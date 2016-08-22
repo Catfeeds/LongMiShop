@@ -25,9 +25,9 @@ class MobileBaseController extends Controller {
         //微信浏览器
         if(strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
             //获取微信配置
-            $wechat_list = M('wx_user')->select();
-            $wechat_config = $wechat_list[0];
-            $this->weixin_config = $wechat_config;
+            $this -> get_wechat_config();
+
+
             $this->assign('wechat_config', $wechat_config); // 微信配置
             if($wechat_config && !$_SESSION['openid']){
                 //去授权获取openid
@@ -278,5 +278,29 @@ class MobileBaseController extends Controller {
         $buff = trim($buff, "&");
         return $buff;
     }
+
+
+    /**
+     * 获取微信配置
+     */
+    public function get_wechat_config()
+    {
+
+        $wechat_list = M('wx_user')->select();
+        $wechat_config = $wechat_list[0];
+        $this->weixin_config = $wechat_config;
+
+        if($this->weixin_config['type'] == 1 ||$this->weixin_config['type'] == 2 ){
+            $wechat_config = M('wx_myuser')->find();
+            if( !empty($wechat_config) ){
+                $this->weixin_config['appid']       =   $wechat_config['appid'];
+                $this->weixin_config['appsecret']   =   $wechat_config['appsecret'];
+                $this->weixin_config['aeskey']      =   $wechat_config['aeskey'];
+                $this->weixin_config['w_token']     =   $wechat_config['w_token'];
+            }
+        }
+    }
+
+
 
 }

@@ -19,7 +19,10 @@ class BaseController extends Controller {
         $navigate_admin = navigate_admin();
         $this->assign('navigate_admin',$navigate_admin);
 //        tpversion();
-        delFile('./Application/Runtime');
+
+
+
+        delFile('./Application/Runtime');//调试使用
    }    
     
     /*
