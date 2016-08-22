@@ -1,0 +1,46 @@
+<div ng-controller="richTextCtrl">
+	{if $_GPC['iseditor']}
+	<!--富文本-->
+	<div class="app-richText-edit">
+		<div class="arrow-left"></div>
+		<div class="app-header-setting-new-inner">
+			<div class="panel panel-default">
+				<div class="panel-body form-horizontal">
+					<div class="form-group">
+						<label class="col-xs-3 control-label">背景颜色</label>
+						<div class="col-xs-9 ">
+							<div class="input-group">
+								<div ng-my-colorpicker ng-my-color="activeItem.params.bgColor" ng-my-default-color="'#ffffff'"></div>
+							</div>
+						</div>
+					</div>
+					<!--div class="form-group">
+						<label class="col-xs-3 control-label">是否全屏</label>
+						<div class="col-xs-9">
+							<label for="fullScreen" class="checkbox-inline">
+								<input id="fullScreen" name="fullScreen" type="checkbox">全屏显示
+							</label>
+						</div>
+					</div-->
+					<div class="form-group">
+						<div class="col-xs-12">
+                            <div ng-my-editor ng-my-value="activeItem.params.content"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!--end富文本-->
+	{else}
+	<!--富文本-->
+	<div class="app-richText" ng-style="{'background-color' : module.params.bgColor}">
+		<div class="inner" ng-bind-html="module.params.content|to_trusted"  ng-if="module.params.content"></div>
+		<div class="inner js-default-content" ng-if="!module.params.content">
+			<p>点此编辑『富文本』内容</p>
+		</div>
+	</div>
+	<!--end富文本-->
+	{/if}
+</div>

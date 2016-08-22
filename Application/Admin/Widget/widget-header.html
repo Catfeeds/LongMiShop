@@ -1,0 +1,108 @@
+<div ng-controller="headerCtrl">
+{if $_GPC['iseditor']}
+<!--页面标题设置-->
+	<div class="app-header-setting">
+		<div class="arrow-left"></div>
+		<div class="app-header-setting-inner ">
+			<div class="panel panel-default">
+				<div class="panel-body form-horizontal">
+					<div class="form-group">
+						<label class="col-xs-3 control-label"><span class="red">*</span> 页面名称</label>
+						<div class="col-xs-9">
+							<input type="text" ng-model="activeItem.params.title" placeholder="微页面标题" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">页面描述</label>
+						<div class="col-xs-9">
+							<input type="text" ng-model="activeItem.params.description" placeholder="" class="form-control">
+						</div>
+					</div>
+					<div class="form-group" ng-if="1==2">
+						<label class="col-xs-3 control-label">触发关键字</label>
+						<div class="col-xs-9">
+							<input type="text" ng-model="activeItem.params.keyword" class="form-control">
+							<span class="help-block">用户触发关键字，系统回复此页面的图文链接</span>
+						</div>
+					</div>
+					<div class="form-group" ng-if="1==2">
+						<label class="control-label col-xs-3"><span class="red">*</span>封面</label>
+						<div class="col-xs-9">
+							<span ng-click="addThumb()"><i class="fa fa-plus-circle green"></i>&nbsp;选择图片</span>
+							<div style="margin-top:.5em;" class="input-group" ng-show="activeItem.params.thumb">
+								<img width="150" class="img-responsive img-thumbnail" ng-src="{{activeItem.params.thumb}}" />
+								<em ng-click="activeItem.params.thumb = '';" title="删除这张图片" style="position:absolute; top: 0px; right: -14px;" class="close">×</em>
+							</div>
+							<span class="help-block">用于用户触发关键字后，系统回复时的封面图片</span>
+						</div>
+					</div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">页面颜色</label>
+                        <div class="col-xs-9 ">
+                            <div class="input-group">
+                                <div ng-my-colorpicker ng-my-color="activeItem.params.bgColor" ng-my-default-color=""></div>
+                            </div>
+                            <span class="help-block">背景颜色只在手机端显示</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">底部菜单</label>
+                        <div class="col-xs-9 ">
+                            <select class="form-control" ng-model="activeItem.params.footer">
+                                <option value="1" selected>显示</option>
+                                <option value="2">隐藏</option>
+                            </select>
+                        </div>
+                    </div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">分享标题设置</label>
+						<div class="col-xs-9">
+							<input type="text" ng-model="activeItem.params.sharetitle" placeholder="" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">分享描述设置</label>
+						<div class="col-xs-9">
+							<input type="text" ng-model="activeItem.params.sharedesc" placeholder="" class="form-control">
+						</div>
+					</div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">分享图片设置</label>
+                        <div class="col-xs-9 ">
+                            <select class="form-control" ng-model="activeItem.params.shareimgop">
+                                <option value="0" selected>使用系统设置</option>
+                                <option value="1">自定义分享图片</option>
+                            </select>
+                            <span class="help-block" style=" color:#f00;">此分享设置的优先级高于总分享设置</span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="activeItem.params.shareimgop==1">
+                            <label class="control-label col-xs-3">选择图片</label>
+                            <div class="col-xs-9">
+                                <div style="width:50px; height:50px; overflow:hidden; float:left; margin-right:10px;"><img ng-src="{{activeItem.params.shareimg}}" id="thumb" /></div>
+                                <span ng-click="addItem()"><i class="fa fa-plus-circle green"></i>&nbsp;添加图片</span>
+                                <span class="help-block">建议尺寸:150 * 150像素</span>
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">头部嵌入代码</label>
+                        <div class="col-xs-9 ">
+                            <textarea  ng-model="activeItem.params.topcode" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">底部嵌入代码</label>
+                        <div class="col-xs-9 ">
+                            <textarea  ng-model="activeItem.params.btncode" class="form-control"></textarea>
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+{else}
+	<div class="title js-default-content">
+		<h1><span>{{module.params.title}}</span></h1>
+	</div>
+{/if}
+</div>

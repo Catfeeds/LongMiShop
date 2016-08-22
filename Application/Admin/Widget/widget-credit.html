@@ -1,0 +1,23 @@
+<div ng-controller="creditCtrl">
+    {if $_GPC['iseditor']}
+    <div class="app-textNav-edit">
+        <div class="arrow-left"></div>
+        <div class="inner">
+            <div class="panel panel-default">
+                <div class="panel-body form-horizontal">
+                    <div class="card add-textNav-con" ng-repeat="item in activeItem.params.items">
+                       
+                    </div>
+                    <div class="add-textNav card" >
+                        <a ><i class="fa fa-plus-circle green"></i>  敬请期待</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</div>
+{else}
+
+{/if}
+</div>

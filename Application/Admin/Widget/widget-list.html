@@ -1,0 +1,219 @@
+<div ng-controller="listCtrl">
+    {if $_GPC['iseditor']}
+    <div class="app-textNav-edit">
+        <div class="arrow-left"></div>
+        <div class="inner">
+            <div class="panel panel-default">
+                <div class="panel-body form-horizontal">
+                    <div class="card add-textNav-con" ng-repeat="item in activeItem.params.items">
+                        <div class="btns">
+                            <a href="javascript:" ng-click="addItem()"><i class="fa fa-plus"></i></a>
+                            <a href="javascript:" ng-click="removeItem(item)"><i class="fa fa-times"></i></a>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-3">是否显示头部</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" ng-model="item.enable" ng-change="changeenable(item)">
+                                    <option value="0">显示</option>
+                                    <option value="1">隐藏</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-3">显示类型</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" ng-model="item.list1" ng-change="changelist1(item)">
+                                    <option value="1">分类</option>
+                                    <option value="2">属性</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="item.list1== 2">
+                            <label class="control-label col-xs-3">属性</label>
+                            <div class="col-xs-9">
+                                <select class="form-control" ng-model="item.list2" ng-change="changelist2(item)">
+                                    <option value="1">热卖</option>
+                                    <option value="2">新品</option>
+                                    <option value="3">精品</option>
+                                    <option value="4">特惠</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="item.list1==1">
+                            <label class="control-label col-xs-3">分类</label>
+                            <div class="col-xs-9 ">
+                                <div class="input-group">
+                                    <!--链接选择好以后显示以下内容-->
+                                    <div class="form-control-static ">
+                                        <label ng-if="item.selectCate.id != 0" class="label label-success">{{item.selectCate.name}}</label>
+                                        <a href="javascript:;" ng-click="showSearchCateList(item)"><span ng-if="item.selectCate.id == 0">从分类中选择</span><span ng-if="item.selectCate.id != 0">修改</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-3">显示条数</label>
+                            <div class="col-xs-9 ">
+                                <select class="form-control" ng-model="item.pageSize" ng-change="changePageSize(item)">
+                                    <option value="1">1条</option>
+                                    <option value="2">2条</option>
+                                    <option value="3">3条</option>
+                                    <option value="4">4条</option>
+                                    <option value="5">5条</option>
+                                    <option value="6">6条</option>
+                                    <option value="7">7条</option>
+                                    <option value="8">8条</option>
+                                    <option value="9">9条</option>
+                                    <option value="10">10条</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="control-label col-xs-3">显示方式</label>
+                                <div class="col-xs-9">
+                                    <select class="form-control" ng-model="item.type" ng-change="changetype(item)">
+                                        <option value="1">单列</option>
+                                        <option value="2">两列</option>
+                                        <option value="3">图文</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-textNav card" >
+                        <a href="javascript:" ng-click="addItem()"><i class="fa fa-plus-circle green"></i>  添加一个产品列表</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-search-cate-list" class="modal fade in" role="dialog" aria-hidden="false" style="margin-top: 75px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">+</button>
+                    <h3>选择分类</h3>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <thead class="navbar-inner">
+                        <tr>
+                            <th style="width:60%;">标题</th><th style="width: 30%;"></th>
+                            <th style="width:30%; text-align:right; display: none;" >
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control">
+											<span class="input-group-btn">
+												<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+											</span>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="pcate in searchCateList">
+                        <tr>
+                            <td><a href="#">{{pcate.name}}</a></td>
+                            <td class="text-right"><a class="btn btn-default btn-sm" ng-click="selectCateItem(pcate.id, 0, pcate.name)">选取</a></td>
+                        </tr>
+                        <tr ng-repeat="ccate in pcate.children track by $index">
+                            <td style="padding-left:50px;height:30px;line-height:30px;background-image:url('./resource/images/bg_repno.gif'); background-repeat:no-repeat; background-position: -245px -540px;"><a href="#">{{ccate.name}}</a></td>
+                            <td class="text-right">
+                                <a class="btn btn-default btn-sm" ng-click="selectCateItem(0, ccate.id, ccate.name)">选取</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{else}
+<div  class="js-default-content" ng-if="module.params.items.length == 0">
+    <div class="inner">
+        <div class="list-group">
+            <div class="list-group-item">
+                <a class="clearfix" href="javascript:;">
+                    <span class="app-nav-title">点此编辑『产品列表』<i class="pull-right fa fa-angle-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="module.params.items.length != 0">
+    <div class="app-list">
+        <div ng-repeat="item in module.params.items">
+                <div  ng-if="(item.list1==2&&item.list2!=0)||(item.selectCate.pid > 0 || item.selectCate.cid > 0)">
+                    <div class="list-group-item" ng-if="item.list1==1&&item.enable==0">
+                        <a class="clearfix" href="javascript:;">
+                            <span class="app-nav-title">{{item.selectCate.name}}<i class="pull-right fa fa-angle-right"></i></span>
+                        </a>
+                    </div>
+                    <div class="list-group-item" ng-if="item.list1==2&&item.enable==0">
+                        <a class="clearfix" href="javascript:;">
+                            <span class="app-nav-title"  ng-if="item.list2==1">热卖<i class="pull-right fa fa-angle-right"></i></span>
+                            <span class="app-nav-title"  ng-if="item.list2==2">新品<i class="pull-right fa fa-angle-right"></i></span>
+                            <span class="app-nav-title"  ng-if="item.list2==3">精品<i class="pull-right fa fa-angle-right"></i></span>
+                            <span class="app-nav-title"  ng-if="item.list2==4">特惠<i class="pull-right fa fa-angle-right"></i></span>
+                        </a>
+                    </div>
+
+                    <div ng-if="item.type== 1">
+                        <div class="list-group-item pa type1">
+                            <div  ng-repeat="i in pageSize | limitTo:item.pageSize">
+                                <div class="list-type1">
+                                    <a href="#" >
+                                        <div class="imgout">
+                                            <img  src="../app/resource/images/shilitu.png">
+                                        </div>
+                                        <p><span class="name">詹尼弗洛佩兹（JENNIFER LOPEZ）传奇女士香水 100ml</span> <span class="money" >￥219.00</span></p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="item.type==2">
+                        <div class="list-group-item pa type2"  >
+                            <div class="list-type2">
+                                <div  ng-repeat="i in pageSize | limitTo:item.pageSize">
+                                    <a href="#" >
+                                        <div class="imgout">
+                                            <img src="../app/resource/images/shilitu.png" >
+                                        </div>
+                                        <span class="name">詹尼弗洛佩兹（JENNIFER LOPEZ）传奇女士香水 100ml</span>
+                                        <p class="money">￥219.00</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="item.type==3">
+                        <div class="list-group-item pa type3" >
+                            <div  ng-repeat="i in pageSize | limitTo:item.pageSize">
+                                <div class="list-type3">
+                                    <a href="#" >
+                                        <div class="detail">
+                                            <span class="name">詹尼弗洛佩兹（JENNIFER LOPEZ）传奇女士香水 100ml</span>
+                                            <span class="xiangqing">詹尼弗洛佩兹（JENNIFER LOPEZ）传奇女士香水 100ml詹尼弗洛佩兹（JENNIFER LOPEZ）传奇女士香水 100ml詹尼弗洛佩兹（JENNIFER LOPEZ）传奇女士香水 100ml詹尼弗洛佩兹（JENNIFER LOPEZ）传奇女士香水 100ml</span>
+                                            <span class="money">￥219.00</span>
+                                            <span class="money2">原价：<del>￥219.00</del></span>
+                                        </div>
+                                        <div class="imgout">
+                                            <img src="../app/resource/images/shilitu.png" >
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 100%; height: 5px;"></div>
+                <div  ng-if="(item.selectCate.name =='')&&item.list1==1 ">
+                    <span style="padding: 10px 0;">请选择分类</span>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+{/if}
+</div>
