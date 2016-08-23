@@ -1,5 +1,6 @@
 /Application/Runtime
 /.idea
+/backup
 /.git
 /Public/upload
 /Application/Common/Conf/db.php
