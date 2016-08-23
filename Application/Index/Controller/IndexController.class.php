@@ -1,17 +1,8 @@
 <?php
-
 namespace Index\Controller;
-
-class IndexController extends BaseController {
-
-    public function _initialize() {
+use Think\Controller;
+class IndexController extends Controller {
+    public function index(){
+    	$this->display();
     }
-
-    // 官网首页
-    public function index()
-    {
-        echo 1;exit;
-        $this->display();
-    }
-    
 }

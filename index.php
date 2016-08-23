@@ -23,6 +23,7 @@ define('APP_DEBUG',true);
 define('APP_PATH','./Application/');
 //  定义插件目录
 define('PLUGIN_PATH','plugins/');
+// define('BIND_MODULE','Index'); 
 // 开启页面gzip压缩
 // ob_end_clean();
 // define ( "GZIP_ENABLE", function_exists ( 'ob_gzhandler' ) );
