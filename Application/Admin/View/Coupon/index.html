@@ -47,7 +47,14 @@
                                         </td>
                                         <td class="text-center">{$list.name}</td>
                                         <td class="text-center">{$coupons[$list[type]]}</td>
-                                        <td class="text-center">{$list.money}</td>
+                                        <td class="text-center">
+                                            <if condition="$list['is_discount'] == true">
+                                                {$list.money}%
+                                            <else />
+                                                {$list.money}
+                                            </if>
+                                            
+                                        </td>
                                         <td class="text-center">{$list.condition}</td>
                                         <td class="text-center">{$list.createnum}</td>
                                         <td class="text-center">{$list.send_num}</td>

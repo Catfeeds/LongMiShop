@@ -999,7 +999,10 @@ function calculate_price($user_id=0,$order_goods,$shipping_code='',$shipping_pri
         $coupon_price = 0;
         if($coupon_id && $user_id)
         {
-            $coupon_price = $cartLogic->getCouponMoney($user_id, $coupon_id,1); // 下拉框方式选择优惠券                    
+            $coupon_price = $cartLogic->getCouponMoney($user_id, $coupon_id,1); // 下拉框方式选择优惠券
+            if($coupon_price['status']==2){
+                $coupon_price =  $goods_price  - ($goods_price * $coupon_price['result']);
+            }                  
         }        
         if($couponCode && $user_id)
         {                 

@@ -263,8 +263,15 @@ class CartLogic extends RelationModel
 
         $coupon = M('Coupon')->where("id = {$couponlist['cid']}")->find(); // 获取 优惠券类型表
         $coupon['money'] = $coupon['money'] ? $coupon['money'] : 0;
+        
+        if($coupon['is_discount'] == 1 && $mode == 1){
+            //折扣
+            $coupon['money'] = $coupon['money'] / 100;
+            return array('status'=>2,'msg'=>'','result'=>$coupon['money']);
+        }
 
         if($mode == 1) return $coupon['money'];
+         
         return array('status'=>1,'msg'=>'','result'=>$coupon['money']);
     }
 
@@ -286,7 +293,7 @@ class CartLogic extends RelationModel
             return array('status'=>-11,'msg'=>'金额没达到优惠券使用条件','result'=>'');
         if($couponlist['order_id'] > 0)
             return array('status'=>-12,'msg'=>'优惠券已被使用','result'=>'');
-
+        
         return array('status'=>1,'msg'=>'','result'=>$coupon['money']);
     }
 

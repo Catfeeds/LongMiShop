@@ -24,6 +24,20 @@
                             <table class="table table-bordered">
                                 <tbody>
                                 <tr>
+                                    <td class="col-sm-2">券类型</td>
+                                    <td class="col-sm-4">
+                                       <select name="is_discount" style="width:100px" id="is_discount" {: isset($coupon['id'])?'disabled':''}>
+                                           <option value="0"  {: empty($coupon['is_discount'])?'selected':''}>优惠券</option>
+                                           <option value="1" {: !empty($coupon['is_discount'])==1?'selected':'' }>折扣券</option>
+                                       </select> 
+                                    </td>
+                                    <td>请选择券类型</td>
+                                </tr>
+
+                            
+                            
+                                
+                                <tr id="coupon">
                                     <td class="col-sm-2">优惠券名称：</td>
                                     <td class="col-sm-4">
                                         <input type="text" value="{$coupon.name}" class="form-control" id="name" name="name" >
@@ -32,13 +46,16 @@
                                     <td class="col-sm-4">请填写优惠券名称
                                     </td>
                                 </tr>  
-                                <tr>
-                                    <td>优惠券面额：</td>
+
+                                <tr >
+                                    <td> <span id="discount">优惠券</span>面额：</td>
                                     <td >
-                         				<input type="text" value="{$coupon.money}" class="form-control" id="money" name="money"  onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"/>
+                                        <input type="text" value="{$coupon.money}" class="form-control" id="money" name="money"  onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"/>
                                     </td>
-                                    <td class="col-sm-4">优惠券可抵扣金额</td>
-                                </tr>  
+                                    <td class="col-sm-4"><span id="discount_span">优惠券可抵扣金额</span></td>
+                                </tr>   
+                                
+                                  
                                 <tr>
                                     <td>消费金额：</td>
                                     <td>
@@ -168,6 +185,30 @@ function data_pick(id){
         }
     });
 }
+
+//选择类型
+$('#is_discount').change(['Data'],function(){
+    var values = $(this).val();
+    if(values==1){
+        $('#discount').text('折扣券');
+        $('#discount_span').text('可折扣百分比');
+        $('#coupon').hide();
+    }else{
+        $('#discount').text('优惠券');
+        $('#discount_span').text('优惠券可抵扣金额');
+        $('#coupon').show();
+    }
+});
+
+$('#money').change(['Data'],function(){
+    var values = $(this).val();
+    var is_discount = $('#is_discount').val();
+    if(is_discount==1){
+       var text = '百分之'+values+'折扣券';
+       $('#name').val(text); 
+    }
+    
+});
 </script>
 </body>
 </html>
