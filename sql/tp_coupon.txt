@@ -1,0 +1,4 @@
+//新增字段
+
+
+ALTER TABLE  `tp_coupon` ADD  `is_discount` TINYINT( 1 ) NOT NULL COMMENT  '券类型' AFTER  `type` ;
