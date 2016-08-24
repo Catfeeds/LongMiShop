@@ -1,0 +1,116 @@
+@charset "utf-8";
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.foot {
+	text-align: left;
+	background-color: #FFF;
+	overflow: hidden;
+	position: fixed;
+	_position: absolute;
+	bottom: 0px;
+	_bottom: 0px;
+ _margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop);
+	width: 100%;
+	max-width: 800px;
+	z-index: 999999999999999999999;
+	margin-top: 10px;
+	color: #666;
+	background-color: #FFFFFF;
+	overflow: hidden;
+	font-size: 14px;
+	margin-bottom: 51px;
+}
+.foot div, .foot a {
+	line-height: 48px;
+	height: 48px;
+}
+.foot .select-all {
+	width: 70px;
+	height: 48px;
+	line-height: 48px;
+	padding-left: 2px;
+	color: #666;
+	text-align: left;
+}
+.foot .closing {
+	width: 100px;
+	text-align: center;
+	color: #FFF;
+	font-weight: bold;
+	cursor: pointer;
+	background-color: #b02f4b;
+	font-size: 16px;
+}
+.foot .total {
+	margin: 0 5px;
+	cursor: pointer;
+}
+.foot #priceTotal, .foot #selectedTotal {
+	color: #b02f4b;
+	font-family: "Microsoft Yahei";
+	font-weight: bold;
+}
+.foot .selected {
+	cursor: pointer;
+}
+.foot .selected .arrow {
+	position: relative;
+	top: -3px;
+	margin-left: 3px;
+}
+.foot .selected .down {
+	position: relative;
+	top: 3px;
+	display: none;
+}
+.show .selected .down {
+	display: inline;
+}
+.show .selected .up {
+	display: none;
+}
+.foot .selected:hover .arrow {
+	color: #b02f4b;
+}
+.foot .selected-view {
+	width: 935px;
+	border: 1px solid #b02f4b;
+	position: absolute;
+	height: auto;
+	background: #ffffff;
+	z-index: 9;
+	bottom: 48px;
+	left: -1px;
+	display: none;
+}
+.show .selected-view {
+	display: block;
+}
+.foot .selected-view div {
+	height: auto;
+}
+.foot .selected-view .arrow {
+	font-size: 16px;
+	line-height: 100%;
+	color: #b02f4b;
+	position: absolute;
+	right: 330px;
+	bottom: -9px;
+}
+.foot .selected-view .arrow span {
+	color: #ffffff;
+	position: absolute;
+	left: 0px;
+	bottom: 1px;
+}
+table td {
+	margin-bottom: 5px;
+	background-color: #FFF;
+	border-bottom-width: 5px;
+	border-bottom-style: solid;
+	border-bottom-color: #F5F5F5;
+}

@@ -1,8 +1,9 @@
   <foreach name="account_log" item="item" key="k">
-    <li class="Funds_li" <if condition="$k eq count($account_log)"> style="border:0"</if>>
-    	<span class="icon <if condition='$k eq 0'>on</if>"></span>
-        <span>增加,<em>{$item.pay_points}</em></span>
-        <span>{$item.change_time|date='Y-m-d H:i:s',###}</span>
-        <span>{$item.desc}</span>
-    </li>
+      <div class="m6">
+          <div class="m6_left">
+              <div>{$item.desc}</div>
+              <div class="m7">{$item.change_time|date='Y-m-d H:i:s',###}</div>
+          </div>
+          <div class="m6_right">{$item.user_money}</div>
+      </div>
   </foreach>

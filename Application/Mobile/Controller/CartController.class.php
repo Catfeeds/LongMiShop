@@ -140,7 +140,6 @@ class CartController extends MobileBaseController {
         $pay_points =  I("pay_points",0); //  使用积分
         $user_money =  I("user_money",0); //  使用余额        
         $user_money = $user_money ? $user_money : 0;
-
         if($this->cartLogic->cart_count($this->user_id,1) == 0 ) exit(json_encode(array('status'=>-2,'msg'=>'你的购物车没有选中商品','result'=>null))); // 返回结果状态
         if(!$address_id) exit(json_encode(array('status'=>-3,'msg'=>'请先填写收货人信息','result'=>null))); // 返回结果状态
         if(!$shipping_code) exit(json_encode(array('status'=>-4,'msg'=>'请选择物流信息','result'=>null))); // 返回结果状态
