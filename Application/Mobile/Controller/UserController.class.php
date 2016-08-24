@@ -920,7 +920,7 @@ class UserController extends MobileBaseController {
         }         
     	$this->display();        
     }
-    
+
     /**
      *  退货详情
      */
@@ -929,10 +929,21 @@ class UserController extends MobileBaseController {
         $id = I('id',0);
         $return_goods = M('return_goods')->where("id = $id")->find();
         if($return_goods['imgs'])
-            $return_goods['imgs'] = explode(',', $return_goods['imgs']);        
-        $goods = M('goods')->where("goods_id = {$return_goods['goods_id']} ")->find();                
+            $return_goods['imgs'] = explode(',', $return_goods['imgs']);
+        $goods = M('goods')->where("goods_id = {$return_goods['goods_id']} ")->find();
         $this->assign('goods',$goods);
         $this->assign('return_goods',$return_goods);
         $this->display();
-    }            
+    }
+
+
+    /**
+     *  消息列表
+     */
+    public function message()
+    {
+        $need_top = I('need_top',0);
+        $this->assign('need_top',$need_top);
+        $this->display();
+    }
 }

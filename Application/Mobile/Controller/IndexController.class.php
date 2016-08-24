@@ -23,24 +23,24 @@ class IndexController extends MobileBaseController {
         $this->display();
     }
 
-    /**
-     * 分类列表显示
-     */
-    public function categoryList(){
-        $this->display();
-    }
+//    /**
+//     * 分类列表显示
+//     */
+//    public function categoryList(){
+//        $this->display();
+//    }
 
-    /**
-     * 模板列表
-     */
-    public function mobanlist(){
-        $arr = glob("D:/wamp/www/svn_tpshop/mobile--html/*.html");
-        foreach($arr as $key => $val)
-        {
-            $html = end(explode('/', $val));
-            echo "<a href='http://www.php.com/svn_tpshop/mobile--html/{$html}' target='_blank'>{$html}</a> <br/>";            
-        }        
-    }
+//    /**
+//     * 模板列表
+//     */
+//    public function mobanlist(){
+//        $arr = glob("D:/wamp/www/svn_tpshop/mobile--html/*.html");
+//        foreach($arr as $key => $val)
+//        {
+//            $html = end(explode('/', $val));
+//            echo "<a href='http://www.php.com/svn_tpshop/mobile--html/{$html}' target='_blank'>{$html}</a> <br/>";
+//        }
+//    }
     
     /**
      * 商品列表页
@@ -52,11 +52,11 @@ class IndexController extends MobileBaseController {
         $this->assign('lists',$lists);
         $this->display();
     }
-    
-    public function ajaxGetMore(){
-    	$p = I('p',1);
-    	$favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->page($p,10)->cache(true,TPSHOP_CACHE_TIME)->select();//首页推荐商品
-    	$this->assign('favourite_goods',$favourite_goods);
-    	$this->display();
-    }
+//
+//    public function ajaxGetMore(){
+//    	$p = I('p',1);
+//    	$favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->page($p,10)->cache(true,TPSHOP_CACHE_TIME)->select();//首页推荐商品
+//    	$this->assign('favourite_goods',$favourite_goods);
+//    	$this->display();
+//    }
 }
