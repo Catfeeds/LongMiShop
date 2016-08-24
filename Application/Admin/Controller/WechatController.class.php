@@ -530,6 +530,7 @@ class WechatController extends BaseController {
             $this->config = M('config');
             $data[]['store_title'] = I('store_title');
             $data[]['store_desc'] = I('store_desc');
+            $data[]['default'] = I('default');
             $data[]['details'] = I('details');
             $data[]['classify'] = I('classify');
             $data[]['article'] = I('article');
@@ -537,9 +538,10 @@ class WechatController extends BaseController {
                 $where = array_keys($item);
                 $wheres['name'] = $where[0];
                 $data['value'] = $item[$where[0]];
-                $res = $this->config->where($wheres)->save($data);
+                $res[] = $this->config->where($wheres)->save($data);
             }
-            if($res){
+            $isin = in_array('1',$res);
+            if($isin){
                 $this->success('修改成功',U('Admin/Wechat/share'));
                 exit;
             }else{

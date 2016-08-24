@@ -10,3 +10,5 @@ INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VAL
 
 INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VALUES (NULL, 'article', '1', 'shop_info', NULL);
 
+INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VALUES (NULL, 'default', '1', 'shop_info', NULL);
+
