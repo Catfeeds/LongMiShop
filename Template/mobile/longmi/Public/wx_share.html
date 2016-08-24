@@ -4,16 +4,13 @@
 <script type="text/javascript">
 
     //商品详情
-    <if condition="ACTION_NAME eq 'goodsInfo'">
+//    <if condition="ACTION_NAME eq 'goodsInfo'">
         var ShareLink = "http://{$_SERVER[HTTP_HOST]}/index.php?m=Mobile&c=Goods&a=goodsInfo&id={$goods[goods_id]}"; //默认分享链接
-    var ShareImgUrl = <if condition="$lmshop_config['shop_info_details'] eq 1">
-
-            <else/>"http://{$_SERVER[HTTP_HOST]}{$goods[goods_id]|goods_thum_images=400,400}"; // 分享图标</if>
-    </if>
-    <else />
-    var ShareLink = "http://{$_SERVER[HTTP_HOST]}/index.php?m=Mobile&c=Index&a=index"; //默认分享链接
-    var ShareImgUrl = "http://{$_SERVER[HTTP_HOST]}{$lmshop_config['shop_info_store_logo']}"; // 分享图标
-    </if>
+        var ShareImgUrl = "{:getShareImages($goods[goods_id])}";
+//    <else />
+        var ShareLink = "http://{$_SERVER[HTTP_HOST]}/index.php?m=Mobile&c=Index&a=index"; //默认分享链接
+        var ShareImgUrl = "http://{$_SERVER[HTTP_HOST]}{$lmshop_config['shop_info_store_logo']}"; // 分享图标
+//    </if>
 
 var is_distribut = getCookie('is_distribut'); // 是否分销代理
 var user_id = getCookie('user_id'); // 当前用户id
