@@ -84,15 +84,13 @@ class MobileBaseController extends Controller {
        	  	 $lmshop_config['hot_keywords'] = explode('|', $v['value']);
        	  }       	  
           $lmshop_config[$v['inc_type'].'_'.$v['name']] = $v['value'];
-       }                        
-       
+       }
        $goods_category_tree = get_goods_category_tree();    
        $this->cateTrre = $goods_category_tree;
        $this->assign('goods_category_tree', $goods_category_tree);                     
        $brand_list = M('brand')->cache(true,TPSHOP_CACHE_TIME)->field('id,parent_cat_id,logo,is_hot')->where("parent_cat_id>0")->select();              
        $this->assign('brand_list', $brand_list);
        $this->assign('lmshop_config', $lmshop_config);
-       print_r($goods);
     }      
 
     // 网页授权登录获取 OpendId
