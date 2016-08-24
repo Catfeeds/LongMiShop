@@ -1,42 +1,61 @@
-<include file="Public/header"/>
-<body>      
-<div id="tbh5v0">
-<div class="user_com">
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>{$lmshop_config['shop_info_store_title']}</title>
+	<meta http-equiv="keywords" content="{$lmshop_config['shop_info_store_keyword']}" />
+	<meta name="description" content="{$lmshop_config['shop_info_store_desc']}" />
+	<script src="__STATIC__/js/mui.min.js"></script>
+	<script src="__STATIC__/js/TouchSlide.js"></script>
+	<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
+	<link href="__STATIC__/css/css.css" rel="stylesheet" />
+	<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+</head>
+<body>
 
-<include file="Public/uer_topnav"/>
+<div class="top_box">
+	<include file="Public/news"/>
+</div>
 
-<div class="Wallet">
+<include file="Public/user_topnav"/>
+<div class="er">
 	<ul>
-	<li class="bain1"><strong>￥{$user['user_money']}元</strong><span>余额</span></li>
-	<li class="bain1"><strong>{$coupon_count}</strong><span>优惠券</span></li>
-	<li><strong>{$user['pay_points']}</strong><span>积分</span></li>
+		<li><p>优惠券</p><span>{$coupon_count}</span></li>
+		<li><p>余额</p><span>￥{$user['user_money']}</span></li>
+		<li class="none"><p>积分</p><span>{$user['pay_points']}</span></li>
 	</ul>
-	<a href="{:U('Mobile/User/account')}"><em class="Icon Icon1"></em><dl><dt>我的钱包</dt><dd style="color:#aaaaaa;">查看我的钱包</dd></dl></a>
+
+</div>
+<div class="er_t">我的订单</div>
+<div class="er1">
+	<ul>
+		<li>
+			<p><a href="{:U('Mobile/User/order_list')}">待付款</a></p>
+		</li>
+		<li style="background-image:url('__STATIC__/SVG/a2.svg')">
+			<p><a href="{:U('Mobile/User/order_list')}">待发货</a></p>
+		</li>
+		<li style="background-image:url('__STATIC__/SVG/a3.svg')">
+			<p><a href="{:U('Mobile/User/order_list')}">已发货</a></p>
+		</li>
+		<li style="background-image:url('__STATIC__/SVG/a4.svg')">
+			<p><a href="{:U('Mobile/User/order_list')}">已完成</a></p>
+		</li>
+
+	</ul>
+
 </div>
 
+<div class="my_nav">
+	<ul>
+		<li><a href="{:U('Mobile/User/collect_list')}">收藏</a></li>
+		<li><a href="{:U('Mobile/User/account')}">钱包</a></li>
+		<li><a href="{:U('Mobile/User/coupon')}">代金券</a></li>
+		<li><a href="{:U('User/points')}">积分</a></li>
+	</ul>
+</div>
 
-<div class="Wallet">
-	<a href="{:U('Mobile/User/order_list')}" ><em class="Icon Icon2"></em><dl class="b"><dt>全部订单</dt><dd>查看订单</dd></dl></a>
-	<a href="{:U('Mobile/User/coupon')}"><em class="Icon Icon3"></em><dl class="b"><dt>我的优惠券</dt><dd>&nbsp;</dd></dl></a>
-	<a href="{:U('Mobile/User/comment')}"><em class="Icon Icon4"></em><dl class="b"><dt>我的评价</dt><dd>查看评价</dd></dl></a>
-	<a href="{:U('Mobile/User/collect_list')}"><em class="Icon Icon10"></em><dl><dt>我的收藏</dt><dd>&nbsp;</dd></dl></a>
-</div>
-<div class="Wallet">
-	<a href="{:U('User/address_list')}"><em class="Icon Icon5"></em><dl class="b"><dt>地址管理</dt><dd>&nbsp;</dd></dl></a>
-	<a href="{:U('User/points')}"><em class="Icon Icon6"></em><dl class="b"><dt>我的积分</dt><dd>&nbsp;</dd></dl></a>
-	<a href="{:U('User/message_list')}"><em class="Icon Icon7"></em><dl class="b"><dt>我的留言</dt><dd>&nbsp;</dd></dl></a>
-	<a href="{:U('User/return_goods_list')}"><em class="Icon Icon11"></em><dl><dt>售后服务</dt><dd>&nbsp;</dd></dl></a>
-    
-    <if condition="$lmshop_config['distribut_switch'] eq 1">
-	<a href="{:U('Distribut/index')}"><em class="Icon Icon1"></em><dl><dt>我发展收益</dt><dd>&nbsp;</dd></dl></a>    
-    </if>    
-</div>
-<div class="Wallet">
-	<a href="{:U('User/logout')}"><em class="Icon Icon8"></em><dl><dt>注销登录</dt></dl></a>
-</div>
-</div>
-<include file="Public/footer"/>
-</div>
-<include file="Public/footer_nav"/>
+<include file="Public/nav"/>
 </body>
 </html>

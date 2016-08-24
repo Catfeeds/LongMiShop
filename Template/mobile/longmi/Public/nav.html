@@ -1,0 +1,64 @@
+<div style="height:55px"></div>
+<div class="nav_d">
+	<ul>
+		<if condition="$_SERVER['REQUEST_URI']==U('Index/index') ">
+			<li class="h">
+				<a href="{:U('Index/index')}">
+					<img src="__STATIC__/SVG/home_h.svg">
+				</a>
+			</li>
+			<else/>
+			<li>
+				<a href="{:U('Index/index')}">
+					<img src="__STATIC__/SVG/home.svg">
+				</a>
+			</li>
+		</if>
+		<if condition="$_SERVER['REQUEST_URI']==U('Goods/categoryList') ">
+			<li class="h">
+				<a href="{:U('Goods/categoryList')}">
+					<img src="__STATIC__/SVG/commodity_h.svg">
+				</a>
+			</li>
+			<else/>
+			<li>
+				<a href="{:U('Goods/categoryList')}">
+					<img src="__STATIC__/SVG/commodity.svg">
+				</a>
+			</li>
+		</if>
+		<if condition="$_SERVER['REQUEST_URI']==U('Cart/cart') ">
+			<li class="h">
+				<a href="{:U('Cart/cart')}">
+					<img src="__STATIC__/SVG/shopping_h.svg">
+				</a>
+			</li>
+			<else/>
+			<li>
+				<a href="{:U('Cart/cart')}">
+					<img src="__STATIC__/SVG/shopping.svg">
+				</a>
+			</li>
+		</if>
+		<if condition="$_SERVER['REQUEST_URI']==U('User/index') ">
+			<li class="h">
+				<a href="{:U('User/index')}">
+					<img src="__STATIC__/SVG/my_h.svg">
+				</a>
+			</li>
+			<else/>
+			<li>
+				<a href="{:U('User/index')}">
+					<img src="__STATIC__/SVG/my.svg">
+				</a>
+			</li>
+		</if>
+	</ul>
+
+</div>
+<!-- 微信浏览器 调用微信 分享js-->
+<if condition="$signPackage neq null">
+
+	<include file="Public/wx_share"/>
+</if>
+<!-- 微信浏览器 调用微信 分享js  end-->

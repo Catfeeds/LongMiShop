@@ -25,7 +25,9 @@ class MobileBaseController extends Controller {
         //微信浏览器
         if(strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
             //获取微信配置
-            $this -> get_wechat_config();
+            $wechat_list = M('wx_user')->select();
+            $wechat_config = $wechat_list[0];
+            $this->weixin_config = $wechat_config;
 
 
             $this->assign('wechat_config', $wechat_config); // 微信配置
@@ -285,11 +287,6 @@ class MobileBaseController extends Controller {
      */
     public function get_wechat_config()
     {
-
-        $wechat_list = M('wx_user')->select();
-        $wechat_config = $wechat_list[0];
-        $this->weixin_config = $wechat_config;
-
         if($this->weixin_config['type'] == 1 ||$this->weixin_config['type'] == 2 ){
             $wechat_config = M('wx_myuser')->find();
             if( !empty($wechat_config) ){

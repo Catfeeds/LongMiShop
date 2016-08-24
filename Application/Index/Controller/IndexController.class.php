@@ -2,6 +2,7 @@
 
 namespace Index\Controller;
 
+use Index\Controller;
 class IndexController extends BaseController {
 
     public function _initialize() {

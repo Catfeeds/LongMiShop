@@ -208,6 +208,7 @@ function collect_goods(goods_id){
 		url:"/index.php?m=Home&c=goods&a=collect_goods&goods_id="+goods_id,//+tab,
 		success: function(data){
 			alert(data.msg);
+            // $(".collect").toggleClass("collect_click");
 		}
 	});
 }	
