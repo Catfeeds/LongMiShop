@@ -2,3 +2,11 @@
 
 
 ALTER TABLE  `tp_coupon` ADD  `is_discount` TINYINT( 1 ) NOT NULL COMMENT  '券类型' AFTER  `type` ;
+
+//配置表插入
+INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VALUES (NULL, 'details', '1', 'shop_info', NULL);
+
+INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VALUES (NULL, 'classify', '1', 'shop_info', NULL);
+
+INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VALUES (NULL, 'article', '1', 'shop_info', NULL);
+

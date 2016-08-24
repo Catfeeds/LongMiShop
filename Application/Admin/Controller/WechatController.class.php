@@ -522,5 +522,35 @@ class WechatController extends BaseController {
     }
 
 
+    //分享设置
+    public function share(){
+        // header('content-type:text/html;charset=utf-8');
+        
+        if(IS_POST){
+            $this->config = M('config');
+            $data[]['store_title'] = I('store_title');
+            $data[]['store_desc'] = I('store_desc');
+            $data[]['details'] = I('details');
+            $data[]['classify'] = I('classify');
+            $data[]['article'] = I('article');
+            foreach($data as $key=>$item){
+                $where = array_keys($item);
+                $wheres['name'] = $where[0];
+                $data['value'] = $item[$where[0]];
+                $res = $this->config->where($wheres)->save($data);
+            }
+            if($res){
+                $this->success('修改成功',U('Admin/Wechat/share'));
+                exit;
+            }else{
+                $this->error("修改失败");
+                exit;
+            }
+            
+        }
+        $this->display();
+    }
+
+
 
 }

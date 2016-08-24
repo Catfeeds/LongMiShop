@@ -90,6 +90,7 @@ class MobileBaseController extends Controller {
        $brand_list = M('brand')->cache(true,TPSHOP_CACHE_TIME)->field('id,parent_cat_id,logo,is_hot')->where("parent_cat_id>0")->select();              
        $this->assign('brand_list', $brand_list);
        $this->assign('lmshop_config', $lmshop_config);
+       print_r($goods);
     }      
 
     // 网页授权登录获取 OpendId
