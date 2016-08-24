@@ -113,7 +113,7 @@ class TemplateController extends BaseController {
         //tpCache('hidden',array("{$t}_default_theme"=>$_GET['key']));                         
         // 修改文件配置  
          if(!is_writeable("./Application/$m/Conf/html.php"))
-            return "文件/Application/$m/Conf/html.php不可写,不能启用魔板,请修改权限!!!";           
+            return "文件/Application/$m/Conf/html.php不可写,不能启用模板,请修改权限!!!";
          
 		$config_html ="<?php
 		return array(

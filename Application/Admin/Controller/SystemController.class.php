@@ -371,4 +371,24 @@ class SystemController extends BaseController{
             $distributLogic->auto_confirm(); // 自动确认分成
          }         
      }
+
+
+    /**
+     * 生成官网
+     */
+     public function createWebsite()
+     {
+         $url = 'http://' . $_SERVER['HTTP_HOST'] .'/index.php?m=Index';
+         $contents = file_get_contents($url);
+         $file_url = './index.html';
+         if(!is_writeable($file_url)){
+             $json_arr = array('status'=>0,'msg'=>'文件'.$file_url.'不存在或者不可写!!!','result'=>'' );
+         }else{
+             $json_arr = array('status'=>1,'msg'=>'操作完成','result'=>'' );
+             file_put_contents($file_url, $contents);
+         }
+         $json_str = json_encode($json_arr);
+         exit($json_str);
+
+     }
 }

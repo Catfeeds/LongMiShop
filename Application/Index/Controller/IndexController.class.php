@@ -1,12 +1,13 @@
 <?php
 namespace Index\Controller;
-//use Think\Controller;
-class IndexController extends BaseController {
+//use Index\Controller;
+use Think\Controller;
+class IndexController extends Controller {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
+//    function __construct()
+//    {
+//        parent::__construct();
+//    }
 
     public function index(){
     	$this->display();

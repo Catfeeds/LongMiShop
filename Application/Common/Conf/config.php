@@ -113,14 +113,14 @@ return array(
      */
     
     // 'site_url'=>'http://www.tp-shop.cn', // tpshop 网站域名 已经改写入数据库
-    'DEFAULT_MODULE'        =>  'Home',  // 默认模块
-//    'DEFAULT_MODULE'        =>  'Index',  // 默认模块
+//    'DEFAULT_MODULE'        =>  'Home',  // 默认模块
+    'DEFAULT_MODULE'        =>  'Index',  // 默认模块
     'DEFAULT_CONTROLLER'    =>  'Index', // 默认控制器名称
     'DEFAULT_ACTION'        =>  'index', // 默认操作名称    
     
     'APP_SUB_DOMAIN_DEPLOY'   =>    0, // 开启子域名或者IP配置
     'APP_SUB_DOMAIN_RULES'    =>    array( 
-         'm.tpshop.com'   => 'Mobile/',  // 手机访问网站
+//         'm.tpshop.com'   => 'Mobile/',  // 手机访问网站
     ),    
         
    // 'DEFAULT_FILTER'        => 'trim'   // 系统默认的变量过滤机制
