@@ -1,15 +1,24 @@
 <?php
 namespace Index\Controller;
-//use Index\Controller;
-use Think\Controller;
-class IndexController extends Controller {
 
-//    function __construct()
-//    {
-//        parent::__construct();
-//    }
+
+class IndexController extends BaseIndexController {
+
+    function exceptAuthActions()
+    {
+        return array(
+            'index'
+        );
+    }
+
+    public function _initialize() {
+        parent::_initialize();
+    }
 
     public function index(){
     	$this->display();
     }
+
+
+
 }
