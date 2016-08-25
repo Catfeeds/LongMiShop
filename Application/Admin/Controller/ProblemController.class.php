@@ -12,8 +12,8 @@ class ProblemController extends BaseController {
 	}
     public function index(){
         $where = array();
-    	$p = I($_REQUEST['p'],1);
-        $size = I($_REQUEST['size'],10);
+        $p = I('_REQUEST.p',1);
+        $size = I('_REQUEST.size',10);
         $count = $this->pro->where($where)->count();// 查询满足要求的总记录数
         if($count>0){
         	$list = $this->pro->order('pro_rank desc')->page("$p,$size")->select();
