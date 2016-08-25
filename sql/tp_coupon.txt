@@ -12,3 +12,21 @@ INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VAL
 
 INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VALUES (NULL, 'default', '1', 'shop_info', NULL);
 
+
+//新增QA数据表
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for tp_problem
+-- ----------------------------
+DROP TABLE IF EXISTS `tp_problem`;
+CREATE TABLE `tp_problem` (
+  `pro_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pro_title` varchar(250) DEFAULT NULL COMMENT '描述',
+  `pro_rank` int(11) NOT NULL COMMENT '排序 从大到小',
+  `pro_show` int(2) NOT NULL COMMENT '1显示 2隐藏',
+  `pro_details` text COMMENT '详情',
+  `pro_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`pro_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+
