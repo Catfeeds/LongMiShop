@@ -4,13 +4,16 @@ namespace Admin\Controller;
 
 class ProblemController extends BaseController {
 
+    public $pro = null;
+
 	function __construct(){
 		parent::__construct();
 		$this->pro = M('problem');
 	}
     public function index(){
-    	$p = empty($_REQUEST['p']) ? 1 : $_REQUEST['p'];
-        $size = empty($_REQUEST['size']) ? 10 : $_REQUEST['size'];
+        $where = array();
+    	$p = I($_REQUEST['p'],1);
+        $size = I($_REQUEST['size'],10);
         $count = $this->pro->where($where)->count();// 查询满足要求的总记录数
         if($count>0){
         	$list = $this->pro->order('pro_rank desc')->page("$p,$size")->select();

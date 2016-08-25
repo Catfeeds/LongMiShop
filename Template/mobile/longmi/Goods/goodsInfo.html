@@ -78,17 +78,17 @@
 <div class="price_main">
     {$goods.goods_content|htmlspecialchars_decode}
 </div>
-<!--<div class="price_main">-->
-    <!--<div class="titel_box">用户评价</div>-->
-<!--</div>-->
+
+    <div class="price_main">
+    <div class="titel_box">用户评价</div>
+    </div>
+    <div class=evaluate_box" id="my_comment_list">
+    </div>
+
+
+
 <!--<div class="evaluate_box">-->
-    <!--<div class="evaluate">-->
-        <!--<div class="ev_box">-->
-            <!--<div class="ev_box_l"><img src="images/user_48.png" width="48" height="48"></div>-->
-            <!--<div class="ev_box_r">Anniebear<span>16/01/01</span></div>-->
-        <!--</div>-->
-        <!--<div class="ev_txt">大米很不错，很好！一年一季，没有残留农药！</div>-->
-    <!--</div>-->
+
     <!--<div class="evaluate">-->
         <!--<div class="ev_box">-->
             <!--<div class="ev_box_l"><img src="images/user_48.png" width="48" height="48"></div>-->
@@ -151,7 +151,7 @@
             }
         });
         commentType = 1; // 评论类型
-//        ajaxComment(1,1);// ajax 加载评价列表
+        ajaxComment(1,1);// ajax 加载评价列表
     })
 function click_search (){
   var search_ka = document.getElementById("search_ka");
@@ -250,13 +250,13 @@ function changeAtt1(t) {
             type : "GET",
             url:"/index.php?m=Mobile&c=goods&a=ajaxComment&goods_id={$goods['goods_id']}&commentType="+commentType+"&p="+page,//+tab,
             success: function(data){
-                $(".my_comment_list").empty().append(data);
-                var myPhotoSwipe = $("#gallery a").photoSwipe({
-                    enableMouseWheel: false,
-                    enableKeyboard: false,
-                    allowUserZoom: false,
-                    loop:false
-                });
+                $("#my_comment_list").empty().append(data);
+//                var myPhotoSwipe = $("#gallery a").photoSwipe({
+//                    enableMouseWheel: false,
+//                    enableKeyboard: false,
+//                    allowUserZoom: false,
+//                    loop:false
+//                });
             }
         });
     }

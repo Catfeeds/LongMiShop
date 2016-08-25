@@ -201,7 +201,8 @@ class GoodsController extends MobileBaseController {
     public function ajaxComment(){        
         $goods_id = I("goods_id",'0');        
         $commentType = I('commentType','1'); // 1 全部 2好评 3 中评 4差评
-        if($commentType==5){
+        $page_limit = 3;
+        if($commentType==$page_limit){
         	$where = "goods_id = $goods_id and parent_id = 0 and img !='' ";
         }else{
         	$typeArr = array('1'=>'0,1,2,3,4,5','2'=>'4,5','3'=>'3','4'=>'0,1,2');
@@ -209,7 +210,7 @@ class GoodsController extends MobileBaseController {
         }
         $count = M('Comment')->where($where)->count();                
         
-        $page = new AjaxPage($count,5);
+        $page = new AjaxPage($count,$page_limit);
         $show = $page->show();        
         $list = M('Comment')->where($where)->order("add_time desc")->limit($page->firstRow.','.$page->listRows)->select();
         $replyList = M('Comment')->where("goods_id = $goods_id and parent_id > 0")->order("add_time desc")->select();
