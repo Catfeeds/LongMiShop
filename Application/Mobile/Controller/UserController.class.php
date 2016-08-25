@@ -185,16 +185,15 @@ class UserController extends MobileBaseController {
      */
     public function order_list()
     {         
-        $where = ' user_id='.$this->user_id;        
+        $where = ' user_id='.$this->user_id;
+        $_GET['type'] = $type = I('type','WAITPAY');
         //条件搜索 
-        if(in_array(strtoupper(I('type')), array('WAITCCOMMENT','COMMENTED'))) 
+        if(in_array(strtoupper($type), array('WAITCCOMMENT','COMMENTED')))
         {
            $where .= " AND order_status in(1,4) "; //代评价 和 已评价
+        }else{
+           $where .= C(strtoupper($type));
         }
-        elseif(I('type'))
-       {
-           $where .= C(strtoupper(I('type')));
-       } 
         $count = M('order')->where($where)->count();
         $Page = new Page($count,10);
 
@@ -673,9 +672,10 @@ class UserController extends MobileBaseController {
     }
     
     public function points(){
-        $count = M('account_log')->where("user_id=".$this->user_id)->count();
+        $condition = "pay_points != 0 and user_id=".$this->user_id;
+        $count = M('account_log')->where($condition)->count();
         $Page = new Page($count,16);    	        
-    	$account_log = M('account_log')->where("user_id=".$this->user_id)->order('log_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+    	$account_log = M('account_log')->where($condition)->order('log_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
         $showpage = $Page->show();
     	$this->assign('account_log',$account_log);
         $this->assign('page',$showpage);

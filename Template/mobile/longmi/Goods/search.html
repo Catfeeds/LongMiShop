@@ -33,10 +33,12 @@
 		</li>
 	</ul>
 </div>
-<div class="mui-content" style="background-color:#fff">
-	<ul class="mui-table-view mui-grid-view" id="goods_list">
-		<empty name="goods_list">
-			<else />
+<empty name="goods_list">
+	<div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
+	<div class="empty_txt">暂无数据！</div>
+	<else />
+	<div class="mui-content" style="background-color:#fff">
+		<ul class="mui-table-view mui-grid-view" id="goods_list">
 			<foreach name="goods_list" item="vo" key="k">
 				<li class="mui-table-view-cell mui-media mui-col-xs-6">
 					<a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$vo[goods_id]))}">
@@ -48,9 +50,9 @@
 					</a>
 				</li>
 			</foreach>
-		</empty>
-	</ul>
-</div>
+		</ul>
+	</div>
+</empty>
 <notempty name="goods_list">
 	<div id="getmore" style="font-size:.24rem;text-align: center;color:#888;padding:.25rem .24rem .4rem; clear:both">
 		<a href="javascript:void(0)" onClick="ajax_sourch_submit()">点击加载更多</a>

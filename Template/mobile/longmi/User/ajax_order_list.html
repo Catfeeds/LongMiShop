@@ -1,40 +1,55 @@
 
 <volist name="lists" id="list">
-    <div class="order_list">
+    <foreach name="list.goods_list" item="admin_v" key="admin_k" >
+        <div class="titel_box">
+            <div class="titel_box_l">{$admin_v['admin_name']}</div>
+            <div class="titel_box_r" style="color:#C00">待付款</div>
+        </div>
+        <div class="cp_box">
+            <foreach name="admin_v.goods" item="good" key="k" >
+                <div class="cp1">
+                    <div class="c"><a href="{:U('/Mobile/Goods/goodsInfo',array('id'=>$good['goods_id']))}"></a></div>
+                    <div class="cp1_l"><img src="{$good.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
+                    <div class="cp1_r">
+                        <p>{$good.goods_name}{$good.spec_key_name}</p>
+                        <span>￥{$good['member_goods_price']}</span>
+                        <div style="float:right">X{$good['goods_num']}</div>
+                    </div>
+                </div>
+            </foreach>
+        </div>
+    </foreach>
+    <div class="l">
+        <div class="l_l">
+            <p>共<span style="color:#900">{$list.goods_list|count}</span>件&nbsp;实付:￥{$list['order_amount']}</p>
+        </div>
+        <div class="l_r">
+            <if condition="$list.cancel_btn eq 1">
+                <div class="l_btn1">
+                    <a href="#" onClick="cancel_order({$list.order_id})">取消订单</a>
+                </div>
+            </if>
+            <if condition="$list.pay_btn eq 1">
+                <div class="l_btn2">
+                    <a href="{:U('Mobile/Cart/cart4',array('order_id'=>$list['order_id']))}">立即付款</a>
+                </div>
+            </if>
+            <if condition="$list.receive_btn eq 1">
+                <div class="l_btn2">
+                    <a href="{:U('Mobile/User/order_confirm',array('id'=>$list['order_id']))}">收货确认</a>
+                </div>
+            </if>
+            <if condition="$list.comment_btn eq 1">
+                <div class="l_btn2">
+                    <a href="{:U('/Mobile/User/comment')}">评价</a>
+                </div>
+            </if>
+            <if condition="$list.shipping_btn eq 1">
+                <div class="l_btn1">
+                    <a href="{:U('User/express',array('order_id'=>$list['order_id']))}">查看物流</a>
+                </div>
+            </if>
 
-        <foreach name="list.goods_list" item="admin_v" key="admin_k" >
-            <div  class="block" style="margin-top:0px;">
-                <h2>
-                    <a href="{:U('/Mobile/User/order_detail',array('id'=>$list['order_id']))}">
-                        <img src="__STATIC__/images/dianpu.png"><span>{$admin_v['admin_name']}</span><strong>
-                        <img src="__STATIC__/images/icojiantou1.png"></strong>
-                    </a>
-                </h2>
-                <foreach name="admin_v.goods" item="good" key="k" >
-                    <dl style="position: relative">
-                        <dt><img src="{$good.goods_id|goods_thum_images=200,200}"></dt>
-                        <dd class="name"><strong>{$good.goods_name}</strong>
-                            <span style="position: absolute;">{$good.spec_key_name} </span></dd>
-                        <dd class="pice">￥{$good['member_goods_price']}元<em>x{$good['goods_num']}</em></dd>
-                        <dd class="pice">
-                            <em>
-                                <if condition="($list[return_btn] eq 1) and ($good[is_send] eq 1)">
-                                    <a href="{:U('Mobile/User/return_goods',array('order_id'=>$list[order_id],'order_sn'=>$list[order_sn],'goods_id'=>$good[goods_id],'spec_key'=>$good['spec_key']))}" style="color:#999;">申请售后</a>
-                                </if>
-                            </em>
-                        </dd>
-
-                    </dl>
-                </foreach>
-            </div>
-        </foreach>
-        <div class="pic">共{$list.goods_list|count}件商品<span>实付：</span><strong>￥{$list['order_amount']}元</strong></div>
-        <div class="anniu" style="width:95%">
-            <if condition="$list.cancel_btn eq 1"><span onClick="cancel_order({$list.order_id})">取消订单</span></if>
-            <if condition="$list.pay_btn eq 1"><a href="{:U('Mobile/Cart/cart4',array('order_id'=>$list['order_id']))}">立即付款</a></if>
-            <if condition="$list.receive_btn eq 1"><a href="{:U('Mobile/User/order_confirm',array('id'=>$list['order_id']))}">收货确认</a></if>
-            <if condition="$list.comment_btn eq 1"><a href="{:U('/Mobile/User/comment')}">评价</a></if>
-            <if condition="$list.shipping_btn eq 1"><a href="{:U('User/express',array('order_id'=>$list['order_id']))}">查看物流</a></if>
         </div>
     </div>
 </volist>

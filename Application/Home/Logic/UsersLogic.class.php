@@ -235,6 +235,7 @@ class UsersLogic extends RelationModel
     public function get_account_log($user_id,$type=0){
         //查询条件
 //        $type = I('get.type',0);
+        $where = 'user_money != 0 and user_id = '.$user_id;
         if($type == 1){
             //收入
             $where = 'user_money > 0 OR pay_points > 0 AND user_id='.$user_id;
@@ -244,9 +245,9 @@ class UsersLogic extends RelationModel
             $where = 'user_money < 0 OR pay_points < 0 AND user_id='.$user_id;
         }
 
-        $count = M('account_log')->where($where ? $where : 'user_id = '.$user_id)->count();
+        $count = M('account_log')->where($where)->count();
         $Page = new Page($count,16);
-        $logs = M('account_log')->where($where ? $where : 'user_id = '.$user_id)->order('change_time desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $logs = M('account_log')->where($where)->order('change_time desc')->limit($Page->firstRow.','.$Page->listRows)->select();
 
         $return['status'] = 1;
         $return['msg'] = '';

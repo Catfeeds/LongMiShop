@@ -1,12 +1,9 @@
 <foreach name="account_log" item="vo">
-<li class="list_add J_add">
-    <div class="td_l">
-        <p>余额: {$vo.user_money}</p>
-        <p>积分:{$vo.pay_points}</p>
+    <div class="m6">
+        <div class="m6_left">
+            <div>{$vo.desc}</div>
+            <div class="m7">{$vo.change_time|date='Y-m-d',###}</div>
+        </div>
+        <div class="m6_right">{$vo.pay_points}</div>
     </div>
-    <div class="td_r">
-        <p class="il_money">{$vo.desc}</p>
-        <p class="time">{$vo.change_time|date='Y-m-d',###}</p>
-    </div>
-</li>
 </foreach>      
