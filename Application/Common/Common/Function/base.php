@@ -551,3 +551,17 @@ function getFirstCharter($str){
      return null;
 }
 
+
+/**
+ * 规范数据返回函数
+ * @param unknown $state
+ * @param unknown $msg
+ * @param unknown $data
+ * @return multitype:unknown
+ */
+function callback($state = true, $msg = '', $data = array()) {
+    if( $state == false ){
+        //此处应该插入日志
+    }
+    return array('state' => $state, 'msg' => $msg, 'data' => $data);
+}

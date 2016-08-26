@@ -1,13 +1,13 @@
 <?php
 namespace Index\Controller;
 
+use Common\Logic\BuyLogic;
 class ShopController extends BaseIndexController {
 
     function exceptAuthActions()
     {
         return array(
             'index',
-//            'cart',
         );
     }
 
@@ -20,6 +20,10 @@ class ShopController extends BaseIndexController {
     }
 
     public function cart(){
+        $buy_logic  = new BuyLogic();
+        $buy_logic -> createOrder();
+
+        exit;
         $this->display();
     }
 
