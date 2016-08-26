@@ -188,12 +188,12 @@ class UserController extends MobileBaseController {
         $where = ' user_id='.$this->user_id;
         $_GET['type'] = $type = I('type','WAITPAY');
         //条件搜索 
-        if(in_array(strtoupper($type), array('WAITCCOMMENT','COMMENTED')))
-        {
-           $where .= " AND order_status in(1,4) "; //代评价 和 已评价
-        }else{
+//        if(in_array(strtoupper($type), array('WAITCCOMMENT','COMMENTED')))
+//        {
+//           $where .= " AND order_status in(1,4) "; //代评价 和 已评价
+//        }else{
            $where .= C(strtoupper($type));
-        }
+//        }
         $count = M('order')->where($where)->count();
         $Page = new Page($count,10);
 

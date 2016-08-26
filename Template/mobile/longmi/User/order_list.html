@@ -21,8 +21,10 @@
         <volist name="lists" id="list">
             <foreach name="list.goods_list" item="admin_v" key="admin_k" >
                 <div class="titel_box">
+                    <a href="{:U('/Mobile/User/order_detail',array('id'=>$list['order_id']))}">
                     <div class="titel_box_l">{$admin_v['admin_name']}</div>
                     <!--<div class="titel_box_r" style="color:#C00">待付款</div>-->
+                    </a>
                 </div>
                 <div class="cp_box">
                     <foreach name="admin_v.goods" item="good" key="k" >
