@@ -6,7 +6,7 @@
  *
  * 2016 8 25
  */
-namespace Common\Base;
+namespace Common\Model\Base;
 
 use Common\Common\Page;
 use Think\Model;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Index\Model;
+namespace Common\Model;
 
-use Common\Base\BaseModel;
+use Common\Model\Base\BaseModel;
 
 class User extends BaseModel
 {

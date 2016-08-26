@@ -2,16 +2,15 @@
 namespace Index\Controller;
 
 use Common\Base\BaseController;
-use Index\Model\User;
+use Common\Model\User;
 
 abstract class BaseIndexController extends BaseController {
 
     public function _initialize() {
         parent::_initialize();
-//
-//        session('lm_id',14);
-//        session('auth',true);
-        session(null);
+        session('lm_id',14);
+        session('auth',true);
+//        session(null);
         if( $this -> needAuth() ){
             //验证部分
             if (session('auth') != true) {
