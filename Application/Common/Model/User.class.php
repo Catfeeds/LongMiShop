@@ -14,7 +14,6 @@ class User extends BaseModel
         $this->databaseData['lm_nickname'] = session('lm_nickname');
     }
 
-
     public function getUsername() {
         return $this->databaseData['nickname'];
     }
@@ -22,12 +21,6 @@ class User extends BaseModel
     public function getUserID() {
         return $this->databaseData['user_id'];
     }
-
-
-
-
-
-
     public static function getCurrentUserID() {
         return session('lm_id');
     }
@@ -36,7 +29,7 @@ class User extends BaseModel
     public static function currentUserInfo() {
         $userInfo = null;
         if (!session('lm_userInfo')) {
-            $userInfo = User::findUserInfoWithUserID(session('lm_id'));
+            $userInfo = self::findUserInfoWithUserID(session('lm_id'));
             session('lm_id', $userInfo->getUserID());
             session('lm_nickname', $userInfo->getUsername());
             session('lm_userInfo', true);

@@ -1,8 +1,8 @@
 <?php
 namespace Mobile\Controller;
 use Home\Logic\UsersLogic;
-use Think\Controller;
-class MobileBaseController extends Controller {
+use Common\Base\BaseController;
+class MobileBaseController extends BaseController {
     public $user = array();
     public $user_id = 0;
     public $session_id;

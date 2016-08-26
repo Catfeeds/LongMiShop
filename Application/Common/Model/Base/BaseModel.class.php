@@ -42,8 +42,8 @@ abstract class BaseModel
 
     //增
     protected static function addRecord($tableName, $fields) {
-        $fields['created_at']    = lm_getRecordDateFormat();
-        $fields['updated_at']    = lm_getRecordDateFormat();
+//        $fields['created_at']    = lm_getRecordDateFormat();
+//        $fields['updated_at']    = lm_getRecordDateFormat();
 
         $sqlInstance = self::getModel($tableName);
         $id = $sqlInstance->add($fields);
@@ -52,8 +52,8 @@ abstract class BaseModel
 
     protected static function addRecordList($tableName, $fieldList) {
         foreach ($fieldList as $k => $fields) {
-            $fields['created_at']    = lm_getRecordDateFormat();
-            $fields['updated_at']    = lm_getRecordDateFormat();
+//            $fields['created_at']    = lm_getRecordDateFormat();
+//            $fields['updated_at']    = lm_getRecordDateFormat();
             $fieldList[$k] = $fields;
         }
 
@@ -84,7 +84,7 @@ abstract class BaseModel
      *
      */
     protected static function saveRecordWithCondition($tableName, $condition, $fields) {
-        $fields['updated_at']    = lm_getRecordDateFormat();
+//        $fields['updated_at']    = lm_getRecordDateFormat();
 
         $sqlInstance = self::getModel($tableName);
         $id = $sqlInstance->where($condition)->save($fields);
@@ -92,7 +92,7 @@ abstract class BaseModel
     }
 
     protected static function saveRecordWithIDs($tableName, $ids, $keyField = 'id', $fields) {
-        $fields['updated_at']    = lm_getRecordDateFormat();
+//        $fields['updated_at']    = lm_getRecordDateFormat();
 
         $sqlInstance = self::getModel($tableName);
         $sqlInstance = $sqlInstance->where(array($keyField => array('in', implode(',', $ids))));
@@ -170,7 +170,7 @@ abstract class BaseModel
         return $result;
     }
 
-    protected static function findRecordWithCondition($tableName, $condition, $fields = array('*')) {
+    protected static function findRecordWithCondition($tableName, $condition = array(), $fields = array('*')) {
         $sqlInstance = self::getModel($tableName)->field($fields);
         $result = $sqlInstance->where($condition)->find();
         return $result;
