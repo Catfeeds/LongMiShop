@@ -1,12 +1,13 @@
 <?php
 /**
- * Model 基类 测试
+ * Model 基类
  *
  * 钟瀚涛
  *
  * 2016 8 25
  */
 namespace Common\Base;
+
 use Common\Common\Page;
 use Think\Model;
 
@@ -33,6 +34,7 @@ abstract class BaseModel
 
     protected static function getModel($tableName) {
         $model = new Model();
+        $tableName = C('DB_PREFIX') . $tableName;
         return $model->table($tableName);
     }
 
@@ -40,8 +42,8 @@ abstract class BaseModel
 
     //增
     protected static function addRecord($tableName, $fields) {
-        $fields['created_at']    = wmd_getRecordDateFormat();
-        $fields['updated_at']    = wmd_getRecordDateFormat();
+        $fields['created_at']    = lm_getRecordDateFormat();
+        $fields['updated_at']    = lm_getRecordDateFormat();
 
         $sqlInstance = self::getModel($tableName);
         $id = $sqlInstance->add($fields);
@@ -50,8 +52,8 @@ abstract class BaseModel
 
     protected static function addRecordList($tableName, $fieldList) {
         foreach ($fieldList as $k => $fields) {
-            $fields['created_at']    = wmd_getRecordDateFormat();
-            $fields['updated_at']    = wmd_getRecordDateFormat();
+            $fields['created_at']    = lm_getRecordDateFormat();
+            $fields['updated_at']    = lm_getRecordDateFormat();
             $fieldList[$k] = $fields;
         }
 
@@ -82,7 +84,7 @@ abstract class BaseModel
      *
      */
     protected static function saveRecordWithCondition($tableName, $condition, $fields) {
-        $fields['updated_at']    = wmd_getRecordDateFormat();
+        $fields['updated_at']    = lm_getRecordDateFormat();
 
         $sqlInstance = self::getModel($tableName);
         $id = $sqlInstance->where($condition)->save($fields);
@@ -90,7 +92,7 @@ abstract class BaseModel
     }
 
     protected static function saveRecordWithIDs($tableName, $ids, $keyField = 'id', $fields) {
-        $fields['updated_at']    = wmd_getRecordDateFormat();
+        $fields['updated_at']    = lm_getRecordDateFormat();
 
         $sqlInstance = self::getModel($tableName);
         $sqlInstance = $sqlInstance->where(array($keyField => array('in', implode(',', $ids))));
