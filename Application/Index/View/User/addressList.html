@@ -1,0 +1,97 @@
+<include file="Public/header"/>
+
+<div class="fn-clear" style="min-height: 459px; margin-top:80px">
+    <div class="content fn-clear">
+        <div class="account-wrapper account-min-wrapper">
+            <include file="Public/user_menu"/>
+            <div class="account-content">
+                <div class="account-address">
+                    <div class="gray-box fn-clear">
+                        <div class="title pre-title">
+                            <h2 class="fn-left">收货信息</h2>
+                            <span class="gray-blue-btn js-add-address"> <a class="add" href="javascript:address_edit(0)">添加新地址</a> </span> </div>
+                        <div class="box-inner fn-clear">
+                            <div class="gray-sub-title address-title"> <span class="name">姓名</span> <span class="detail">详细地址</span> <span class="operation"></span> <span class="default"></span> <span class="telephone">电话</span> </div>
+
+                            <volist name="lists" id="list">
+                                <div class="address-list-item " data-id="{$list.address_id}">
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td class="name">{$list.consignee}</td>
+                                            <td class="detail">{$region_list[$list['province']]['name']}&nbsp;{$region_list[$list['city']]['name']}&nbsp;{$region_list[$list['district']]['name']}&nbsp;{$list.address}</td>
+                                            <td class="telephone">{$list.mobile}</td>
+                                            <td class="default">
+                                                <if condition = "$list['is_default'] eq 1" >
+                                                    <span class="js-set-default">默认地址</span>
+                                                    <else/>
+                                                    <a class="js-set-default" href="{:U('Index/User/set_default',array('id'=>$list['address_id']))}">设为默认</a>
+                                                </if>
+
+
+                                            </td>
+                                            <td class="operation">
+                                                <a class="gray-edit-btn js-edit-address" href="javascript:address_edit({$list['address_id']})">修改</a>
+                                                <span class="red-del-btn js-del-address">
+                                                    <a href="{:U('Index/User/del_address',array('id'=>$list['address_id']))}">删除</a>
+                                                    <em>删除</em>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </volist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<include file="Widget/open"/>
+<include file="Public/footer"/>
+
+
+<script src="__MAIN__/js/global.js"></script>
+<script src="__MAIN__/js/pc_common.js"></script>
+<script>
+    function checkForm(){
+        var consignee = $('input[name="consignee"]').val();
+        var province = $('select[name="province"]').find('option:selected').val();
+        var city = $('select[name="city"]').find('option:selected').val();
+        var district = $('select[name="district"]').find('option:selected').val();
+        var address = $('textarea[name="address"]').val();
+        var mobile = $('input[name="mobile"]').val();
+        var error = '';
+        if(consignee == ''){
+            error += '收货人不能为空 <br/>';
+        }
+        if(province==0){
+            error += '请选择省份 <br/>';
+        }
+        if(city==0){
+            error += '请选择城市 <br/>';
+        }
+        if(district==0){
+            error += '请选择区域 <br/>';
+        }
+        if(address == ''){
+            error += '请填写地址 <br/>';
+        }
+        if(!checkMobile(mobile))
+            error += '手机号码格式有误 <br/>';
+        if(error){
+            alert(error);
+//            layer.alert(error, {icon: 2});
+            //	layer.msg('只想弱弱提示');
+            return false;
+        }
+        return true;
+    }
+</script>
+
+</body>
+</html>

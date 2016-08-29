@@ -1,0 +1,82 @@
+<include file="Public/header"/>
+<div class="fn-clear" style="min-height: 459px; margin-top:80px">
+    <div class="content fn-clear">
+        <div class="account-wrapper account-min-wrapper">
+            <include file="Public/user_menu"/>
+            <div class="account-content">
+                <div class="account-user-info">
+                    <div class="gray-box fn-clear confirm-detail">
+                        <div class="title columns-title pre-title">
+                            <h2>账户资料</h2>
+                        </div>
+                        <div class="box-inner js-account-info">
+                            <div class="status-box account-avatar-box fn-clear">
+                                <div class="account-avatar-image">
+                                    <img src="{$user.head_pic|default='__PUBLIC__/img/user.png'}" alt="">
+                                </div>
+                                <input type="hidden" name="head_pic" id="head_pic" value="{$user.head_pic}">
+                                <div class="safe-center-title" onClick="GetUploadify2(1,'head_pic','head_pic','add_img');">
+                                    <h3>修改头像</h3>
+                                </div>
+                                <a class="blue-small-btn js-modify-avatar">上传图片</a> </div>
+                            <div class="status-box safe-status-ok fn-clear">
+                                <div class="safe-center-title">
+                                    <h3>账户昵称</h3>
+                                </div>
+                                <p>{$user.nickname}</p>
+                                <div class="safe-todo">
+                                    <a href="#" target="_blank">修改</a>
+                                </div>
+                            </div>
+                            <div class="status-box status-box fn-clear <if condition="$user['mobile_validate'] eq 0">safe-status-warning<else/>safe-status-ok </if>">
+                                <div class="safe-center-title">
+                                    <h3>手机验证</h3>
+                                </div>
+                                <if condition="$user['mobile_validate'] eq 0">
+                                    <p>绑定手机后，可用手机登录。</p>
+                                    <div class="safe-todo">
+                                        <a href="{:U('Home/User/mobile_validate',array('type'=>'mobile','step'=>1))}" target="_blank">验证</a>
+
+                                    </div>
+                                    <else/>
+                                    <p>您验证的手机：{$user.mobile}</p>
+                                    <div class="safe-todo">
+                                        <a href="{:U('Home/User/mobile_validate',array('type'=>'mobile','step'=>1))}" target="_blank">修改</a>
+
+                                    </div>
+                                </if>
+                            </div>
+                            <div class="status-box safe-status-ok fn-clear">
+                                <div class="safe-center-title">
+                                    <h3>登录密码</h3>
+                                </div>
+                                <p>互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</p>
+                                <div class="safe-todo"> <a href="{:U('Home/User/password')}" target="_blank">修改</a> </div>
+                            </div>
+                            <div class="status-box fn-clear status-box-last <if condition="$user['email_validated'] eq 0">safe-status-warning<else/>safe-status-ok</if>">
+                                <div class="safe-center-title">
+                                    <h3>邮箱验证</h3>
+                                </div>
+                                <if condition="$user['email_validated'] eq 0">
+                                    <p>绑定邮箱后，可用邮箱登录。</p>
+                                    <div class="safe-todo">
+                                        <a href="{:U('Home/User/email_validate',array('type'=>'email','step'=>1))}" target="_blank">验证</a>
+                                    </div>
+                                    <else/>
+                                    <p>您验证的邮箱：{$user.email}</p>
+                                    <div class="safe-todo">
+                                        <a href="{:U('Home/User/email_validate',array('type'=>'email','step'=>1))}" target="_blank">修改</a>
+                                    </div>
+                                </if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="Public/footer"/>
+</body>
+</html>

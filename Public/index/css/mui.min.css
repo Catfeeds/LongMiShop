@@ -1686,7 +1686,7 @@ select:focus {
 	-webkit-font-smoothing: antialiased
 }
 .mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before {
-	color: #ff6c00
+	color: #FF9803
 }
 .mui-checkbox label.mui-disabled, .mui-checkbox.mui-disabled label, .mui-radio label.mui-disabled, .mui-radio.mui-disabled label {
 	opacity: .4

@@ -8,10 +8,9 @@ class User extends BaseModel
 {
     private static $tableName = 'users';
 
-
     public function _initFromSession() {
-        $this->databaseData['lm_id'] = session('lm_id');
-        $this->databaseData['lm_nickname'] = session('lm_nickname');
+        $this->databaseData['user_id'] = session(__UserID__);
+        $this->databaseData['nickname'] = session(__UserName__);
     }
 
     public function getUsername() {
@@ -21,27 +20,33 @@ class User extends BaseModel
     public function getUserID() {
         return $this->databaseData['user_id'];
     }
+
     public static function getCurrentUserID() {
-        return session('lm_id');
+        return session(__UserID__);
     }
 
 
-    public static function currentUserInfo() {
+    public function getInfo(){
+        return array(
+            'userId' => self::getUserID(),
+            'nickName' => self::getUsername(),
+        );
+    }
+
+    public static function currentInfo() {
         $userInfo = null;
-        if (!session('lm_userInfo')) {
-            $userInfo = self::findUserInfoWithUserID(session('lm_id'));
-            session('lm_id', $userInfo->getUserID());
-            session('lm_nickname', $userInfo->getUsername());
-            session('lm_userInfo', true);
+        if (!self::getCurrentUserID()) {
+            $userInfo = self::findInfoWithID(self::getCurrentUserID());
+            session(__UserID__, $userInfo->getUserID());
         }else{
-            $userInfo = new User(null);
+            $userInfo = new self(null);
             $userInfo->_initFromSession();
         }
         return $userInfo;
     }
 
-    public static function findUserInfoWithUserID($userID) {
+    public static function findInfoWithID($userID) {
         $data = self::findRecordWithID(self::$tableName, $userID);
-        return new User($data);
+        return new self($data);
     }
 }

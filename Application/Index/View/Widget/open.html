@@ -1,0 +1,31 @@
+<div id="popDiv" class="mydiv" style="display:none; height:auto">
+</div>
+<div id="bg" class="bg" style="display:none;"></div>
+<iframe id='popIframe' class='popIframe' frameborder='0' ></iframe>
+
+
+<script type="text/javascript">
+
+    /**
+     * 新增修改收货地址
+     * id 为零 则为新增, 否则是修改
+     *  使用 公共的 layer 弹窗插件  参考官方手册 http://layer.layui.com/
+     */
+    function address_edit(id)
+    {
+        $('#popDiv').html("");
+        if(id > 0)
+            var url = "/index.php?m=Index&c=User&a=addressEdit&scene=1&id="+id; // 修改地址
+        else
+            var url = "/index.php?m=Index&c=User&a=addressAdd&scene=1";	// 新增地址
+        showDiv();
+        $.ajax({
+            type:"GET",
+            url:url,
+            dataType: "html",
+            success: function(data){
+                $('#popDiv').html(data);
+            }
+        });
+    }
+</script>

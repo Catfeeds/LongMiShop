@@ -1,0 +1,63 @@
+<form action="{$formUrl}" method="post" id="addressForm" onSubmit="return checkForm()">
+    <input value="{$id}" name="id" type="hidden">
+    <div class="pop">
+        <div class="in2">
+            <div class="in2_l">收货地址</div>
+            <div class="in2_r"><a href="javascript:closeDiv()"><img src="__PUBLIC__/img/close.png" width="22" height="21"></a></div>
+        </div>
+        <div class="pop_main">
+            <div class="text_box" style="padding-top:20px">
+                <input name="consignee" value="{$address.consignee}" maxlength="12"  type="text" class="pop_text" style="margin-right:10px; width:150px" placeholder="收货人姓名">
+                <input name="mobile" value="{$address.mobile}" type="text" class="pop_text"  onpaste="this.value=this.value.replace(/[^\d-]/g,'')" onKeyUp="this.value=this.value.replace(/[^\d-]/g,'')" maxlength="15" style=" width:495px" placeholder="手机号码">
+            </div>
+            <!--<div class="text_box">-->
+                <!--<input name="" type="text" class="pop_text" style="margin-right:10px; width:120px" placeholder="区号（可选）">-->
+                <!--<input name="" type="text" class="pop_text" style=" width:525px" placeholder="固定电话（可选）">-->
+            <!--</div>-->
+            <div class="text_box">
+                <select class="set" name="province" id="province" onChange="get_city(this)">
+                    <option value="0">请选择</option>
+                    <volist name="province" id="p">
+                        <option <if condition="$address['province'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                    </volist>
+                </select>
+
+                <select class="set" name="city" id="city" onChange="get_area(this)">
+                    <option  value="0">请选择</option>
+                    <volist name="city" id="p">
+                        <option <if condition="$address['city'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                    </volist>
+                </select>
+
+                <select class="set" name="district" id="district" onChange="get_twon(this)">
+                    <option  value="0">请选择</option>
+                    <volist name="district" id="p">
+                        <option <if condition="$address['district'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                    </volist>
+                </select>
+                <div style="display:none;">
+                    <select class="set" name="twon" id="twon" <if condition="$address['twon'] gt 0 ">style="display:block;"<else/>style="display:none;"</if>>
+                    <volist name="twon" id="p">
+                        <option <if condition="$address['twon'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                    </volist>
+                    </select>
+                </div>
+
+            </div>
+            <div class="text_box">
+                <input name="address"  id="address" type="text"  value="{$address.address}" maxlength="100" class="pop_text" style="margin-right:10px; width:660px" placeholder="街道编号/名称，楼宇名称">
+                <div class="mui-input-row mui-checkbox mui-left" style="line-height:60px">
+                    <input name="subBox" type="checkbox"  class="check-one check check_titel" <if condition="$address['is_default'] eq 1">checked</if>>
+                    设为默认地址 </div>
+            </div>
+        </div>
+        <div class="tab_box1" style="border-radius:0 0 6px 6px!important">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>&nbsp;</td>
+                    <td width="13%"><div class="m4_btn"><a href="javascript:$('#addressForm').submit();">保存</a></div></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>

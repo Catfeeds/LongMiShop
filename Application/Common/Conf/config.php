@@ -1,6 +1,7 @@
 <?php
 //  加载常量配置文件
 require_once('constant.php');
+require_once('field.php');
 
 return array(
     /* 加载公共函数 */

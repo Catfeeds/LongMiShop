@@ -5,13 +5,12 @@ namespace Home\Logic;
 
 use Think\Model\RelationModel;
 use Think\Page;
-//use Think\Model;
 /**
  * 分类逻辑定义
  * Class CatsLogic
  * @package Home\Logic
  */
-class UsersLogic extends RelationModel implements Model
+class UsersLogic extends RelationModel
 {
     /*
      * 登陆

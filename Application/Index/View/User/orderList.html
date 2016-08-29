@@ -1,0 +1,97 @@
+<include file="Public/header"/>
+
+<div class="fn-clear" style="min-height: 459px; margin-top:80px">
+    <div class="content fn-clear">
+        <div class="account-wrapper account-min-wrapper">
+            <include file="Public/user_menu"/>
+            <div class="account-content">
+                <div class="account-order">
+                    <div class="gray-box empty-order-box">
+                        <div class="title columns-title pre-title">
+                            <h2>我的订单</h2>
+                            <!--<div class="gray-btn-menu sort-status-menu sort-time-menu2"> <span class="label"> <img src="__PUBLIC__/img/i.gif" class="arrow"> 全部状态 </span>-->
+                                <!--<ul class="menu-list menu-list2">-->
+                                    <!--<li class="selected"> <a href="#">全部状态</a> </li>-->
+                                    <!--<li class=""> <a href="#">未完成</a> </li>-->
+                                    <!--<li class=""> <a href="#">已完成</a> </li>-->
+                                    <!--<li class=""> <a href="#">已关闭</a> </li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                            <!--<div class="gray-btn-menu sort-time-menu sort-time-menu1"> <span class="label"> <img src="__PUBLIC__/img/i(1).gif" class="arrow"> 最近三个月 </span>-->
+                                <!--<ul class="menu-list  menu-list1">-->
+                                    <!--<li class="selected"> <a href="#">最近三个月</a> </li>-->
+                                    <!--<li class=""> <a href="#">今年内</a> </li>-->
+                                    <!--<li class=""> <a href="#">2015 年</a> </li>-->
+                                    <!--<li class=""> <a href="#">2014 年</a> </li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                        </div>
+                        <div class="js-list-inner">
+                            <volist name="lists" id="list">
+                                <div class="box-inner order-cart order-list-cart fn-clear" data-id="{$list.order_id}">
+                                    <div class="gray-sub-title cart-title">
+                                        <span class="date">{$list.add_time|date='Y-m-d',###}</span>
+                                        <span class="order-id">
+                                            订单号： <a href="#">{$list.order_sn}</a>
+                                        </span>
+                                        <span class="order-detail">
+                                            <a href="{:U('Home/User/order_detail',array('id'=>$list['order_id']))}">查看详情</a>
+                                        </span>
+                                        <span class="sub-total">应付总额</span>
+                                        <span class="operation">商品操作</span>
+                                        <span class="num">数量</span>
+                                        <span class="price">单价</span>
+                                    </div>
+                                    <div class="cart">
+                                        <volist name="list.goods_list" id="good">
+                                        <div class="cart-items fn-clear" data-id="100014501">
+                                            <div class="prod-info">
+                                                <div class="items-thumb">
+                                                    <a href="#" title="{$good.goods_name}" target="_blank">
+                                                        <img src="{$good.goods_id|goods_thum_images=78,78}">
+                                                    </a>
+                                                </div>
+                                                <div class="items-params fn-clear">
+                                                    <div class="name">
+                                                        <a href="#" target="_blank">{$good.goods_name}</a>
+                                                    </div>
+                                                    <div class="detail">
+                                                        商品编号：{$good.goods_sn}
+                                                    </div>
+                                                </div>
+                                                <div class="operation">
+                                                    <div class="operation-list"> </div>
+                                                </div>
+                                                <div class="num">{$good['goods_num']}</div>
+                                                <div class="price">¥ {$good.goods_price}</div>
+                                            </div>
+                                        </div>
+                                        </volist>
+
+                                    </div>
+                                    <div class="prod-operation">
+                                        <div class="total">¥ {$list['order_amount']}</div>
+                                        <div class="status">
+                                            <if condition="$list.pay_btn eq 1">
+                                                <a href="{:U('/Home/Cart/cart4',array('order_id'=>$list[order_id]))}" class="blue-small-btn js-payment-order">
+                                                    现在付款
+                                                </a>
+                                            </if>
+                                        </div>
+                                    </div>
+                                </div>
+                            </volist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<include file="Public/footer"/>
+</body>
+</html>

@@ -3,12 +3,24 @@ namespace Index\Controller;
 
 use Common\Base\BaseController;
 use Common\Model\User;
+use Common\Logic\UsersLogic;
 
 abstract class BaseIndexController extends BaseController {
 
+    public $user_id;
+    public $user_info;
+
+
+    /**
+     * 免登陆页面函数声明
+     */
+    abstract function exceptAuthActions();
+
+
+
     public function _initialize() {
         parent::_initialize();
-        session('lm_id',14);
+        session(__UserID__,1);
         session('auth',true);
 //        session(null);
         if( $this -> needAuth() ){
@@ -17,16 +29,19 @@ abstract class BaseIndexController extends BaseController {
                 redirect( U( '/Index/User/login' ) , 0);
                 return;
             }
-            $userModel = User::currentUserInfo();
-            $this->assign('user_id', $userModel->getUserID());
-            $this->assign('nickname', $userModel->getUsername());
+            session('auth',true);
 
+//            $userModel = User::currentInfo();
+//            $this -> assign('user',$userModel -> getInfo());
+            $this -> user_id = User::getCurrentUserID();
+            $userLogic = new UsersLogic();
+            $user_info = $userLogic->get_info($this -> user_id);
+            $this -> user_info  = $user_info['result'];
+            $this -> assign('user',$this -> user_info );
+            $this -> assign('auth',true);
         }
 
-
     }
-
-    abstract function exceptAuthActions();
 
     protected function needAuth(){
         if ($this->exceptAuthActions() == null) {

@@ -22,7 +22,17 @@ $(function(){
 		})
 	
 	})	
+$(function(){
+
+	$('.m44').find('li').each(function(i){
+		$(this).click(function(){
+			$('.m44').find('li').removeClass('m44_hover');
+			$(this).addClass('m44_hover');
+			
+			})
+		})
 	
+	})		
 	// JavaScript Document
 $(document).ready(function(){
 //加的效果
@@ -65,3 +75,25 @@ document.getElementById('bg').style.display='none';
 document.getElementById('popIframe').style.display='none';
 
 }
+
+
+
+$(function(){
+$(".user").hover(function(){
+$(".show").toggle();
+})	
+})
+
+
+$(function(){
+$(".sort-time-menu1").hover(function(){
+$(".menu-list1").toggle();
+
+})	
+$(".sort-time-menu2").hover(function(){
+$(".menu-list2").toggle();
+
+})
+})
+
+

@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <title>龙米</title>
     <link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
+    <link  href="__PUBLIC__/css/base_c.css"rel="stylesheet" type="text/css" />
+    <link href="__PUBLIC__/css/mui.min.css" rel="stylesheet" type="text/css" />
     <link href="__PUBLIC__/css/mui.min.css" rel="stylesheet" type="text/css" />
     <link href="__PUBLIC__/css/jquery.fullPage.css" rel="stylesheet" type="text/css" />
     <script src="__PUBLIC__/js/jquery.min.js"></script>
     <script src="__PUBLIC__/js/jquery.fullPage.min.js"></script>
     <script src="__PUBLIC__/js/function.js"></script>
     <script src="__PUBLIC__/js/PCASClass.js"></script>
-
+    <!--<script src="__STATIC__/js/jquery-1.10.2.min.js"></script>-->
+    <!--<script src="__MAIN__/js/slider.js"></script>-->
+    <script src="__MAIN__/js/global.js"></script>
+    <script src="__MAIN__/js/layer/layer.js"></script>
     <script language="javascript">
         $(function () {
             if ((screen.width == 1920) && (screen.height == 1080)) {
@@ -22,13 +27,60 @@
 <body>
 <header class="hd">
     <div class="inner">
-        <a href="{:U('Index/index')}" class="logo"><img src="__PUBLIC__/img/logo.png" width="75" height="50"></a>
+        <a href="{:U('Index/index')}" class="logo">
+            <img src="__PUBLIC__/img/logo.png" width="75" height="50">
+        </a>
         <include file="Public/nav"/>
         <div class="seek">
             <div class="text">
                 <input name="" type="text" class="text_a" placeholder="输入关键字">
             </div>
-            <div class="icon"><a href="#"><img src="__PUBLIC__/img/seek.png" width="27" height="27"></a></div>
+            <div class="icon">
+                <a href="#">
+                    <img src="__PUBLIC__/img/seek.png" width="27" height="27">
+                </a>
+            </div>
         </div>
+
+        <if condition=" $auth eq ture " >
+            <div class="user">
+                <a href="javascript:;">个人中心</a>
+                <div class="show">
+                    <div class="show_ul">
+                        <div class="show_user"><img src="{$user.head_pic|default='__PUBLIC__/img/user.png'}" width="133" height="133">
+                            <p>{$user.nickname}</p>
+                        </div>
+                        <ul>
+                            <li>
+                                <a href="{:U('User/orderList')}" style="background-image:url(__PUBLIC__/img/b1.png)">我的订单</a>
+                            </li>
+                            <li>
+                                <a href="{:U('User/returnGoodsList')}" style="background-image:url(__PUBLIC__/img/b2.png)">售后服务</a>
+                            </li>
+                            <li>
+                                <a href="{:U('User/coupon')}" style="background-image:url(__PUBLIC__/img/b3.png)">我的优惠</a>
+                            </li>
+                            <li>
+                                <a href="{:U('User/info')}" style="background-image:url(__PUBLIC__/img/b4.png)">账户资料</a>
+                            </li>
+                            <li>
+                                <a href="{:U('User/addressList')}" style="background-image:url(__PUBLIC__/img/b5.png)">收货地址</a>
+                            </li>
+                            <li>
+                                <a href="{:U('User/logout')}" style="background-image:url(__PUBLIC__/img/b6.png)">退出</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        <else/>
+            <div class="login">
+                <a href="{:U('User/orderList')}">登录</a>
+            </div>
+        </if>
+
+
+
+
     </div>
 </header>

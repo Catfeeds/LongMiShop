@@ -1,0 +1,58 @@
+<include file="Public/header"/>
+
+<div class="fn-clear" style="min-height: 459px; margin-top:80px">
+    <div class="content fn-clear">
+        <div class="account-wrapper account-min-wrapper">
+            <include file="Public/user_menu"/>
+            <div class="account-content">
+                <div class="account-coupon">
+                    <div class="gray-box fn-clear">
+                        <div class="title columns-title pre-title">
+                            <h2>我的优惠</h2>
+                        </div>
+                        <empty name ="coupon_list">
+
+                            <div class="empty-coupon-list js-empty-list"> 您目前还没有优惠券，您可以
+                                <a href="{:U('User/index')}">
+                                    返回首页
+                                    <img src="http://static.smartisanos.cn/account/asset/img/i.gif?1471933951822">
+                                </a>
+                            </div>
+
+                            <else/>
+
+                            <div class="di">
+                                <volist name="coupon_list" id="coupon">
+                                    <div class="discount-box">
+                                        <!--<div class="past-due">-->
+                                        <!--<div class="past-due-txt">已过期</div>-->
+                                        <div class="discount">
+                                            <div class="di_1"></div>
+                                            <span>￥</span>{$coupon.money} </div>
+                                        <div class="di_2"></div>
+                                        <div class="discount_main">
+                                            <!--<p>优惠名称：{$coupon.name}</p>-->
+                                            <p>优惠名称：{$coupon.name}</p>
+                                            <p>使用规则：{$coupon.condition}</p>
+                                            <p>使用规则：满{$coupon.condition}时使用</p>
+                                            <p>有效期：{$coupon.use_end_time|date='Y-m-d H:s',###}</p>
+                                        </div>
+                                    </div>
+                                </volist>
+                            </div>
+                        </empty>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<include file="Public/footer"/>
+</body>
+</html>

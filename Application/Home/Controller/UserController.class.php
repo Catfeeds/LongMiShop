@@ -308,7 +308,7 @@ class UserController extends BaseController {
         }
         $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
         $this->assign('province',$p);
-        $this->display('edit_address');
+        $this->display('addressEdit');
 
     }
 

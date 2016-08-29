@@ -1,0 +1,67 @@
+<include file="Public/header"/>
+
+<div class="fn-clear" style="min-height: 459px; margin-top:80px">
+    <div class="content fn-clear">
+        <div class="account-wrapper account-min-wrapper">
+            <include file="Public/user_menu"/>
+            <div class="account-content">
+                <div class="support-list-wrapper">
+                    <div class="gray-box fn-clear">
+                        <div class="title columns-title pre-title">
+                            <h2>售后服务</h2>
+                            <div class="gray-btn-menu sort-type-menu  sort-time-menu2">
+                                <span class="label">
+                                    <a href="#">
+                                        <img src="__PUBLIC__/img/i(1).gif?1471933951822" class="arrow">
+                                    </a> 全部服务
+                                </span>
+                                <ul class="menu-list menu-list2">
+                                    <li class="selected"> <a href="#">全部服务</a> </li>
+                                    <li class=""> <a href="#">退货服务</a> </li>
+                                    <li class=""> <a href="#">换货服务</a> </li>
+                                    <li class=""> <a href="#">维修服务</a> </li>
+                                </ul>
+                            </div>
+                            <div class="gray-btn-menu sort-time-menu sort-time-menu1">
+                                <span class="label">
+                                    <a href="#">
+                                        <img src="__PUBLIC__/img/i.gif?1471933951822" class="arrow">
+                                    </a> 最近三个月
+                                </span>
+                                <ul class="menu-list menu-list1">
+                                    <li class="selected"> <a href="#">最近三个月</a> </li>
+                                    <li class=""> <a href="#">今年内</a> </li>
+                                    <li class=""> <a href="#">2015 年</a> </li>
+                                    <li class=""> <a href="#">2014 年</a> </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="box-inner">
+
+                            <!--<volist name="list" id="item">-->
+                                <!--<tr>-->
+                                    <!--<td align="center"><a target="_blank" href="">{$item.id}</a></td>-->
+                                    <!--<td><a target="_blank" href="{:U('Home/User/order_detail',array('id'=>$item['order_id']))}">{$item.order_sn}</a></td>-->
+                                    <!--<td><div><a href="{:U('Home/Goods/goodsInfo',array('id'=>$item[goods_id]))}" target="_blank">{$goodsList[$item[goods_id]]}</a> </div></td>-->
+                                    <!--<td>{$item.addtime|date="Y-m-d",###}</td>-->
+                                    <!--<td>-->
+                                        <!--<if condition="$item['status'] eq 0">待客服处理</if>-->
+                                        <!--<if condition="$item['status'] eq 1">客服处理中</if>-->
+                                        <!--<if condition="$item['status'] eq 2">已完成</if>-->
+                                    <!--</td>-->
+                                    <!--<td><a href="{:U('Home/User/return_goods_info',array('id'=>$item[id]))}">查看</a></td>-->
+                                <!--</tr>-->
+                            <!--</volist>-->
+
+                            <div class="order-empty"> 您目前还没有此类服务单，您可以<a href="{:U('User/index')}">返回首页</a>。 </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<include file="Public/footer"/>
+</body>
+</html>

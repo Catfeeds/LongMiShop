@@ -1,0 +1,28 @@
+<div class="account-sidebar" style="top: 0px;">
+    <div class="avatar gray-box fn-clear">
+        <div class="js-account-sidebar-info">
+            <img src="{$user.head_pic|default='__PUBLIC__/img/user.png'}" alt="">
+            <h5>{$user.nickname}</h5>
+        </div>
+        <div class="box-inner">
+
+            <ul class="account-nav">
+                <li class="<if condition = 'ACTION_NAME eq "orderList"'>current</if>">
+                <a href="{:U('User/orderList')}">我的订单</a>
+                </li>
+                <!--<li class="<if condition = 'ACTION_NAME eq "returnGoodsList"'>current</if>">-->
+                <!--<a href="{:U('User/returnGoodsList')}">售后服务</a>-->
+                <!--</li>-->
+                <li class="<if condition = 'ACTION_NAME eq "coupon"'>current</if>">
+                <a href="{:U('User/coupon')}">我的优惠</a>
+                </li>
+                <li class="<if condition = 'ACTION_NAME eq "info"'>current</if>">
+                <a href="{:U('User/info')}">账户资料</a>
+                </li>
+                <li class="<if condition = 'ACTION_NAME eq "addressList"'>current</if>">
+                <a href="{:U('User/addressList')}">收货地址</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
