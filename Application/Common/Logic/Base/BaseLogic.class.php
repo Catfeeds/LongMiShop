@@ -23,10 +23,23 @@ class BaseLogic extends RelationModel
      */
     protected $_member_info = array();
 
-
-    public function __construct()
-    {
-
+    /**
+     * 动态方法实现
+     * @access public
+     * @param string $method 方法名称
+     * @param array $args 调用参数
+     * @return mixed
+     */
+    public function __call($method,$args) {
+        if(strtolower(substr($method,0,8))=='relation'){
+            $type    =   strtoupper(substr($method,8));
+            if(in_array($type,array('ADD','SAVE','DEL'),true)) {
+                array_unshift($args,$type);
+                return call_user_func_array(array(&$this, 'opRelation'), $args);
+            }
+        }else{
+            return parent::__call($method,$args);
+        }
     }
 
 

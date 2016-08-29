@@ -1,7 +1,7 @@
 <?php
 
 namespace Mobile\Controller;
-use Home\Logic\UsersLogic;
+use Common\Logic\UsersLogic;
 use Think\Page;
 use Think\Verify;
 
@@ -83,12 +83,12 @@ class UserController extends MobileBaseController {
         $this->assign('user',$user);
         $this->assign('account_log',$account_log);
         $this->assign('page',$data['show']);
-        
+
         if($_GET['is_ajax'])
         {
             $this->display('ajax_account_list');
             exit;
-        }                
+        }
         $this->display();
     }
 
@@ -103,7 +103,7 @@ class UserController extends MobileBaseController {
         {
             $this->display('ajax_coupon_list');
             exit;
-        }             
+        }
         $this->display();
     }
     /**
@@ -112,12 +112,12 @@ class UserController extends MobileBaseController {
     public function login(){
         if($this->user_id > 0){
         	header("Location: ".U('Mobile/User/Index'));
-        }           
+        }
         $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Mobile/User/index");
         $this->assign('referurl',$referurl);
         $this->display();
     }
-    
+
 
     public function do_login(){
     	$username = I('post.username');
@@ -152,7 +152,7 @@ class UserController extends MobileBaseController {
             $password = I('post.password','');
             $password2 = I('post.password2','');
             //是否开启注册验证码机制
-            
+
             if(check_mobile($username) && tpCache('sms.regis_sms_enable')){
                 $code = I('post.mobile_code','');
 
@@ -163,7 +163,7 @@ class UserController extends MobileBaseController {
                     $this->error($check_code['msg']);
 
             }
-            
+
             $data = $logic->reg($username,$password,$password2);
             if($data['status'] != 1)
                 $this->error($data['msg']);
@@ -171,7 +171,7 @@ class UserController extends MobileBaseController {
             setcookie('user_id',$data['result']['user_id'],null,'/');
             setcookie('is_distribut',$data['result']['is_distribut'],null,'/');
             $cartLogic = new \Common\Logic\CartLogic();
-            $cartLogic->login_cart_handle($this->session_id,$data['result']['user_id']);  //用户登录后 需要对购物车 一些操作            
+            $cartLogic->login_cart_handle($this->session_id,$data['result']['user_id']);  //用户登录后 需要对购物车 一些操作
             $this->success($data['msg'],U('Mobile/User/index'));
             exit;
         }
@@ -184,10 +184,10 @@ class UserController extends MobileBaseController {
      * 订单列表
      */
     public function order_list()
-    {         
+    {
         $where = ' user_id='.$this->user_id;
         $_GET['type'] = $type = I('type','WAITPAY');
-        //条件搜索 
+        //条件搜索
 //        if(in_array(strtoupper($type), array('WAITCCOMMENT','COMMENTED')))
 //        {
 //           $where .= " AND order_status in(1,4) "; //代评价 和 已评价
@@ -203,12 +203,13 @@ class UserController extends MobileBaseController {
 
         //获取订单商品
         $model = new \Common\Logic\UsersLogic();
+//        $model = new UsersLogic();
         foreach($order_list as $k=>$v)
         {
             $order_list[$k] = set_btn_order_status($v);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
             //$order_list[$k]['total_fee'] = $v['goods_amount'] + $v['shipping_fee'] - $v['integral_money'] -$v['bonus'] - $v['discount']; //订单总额
             $data = $model->get_order_goods($v['order_id']);
-            $order_list[$k]['goods_list'] = $data['result'];            
+            $order_list[$k]['goods_list'] = $data['result'];
         }
         $this->assign('order_status',C('ORDER_STATUS'));
         $this->assign('shipping_status',C('SHIPPING_STATUS'));
@@ -216,31 +217,31 @@ class UserController extends MobileBaseController {
         $this->assign('page',$show);
         $this->assign('lists',$order_list);
         $this->assign('active','order_list');
-        $this->assign('active_status',I('get.type'));        
+        $this->assign('active_status',I('get.type'));
         if($_GET['is_ajax'])
         {
             $this->display('ajax_order_list');
             exit;
-        }              
+        }
         $this->display();
     }
 
-    
+
     /*
      * 订单列表
      */
     public function ajax_order_list(){
 
-    }    
-    
+    }
+
     /*
      * 订单详情
      */
     public function order_detail(){
-        $id = I('get.id');    
+        $id = I('get.id');
         $map['order_id'] = $id;
         $map['user_id'] = $this->user_id;
-        $order_info = M('order')->where($map)->find();        
+        $order_info = M('order')->where($map)->find();
         $order_info = set_btn_order_status($order_info);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
         if(!$order_info){
             $this->error('没有获取到订单信息');
@@ -254,7 +255,7 @@ class UserController extends MobileBaseController {
 
         $region_list = get_region_list();
         $invoice_no = M('DeliveryDoc')->where("order_id = $id")->getField('invoice_no',true);
-        $order_info[invoice_no] = implode(' , ', $invoice_no);        
+        $order_info[invoice_no] = implode(' , ', $invoice_no);
         //获取订单操作记录
         $order_action = M('order_action')->where(array('order_id'=>$id))->select();
         $this->assign('order_status',C('ORDER_STATUS'));
@@ -265,7 +266,7 @@ class UserController extends MobileBaseController {
         $this->assign('order_action',$order_action);
         $this->display();
     }
-    
+
     public function express(){
     	$order_id = I('get.order_id',195);
     	$result = $order_goods = $delivery = array();
@@ -307,19 +308,19 @@ class UserController extends MobileBaseController {
      * 添加地址
      */
     public function add_address()
-    {        
+    {
         if(IS_POST)
-        {                
+        {
             $logic = new \Common\Logic\UsersLogic();
             $data = $logic->add_address($this->user_id,0,I('post.'));
             if($data['status'] != 1)
                 $this->error($data['msg']);
             elseif($_POST['source'] == 'cart2')
-            { 
+            {
                header ('Location:'.U('/Mobile/Cart/cart2',array('address_id'=>$data['result'])));
                exit;
             }
-            
+
             $this->success($data['msg'],U('/Mobile/User/address_list'));
             exit();
         }
@@ -334,7 +335,7 @@ class UserController extends MobileBaseController {
      * 地址编辑
      */
     public function edit_address()
-    {        
+    {
         $id = I('id');
         $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
         if(IS_POST)
@@ -345,8 +346,8 @@ class UserController extends MobileBaseController {
                 header ('Location:'.U('/Mobile/Cart/cart2',array('address_id'=>$id)));
                 exit;
             }
-            else 
-                $this->success($data['msg'],U('/Mobile/User/address_list'));            
+            else
+                $this->success($data['msg'],U('/Mobile/User/address_list'));
             exit();
         }
         //获取省份
@@ -380,7 +381,7 @@ class UserController extends MobileBaseController {
             exit;
         }else{
             header("Location:".U('Mobile/User/address_list'));
-        }                    
+        }
     }
 
     /*
@@ -388,16 +389,16 @@ class UserController extends MobileBaseController {
      */
     public function del_address(){
         $id = I('get.id');
-        
+
         $address = M('user_address')->where("address_id = $id")->find();
-        $row = M('user_address')->where(array('user_id'=>$this->user_id,'address_id'=>$id))->delete();                
+        $row = M('user_address')->where(array('user_id'=>$this->user_id,'address_id'=>$id))->delete();
         // 如果删除的是默认收货地址 则要把第一个地址设置为默认收货地址
         if($address['is_default'] == 1)
         {
-            $address = M('user_address')->where("user_id = {$this->user_id}")->find();            
+            $address = M('user_address')->where("user_id = {$this->user_id}")->find();
             M('user_address')->where("address_id = {$address['address_id']}")->save(array('is_default'=>1));
         }
-        
+
         if(!$row)
             $this->error('操作失败',U('/Mobile/User/address_list'));
         else
@@ -411,20 +412,20 @@ class UserController extends MobileBaseController {
     	$user_id = $this->user_id;
     	$status = I('get.status');
     	$logic = new \Common\Logic\UsersLogic();
-    	$result = $logic->get_comment($user_id,$status); //获取评论列表    
-    	$this->assign('comment_list',$result['result']);       
+    	$result = $logic->get_comment($user_id,$status); //获取评论列表
+    	$this->assign('comment_list',$result['result']);
         if($_GET['is_ajax'])
         {
             $this->display('ajax_comment_list');
             exit;
-        }           
+        }
     	$this->display();
     }
 
     /*
      *添加评论
      */
-    public function add_comment(){    
+    public function add_comment(){
     	if(IS_POST){
     		// 晒图片
     		if($_FILES[comment_img_file][tmp_name][0])
@@ -447,7 +448,7 @@ class UserController extends MobileBaseController {
     				$add['img'] = serialize($comment_img); // 上传的图片文件
     			}
     		}
-    		
+
     		$user_info = session('user');
     		$logic = new \Common\Logic\UsersLogic();
     		$add['goods_id'] = I('goods_id');
@@ -465,7 +466,7 @@ class UserController extends MobileBaseController {
     		$add['add_time'] = time();
     		$add['ip_address'] = getIP();
     		$add['user_id'] = $this->user_id;
-    		
+
     		//添加评论
     		$row = $logic->add_comment($add);
     		if($row[status] == 1)
@@ -502,13 +503,13 @@ class UserController extends MobileBaseController {
             I('post.district') ? $post['district'] = I('post.district') : false;  //地区
             I('post.email') ? $post['email'] = I('post.email') : false; //邮箱
             I('post.mobile') ? $post['mobile'] = I('post.mobile') : false; //手机
-            
+
             $c = M('users')->where("email = '{$post['email']}' and user_id != {$this->user_id}")->count();
             $c && $this->error("邮箱已被使用");
-            
+
             $c = M('users')->where("mobile = '{$post['mobile']}' and user_id != {$this->user_id}")->count();
             $c && $this->error("手机已被使用");
-            
+
             if(!$userLogic->update_info($this->user_id,$post))
                 $this->error("保存失败");
             $this->success("操作成功");
@@ -611,7 +612,7 @@ class UserController extends MobileBaseController {
         $this->assign('step',$step);
         $this->display();
     }
-    
+
     public function collect_list(){
     	$userLogic = new \Common\Logic\UsersLogic();
     	$data = $userLogic->get_goods_collect($this->user_id);
@@ -621,10 +622,10 @@ class UserController extends MobileBaseController {
         {
             $this->display('ajax_collect_list');
             exit;
-        }         
+        }
     	$this->display();
     }
-    
+
     /*
      *取消收藏
      */
@@ -644,7 +645,7 @@ class UserController extends MobileBaseController {
     	if(IS_POST)
     	{
                 $this->verifyHandle('message');
-                
+
     		$data = I('post.');
     		$data['user_id'] = $this->user_id;
     		$user = session('user');
@@ -670,11 +671,11 @@ class UserController extends MobileBaseController {
     	$this->assign('msg_type',$msg_type);
     	$this->display();
     }
-    
+
     public function points(){
         $condition = "pay_points != 0 and user_id=".$this->user_id;
         $count = M('account_log')->where($condition)->count();
-        $Page = new Page($count,16);    	        
+        $Page = new Page($count,16);
     	$account_log = M('account_log')->where($condition)->order('log_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
         $showpage = $Page->show();
     	$this->assign('account_log',$account_log);
@@ -683,7 +684,7 @@ class UserController extends MobileBaseController {
         {
             $this->display('ajax_points');
             exit;
-        }                
+        }
     	$this->display();
     }
     /*
@@ -706,7 +707,7 @@ class UserController extends MobileBaseController {
         }
         $this->display();
     }
-    
+
     function forget_pwd(){
         if($this->user_id > 0){
     		header("Location: ".U('User/Index'));
@@ -732,7 +733,7 @@ class UserController extends MobileBaseController {
     	}
     	$this->display();
     }
-    
+
     function find_pwd(){
     	if($this->user_id > 0){
     		header("Location: ".U('User/Index'));
@@ -744,7 +745,7 @@ class UserController extends MobileBaseController {
     	$this->assign('user',$user);
     	$this->display();
     }
-    
+
 
     public function set_pwd(){
     	if($this->user_id > 0){
@@ -786,7 +787,7 @@ class UserController extends MobileBaseController {
         $logic = new \Common\Logic\UsersLogic();
         $logic->send_validate_code($send, $type);
     }
-    
+
     public function check_validate_code(){
     	$code = I('post.code');
     	$send = I('send');

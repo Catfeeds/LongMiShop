@@ -3,7 +3,6 @@ namespace Common\Logic;
 
 use Common\Logic\Base\BaseLogic;
 use Think\Page;
-
 /**
  * 分类逻辑定义
  * Class CatsLogic

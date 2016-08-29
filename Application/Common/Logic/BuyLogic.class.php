@@ -6,14 +6,6 @@ use Common\Logic\Base\BaseLogic;
 class BuyLogic extends BaseLogic
 {
 
-    public function __construct()
-    {
-
-        parent::__construct();
-
-    }
-
-
     /**
      * 订单生成
      */
