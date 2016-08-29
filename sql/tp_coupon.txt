@@ -30,3 +30,33 @@ CREATE TABLE `tp_problem` (
   PRIMARY KEY (`pro_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
+//新增物流表
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for tp_logistics
+-- ----------------------------
+DROP TABLE IF EXISTS `tp_logistics`;
+CREATE TABLE `tp_logistics` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `log_rank` int(11) NOT NULL COMMENT '排序',
+  `log_template` varchar(255) DEFAULT NULL COMMENT '模版名称',
+  `log_delivery` varchar(255) DEFAULT NULL COMMENT '配送方式',
+  `log_province` varchar(50) DEFAULT NULL COMMENT '商品所在省份',
+  `log_city` varchar(50) DEFAULT NULL COMMENT '城市',
+  `log_aging` varchar(20) NOT NULL COMMENT '发货时效 ',
+  `log_is_take_their` tinyint(2) unsigned NOT NULL COMMENT '是否自提  1允许  2不允许',
+  `log_take_their_site` varchar(255) DEFAULT NULL COMMENT '自提地址',
+  `log_is_free` tinyint(2) NOT NULL COMMENT '包邮  1是  2否',
+  `log_is_collect` tinyint(2) NOT NULL COMMENT '到付 1是 2否',
+  `log_mode` tinyint(2) NOT NULL COMMENT '记重方式 1重量 2件数 ',
+  `log_cost` decimal(10,0) NOT NULL COMMENT '基础费用',
+  `log_cost_add` decimal(10,0) NOT NULL COMMENT '增加费用',
+  `log_amount` int(11) NOT NULL COMMENT '基础件数/重量',
+  `log_amount_add` int(11) NOT NULL COMMENT '增加件数/重量',
+  `log_ispinkage` tinyint(2) NOT NULL COMMENT '包邮条件 1有  2空',
+  `log_condition` text COMMENT '包邮地区',
+  `log_time` int(11) NOT NULL,
+  PRIMARY KEY (`log_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+
