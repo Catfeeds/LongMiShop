@@ -12,7 +12,7 @@ class CartController extends BaseController {
      */
     public function _initialize() {       
         parent::_initialize();
-        $this->cartLogic = new \Home\Logic\CartLogic();
+        $this->cartLogic = new \Common\Logic\CartLogic();
         
         if(session('?user'))
         {

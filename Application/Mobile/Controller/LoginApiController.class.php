@@ -31,7 +31,7 @@ class LoginApiController extends MobileBaseController {
 
     public function callback(){
         $data = $this->class_obj->respon();
-        $logic = new UsersLogic();
+        $logic = new \Common\Logic\UsersLogic();
         $data = $logic->thirdLogin($data);
         if($data['status'] != 1)
             $this->error($data['msg']);

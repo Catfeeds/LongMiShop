@@ -967,7 +967,7 @@ function get_order_promotion($order_amount){
  
 function calculate_price($user_id=0,$order_goods,$shipping_code='',$shipping_price=0,$province=0,$city=0,$district=0,$pay_points=0,$user_money=0,$coupon_id=0,$couponCode='')
 {    
-    $cartLogic = new \Home\Logic\CartLogic();               
+    $cartLogic = new \Common\Logic\CartLogic();
     $user = M('users')->where("user_id = $user_id")->find();// 找出这个用户
     
     if(empty($order_goods)) 

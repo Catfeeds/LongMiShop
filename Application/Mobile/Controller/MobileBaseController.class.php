@@ -47,7 +47,7 @@ class MobileBaseController extends BaseController {
                     'head_pic'=>$wxuser['headimgurl'],
                 );                                                   
                 
-                $logic = new UsersLogic();
+                $logic = new \Common\Logic\UsersLogic();
                 $data = $logic->thirdLogin($data);                                
                 
                 if($data['status'] == 1){
@@ -62,7 +62,7 @@ class MobileBaseController extends BaseController {
             }
             
             // 微信Jssdk 操作类 用分享朋友圈 JS            
-            $jssdk = new \Mobile\Logic\Jssdk($this->weixin_config['appid'], $this->weixin_config['appsecret']);
+            $jssdk = new \Common\Logic\JsSdkLogic($this->weixin_config['appid'], $this->weixin_config['appsecret']);
             $signPackage = $jssdk->GetSignPackage();            
             $this->assign('signPackage', $signPackage);
         }else{

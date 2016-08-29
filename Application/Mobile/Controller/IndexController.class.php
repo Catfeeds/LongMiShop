@@ -46,7 +46,7 @@ class IndexController extends MobileBaseController {
      * 商品列表页
      */
     public function goodsList(){
-        $goodsLogic = new \Home\Logic\GoodsLogic(); // 前台商品操作逻辑类
+        $goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
         $id = I('get.id',0); // 当前分类id
         $lists = getCatGrandson($id);
         $this->assign('lists',$lists);

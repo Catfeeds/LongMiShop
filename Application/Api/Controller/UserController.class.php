@@ -6,7 +6,7 @@ class UserController extends BaseController {
     public $userLogic;
     public function _initialize(){
         parent::_initialize();
-        $this->userLogic = new \Home\Logic\UsersLogic();
+        $this->userLogic = new \Common\Logic\UsersLogic();
     }
     /**
      *  登录
@@ -17,7 +17,7 @@ class UserController extends BaseController {
         $unique_id = I("unique_id"); // 唯一id  类似于 pc 端的session id
         $data = $this->userLogic->login($username,$password);
         
-        $cartLogic = new \Home\Logic\CartLogic();        
+        $cartLogic = new \Common\Logic\CartLogic();
         $cartLogic->login_cart_handle($unique_id,$data['result']['user_id']); // 用户登录后 需要对购物车 一些操作               
         exit(json_encode($data));
     }

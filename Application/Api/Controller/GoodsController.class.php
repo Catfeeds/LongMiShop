@@ -98,7 +98,7 @@ class GoodsController extends BaseController {
     	$attr  && ($filter_param['attr'] = $attr); //加入帅选条件中
     	$price  && ($filter_param['price'] = $price); //加入帅选条件中
          
-    	$goodsLogic = new \Home\Logic\GoodsLogic(); // 前台商品操作逻辑类
+    	$goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
     	// 分类菜单显示
     	$goodsCate = M('GoodsCategory')->where("id = $id")->find();// 当前分类
     	//($goodsCate['level'] == 1) && header('Location:'.U('Home/Channel/index',array('cat_id'=>$id))); //一级分类跳转至大分类馆
@@ -224,7 +224,7 @@ class GoodsController extends BaseController {
         if(empty($q))
             exit(json_encode(array('status'=>-1,'msg'=>'请输入搜索关键词'),true));            
         
-    	$goodsLogic = new \Home\Logic\GoodsLogic(); // 前台商品操作逻辑类    	     
+    	$goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
     	$filter_goods_id = M('goods')->where("is_on_sale=1 and goods_name like '%{$q}%'  ")->cache(true)->getField("goods_id",true);
     	
     	// 过滤帅选的结果集里面找商品

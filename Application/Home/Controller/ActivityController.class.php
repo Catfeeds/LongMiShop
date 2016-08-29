@@ -15,7 +15,7 @@ class ActivityController extends BaseController {
         //form表单提交
         C('TOKEN_ON',true);        
         
-        $goodsLogic = new \Home\Logic\GoodsLogic();
+        $goodsLogic = new \Common\Logic\GoodsLogic();
         $goods_id = I("get.id");
         
         $group_buy_info = M('GroupBuy')->where("goods_id = $goods_id and ".time()." >= start_time and ".time()." <= end_time ")->find(); // 找出这个商品

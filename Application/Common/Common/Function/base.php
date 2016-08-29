@@ -554,10 +554,10 @@ function getFirstCharter($str){
 
 /**
  * 规范数据返回函数
- * @param unknown $state
- * @param unknown $msg
- * @param unknown $data
- * @return multitype:unknown
+ * @param bool $state
+ * @param string $msg
+ * @param array $data
+ * @return array
  */
 function callback($state = true, $msg = '', $data = array()) {
     if( $state == false ){

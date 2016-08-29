@@ -76,7 +76,7 @@ class UserController extends MobileBaseController {
     public function account(){
         $user = session('user');
         //获取账户资金记录
-        $logic = new UsersLogic();
+        $logic = new \Common\Logic\UsersLogic();
         $data = $logic->get_account_log($this->user_id,I('get.type'));
         $account_log = $data['result'];
 
@@ -94,7 +94,7 @@ class UserController extends MobileBaseController {
 
     public function coupon(){
         //
-        $logic = new UsersLogic();
+        $logic = new \Common\Logic\UsersLogic();
         $data = $logic->get_coupon($this->user_id,$_REQUEST['type']);
         $coupon_list = $data['result'];
         $this->assign('coupon_list',$coupon_list);
@@ -124,7 +124,7 @@ class UserController extends MobileBaseController {
     	$password = I('post.password');
     	$username = trim($username);
     	$password = trim($password);
-    	$logic = new UsersLogic();
+    	$logic = new \Common\Logic\UsersLogic();
     	$res = $logic->login($username,$password);
     	if($res['status'] == 1){
     		$res['url'] =  urldecode(I('post.referurl'));
@@ -133,7 +133,7 @@ class UserController extends MobileBaseController {
     		setcookie('is_distribut',$res['result']['is_distribut'],null,'/');
     		$nickname = empty($res['result']['nickname']) ? $username : $res['result']['nickname'];
     		setcookie('uname',$nickname,null,'/');
-    		$cartLogic = new \Home\Logic\CartLogic();
+    		$cartLogic = new \Common\Logic\CartLogic();
     		$cartLogic->login_cart_handle($this->session_id,$res['result']['user_id']);  //用户登录后 需要对购物车 一些操作
     	}
     	exit(json_encode($res));
@@ -145,7 +145,7 @@ class UserController extends MobileBaseController {
     public function reg(){
 
         if(IS_POST){
-            $logic = new UsersLogic();
+            $logic = new \Common\Logic\UsersLogic();
             //验证码检验
             //$this->verifyHandle('user_reg');
             $username = I('post.username','');
@@ -170,7 +170,7 @@ class UserController extends MobileBaseController {
             session('user',$data['result']);
             setcookie('user_id',$data['result']['user_id'],null,'/');
             setcookie('is_distribut',$data['result']['is_distribut'],null,'/');
-            $cartLogic = new \Home\Logic\CartLogic();
+            $cartLogic = new \Common\Logic\CartLogic();
             $cartLogic->login_cart_handle($this->session_id,$data['result']['user_id']);  //用户登录后 需要对购物车 一些操作            
             $this->success($data['msg'],U('Mobile/User/index'));
             exit;
@@ -202,7 +202,7 @@ class UserController extends MobileBaseController {
         $order_list = M('order')->order($order_str)->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
 
         //获取订单商品
-        $model = new UsersLogic();
+        $model = new \Common\Logic\UsersLogic();
         foreach($order_list as $k=>$v)
         {
             $order_list[$k] = set_btn_order_status($v);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
@@ -247,7 +247,7 @@ class UserController extends MobileBaseController {
             exit;
         }
         //获取订单商品
-        $model = new UsersLogic();
+        $model = new \Common\Logic\UsersLogic();
         $data = $model->get_order_goods($order_info['order_id']);
         $order_info['goods_list'] = $data['result'];
         //$order_info['total_fee'] = $order_info['goods_price'] + $order_info['shipping_price'] - $order_info['integral_money'] -$order_info['coupon_price'] - $order_info['discount'];
@@ -286,7 +286,7 @@ class UserController extends MobileBaseController {
     public function cancel_order(){
         $id = I('get.id');
         //检查是否有积分，余额支付
-        $logic = new UsersLogic();
+        $logic = new \Common\Logic\UsersLogic();
         $data = $logic->cancel_order($this->user_id,$id);
         if($data['status'] < 0)
             $this->error($data['msg']);
@@ -310,7 +310,7 @@ class UserController extends MobileBaseController {
     {        
         if(IS_POST)
         {                
-            $logic = new UsersLogic();
+            $logic = new \Common\Logic\UsersLogic();
             $data = $logic->add_address($this->user_id,0,I('post.'));
             if($data['status'] != 1)
                 $this->error($data['msg']);
@@ -339,7 +339,7 @@ class UserController extends MobileBaseController {
         $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
         if(IS_POST)
         {
-            $logic = new UsersLogic();
+            $logic = new \Common\Logic\UsersLogic();
             $data = $logic->add_address($this->user_id,$id,I('post.'));
             if($_POST['source'] == 'cart2'){
                 header ('Location:'.U('/Mobile/Cart/cart2',array('address_id'=>$id)));
@@ -410,7 +410,7 @@ class UserController extends MobileBaseController {
     public function comment(){
     	$user_id = $this->user_id;
     	$status = I('get.status');
-    	$logic = new UsersLogic();
+    	$logic = new \Common\Logic\UsersLogic();
     	$result = $logic->get_comment($user_id,$status); //获取评论列表    
     	$this->assign('comment_list',$result['result']);       
         if($_GET['is_ajax'])
@@ -449,7 +449,7 @@ class UserController extends MobileBaseController {
     		}
     		
     		$user_info = session('user');
-    		$logic = new UsersLogic();
+    		$logic = new \Common\Logic\UsersLogic();
     		$add['goods_id'] = I('goods_id');
     		$add['email'] = $user_info['email'];
     		$hide_username = I('hide_username');
@@ -488,7 +488,7 @@ class UserController extends MobileBaseController {
      * 个人信息
      */
     public function userinfo(){
-        $userLogic = new UsersLogic();
+        $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $user_info = $user_info['result'];
         if(IS_POST){
@@ -532,7 +532,7 @@ class UserController extends MobileBaseController {
      * 邮箱验证
      */
     public function email_validate(){
-        $userLogic = new UsersLogic();
+        $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $user_info = $user_info['result'];
         $step = I('get.step',1);
@@ -574,7 +574,7 @@ class UserController extends MobileBaseController {
     * 手机验证
     */
     public function mobile_validate(){
-        $userLogic = new UsersLogic();
+        $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $user_info = $user_info['result'];
         $step = I('get.step',1);
@@ -613,7 +613,7 @@ class UserController extends MobileBaseController {
     }
     
     public function collect_list(){
-    	$userLogic = new UsersLogic();
+    	$userLogic = new \Common\Logic\UsersLogic();
     	$data = $userLogic->get_goods_collect($this->user_id);
     	$this->assign('page',$data['show']);// 赋值分页输出
     	$this->assign('goods_list',$data['result']);
@@ -691,13 +691,13 @@ class UserController extends MobileBaseController {
      */
     public function password(){
         //检查是否第三方登录用户
-        $logic = new UsersLogic();
+        $logic = new \Common\Logic\UsersLogic();
         $data = $logic->get_info($this->user_id);
         $user = $data['result'];
         if($user['mobile'] == ''&& $user['email'] == '')
             $this->error('请先到电脑端绑定手机',U('/Mobile/User/index'));
         if(IS_POST){
-            $userLogic = new UsersLogic();
+            $userLogic = new \Common\Logic\UsersLogic();
             $data = $userLogic->password($this->user_id,I('post.old_password'),I('post.new_password'),I('post.confirm_password')); // 获取用户信息
             if($data['status'] == -1)
                 $this->error($data['msg']);
@@ -783,14 +783,14 @@ class UserController extends MobileBaseController {
     public function send_validate_code(){
         $type = I('type');
         $send = I('send');
-        $logic = new UsersLogic();
+        $logic = new \Common\Logic\UsersLogic();
         $logic->send_validate_code($send, $type);
     }
     
     public function check_validate_code(){
     	$code = I('post.code');
     	$send = I('send');
-    	$logic = new UsersLogic();
+    	$logic = new \Common\Logic\UsersLogic();
     	$logic->check_validate_code($code, $send);
     }
     

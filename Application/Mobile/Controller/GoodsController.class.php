@@ -37,7 +37,7 @@ class GoodsController extends MobileBaseController {
     	$attr  && ($filter_param['attr'] = $attr); //加入帅选条件中
     	$price  && ($filter_param['price'] = $price); //加入帅选条件中
          
-    	$goodsLogic = new \Home\Logic\GoodsLogic(); // 前台商品操作逻辑类
+    	$goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
     	// 分类菜单显示
     	$goodsCate = M('GoodsCategory')->where("id = $id")->find();// 当前分类
     	//($goodsCate['level'] == 1) && header('Location:'.U('Home/Channel/index',array('cat_id'=>$id))); //一级分类跳转至大分类馆
@@ -135,7 +135,7 @@ class GoodsController extends MobileBaseController {
      */
     public function goodsInfo(){
         C('TOKEN_ON',true);        
-        $goodsLogic = new \Home\Logic\GoodsLogic();
+        $goodsLogic = new \Common\Logic\GoodsLogic();
         $goods_id = I("get.id");
         $goods = M('Goods')->where("goods_id = $goods_id")->find();
         if(empty($goods)){
@@ -179,7 +179,7 @@ class GoodsController extends MobileBaseController {
     public function detail(){
         //  form表单提交
         C('TOKEN_ON',true);
-        $goodsLogic = new \Home\Logic\GoodsLogic();
+        $goodsLogic = new \Common\Logic\GoodsLogic();
         $goods_id = I("get.id");
         $goods = M('Goods')->where("goods_id = $goods_id")->find();
         $this->assign('goods',$goods);
@@ -257,7 +257,7 @@ class GoodsController extends MobileBaseController {
         if(empty($q))
             $this->error ('请输入搜索关键词');
         
-    	$goodsLogic = new \Home\Logic\GoodsLogic(); // 前台商品操作逻辑类    	     
+    	$goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
     	$filter_goods_id = M('goods')->where("is_on_sale=1 and goods_name like '%{$q}%'  ")->cache(true)->getField("goods_id",true);
     	
     	// 过滤帅选的结果集里面找商品

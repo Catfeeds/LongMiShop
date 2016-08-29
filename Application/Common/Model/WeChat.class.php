@@ -50,10 +50,10 @@ class WeChat extends BaseModel
 
     public static function findWeChatInfoWithUserID($weChatId) {
         $data = self::findRecordWithID(self::$tableName , $weChatId);
-        return new User($data);
+        return new WeChat($data);
     }
     public static function findWeChatWithCondition() {
         $data = self::findRecordWithCondition(self::$tableName);
-        return new User($data);
+        return new WeChat($data);
     }
 }

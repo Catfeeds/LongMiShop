@@ -12,7 +12,7 @@ class CartController extends BaseController {
      */
     public function  __construct() {   
         parent::__construct();                
-        $this->cartLogic = new \Home\Logic\CartLogic();                     
+        $this->cartLogic = new \Common\Logic\CartLogic();
         
         $unique_id = I("unique_id"); // 唯一id  类似于 pc 端的session id
         $user_id = I("user_id",0); // 用户id                       

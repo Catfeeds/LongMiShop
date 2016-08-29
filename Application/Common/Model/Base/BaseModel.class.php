@@ -20,17 +20,17 @@ abstract class BaseModel
         $this->databaseData = $databaseData;
     }
 
-    public function getID() {
-        return $this->databaseData['id'];
-    }
-
-    public function getCreatedAt() {
-        return $this->databaseData['createtime'];
-    }
-
-    public function getUpdatedAt() {
-        return $this->databaseData['updatetime'];
-    }
+//    public function getID() {
+//        return $this->databaseData['id'];
+//    }
+//
+//    public function getCreatedAt() {
+//        return $this->databaseData['createtime'];
+//    }
+//
+//    public function getUpdatedAt() {
+//        return $this->databaseData['updatetime'];
+//    }
 
     protected static function getModel($tableName) {
         $model = new Model();

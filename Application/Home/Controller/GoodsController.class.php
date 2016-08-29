@@ -14,7 +14,7 @@ class GoodsController extends BaseController {
     public function goodsInfo(){
         //  form表单提交
         C('TOKEN_ON',true);        
-        $goodsLogic = new \Home\Logic\GoodsLogic();
+        $goodsLogic = new \Common\Logic\GoodsLogic();
         $goods_id = I("get.id");
         $goods = M('Goods')->where("goods_id = $goods_id")->find();
         if(empty($goods) || ($goods['is_on_sale'] == 0)){
@@ -83,7 +83,7 @@ class GoodsController extends BaseController {
         $attr  && ($filter_param['attr'] = $attr); //加入帅选条件中
         $price  && ($filter_param['price'] = $price); //加入帅选条件中
                 
-        $goodsLogic = new \Home\Logic\GoodsLogic(); // 前台商品操作逻辑类
+        $goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
         
         // 分类菜单显示
         $goodsCate = M('GoodsCategory')->where("id = $id")->find();// 当前分类
@@ -172,7 +172,7 @@ class GoodsController extends BaseController {
         $price  && ($filter_param['price'] = $price); //加入帅选条件中
         $q  && ($_GET['q'] = $filter_param['q'] = $q); //加入帅选条件中
         
-        $goodsLogic = new \Home\Logic\GoodsLogic(); // 前台商品操作逻辑类
+        $goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
                
         $where = "goods_name like '%{$q}%' and is_on_sale=1 ";
         if($id)
@@ -321,7 +321,7 @@ class GoodsController extends BaseController {
     public function collect_goods($goods_id)
     {
         $goods_id = I('goods_id');
-        $goodsLogic = new \Home\Logic\GoodsLogic();        
+        $goodsLogic = new \Common\Logic\GoodsLogic();
         $result = $goodsLogic->collect_goods(cookie('user_id'),$goods_id);
         exit(json_encode($result));
     }

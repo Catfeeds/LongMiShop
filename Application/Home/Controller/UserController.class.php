@@ -137,7 +137,7 @@ class UserController extends BaseController {
     		$nickname = empty($res['result']['nickname']) ? $username : $res['result']['nickname'];
             setcookie('uname',urlencode($nickname),null,'/');
             setcookie('cn','',time()-3600,'/');
-    		$cartLogic = new \Home\Logic\CartLogic();
+    		$cartLogic = new \Common\Logic\CartLogic();
     		$cartLogic->login_cart_handle($this->session_id,$res['result']['user_id']);  //用户登录后 需要对购物车 一些操作
     	}
     	exit(json_encode($res));
@@ -173,7 +173,7 @@ class UserController extends BaseController {
     		setcookie('is_distribut',$data['result']['is_distribut'],null,'/');
             $nickname = empty($data['result']['nickname']) ? $username : $data['result']['nickname'];
             setcookie('uname',$nickname,null,'/');
-            $cartLogic = new \Home\Logic\CartLogic();
+            $cartLogic = new \Common\Logic\CartLogic();
             $cartLogic->login_cart_handle($this->session_id,$data['result']['user_id']);  //用户登录后 需要对购物车 一些操作
             
             $this->success($data['msg'],U('Home/User/index'));
