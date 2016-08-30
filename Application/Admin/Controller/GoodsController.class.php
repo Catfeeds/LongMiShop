@@ -274,7 +274,8 @@ class GoodsController extends BaseController {
             //$cat_list = $GoodsLogic->goods_cat_list(); // 已经改成联动菜单            
             $level_cat = $GoodsLogic->find_parent_cat($goodsInfo['cat_id']); // 获取分类默认选中的下拉框
             $level_cat2 = $GoodsLogic->find_parent_cat($goodsInfo['extend_cat_id']); // 获取分类默认选中的下拉框
-            $cat_list = M('goods_category')->where("parent_id = 0")->select(); // 已经改成联动菜单            
+            $cat_list = M('goods_category')->where("parent_id = 0")->select(); // 已经改成联动菜单
+            $logistics_list = M('logistics')->field('log_id,log_template')->select(); //获取所有配送方式           
             $brandList = $GoodsLogic->getSortBrands();
             $goodsType = M("GoodsType")->select();            
             $this->assign('level_cat',$level_cat);
@@ -285,6 +286,7 @@ class GoodsController extends BaseController {
             $this->assign('goodsInfo',$goodsInfo);  // 商品详情            
             $goodsImages = M("GoodsImages")->where('goods_id ='.I('GET.id',0))->select();
             $this->assign('goodsImages',$goodsImages);  // 商品相册
+            $this->assign('logistics_list',$logistics_list); 
             $this->initEditor(); // 编辑器
             $this->display('_goods');                                     
     } 

@@ -60,3 +60,5 @@ CREATE TABLE `tp_logistics` (
   PRIMARY KEY (`log_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
+//商品表 添加配送字段
+ALTER TABLE  `tp_goods` ADD  `delivery_way` INT( 11 ) NOT NULL COMMENT  '配送方式' AFTER  `is_free_shipping` ;

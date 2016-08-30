@@ -282,7 +282,18 @@
                                         是:<input type="radio" <if condition="$goodsInfo[is_free_shipping] eq 1">checked="checked"</if> value="1" name="is_free_shipping" /> 
                                         否:<input type="radio" <if condition="$goodsInfo[is_free_shipping] eq 0">checked="checked"</if> value="0" name="is_free_shipping" /> 
                                     </td>
-                                </tr>                                
+                                </tr>     
+                                <tr>
+                                  <td>选择配送方式</td>
+                                  <td>
+                                    <select name="delivery_way" >
+                                      <option value="0">请选择</option>
+                                      <volist name="logistics_list" id="item">
+                                        <option value="{: $item['log_id']}" {: $goodsInfo['delivery_way']==$item['log_id']? 'selected' :''}>{: $item['log_template']}</option>
+                                      </volist>
+                                    </select>
+                                  </td>
+                                </tr>                           
                                 <tr>
                                     <td>库存数量:</td>
                                     <td>
