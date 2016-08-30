@@ -1,0 +1,37 @@
+
+
+<volist name="address_list" id="item">
+
+	<if condition="$item['is_default'] eq 1">
+	
+		<li class="m333_hover">
+          <p>{: $item['consignee']}(默认地址）</p>
+          <p>{: $item['mobile']}</p>
+          <p>{$regionList[$item[province]]} {$regionList[$item[city]]} </p>
+          <p>{: $item['address']}</p>
+        </li>
+	<else/>
+		<li>
+	      <p>{: $item['consignee']}</p>
+	      <p>{: $item['mobile']}</p>
+	      <p>{$regionList[$item[province]]} {$regionList[$item[city]]}</p>
+	      <p>{: $item['address']}</p>
+	    </li>
+	</if>
+	
+</volist>
+
+<script>
+	$(function(){
+
+	$('.m333').find('li').each(function(i){
+	$(this).click(function(){
+		$('.m333').find('li').removeClass('m333_hover');
+		$(this).addClass('m333_hover');
+		
+		})
+	})
+
+	})
+	
+</script>

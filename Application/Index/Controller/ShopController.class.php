@@ -3,6 +3,8 @@ namespace Index\Controller;
 
 class ShopController extends BaseIndexController {
 
+    public $cartLogic;
+
     function exceptAuthActions()
     {
         return array(
@@ -11,6 +13,7 @@ class ShopController extends BaseIndexController {
     }
 
     public function _initialize() {
+        $this->cartLogic = new \Common\Logic\CartLogic();
         parent::_initialize();
     }
 
@@ -60,8 +63,33 @@ class ShopController extends BaseIndexController {
     }
 
     public function cart2(){
-//        $buy_logic  = new BuyLogic();
-//        $buy_logic -> createOrder();
+        // if($this->user_id == 0)
+        //     $this->error('请先登陆',U('Index/User/login'));
+        
+        // if($this->cartLogic->cart_count($this->user_id,1) == 0 ) 
+        //     $this->error ('你的购物车没有选中商品','Cart/cart');
+        
+        $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1); // 获取购物车商品
+        // $address_lists = get_user_address_list($this->user_id);   
+        // $default_address = get_user_default_address($this->user_id);
+        // dump($default_address);
+
+        foreach($result['cartList'] as $item){ //计算总额
+            $sum += $item['goods_price'] * $item['goods_num'];
+        }    
+        // $shippingList = M('Plugin')->where("`type` = 'shipping' and status = 1")->select();// 物流公司                
+        
+        // $Model = new \Think\Model(); // 找出这个用户的优惠券 没过期的  并且 订单金额达到 condition 优惠券指定标准的               
+        // $sql = "select c1.name,c1.money,c1.condition, c2.* from __PREFIX__coupon as c1 inner join __PREFIX__coupon_list as c2  on c2.cid = c1.id and c1.type in(0,1,2,3) and order_id = 0  where c2.uid = {$this->user_id}  and ".time()." < c1.use_end_time and c1.condition <= {$result['total_price']['total_fee']}";
+        // $couponList = $Model->query($sql);
+               
+        // $this->assign('couponList', $couponList); // 优惠券列表
+        // $this->assign('shippingList', $shippingList); // 物流公司
+        $this->assign('cartList', $result['cartList']); // 购物车的商品                
+        $this->assign('total_price', $sum); // 总计
+        // $this->assign('lists',$address_lists); //用户收获地址
+        // $this->assign('default_address',$default_address);//默认地址
+
         $this->display();
     }
 
@@ -105,6 +133,57 @@ class ShopController extends BaseIndexController {
 
         $this->assign('cartList', $result['cartList']); // 购物车的商品
         $this->assign('total_price', $result['total_price']); // 总计
+        $this->display();
+    }
+
+    /*
+     * ajax 获取用户收货地址 用于购物车确认订单页面
+     */
+    public function ajaxAddress(){                               
+        $address_list = M('UserAddress')->where("user_id = {$this->user_id}")->select();
+        if($address_list){
+            $area_id = array();
+            foreach ($address_list as $val){
+                $area_id[] = $val['province'];
+                        $area_id[] = $val['city'];
+                        $area_id[] = $val['district'];
+                        $area_id[] = $val['twon'];                        
+            }    
+                $area_id = array_filter($area_id);
+            $area_id = implode(',', $area_id);
+            $regionList = M('region')->where("id in ($area_id)")->getField('id,name');
+            $this->assign('regionList', $regionList);
+        }
+        // dump($address_list);
+        $c = M('UserAddress')->where("user_id = {$this->user_id} and is_default = 1")->count(); // 看看有没默认收货地址        
+        if((count($address_list) > 0) && ($c == 0)) // 如果没有设置默认收货地址, 则第一条设置为默认收货地址
+            $address_list[0]['is_default'] = 1;
+                     
+        $this->assign('address_list', $address_list);
+        $this->display('ajax_address');
+    }
+
+    public function add_address(){
+        if(IS_POST){ //新增地址
+            $data = I('post.');
+            $data['user_id'] = $this->user['user_id'];
+            $this->address = M('user_address');
+            if(!empty($data['subBox'])){
+                $where['user_id'] = $this->user['user_id'];
+                $where['is_default'] = 1;
+                $datas['is_default'] = 0;
+                $this->address->where($where)->save($datas);
+                $data['is_default'] = 1;
+            }
+            $res = $this->address->add($data);
+            if($res){
+                $this->redirect('Index/Shop/cart2');exit;
+            }else{
+                $this->error('修改失败',U('Index/Shop/cart2'));exit;
+            }
+        }
+        $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
+        $this->assign('province',$p);
         $this->display();
     }
 
