@@ -4,9 +4,9 @@
 <script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
 <style>
 
-    .wrapper{
+    /*.wrapper{
         position:relative;
-    }
+    }*/
     .red{
         color:red;
     }
@@ -15,12 +15,13 @@
         background-color:#fff;
         width:800px;
         height:500px;
-        position:absolute; top:80px; left:120px;
+        position:fixed; top:80px; left:120px;
         z-index:5;
         border:1px #000 solid;
         border-radius:5px;
 
     }
+    ul{list-style-type:none;}
 
     #diqu_ul p {
         width:300px;
@@ -474,13 +475,14 @@ function pinkage(){
 }
 
 
-//全选
+// 全选
 $("#selectAlls").click(function () {  //全选  
-    $("#pinkage_condition :checkbox").attr("checked", true);  
+    $("#pinkage_condition input[type='checkbox']").attr("checked", true);  
 });
 $("#unSelects").click(function () {  //全不选  
-    $("#pinkage_condition :checkbox").attr("checked", false);  
+    $("#pinkage_condition input[type='checkbox']").attr("checked", false);  
 });
+
 
 //移除元素
 function del_li(obj){

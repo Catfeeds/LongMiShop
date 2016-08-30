@@ -15,7 +15,7 @@ class LogisticsController extends BaseController {
 
     //物流配送方式
     public function index(){ 
-        $list = $this->logi->select();
+        $list = $this->logi->order('log_rank DESC ')->select();
         $this->assign('list',$list);
         $this->display();
     }
