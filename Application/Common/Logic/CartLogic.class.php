@@ -160,34 +160,39 @@ class CartLogic extends BaseLogic
         if(!empty($cartData)){
             foreach ($cartData as $k=>$val){
 
-                $cartList[$val['admin_id']]['goods'][$k] = $val;
-                $cartList[$val['admin_id']]['goods'][$k]['goods_fee'] = $val['goods_num'] * $val['member_goods_price'];
-                $cartList[$val['admin_id']]['goods'][$k]['store_count']  = getGoodNum($val['goods_id'],$val['spec_key']); // 最多可购买的库存数量
+//                $cartList[$val['admin_id']]['goods'][$k] = $val;
+//                $cartList[$val['admin_id']]['goods'][$k]['goods_fee'] = $val['goods_num'] * $val['member_goods_price'];
+//                $cartList[$val['admin_id']]['goods'][$k]['store_count']  = getGoodNum($val['goods_id'],$val['spec_key']); // 最多可购买的库存数量
+//
 
-                $anum += $val['goods_num'];
+                $cartList[$k] = $val;
+                $cartList[$k]['goods_fee'] = $val['goods_num'] * $val['member_goods_price'];
+                $cartList[$k]['store_count']  = getGoodNum($val['goods_id'],$val['spec_key']); // 最多可购买的库存数量
+
 
                 // 如果要求只计算购物车选中商品的价格 和数量  并且  当前商品没选择 则跳过
                 if($selected == 1 && $val['selected'] == 0)
                     continue;
 
+                $anum += $val['goods_num'];
                 $cut_fee += $val['goods_num'] * $val['market_price'] - $val['goods_num'] * $val['member_goods_price'];
                 $total_price += $val['goods_num'] * $val['member_goods_price'];
             }
         }
 
-        if(!empty($cartList)){
-            foreach ($cartList as $admin_id=>$cartList_item){
-                if($admin_id == 0){
-                    $admin_name = "商城自营";
-                }else{
-                    $admin_info  = M('admin')->where(array('admin_id' => $admin_id)) -> find();
-                    $admin_name = !empty($admin_info) ? $admin_info['company_name'] : "未知";
-                    $admin_name = !empty($admin_name) ? $admin_name : $admin_info['user_name'];
-                    $admin_name = "供货商：".$admin_name;
-                }
-                $cartList[$admin_id]['admin_name'] = $admin_name;
-            }
-        }
+//        if(!empty($cartList)){
+//            foreach ($cartList as $admin_id=>$cartList_item){
+//                if($admin_id == 0){
+//                    $admin_name = "商城自营";
+//                }else{
+//                    $admin_info  = M('admin')->where(array('admin_id' => $admin_id)) -> find();
+//                    $admin_name = !empty($admin_info) ? $admin_info['company_name'] : "未知";
+//                    $admin_name = !empty($admin_name) ? $admin_name : $admin_info['user_name'];
+//                    $admin_name = "供货商：".$admin_name;
+//                }
+//                $cartList[$admin_id]['admin_name'] = $admin_name;
+//            }
+//        }
 
         $total_price = array('total_fee' =>$total_price , 'cut_fee' => $cut_fee,'num'=> $anum,); // 总计
         setcookie('cn',$anum,null,'/');

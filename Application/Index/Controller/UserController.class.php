@@ -149,10 +149,10 @@ class UserController extends BaseIndexController {
         $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
         $c = M('region')->where(array('parent_id'=>$address['province'],'level'=> 2))->select();
         $d = M('region')->where(array('parent_id'=>$address['city'],'level'=> 3))->select();
-//        if($address['twon']){
-//            $e = M('region')->where(array('parent_id'=>$address['district'],'level'=>4))->select();
-//            $this->assign('twon',$e);
-//        }
+        if($address['twon']){
+            $e = M('region')->where(array('parent_id'=>$address['district'],'level'=>4))->select();
+            $this->assign('twon',$e);
+        }
         $this->assign('formUrl',$formUrl);
         $this->assign('id',$id);
         $this->assign('province',$p);

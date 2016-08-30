@@ -8,6 +8,7 @@ use Common\Logic\UsersLogic;
 abstract class BaseIndexController extends BaseController {
 
     public $user_id;
+    public $user;
     public $user_info;
 
 
@@ -37,6 +38,7 @@ abstract class BaseIndexController extends BaseController {
             $userLogic = new UsersLogic();
             $user_info = $userLogic->get_info($this -> user_id);
             $this -> user_info  = $user_info['result'];
+            $this -> user  = $this -> user_info;
             $this -> assign('user',$this -> user_info );
             $this -> assign('auth',true);
         }

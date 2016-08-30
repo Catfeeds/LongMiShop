@@ -1,0 +1,79 @@
+<div class="tab_box" >
+  <table width="100%" border="0" cellspacing="0" cellpadding="5">
+    <tr class="hr">
+      <td colspan="3" align="left" class="td">名称</td>
+      <td width="18%" class="td">单价</td>
+      <td width="9%" class="td">数量</td>
+      <td width="14%" class="td">小计</td>
+      <td width="10%" class="td">操作</td>
+    </tr>
+    <foreach name="cartList" item="v" key="k" >
+      <tr>
+        <td width="6%">
+          <div class="mui-input-row mui-checkbox mui-left">
+            <input name="cart_select[{$v.id}]" <if condition="$v[selected] eq 1" >checked="checked"</if> value="1" onclick="ajax_cart_list();" type="checkbox" class="check-one check check_titel">
+          </div>
+        </td>
+        <td width="8%">
+          <div class="img">
+            <img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92">
+          </div>
+        </td>
+
+        <td width="35%">
+          <div class="mui-input-row mui-checkbox mui-left" title="{$v.goods_name}{:$v['spec_key_name']?'['.$v['spec_key_name'].']':''}">
+            {$v.goods_name}
+          </div>
+        </td>
+
+        <td align="center">￥{$v.market_price}</td>
+        <td>
+          <div class="gw_num gw_num1">
+            <em class="jian" onClick="switch_num(-1,{$v.id},{$v.store_count});" >-</em>
+            <input type="text" value="{$v.goods_num}" name="goods_num[{$v.id}]" id="goods_num[{$v.id}]" readonly="" class="num"/>
+            <em class="add"  onClick="switch_num(1,{$v.id},{$v.store_count});">+</em>
+          </div>
+        </td>
+        <td align="center">￥{$v.goods_fee}</td>
+        <td align="center">
+          <a  href="javascript:void(0);" onclick="if(confirm('确定要删除吗?')) ajax_del_cart({$v.id});">
+            <img src="__PUBLIC__/img/delete.png" width="18" height="18">
+          </a>
+        </td>
+      </tr>
+    </foreach>
+    <!--<tr>-->
+      <!--<td colspan="3">&nbsp;</td>-->
+      <!--<td>&nbsp;</td>-->
+      <!--<td>&nbsp;</td>-->
+      <!--<td></td>-->
+      <!--<td></td>-->
+    <!--</tr>-->
+
+  </table>
+</div>
+
+<div class="tab_box1">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="17%">
+        <label class="fl select-all">
+              <span class="mui-input-row mui-checkbox mui-left">
+                <input class="check-all check-one check" type="checkbox"  name="select_all" id="select_all" <if condition="$select_all eq 1" >checked="checked"</if> onchange="check_all();" value="1"/>
+              </span>
+          全选
+        </label>
+      </td>
+      <td width="70%">
+        <div class="mo">
+          商品<em>{$total_price.num }</em>件<span>总计￥{$total_price.total_fee}</span>
+        </div>
+      </td>
+      <td width="13%">
+        <div class="m4_btn">
+          <a href="{:U('Shop/cart2')}">现在购买</a>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

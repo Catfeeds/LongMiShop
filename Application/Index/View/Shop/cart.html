@@ -1,87 +1,116 @@
 <include file="Public/header"/>
 
-
-
-
 <div class="inventory">
   <div class="inventory_box">
-    <div class="in1">买米清单</div>
-    <div class="tab_box">
-      <table width="100%" border="0" cellspacing="0" cellpadding="5">
-        <tr class="hr">
-          <td colspan="3" align="left" class="td">名称</td>
-          <td width="18%" class="td">单价</td>
-          <td width="9%" class="td">数量</td>
-          <td width="14%" class="td">小计</td>
-          <td width="10%" class="td">操作</td>
-        </tr>
-        <tr>
-          <td width="6%"><div class="mui-input-row mui-checkbox mui-left">
-            <input name="subBox" type="checkbox" class="check-one check check_titel">
-          </div></td>
-          <td width="8%"><div class="img"><img src="__PUBLIC__/img/cp5.png" width="92" height="92"></div></td>
+    <div class="in1">清单</div>
 
-          <td width="35%"><div class="mui-input-row mui-checkbox mui-left">
-            龙米2016年8月份新米</div></td>
-
-          <td align="center">￥99.00</td>
-          <td>    <div class="gw_num gw_num1"> <em class="jian">-</em>
-            <input type="text" value="1" class="num"/>
-            <em class="add">+</em> </div></td>
-          <td align="center">￥99.00</td>
-          <td align="center"><a href="#"><img src="__PUBLIC__/img/delete.png" width="18" height="18"></a></td>
-        </tr>
-        <tr>
-          <td width="6%"><div class="mui-input-row mui-checkbox mui-left">
-            <input name="subBox" type="checkbox" class="check-one check check_titel">
-          </div></td>
-          <td width="8%"><div class="img"><img src="__PUBLIC__/img/cp5.png" width="92" height="92"></div></td>
-
-          <td width="35%"><div class="mui-input-row mui-checkbox mui-left">
-            龙米2016年8月份新米</div></td>
-
-          <td align="center">￥99.00</td>
-          <td>    <div class="gw_num gw_num1"> <em class="jian">-</em>
-            <input type="text" value="1" class="num"/>
-            <em class="add">+</em> </div></td>
-          <td align="center">￥99.00</td>
-          <td align="center"><a href="#"><img src="__PUBLIC__/img/delete.png" width="18" height="18"></a></td>
-        </tr>
-        <tr>
-          <td colspan="3">&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td></td>
-          <td></td>
-        </tr>
-      </table>
-
-
-
-    </div>
-
-    <div class="tab_box1"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td width="17%">  <label class="fl select-all"> <span class="mui-input-row mui-checkbox mui-left">
-    <input class="check-all check-one check" type="checkbox" id="checkAll">
-    </span>全选</label></td>
-        <td width="70%"><div class="mo">商品<em>2</em>件<span>总计￥99.00</span></div></td>
-        <td width="13%">    <div class="m4_btn"><a href="{:U('Shop/cart2')}">现在购买</a></div>
-        </td>
-      </tr>
-    </table>
-    </div>
+    <form name="cart_form" id="cart_form" action="{:U('Home/Cart/ajaxCartList')}">
+      <div id="ajax_return">
+      </div>
+    </form>
   </div>
-
-
-
 </div>
 
-
-
-
-
 <div style="height:250px"></div>
+
+
+<script>
+
+  $(document).ready(function(){
+
+    ajax_cart_list(); // ajax 请求获取购物车列表
+  });
+
+
+
+
+  // ajax 提交购物车
+  var before_request = 1; // 上一次请求是否已经有返回来, 有才可以进行下一次请求
+  function ajax_cart_list(){
+
+
+    if(before_request == 0) // 上一次请求没回来 不进行下一次请求
+      return false;
+    before_request = 0;
+
+    $.ajax({
+      type : "POST",
+      url:"{:U('Index/Shop/ajaxCartList')}",//+tab,
+      data : $('#cart_form').serialize(),// 你的formid
+      success: function(data){
+        $("#ajax_return").html("");
+        $("#ajax_return").append(data);
+        before_request = 1;
+      }
+    });
+  }
+
+  /**
+   * 购买商品数量加加减减
+   * 购买数量 , 购物车id , 库存数量
+   */
+  function switch_num(num,cart_id,store_count)
+  {
+    var num2 = parseInt($("input[name='goods_num["+cart_id+"]']").val());
+    num2 += num;
+    if(num2 < 1) num2 = 1; // 保证购买数量不能少于 1
+    if(num2 > store_count)
+    {
+      error = "库存只有 "+store_count+" 件, 你只能买 "+store_count+" 件";
+      layer.alert(error, {icon: 2});
+      num2 = store_count; // 保证购买数量不能多余库存数量
+    }
+
+    $("input[name='goods_num["+cart_id+"]']").val(num2);
+
+    ajax_cart_list(); // ajax 更新商品价格 和数量
+  }
+
+
+  /**  全选 反选 **/
+  function check_all()
+  {
+    var vt = $("#select_all").is(':checked');
+    $("input[name^='cart_select']").prop('checked',vt);
+    // var checked = !$('#select_all').attr('checked');
+    // $("input[name^='cart_select']").attr("checked",!checked);
+    ajax_cart_list(); // ajax 更新商品价格 和数量
+  }
+
+
+  // ajax 删除购物车的商品
+  function ajax_del_cart(ids)
+  {
+    $.ajax({
+      type : "POST",
+      url:"{:U('Home/Cart/ajaxDelCart')}",//+tab,
+      data:{ids:ids}, //
+      dataType:'json',
+      success: function(data){
+        // alert(data.msg);
+        if(data.status == 1)
+          ajax_cart_list(); // ajax 请求获取购物车列表
+      }
+    });
+  }
+
+  // 批量删除购物车的商品
+  function del_cart_more()
+  {
+    if(!confirm('确定要删除吗?'))
+      return false;
+    // 循环获取复选框选中的值
+    var chk_value = [];
+    $('input[name^="cart_select"]:checked').each(function(){
+      var s_name = $(this).attr('name');
+      var id = s_name.replace('cart_select[','').replace(']','');
+      chk_value.push(id);
+    });
+    // ajax  调用删除
+    if(chk_value.length > 0)
+      ajax_del_cart(chk_value.join(','));
+  }
+</script>
 
 
 

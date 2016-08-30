@@ -7,26 +7,33 @@
   </div>
 </div>
 <div class="E-shop_cp">
-  <div class="E-shop_cp_l"><img src="__PUBLIC__/img/cp.png" width="520" height="520"></div>
+  <div class="E-shop_cp_l"><img src="{$goods.goods_id|goods_thum_images=520,520}" width="520" height="520"></div>
   <div class="E-shop_cp_r">
-    <p class="m1">龙米稻花香</p>
-    <p class="m2">独特灌装，保证真正的五常大米，没有掺米，碎米率<1%<span><a href="index.html">了解更多>></a></span></p>
-    <p class="m3">1、选择出品日期</p>
-    <div class="m33">
-      <ul>
-        <li class="m33_hover">
-          <p>2016年8月新米</p>
-        </li>
-        <li>
-          <p>2016年7月新米</p>
-        </li>
-        <li>
-          <p>2016年6月新米</p>
-        </li>
-      </ul>
-    </div>
+    <p class="m1">{$goods.goods_name}</p>
+    <p class="m2">
+      <if condition="$flash_sale['description'] neq ''">
+      {$flash_sale['description']}
+      <else/>
+      {$goods.goods_remark}
+    </if>
+      <!--<span><a href="index.html">了解更多>></a></span>-->
+    </p>
+
+    <foreach name="filter_spec" item="v" key="k" >
+      <p class="m3">选择{$k}</p>
+      <div class="m33">
+        <ul>
+          <foreach name="v" item="v2" key="k2" >
+            <li class=" <if condition='$k2 eq 0 '>m33_hover</if> "  onClick="switch_spec(this);" >
+              <p>{$v2[item]}</p>
+              <input type="radio"  style="display:none;" name="goods_spec[{$k}]" value="{$v2[item_id]}" <if condition="$k2 eq 0 ">checked="checked"</if>  />
+            </li>
+          </foreach>
+        </ul>
+      </div>
+    </foreach>
     <p class="m2">月份越近代表越高的价格，当然也带来了更高的新鲜度</p>
-    <p class="m3">2、选择数量</p>
+    <p class="m3">选择数量</p>
     <div class="gw_num"> <em class="jian">-</em>
       <input type="text" value="1" class="num"/>
       <em class="add">+</em> </div>
@@ -40,5 +47,149 @@
 
 
 <include file="Public/footer"/>
+
+
+<script>
+
+
+
+
+
+  $(document).ready(function(){
+    // 更新商品价格
+    get_goods_price();
+    $(".jqzoom").jqueryzoom({
+      xzoom: 480,
+      yzoom: 480,
+      offset: 30,
+      position: "right",
+      preload: 1,
+      lens: 1
+    });
+  });
+
+  /**
+   * 切换规格
+   */
+  function switch_spec(spec)
+  {
+    $(spec).siblings('input').trigger('click');	 // 让隐藏的 单选按钮选中
+    $(spec).parent().parent().parent().parent().find("div.sku").removeClass('sku-bo-blo'); //   清空勾选图标
+    $(spec).parent().addClass('sku-bo-blo'); // 当前 加上勾选图标
+    // 更新商品价格
+    get_goods_price();
+  }
+
+  /**
+   * 购买商品数量加加减减
+   */
+  function switch_num(num)
+  {
+    var num2 = parseInt($("#goods_num").val());
+    num2 += num;
+    if(num2 < 1) num2 = 1; // 保证购买数量不能少于 1
+    $("#goods_num").val(num2); // 修改商品购买数量
+    // 更新商品价格
+    //get_goods_price();
+  }
+  // 用作 sort 排序用
+  function sortNumber(a,b)
+  {
+    return a - b;
+  }
+  /*** 查询商品价格*/
+  function get_goods_price()
+  {
+
+    var goods_price = {$goods.shop_price}; // 商品起始价
+    var store_count = {$goods.store_count}; // 商品起始库存
+
+    var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表   //alert(spec_goods_price['28_100']['price']);
+    // 如果有属性选择项
+    if(spec_goods_price != null)
+    {
+      goods_spec_arr = new Array();
+      $("input[name^='goods_spec']:checked").each(function(){
+        goods_spec_arr.push($(this).val());
+      });
+      var spec_key = goods_spec_arr.sort(sortNumber).join('_');  //排序后组合成 key
+      goods_price = spec_goods_price[spec_key]['price']; // 找到对应规格的价格
+      store_count = spec_goods_price[spec_key]['store_count']; // 找到对应规格的库存
+    }
+
+    var goods_num = parseInt($("#goods_num").val());
+    // 库存不足的情况
+    if(goods_num > store_count)
+    {
+      goods_num = store_count;
+      layer.msg('库存仅剩 '+store_count+' 件', {icon: 2}); //alert('库存仅剩 '+store_count+' 件');
+      $("#goods_num").val(goods_num);
+    }
+    $("#goods_price").html(goods_price * goods_num); // 变动价格显示
+  }
+
+  /**
+   * 切换 商品详情  用户评价  规格参数  包装清单  售后服务
+   */
+  function switch_tab(cur,tab)
+  {
+    $("#tab1,#tab2,#tab3,#tab4").hide(); // 先全部隐藏
+    $("#"+tab).show();	// 再显示其中一个
+    $("ul.tab_li li").removeClass("current"); // 先全部样式去除
+    $(cur).addClass("current"); //  单独的给当前点击这个加上
+  }
+
+  // 验证码切换
+  function verify(){
+    $('#verify_code').attr('src','/index.php?m=Home&c=Index&a=verify&type=consult&fontSize=20&length=4&r='+Math.random());
+  }
+
+  //缩略图切换
+  $('.small-pic-li').each(function(i,o){
+    var lilength = $('.small-pic-li').length;
+    $(o).hover(function(){
+      $(o).siblings().removeClass('current');
+      $(o).addClass('current');
+      $('#zoomimg').attr('src',$(o).find('img').attr('data-img'));
+      $('#zoomimg').attr('jqimg',$(o).find('img').attr('data-big'));
+      if(i==0){
+        $('.next-left').addClass('disabled');
+      }
+      if(i+1==lilength){
+        $('.next-right').addClass('disabled');
+      }
+    });
+  })
+
+  //前一张缩略图
+  $('.next-left').click(function(){
+    var newselect = $('.small-pic>.current').prev();
+    $('.small-pic-li').removeClass('current');
+    $(newselect).addClass('current');
+    $('#zoomimg').attr('src',$(newselect).find('img').attr('data-img'));
+    $('#zoomimg').attr('jqimg',$(newselect).find('img').attr('data-big'));
+    var index = $('.small-pic>li').index(newselect);
+    if(index==0){
+      $('.next-left').addClass('disabled');
+    }
+    $('.next-right').removeClass('disabled');
+  })
+
+  //后前一张缩略图
+  $('.next-right').click(function(){
+    var newselect = $('.small-pic>.current').next();
+    $('.small-pic-li').removeClass('current');
+    $(newselect).addClass('current');
+    console.log(newselect)
+    $('#zoomimg').attr('src',$(newselect).find('img').attr('data-img'));
+    $('#zoomimg').attr('jqimg',$(newselect).find('img').attr('data-big'));
+    var index = $('.small-pic>li').index(newselect);
+    if(index+1 == $('.small-pic>li').length){
+      $('.next-right').addClass('disabled');
+    }
+    $('.next-left').removeClass('disabled');
+  })
+</script>
+
 </body>
 </html>
