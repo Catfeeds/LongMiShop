@@ -134,7 +134,7 @@ class ShopController extends BaseIndexController {
             $this->assign('select_all', $_POST['select_all']); // 全选框
         }
 
-        $result = $cartLogic->cartList($this->user, $this->session_id,1,1); // 选中的商品
+        $result = $cartLogic->cartList($this->user, $this->session_id,0,1); // 选中的商品
         if(empty($result['total_price']))
             $result['total_price'] = Array( 'total_fee' =>0, 'cut_fee' =>0, 'num' => 0);
 

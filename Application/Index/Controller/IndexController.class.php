@@ -22,5 +22,16 @@ class IndexController extends BaseIndexController {
     }
 
 
+    public function test(){
+        $tables = M()->query($sql = 'show tables');
+        foreach ($tables as $table){
+            $sql = "alter table ".$table['tables_in_tpshop']." engine=innodb";
+            echo $sql;exit;
+            M()->query($sql);
+            echo $table['tables_in_tpshop'].' is ok;<br>';
+        }
+//
+    }
+
 
 }
