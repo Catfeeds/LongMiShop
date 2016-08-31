@@ -62,3 +62,6 @@ CREATE TABLE `tp_logistics` (
 
 //商品表 添加配送字段
 ALTER TABLE  `tp_goods` ADD  `delivery_way` INT( 11 ) NOT NULL COMMENT  '配送方式' AFTER  `is_free_shipping` ;
+
+//配置表新增官网id
+INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VALUES (NULL, 'index_id', '104', 'shop_info', NULL);

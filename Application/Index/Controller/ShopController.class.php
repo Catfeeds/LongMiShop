@@ -21,8 +21,8 @@ class ShopController extends BaseIndexController {
         //  form表单提交
         C('TOKEN_ON',true);
         $goodsLogic = new \Common\Logic\GoodsLogic();
-        $goods_id = I("get.id");
-        $goods_id = 104;
+        $config_id = M('config')->field('value')->where('name = "index_id"')->find();
+        $goods_id = $config_id['value'];
         $goods = M('Goods')->where("goods_id = '$goods_id'")->find();
         if(empty($goods) || ($goods['is_on_sale'] == 0)){
             $this->error('该商品已经下架',U('Index/index'));
