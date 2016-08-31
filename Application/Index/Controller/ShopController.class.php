@@ -3,6 +3,8 @@ namespace Index\Controller;
 
 class ShopController extends BaseIndexController {
 
+    public $cartLogic;
+
     function exceptAuthActions()
     {
         return array(
@@ -11,6 +13,7 @@ class ShopController extends BaseIndexController {
     }
 
     public function _initialize() {
+        $this->cartLogic = new \Common\Logic\CartLogic();
         parent::_initialize();
     }
 
@@ -60,18 +63,25 @@ class ShopController extends BaseIndexController {
     }
 
     public function cart2(){
-//        $buy_logic  = new BuyLogic();
-//        $buy_logic -> createOrder();
+        // if($this->user_id == 0)
+        //     $this->error('请先登陆',U('Index/User/login'));
+        
+        // if($this->cartLogic->cart_count($this->user_id,1) == 0 ) 
+        //     $this->error ('你的购物车没有选中商品','Cart/cart');
+        
+        $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1); // 获取购物车商品
+        foreach($result['cartList'] as $item){ //计算总额
+            $sum += $item['goods_price'] * $item['goods_num'];
+        }    
+        $this->assign('cartList', $result['cartList']); // 购物车的商品                
+        $this->assign('total_price', $sum); // 总计
         $this->display();
     }
 
-    /**
-     * ajax 获取订单商品价格 或者提交 订单
-     */
     public function cart3(){
-        $buy_logic  = new \Common\Logic\BuyLogic();
-        $buy_logic -> createOrder();
+        
     }
+
 
     /*
      * ajax 请求获取购物车列表
@@ -83,6 +93,7 @@ class ShopController extends BaseIndexController {
         $post_cart_select = I("cart_select"); // 购物车选中状态
         $where = " session_id = '$this->session_id' "; // 默认按照 session_id 查询
         $this->user_id && $where = " user_id = ".$this->user_id; // 如果这个用户已经等了则按照用户id查询
+
         $cartList = M('Cart')->where($where)->getField("id,goods_num,selected,prom_type,prom_id");
 
         if($post_goods_num)
@@ -111,6 +122,57 @@ class ShopController extends BaseIndexController {
 
         $this->assign('cartList', $result['cartList']); // 购物车的商品
         $this->assign('total_price', $result['total_price']); // 总计
+        $this->display();
+    }
+
+    /*
+     * ajax 获取用户收货地址 用于购物车确认订单页面
+     */
+    public function ajaxAddress(){                               
+        $address_list = M('UserAddress')->where("user_id = {$this->user_id}")->select();
+        if($address_list){
+            $area_id = array();
+            foreach ($address_list as $val){
+                $area_id[] = $val['province'];
+                        $area_id[] = $val['city'];
+                        $area_id[] = $val['district'];
+                        $area_id[] = $val['twon'];                        
+            }    
+                $area_id = array_filter($area_id);
+            $area_id = implode(',', $area_id);
+            $regionList = M('region')->where("id in ($area_id)")->getField('id,name');
+            $this->assign('regionList', $regionList);
+        }
+        // dump($address_list);
+        $c = M('UserAddress')->where("user_id = {$this->user_id} and is_default = 1")->count(); // 看看有没默认收货地址        
+        if((count($address_list) > 0) && ($c == 0)) // 如果没有设置默认收货地址, 则第一条设置为默认收货地址
+            $address_list[0]['is_default'] = 1;
+                     
+        $this->assign('address_list', $address_list);
+        $this->display('ajax_address');
+    }
+
+    public function add_address(){
+        if(IS_POST){ //新增地址
+            $data = I('post.');
+            $data['user_id'] = $this->user['user_id'];
+            $this->address = M('user_address');
+            if(!empty($data['subBox'])){
+                $where['user_id'] = $this->user['user_id'];
+                $where['is_default'] = 1;
+                $datas['is_default'] = 0;
+                $this->address->where($where)->save($datas);
+                $data['is_default'] = 1;
+            }
+            $res = $this->address->add($data);
+            if($res){
+                $this->redirect('Index/Shop/cart2');exit;
+            }else{
+                $this->error('修改失败',U('Index/Shop/cart2'));exit;
+            }
+        }
+        $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
+        $this->assign('province',$p);
         $this->display();
     }
 

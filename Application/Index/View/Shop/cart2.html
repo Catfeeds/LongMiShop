@@ -1,24 +1,14 @@
 <include file="Public/header"/>
 
+<form id="cart2_form" method="post">
 <div class="inventory">
   <div class="inventory_box">
     <div class="in1">收货地址</div>
     <div class="tab_box2">
 
       <div class="m333">
-        <ul>
-          <li class="m333_hover">
-            <p>陈大猷(默认地址）</p>
-            <p>18027186429</p>
-            <p>广东省 广州市 天河区</p>
-            <p>华景新城逸宁居31H</p>
-          </li>
-          <li>
-            <p>陈大猷</p>
-            <p>18027186429</p>
-            <p>广东省 广州市 天河区</p>
-            <p>华景新城逸宁居31H</p>
-          </li>
+        <ul id="ajax_address">
+
         </ul>
       </div>
       <div class="add_dz_box">
@@ -32,9 +22,9 @@
       <div>发票类型：电子发票
         </p>
         <div class="mui-input-row mui-radio mui-left" style="float:left"> 发票抬头：
-          <input name="radio1" type="radio">
+          <input name="invoice_title" type="radio" value="1">
           个人
-          <input name="radio1" type="radio" checked>
+          <input name="invoice_title" type="radio" checked value="2">
           单位</div>
       </div>
       <div style="clear:both"></div>
@@ -51,20 +41,16 @@
           <td width="9%" class="td">数量</td>
           <td width="15%" class="td">小计</td>
         </tr>
-        <tr>
-          <td width="4%"><div class="img"><img src="__PUBLIC__/img/cp5.png" width="92" height="92"></div></td>
-          <td width="53%">龙米2016年8月份新米</td>
-          <td align="center">￥99.00</td>
-          <td align="center">1</td>
-          <td align="center">￥99.00</td>
-        </tr>
-        <tr>
-          <td><div class="img"><img src="__PUBLIC__/img/cp5.png" width="92" height="92"></div></td>
-          <td>龙米2016年8月份新米</td>
-          <td align="center">￥99.00</td>
-          <td align="center">1</td>
-          <td align="center">￥99.00</td>
-        </tr>
+        <volist name="cartList" id="item">
+          <tr>
+            <td width="4%"><div class="img"><img src="{$item['goods_id']|goods_thum_images=92,92}" width="92" height="92"></div></td>
+            <td width="53%">{: $item['goods_name']}</td>
+            <td align="center">￥{: $item['goods_price']}</td>
+            <td align="center">{: $item['goods_num']}</td>
+            <td align="center">￥{: $item['goods_price'] * $item['goods_num']}</td>
+          </tr>
+        </volist>
+
         <tr>
           <td colspan="2">&nbsp;</td>
           <td>&nbsp;</td>
@@ -77,8 +63,8 @@
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td width="17%">&nbsp;</td>
-          <td width="70%"><div class="mo">应付金额  ￥99.00</div></td>
-          <td width="13%"><div class="m4_btn"><a href="#">提交订单</a></div></td>
+          <td width="70%"><div class="mo">应付金额  ￥{: $total_price}<input name="total_price" type="hidden" value="{: $total_price}"></div></td>
+          <td width="13%"><div class="m4_btn"><a href="javascript:void(0);" onclick="submit_order()">提交订单</a></div></td>
         </tr>
       </table>
     </div>
@@ -89,51 +75,100 @@
 
 <div id="popDiv" class="mydiv" style="display:none; height:auto">
 
-
-  <div class="pop">
-    <div class="in2">
-      <div class="in2_l">收货地址</div>
-      <div class="in2_r"><a href="javascript:closeDiv()"><img src="__PUBLIC__/img/close.png" width="22" height="21"></a></div>
-    </div>
-
-    <div class="pop_main">
-      <div class="text_box" style="padding-top:20px">
-        <input name="" type="text" class="pop_text" style="margin-right:10px; width:150px" placeholder="收货人姓名"><input name="" type="text" class="pop_text" style=" width:495px" placeholder="手机号码">
-
-      </div>
-      <div class="text_box">
-        <input name="" type="text" class="pop_text" style="margin-right:10px; width:120px" placeholder="区号（可选）"><input name="" type="text" class="pop_text" style=" width:525px" placeholder="固定电话（可选）">
-
-      </div>
-
-      <div class="text_box">
-        <select name="province" class="set"></select><select name="city" class="set"></select><select name="area" class="set" style="width:218px; margin-right:0px !important"></select>
-        <script language="javascript" defer>
-          new PCAS("province","city","area","","","");
-        </script>
-      </div>
-      <div class="text_box">
-        <input name="" type="text" class="pop_text" style="margin-right:10px; width:655px" placeholder="街道编号/名称，楼宇名称">
-        <div class="mui-input-row mui-checkbox mui-left" style="line-height:60px">
-          <input name="subBox" type="checkbox" class="check-one check check_titel">设为默认地址
-        </div>
-      </div>
-    </div>
-    <div class="tab_box1" style="border-radius:0 0 6px 6px!important">
-      <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td>&nbsp;</td>
-          <td width="13%"><div class="m4_btn"><a href="#">保存</a></div></td>
-        </tr>
-      </table>
-    </div>
-  </div>
 </div>
+
+
 <div id="bg" class="bg" style="display:none;"></div>
 <iframe id='popIframe' class='popIframe' frameborder='0' ></iframe>
 
 
 
 <include file="Public/footer"/>
+
+<script src="__MAIN__/js/global.js"></script>
+<script src="__MAIN__/js/pc_common.js"></script>
+
 </body>
 </html>
+<script>
+$(document).ready(function(){
+  ajax_address(); // 获取用户收货地址列表
+  add_address(); //新增收货地址
+});
+
+  /*
+  * ajax 获取当前用户的收货地址列表
+  */
+  function ajax_address(){
+    $.ajax({
+      url:"{:U('Index/Shop/ajaxAddress')}",//+tab,
+      success: function(data){
+        // console.log(data);return false;
+        $("#ajax_address").html('');
+        $("#ajax_address").append(data);
+        // if(data != '') // 有收货地址列表 再计算价钱
+        //   ajax_order_price(); // 计算订单价钱
+      }
+    });
+  }
+
+  /*新增收货地址*/
+  function add_address(){
+    $.ajax({
+      url:"{: U('Index/Shop/add_address')}",
+      success:function(data){
+        $("#popDiv").html('');
+        $('#popDiv').append(data);
+      }
+    });
+  }
+
+  function checkForm(){
+        var consignee = $('input[name="consignee"]').val();
+        var province = $('select[name="province"]').find('option:selected').val();
+        var city = $('select[name="city"]').find('option:selected').val();
+        var district = $('select[name="district"]').find('option:selected').val();
+        var address = $('textarea[name="address"]').val();
+        var mobile = $('input[name="mobile"]').val();
+        var error = '';
+        if(consignee == ''){
+            error += '收货人不能为空 <br/>';
+        }
+        if(province==0){
+            error += '请选择省份 <br/>';
+        }
+        if(city==0){
+            error += '请选择城市 <br/>';
+        }
+        if(district==0){
+            error += '请选择区域 <br/>';
+        }
+        if(address == ''){
+            error += '请填写地址 <br/>';
+        }
+        if(!checkMobile(mobile))
+            error += '手机号码格式有误 <br/>';
+        if(error){
+            alert(error);
+//            layer.alert(error, {icon: 2});
+            //  layer.msg('只想弱弱提示');
+            return false;
+        }
+        return true;
+    }
+
+    //提交订单
+    function submit_order(){
+      // var data  = $('#cart2_form').serialize();
+      // console.log(data); return false;
+      $.ajax({
+        type:'post',
+        url:"{: U('Index/Shop/cart3')}",
+        data : $('#cart2_form').serialize()+"&act=submit_order",// 你的formid
+        dataType:'json',
+        success:function(data){
+
+        }
+      });
+    }
+</script>
