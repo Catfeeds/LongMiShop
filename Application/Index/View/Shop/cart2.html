@@ -1,5 +1,6 @@
 <include file="Public/header"/>
 
+<form id="cart2_form" method="post">
 <div class="inventory">
   <div class="inventory_box">
     <div class="in1">收货地址</div>
@@ -21,9 +22,9 @@
       <div>发票类型：电子发票
         </p>
         <div class="mui-input-row mui-radio mui-left" style="float:left"> 发票抬头：
-          <input name="radio1" type="radio">
+          <input name="invoice_title" type="radio" value="1">
           个人
-          <input name="radio1" type="radio" checked>
+          <input name="invoice_title" type="radio" checked value="2">
           单位</div>
       </div>
       <div style="clear:both"></div>
@@ -62,8 +63,8 @@
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td width="17%">&nbsp;</td>
-          <td width="70%"><div class="mo">应付金额  ￥{: $total_price}</div></td>
-          <td width="13%"><div class="m4_btn"><a href="#">提交订单</a></div></td>
+          <td width="70%"><div class="mo">应付金额  ￥{: $total_price}<input name="total_price" type="hidden" value="{: $total_price}"></div></td>
+          <td width="13%"><div class="m4_btn"><a href="javascript:void(0);" onclick="submit_order()">提交订单</a></div></td>
         </tr>
       </table>
     </div>
@@ -154,5 +155,20 @@ $(document).ready(function(){
             return false;
         }
         return true;
+    }
+
+    //提交订单
+    function submit_order(){
+      // var data  = $('#cart2_form').serialize();
+      // console.log(data); return false;
+      $.ajax({
+        type:'post',
+        url:"{: U('Index/Shop/cart3')}",
+        data : $('#cart2_form').serialize()+"&act=submit_order",// 你的formid
+        dataType:'json',
+        success:function(data){
+
+        }
+      });
     }
 </script>

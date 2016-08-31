@@ -5,6 +5,7 @@
 	<if condition="$item['is_default'] eq 1">
 	
 		<li class="m333_hover">
+			<input name="address_id" type="radio" value="{: $item['address_id']}" checked style="display:none">
           <p>{: $item['consignee']}(默认地址）</p>
           <p>{: $item['mobile']}</p>
           <p>{$regionList[$item[province]]} {$regionList[$item[city]]} </p>
@@ -12,6 +13,7 @@
         </li>
 	<else/>
 		<li>
+			<input name="address_id" type="radio" value="{: $item['address_id']}" style="display:none">
 	      <p>{: $item['consignee']}</p>
 	      <p>{: $item['mobile']}</p>
 	      <p>{$regionList[$item[province]]} {$regionList[$item[city]]}</p>
@@ -28,6 +30,7 @@
 	$(this).click(function(){
 		$('.m333').find('li').removeClass('m333_hover');
 		$(this).addClass('m333_hover');
+		$(this).children('input').attr("checked",'checked'); 
 		
 		})
 	})

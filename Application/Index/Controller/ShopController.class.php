@@ -70,27 +70,16 @@ class ShopController extends BaseIndexController {
         //     $this->error ('你的购物车没有选中商品','Cart/cart');
         
         $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1); // 获取购物车商品
-        // $address_lists = get_user_address_list($this->user_id);   
-        // $default_address = get_user_default_address($this->user_id);
-        // dump($default_address);
-
         foreach($result['cartList'] as $item){ //计算总额
             $sum += $item['goods_price'] * $item['goods_num'];
         }    
-        // $shippingList = M('Plugin')->where("`type` = 'shipping' and status = 1")->select();// 物流公司                
-        
-        // $Model = new \Think\Model(); // 找出这个用户的优惠券 没过期的  并且 订单金额达到 condition 优惠券指定标准的               
-        // $sql = "select c1.name,c1.money,c1.condition, c2.* from __PREFIX__coupon as c1 inner join __PREFIX__coupon_list as c2  on c2.cid = c1.id and c1.type in(0,1,2,3) and order_id = 0  where c2.uid = {$this->user_id}  and ".time()." < c1.use_end_time and c1.condition <= {$result['total_price']['total_fee']}";
-        // $couponList = $Model->query($sql);
-               
-        // $this->assign('couponList', $couponList); // 优惠券列表
-        // $this->assign('shippingList', $shippingList); // 物流公司
         $this->assign('cartList', $result['cartList']); // 购物车的商品                
         $this->assign('total_price', $sum); // 总计
-        // $this->assign('lists',$address_lists); //用户收获地址
-        // $this->assign('default_address',$default_address);//默认地址
-
         $this->display();
+    }
+
+    public function cart3(){
+        
     }
 
 
