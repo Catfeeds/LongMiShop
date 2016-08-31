@@ -73,7 +73,7 @@
                                         <div class="total">¥ {$list['order_amount']}</div>
                                         <div class="status">
                                             <if condition="$list.pay_btn eq 1">
-                                                <a href="{:U('/Home/Cart/cart4',array('order_id'=>$list[order_id]))}" class="blue-small-btn js-payment-order">
+                                                <a href="{:U('/Index/Payment/index',array('order_id'=>$list[order_id]))}" class="blue-small-btn js-payment-order">
                                                     现在付款
                                                 </a>
                                             </if>
@@ -82,6 +82,7 @@
                                 </div>
                             </volist>
                         </div>
+                        <!--{$page}-->
                     </div>
                 </div>
             </div>

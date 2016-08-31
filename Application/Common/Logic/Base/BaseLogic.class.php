@@ -23,6 +23,11 @@ class BaseLogic extends RelationModel
      */
     protected $_member_info = array();
 
+    public function __construct()
+    {
+        $this -> _post_data = I('post.');
+    }
+
     /**
      * 动态方法实现
      * @access public

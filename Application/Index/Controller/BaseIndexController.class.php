@@ -7,9 +7,9 @@ use Common\Logic\UsersLogic;
 
 abstract class BaseIndexController extends BaseController {
 
-    public $user_id;
-    public $user;
-    public $user_info;
+    public $user_id     = null;
+    public $user        = null;
+    public $user_info   = null;
 
 
     /**

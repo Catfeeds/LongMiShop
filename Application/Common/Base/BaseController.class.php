@@ -5,8 +5,8 @@ use Think\Controller;
 
 class BaseController extends Controller
 {
+    public $session_id = null;
 
-    public $session_id;
     public function _initialize() {
         $this->session_id = session_id();
     }

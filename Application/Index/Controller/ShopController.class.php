@@ -65,6 +65,13 @@ class ShopController extends BaseIndexController {
         $this->display();
     }
 
+    /**
+     * ajax 获取订单商品价格 或者提交 订单
+     */
+    public function cart3(){
+        $buy_logic  = new \Common\Logic\BuyLogic();
+        $buy_logic -> createOrder();
+    }
 
     /*
      * ajax 请求获取购物车列表
@@ -76,7 +83,6 @@ class ShopController extends BaseIndexController {
         $post_cart_select = I("cart_select"); // 购物车选中状态
         $where = " session_id = '$this->session_id' "; // 默认按照 session_id 查询
         $this->user_id && $where = " user_id = ".$this->user_id; // 如果这个用户已经等了则按照用户id查询
-
         $cartList = M('Cart')->where($where)->getField("id,goods_num,selected,prom_type,prom_id");
 
         if($post_goods_num)
