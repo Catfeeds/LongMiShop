@@ -22,7 +22,7 @@ class ShopController extends BaseIndexController {
         C('TOKEN_ON',true);
         $goodsLogic = new \Common\Logic\GoodsLogic();
         $goods_id = I("get.id");
-        $goods_id = 43;
+        $goods_id = 104;
         $goods = M('Goods')->where("goods_id = '$goods_id'")->find();
         if(empty($goods) || ($goods['is_on_sale'] == 0)){
             $this->error('该商品已经下架',U('Index/index'));
@@ -46,6 +46,7 @@ class ShopController extends BaseIndexController {
         $spec_goods_price  = M('spec_goods_price')->where("goods_id = $goods_id")->getField("key,price,store_count"); // 规格 对应 价格 库存表
         M('Goods')->where("goods_id=$goods_id")->save(array('click_count'=>$goods['click_count']+1 )); //统计点击数
         $commentStatistics = $goodsLogic->commentStatistics($goods_id);// 获取某个商品的评论统计
+        $cart_count = M('cart')->where("user_id = '".$this->user_id."'")->count();
         $this->assign('spec_goods_price', json_encode($spec_goods_price,true)); // 规格 对应 价格 库存表
         $this->assign('commentStatistics',$commentStatistics);//评论概览
         $this->assign('goods_attribute',$goods_attribute);//属性值
@@ -55,7 +56,18 @@ class ShopController extends BaseIndexController {
         $this->assign('siblings_cate',$goodsLogic->get_siblings_cate($goods['cat_id']));//相关分类
         $this->assign('look_see',$goodsLogic->get_look_see($goods));//看了又看
         $this->assign('goods',$goods);
+        $this->assign('cart_count',$cart_count);
+        dump($this->user);exit;
         $this->display();
+    }
+
+    function ajaxAddCart()
+    {
+        $goods_id = I("goods_id"); // 商品id
+        $goods_num = I("goods_num");// 商品数量
+        $goods_spec = I("goods_spec"); // 商品规格            
+        $result = $this->cartLogic->addCart($goods_id, $goods_num, $goods_spec,$this->session_id,$this->user_id); // 将商品加入购物车                     
+        exit(json_encode($result));       
     }
 
     public function cart(){
