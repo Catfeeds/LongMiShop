@@ -6,9 +6,31 @@ use Think\Controller;
 class BaseController extends Controller
 {
     public $session_id = null;
+    public $shopConfig = array();
 
     public function _initialize() {
-        $this->session_id = session_id();
+        $this -> session_id = session_id();
+        $this -> public_assign();
+    }
+
+
+
+    /**
+     * 保存公共变量
+     */
+    public function public_assign()
+    {
+        $shopConfig = array();
+        $config = M('config')->cache(true,LONGMI_CACHE_TIME)->select();
+        foreach($config as $k => $v)
+        {
+            if($v['name'] == 'hot_keywords'){
+                $shopConfig['hot_keywords'] = explode('|', $v['value']);
+            }
+            $shopConfig[$v['inc_type'].'_'.$v['name']] = $v['value'];
+        }
+        $this -> shopConfig = $shopConfig;
+        $this->assign('shopConfig', $shopConfig);
     }
 
     /**

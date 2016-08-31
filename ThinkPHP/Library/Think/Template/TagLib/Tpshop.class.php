@@ -41,8 +41,8 @@ class Tpshop extends TagLib {
            
         $str = '<?php ';
         $str .= '$pid ='.$pid.';';
-        $str .= '$ad_position = M("ad_position")->cache(true,TPSHOP_CACHE_TIME)->getField("position_id,position_name,ad_width,ad_height");';
-        $str .= '$result = D("ad")->where("pid=$pid  and enabled = 1 and start_time < '.strtotime(date('Y-m-d H:00:00')).' and end_time > '.strtotime(date('Y-m-d H:00:00')).' ")->order("orderby desc")->cache(true,TPSHOP_CACHE_TIME)->limit("'.$limit.'")->select();';
+        $str .= '$ad_position = M("ad_position")->cache(true,LONGMI_CACHE_TIME)->getField("position_id,position_name,ad_width,ad_height");';
+        $str .= '$result = D("ad")->where("pid=$pid  and enabled = 1 and start_time < '.strtotime(date('Y-m-d H:00:00')).' and end_time > '.strtotime(date('Y-m-d H:00:00')).' ")->order("orderby desc")->cache(true,LONGMI_CACHE_TIME)->limit("'.$limit.'")->select();';
         $str .= '
 
 if(!in_array($pid,array_keys($ad_position)) && $pid)
@@ -148,7 +148,7 @@ foreach($result as $'.$key.'=>$'.$item.'):
                                 {
                                     $Model = new \Think\Model();    
                                     $'.$result_name.' = $'.$name.' = $Model->query("'.$sql.'"); 
-                                    S("sql_".$md5_key,$'.$name.',TPSHOP_CACHE_TIME);
+                                    S("sql_".$md5_key,$'.$name.',LONGMI_CACHE_TIME);
                                 }    
                              ';  
             $parseStr  .=   ' foreach($'.$name.' as $'.$key.'=>$'.$item.'): ?>';

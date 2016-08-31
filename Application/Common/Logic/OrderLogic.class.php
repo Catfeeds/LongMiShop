@@ -9,7 +9,7 @@ class OrderLogic extends BaseLogic
     public function __construct()
     {
 
-        parent::__construct();
+        parent::_initialize();
 
     }
 
