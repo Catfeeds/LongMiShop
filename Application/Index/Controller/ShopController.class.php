@@ -78,7 +78,7 @@ class ShopController extends BaseIndexController {
              $this->error('请先登陆',U('Index/User/login'));
         
          if($this->cartLogic->cart_count($this->user_id,1) == 0 )
-             $this->error ('你的购物车没有选中商品','Cart/cart');
+             $this->error ('你的购物车没有选中商品',U('Index/Shop/cart'));
         
         $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1); // 获取购物车商品
         $sum = 0;
