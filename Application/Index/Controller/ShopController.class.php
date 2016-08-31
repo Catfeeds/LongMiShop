@@ -57,7 +57,6 @@ class ShopController extends BaseIndexController {
         $this->assign('look_see',$goodsLogic->get_look_see($goods));//看了又看
         $this->assign('goods',$goods);
         $this->assign('cart_count',$cart_count);
-        dump($this->user);exit;
         $this->display();
     }
 
