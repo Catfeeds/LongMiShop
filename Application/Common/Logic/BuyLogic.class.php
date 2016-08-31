@@ -14,7 +14,7 @@ class BuyLogic extends BaseLogic
 
     public function __construct()
     {
-        parent::__construct();
+        parent::_initialize();
         $this -> cartLogic = new \Common\Logic\CartLogic();
         $this -> userId = session(__UserID__);
 //        $this -> UserAddressModel = new \Common\Model\UserAddress();
@@ -44,7 +44,7 @@ class BuyLogic extends BaseLogic
 
             //第5步 订单后续处理
             $this->_createOrderStep5();
-//            throw new \Exception('登录超时请重新登录');//调试使用
+            throw new \Exception('调试使用');//调试使用
             $this -> model -> commit();
             return callback(true,'',array());
 
