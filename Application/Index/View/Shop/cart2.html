@@ -22,11 +22,13 @@
       <div>发票类型：电子发票
         </p>
         <div class="mui-input-row mui-radio mui-left" style="float:left"> 发票抬头：
-          <input name="invoice_title" type="radio" value="1">
+          <input name="invoice_title" type="radio" value="1" checked='checked' onclick="selectedvalue()">
           个人
-          <input name="invoice_title" type="radio" checked value="2">
+          <input name="invoice_title" type="radio"  value="2" onclick="selectedvalue()">
           单位</div>
       </div>
+
+      <div id="invoice_div" style="display:none"><br/>发票地址：<input name="invoice" type="text" class="pop_text" style="width:280px"></div>
       <div style="clear:both"></div>
       <p>发票内容：购买商品明细</p>
       <span>电子发票是税务局认可的有效收付款凭证，可作为售后服务凭据。</span> <span>电子发票打印后可以用于企业报销。</span> </div>
@@ -109,6 +111,21 @@ $(document).ready(function(){
       }
     });
   }
+
+  //发票抬头
+  
+  function selectedvalue(){
+    var values = $("input[name='invoice_title']:checked").val();
+    if(values==1){
+      $('#invoice_div').hide();
+    }else{
+      $('#invoice_div').show();
+    }
+  }
+  // $('.invoice_title').change(['Data'],function(){
+  //   var values = $(this).val();
+  //   alert(values);
+  // });
 
   /*新增收货地址*/
   function add_address(){
