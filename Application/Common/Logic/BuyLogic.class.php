@@ -50,7 +50,7 @@ class BuyLogic extends BaseLogic
 
         } catch (\Exception $e){
             $this -> model -> rollback();
-//            dd(callback(false, $e->getMessage()));//调试使用
+            dd(callback(false, $e->getMessage()));//调试使用
             return callback(false, $e->getMessage());
         }
 

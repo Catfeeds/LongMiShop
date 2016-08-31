@@ -155,7 +155,7 @@ class CartLogic extends BaseLogic
         }
 
         $cartData = M('Cart')->where($where)->select();  // 获取购物车商品
-        $anum = $total_price =  $cut_fee = 0;
+        $num = $total_price =  $cut_fee = 0;
         $cartList = array();
         if(!empty($cartData)){
             foreach ($cartData as $k=>$val){
@@ -168,13 +168,13 @@ class CartLogic extends BaseLogic
                 $cartList[$k] = $val;
                 $cartList[$k]['goods_fee'] = $val['goods_num'] * $val['member_goods_price'];
                 $cartList[$k]['store_count']  = getGoodNum($val['goods_id'],$val['spec_key']); // 最多可购买的库存数量
-                $anum += $val['goods_num'];
+                $num += $val['goods_num'];
                 $cut_fee += $val['goods_num'] * $val['market_price'] - $val['goods_num'] * $val['member_goods_price'];
                 $total_price += $val['goods_num'] * $val['member_goods_price'];
             }
         }
-        $total_price = array('total_fee' =>$total_price , 'cut_fee' => $cut_fee,'num'=> $anum,); // 总计
-        setcookie('cn',$anum,null,'/');
+        $total_price = array('total_fee' =>$total_price , 'cut_fee' => $cut_fee,'num'=> $num,); // 总计
+        setcookie('cn',$num,null,'/');
         if($mode == 1) return array('cartList' => $cartList, 'total_price' => $total_price);
         return array('status'=>1,'msg'=>'','result'=>array('cartList' =>$cartList, 'total_price' => $total_price));
     }
