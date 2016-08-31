@@ -1,6 +1,8 @@
 <include file="Public/header"/>
 
 
+<form method="post" id="buy_goods_form">
+<input name="goods_id" type="hidden" value="{: $goods['goods_id']}" /> 
 <div class="E-shop">
   <div class="shop_box">
     <div class="E-shop_box"><a href="{:U('Shop/cart')}">购物车(<span>8</span>)</a></div>
@@ -18,7 +20,6 @@
     </if>
       <!--<span><a href="index.html">了解更多>></a></span>-->
     </p>
-
     <foreach name="filter_spec" item="v" key="k" >
       <p class="m3">选择{$k}</p>
       <div class="m33">
@@ -26,7 +27,7 @@
           <foreach name="v" item="v2" key="k2" >
             <li class=" <if condition='$k2 eq 0 '>m33_hover</if> "  onClick="switch_spec(this);" >
               <p>{$v2[item]}</p>
-              <input type="radio"  style="display:none;" name="goods_spec[{$k}]" value="{$v2[item_id]}" <if condition="$k2 eq 0 ">checked="checked"</if>  />
+              <input  type="radio"  style="display:none;" name="goods_spec[{$k}]" value="{$v2[item_id]}" <if condition="$k2 eq 0 ">checked="checked"</if>  />
             </li>
           </foreach>
         </ul>
@@ -34,16 +35,17 @@
     </foreach>
     <p class="m2">月份越近代表越高的价格，当然也带来了更高的新鲜度</p>
     <p class="m3">选择数量</p>
-    <div class="gw_num"> <em class="jian">-</em>
-      <input type="text" value="1" class="num"/>
-      <em class="add">+</em> </div>
+    <div class="gw_num"> <em  onClick="switch_num(-1);">-</em>
+      <input type="text" value="1" class="num" id="goods_num" name="goods_num"/>
+      <em class="switch_add"  onClick="switch_num(+1);">+</em> </div>
     <div style="clear:both"></div>
     <p class="m2 none">根据统计，一箱龙米可以让一个三口之家整整享用一个星期</p>
 
-    <div class="m4_btn"><a href="{:U('Shop/cart')}">现在购买</a></div>
+    <div class="m4_btn"><a href="javascript:void(0);" onclick="AjaxAddCarts()">现在购买</a></div>
 
   </div>
 </div>
+</form>
 
 
 <include file="Public/footer"/>
@@ -55,29 +57,47 @@
 
 
 
-  $(document).ready(function(){
-    // 更新商品价格
-    get_goods_price();
-    $(".jqzoom").jqueryzoom({
-      xzoom: 480,
-      yzoom: 480,
-      offset: 30,
-      position: "right",
-      preload: 1,
-      lens: 1
-    });
-  });
+  // $(document).ready(function(){
+  //   // 更新商品价格
+  //   get_goods_price();
+  //   $(".jqzoom").jqueryzoom({
+  //     xzoom: 480,
+  //     yzoom: 480,
+  //     offset: 30,
+  //     position: "right",
+  //     preload: 1,
+  //     lens: 1
+  //   });
+  // });
 
+   /**
+   * 提交订单
+   */
+
+   function AjaxAddCarts(){
+   	$.ajax({
+   		type: 'post',
+   		url:  "{: U('Index/Shop/ajaxAddCart')}",
+   		data: $('#buy_goods_form').serialize(),// 你的formid 搜索表单 序列化提交
+   		dataType:'json',
+   		success:function(data){
+   			if(data.status < 0){
+   				alert(data['msg'])
+   			}else if(data['status']==1){
+   				location.href = "{: U('Index/Shop/cart')}";
+   			}
+   		}
+
+   	});
+   }
   /**
    * 切换规格
    */
   function switch_spec(spec)
   {
-    $(spec).siblings('input').trigger('click');	 // 让隐藏的 单选按钮选中
-    $(spec).parent().parent().parent().parent().find("div.sku").removeClass('sku-bo-blo'); //   清空勾选图标
-    $(spec).parent().addClass('sku-bo-blo'); // 当前 加上勾选图标
-    // 更新商品价格
-    get_goods_price();
+  	$(spec).children('input').attr("checked",'checked'); 	 // 让隐藏的 单选按钮选中
+  	$(spec).parent().find('li').removeClass('m33_hover');
+	$(spec).addClass('m33_hover');
   }
 
   /**
@@ -139,56 +159,7 @@
     $(cur).addClass("current"); //  单独的给当前点击这个加上
   }
 
-  // 验证码切换
-  function verify(){
-    $('#verify_code').attr('src','/index.php?m=Home&c=Index&a=verify&type=consult&fontSize=20&length=4&r='+Math.random());
-  }
 
-  //缩略图切换
-  $('.small-pic-li').each(function(i,o){
-    var lilength = $('.small-pic-li').length;
-    $(o).hover(function(){
-      $(o).siblings().removeClass('current');
-      $(o).addClass('current');
-      $('#zoomimg').attr('src',$(o).find('img').attr('data-img'));
-      $('#zoomimg').attr('jqimg',$(o).find('img').attr('data-big'));
-      if(i==0){
-        $('.next-left').addClass('disabled');
-      }
-      if(i+1==lilength){
-        $('.next-right').addClass('disabled');
-      }
-    });
-  })
-
-  //前一张缩略图
-  $('.next-left').click(function(){
-    var newselect = $('.small-pic>.current').prev();
-    $('.small-pic-li').removeClass('current');
-    $(newselect).addClass('current');
-    $('#zoomimg').attr('src',$(newselect).find('img').attr('data-img'));
-    $('#zoomimg').attr('jqimg',$(newselect).find('img').attr('data-big'));
-    var index = $('.small-pic>li').index(newselect);
-    if(index==0){
-      $('.next-left').addClass('disabled');
-    }
-    $('.next-right').removeClass('disabled');
-  })
-
-  //后前一张缩略图
-  $('.next-right').click(function(){
-    var newselect = $('.small-pic>.current').next();
-    $('.small-pic-li').removeClass('current');
-    $(newselect).addClass('current');
-    console.log(newselect)
-    $('#zoomimg').attr('src',$(newselect).find('img').attr('data-img'));
-    $('#zoomimg').attr('jqimg',$(newselect).find('img').attr('data-big'));
-    var index = $('.small-pic>li').index(newselect);
-    if(index+1 == $('.small-pic>li').length){
-      $('.next-right').addClass('disabled');
-    }
-    $('.next-left').removeClass('disabled');
-  })
 </script>
 
 </body>

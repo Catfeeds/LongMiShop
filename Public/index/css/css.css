@@ -521,6 +521,11 @@ transform: translate(0, 0)
 	border-right: 0;
 	border-left: 1px solid #dbdbdb;
 }
+.gw_num em.switch_add {
+	float: right;
+	border-right: 0;
+	border-left: 1px solid #dbdbdb;
+}
 .m1 {
 	font-size: 36px;
 	line-height: 60px;
