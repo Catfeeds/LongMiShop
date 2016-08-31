@@ -563,5 +563,6 @@ function callback($state = true, $msg = '', $data = array()) {
     if( $state == false ){
         //此处应该插入日志
     }
+    $state = $state ? 1 : 0 ;
     return array('state' => $state, 'msg' => $msg, 'data' => $data);
 }

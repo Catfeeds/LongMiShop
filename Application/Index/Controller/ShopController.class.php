@@ -63,13 +63,14 @@ class ShopController extends BaseIndexController {
     }
 
     public function cart2(){
-        // if($this->user_id == 0)
-        //     $this->error('请先登陆',U('Index/User/login'));
+         if($this->user_id == 0)
+             $this->error('请先登陆',U('Index/User/login'));
         
-        // if($this->cartLogic->cart_count($this->user_id,1) == 0 ) 
-        //     $this->error ('你的购物车没有选中商品','Cart/cart');
+         if($this->cartLogic->cart_count($this->user_id,1) == 0 )
+             $this->error ('你的购物车没有选中商品','Cart/cart');
         
         $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1); // 获取购物车商品
+        $sum = 0;
         foreach($result['cartList'] as $item){ //计算总额
             $sum += $item['goods_price'] * $item['goods_num'];
         }    
@@ -78,8 +79,14 @@ class ShopController extends BaseIndexController {
         $this->display();
     }
 
+
+    /**
+     * ajax 获取订单商品价格 或者提交 订单
+     */
     public function cart3(){
-        
+        $buy_logic = new \Common\Logic\BuyLogic();
+        $result = $buy_logic -> createOrder();
+        die(json_encode($result));
     }
 
 

@@ -71,7 +71,7 @@
   </div>
 </div>
 
-
+</form>
 
 <div id="popDiv" class="mydiv" style="display:none; height:auto">
 
@@ -88,8 +88,6 @@
 <script src="__MAIN__/js/global.js"></script>
 <script src="__MAIN__/js/pc_common.js"></script>
 
-</body>
-</html>
 <script>
 $(document).ready(function(){
   ajax_address(); // 获取用户收货地址列表
@@ -167,8 +165,11 @@ $(document).ready(function(){
         data : $('#cart2_form').serialize()+"&act=submit_order",// 你的formid
         dataType:'json',
         success:function(data){
-
+//            alert(data);
         }
       });
     }
 </script>
+
+  </body>
+  </html>

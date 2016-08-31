@@ -262,4 +262,5 @@ class CartController extends BaseController {
         $template = I('template','header_cart_list');    	 
         $this->display($template);		 
     }
+
 }

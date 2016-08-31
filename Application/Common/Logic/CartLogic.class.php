@@ -419,7 +419,7 @@ class CartLogic extends BaseLogic
      * $mode 0  返回数组形式  1 直接返回result
      */
     public function cart_count($user_id,$mode = 0){
-        $count = M('Cart')->where("user_id = $user_id and selected = 1")->count();
+        $count = M('Cart')->where("user_id = '$user_id' and selected = 1")->count();
         if($mode == 1) return  $count;
 
         return array('status'=>1,'msg'=>'','result'=>$count);

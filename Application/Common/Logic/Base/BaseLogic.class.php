@@ -25,6 +25,7 @@ class BaseLogic extends RelationModel
 
     public function __construct()
     {
+        parent::__construct();
         $this -> _post_data = I('post.');
     }
 
