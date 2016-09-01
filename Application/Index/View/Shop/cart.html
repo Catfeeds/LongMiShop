@@ -17,7 +17,6 @@
 <script>
 
   $(document).ready(function(){
-
     ajax_cart_list(); // ajax 请求获取购物车列表
   });
 
@@ -30,7 +29,9 @@
 
 
     if(before_request == 0) // 上一次请求没回来 不进行下一次请求
+    {
       return false;
+    }
     before_request = 0;
 
     $.ajax({

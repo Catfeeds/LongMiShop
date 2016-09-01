@@ -1676,7 +1676,7 @@ select:focus {
 }
 .mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
 	font-family: Muiicons;
-	font-size: 28px;
+	font-size: 20px;
 	font-weight: 400;
 	line-height: 1;
 	text-decoration: none;

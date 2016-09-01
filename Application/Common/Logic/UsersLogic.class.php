@@ -14,25 +14,24 @@ class UsersLogic extends BaseLogic
      * 登陆
      */
     public function login($username,$password){
-    	$result = array();
         if(!$username || !$password)
-           $result= array('status'=>0,'msg'=>'请填写账号或密码');
+           return callback(false,'请填写账号或密码');
         $user = M('users')->where("mobile='{$username}' OR email='{$username}'")->find();
         if(!$user){
-           $result = array('status'=>-1,'msg'=>'账号不存在!');
+            return callback(false,'账号不存在');
         }elseif(encrypt($password) != $user['password']){
-           $result = array('status'=>-2,'msg'=>'密码错误!');
+            return callback(false,'密码错误');
         }elseif($user['is_lock'] == 1){
-           $result = array('status'=>-3,'msg'=>'账号异常已被锁定！！！');
+            return callback(false,'账号异常已被锁定');
         }else{
             //查询用户信息之后, 查询用户的登记昵称
             $levelId = $user['level'];
             $levelName = M("user_level")->where("level_id = {$levelId}")->getField("level_name"); 
             $user['level_name'] = $levelName;
-          
-           $result = array('status'=>1,'msg'=>'登陆成功','result'=>$user);
+            session('auth',true);
+            session(__UserID__,$user['user_id']);
+            return callback(true,'登录成功',urldecode(I('post.referurl')));
         }
-        return $result;
     }
 
     /*

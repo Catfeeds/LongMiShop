@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>龙米</title>
+    <title>{$shopConfig['shop_info_store_title']}</title>
+    <meta http-equiv="keywords" content="{$shopConfig['shop_info_store_keyword']}" />
+    <meta name="description" content="{$shopConfig['shop_info_store_desc']}" />
     <link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
     <link  href="__PUBLIC__/css/base_c.css"rel="stylesheet" type="text/css" />
     <link href="__PUBLIC__/css/mui.min.css" rel="stylesheet" type="text/css" />
@@ -18,7 +20,7 @@
     <script src="__MAIN__/js/layer/layer.js"></script>
     <script language="javascript">
         $(function () {
-            if ((screen.width == 1920) && (screen.height == 1080)) {
+            if ((screen.width >= 1920) && (screen.height >= 1080)) {
                 $(".section .left").addClass("p1080");//此分辨率下你需要的操作
             }
         });

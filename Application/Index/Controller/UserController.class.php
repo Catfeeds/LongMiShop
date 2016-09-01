@@ -11,6 +11,7 @@ class UserController extends BaseIndexController {
     {
         return array(
             'login',
+            'doLogin',
             'register'
         );
     }
@@ -21,6 +22,29 @@ class UserController extends BaseIndexController {
 
     public function login(){
         $this->display();
+    }
+
+    public function doLogin(){
+        $username = I('post.username');
+        $password = I('post.password');
+        $username = trim($username);
+        $password = trim($password);
+
+        $logic = new \Common\Logic\UsersLogic();
+        $res = $logic->login($username,$password);
+        exit(json_encode($res));
+//        if($res['status'] == 1){
+//            $res['url'] =  urldecode(I('post.referurl'));
+//            session('user',$res['result']);
+//            setcookie('user_id',$res['result']['user_id'],null,'/');
+//            setcookie('is_distribut',$res['result']['is_distribut'],null,'/');
+//            $nickname = empty($res['result']['nickname']) ? $username : $res['result']['nickname'];
+//            setcookie('uname',urlencode($nickname),null,'/');
+//            setcookie('cn','',time()-3600,'/');
+//            $cartLogic = new \Common\Logic\CartLogic();
+//            $cartLogic->login_cart_handle($this->session_id,$res['result']['user_id']);  //用户登录后 需要对购物车 一些操作
+//        }
+//        exit(json_encode($res));
     }
 
     public function logout(){

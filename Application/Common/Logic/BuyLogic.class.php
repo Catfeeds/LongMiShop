@@ -14,7 +14,7 @@ class BuyLogic extends BaseLogic
 
     public function __construct()
     {
-        parent::_initialize();
+        parent::__construct("config");
         $this -> cartLogic = new \Common\Logic\CartLogic();
         $this -> userId = session(__UserID__);
 //        $this -> UserAddressModel = new \Common\Model\UserAddress();
@@ -44,13 +44,13 @@ class BuyLogic extends BaseLogic
 
             //第5步 订单后续处理
             $this->_createOrderStep5();
-            throw new \Exception('调试使用');//调试使用
+//            throw new \Exception('调试使用');//调试使用
             $this -> model -> commit();
-            return callback(true,'',array());
+            return callback(true,'',$this -> _post_data['orderData']['order_id']);
 
         } catch (\Exception $e){
             $this -> model -> rollback();
-            dd(callback(false, $e->getMessage()));//调试使用
+//            dd(callback(false, $e->getMessage()));//调试使用
             return callback(false, $e->getMessage());
         }
 
@@ -265,9 +265,6 @@ class BuyLogic extends BaseLogic
             $jsSdkLogic->push_msg($user['openid'], $wx_content);
         }
     }
-
-
-
 
     /**
      * 查看订单是否满足条件参加活动

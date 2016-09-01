@@ -23,8 +23,9 @@ class BaseLogic extends RelationModel
      */
     protected $_member_info = array();
 
-    public function _initialize()
+    public function __construct($name = "")
     {
+        parent::__construct($name);
         $this -> _post_data = I('post.');
     }
 
