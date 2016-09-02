@@ -6,7 +6,7 @@ return array(
     'version' => '1.0',
     'author' => 'IT宇宙人',
     'desc' => 'PC端+微信公众号支付',
-    'icon' => 'logo.jpg',
+    'icon' => 'weixinpay.png',
     'scene' => 0,  // 使用场景 0 PC+手机 1 手机 2 PC
     'config' => array(
         array('name' => 'appid','label'=>'绑定支付的APPID','type' => 'text',   'value' => ''), // * APPID：绑定支付的APPID（必须配置，开户邮件中可查看）
