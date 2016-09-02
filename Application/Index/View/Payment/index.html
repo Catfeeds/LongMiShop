@@ -1,294 +1,141 @@
 ﻿<include file="Public/header"/>
-<div class="content page-order-payment order-confirm" style="margin-top:80px">
-    <div class="gray-box fn-clear">
-        <div class="in1">
-            <h2>支付订单</h2>
-        </div>
-        <div class="box-inner order-info">
-            <h3>提交订单成功</h3>
-            <p class="payment-detail">请在 <span>24 小时内</span>完成支付，超时订单将自动取消。</p>
-            <p class="payment-detail">我们将在您完成支付后的 72 小时内发货。</p>
-        </div>
-        <div class="gray-sub-title">选择支付方式</div>
-        <div class="slideTxtBox">
-            <div class="hd">
-                <ul>
-                    <li>平台支付</li>
-                    <li style="padding-left:-1px">借记卡及信用卡支付</li>
-                </ul>
+
+
+<form action="{:U('Index/Payment/getCode')}" method="post" name="cart4_form" id="cart4_form">
+    <div class="content page-order-payment order-confirm" style="margin-top:80px">
+        <div class="gray-box fn-clear">
+            <div class="in1">
+                <h2>支付订单</h2>
             </div>
-            <div class="bd">
-                <ul>
-                    <div class="m44">
-                        <ul>
-                            <li> <img src="img/weixinpay.png" width="144" height="34"> </li>
-                            <li> <img src="img/alipay.png" width="144" height="34"> </li>
-                            <li> <img src="img/ylpay.png" width="144" height="34"> </li>
-                        </ul>
-                    </div>
-                </ul>
-                <ul>
-                    <div class="m44">
-                        <ul>
-                            <li> <img src="img/pay-icbc.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-abc.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-boc.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-ccb.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-cmb.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-spdb.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-gdb.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-bocom.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-psbc.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-cncb.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-cmbc.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-ceb.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-hxb.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-cib.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-bos.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-srcb.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-pab.png" width="144" height="34"> </li>
-                            <li> <img src="img/pay-brcb.png" width="144" height="34"> </li>
-                        </ul>
-                    </div>
-                </ul>
+            <div class="box-inner order-info">
+                <h3>提交订单成功</h3>
+                <!--<p class="payment-detail">请在 <span>24 小时内</span>完成支付，超时订单将自动取消。</p>-->
+                <!--<p class="payment-detail">我们将在您完成支付后的 72 小时内发货。</p>-->
             </div>
-        </div>
-        <script type="text/javascript">jQuery(".slideTxtBox").slide({trigger:"click"});</script>
-        <div class="box-inner payment-checkout-panel fn-clear">
-            <div class="m4_btn" style="float:right; margin-left:10px"><a href="inventory_next_ply.html">现在支付</a></div>
-            <span class="prices"> 应付金额： <em>¥ 1,999.00</em> </span> </div>
-    </div>
-    <div class="gray-box fn-clear confirm-detail">
-        <div class="in1 pre-title columns-title">
-            <h2>订单详情</h2>
-            <span class="status-tip" style="float:right; font-size:16px; padding-right:20px">订单编号：160828541425319</span> </div>
-        <div class="box-inner order-cart banner-cart">
-            <div class="gray-sub-title cart-title"> <span class="name">商品名称</span> <span class="subtotal">小计</span> <span class="num">数量</span> <span class="price">单价</span> <span class="discount">优惠</span> </div>
-            <div class="cart">
-                <div class="cart-items fn-clear" data-id="100014501">
-                    <div class="prod-info">
-                        <div class="items-thumb"> <a href="#" target="_blank" title="Smartisan T2（黑色，32GB）"> <img src="img/cp5.png"> </a> </div>
-                        <div class="items-params fn-clear">
-                            <h6 class="name"> <a href="#" target="_blank">龙米</a> </h6>
-                            <div class="subtotal">¥ 1,999.00</div>
-                            <div class="num">1</div>
-                            <div class="price">¥ 1,999.00</div>
-                        </div>
-                        <div class="items-detail fn-clear">
-                            <div class="detail">商品编号：100014501</div>
-                        </div>
-                    </div>
+            <div class="gray-sub-title">选择支付方式</div>
+            <div class="slideTxtBox">
+                <div class="hd" style="z-index: -1;">
+                    <ul>
+                        <li>平台支付</li>
+                        <!--<li style="padding-left:-1px">借记卡及信用卡支付</li>-->
+                    </ul>
                 </div>
-                <div class="cart-items fn-clear" data-id="100013612">
-                    <div class="prod-info">
-                        <div class="items-thumb"> <a href="#" target="_blank" title="Smartisan T2（黑色，32GB）"> <img src="img/cp5.png"></a></div>
-                        <div class="items-params fn-clear">
-                            <h6 class="name"> <a href="#" target="_blank">龙米</a></h6>
-                            <div class="subtotal">¥ 1,999.00</div>
-                            <div class="num">1</div>
-                            <div class="price">¥ 1,999.00</div>
-                        </div>
-                        <div class="items-detail fn-clear">
-                            <div class="detail">商品编号：100014501</div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="gray-sub-title">优惠券</div>
-            <div class="order-discount-line" style="text-align:left; padding:20px; line-height:30px">
-                <div class="mui-input-row mui-radio mui-left">
-                    <input name="radio1" type="radio"  checked>
-                    不使用优惠券<br>
-                    <input name="radio1" type="radio">
-                    自营商品满299减50元<br>
-
-                    <input name="radio1" type="radio">
-                    自营商品满199减20元</div>
-            </div>
-            <div class="order-discount-line">
-                <p>商品总计：¥ 1,999.00</p>
-                <p>运费：+ ¥ 0.00</p>
-                <p class="order-total"> 应付金额： <em>¥ 1,999.00</em> </p>
-            </div>
-            <div class="gray-sub-title">收货信息</div>
-            <div class="gray-sub-con">
-                <p>姓名：刘华</p>
-                <p>联系电话：13570303888</p>
-                <p>详细地址：上海市市辖区徐汇区龙口东路</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="bottom" style="margin-top:20px">
-    <div class="b_box">
-        <div class="b_left"><img src="img/code.png" width="139" height="139"><img src="img/code2.png" width="140" height="140"></div>
-        <div class="b_right">
-            <div class="b1">4000-78-7725</div>
-            <div class="b2">邮箱：jiangbingxue@longmiwang.com </div>
-        </div>
-    </div>
-    <div style="clear:both"></div>
-    <div class="b_txt">版权所有 @ 上海龙米农业科技有限公司 地址： 中国（上海）自由贸易试验区新金桥路27号13号楼2层 All Rights Reserved 粤ICP备15051254号-1 </div>
-</div>
-
-</body>
-</html>
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>订单支付-{$lmshop_config['shop_info_store_title']}</title>
-<meta http-equiv="keywords" content="{$lmshop_config['shop_info_store_keyword']}" />
-<meta name="description" content="{$lmshop_config['shop_info_store_desc']}" />
-<link rel="stylesheet" href="__STATIC__/css/pay.min.css">
-<link href="__STATIC__/css/common.min.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="__STATIC__/css/jh.css">
-<script src="__PUBLIC__/js/jquery-1.8.2.min.js"></script>    
-<script src="__PUBLIC__/js/global.js"></script>
-<script src="__PUBLIC__/js/pc_common.js"></script>
-<script src="__PUBLIC__/js/layer/layer.js"></script><!-- 弹窗js 参考文档 http://layer.layui.com/-->
-</head>
-<body>
-<include file="Public/sign-header"/>
-<div class="fn-cart-pay"> 
-   <!-- cart-title -->
-   <div class="wrapper1190">
-    <div class="order-header">
-    	<div class="layout after">
-        	<div class="fl">
-            	<div class="logo pa-to-36 wi345">
-                	<a href="/"><img src="__STATIC__/images/newLogo.png" alt=""></a>
-                </div>
-            </div>
-        	<div class="fr">
-            	<div class="pa-to-36 progress-area">
-                	<div class="progress-area-wd" style="display:none">我的购物车</div>
-                	<div class="progress-area-tx" style="display:none">填写核对订单信息</div>
-                	<div class="progress-area-cg">成功提交订单</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end cart-title --> 
-    
-    <div class="layout after-ta order-ha">
-    	<div class="erhuh">
-        	<i class="icon-succ"></i>
-            <h3>订单提交成功，请您尽快付款！</h3>
-            <p class="succ-p">
-			            订单号：&nbsp;&nbsp;{$order['order_sn']}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-			            付款金额（元）：&nbsp;&nbsp;<b>{$order['order_amount']}</b>&nbsp;<b>元</b>
-			</p>
-            <div class="succ-tip">
-            	请您在&nbsp;&nbsp;<b>{$pay_date}</b>&nbsp;完成支付，否则订单将自动取消
-            </div>
-        </div>
-        <div class="ddxq-xiaq">
-        	<a href="{:U('Home/User/order_detail',array('id'=>$order['order_id']))}">
-            	订单详情
-                <i></i>
-            </a>
-        </div>
-        <form action="{:U('Home/Payment/getCode')}" method="post" name="cart4_form" id="cart4_form">
-        <div class="orde-sjyy">
-        	<h3 class="titls">选择支付方式</h3>
-            <div class="bsjy-g">
-            	<dl>
-            		<dd>
-						<div class="order-payment-area">
-                        	<div class="dsfzfpte">
-                            	<b>选择支付方式</b>                               
-                            </div>
-                            <div class="po-re dsfzf-ee">
-                            	<ul>
-                                <foreach name="paymentList" item="v"  key="k">                                
-                            		<li>
-                                    	<div class="payment-area">
-                                        	<input type="radio" id="input-ALIPAY-1" value="pay_code={$v['code']}" class="radio vam" name="pay_radio" >
-                                            <label for="">
-                                            	<img src="/plugins/{$v['type']}/{$v['code']}/{$v['icon']}" width="120" height="40" onClick="change_pay(this);" />
-                                            </label>
-                                        </div>
+                <div class="bd">
+                    <ul>
+                        <div class="m44">
+                            <ul>
+                                <foreach name="paymentList" item="v"  key="k">
+                                    <li>
+                                        <input type="radio" id="input-ALIPAY-1" value="pay_code={$v['code']}" style="display: none;" name="pay_radio" >
+                                        <img src="/plugins/{$v['type']}/{$v['code']}/{$v['icon']}" width="144" height="34"  onClick="change_pay(this);" >
                                     </li>
-                                </foreach>                                                            		 
-                            	</ul>
-                            </div>
-                        </div>  
-                        
-                    <!--第三方网银支付 start-->
-                      <foreach name="bankCodeList" item="v"  key="k">
-						<div class="order-payment-area">
-                        	<div class="dsfzfpte">
-                                    <b>{$paymentList[$k]['name']}</b>
-                                    <em>网银支付</em>
-                                </div>
-                            <div class="po-re dsfzf-ee">
-                                    <ul>
-				                      <foreach name="v" item="v2"  key="k2">
-                                        <li>
-                                            <div class="payment-area">
-                                                <input type="radio" name="pay_radio" class="radio vam" value="pay_code={$k}&bank_code={$v2}" id="input-ALIPAY-1">
-                                                <label for="">
-                                            	<img src="__STATIC__/images/images-out/{$bank_img[$k2]}" width="120" height="40" onClick="change_pay(this);"/>
-                                                </label>
-                                            </div>
-                                        </li>                
-				                    </foreach>                                                           
-                                    </ul>
-                            </div> 
-                        </div>     
-                    </foreach>                   
-                    <!--第三方网银支付 end -->
-                                                             	
-                    </dd>
-            	</dl>
-                <div class="order-payment-action-area">                    
-                    <a class="button-style-5 button-confirm-payment" href="javascript:void(0);" onClick="$('#cart4_form').submit();" >确认支付方式</a>
+                                </foreach>
+                            </ul>
+                        </div>
+                    </ul>
+                    <!--<ul>-->
+                        <!--<div class="m44">-->
+                            <!--<ul>-->
+                                <!--&lt;!&ndash;<foreach name="bankCodeList" item="v"  key="k">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<foreach name="v" item="v2"  key="k2">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input type="radio" name="pay_radio" style="display: none;" value="pay_code={$k}&bank_code={$v2}" id="input-ALIPAY-1">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<img src="__MAIN__/images/images-out/{$bank_img[$k2]}" width="144" height="34" onClick="change_pay(this);">&ndash;&gt;-->
+                                <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</foreach>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</foreach>&ndash;&gt;-->
+
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</ul>-->
                 </div>
             </div>
+            <script type="text/javascript">jQuery(".slideTxtBox").slide({trigger:"click"});</script>
+            <div class="box-inner payment-checkout-panel fn-clear">
+                <div class="m4_btn" style="float:right; margin-left:10px">
+                    <a href="javascript:void(0);" onClick="$('#cart4_form').submit();">现在支付</a>
+                </div>
+                <span class="prices">
+                应付金额： <em>¥ {$order['order_amount']}</em>
+            </span>
+            </div>
         </div>
-        <input type="hidden" name="order_id" value="{$order['order_id']}" />
-       </form>
+        <div class="gray-box fn-clear confirm-detail">
+            <div class="in1 pre-title columns-title">
+                <h2>订单详情</h2>
+                <span class="status-tip" style="float:right; font-size:16px; padding-right:20px">订单编号：{$order['order_sn']}</span>
+            </div>
+            <div class="box-inner order-cart banner-cart">
+                <!--<div class="gray-sub-title cart-title">-->
+                    <!--<span class="name">商品名称</span>-->
+                    <!--<span class="subtotal">小计</span>-->
+                    <!--<span class="num">数量</span>-->
+                    <!--<span class="price">单价</span>-->
+                    <!--<span class="discount">优惠</span>-->
+                <!--</div>-->
+                <!--<div class="cart">-->
+                    <!--<div class="cart-items fn-clear" data-id="100014501">-->
+                        <!--<div class="prod-info">-->
+                            <!--<div class="items-thumb">-->
+                                <!--<a href="#" target="_blank" title="Smartisan T2（黑色，32GB）">-->
+                                    <!--<img src="__PUBLIC__/img/cp5.png">-->
+                                <!--</a>-->
+                            <!--</div>-->
+                            <!--<div class="items-params fn-clear">-->
+                                <!--<h6 class="name">-->
+                                    <!--<a href="#" target="_blank">龙米</a>-->
+                                <!--</h6>-->
+                                <!--<div class="subtotal">¥ 1,999.00</div>-->
+                                <!--<div class="num">1</div>-->
+                                <!--<div class="price">¥ 1,999.00</div>-->
+                            <!--</div>-->
+                            <!--<div class="items-detail fn-clear">-->
+                                <!--<div class="detail">商品编号：100014501</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+
+                <!--</div>-->
+                <div class="gray-sub-title">优惠券</div>
+                <div class="order-discount-line" style="text-align:left; padding:20px; line-height:30px">
+                    <div class="mui-input-row mui-radio mui-left">
+                        <input name="coupon" type="radio"  checked>
+                        不使用优惠券<br>
+                        <!--<input name="coupon" type="radio">-->
+                        <!--自营商品满299减50元<br>-->
+
+                        <!--<input name="coupon" type="radio">-->
+                        <!--自营商品满199减20元-->
+                    </div>
+                </div>
+                <!--<div class="order-discount-line">-->
+                    <!--<p>商品总计：¥ 1,999.00</p>-->
+                    <!--<p>运费：+ ¥ 0.00</p>-->
+                    <!--<p class="order-total"> 应付金额： <em>¥ 1,999.00</em> </p>-->
+                <!--</div>-->
+                <!--<div class="gray-sub-title">收货信息</div>-->
+                <!--<div class="gray-sub-con">-->
+                    <!--<p>姓名：刘华</p>-->
+                    <!--<p>联系电话：13570303888</p>-->
+                    <!--<p>详细地址：上海市市辖区徐汇区龙口东路</p>-->
+                <!--</div>-->
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-
-
-
-<!--微信扫一扫支付对话框  -->
-<div id="wchatQrcodeDlg" class="g-cartpay-dlg" style="display: none;" data-show="" >
-          <div class="g-cartpay-content">
-    <div class="g-h"> <span class="u-close"></span> </div>
-    <div class="g-c">
-              <div class="g-t"> 使用微信支付<span>￥<small class='wx_amount'>118</small></span> </div>
-              <div class="g-qrcode"> <img alt="使用微信支付" src="images/loading.gif" /> </div>
-            </div>
-    <div class="g-f fixed"> <i class="icon_scan"></i>
-              <div class="u-label">
-        <p>请使用微信扫一扫<br>
-                  扫描二维码完成支付</p>
-      </div>
-            </div>
-  </div>
-          <div class="u-mask"></div>
-        </div>
-<!--微信扫一扫支付对话框 / --> 
-<div id="addCardNewBind"></div>
-<include file="Public/min-footer"/>
+    <input type="hidden" name="order_id" value="{$order['order_id']}" />
+</form>
+<include file="Public/footer"/>
 <script>
-$(document).ready(function(){
-	 $("input[name='pay_radio']").first().trigger('click');
-});
-// 切换支付方式
-function change_pay(obj)
-{
-	$(obj).parent().siblings('input[name="pay_radio"]').trigger('click');
-}
-</script>    
+    $(document).ready(function(){
+        $("input[name='pay_radio']").first().trigger('click');
+    });
+    // 切换支付方式
+    function change_pay(obj)
+    {
+        $(obj).parent().siblings('input[name="pay_radio"]').trigger('click');
+    }
+</script>
 </body>
 </html>
+

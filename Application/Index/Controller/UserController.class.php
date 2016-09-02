@@ -1,6 +1,7 @@
 <?php
 namespace Index\Controller;
 
+use Common\Logic\OrderLogic;
 use Common\Logic\UsersLogic;
 use Think\Page;
 use Think\Verify;
@@ -34,6 +35,8 @@ class UserController extends BaseIndexController {
 
         $logic = new \Common\Logic\UsersLogic();
         $res = $logic->login($username,$password);
+        $cartLogic = new \Common\Logic\CartLogic();
+        $cartLogic->login_cart_handle($this->session_id, session(__UserID__));  //用户登录后 需要对购物车 一些操作
         exit(json_encode($res));
 //        if($res['status'] == 1){
 //            $res['url'] =  urldecode(I('post.referurl'));
@@ -43,8 +46,6 @@ class UserController extends BaseIndexController {
 //            $nickname = empty($res['result']['nickname']) ? $username : $res['result']['nickname'];
 //            setcookie('uname',urlencode($nickname),null,'/');
 //            setcookie('cn','',time()-3600,'/');
-//            $cartLogic = new \Common\Logic\CartLogic();
-//            $cartLogic->login_cart_handle($this->session_id,$res['result']['user_id']);  //用户登录后 需要对购物车 一些操作
 //        }
 //        exit(json_encode($res));
     }
@@ -100,35 +101,6 @@ class UserController extends BaseIndexController {
 
 
     public function info(){
-
-        $user_info = $this -> user_info;
-
-        if(IS_POST){
-//            I('post.nickname') ? $post['nickname'] = I('post.nickname') : false; //昵称
-//            I('post.qq') ? $post['qq'] = I('post.qq') : false;  //QQ号码
-//            I('post.head_pic') ? $post['head_pic'] = I('post.head_pic') : false; //头像地址
-//            I('post.sex') ? $post['sex'] = I('post.sex') : false;  // 性别
-//            I('post.birthday') ? $post['birthday'] = strtotime(I('post.birthday')) : false;  // 生日
-//            I('post.province') ? $post['province'] = I('post.province') : false;  //省份
-//            I('post.city') ? $post['city'] = I('post.city') : false;  // 城市
-//            I('post.district') ? $post['district'] = I('post.district') : false;  //地区
-//            if(!$userLogic->update_info($this->user_id,$post))
-//                $this->error("保存失败");
-//            $this->success("操作成功");
-//            exit;
-        }
-        //  获取省份
-        $province = M('region')->where(array('parent_id'=>0,'level'=>1))->select();
-        //  获取订单城市
-        $city =  M('region')->where(array('parent_id'=>$user_info['province'],'level'=>2))->select();
-        //获取订单地区
-        $area =  M('region')->where(array('parent_id'=>$user_info['city'],'level'=>3))->select();
-
-        $this->assign('province',$province);
-        $this->assign('city',$city);
-        $this->assign('area',$area);
-        $this->assign('sex',C('SEX'));
-        $this->assign('active','info');
         $this->display();
     }
 
@@ -225,6 +197,31 @@ class UserController extends BaseIndexController {
         $this->assign('lists',$order_list);
         $this->assign('active','order_list');
         $this->assign('active_status',I('get.type'));
+        $this->display();
+    }
+
+
+
+    //订单详情
+    public function orderDetail(){
+        $id = I('get.id');
+        $orderLogic = new \Common\Logic\OrderLogic();
+        $orderInfo = $orderLogic -> getOrderInfo( $id , $this->user_id );
+        if(!$orderInfo){
+            $this->error('没有获取到订单信息');
+            exit;
+        }
+        $data = $orderLogic->getOrderGoods($orderInfo['order_id']);
+        $orderInfo['goods_list'] = $data['data'];
+        $orderInfo = set_btn_order_status($orderInfo);
+        $progressBar = getOderProgressBar($orderInfo);
+        $region_list = get_region_list();
+        $this->assign('order_status',C('ORDER_STATUS'));
+        $this->assign('shipping_status',C('SHIPPING_STATUS'));
+        $this->assign('pay_status',C('PAY_STATUS'));
+        $this->assign('region_list',$region_list);
+        $this->assign('order_info',$orderInfo);
+        $this->assign('progressBar',$progressBar);
         $this->display();
     }
 

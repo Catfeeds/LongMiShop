@@ -9,6 +9,9 @@ class ShopController extends BaseIndexController {
     {
         return array(
             'index',
+            'cart',
+            'ajaxAddCart',
+            'ajaxCartList',
         );
     }
 
@@ -59,7 +62,7 @@ class ShopController extends BaseIndexController {
         $this->display();
     }
 
-    function ajaxAddCart()
+    public function ajaxAddCart()
     {
         $goods_id = I("goods_id"); // 商品id
         $goods_num = I("goods_num");// 商品数量

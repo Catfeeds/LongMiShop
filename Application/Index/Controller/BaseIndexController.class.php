@@ -12,9 +12,7 @@ abstract class BaseIndexController extends BaseController {
     public $user_info   = null;
 
 
-    /**
-     * 免登陆页面函数声明
-     */
+
     abstract function exceptAuthActions();
 
 

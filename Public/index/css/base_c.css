@@ -4564,19 +4564,18 @@ div.address-form select.city {
 .order-process .order-status-wrapper {
 	position: relative;
 	top: 1px;
-	z-index: 2;
 	overflow: hidden
 }
 .order-process .order-status-process {
 	position: relative;
 	background: url(../img/order-process.png) 0 -307px repeat-x;
-	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/retina/order-process@2x.png) 2x)
+	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/order-process@2x.png) 2x)
 }
 .order-process .order-status-process .status-process {
 	display: block;
 	height: 38px;
 	background: url(../img/order-process.png) 0 -257px repeat-x;
-	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/retina/order-process@2x.png) 2x)
+	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/order-process@2x.png) 2x)
 }
 .order-process .order-status-text {
 	position: absolute;
@@ -4599,26 +4598,26 @@ div.address-form select.city {
 	height: 38px;
 	margin: 18px auto 5px;
 	background: url(../img/order-process.png) 0 -158px no-repeat;
-	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/retina/order-process@2x.png) 2x)
+	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/order-process@2x.png) 2x)
 }
 .order-process .order-status-process .status-first span.point {
 	background: url(../img/order-process.png) 0 -58px no-repeat;
-	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/retina/order-process@2x.png) 2x)
+	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/order-process@2x.png) 2x)
 }
 .order-process .order-status-process .status-last .point {
 	background: url(../img/order-process.png) 0 -208px no-repeat;
-	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/retina/order-process@2x.png) 2x)
+	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/order-process@2x.png) 2x)
 }
 .order-process .order-status-process .status-on span.point {
 	background: url(../img/order-process.png) 0 -8px no-repeat;
-	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/retina/order-process@2x.png) 2x)
+	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/order-process@2x.png) 2x)
 }
 .order-process .order-status-process .status-on {
 	background: url(../img/order-status-bottom-arrow.png) center bottom no-repeat
 }
 .order-process .order-status-process .status-done .point {
 	background: url(../img/order-process.png) 0 -108px no-repeat;
-	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/retina/order-process@2x.png) 2x)
+	background-image: -webkit-image-set(url(../img/order-process.png) 1x, url(../img/order-process@2x.png) 2x)
 }
 .order-process .order-status-process .status-done h5, .order-process .order-status-process .status-on h5 {
 	color: #333
