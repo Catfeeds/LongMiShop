@@ -1,7 +1,6 @@
 <?php
 namespace Index\Controller;
 
-use Common\Logic\OrderLogic;
 use Common\Logic\UsersLogic;
 use Think\Page;
 use Think\Verify;
@@ -35,8 +34,6 @@ class UserController extends BaseIndexController {
 
         $logic = new \Common\Logic\UsersLogic();
         $res = $logic->login($username,$password);
-        $cartLogic = new \Common\Logic\CartLogic();
-        $cartLogic->login_cart_handle($this->session_id, session(__UserID__));  //用户登录后 需要对购物车 一些操作
         exit(json_encode($res));
 //        if($res['status'] == 1){
 //            $res['url'] =  urldecode(I('post.referurl'));
@@ -46,6 +43,8 @@ class UserController extends BaseIndexController {
 //            $nickname = empty($res['result']['nickname']) ? $username : $res['result']['nickname'];
 //            setcookie('uname',urlencode($nickname),null,'/');
 //            setcookie('cn','',time()-3600,'/');
+//            $cartLogic = new \Common\Logic\CartLogic();
+//            $cartLogic->login_cart_handle($this->session_id,$res['result']['user_id']);  //用户登录后 需要对购物车 一些操作
 //        }
 //        exit(json_encode($res));
     }
@@ -101,6 +100,35 @@ class UserController extends BaseIndexController {
 
 
     public function info(){
+
+        $user_info = $this -> user_info;
+
+        if(IS_POST){
+//            I('post.nickname') ? $post['nickname'] = I('post.nickname') : false; //昵称
+//            I('post.qq') ? $post['qq'] = I('post.qq') : false;  //QQ号码
+//            I('post.head_pic') ? $post['head_pic'] = I('post.head_pic') : false; //头像地址
+//            I('post.sex') ? $post['sex'] = I('post.sex') : false;  // 性别
+//            I('post.birthday') ? $post['birthday'] = strtotime(I('post.birthday')) : false;  // 生日
+//            I('post.province') ? $post['province'] = I('post.province') : false;  //省份
+//            I('post.city') ? $post['city'] = I('post.city') : false;  // 城市
+//            I('post.district') ? $post['district'] = I('post.district') : false;  //地区
+//            if(!$userLogic->update_info($this->user_id,$post))
+//                $this->error("保存失败");
+//            $this->success("操作成功");
+//            exit;
+        }
+        //  获取省份
+        $province = M('region')->where(array('parent_id'=>0,'level'=>1))->select();
+        //  获取订单城市
+        $city =  M('region')->where(array('parent_id'=>$user_info['province'],'level'=>2))->select();
+        //获取订单地区
+        $area =  M('region')->where(array('parent_id'=>$user_info['city'],'level'=>3))->select();
+
+        $this->assign('province',$province);
+        $this->assign('city',$city);
+        $this->assign('area',$area);
+        $this->assign('sex',C('SEX'));
+        $this->assign('active','info');
         $this->display();
     }
 
@@ -201,31 +229,6 @@ class UserController extends BaseIndexController {
     }
 
 
-
-    //订单详情
-    public function orderDetail(){
-        $id = I('get.id');
-        $orderLogic = new \Common\Logic\OrderLogic();
-        $orderInfo = $orderLogic -> getOrderInfo( $id , $this->user_id );
-        if(!$orderInfo){
-            $this->error('没有获取到订单信息');
-            exit;
-        }
-        $data = $orderLogic->getOrderGoods($orderInfo['order_id']);
-        $orderInfo['goods_list'] = $data['data'];
-        $orderInfo = set_btn_order_status($orderInfo);
-        $progressBar = getOderProgressBar($orderInfo);
-        $region_list = get_region_list();
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('region_list',$region_list);
-        $this->assign('order_info',$orderInfo);
-        $this->assign('progressBar',$progressBar);
-        $this->display();
-    }
-
-
     /*
      * 设置默认收货地址
      */
@@ -319,28 +322,20 @@ class UserController extends BaseIndexController {
             $step = 2;
         if($user_info['mobile_validated'] == 1 && session('mobile_step1') != 1)
             $step = 1;
-        if(IS_POST){
+        if(IS_POST){ //修改绑定手机
             $mobile = I('post.mobile');
-            $old_mobile = I('post.old_mobile');
             $code = I('post.code');
-            $info = session('mobile_code');
-            if(!$info)
-                $this->error('非法操作');
-            //检查原手机是否正确
-            if($user_info['mobile_validated'] == 1 && $old_mobile != $user_info['mobile'])
-                $this->error('原手机号码错误');
-            //验证手机和验证码
-            if($info['mobile'] == $mobile && $info['code'] == $code){
-                session('mobile_code',null);
-                //验证有效期
-                if($info['time'] < time())
-                    $this->error('验证码已失效');
-                if(!$userLogic->update_email_mobile($mobile,$this->user_id,2))
-                    $this->error('手机已存在');
-                $this->success('绑定成功',U('Index/User/info'));
-                exit;
+            $info = $userLogic->sms_code_verify($mobile,$code,$this->session_id);
+            if($info['status'] == 1){
+                $where['mobile'] = $mobile;
+                $where['mobile_validated'] = 1;
+                $where['user_id'] =  $this->user_id;
+                $res = $this->users->save($where);
+                $res ? $this->success('绑定成功',U('Index/User/info')) :  $this->error('绑定失败');
+            }else{
+                $this->error($info['msg']);
             }
-            $this->error('手机验证码不匹配');
+            exit;
         }
         $phone = $user_info['mobile'];
         $this->assign('time',$sms_time_out);
@@ -353,8 +348,7 @@ class UserController extends BaseIndexController {
      * 发送手机注册验证码
      */
     public function send_sms_reg_code(){
-        $mobile = I('get.mobile');
-        exit(json_encode(array('status'=>$mobile,'msg'=>'验证码已发送，请注意查收')));exit;
+        exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));exit;
         $mobile = I('post.mobile');
         $userLogic = new Common\Logic\UsersLogic();
         if(!check_mobile($mobile))
@@ -368,25 +362,129 @@ class UserController extends BaseIndexController {
 
     //验证手机是否已绑定
     public function check_phones(){
-        echo json_encode(I('get.phone'));exit;
         if(IS_POST){
-            // $phone = I('phones');
-
+            $phone = I('phone');
             $where['mobile'] = $phone;
             $phone_res  = $this->users->field('user_id,mobile')->where($where)->fetChSql(true)->find();
             
             if(empty($phone_res)){ //可以更换
                 $res = 1; 
-            }else if($phone_res['mobile'] == $phone && $phone_res['user_id'] == $this->user_id){  //手机号和之前相同
-                $res = 2;
             }else if($phone_res['mobile'] == $phone && $phone_res['user_id'] != $this->user_id){ //此手机已绑定
                 $res = 3;
             }
-
-             
-
+            exit(json_encode($res));
         }
     }
+
+    /*
+     * 邮箱验证
+     */
+    public function email_validate(){
+        $send_email_time = session('send_email_time');
+        $res_time = $send_email_time + 300;
+        $now_time = time();
+        if($res_time > $now_time){
+           $time = $res_time - $now_time; 
+        }else if($res_time < $now_time){
+            session('send_email_time',null);
+            $time = 300;
+            $info = time();
+            session('send_email_time',$info);
+        }
+        
+        $this->assign('time',$time);
+        $this->display();
+    }
+
+    //发送邮箱验证
+    public function  send_email(){
+        $userLogic = new UsersLogic();
+        $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
+        $this->email_log = M('email_log');
+        $type = I('type');
+        $secret_key = sha1(md5(mt_rand(0,999999)).'longmi'); 
+        $data['time'] = time();
+        $data['secret_key'] = $secret_key;
+        
+        if($type=='anew'){ //ajax请求重新发送
+            $res = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->save($data); 
+        }else{
+            $data['user_id']  = $user_info['result']['user_id'];
+            $res = $this->email_log->add($data);
+        }
+        if($user_info['result']['email_validated'] != 0) { //状态修改为 未验证
+            $datas['email_validated'] = 0;
+            $this->users->where("user_id = '".$user_info['result']['user_id']."'")->save($datas); //验证
+        }
+        
+        if($res){
+            $url = 'http://'.$_SERVER['SERVER_NAME'].U('Index/User/check_email',array('secret_key'=>$secret_key,'user_id'=>$user_info['result']['user_id']));
+            send_email($user_info['result']['email'],'邮箱验证','尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url); 
+            exit(json_encode(callback(true,'发送成功',array('status'=>1))));
+        }else{
+            exit(json_encode(callback(false,'发送失败')));
+        }
+         
+
+        
+    }
+
+
+    //邮箱验证
+    public function check_email(){
+        $where['secret_key'] = I('get.secret_key');
+        $where['user_id'] = I('get.user_id');
+        $email_res = M('email_log')->where($where)->find();
+        if(!empty($email_res)){
+            $data['email_validated'] = 1;
+            $data['user_id'] = $this->user_id; 
+            $res = $this->users->save($data); //修改验证字段
+            if($res){
+                M('email_log')->where($where)->delete();
+                $this->success('验证成功',U('Index/User/Info'));
+            }else{
+              $this->error('验证失败');  
+            }
+            
+        }else{
+            $this->error('验证失败');
+        }
+        exit;
+    }
+
+    /*
+     * 修改邮箱
+     */
+
+    public function edit_email(){
+        if(IS_POST){
+            
+            $data['email'] = I('email');
+            $where['email'] = I('email');
+            $find_res = $this->users->field('user_id,email')->where($where)->find();
+            if($find_res['email'] == $data['email']){
+                $this->error('修改邮箱和原邮箱一致');exit;
+            }else if(!empty($find_res)){
+                $this->error('此邮箱已绑定');exit;
+            }else{
+                $data['user_id'] = $this->user_id;
+                $data['email_validated'] = 0;
+                $res = $this->users->save($data);
+                if($res){
+                    $info = time();
+                    session('send_email_time',$info);
+                    $this->success('修改成功',U('Index/User/email_validate'));
+                }else{
+                    $this->error('修改失败');
+                }
+                exit; 
+            }
+            
+        }
+        $this->display();
+    }
+
+
 
 
 

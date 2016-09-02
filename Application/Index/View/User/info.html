@@ -1,3 +1,4 @@
+
 <include file="Public/header"/>
 <div class="fn-clear" style="min-height: 459px; margin-top:80px">
     <div class="content fn-clear">
@@ -28,20 +29,21 @@
                                     <a href="{: U('Index/User/edit_name')}" >修改</a>
                                 </div>
                             </div>
-                            <div class="status-box status-box fn-clear <if condition="$user['mobile_validate'] eq 0">safe-status-warning<else/>safe-status-ok </if>">
+                            <div class="status-box status-box fn-clear <if condition="$user['mobile_validated'] eq 0">safe-status-warning<else/>safe-status-ok </if>">
                                 <div class="safe-center-title">
                                     <h3>手机验证</h3>
                                 </div>
-                                <if condition="$user['mobile_validate'] eq 0">
+                                <if condition="$user['mobile_validated'] eq 0">
                                     <p>绑定手机后，可用手机登录。</p>
+
                                     <div class="safe-todo">
-                                        <a href="{:U('Index/User/mobile_validate',array('type'=>'mobile','step'=>1))}" target="_blank">验证</a>
+                                        <a href="{:U('Index/User/mobile_validate',array('type'=>'mobile','step'=>1))}" >验证</a>
 
                                     </div>
                                     <else/>
                                     <p>您验证的手机：{$user.mobile}</p>
                                     <div class="safe-todo">
-                                        <a href="{:U('Home/User/mobile_validate',array('type'=>'mobile','step'=>1))}" target="_blank">修改</a>
+                                        <a href="{:U('Index/User/mobile_validate',array('type'=>'mobile','step'=>1))}" >修改</a>
 
                                     </div>
                                 </if>
@@ -60,12 +62,13 @@
                                 <if condition="$user['email_validated'] eq 0">
                                     <p>绑定邮箱后，可用邮箱登录。</p>
                                     <div class="safe-todo">
-                                        <a href="{:U('Home/User/email_validate',array('type'=>'email','step'=>1))}" target="_blank">验证</a>
+                                        <a href="{:U('Index/User/email_validate')}" target="_blank">发送验证邮件</a>
+                                        <a href="{: U('Index/User/edit_email')}" target="_blank">修改</a>
                                     </div>
                                     <else/>
                                     <p>您验证的邮箱：{$user.email}</p>
                                     <div class="safe-todo">
-                                        <a href="{:U('Home/User/email_validate',array('type'=>'email','step'=>1))}" target="_blank">修改</a>
+                                        <a href="{: U('Index/User/edit_email')}" target="_blank">修改</a>
                                     </div>
                                 </if>
                             </div>

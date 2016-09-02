@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>龙米</title>
+<link href="__PUBLIC__/CSS/css.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/CSS/mui.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<form action="{: U('Index/User/edit_email')}" method="post" id="email_from">
+  <div class="mydiv1">
+    <div class="pop1" style="text-align:center; width:500px">
+      <div class="in3">
+        设置邮箱
+      </div>
+      <div class="pop_main">
+      </div>
+      <div class="tab_box2" style="border-radius:0 0 6px 6px!important">
+       <input name="email" type="text" class="pop_text1" style="width:100%" placeholder="邮箱" id="email">
+        <div class="m5_btn"><a href="javascript:void(0);" onclick="check_email_from()">提交</a></div>
+      </div>
+    </div>
+  </div> 
+</form>
+
+</body>
+</html>
+<script src="./Public/js/jquery-1.8.2.min.js"></script>
+<script>
+  function check_email_from(){
+    var email = $('#email').val();
+    var emailVerify = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if(!emailVerify.test(email)){
+      alert('邮箱格式不对');return false;
+    }
+    $('#email_from').submit();
+  }
+</script>
