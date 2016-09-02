@@ -1,48 +1,45 @@
-<include file="Public/header" />
-
-<div style="height:150px"></div>
-<div class="E-shop_cp">
-    <?php if(isset($message)) {?>
-    <div class="E-shop_cp_l">
-        <!--<img src="__MAIN__/images/success_ts.png" width="520" height="520">-->
-    </div>
-    <div class="E-shop_cp_r">
-        <p class="m1"><?php echo($message); ?></p>
-        <p class="m2">
-            页面自动 <span><a id="href" href="<?php echo($jumpUrl); ?>">跳转</a> </span>等待时间： <b id="wait"><?php echo($waitSecond); ?></b>
-        </p>
-    </div>
-    </div>
-    <?php }else{?>
-    <div class="E-shop_cp_l">
-        <!--<img src="__MAIN__/images/error_ts.png" width="520" height="520">-->
-    </div>
-    <div class="E-shop_cp_r">
-        <p class="m1"><?php echo($error); ?></p>
-        <p class="m2">
-            页面自动 <span><a id="href" href="<?php echo($jumpUrl); ?>">跳转</a> </span>等待时间： <b id="wait"><?php echo($waitSecond); ?></b>
-        </p>
-    </div>
-    <?php }?>
-</div>
-
-
-
-<include file="Public/footer" />
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$shopConfig['shop_info_store_title']}</title>
+    <link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
+    <link href="__PUBLIC__/css/mui.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
 <script type="text/javascript">
- 
-(function(){
-var wait = document.getElementById('wait'),href = document.getElementById('href').href;
-var interval = setInterval(function(){
-	var time = --wait.innerHTML;
-	if(time <= 0) {
-		location.href = href;
-		clearInterval(interval);
-	};
-}, 1000);
-})();
- 
+    function countDown(secs,surl){
+        //alert(surl);
+        var jumpTo = document.getElementById('jumpTo');
+        jumpTo.innerHTML=secs;
+        if(--secs>0){
+            setTimeout("countDown("+secs+",'"+surl+"')",1000);
+        }
+        else{
+            location.href=surl;
+        }
+    }
 </script>
+<div class="mydiv1">
+    <div class="pop1" style="text-align:center; width:500px">
+        <div class="in3"> 提示 </div>
+        <div class="pop_main"> </div>
+        <div class="tab_box2" style="border-radius:0 0 6px 6px!important">
+            <?php if(isset($message)) {?>
+            <p style="padding-top:20px"><img src="__PUBLIC__/img/g2.png" width="51" height="51"></p>
+            <p style="font-size:24px; padding-bottom:20px"><?php echo($message); ?></p>
+            <?php }else{?>
+            <p style="padding-top:20px"><img src="__PUBLIC__/img/g1.png" width="51" height="51"></p>
+            <p style="font-size:24px; padding-bottom:20px"><?php echo($error); ?></p>
+            <?php }?>
+            <p  style="color:#CCC">
+                <span id="jumpTo"><?php echo($waitSecond); ?></span>秒后系统自动跳转
+            </p>
+            <script type="text/javascript">countDown("<?php echo($waitSecond); ?>",'<?php echo($jumpUrl); ?>');</script>
+            <p style="padding-top:10px"><a href="<?php echo($jumpUrl); ?>">返回&nbsp;&gt;</a></p>
+        </div>
+    </div>
+</div>
+</div>
 </body>
 </html>

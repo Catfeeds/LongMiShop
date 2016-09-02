@@ -32,7 +32,7 @@ class PaymentController extends BaseIndexController {
                 $bankCodeList[$val['code']] = unserialize($val['bank_code']);
             }
         }
-        $bank_img = include_once '../../../Application/Common/Conf/bank.php'; // 银行对应图片
+        $bank_img = include_once 'Application/Common/Conf/bank.php'; // 银行对应图片
         $payment = M('Plugin')->where("`type`='payment' and status = 1")->select();
         $this->assign('paymentList',$paymentList);
         $this->assign('bank_img',$bank_img);

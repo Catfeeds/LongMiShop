@@ -2,26 +2,26 @@
 
 $(function(){
 
-	$('.m33').find('li').each(function(i){
-		$(this).click(function(){
-			$('.m33').find('li').removeClass('m33_hover');
-			$(this).addClass('m33_hover');
-			
-			})
-		})
+	// $('.m33').find('li').each(function(i){
+	// 	$(this).click(function(){
+	// 		$('.m33').find('li').removeClass('m33_hover');
+	// 		$(this).addClass('m33_hover');
+	//
+	// 		})
+	// 	})
 	
 	})
 $(function(){
 
-	$('.m333').find('li').each(function(i){
-		$(this).click(function(){
-			$('.m333').find('li').removeClass('m333_hover');
-			$(this).addClass('m333_hover');
-			
-			})
-		})
-	
-	})	
+	// $('.m333').find('li').each(function(i){
+	// 	$(this).click(function(){
+	// 		$('.m333').find('li').removeClass('m333_hover');
+	// 		$(this).addClass('m333_hover');
+	//
+	// 		})
+	// 	})
+	//
+	})
 $(function(){
 
 	$('.m44').find('li').each(function(i){
