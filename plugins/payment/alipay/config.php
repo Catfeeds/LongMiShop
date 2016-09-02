@@ -6,7 +6,7 @@ return array(
     'author' => 'jy_pwn',
     'desc' => 'PC端支付宝插件 ',
     'scene' =>2,  // 使用场景 0 PC+手机 1 手机 2 PC
-    'icon' => 'logo.jpg',
+    'icon' => 'alipay.png',
     'config' => array(
         array('name' => 'alipay_account','label'=>'支付宝帐户',           'type' => 'text',   'value' => ''),
         array('name' => 'alipay_key','label'=>'交易安全校验码',               'type' => 'text',   'value' => ''),
