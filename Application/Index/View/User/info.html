@@ -18,14 +18,14 @@
                                 <div class="safe-center-title" onClick="GetUploadify2(1,'head_pic','head_pic','add_img');">
                                     <h3>修改头像</h3>
                                 </div>
-                                <a class="blue-small-btn js-modify-avatar">上传图片</a> </div>
+                                <a href="javascript:showDiv()" class="blue-small-btn js-modify-avatar">上传图片</a> </div>
                             <div class="status-box safe-status-ok fn-clear">
                                 <div class="safe-center-title">
                                     <h3>账户昵称</h3>
                                 </div>
                                 <p>{$user.nickname}</p>
                                 <div class="safe-todo">
-                                    <a href="#" target="_blank">修改</a>
+                                    <a href="{: U('Index/User/edit_name')}" >修改</a>
                                 </div>
                             </div>
                             <div class="status-box status-box fn-clear <if condition="$user['mobile_validate'] eq 0">safe-status-warning<else/>safe-status-ok </if>">
@@ -35,7 +35,7 @@
                                 <if condition="$user['mobile_validate'] eq 0">
                                     <p>绑定手机后，可用手机登录。</p>
                                     <div class="safe-todo">
-                                        <a href="{:U('Home/User/mobile_validate',array('type'=>'mobile','step'=>1))}" target="_blank">验证</a>
+                                        <a href="{:U('Index/User/mobile_validate',array('type'=>'mobile','step'=>1))}" target="_blank">验证</a>
 
                                     </div>
                                     <else/>
@@ -51,7 +51,7 @@
                                     <h3>登录密码</h3>
                                 </div>
                                 <p>互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</p>
-                                <div class="safe-todo"> <a href="{:U('Home/User/password')}" target="_blank">修改</a> </div>
+                                <div class="safe-todo"> <a href="{:U('Index/User/edit_pwd')}" >修改</a> </div>
                             </div>
                             <div class="status-box fn-clear status-box-last <if condition="$user['email_validated'] eq 0">safe-status-warning<else/>safe-status-ok</if>">
                                 <div class="safe-center-title">
@@ -78,5 +78,35 @@
 </div>
 
 <include file="Public/footer"/>
+
+
+<div id="popDiv" class="mydiv" style="display:none;">
+  <div class="pop">
+    <div class="in2">
+      <div class="in2_l">设置头像</div>
+      <div class="in2_r"><a href="javascript:closeDiv()"><img src="__PUBLIC__/img/close.png" width="22" height="21"></a></div>
+    </div>
+    <div class="Favicon">
+      <div class="Favicon_l">
+        <p><img src="__PUBLIC__/img/user.png" width="133" height="133"></p>
+        <p><a href="javascript:;" class="a-upload">
+          <input type="file" name="" id="">
+          点击这里上传文件 </a></p>
+      </div>
+      <div class="Favicon_r"></div>
+    </div>
+    <div class="tab_box1" style="border-radius:0 0 6px 6px!important">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><div class="m41_btn"><a href="javascript:closeDiv()">取消</a></div></td>
+          <td width="13%"><div class="m4_btn"><a href="#">保存</a></div></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="bg" class="bg" style="display:none;"></div>
+<iframe id='popIframe' class='popIframe' frameborder='0' ></iframe>
 </body>
 </html>

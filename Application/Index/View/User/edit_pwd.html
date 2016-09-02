@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>龙米</title>
+<link href="__PUBLIC__/CSS/css.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/CSS/mui.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<form  method="post" action="{: U('Index/User/edit_pwd')}" id="edit_pwd_form">
+<div class="mydiv1">
+  <div class="pop1" style="text-align:center; width:500px">
+    <div class="in3">
+      修改密码</div>
+    <div class="pop_main">
+    </div>
+    <div class="tab_box2" style="border-radius:0 0 6px 6px!important">
+      <input name="initial_pwd" type="password" class="pop_text1" placeholder="旧密码" style="width:100%; margin-bottom:10px; margin-top:10px">
+       <input name="password" type="password" class="pop_text1" placeholder="新密码" style="width:100%; margin-bottom:10px; margin-top:10px">
+        <input name="verify_pwd" type="password" class="pop_text1" placeholder="重复新密码" style="width:100%; margin-bottom:10px; margin-top:10px">
+      <div class="m5_btn"><a name="submit" onclick="document.getElementById('edit_pwd_form').submit();return false;">确定更改密码</a></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
