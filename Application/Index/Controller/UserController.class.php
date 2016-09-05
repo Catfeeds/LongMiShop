@@ -12,7 +12,7 @@ class UserController extends BaseIndexController {
         return array(
             'login',
             'doLogin',
-            'register'
+            'register',
         );
     }
 
@@ -49,6 +49,7 @@ class UserController extends BaseIndexController {
 //        exit(json_encode($res));
     }
 
+    //退出
     public function logout(){
         session_unset();
         session_destroy();
@@ -56,9 +57,35 @@ class UserController extends BaseIndexController {
         exit;
     }
 
+    //用户注册
     public function register(){
+        // session_start();
+        $config = tpCache('sms');
+        $sms_time_out = $config['sms_time_out'];
+        if(IS_POST){  
+            $verify = new \Think\Verify();
+            $code=I("post.verify");
+            if(!$verify->check($code,$id)){
+                $this->error('验证码输入错误!',U('Index/User/register'),3);
+            }
+            $data = I('post.');
+            //手机号码是否注册
+            $new_res = $this->users->where("mobile = '".$data['mobile']."'")->count();
+            if(empty($new_res)){
+                $data['password'] = encrypt($data['password']);
+                $data['reg_time'] = time();
+                $res = $this->users->add($data);
+                $res ? $this->success('注册成功',U('Index/Index/index')) : $this->error('注册失败');exit;
+            }else{
+                $this->error('手机号码已注册');
+                exit;
+            }
+            
+        }
+        $this->assign('time',$sms_time_out);
         $this->display();
     }
+
 
     public function index(){
         header("location:".U('Index/Order/orderList'));
@@ -485,7 +512,8 @@ class UserController extends BaseIndexController {
                 $info = $upload->upload();
                 
                 if(!$info){
-                    return   $upload->getError();// 上传错误提示错误信息
+                    // return   $upload->getError();// 上传错误提示错误信息
+                    exit(json_encode(callback(false,$upload->getError())));
                     // echo json_encode($upload->getError());exit;
                 }else{
                     $this->del_before($this->user_id); //删除旧头像
@@ -505,5 +533,8 @@ class UserController extends BaseIndexController {
         // $file = './Template/mobile/longmi/Static/images/'.$res['head_pic'];
         unlink($res['head_pic']);//删除
     }
+
+
+    
 
 }

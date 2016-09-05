@@ -3,6 +3,7 @@
 
 require_once "Function/base.php";
 require_once "Function/order.php";
+require_once "Function/verify.php";
 
 
 function dd($x) {
