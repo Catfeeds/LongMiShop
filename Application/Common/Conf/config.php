@@ -10,7 +10,7 @@ return array(
     //'URL_CASE_INSENSITIVE' => false, //URL大小写不敏感
 //    'LOAD_EXT_CONFIG'=>'db.company,route', // 加载数据库配置文件
 //    'LOAD_EXT_CONFIG'=>'db.home,route', // 加载数据库配置文件
-    'LOAD_EXT_CONFIG'=>'db.company', // 加载数据库配置文件
+    'LOAD_EXT_CONFIG'=>'db', // 加载数据库配置文件
 //    'URL_MODEL'=>2, // 如果需要 隐藏 index.php  打开这行"URL_MODEL"注释 同时在apache环境下 开启 伪静态模块，  如果在nginx 下需要另外配置，参考thinkphp官网手册
     'URL_MODEL'=>3,//兼容模式
 

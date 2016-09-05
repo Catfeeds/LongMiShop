@@ -52,30 +52,80 @@
                             <div class="order-status-now">
                                 <h3>订单状态：{$order_info.order_status_desc}</h3>
                                 <!--<p>您的订单已关闭。</p>-->
+
+                                <p>
+                                    您可以
+                                    <if condition="$order_info.pay_btn eq 1">
+                                        <a class="blue-small-btn js-payment-order"  href="{:U('/Index/User/payment',array('order_id'=>$order_info[order_id]))}">立即支付</a>
+                                    </if>
+                                        <if condition="$order_info.cancel_btn eq 1">
+                                        <a class="gray-small-btn js-cancel-order" href="javascript:showDiv()">取消订单</a>
+                                    </if>
+                                    <if condition="$order_info.receive_btn eq 1">
+                                        <a class="blue-small-btn js-payment-order"  onClick=" if(confirm('你确定收到货了吗?')) location.href='{:U('Home/Order/orderConfirm',array('id'=>$order_info['order_id']))}'">收货确认</a>
+                                    </if>
+                                </p>
+
                             </div>
                         </div>
+                        <if condition="$order_info.shipping_btn eq 1">
+                            <div class="express_list">
+                                <a href="javascript:;">查看物流</a>
+                            </div>
+                            <div class="express_box">
+                                <div class="express_txt">
+                                    <p>
+                                        <span>快递编号：</span>21818838047
+                                        <span>承运人：</span>顺丰快递
+                                        <span>预计送达时间：</span>2016-08-25
+                                    </p>
+                                </div>
+                                <div class="course_box">
+                                    <div class="course">
+                                        <div class="before">
+                                            <p>感谢您在龙米商城购物，欢迎您再次光临！</p>
+                                            <span>2016-08-25 10:12</span></div>
+                                        <div class="now">
+                                            <p>您的订单已到达广州站！</p>
+                                            <span>2016-08-24 10:12</span></div>
+                                        <div class="now">
+                                            <p>订单已打包完成！将会顺丰快递！</p>
+                                            <span>2016-08-24 10:12</span></div>
+                                    </div>
+                                    <div class="now1">
+                                        <p>订单已打印！</p>
+                                        <span>2016-08-24 10:12</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pack-up">
+                                <a href="javascript:;">收起物流详情</a>
+                            </div>
+                        </if>
+
+
                         <div class="box-inner order-cart order-list-cart order-detail-cart  fn-clear">
                             <div class="gray-sub-title cart-title"> <span class="name">商品名称</span> <span class="subtotal">小计</span> <span class="num">数量</span> <span class="price">单价</span> </div>
                             <div class="cart">
                                 <volist name="order_info.goods_list" id="good">
-                                <div class="cart-items fn-clear" data-id="{$good.goods_id}">
-                                    <div class="prod-info">
-                                        <div class="items-thumb">
-                                            <a href="#" target="_blank" title="{$good.goods_name}">
-                                                <img src="{$good.goods_id|goods_thum_images=80,80}">
-                                            </a>
-                                        </div>
-                                        <div class="items-params fn-clear">
-                                            <div class="name">
-                                                <a href="#" target="_blank" title="{$good.goods_name}">{$good.goods_name}</a>
+                                    <div class="cart-items fn-clear" data-id="{$good.goods_id}">
+                                        <div class="prod-info">
+                                            <div class="items-thumb">
+                                                <a href="#" target="_blank" title="{$good.goods_name}">
+                                                    <img src="{$good.goods_id|goods_thum_images=80,80}">
+                                                </a>
                                             </div>
-                                            <div class="detail"> 商品编号：{$good.goods_sn} </div>
+                                            <div class="items-params fn-clear">
+                                                <div class="name">
+                                                    <a href="#" target="_blank" title="{$good.goods_name}">{$good.goods_name}</a>
+                                                </div>
+                                                <div class="detail"> 商品编号：{$good.goods_sn} </div>
+                                            </div>
+                                            <div class="subtotal">¥ {$good['member_goods_price'] * $good['goods_num']}</div>
+                                            <div class="num">{$good.goods_num}</div>
+                                            <div class="price">¥ {$good.goods_price}</div>
                                         </div>
-                                        <div class="subtotal">¥ {$good['member_goods_price'] * $good['goods_num']}</div>
-                                        <div class="num">{$good.goods_num}</div>
-                                        <div class="price">¥ {$good.goods_price}</div>
                                     </div>
-                                </div>
                                 </volist>
                             </div>
                             <div class="order-discount-line">
@@ -114,5 +164,33 @@
     </div>
 </div>
 <include file="Public/footer"/>
+
+<div id="popDiv" class="mydiv" style="display:none; height:auto;width:450px; margin-left:-225px; left: 50%;">
+    <div class="pop" style="width:450px">
+        <div class="in2">
+            <div class="in2_l">提示</div>
+            <div class="in2_r"><a href="javascript:closeDiv()"><img src="__PUBLIC__/img/close.png" width="22" height="21"></a></div>
+        </div>
+
+
+        <div class="or"><img src="__PUBLIC__/img/warning.png" width="50" height="50">是否取消订单？</div>
+
+
+        <div class="tab_box1" style="border-radius:0 0 6px 6px!important">
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td><div class="m41_btn"><a href="javascript:closeDiv()">返回</a></div></td>
+                    <td width="13%"><div class="m4_btn"><a href="{:U('Index/Order/cancelOrder',array('id'=>$order_info['order_id']))}">是</a></div></td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+<div id="bg" class="bg" style="display:none;"></div>
+<iframe id='popIframe' class='popIframe' frameborder='0' ></iframe>
+
 </body>
 </html>

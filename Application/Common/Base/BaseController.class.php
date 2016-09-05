@@ -21,7 +21,7 @@ class BaseController extends Controller
     public function public_assign()
     {
         $shopConfig = array();
-        $config = M('config')->cache(true,LONGMI_CACHE_TIME)->select();
+        $config = M('config')->cache(true,MY_CACHE_TIME)->select();
         foreach($config as $k => $v)
         {
             if($v['name'] == 'hot_keywords'){

@@ -34,6 +34,8 @@ class UserController extends BaseIndexController {
 
         $logic = new \Common\Logic\UsersLogic();
         $res = $logic->login($username,$password);
+        $cartLogic = new \Common\Logic\CartLogic();
+        $cartLogic->login_cart_handle($this->session_id,session(__UserID__));  //用户登录后 需要对购物车 一些操作
         exit(json_encode($res));
 //        if($res['status'] == 1){
 //            $res['url'] =  urldecode(I('post.referurl'));
@@ -43,8 +45,6 @@ class UserController extends BaseIndexController {
 //            $nickname = empty($res['result']['nickname']) ? $username : $res['result']['nickname'];
 //            setcookie('uname',urlencode($nickname),null,'/');
 //            setcookie('cn','',time()-3600,'/');
-//            $cartLogic = new \Common\Logic\CartLogic();
-//            $cartLogic->login_cart_handle($this->session_id,$res['result']['user_id']);  //用户登录后 需要对购物车 一些操作
 //        }
 //        exit(json_encode($res));
     }
@@ -61,7 +61,7 @@ class UserController extends BaseIndexController {
     }
 
     public function index(){
-        header("location:".U('Index/User/orderList'));
+        header("location:".U('Index/Order/orderList'));
         $this->display();
     }
 
@@ -104,18 +104,6 @@ class UserController extends BaseIndexController {
         $user_info = $this -> user_info;
 
         if(IS_POST){
-//            I('post.nickname') ? $post['nickname'] = I('post.nickname') : false; //昵称
-//            I('post.qq') ? $post['qq'] = I('post.qq') : false;  //QQ号码
-//            I('post.head_pic') ? $post['head_pic'] = I('post.head_pic') : false; //头像地址
-//            I('post.sex') ? $post['sex'] = I('post.sex') : false;  // 性别
-//            I('post.birthday') ? $post['birthday'] = strtotime(I('post.birthday')) : false;  // 生日
-//            I('post.province') ? $post['province'] = I('post.province') : false;  //省份
-//            I('post.city') ? $post['city'] = I('post.city') : false;  // 城市
-//            I('post.district') ? $post['district'] = I('post.district') : false;  //地区
-//            if(!$userLogic->update_info($this->user_id,$post))
-//                $this->error("保存失败");
-//            $this->success("操作成功");
-//            exit;
         }
         //  获取省份
         $province = M('region')->where(array('parent_id'=>0,'level'=>1))->select();
@@ -189,44 +177,6 @@ class UserController extends BaseIndexController {
     }
 
 
-    public function orderList(){
-        $where = ' user_id='.$this->user_id;
-        //条件搜索
-        if(I('get.type')){
-            $where .= C(strtoupper(I('get.type')));
-        }
-        // 搜索订单 根据商品名称 或者 订单编号
-        $search_key = trim(I('search_key'));
-        if($search_key)
-        {
-            $where .= " and (order_sn like '%$search_key%' or order_id in (select order_id from `".C('DB_PREFIX')."order_goods` where goods_name like '%$search_key%') ) ";
-        }
-
-        $count = M('order')->where($where)->count();
-        $Page       = new Page($count,5);
-
-        $show = $Page->show();
-        $order_str = "order_id DESC";
-        $order_list = M('order')->order($order_str)->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
-
-        //获取订单商品
-        $model = new UsersLogic();
-        foreach($order_list as $k=>$v)
-        {
-            $order_list[$k] = set_btn_order_status($v);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
-            //$order_list[$k]['total_fee'] = $v['goods_amount'] + $v['shipping_fee'] - $v['integral_money'] -$v['bonus'] - $v['discount']; //订单总额
-            $data = $model->getOrderGoods($v['order_id']);
-            $order_list[$k]['goods_list'] = $data['result'];
-        }
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('page',$show);
-        $this->assign('lists',$order_list);
-        $this->assign('active','order_list');
-        $this->assign('active_status',I('get.type'));
-        $this->display();
-    }
 
 
     /*
@@ -314,7 +264,7 @@ class UserController extends BaseIndexController {
             if(empty($initial_pwd)){
                 $this->error('旧密码不能为空',U('/Index/User/edit_pwd'));exit;
             }else if(empty($password) || empty($verify_pwd)){
-                 $this->error('新密码不能为空',U('/Index/User/edit_pwd'));exit;
+                $this->error('新密码不能为空',U('/Index/User/edit_pwd'));exit;
             }else if($password != $verify_pwd){
                 $this->error('新密码两次输入不一致',U('/Index/User/edit_pwd'));exit;
             }else if($initial_pwd == $password){
@@ -555,9 +505,5 @@ class UserController extends BaseIndexController {
         // $file = './Template/mobile/longmi/Static/images/'.$res['head_pic'];
         unlink($res['head_pic']);//删除
     }
-
-
-
-
 
 }

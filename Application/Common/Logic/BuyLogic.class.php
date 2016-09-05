@@ -7,6 +7,7 @@ use Think\Model;
 class BuyLogic extends BaseLogic
 {
     public  $userId                  = null;
+    public  $orderId                 = null;
     public  $user                    = null;
     public  $model                   = null;
     private $cartLogic               = null;
@@ -27,6 +28,7 @@ class BuyLogic extends BaseLogic
     public function createOrder()
     {
         $this -> model = new Model();
+
         try {
             $this -> model -> startTrans();
 
@@ -44,13 +46,14 @@ class BuyLogic extends BaseLogic
 
             //第5步 订单后续处理
             $this->_createOrderStep5();
-//            throw new \Exception('调试使用');//调试使用
+
             $this -> model -> commit();
-            return callback(true,'',$this -> _post_data['orderData']['order_id']);
+
+            return callback(true,'',$this -> orderId);
 
         } catch (\Exception $e){
             $this -> model -> rollback();
-//            dd(callback(false, $e->getMessage()));//调试使用
+
             return callback(false, $e->getMessage());
         }
 
@@ -249,7 +252,7 @@ class BuyLogic extends BaseLogic
 //        // 如果使用了积分或者余额才记录
         ($data4['user_money'] || $data4['pay_points']) && M("AccountLog")->add($data4);
 
-
+        $this -> orderId = $order;
         $this -> _post_data['orderData'] = $order;
     }
 

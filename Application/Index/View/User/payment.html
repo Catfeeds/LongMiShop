@@ -26,7 +26,7 @@
                             <ul>
                                 <foreach name="paymentList" item="v"  key="k">
                                     <li>
-                                        <input type="radio" id="input-ALIPAY-1" value="pay_code={$v['code']}" style="display: none;" name="pay_radio" >
+                                        <input type="radio" id="input-ALIPAY-1" value="pay_code={$v['code']}" style="display:none;" name="pay_radio" >
                                         <img src="/plugins/{$v['type']}/{$v['code']}/{$v['icon']}" width="144" height="34"  onClick="change_pay(this);" >
                                     </li>
                                 </foreach>
@@ -60,66 +60,67 @@
             </span>
             </div>
         </div>
+
         <div class="gray-box fn-clear confirm-detail">
             <div class="in1 pre-title columns-title">
                 <h2>订单详情</h2>
                 <span class="status-tip" style="float:right; font-size:16px; padding-right:20px">订单编号：{$order['order_sn']}</span>
             </div>
             <div class="box-inner order-cart banner-cart">
-                <!--<div class="gray-sub-title cart-title">-->
-                    <!--<span class="name">商品名称</span>-->
-                    <!--<span class="subtotal">小计</span>-->
-                    <!--<span class="num">数量</span>-->
-                    <!--<span class="price">单价</span>-->
-                    <!--<span class="discount">优惠</span>-->
-                <!--</div>-->
-                <!--<div class="cart">-->
-                    <!--<div class="cart-items fn-clear" data-id="100014501">-->
-                        <!--<div class="prod-info">-->
-                            <!--<div class="items-thumb">-->
-                                <!--<a href="#" target="_blank" title="Smartisan T2（黑色，32GB）">-->
-                                    <!--<img src="__PUBLIC__/img/cp5.png">-->
-                                <!--</a>-->
-                            <!--</div>-->
-                            <!--<div class="items-params fn-clear">-->
-                                <!--<h6 class="name">-->
-                                    <!--<a href="#" target="_blank">龙米</a>-->
-                                <!--</h6>-->
-                                <!--<div class="subtotal">¥ 1,999.00</div>-->
-                                <!--<div class="num">1</div>-->
-                                <!--<div class="price">¥ 1,999.00</div>-->
-                            <!--</div>-->
-                            <!--<div class="items-detail fn-clear">-->
-                                <!--<div class="detail">商品编号：100014501</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-
-
-                <!--</div>-->
-                <div class="gray-sub-title">优惠券</div>
-                <div class="order-discount-line" style="text-align:left; padding:20px; line-height:30px">
-                    <div class="mui-input-row mui-radio mui-left">
-                        <input name="coupon" type="radio"  checked>
-                        不使用优惠券<br>
+                <div class="gray-sub-title cart-title">
+                    <span class="name">商品名称</span>
+                    <span class="subtotal">小计</span>
+                    <span class="num">数量</span>
+                    <span class="price">单价</span>
+                    <span class="discount">优惠</span>
+                </div>
+                <div class="cart">
+                    <volist name="goodsList" id="good">
+                        <div class="cart-items fn-clear" data-id="{$good.goods_id}">
+                            <div class="prod-info">
+                                <div class="items-thumb">
+                                    <a href="#" target="_blank" title="{$good.goods_name}">
+                                        <img src="{$good.goods_id|goods_thum_images=80,80}">
+                                    </a>
+                                </div>
+                                <div class="items-params fn-clear">
+                                    <div class="name">
+                                        <a href="#" target="_blank" title="{$good.goods_name}">{$good.goods_name}</a>
+                                    </div>
+                                    <div class="subtotal">¥ {$good['member_goods_price'] * $good['goods_num']}</div>
+                                    <div class="num">{$good.goods_num}</div>
+                                    <div class="price">¥ {$good.goods_price}</div>
+                                </div>
+                                <div class="items-detail fn-clear">
+                                    <div class="detail"> 商品编号：{$good.goods_sn} </div>
+                                </div>
+                            </div>
+                        </div>
+                    </volist>
+                </div>
+                <!--<div class="gray-sub-title">优惠券</div>-->
+                <!--<div class="order-discount-line" style="text-align:left; padding:20px; line-height:30px">-->
+                    <!--<div class="mui-input-row mui-radio mui-left">-->
+                        <!--<input name="coupon" type="radio"  checked>-->
+                        <!--不使用优惠券<br>-->
                         <!--<input name="coupon" type="radio">-->
                         <!--自营商品满299减50元<br>-->
 
                         <!--<input name="coupon" type="radio">-->
                         <!--自营商品满199减20元-->
-                    </div>
-                </div>
-                <!--<div class="order-discount-line">-->
-                    <!--<p>商品总计：¥ 1,999.00</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="order-discount-line">
+                    <p>商品总计：¥ {$order.goods_price}</p>
                     <!--<p>运费：+ ¥ 0.00</p>-->
-                    <!--<p class="order-total"> 应付金额： <em>¥ 1,999.00</em> </p>-->
-                <!--</div>-->
-                <!--<div class="gray-sub-title">收货信息</div>-->
-                <!--<div class="gray-sub-con">-->
-                    <!--<p>姓名：刘华</p>-->
-                    <!--<p>联系电话：13570303888</p>-->
-                    <!--<p>详细地址：上海市市辖区徐汇区龙口东路</p>-->
-                <!--</div>-->
+                    <p class="order-total">应付金额：¥ {$order.order_amount}</p>
+                </div>
+                <div class="gray-sub-title">收货信息</div>
+                <div class="gray-sub-con">
+                    <p>姓名：刘华</p>
+                    <p>联系电话：13570303888</p>
+                    <p>详细地址：上海市市辖区徐汇区龙口东路</p>
+                </div>
             </div>
         </div>
     </div>
@@ -133,7 +134,7 @@
     // 切换支付方式
     function change_pay(obj)
     {
-        $(obj).parent().siblings('input[name="pay_radio"]').trigger('click');
+        $(obj).siblings('input[name="pay_radio"]').trigger('click');
     }
 </script>
 </body>
