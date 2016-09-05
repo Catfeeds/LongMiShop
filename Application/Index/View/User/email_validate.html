@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>龙米</title>
+<link href="__PUBLIC__/CSS/css.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/CSS/mui.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="mydiv1">
+  <div class="pop1" style="text-align:center; width:500px">
+    <div class="in3"> 安全验证 </div>
+    <div class="pop_main"> </div>
+    <div class="tab_box2" style="border-radius:0 0 6px 6px!important">
+      <p style="padding-top:20px"><img src="__PUBLIC__/img/g2.png" width="51" height="51"></p>
+      <p style="font-size:24px; padding-bottom:20px">验证邮件发送成功</p>
+      <p  style="color:#CCC">如果没有收到邮件，请检查垃圾邮件，或点击重新发送按钮</p>
+      <div class="in4_box">
+        <div class="in4_l_btn"><a href="#">查看我的邮箱</a></div>
+        <div class="in4_r1_btn">
+        <input type="button" intervaltime="{: $time}" value="重新发送邮件 " id="btnemailAuthCode2" onClick="sendCode(this)">
+        <!-- <a href="#">重新发送邮件（298）</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>
+<script src="./Public/js/jquery-1.8.2.min.js"></script>
+<script>
+$(document).ready(function(){
+  var intAs_time=parseInt($('#btnemailAuthCode2').attr("IntervalTime"));
+  if(intAs_time==300){
+    sendCode('btnemailAuthCode2');
+  }
+  jsInnerTimeout('btnemailAuthCode2');
+  
+});
+
+ function sendCode(obj){
+        var id = $(obj).attr('id');
+
+        //重新发邮件
+        $.ajax({
+            type : "get",
+            url  : "/index.php?m=Index&c=User&a=send_email&type=anew",
+            dataType : 'json',
+            error: function(request) {
+                console.log(request);
+                alert('服务器繁忙, 请联系管理员!');//alert("服务器繁忙, 请联系管理员!");
+                return;
+            },
+            success: function(res) {
+              console.log(res);
+                if(res.data.status == 1){
+                    jsInnerTimeout(id);
+                }else{
+                    alert(res.msg);//alert('发送失败');
+                }
+            }
+        });
+    }
+
+  //倒计时函数
+    function jsInnerTimeout(id)
+    {
+        var codeObj=$("#"+id);
+        var intAs=parseInt(codeObj.attr("IntervalTime"));
+
+        intAs--;
+        codeObj.attr("disabled","disabled");
+        if(intAs<=-1)
+        {
+            codeObj.removeAttr("disabled");
+            codeObj.attr("IntervalTime","{: $time}");
+            codeObj.val("重新发送邮件");
+            return true;
+        }
+
+        codeObj.val(intAs+'s后再次发送邮件');
+        codeObj.attr("IntervalTime",intAs);
+
+        setTimeout("jsInnerTimeout('"+id+"')",1000);
+    };
+</script>
