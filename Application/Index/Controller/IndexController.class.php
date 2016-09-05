@@ -17,7 +17,6 @@ class IndexController extends BaseIndexController {
 
     public function index(){
 
-
     	$this->display();
     }
 
