@@ -94,7 +94,7 @@
     
     <div class="Favicon">
       <div class="Favicon_l">
-        <p><img src="__PUBLIC__/img/user.png" width="133" height="133"></p>
+        <p><img src="{$user.head_pic|default='__PUBLIC__/img/user.png'}" width="133" height="133"></p>
         <p>
             <a href="javascript:void(0);" class="a-upload" onclick="onclick_a()">
                   <input type="file" name="head_pic" id="fileupload">
@@ -132,13 +132,13 @@
 <script type="text/javascript" src="__PUBLIC__/js/jquery-form.js"></script>
 <script type="text/javascript">
 
+    $(function () {
+        $("#fileupload").wrap('<form id="myuploads" action="{:U('Index/User/upload_lcon')}" method="post" enctype="multipart/form-data"></form>');
+    });
 
     //模拟点击
     function onclick_a(){
-        $("#fileupload").wrap('<form id="myuploads" action="{:U('Index/User/upload_lcon')}" method="post" enctype="multipart/form-data"></form>');
-        $('#fileupload').click(function(){
-        });
-    
+        $('#fileupload').click(function () {});
     }
 
     function upload_lcon(){

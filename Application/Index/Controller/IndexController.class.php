@@ -25,7 +25,7 @@ class IndexController extends BaseIndexController {
         $tables = M()->query($sql = 'show tables');
         $sql = "";
         foreach ($tables as $table){
-            $sql .= "alter table ".$table['tables_in_tpshop']." engine=innodb;";
+            $sql .= "alter table ".$table['Tables_in_longmi_master']." engine=innodb;";
 
 //            M()->query($sql);
 //            echo $table['tables_in_tpshop'].' is ok;<br>';

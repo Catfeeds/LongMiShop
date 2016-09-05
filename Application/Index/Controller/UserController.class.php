@@ -154,7 +154,8 @@ class UserController extends BaseIndexController {
     public function addressAdd(){
         if(IS_POST){
             $logic = new UsersLogic();
-            $data = $logic->add_address($this->user_id,0,I('post.'));
+            $post = I('post.');
+            $data = $logic->add_address($this->user_id,0,$post);
             if($data['status'] != 1){
                 $this->error('操作失败');exit;
             }

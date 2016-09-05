@@ -49,7 +49,7 @@ class BuyLogic extends BaseLogic
 
             $this -> model -> commit();
 
-            return callback(true,'',$this -> orderId);
+            return callback(true,'',$this -> _post_data['orderData']['order_id']);
 
         } catch (\Exception $e){
             $this -> model -> rollback();
@@ -79,8 +79,6 @@ class BuyLogic extends BaseLogic
 
     //第2步 得到购买商品信息
     private function _createOrderStep2(){
-        $post = $this -> _post_data;
-
         $cart_count = $this -> cartLogic -> cart_count($this->userId,1);
         if( $cart_count == 0 ){
             throw new \Exception('你的购物车没有选中商品！');
@@ -252,7 +250,6 @@ class BuyLogic extends BaseLogic
 //        // 如果使用了积分或者余额才记录
         ($data4['user_money'] || $data4['pay_points']) && M("AccountLog")->add($data4);
 
-        $this -> orderId = $order;
         $this -> _post_data['orderData'] = $order;
     }
 
