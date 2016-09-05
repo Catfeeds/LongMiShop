@@ -3,7 +3,7 @@ namespace Index\Controller;
 
 class PaymentController extends BaseIndexController {
 
-    public $payment     = null; //  具体的支付类
+    public $payment    = null; //  具体的支付类
     public $payCode    = null; //  具体的支付code
 
     function exceptAuthActions()
@@ -43,21 +43,42 @@ class PaymentController extends BaseIndexController {
         $order_id = I('order_id'); // 订单id
         // 修改订单的支付方式
         $payment_arr = M('Plugin')->where("`type` = 'payment'")->getField("code,name");
-        M('order')->where("order_id = $order_id")->save(array('pay_code'=>$this->pay_code,'pay_name'=>$payment_arr[$this->pay_code]));
+        M('order')->where("order_id = $order_id")->save(array('pay_code'=>$this->payCode,'pay_name'=>$payment_arr[$this->payCode]));
 
         $order = M('order')->where("order_id = $order_id")->find();
 
         // tpshop 订单支付提交
-        $pay_radio = $_REQUEST['pay_radio'];
+        $pay_radio = I('pay_radio');
         $config_value = parse_url_param($pay_radio); // 类似于 pay_code=alipay&bank_code=CCB-DEBIT 参数
         $code_str = $this->payment->get_code($order,$config_value);
         //微信JS支付
-        if($this->pay_code == 'weixin' && $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
+        if($this->payCode == 'weixin' && $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
             $code_str = $this->payment->getJSAPI($order,$config_value);
             exit($code_str);
         }
+//        dd($pay_radio);
+//        dd($this->payment);
         $this->assign('code_str', $code_str);
         $this->assign('order_id', $order_id);
         $this->display('payment');  // 分跳转 和不 跳转
     }
+
+
+    // 服务器点对点 // http://www.tp-shop.cn/index.php/Home/Payment/notifyUrl
+    public function notifyUrl(){
+        $this->payment->response();
+        exit();
+    }
+
+    // 页面跳转 // http://www.tp-shop.cn/index.php/Home/Payment/returnUrl
+    public function returnUrl(){
+        $result = $this->payment->respond2(); // $result['order_sn'] = '201512241425288593';
+        $order = M('order')->where("order_sn = '{$result['order_sn']}'")->find();
+        $this->assign('order', $order);
+        if($result['status'] == 1)
+            $this->display('success');
+        else
+            $this->display('error');
+    }
+
 }

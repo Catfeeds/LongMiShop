@@ -14,11 +14,11 @@ class IndexController extends MobileBaseController {
             $signPackage = $jssdk->GetSignPackage();              
             print_r($signPackage);
         */
-        $hot_goods = M('goods')->where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,LONGMI_CACHE_TIME)->select();//首页热卖商品
-        $thems = M('goods_category')->where('level=1')->order('sort_order')->limit(9)->cache(true,LONGMI_CACHE_TIME)->select();
+        $hot_goods = M('goods')->where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,MY_CACHE_TIME)->select();//首页热卖商品
+        $thems = M('goods_category')->where('level=1')->order('sort_order')->limit(9)->cache(true,MY_CACHE_TIME)->select();
         $this->assign('thems',$thems);
         $this->assign('hot_goods',$hot_goods);
-        $favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,LONGMI_CACHE_TIME)->select();//首页推荐商品
+        $favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,MY_CACHE_TIME)->select();//首页推荐商品
         $this->assign('favourite_goods',$favourite_goods);
         $this->display();
     }
@@ -55,7 +55,7 @@ class IndexController extends MobileBaseController {
 //
 //    public function ajaxGetMore(){
 //    	$p = I('p',1);
-//    	$favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->page($p,10)->cache(true,LONGMI_CACHE_TIME)->select();//首页推荐商品
+//    	$favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->page($p,10)->cache(true,MY_CACHE_TIME)->select();//首页推荐商品
 //    	$this->assign('favourite_goods',$favourite_goods);
 //    	$this->display();
 //    }

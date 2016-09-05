@@ -1,10 +1,8 @@
 <?php
 namespace Index\Controller;
 
-use Common\Logic\OrderLogic;
 use Common\Logic\UsersLogic;
 use Think\Page;
-use Think\Verify;
 
 class UserController extends BaseIndexController {
 
@@ -62,7 +60,7 @@ class UserController extends BaseIndexController {
     }
 
     public function index(){
-        header("location:".U('Index/User/orderList'));
+        header("location:".U('Index/Order/orderList'));
         $this->display();
     }
 
@@ -161,69 +159,7 @@ class UserController extends BaseIndexController {
     }
 
 
-    public function orderList(){
-        $where = ' user_id='.$this->user_id;
-        //条件搜索
-        if(I('get.type')){
-            $where .= C(strtoupper(I('get.type')));
-        }
-        // 搜索订单 根据商品名称 或者 订单编号
-        $search_key = trim(I('search_key'));
-        if($search_key)
-        {
-            $where .= " and (order_sn like '%$search_key%' or order_id in (select order_id from `".C('DB_PREFIX')."order_goods` where goods_name like '%$search_key%') ) ";
-        }
 
-        $count = M('order')->where($where)->count();
-        $Page       = new Page($count,5);
-
-        $show = $Page->show();
-        $order_str = "order_id DESC";
-        $order_list = M('order')->order($order_str)->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
-
-        //获取订单商品
-        $model = new UsersLogic();
-        foreach($order_list as $k=>$v)
-        {
-            $order_list[$k] = set_btn_order_status($v);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
-            //$order_list[$k]['total_fee'] = $v['goods_amount'] + $v['shipping_fee'] - $v['integral_money'] -$v['bonus'] - $v['discount']; //订单总额
-            $data = $model->getOrderGoods($v['order_id']);
-            $order_list[$k]['goods_list'] = $data['result'];
-        }
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('page',$show);
-        $this->assign('lists',$order_list);
-        $this->assign('active','order_list');
-        $this->assign('active_status',I('get.type'));
-        $this->display();
-    }
-
-
-
-    //订单详情
-    public function orderDetail(){
-        $id = I('get.id');
-        $orderLogic = new \Common\Logic\OrderLogic();
-        $orderInfo = $orderLogic -> getOrderInfo( $id , $this->user_id );
-        if(!$orderInfo){
-            $this->error('没有获取到订单信息');
-            exit;
-        }
-        $data = $orderLogic->getOrderGoods($orderInfo['order_id']);
-        $orderInfo['goods_list'] = $data['data'];
-        $orderInfo = set_btn_order_status($orderInfo);
-        $progressBar = getOderProgressBar($orderInfo);
-        $region_list = get_region_list();
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('region_list',$region_list);
-        $this->assign('order_info',$orderInfo);
-        $this->assign('progressBar',$progressBar);
-        $this->display();
-    }
 
 
     /*
@@ -261,6 +197,14 @@ class UserController extends BaseIndexController {
     public function payment(){
         $order_id = I('order_id');
         $order = M('Order')->where("order_id = $order_id")->find();
+
+        if(!$order){
+            $this->error('没有获取到订单信息');
+            exit;
+        }
+        $orderLogic = new \Common\Logic\OrderLogic();
+        $data = $orderLogic -> getOrderGoods($order['order_id']);
+        $goodsList = $data['data'];
         // 如果已经支付过的订单直接到订单详情页面. 不再进入支付页面
         if($order['pay_status'] == 1){
             $order_detail_url = U("Index/User/order_detail",array('id'=>$order_id));
@@ -283,6 +227,7 @@ class UserController extends BaseIndexController {
         $this->assign('paymentList',$paymentList);
         $this->assign('bank_img',$bank_img);
         $this->assign('order',$order);
+        $this->assign('goodsList',$goodsList);
         $this->assign('bankCodeList',$bankCodeList);
         $this->assign('pay_date',date('Y-m-d', strtotime("+1 day")));
         $this->display();
