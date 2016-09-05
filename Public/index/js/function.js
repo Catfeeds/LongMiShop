@@ -1,23 +1,23 @@
 $(function () {
 
-    $('.m33').find('li').each(function (i) {
-        $(this).click(function () {
-            $('.m33').find('li').removeClass('m33_hover');
-            $(this).addClass('m33_hover');
-
-        })
-    })
+    // $('.m33').find('li').each(function (i) {
+    //     $(this).click(function () {
+    //         $('.m33').find('li').removeClass('m33_hover');
+    //         $(this).addClass('m33_hover');
+    //
+    //     })
+    // })
 
 })
 $(function () {
 
-    $('.m333').find('li').each(function (i) {
-        $(this).click(function () {
-            $('.m333').find('li').removeClass('m333_hover');
-            $(this).addClass('m333_hover');
-
-        })
-    })
+    // $('.m333').find('li').each(function (i) {
+    //     $(this).click(function () {
+    //         $('.m333').find('li').removeClass('m333_hover');
+    //         $(this).addClass('m333_hover');
+    //
+    //     })
+    // })
 
 })
 $(function () {
@@ -102,12 +102,22 @@ $(function () {
 
 $(function () {
     $(".express_list").click(function () {
-        $(".express_box").show(200);
-        $(".pack-up").show(200);
+        $(".express_box").fadeIn(200);
+        $(".pack-up").fadeIn(200);
     })
     $(".pack-up").click(function () {
-        $(".express_box").hide(200);
-        $(this).hide(200);
+        $(".express_box").fadeOut(200);
+        $(this).fadeOut(200);
 
     })
+})
+
+
+$(function () {
+    $(".show_co").click(function () {
+        $(".pop_co").fadeIn(200);
+    })
+     $(".pop_co_close").click(function () {
+        $(".pop_co").fadeOut(200);
+    })  
 })

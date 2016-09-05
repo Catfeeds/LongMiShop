@@ -89,7 +89,7 @@ sub {
 	bottom: -.25em
 }
 a {
-	color: #5079D9;
+	color: #666666;
 	cursor: pointer;
 	transition: all .3s ease;
 	-moz-transition: all .3s ease;
@@ -2140,7 +2140,7 @@ opacity:1
 }
 .red-del-btn {
 	position: relative;
-	background: #d84747;
+	background: #F60;
 	background: linear-gradient(#f97474, #e05b5b);
 	line-height: 26px;
 	opacity: .62;
