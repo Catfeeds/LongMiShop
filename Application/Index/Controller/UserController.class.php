@@ -61,7 +61,7 @@ class UserController extends BaseIndexController {
     }
 
     public function index(){
-        header("location:".U('Index/User/orderList'));
+        header("location:".U('Index/Order/orderList'));
         $this->display();
     }
 

@@ -59,7 +59,8 @@
             dataType : 'json',
             success : function(res){
                 if(res.state == 1){
-                    window.location.href = "{:U('Index/Index/index')}";// res.data;
+                    window.location.href = "{:U('Index/Index/index')}";
+                    // res.data;
                 }else{
                     showErrorMsg(res.msg);
                 }
