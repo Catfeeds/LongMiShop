@@ -26,7 +26,7 @@ class BaseController extends Controller {
     {
         
        $lmshop_config = array();
-       $tp_config = M('config')->cache(true,LONGMI_CACHE_TIME)->select();
+       $tp_config = M('config')->cache(true,MY_CACHE_TIME)->select();
        foreach($tp_config as $k => $v)
        {
        	  if($v['name'] == 'hot_keywords'){
@@ -38,7 +38,7 @@ class BaseController extends Controller {
        $goods_category_tree = get_goods_category_tree();    
        $this->cateTrre = $goods_category_tree;
        $this->assign('goods_category_tree', $goods_category_tree);                     
-       $brand_list = M('brand')->cache(true,LONGMI_CACHE_TIME)->field('id,parent_cat_id,logo,is_hot')->where("parent_cat_id>0")->select();
+       $brand_list = M('brand')->cache(true,MY_CACHE_TIME)->field('id,parent_cat_id,logo,is_hot')->where("parent_cat_id>0")->select();
        $this->assign('brand_list', $brand_list);
        $this->assign('lmshop_config', $lmshop_config);
     }  
