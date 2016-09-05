@@ -394,7 +394,7 @@ class UserController extends BaseIndexController {
         if(IS_POST){
             $phone = I('phone');
             $where['mobile'] = $phone;
-            $phone_res  = $this->users->field('user_id,mobile')->where($where)->fetChSql(true)->find();
+            $phone_res  = $this->users->field('user_id,mobile')->where($where)->find();
             
             if(empty($phone_res)){ //可以更换
                 $res = 1; 
@@ -511,6 +511,49 @@ class UserController extends BaseIndexController {
             
         }
         $this->display();
+    }
+
+    //修改头像
+    public function upload_lcon(){
+        if(IS_POST){
+            if($_FILES['head_pic']['error'] == 0 && is_uploaded_file($_FILES['head_pic']['tmp_name'])){
+                
+                $upload = new \Think\Upload();//实例化上传类
+                $upload->maxSize = 5242880;//设置附件上传大小
+                //判断目录是否存在
+
+                $dirname = './Public/upload/head_pic/';
+                if(!is_dir($dirname)){
+                    mkdir($dirname,0777,true);
+                }
+                $head_pic = $this->user_id.'_'.mt_rand();
+                $upload->rootPath = $dirname;//设置文件路径
+                $upload->exts = array('jpg','gif','png','jpeg');//设置附件上传类型
+                $imgName = $upload->saveName = $file_name.$head_pic;//更改文件名
+                $upload->replace = True;
+                $upload->subName = '';
+                $info = $upload->upload();
+                
+                if(!$info){
+                    return   $upload->getError();// 上传错误提示错误信息
+                    // echo json_encode($upload->getError());exit;
+                }else{
+                    $this->del_before($this->user_id); //删除旧头像
+
+                    $data['head_pic'] = $dirname.$info['head_pic']['savename'];
+                    $data['user_id'] = $this->user_id;
+                    $res = $this->users->save($data);
+                    $res ? exit(json_encode(callback(true,'修改成功',array('path'=>$data['head_pic'])))) : exit(json_encode(callback(false,'修改失败'))) ;
+                }
+            }
+        }
+    }
+
+    /*修改删除文件*/
+    public function del_before($id){
+        $res = $this->users->field('head_pic')->where('user_id = '.$id)->find();
+        // $file = './Template/mobile/longmi/Static/images/'.$res['head_pic'];
+        unlink($res['head_pic']);//删除
     }
 
 
