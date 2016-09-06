@@ -70,15 +70,16 @@ class UserController extends BaseIndexController {
                 $this->error('验证码输入错误!',U('Index/User/register'),3);
             }
             $data = I('post.');
-            //手机号码是否注册
-            $new_res = $this->users->where("mobile = '".$data['mobile']."'")->count();
-            if(empty($new_res)){
+            //是否注册
+            $res_mobile = M('users')->where("mobile = '".$data['mobile']."'")->count();//查询手机
+            $res_email = M('users')->where("email = '".$data['email']."'")->count(); //查询邮箱
+            if(empty($res_mobile) && empty($res_email)){
                 $data['password'] = encrypt($data['password']);
                 $data['reg_time'] = time();
-                $res = $this->users->add($data);
+                $res = M('users')->add($data);
                 $res ? $this->success('注册成功',U('Index/Index/index')) : $this->error('注册失败');exit;
             }else{
-                $this->error('手机号码已注册');
+                $this->error('手机号码或邮箱已注册');
                 exit;
             }
 
