@@ -201,27 +201,27 @@ class UsersLogic extends RelationModel
      */
     public function get_order_goods($order_id){
         $sql = "SELECT og.*,g.original_img FROM __PREFIX__order_goods og LEFT JOIN __PREFIX__goods g ON g.goods_id = og.goods_id WHERE order_id = ".$order_id;
-        $goods_data = $this->query($sql);
-        $goods_list = array();
-        if(!empty($goods_data)){
-            foreach ($goods_data as $k=>$val){
-                $goods_list[$val['admin_id']]['goods'][$k] = $val;
-            }
-        }
-
-        if(!empty($goods_list)){
-            foreach ($goods_list as $admin_id=>$goods_list_item){
-                if($admin_id == 0){
-                    $admin_name = "商城自营";
-                }else{
-                    $admin_info  = M('admin')->where(array('admin_id' => $admin_id)) -> find();
-                    $admin_name = !empty($admin_info) ? $admin_info['company_name'] : "未知";
-                    $admin_name = !empty($admin_name) ? $admin_name : $admin_info['user_name'];
-                    $admin_name = "供货商：".$admin_name;
-                }
-                $goods_list[$admin_id]['admin_name'] = $admin_name;
-            }
-        }
+        $goods_list = $this->query($sql);
+//        $goods_list = array();
+//        if(!empty($goods_data)){
+//            foreach ($goods_data as $k=>$val){
+//                $goods_list[$val['admin_id']]['goods'][$k] = $val;
+//            }
+//        }
+//
+//        if(!empty($goods_list)){
+//            foreach ($goods_list as $admin_id=>$goods_list_item){
+//                if($admin_id == 0){
+//                    $admin_name = "商城自营";
+//                }else{
+//                    $admin_info  = M('admin')->where(array('admin_id' => $admin_id)) -> find();
+//                    $admin_name = !empty($admin_info) ? $admin_info['company_name'] : "未知";
+//                    $admin_name = !empty($admin_name) ? $admin_name : $admin_info['user_name'];
+//                    $admin_name = "供货商：".$admin_name;
+//                }
+//                $goods_list[$admin_id]['admin_name'] = $admin_name;
+//            }
+//        }
         $return['status'] = 1;
         $return['msg'] = '';
         $return['result'] = $goods_list;

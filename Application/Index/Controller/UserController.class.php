@@ -246,13 +246,13 @@ class UserController extends BaseIndexController {
         $order = M('Order')->where("order_id = $order_id")->find();
         // 如果已经支付过的订单直接到订单详情页面. 不再进入支付页面
         if($order['pay_status'] == 1){
-            $order_detail_url = U("Index/User/order_detail",array('id'=>$order_id));
+            $order_detail_url = U("Index/Order/OrderDetail",array('id'=>$order_id));
             header("Location: $order_detail_url");
         }
-
         $paymentList = M('Plugin')->where("`type`='payment' and status = 1 and  scene in(0,2)")->select();
         $paymentList = convert_arr_key($paymentList, 'code');
 
+        $bankCodeList = array();
         foreach($paymentList as $key => $val)
         {
             $val['config_value'] = unserialize($val['config_value']);
@@ -263,6 +263,10 @@ class UserController extends BaseIndexController {
         }
         $bank_img = include_once 'Application/Common/Conf/bank.php'; // 银行对应图片
         $payment = M('Plugin')->where("`type`='payment' and status = 1")->select();
+
+        $orderLogic = new \Common\Logic\OrderLogic();
+        $data = $orderLogic -> getOrderGoods($order['order_id']);
+        $this->assign('goodsList',$data['data']);
         $this->assign('paymentList',$paymentList);
         $this->assign('bank_img',$bank_img);
         $this->assign('order',$order);
