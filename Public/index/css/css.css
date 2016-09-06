@@ -1332,22 +1332,6 @@ transform: translate(0, 0)
 	float: right;
 	width: 220px;
 }
-.in4_r1_btn input {
-	border-radius: 4px;
-	background-image: -moz-linear-gradient( 90deg, rgb(239,239,239) 0%, rgb(255,255,255) 100%);
-	background-image: -webkit-linear-gradient( 90deg, rgb(239,239,239) 0%, rgb(255,255,255) 100%);
-	background-image: -ms-linear-gradient( 90deg, rgb(239,239,239) 0%, rgb(255,255,255) 100%);
-	box-shadow: 0.5px 0.866px 7px 0px rgb( 234, 234, 234 );
-	height: 54px;
-	display: block;
-	line-height: 54px;
-	color: #999999;
-	text-align: center;
-	font-size: 18px;
-	margin-bottom: 20px;
-	float: right;
-	width: 220px;
-}
 .Favicon {
 	background-color: #FFF;
 	overflow: hidden;
@@ -1665,7 +1649,6 @@ transform: translate(0, 0)
 	_position: absolute;
 	bottom: 0px;
 	_bottom: 0px;
-
  _margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop);
 	background-color: #FFF;
 	width: 100%;
@@ -1718,4 +1701,33 @@ transform: translate(0, 0)
 	width: 22px;
 	top: 10px;
 	right: 10px;
+}
+.btn_reg {
+	border-radius: 4px;
+	height: 54px;
+	display: block;
+	line-height: 54px;
+	color: #999999;
+	text-align: center;
+	font-size: 18px !important;
+	background-image: -moz-linear-gradient( 90deg, rgb(231,231,231) 0%, rgb(234,234,234) 100%) !important;
+	background-image: -webkit-linear-gradient( 90deg, rgb(231,231,231) 0%, rgb(234,234,234) 100%) !important;
+	background-image: -ms-linear-gradient( 90deg, rgb(231,231,231) 0%, rgb(234,234,234) 100%);
+	width: 100%;
+ !important;
+	cursor: default !important;
+}
+.btn_reg1 {
+	border-radius: 4px;
+	height: 54px;
+	display: block;
+	line-height: 54px;
+	color: #FFFFFF !important;
+	text-align: center;
+	font-size: 18px !important;
+	background-image: -moz-linear-gradient( 90deg, rgb(255,108,0) 0%, rgb(255,157,3) 100%) !important;
+	background-image: -webkit-linear-gradient( 90deg, rgb(255,108,0) 0%, rgb(255,157,3) 100%) !important;
+	background-image: -ms-linear-gradient( 90deg, rgb(230,108,0) 0%, rgb(255,157,3) 100%) !important;
+	width: 100%;
+	cursor: pointer;
 }
