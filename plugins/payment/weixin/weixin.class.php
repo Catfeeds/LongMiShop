@@ -40,7 +40,7 @@ class weixin extends RelationModel
             //$notify_url = C('site_url').U('Home/Payment/notifyUrl',array('pay_code'=>'weixin')); // 接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。
             //$notify_url = C('site_url')."/index.php?m=Home&c=Payment&a=notifyUrl&pay_code=weixin";
             $input = new WxPayUnifiedOrder();
-            $input->SetBody("TPshop商品"); // 商品描述
+            $input->SetBody("商品"); // 商品描述
             $input->SetAttach("weixin"); // 附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
             $input->SetOut_trade_no($order['order_sn']); // 商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
             $input->SetTotal_fee($order['order_amount']*100); // 订单总金额，单位为分，详见支付金额
