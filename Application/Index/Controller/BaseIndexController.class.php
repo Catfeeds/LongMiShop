@@ -2,7 +2,6 @@
 namespace Index\Controller;
 
 use Common\Base\BaseController;
-use Common\Model\User;
 use Common\Logic\UsersLogic;
 
 abstract class BaseIndexController extends BaseController {

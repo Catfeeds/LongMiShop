@@ -94,7 +94,7 @@ return array(
     'WAITCCOMMENT'=> ' AND order_status=2 ', // 待评价 确认收货     //'FINISHED'=>'  AND order_status=1 ', //订单查询状态 已完成
     'FINISH'=> ' AND order_status = 4 ', // 已完成
     'CANCEL'=> ' AND order_status = 3 ', // 已取消
-    
+
     'ORDER_STATUS_DESC' => array(
         'WAITPAY' => '待支付',
         'WAITSEND'=>'待发货',
@@ -103,7 +103,15 @@ return array(
         'CANCEL'=> '已取消',
         'FINISH'=> '已完成', // 
     ),
-    
+    'ORDER_STATUS_DESC_INDEX' => array(
+        'WAITPAY' => '待支付',
+        'WAITSEND'=>'待发货',
+        'WAITRECEIVE'=>'待收货',
+        'WAITCCOMMENT'=> '已完成',
+        'CANCEL'=> '已取消',
+        'FINISH'=> '已完成',
+    ),
+
     /**
      *  订单用户端显示按钮     
         去支付     AND pay_status=0 AND order_status=0 AND pay_code ! ="cod"

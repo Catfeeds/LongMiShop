@@ -47,7 +47,7 @@
             <div class="text_box">
                 <input name="address"  id="address" type="text"  value="{$address.address}" maxlength="100" class="pop_text" style="margin-right:10px; width:660px" placeholder="街道编号/名称，楼宇名称">
                 <div class="mui-input-row mui-checkbox mui-left" style="line-height:60px">
-                    <input name="subBox" type="checkbox"  class="check-one check check_titel" <if condition="$address['is_default'] eq 1">checked</if>>
+                    <input name="is_default" type="checkbox" value="1"  class="check-one check check_titel" <if condition="$address['is_default'] eq 1">checked</if>>
                     设为默认地址 </div>
             </div>
         </div>
