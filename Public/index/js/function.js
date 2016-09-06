@@ -1,23 +1,23 @@
 $(function () {
 
-    // $('.m33').find('li').each(function (i) {
-    //     $(this).click(function () {
-    //         $('.m33').find('li').removeClass('m33_hover');
-    //         $(this).addClass('m33_hover');
-    //
-    //     })
-    // })
+    $('.m33').find('li').each(function (i) {
+        $(this).click(function () {
+            $('.m33').find('li').removeClass('m33_hover');
+            $(this).addClass('m33_hover');
+
+        })
+    })
 
 })
 $(function () {
 
-    // $('.m333').find('li').each(function (i) {
-    //     $(this).click(function () {
-    //         $('.m333').find('li').removeClass('m333_hover');
-    //         $(this).addClass('m333_hover');
-    //
-    //     })
-    // })
+    $('.m333').find('li').each(function (i) {
+        $(this).click(function () {
+            $('.m333').find('li').removeClass('m333_hover');
+            $(this).addClass('m333_hover');
+
+        })
+    })
 
 })
 $(function () {
@@ -121,3 +121,20 @@ $(function () {
         $(".pop_co").fadeOut(200);
     })  
 })
+
+
+function terms(){  
+    if(!$("input[type='checkbox']").is(':checked'))  
+    {  
+        $("#btn_reg").attr("disabled", true).addClass("btn_reg")
+		    $("#btn_reg").removeClass("btn_reg1");
+
+    }else{  
+        $("#btn_reg").attr("disabled", false).addClass("btn_reg1")
+				    $("#btn_reg").removeClass("btn_reg");
+
+    }  
+  
+} 
+
+
