@@ -157,8 +157,7 @@
             success: function(res) {
                 closeDiv();//关闭浮层
                 alert(res['msg']);
-                console.log(res.data['path']);
-                $('.user_img').attr('src',res.data['path']);
+                $('.user_img').attr('src',res['data']['path']);
 
             },
             error:function(res){

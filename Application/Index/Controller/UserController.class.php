@@ -4,7 +4,6 @@ namespace Index\Controller;
 use Common\Logic\UsersLogic;
 use Think\Page;
 use Think\Verify;
-use Think\Upload;
 
 class UserController extends BaseIndexController {
 
@@ -363,7 +362,7 @@ class UserController extends BaseIndexController {
     public function send_sms_reg_code(){
         exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));exit;
         $mobile = I('post.mobile');
-        $userLogic = new Common\Logic\UsersLogic();
+        $userLogic = new \Common\Logic\UsersLogic();
         if(!check_mobile($mobile))
             exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
         $code =  rand(1000,9999);
@@ -508,21 +507,20 @@ class UserController extends BaseIndexController {
                 mkdir($dirName,0777,true);
             }
             $uploadConfig = array(
-                "rootPath"  => $dirName,
-                "exts"      => array('jpg','gif','png','jpeg'),
-                "saveName"  => $this->user_id.'_'.mt_rand(),
-                "replace"   => True,
-                "maxSize"   => 1024*1024,
-
+                "rootPath" => $dirName,
+                "exts"     => array('jpg','gif','png','jpeg'),
+                "saveName" => $this->user_id.'_'.mt_rand(),
+                "replace"  => True,
+                "maxSize"  => 1024*1024,
             );
             $upload = new \Think\Upload($uploadConfig);//实例化上传类
             $info = $upload->upload();
             if($info){
                 $this->del_before($this->user_id); //删除旧头像
-                $data['head_pic'] = $dirName.$info['head_pic']['savename'];
+                $data['head_pic'] = $info['savepath']['urlpath'].$info['head_pic']['urlpath'];
                 $data['user_id'] = $this->user_id;
                 M('users')->save($data);
-                exit(json_encode(callback(true,"上传成功")));
+                exit(json_encode(callback(true,"上传成功",array('path'=>$data['head_pic']))));
             }
             exit(json_encode(callback(false,$upload->getError())));
         }
