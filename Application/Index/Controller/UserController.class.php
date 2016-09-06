@@ -70,9 +70,10 @@ class UserController extends BaseIndexController {
             }
             $data = I('post.');
             //是否注册
-            $res_mobile = M('users')->where("mobile = '".$data['mobile']."'")->count();//查询手机
-            $res_email = M('users')->where("email = '".$data['email']."'")->count(); //查询邮箱
-            if(empty($res_mobile) && empty($res_email)){
+            !empty($data['email']) ? $where['email'] = $data['email'] : '' ; 
+            !empty($data['mobile']) ? $where['mobile'] = $data['mobile'] : '';
+            $res = M('users')->where($where)->count();
+            if(empty($res)){
                 $data['password'] = encrypt($data['password']);
                 $data['reg_time'] = time();
                 $res = M('users')->add($data);
