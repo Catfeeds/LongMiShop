@@ -31,54 +31,54 @@
                                 </div>
                             </div>
                             <div class="status-box status-box fn-clear <if condition="$user['mobile_validated'] eq 0">safe-status-warning<else/>safe-status-ok </if>">
-                                <div class="safe-center-title">
-                                    <h3>手机验证</h3>
-                                </div>
-                                <if condition="$user['mobile_validated'] eq 0">
-                                    <p>绑定手机后，可用手机登录。</p>
-
-                                    <div class="safe-todo">
-                                        <a href="{:U('Index/User/mobile_validate',array('type'=>'mobile','step'=>1))}" >验证</a>
-
-                                    </div>
-                                    <else/>
-                                    <p>您验证的手机：{$user.mobile}</p>
-                                    <div class="safe-todo">
-                                        <a href="{:U('Index/User/mobile_validate',array('type'=>'mobile','step'=>1))}" >修改</a>
-
-                                    </div>
-                                </if>
+                            <div class="safe-center-title">
+                                <h3>手机验证</h3>
                             </div>
-                            <div class="status-box safe-status-ok fn-clear">
-                                <div class="safe-center-title">
-                                    <h3>登录密码</h3>
+                            <if condition="$user['mobile_validated'] eq 0">
+                                <p>绑定手机后，可用手机登录。</p>
+
+                                <div class="safe-todo">
+                                    <a href="{:U('Index/User/mobile_validate',array('type'=>'mobile','step'=>1))}" >验证</a>
+
                                 </div>
-                                <p>互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</p>
-                                <div class="safe-todo"> <a href="{:U('Index/User/edit_pwd')}" >修改</a> </div>
-                            </div>
-                            <div class="status-box fn-clear status-box-last <if condition="$user['email_validated'] eq 0">safe-status-warning<else/>safe-status-ok</if>">
-                                <div class="safe-center-title">
-                                    <h3>邮箱验证</h3>
+                                <else/>
+                                <p>您验证的手机：{$user.mobile}</p>
+                                <div class="safe-todo">
+                                    <a href="{:U('Index/User/mobile_validate',array('type'=>'mobile','step'=>1))}" >修改</a>
+
                                 </div>
-                                <if condition="$user['email_validated'] eq 0">
-                                    <p>绑定邮箱后，可用邮箱登录。</p>
-                                    <div class="safe-todo">
-                                        <a href="{:U('Index/User/email_validate')}" target="_blank">发送验证邮件</a>
-                                        <a href="{: U('Index/User/edit_email')}" target="_blank">修改</a>
-                                    </div>
-                                    <else/>
-                                    <p>您验证的邮箱：{$user.email}</p>
-                                    <div class="safe-todo">
-                                        <a href="{: U('Index/User/edit_email')}" target="_blank">修改</a>
-                                    </div>
-                                </if>
-                            </div>
+                            </if>
                         </div>
+                        <div class="status-box safe-status-ok fn-clear">
+                            <div class="safe-center-title">
+                                <h3>登录密码</h3>
+                            </div>
+                            <p>互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</p>
+                            <div class="safe-todo"> <a href="{:U('Index/User/edit_pwd')}" >修改</a> </div>
+                        </div>
+                        <div class="status-box fn-clear status-box-last <if condition="$user['email_validated'] eq 0">safe-status-warning<else/>safe-status-ok</if>">
+                        <div class="safe-center-title">
+                            <h3>邮箱验证</h3>
+                        </div>
+                        <if condition="$user['email_validated'] eq 0">
+                            <p>绑定邮箱后，可用邮箱登录。</p>
+                            <div class="safe-todo">
+                                <a href="{:U('Index/User/email_validate')}" target="_blank">发送验证邮件</a>
+                                <a href="{: U('Index/User/edit_email')}" target="_blank">修改</a>
+                            </div>
+                            <else/>
+                            <p>您验证的邮箱：{$user.email}</p>
+                            <div class="safe-todo">
+                                <a href="{: U('Index/User/edit_email')}" target="_blank">修改</a>
+                            </div>
+                        </if>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 <include file="Public/footer"/>
@@ -86,63 +86,73 @@
 
 <div id="popDiv" class="mydiv" style="display:none;">
 
-  <div class="pop">
-    <div class="in2">
-      <div class="in2_l">设置头像</div>
-      <div class="in2_r"><a href="javascript:closeDiv()"><img src="__PUBLIC__/img/close.png" width="22" height="21"></a></div>
+    <div class="pop">
+        <div class="in2">
+            <div class="in2_l">设置头像</div>
+            <div class="in2_r"><a href="javascript:closeDiv()"><img src="__PUBLIC__/img/close.png" width="22" height="21"></a></div>
+        </div>
+
+        <div class="Favicon">
+            <div class="Favicon_l">
+                <p><img src="{$user.head_pic|default='__PUBLIC__/img/user.png'}" width="133" height="133"></p>
+                <p>
+                <form id="myuploads" action="{:U('Index/User/upload_lcon')}" method="post" enctype="multipart/form-data">
+                    <a href="javascript:void(0);" class="a-upload">
+                        <input type="file" name="head_pic" id="fileupload">
+                        点击这里上传文件
+                    </a>
+                </form>
+                </p>
+            </div>
+            <div class="Favicon_r"></div>
+        </div>
+        <div class="tab_box1" style="border-radius:0 0 6px 6px!important">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td><div class="m41_btn"><a href="javascript:closeDiv()">取消</a></div></td>
+                    <td width="13%"><div class="m4_btn"><a href="javascript:void(0);" onclick="upload_lcon()">保存</a></div></td>
+                </tr>
+            </table>
+        </div>
+
     </div>
-    
-    <div class="Favicon">
-      <div class="Favicon_l">
-        <p><img src="{$user.head_pic|default='__PUBLIC__/img/user.png'}" width="133" height="133"></p>
-        <p>
-            <a href="javascript:void(0);" class="a-upload" onclick="onclick_a()">
-                  <input type="file" name="head_pic" id="fileupload">
-                  点击这里上传文件 
-            </a>
-        </p>
-      </div>
-      <div class="Favicon_r"></div>
-    </div>
-    <div class="tab_box1" style="border-radius:0 0 6px 6px!important">
-      <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td><div class="m41_btn"><a href="javascript:closeDiv()">取消</a></div></td>
-          <td width="13%"><div class="m4_btn"><a href="javascript:void(0);" onclick="upload_lcon()">保存</a></div></td>
-        </tr>
-      </table>
-    </div>
-    
-  </div>
 
 
 </div>
 
 <div id="img_msg">
-    
+
 </div>
 
 <div id="bg" class="bg" style="display:none;"></div>
 <iframe id='popIframe' class='popIframe' frameborder='0' ></iframe>
 
-
-</body>
-</html>
 <!-- <script type="text/javascript" src='__PUBLIC__/js/jquery-2.0.3.min.js'></script> -->
 <script type="text/javascript" src="__PUBLIC__/js/jquery-form.js"></script>
 <script type="text/javascript">
 
-    $(function () {
-        $("#fileupload").wrap('<form id="myuploads" action="{:U('Index/User/upload_lcon')}" method="post" enctype="multipart/form-data"></form>');
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+    $(function(){
+        $("#fileupload").change(function(){
+            var objUrl = getObjectURL(this.files[0]) ;
+            if (objUrl) {
+                $(this).parent().parent().parent().find('img').attr('src',objUrl);
+            }
+        });
     });
 
-    //模拟点击
-    function onclick_a(){
-        $('#fileupload').click(function () {});
-    }
-
     function upload_lcon(){
-            $("#myuploads").ajaxSubmit({
+        $("#myuploads").ajaxSubmit({
             dataType:  'json',
             success: function(res) {
                 closeDiv();//关闭浮层
@@ -154,16 +164,20 @@
             error:function(res){
                 alert(res['msg']);
             }
-            
-            });
+
+        });
     }
 
 
-    
-    
 
-        
+
+
+
 
 
 
 </script>
+
+
+</body>
+</html>
