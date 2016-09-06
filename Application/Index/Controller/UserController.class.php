@@ -502,12 +502,8 @@ class UserController extends BaseIndexController {
             if(empty($this->user_id)){
                 exit(json_encode(callback(false,"请先登录")));
             }
-            $dirName = './Public/upload/head_pic/';
-            if(!is_dir($dirName)){
-                mkdir($dirName,0777,true);
-            }
             $uploadConfig = array(
-                "rootPath" => $dirName,
+                "savePath" =>"head_pic/",
                 "exts"     => array('jpg','gif','png','jpeg'),
                 "saveName" => $this->user_id.'_'.mt_rand(),
                 "replace"  => True,
