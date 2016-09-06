@@ -5,6 +5,7 @@
 <title>龙米</title>
 <link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/css/mui.min.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/js/function.js"></script>
 </head>
 <body>
 <div class="mydiv1">
@@ -28,12 +29,11 @@
       <input name="password" type="password" class="pop_text1 icon_bg" placeholder="密码" style="width:100%; margin-bottom:10px; margin-top:10px;background-image:url(img/icon-c.png)" id="password">
 
       <div class="mui-input-row mui-checkbox mui-left" style="padding:0px">
-        <input name="checkbox" value="Item 1" type="checkbox" style="float:left">
+        <input name="checkbox" value="Item 1" type="checkbox"  onclick="terms()" style="float:left">
         <label style="float:left; padding:0px; margin:0px; width:300px; line-height:30px">我已阅读并同意遵守<a href="#">法律声明</a>和<a href="#">隐私条款</a></label>
       </div>
-
-      <div class="m5_btn"><a href="javascript:void(0);" onclick="check_form()">确定注册</a></div>
-      <div class="reg_d">如果您已拥有龙米网ID，则可在此<a href="#">登录</a></div>
+      <input name="submit" id="btn_reg" class="btn_reg" type="button" value="注册" disabled onClick="check_form()">
+      <div class="reg_d">如果您已拥有龙米网ID，则可在此<a href="{: U('Index/User/login')}">登录</a></div>
     </div>
     </form>
   </div>
@@ -141,4 +141,6 @@
 
         setTimeout("jsInnerTimeout('"+id+"')",1000);
     };
+
+
 </script>
