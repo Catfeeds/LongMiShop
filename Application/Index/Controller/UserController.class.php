@@ -4,6 +4,7 @@ namespace Index\Controller;
 use Common\Logic\UsersLogic;
 use Think\Page;
 use Think\Verify;
+use Think\Upload;
 
 class UserController extends BaseIndexController {
 
@@ -62,7 +63,7 @@ class UserController extends BaseIndexController {
         // session_start();
         $config = tpCache('sms');
         $sms_time_out = $config['sms_time_out'];
-        if(IS_POST){  
+        if(IS_POST){
             $verify = new \Think\Verify();
             $code=I("post.verify");
             if(!$verify->check($code,$id)){
@@ -80,7 +81,7 @@ class UserController extends BaseIndexController {
                 $this->error('手机号码已注册');
                 exit;
             }
-            
+
         }
         $this->assign('time',$sms_time_out);
         $this->display();
@@ -373,9 +374,9 @@ class UserController extends BaseIndexController {
             $phone = I('phone');
             $where['mobile'] = $phone;
             $phone_res  = $this->users->field('user_id,mobile')->where($where)->find();
-            
+
             if(empty($phone_res)){ //可以更换
-                $res = 1; 
+                $res = 1;
             }else if($phone_res['mobile'] == $phone && $phone_res['user_id'] != $this->user_id){ //此手机已绑定
                 $res = 3;
             }
@@ -391,14 +392,14 @@ class UserController extends BaseIndexController {
         $res_time = $send_email_time + 300;
         $now_time = time();
         if($res_time > $now_time){
-           $time = $res_time - $now_time; 
+            $time = $res_time - $now_time;
         }else if($res_time < $now_time){
             session('send_email_time',null);
             $time = 300;
             $info = time();
             session('send_email_time',$info);
         }
-        
+
         $this->assign('time',$time);
         $this->display();
     }
@@ -409,12 +410,12 @@ class UserController extends BaseIndexController {
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $this->email_log = M('email_log');
         $type = I('type');
-        $secret_key = sha1(md5(mt_rand(0,999999)).'longmi'); 
+        $secret_key = sha1(md5(mt_rand(0,999999)).'longmi');
         $data['time'] = time();
         $data['secret_key'] = $secret_key;
-        
+
         if($type=='anew'){ //ajax请求重新发送
-            $res = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->save($data); 
+            $res = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->save($data);
         }else{
             $data['user_id']  = $user_info['result']['user_id'];
             $res = $this->email_log->add($data);
@@ -423,17 +424,17 @@ class UserController extends BaseIndexController {
             $datas['email_validated'] = 0;
             $this->users->where("user_id = '".$user_info['result']['user_id']."'")->save($datas); //验证
         }
-        
+
         if($res){
             $url = 'http://'.$_SERVER['SERVER_NAME'].U('Index/User/check_email',array('secret_key'=>$secret_key,'user_id'=>$user_info['result']['user_id']));
-            send_email($user_info['result']['email'],'邮箱验证','尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url); 
+            send_email($user_info['result']['email'],'邮箱验证','尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);
             exit(json_encode(callback(true,'发送成功',array('status'=>1))));
         }else{
             exit(json_encode(callback(false,'发送失败')));
         }
-         
 
-        
+
+
     }
 
 
@@ -444,15 +445,15 @@ class UserController extends BaseIndexController {
         $email_res = M('email_log')->where($where)->find();
         if(!empty($email_res)){
             $data['email_validated'] = 1;
-            $data['user_id'] = $this->user_id; 
+            $data['user_id'] = $this->user_id;
             $res = $this->users->save($data); //修改验证字段
             if($res){
                 M('email_log')->where($where)->delete();
                 $this->success('验证成功',U('Index/User/Info'));
             }else{
-              $this->error('验证失败');  
+                $this->error('验证失败');
             }
-            
+
         }else{
             $this->error('验证失败');
         }
@@ -465,7 +466,7 @@ class UserController extends BaseIndexController {
 
     public function edit_email(){
         if(IS_POST){
-            
+
             $data['email'] = I('email');
             $where['email'] = I('email');
             $find_res = $this->users->field('user_id,email')->where($where)->find();
@@ -484,9 +485,9 @@ class UserController extends BaseIndexController {
                 }else{
                     $this->error('修改失败');
                 }
-                exit; 
+                exit;
             }
-            
+
         }
         $this->display();
     }
@@ -494,48 +495,43 @@ class UserController extends BaseIndexController {
     //修改头像
     public function upload_lcon(){
         if(IS_POST){
-            if($_FILES['head_pic']['error'] == 0 && is_uploaded_file($_FILES['head_pic']['tmp_name'])){
-                
-                $upload = new \Think\Upload();//实例化上传类
-                $upload->maxSize = 5242880;//设置附件上传大小
-                //判断目录是否存在
-
-                $dirname = './Public/upload/head_pic/';
-                if(!is_dir($dirname)){
-                    mkdir($dirname,0777,true);
-                }
-                $head_pic = $this->user_id.'_'.mt_rand();
-                $upload->rootPath = $dirname;//设置文件路径
-                $upload->exts = array('jpg','gif','png','jpeg');//设置附件上传类型
-                $imgName = $upload->saveName = $file_name.$head_pic;//更改文件名
-                $upload->replace = True;
-                $upload->subName = '';
-                $info = $upload->upload();
-                
-                if(!$info){
-                    // return   $upload->getError();// 上传错误提示错误信息
-                    exit(json_encode(callback(false,$upload->getError())));
-                    // echo json_encode($upload->getError());exit;
-                }else{
-                    $this->del_before($this->user_id); //删除旧头像
-
-                    $data['head_pic'] = $dirname.$info['head_pic']['savename'];
-                    $data['user_id'] = $this->user_id;
-                    $res = $this->users->save($data);
-                    $res ? exit(json_encode(callback(true,'修改成功',array('path'=>$data['head_pic'])))) : exit(json_encode(callback(false,'修改失败'))) ;
-                }
+            if(empty($this->user_id)){
+                exit(json_encode(callback(false,"请先登录")));
             }
+            $dirName = './Public/upload/head_pic/';
+            if(!is_dir($dirName)){
+                mkdir($dirName,0777,true);
+            }
+            $uploadConfig = array(
+                "rootPath"  => $dirName,
+                "exts"      => array('jpg','gif','png','jpeg'),
+                "saveName"  => $this->user_id.'_'.mt_rand(),
+                "replace"   => True,
+                "maxSize"   => 1024*1024,
+
+            );
+            $upload = new \Think\Upload($uploadConfig);//实例化上传类
+            $info = $upload->upload();
+            if($info){
+                $this->del_before($this->user_id); //删除旧头像
+                $data['head_pic'] = $dirName.$info['head_pic']['savename'];
+                $data['user_id'] = $this->user_id;
+                M('user')->save($data);
+                exit(json_encode(callback(true,"上传成功")));
+            }
+            exit(json_encode(callback(false,$upload->getError())));
         }
+        exit(json_encode(callback(false,"上传出错啦")));
     }
 
     /*修改删除文件*/
     public function del_before($id){
-        $res = $this->users->field('head_pic')->where('user_id = '.$id)->find();
+        $res = M('user')->field('head_pic')->where('user_id = '.$id)->find();
         // $file = './Template/mobile/longmi/Static/images/'.$res['head_pic'];
         unlink($res['head_pic']);//删除
     }
 
 
-    
+
 
 }
