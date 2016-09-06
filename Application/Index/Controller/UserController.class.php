@@ -516,7 +516,7 @@ class UserController extends BaseIndexController {
                 $this->del_before($this->user_id); //删除旧头像
                 $data['head_pic'] = $dirName.$info['head_pic']['savename'];
                 $data['user_id'] = $this->user_id;
-                M('user')->save($data);
+                M('users')->save($data);
                 exit(json_encode(callback(true,"上传成功")));
             }
             exit(json_encode(callback(false,$upload->getError())));
