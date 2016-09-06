@@ -566,3 +566,20 @@ function callback($state = true, $msg = '', $data = array()) {
     $state = $state ? 1 : 0 ;
     return array('state' => $state, 'msg' => $msg, 'data' => $data);
 }
+
+
+/**
+ * 获取文件类型后缀
+ * @param $file_name
+ * @return mixed|string
+ *
+ */
+function extend($file_name){
+
+    $extend = pathinfo($file_name);
+
+    $extend = strtolower($extend["extension"]);
+
+    return $extend;
+
+}
