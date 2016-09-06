@@ -22,6 +22,12 @@ class UserController extends BaseIndexController {
 
     }
 
+
+
+    public function index(){
+        header("location:".U('Index/Order/orderList'));exit;
+    }
+
     public function login(){
         $this->display();
     }
@@ -87,19 +93,15 @@ class UserController extends BaseIndexController {
         $this->display();
     }
 
-
-    public function index(){
-        header("location:".U('Index/Order/orderList'));
-        $this->display();
-    }
-
     public function returnGoodsList(){
         $count = M('return_goods')->where("user_id = {$this->user_id}")->count();
         $page = new Page($count,10);
         $list = M('return_goods')->where("user_id = {$this->user_id}")->order("id desc")->limit("{$page->firstRow},{$page->listRows}")->select();
         $goods_id_arr = get_arr_column($list, 'goods_id');
-        if(!empty($goods_id_arr))
+        $goodsList = array();
+        if(!empty($goods_id_arr)){
             $goodsList = M('goods')->where("goods_id in (".  implode(',',$goods_id_arr).")")->getField('goods_id,goods_name');
+        }
         $this->assign('goodsList', $goodsList);
         $this->assign('list', $list);
         $this->assign('page', $page->show());// 赋值分页输出
@@ -107,12 +109,9 @@ class UserController extends BaseIndexController {
     }
 
     public function coupon(){
-        $logic = new UsersLogic();
-        $data = $logic->get_coupon($this->user_id,$_REQUEST['type']);
-        $coupon_list = $data['result'];
-        $this->assign('coupon_list',$coupon_list);
-        $this->assign('page',$data['show']);
-        $this->assign('active','coupon');
+        $usersLogic = new \Common\Logic\UsersLogic();
+        $result = $usersLogic -> getCoupon( $this->user_id);
+        $this->assign('coupon_list',$result['data']['result']);
         $this->display();
     }
 
@@ -128,11 +127,7 @@ class UserController extends BaseIndexController {
 
 
     public function info(){
-
         $user_info = $this -> user_info;
-
-        if(IS_POST){
-        }
         //  获取省份
         $province = M('region')->where(array('parent_id'=>0,'level'=>1))->select();
         //  获取订单城市
@@ -265,9 +260,16 @@ class UserController extends BaseIndexController {
         $bank_img = include_once 'Application/Common/Conf/bank.php'; // 银行对应图片
         $payment = M('Plugin')->where("`type`='payment' and status = 1")->select();
 
+
+
+        $usersLogic = new \Common\Logic\UsersLogic();
+        $result = $usersLogic -> getCoupon( $this->user_id);
+        $this->assign('couponList',$result['data']['result']);
+
         $orderLogic = new \Common\Logic\OrderLogic();
         $data = $orderLogic -> getOrderGoods($order['order_id']);
         $this->assign('goodsList',$data['data']);
+
         $this->assign('paymentList',$paymentList);
         $this->assign('bank_img',$bank_img);
         $this->assign('order',$order);

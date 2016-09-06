@@ -269,10 +269,10 @@ class UsersLogic extends BaseLogic
      * 获取优惠券
      */
     public function get_coupon($user_id,$type =0 ){
-       
+
         //查询条件
         //    $type = I('get.type',0);           
-     
+
 
         $where = ' AND l.order_id = 0 AND c.use_end_time > '.time(); // 未使用
         if($type == 1){
@@ -282,7 +282,7 @@ class UsersLogic extends BaseLogic
         if($type == 2){
             //已过期
             $where = ' AND '.time().' > c.use_end_time ';
-        }        
+        }
         //获取数量
         $sql = "SELECT count(l.id) as total_num FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
@@ -303,6 +303,27 @@ class UsersLogic extends BaseLogic
         $return['result'] = $logs;
         $return['show'] = $Page->show();
         return $return;
+    }
+
+    /**
+     * 获取优惠券
+     * @param $userId
+     * @return array
+     */
+    public function getCoupon($userId){
+        $where = ' AND l.order_id = 0 AND c.use_end_time > '.time(); // 未使用
+        //获取数量
+        $sql = "SELECT count(l.id) as total_num FROM __PREFIX__coupon_list".
+            " l LEFT JOIN __PREFIX__coupon".
+            " c ON l.cid =  c.id WHERE l.uid = {$userId} {$where}";
+        $count = $this->query($sql);
+        $count = $count[0]['total_num'];
+        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition FROM __PREFIX__coupon_list".
+            " l LEFT JOIN __PREFIX__coupon".
+            " c ON l.cid =  c.id WHERE l.uid = {$userId} {$where}  ORDER BY l.send_time DESC,l.use_time";
+        //"LIMIT {$Page->firstRow},{$Page->listRows}";
+        $logs = $this->query($sql);
+        return callback(true,"获取成功",array("result" => $logs , "count" => $count));
     }
 
     /**

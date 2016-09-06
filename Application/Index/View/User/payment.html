@@ -98,18 +98,20 @@
                         </div>
                     </volist>
                 </div>
-                <!--<div class="gray-sub-title">优惠券</div>-->
-                <!--<div class="order-discount-line" style="text-align:left; padding:20px; line-height:30px">-->
-                    <!--<div class="mui-input-row mui-radio mui-left">-->
-                        <!--<input name="coupon" type="radio"  checked>-->
-                        <!--不使用优惠券<br>-->
-                        <!--<input name="coupon" type="radio">-->
-                        <!--自营商品满299减50元<br>-->
+                <notempty name = "couponList">
+                    <div class="gray-sub-title">优惠券</div>
+                    <div class="order-discount-line" style="text-align:left; padding:20px; line-height:30px">
+                        <div class="mui-input-row mui-radio mui-left">
+                            <input name="coupon" type="radio" value="0"  checked>
+                            不使用优惠券<br>
+                            <volist name="couponList" id="coupon">
+                                <input name="coupon" type="radio" value="{$coupon.id}">
+                                {$coupon.name}<br>
+                            </volist>
+                        </div>
+                    </div>
+                </notempty>
 
-                        <!--<input name="coupon" type="radio">-->
-                        <!--自营商品满199减20元-->
-                    <!--</div>-->
-                <!--</div>-->
                 <div class="order-discount-line">
                     <p>商品总计：¥ {$order.goods_price}</p>
                     <!--<p>运费：+ ¥ 0.00</p>-->
