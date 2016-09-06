@@ -530,7 +530,7 @@ class UserController extends BaseIndexController {
 
     /*修改删除文件*/
     public function del_before($id){
-        $res = M('user')->field('head_pic')->where('user_id = '.$id)->find();
+        $res = M('users')->field('head_pic')->where('user_id = '.$id)->find();
         // $file = './Template/mobile/longmi/Static/images/'.$res['head_pic'];
         unlink($res['head_pic']);//删除
     }
