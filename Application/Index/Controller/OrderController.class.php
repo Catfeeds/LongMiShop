@@ -66,7 +66,7 @@ class OrderController extends BaseIndexController {
         }
         $data = $orderLogic -> getOrderGoods($orderInfo['order_id']);
         $orderInfo['goods_list'] = $data['data'];
-        $orderInfo = set_btn_order_status($orderInfo);
+        $orderInfo   = setBtnOrderStatus($orderInfo,'INDEX');
         $progressBar = getOderProgressBar($orderInfo);
         $region_list = get_region_list();
         $this->assign('order_status',C('ORDER_STATUS'));

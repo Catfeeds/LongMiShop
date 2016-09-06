@@ -131,6 +131,24 @@ function getOderProgressBar($orderInfo){
 /**
  * 给订单数组添加属性  包括按钮显示属性 和 订单状态显示属性
  * @param $order
+ * @param null $engName
+ * @return array
+ */
+function setBtnOrderStatus($order,$engName = null)
+{
+    if ( is_null($engName) ){
+        $order_status_arr = C('ORDER_STATUS_DESC');
+    }else{
+        $order_status_arr = C('ORDER_STATUS_DESC_'.$engName);
+    }
+    $order['order_status_code'] = $order_status_code = orderStatusDesc(0, $order); // 订单状态显示给用户看的
+    $order['order_status_desc'] = $order_status_arr[$order_status_code];
+    $orderBtnArr = orderBtn(0, $order);
+    return array_merge($order,$orderBtnArr); // 订单该显示的按钮
+}
+/**
+ * 给订单数组添加属性  包括按钮显示属性 和 订单状态显示属性
+ * @param $order
  * @return array
  */
 function set_btn_order_status($order)

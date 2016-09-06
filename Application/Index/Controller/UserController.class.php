@@ -153,6 +153,7 @@ class UserController extends BaseIndexController {
     * 添加地址
     */
     public function addressAdd(){
+        $formUrl = U('addressAdd');
         if(IS_POST){
             $logic = new UsersLogic();
             $post = I('post.');
@@ -163,6 +164,7 @@ class UserController extends BaseIndexController {
             $this->success("操作成功");exit;
         }
         $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
+        $this->assign('formUrl',$formUrl);
         $this->assign('province',$p);
         $this->display('addressEdit');
 
