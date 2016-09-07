@@ -31,7 +31,7 @@ class ServiceController extends BaseIndexController {
 
 
     public function applicationService(){
-        $id = I('get.id');
+        $id = I('get.order_id');
         $orderLogic = new \Common\Logic\OrderLogic();
         $orderInfo =  $orderLogic -> getOrderInfo( $id , $this->user_id );
         if(!$orderInfo){
@@ -40,7 +40,6 @@ class ServiceController extends BaseIndexController {
         }
         $data = $orderLogic -> getOrderGoods($orderInfo['order_id']);
         $orderInfo['goods_list'] = $data['data'];
-        dd($orderInfo);
         $this->assign('orderInfo',$orderInfo);
         $this->display();
     }
