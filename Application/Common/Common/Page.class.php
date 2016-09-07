@@ -16,11 +16,11 @@ class Page{
 
 	// 分页显示定制
     private $config  = array(
-        'header' => '<span class="rows">共 %TOTAL_ROW% 条记录</span>',
-        'prev'   => '<<',
-        'next'   => '>>',
-        'first'  => '1...',
-        'last'   => '...%TOTAL_PAGE%',
+        'header' => '',
+        'prev'   => '&laquo;',
+        'next'   => '&raquo;',
+        'first'  => '1',
+        'last'   => '%TOTAL_PAGE%',
         'theme'  => '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END%',
     );
 
@@ -87,22 +87,21 @@ class Page{
 
         //上一页
         $up_row  = $this->nowPage - 1;
-        $up_page = $up_row > 0 ? '<li class="paginate_button previous" ><a class="prev" href="' . $this->url($up_row) . '">上一页</a></li>' : '';
+        $up_page = $up_row > 0 ? '<li class="mui-previous"><a href="' . $this->url($up_row) . '">&laquo;</a></li>' : '<li class="mui-previous mui-disabled"><a href="' . $this->url($up_row) . '">&laquo;</a></li>';
 
         //下一页
         $down_row  = $this->nowPage + 1;
-        $down_page = ($down_row <= $this->totalPages) ? '<li class="paginate_button next" ><a class="next" href="' . $this->url($down_row) . '">下一页</a></li>' : '';
+        $down_page = ($down_row <= $this->totalPages) ? '<li class="mui-next" ><a href="' . $this->url($down_row) . '">&raquo;</a></li>' : '<li class="mui-next mui-disabled" ><a href="' . $this->url($down_row) . '">&raquo;</a></li>';
 
         //第一页
         $the_first = '';
         if($this->totalPages > $this->rollPage && ($this->nowPage - $now_cool_page) >= 1){
-            $the_first = '<a class="first" href="' . $this->url(1) . '">' . $this->config['first'] . '</a>';
+            $the_first = '<li><a href="' . $this->url(1) . '">' . $this->config['first'] . '</a></li>';
         }
-
         //最后一页
         $the_end = '';
         if($this->totalPages > $this->rollPage && ($this->nowPage + $now_cool_page) < $this->totalPages){
-            $the_end = '<a class="end" href="' . $this->url($this->totalPages) . '">' . $this->config['last'] . '</a>';
+            $the_end = '<li><a href="' . $this->url($this->totalPages) . '">' . $this->config['last'] . '</a></li>';
         }
 
         //数字连接
@@ -118,13 +117,13 @@ class Page{
             if($page > 0 && $page != $this->nowPage){
 
                 if($page <= $this->totalPages){
-                    $link_page .= '<li class="paginate_button "><a class="num" href="' . $this->url($page) . '">' . $page . '</a></li>';
+                    $link_page .= '<li><a href="' . $this->url($page) . '">' . $page . '</a></li>';
                 }else{
                     break;
                 }
             }else{
                 if($page > 0 && $this->totalPages != 1){
-                    $link_page .= '<li class="paginate_button active"><a class="current">' . $page . '</a></li>';
+                    $link_page .= '<li class="mui-active"><a >' . $page . '</a></li>';
                 }
             }
         }
@@ -134,6 +133,6 @@ class Page{
             array('%HEADER%', '%NOW_PAGE%', '%UP_PAGE%', '%DOWN_PAGE%', '%FIRST%', '%LINK_PAGE%', '%END%', '%TOTAL_ROW%', '%TOTAL_PAGE%'),
             array($this->config['header'], $this->nowPage, $up_page, $down_page, $the_first, $link_page, $the_end, $this->totalRows, $this->totalPages),
             $this->config['theme']);
-        return "<ul class='pagination'>{$page_str}</ul>";
+        return "<div class=\"mui-content-padded\" style=\"margin-top:15px\"><ul class=\"mui-pagination\">{$page_str}</ul></div>";
     }
 }

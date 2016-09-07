@@ -2,7 +2,7 @@
 namespace Index\Controller;
 
 use Common\Logic\UsersLogic;
-use Think\Page;
+use Common\Common\Page;
 class OrderController extends BaseIndexController {
 
     function exceptAuthActions()
