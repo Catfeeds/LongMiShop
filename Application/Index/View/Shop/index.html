@@ -7,40 +7,8 @@
   <div class="shop_box">
     <div class="E-shop_box">
 
-      <div class="show1">
-        <div class="show1_ul">
-          <div class="show1_user">
-            <div class="cart_li">
-              <div class="cart_li_left"><a href="#"><img src="__PUBLIC__/img/cp5.png" width="92" height="92"></a></div>
-              <div class="cart_li_right">
-                <p>龙米稻花香</p>
-                <p><span>￥99.00</span> X1</p>
-              </div>
-            </div>
-            <div class="cart_li">
-              <div class="cart_li_left"><a href="#"><img src="__PUBLIC__/img/cp5.png" width="92" height="92"></a></div>
-              <div class="cart_li_right">
-                <p>龙米稻花香</p>
-                <p><span>￥99.00</span> X1</p>
-              </div>
-            </div>
-            <div class="cart_li">
-              <div class="cart_li_left"><a href="#"><img src="__PUBLIC__/img/cp5.png" width="92" height="92"></a></div>
-              <div class="cart_li_right">
-                <p>龙米稻花香</p>
-                <p><span>￥99.00</span> X1</p>
-              </div>
-            </div>
-          </div>
-          <div class="sn">
-            <div class="sn_l">共 {$cart_count} 件商品</div>
-            <div class="sn_r"><a href="{:U('Shop/cart')}">查看所有商品</a></div>
-          </div>
-          <div class="sn1">
-            <div class="sn1_l">合计：<span>￥2061.00</span></div>
-            <div class="sn1_r"><a href="{:U('Shop/cart')}">去购物车</a></div>
-          </div>
-        </div>
+      <div class="show1" id="show1">
+
       </div>
 
 
@@ -93,7 +61,20 @@
 
 
 <script>
+$(document).ready(function(){
+    ajax_trolley(); //
+});
 
+/*购物车*/
+function ajax_trolley(){
+  $.ajax({
+    url:"{: U('Index/Shop/ajax_trolley')}",
+    success:function(data){
+      $("#show1").html('');
+      $('#show1').append(data);
+    }
+  });
+}
 
 
 

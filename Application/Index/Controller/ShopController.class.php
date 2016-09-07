@@ -200,5 +200,20 @@ class ShopController extends BaseIndexController {
         $this->display();
     }
 
+    function ajax_trolley(){
+        $where['user_id'] = $this->user_id;
+        $tro_list = M('cart')->where($where)->order('id DESC')->limit(3)->select();
+        $list = M('cart')->field('member_goods_price')->where($where)->select();
+        $count_cart = M('cart')->where($where)->count();
+        // dump($tro_list);exit;
+        foreach($list as $item){
+            $count_money += $item['member_goods_price'];
+        }
+        $this->assign('tro_list',$tro_list);
+        $this->assign('count_money',$count_money);
+        $this->assign('count_cart',$count_cart);
+        $this->display();
+    }
+
 
 }

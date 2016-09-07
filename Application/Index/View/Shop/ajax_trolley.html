@@ -1,0 +1,22 @@
+<div class="show1_ul">
+  <div class="show1_user">
+    <volist name="tro_list" id="id">
+    <div class="cart_li">
+      <div class="cart_li_left"><a href="#"><img src="__PUBLIC__/img/cp5.png" width="92" height="92"></a></div>
+      <div class="cart_li_right">
+        <p>{: $id['goods_name']}</p>
+        <p><span>￥{: $id['member_goods_price']}</span> X{: $id['goods_num']}</p>
+      </div>
+    </div>
+    </volist>
+
+  </div>
+  <div class="sn">
+    <div class="sn_l">共 {$count_cart} 件商品</div>
+    <div class="sn_r"><a href="{:U('Shop/cart')}">查看所有商品</a></div>
+  </div>
+  <div class="sn1">
+    <div class="sn1_l">合计：<span>￥{: $count_money}</span></div>
+    <div class="sn1_r"><a href="{:U('Shop/cart')}">去购物车</a></div>
+  </div>
+</div>
