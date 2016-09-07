@@ -7387,3 +7387,17 @@ div.address-form select.city {
 	top: 10px;
 	right: 10px;
 }
+.refund-a {
+	font-family: "微软雅黑";
+	border: 1px solid #CCC !important;
+	height: 40px !important;
+	-webkit-appearance: menulist !important;
+	border-radius: 6px
+}
+.refund-b {
+	font-family: "微软雅黑";
+	border: 1px solid #CCC !important;
+	height: 40px !important;
+	border-radius: 6px;
+	text-indent: 4px;
+}

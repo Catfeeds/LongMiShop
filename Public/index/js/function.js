@@ -33,7 +33,7 @@ $(function () {
     })
     // JavaScript Document
 $(document).ready(function () {
-    // //加的效果
+    //加的效果
     // $(".add").click(function () {
     //     var n = $(this).prev().val();
     //     var num = parseInt(n) + 1;
@@ -87,6 +87,11 @@ $(function () {
     })
 })
 
+$(function () {
+    $(".E-shop_box").hover(function () {
+        $(".show1").toggle();
+    })
+})
 
 $(function () {
     $(".sort-time-menu1").hover(function () {

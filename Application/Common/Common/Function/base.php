@@ -567,6 +567,17 @@ function callback($state = true, $msg = '', $data = array()) {
     return array('state' => $state, 'msg' => $msg, 'data' => $data);
 }
 
+/**
+ * 规范数据返回函数判断
+ * @param array $data
+ * @return bool
+ */
+function callbackIsTrue($data){
+    if( $data['state'] == 1 ){
+        return true;
+    }
+    return false;
+}
 
 /**
  * 获取文件类型后缀

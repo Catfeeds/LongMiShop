@@ -10,23 +10,23 @@
                         <div class="title columns-title pre-title">
                             <h2>我的订单</h2>
                             <!--<div class="gray-btn-menu sort-status-menu sort-time-menu2">-->
-                                <!--<span class="label">-->
-                                    <!--<img src="__PUBLIC__/img/i.gif" class="arrow"> 全部状态-->
-                                <!--</span>-->
-                                <!--<ul class="menu-list menu-list2">-->
-                                    <!--<li class="selected">-->
-                                        <!--<a href="{:U('Index/Order/orderList')}">全部状态</a>-->
-                                    <!--</li>-->
-                                    <!--<li class="">-->
-                                        <!--<a href="{:U('Index/Order/orderList')}">未完成</a>-->
-                                    <!--</li>-->
-                                    <!--<li class="">-->
-                                        <!--<a href="{:U('Index/Order/orderList')}">已完成</a>-->
-                                    <!--</li>-->
-                                    <!--<li class="">-->
-                                        <!--<a href="{:U('Index/Order/orderList')}">已关闭</a>-->
-                                    <!--</li>-->
-                                <!--</ul>-->
+                            <!--<span class="label">-->
+                            <!--<img src="__PUBLIC__/img/i.gif" class="arrow"> 全部状态-->
+                            <!--</span>-->
+                            <!--<ul class="menu-list menu-list2">-->
+                            <!--<li class="selected">-->
+                            <!--<a href="{:U('Index/Order/orderList')}">全部状态</a>-->
+                            <!--</li>-->
+                            <!--<li class="">-->
+                            <!--<a href="{:U('Index/Order/orderList')}">未完成</a>-->
+                            <!--</li>-->
+                            <!--<li class="">-->
+                            <!--<a href="{:U('Index/Order/orderList')}">已完成</a>-->
+                            <!--</li>-->
+                            <!--<li class="">-->
+                            <!--<a href="{:U('Index/Order/orderList')}">已关闭</a>-->
+                            <!--</li>-->
+                            <!--</ul>-->
                             <!--</div>-->
                             <!--<div class="gray-btn-menu sort-time-menu sort-time-menu1"> <span class="label"> <img src="__PUBLIC__/img/i(1).gif" class="arrow"> 最近三个月 </span>-->
                             <!--<ul class="menu-list  menu-list1">-->
@@ -108,11 +108,11 @@
                                     </div>
                                 </volist>
                             </div>
-                            <!--{$page}-->
                         </empty>
-
-
                     </div>
+                    <notempty name = "lists">
+                        {$page}
+                    </notempty>
                 </div>
             </div>
         </div>

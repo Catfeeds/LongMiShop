@@ -86,8 +86,12 @@ class ShopController extends BaseIndexController {
         $sum = 0;
         foreach($result['cartList'] as $item){ //计算总额
             $sum += $item['goods_price'] * $item['goods_num'];
-        }    
-        $this->assign('cartList', $result['cartList']); // 购物车的商品                
+        }
+        $this->assign('cartList', $result['cartList']); // 购物车的商品
+        $usersLogic = new \Common\Logic\UsersLogic();
+        $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum);
+        $this->assign('couponList',$result['data']['result']);
+
         $this->assign('total_price', $sum); // 总计
         $this->display();
     }

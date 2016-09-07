@@ -1,5 +1,4 @@
-
-.mui-row>[class*=mui-col-] {
+ .mui-row>[class*=mui-col-] {
 float:left
 }
 .mui-col-xs-12 {
@@ -3269,4 +3268,12 @@ transform:translate3d(100%, 0, 0) scaleX(.5)
 	width: 100%;
 	height: 100%;
 	border: 0
+}
+.mui-content-padded ul{
+	overflow: hidden;
+	margin-right: auto;
+	margin-left: auto;
+}.mui-content-padded{
+	overflow: hidden;
+	text-align: center;
 }
