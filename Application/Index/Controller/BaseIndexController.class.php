@@ -23,6 +23,7 @@ abstract class BaseIndexController extends BaseController {
         //验证部分
         if (session('auth') != true) {
             if( $this -> needAuth() ){
+                session('redirectedUrl',$_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
                 redirect( U( '/Index/User/login' ) , 0);
                 return;
             }

@@ -29,7 +29,9 @@ class UserController extends BaseIndexController {
     }
 
     public function login(){
-        session('skip_url',$_SERVER['HTTP_REFERER']); //记录上次url
+        $redirectedUrl = session('redirectedUrl');
+        $redirectedUrl = !empty($redirectedUrl) ? $redirectedUrl : U("Index/Index/index");
+        $this->assign('redirectedUrl',$redirectedUrl);
         $this->display();
     }
 
@@ -43,9 +45,10 @@ class UserController extends BaseIndexController {
         $res = $logic->login($username,$password);
         $cartLogic = new \Common\Logic\CartLogic();
         $cartLogic->login_cart_handle($this->session_id,session(__UserID__));  //用户登录后 需要对购物车 一些操作
-        $skip_url = session('skip_url');
-        !empty($skip_url) ? session('skip_url',null) : ''; //删除seesion
-        $res ?  exit(json_encode(callback(true,$res,array('url'=>$skip_url)))) :  exit(json_encode(callback(false,$res))) ;
+        
+        session('redirectedUrl',null);
+
+        exit(json_encode(callback(true,$res))) ;
         // exit(json_encode($res));
 
 // //        if($res['status'] == 1){

@@ -10,6 +10,7 @@
     <script src="__MAIN__/js/jquery-1.10.2.min.js"></script>
 </head>
 <body>
+<input id="redirectedUrl"  type="hidden" value="{$redirectedUrl}">
 <div class="mydiv1">
     <form action="{:U('Home/User/do_login')}" method="post">
         <div class="pop1" style="text-align:center; width:500px">
@@ -32,13 +33,16 @@
         </div>
     </form>
 </div>
+
 <script>
+
+
+    var redirectedUrl = $('#redirectedUrl').val();
 
     function checkSubmit()
     {
         var username = $.trim($('#username').val());
         var password = $.trim($('#password').val());
-        var referurl = $('#referurl').val();
         if(username == ''){
             showErrorMsg('用户名不能为空!');
             return false;
@@ -55,11 +59,11 @@
         $.ajax({
             type : 'post',
             url : '/index.php?m=Index&c=User&a=doLogin&t='+Math.random(),
-            data : {username:username,password:password,referurl:referurl},
+            data : {username:username,password:password},
             dataType : 'json',
             success : function(res){
                 if(res.state == 1){
-                    window.location.href = res.data.url;
+                    window.location.href = redirectedUrl;
                     // res.data;
                 }else{
                     showErrorMsg(res.msg);
