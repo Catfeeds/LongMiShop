@@ -1,6 +1,7 @@
 <?php
 namespace Index\Controller;
 
+use Think\Page;
 
 class ServiceController extends BaseIndexController {
 
