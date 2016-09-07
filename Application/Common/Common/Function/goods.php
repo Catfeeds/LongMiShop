@@ -16,6 +16,7 @@ function count_postage(){
             'goods_name'=>'平板液晶电视', //商品名称
             'goods_num'=>1, //件数  重量
             'shipping_code' =>15, //配送方式
+            'goods_price'=> 3000, //商品价格
             'site' =>array(
                 'province' => '北京市'
             ),
@@ -26,6 +27,7 @@ function count_postage(){
             'goods_name'=>'平板液晶电视', //商品名称
             'goods_num'=>1, // 件数  重量
             'shipping_code' =>15, //配送方式
+            'goods_price'=> 3000, //商品价格
             'site' =>array(
                 'province' => '北京市'
             ),
@@ -43,10 +45,10 @@ function count_postage(){
         $mode = $log_res['log_mode']; //记重方式
         $baseValue = $mode == 1 ? $item['goods_num'] : $item['goods_num'] * $item['weight'];
 
-        $base = 0; 			//基础件数 or 重量
-        $money = 0;       	//基础邮费
-        $add_base = 0; 	    //增加件数 or 重量
-        $add_money = 0;	    //增加邮费
+        $base = $log_res['log_amount']; 			//基础件数 or 重量
+        $money = $log_res['log_cost'];       	//基础邮费
+        $add_base = $log_res['log_amount_add']; 	    //增加件数 or 重量
+        $add_money = $log_res['log_cost_add'];	    //增加邮费
 
         if($log_res['log_is_free'] == 1){ //是否包邮
             $postage += 0;
@@ -60,14 +62,18 @@ function count_postage(){
         *  pinkage    指定区域包邮
         */
 
-        $condition = unserialize($log_res['log_condition']);
-
+        $condition = unserialize($log_res['log_condition']); 
+        dump($condition);exit;
 
         if(!empty($condition['pinkage'])){ //是否属于包邮地区
             foreach ($condition['pinkage'] as $items) {
-
-                if ($items['area'] == $item['site']['province']) {
+            	//pinkage_mode  1价钱  2重量
+                if($items['pinkage_area'] == $item['site']['province'] && $items['pinkage_mode'] == 1 && $items['pinkage_bound'] >= $item['goods_price']) {  
                     $postage += 0;
+                    $goods_postage[$item['goods_name']] = 0; //商品单个邮费
+                    break;
+                }else if($items['pinkage_area'] == $item['site']['province'] && $items['pinkage_mode'] == 2 && $items['pinkage_bound'] >= $baseValue){
+                	$postage += 0;
                     $goods_postage[$item['goods_name']] = 0; //商品单个邮费
                     break;
                 }
@@ -110,13 +116,7 @@ function count_postage(){
 
         $goods_postage[$item['goods_name']] = 0;
 
-
-
-        dump($condition);exit;
-
-
-
-
+        
     }
 
 
