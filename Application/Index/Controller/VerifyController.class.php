@@ -7,7 +7,8 @@ class VerifyController extends BaseIndexController {
     function exceptAuthActions()
     {
         return array(
-            'verify'
+            'verify',
+            'postage'
         );
     }
 
@@ -28,6 +29,15 @@ class VerifyController extends BaseIndexController {
 
         $Verify = new \Think\Verify($config);
         $Verify->entry();
+    }
+
+    public function postage(){
+        count_postage();
+
+
+
+
+
     }
 
 
