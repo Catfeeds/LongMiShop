@@ -1,0 +1,78 @@
+<include file="Public/header"/>
+<div class="fn-clear" style="min-height: 459px; margin-top:80px">
+    <div class="content fn-clear">
+        <div class="account-wrapper account-min-wrapper">
+            <include file="Public/user_menu"/>
+            <div class="account-content">
+                <div class="account-order-detail">
+                    <div class="gray-box fn-clear confirm-detail">
+                        <div class="title columns-title pre-title">
+                            <h2>订单号：{$orderInfo['order_sn']}</h2>
+                        </div>
+                        <div class="order-info-wrapper" style="padding-bottom:10px">
+                            <div class="order-status-inner order-process">
+                                <div class="order-status-wrapper">
+                                    <div class="order-status-process">
+                                        <span class="status-process" style="width:0%"></span>
+                                        <div class="order-status-text status-first  status-done status-on" style="width:33%; left:-16.5%">
+                                            <h5 style=" margin-left:50px">选择产品及服务</h5>
+                                            <span class="point"></span>
+                                        </div>
+                                        <div class="order-status-text status-last" style="width:33%; left:35.5%">
+                                            <h5>填写申请单</h5>
+                                            <span class="point"></span>
+                                            <p> </p>
+                                            <p> </p>
+                                        </div>
+                                        <div class="order-status-text  status-last  " style="width:25%; left:87.5%">
+                                            <h5>完成申请</h5>
+                                            <span class="point"></span>
+                                            <p> </p>
+                                            <p> </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-inner order-cart order-list-cart order-detail-cart  fn-clear">
+                            <div class="gray-sub-title cart-title">
+                                <span class="name">选择订单中的商品</span>
+                            </div>
+                            <div class="cart">
+                                <volist name="orderInfo.goods_list" id="good">
+
+                                    <div class="cart-items fn-clear" data-id="{$good.goods_id}">
+                                        <div class="prod-info">
+                                            <div class="items-thumb">
+                                                <a href="#" target="_blank" title="{$good.goods_name}">
+                                                    <img src="{$good.goods_id|goods_thum_images=80,80}">
+                                                </a>
+                                            </div>
+                                            <div class="items-params fn-clear">
+                                                <div class="name">
+                                                    <a href="http://www.smartisan.com/shop/#/t2" target="_blank" title="{$good.goods_name}">{$good.goods_name}</a>
+                                                </div>
+                                                <div class="detail">{$good.spec_key_name}</div>
+                                            </div>
+                                            <div class="subtotal" style="line-height:30px">
+                                                <div class="status">
+                                                    <a href="#{$good.rec_id}" class="blue-small-btn js-payment-order" style=" margin-top:0px">退款</a>
+                                                </div>
+                                                <div class="status">
+                                                    <a href="#{$good.rec_id}" class="blue-small-btn js-payment-order">换货</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </volist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="Public/footer"/>
+</body>
+</html>

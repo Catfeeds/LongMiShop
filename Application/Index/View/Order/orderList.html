@@ -72,7 +72,7 @@
                                                                 <a href="#" target="_blank">{$good.goods_name}</a>
                                                             </div>
                                                             <div class="detail">
-                                                                商品编号：{$good.goods_sn}
+                                                                {$good.spec_key_name}
                                                             </div>
                                                         </div>
                                                         <div class="operation">
@@ -93,6 +93,11 @@
                                                 <!--取消订单-->
                                                 <!--</a>-->
                                                 <!--</if>-->
+                                                <if condition="$list.return_btn eq 1">
+                                                    <a href="{:U('/Index/Service/applicationService',array('order_id'=>$list[order_id]))}" class="blue-small-btn js-payment-order">
+                                                        申请售后
+                                                    </a>
+                                                </if>
                                                 <if condition="$list.receive_btn eq 1">
                                                     <a  onClick=" if(confirm('你确定收到货了吗?')) location.href='{:U('Home/Order/orderConfirm',array('id'=>$list['order_id']))}'" class="blue-small-btn js-payment-order">
                                                         收货确认

@@ -19,12 +19,12 @@ abstract class BaseIndexController extends BaseController {
     public function _initialize() {
         parent::_initialize();
 
-
         //验证部分
         if (session('auth') != true) {
             if( $this -> needAuth() ){
-                session('redirectedUrl',$_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
-                redirect( U( '/Index/User/login' ) , 0);
+                $redirectedUrl = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+                $redirectedUrl = urlencode($redirectedUrl);
+                header("Location: ". U( '/Index/User/login' , array("redirectedUrl" => $redirectedUrl)));
                 return;
             }
         }

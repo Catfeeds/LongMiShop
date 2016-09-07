@@ -29,8 +29,8 @@ class UserController extends BaseIndexController {
     }
 
     public function login(){
-        $redirectedUrl = session('redirectedUrl');
-        $redirectedUrl = !empty($redirectedUrl) ? $redirectedUrl : U("Index/Index/index");
+        $redirectedUrl = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Index/Index/index");
+        $redirectedUrl = !empty($_GET['redirectedUrl']) ? urldecode($_GET['redirectedUrl']) : $redirectedUrl;
         $this->assign('redirectedUrl',$redirectedUrl);
         $this->display();
     }
@@ -65,7 +65,8 @@ class UserController extends BaseIndexController {
     public function logout(){
         session_unset();
         session_destroy();
-        header("location:".U('Index/Index/index'));
+        $redirectedUrl = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Index/Index/index");
+        header("Location: ".$redirectedUrl);
         exit;
     }
 

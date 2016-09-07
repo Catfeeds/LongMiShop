@@ -247,7 +247,6 @@ function orderBtn($order_id = 0, $order = array())
         if($order['shipping_status'] == 1 && $order['order_status'] == 1) //待收货
         {
             $btn_arr['receive_btn'] = 1;  // 确认收货
-            $btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
         }
     }
     // 非货到付款

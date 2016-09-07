@@ -119,7 +119,9 @@
                                                 <div class="name">
                                                     <a href="#" target="_blank" title="{$good.goods_name}">{$good.goods_name}</a>
                                                 </div>
-                                                <div class="detail"> 商品编号：{$good.goods_sn} </div>
+                                                <div class="detail">
+                                                    {$good.spec_key_name}
+                                                </div>
                                             </div>
                                             <div class="subtotal">¥ {$good['member_goods_price'] * $good['goods_num']}</div>
                                             <div class="num">{$good.goods_num}</div>
