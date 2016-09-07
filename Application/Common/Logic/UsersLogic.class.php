@@ -30,6 +30,7 @@ class UsersLogic extends BaseLogic
             $user['level_name'] = $levelName;
             session('auth',true);
             session(__UserID__,$user['user_id']);
+            session('redirectedUrl',null);
             return callback(true,'登录成功',urldecode(I('post.referurl')));
         }
     }

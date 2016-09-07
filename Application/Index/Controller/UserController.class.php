@@ -45,11 +45,8 @@ class UserController extends BaseIndexController {
         $res = $logic->login($username,$password);
         $cartLogic = new \Common\Logic\CartLogic();
         $cartLogic->login_cart_handle($this->session_id,session(__UserID__));  //用户登录后 需要对购物车 一些操作
-        
-        session('redirectedUrl',null);
 
-        exit(json_encode(callback(true,$res))) ;
-        // exit(json_encode($res));
+        exit(json_encode($res));
 
 // //        if($res['status'] == 1){
 //            $res['url'] =  urldecode(I('post.referurl'));
