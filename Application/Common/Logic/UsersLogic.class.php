@@ -306,6 +306,23 @@ class UsersLogic extends BaseLogic
         return $return;
     }
 
+
+
+    public function getCanUseCoupon($userId , $sum){
+        $result         = $this -> getCoupon($userId);
+        $couponList     = $result['data']['result'];
+        $couponCount    = $result['data']['count'];
+        if( !empty( $couponList ) ){
+            foreach ( $couponList as &$couponItem ){
+                if( $sum < $couponItem['condition'] ){
+                    unset($couponItem);
+                }
+
+            }
+        }
+        return callback(true,"获取成功",array("result" => $couponList , "count" => $couponCount));
+    }
+
     /**
      * 获取优惠券
      * @param $userId

@@ -100,9 +100,6 @@ function getOderProgressBar($orderInfo){
         $parameter['third']['done'] = 1;
         $parameter['third']['date'] = date('Y-m-d' , $orderInfo['shipping_time']);
         $parameter['third']['time'] = date('H:i:s' , $orderInfo['shipping_time']);
-        $parameter['third']['done'] = 1;
-        $parameter['third']['date'] = date('Y-m-d' , $orderInfo['shipping_time']);
-        $parameter['third']['time'] = date('H:i:s' , $orderInfo['shipping_time']);
         $parameter['fourth']['on'] = 1;
         $parameter['fourth']['done'] = 1;
         $parameter['fourth']['date'] = date('Y-m-d' , $orderInfo['confirm_time']);
@@ -126,7 +123,21 @@ function getOderProgressBar($orderInfo){
 }
 
 
-
+/**
+ * 获取物流信息
+ * @param $orderId
+ * @return array
+ */
+function getExpress($orderId){
+    if( is_null($orderId) ){
+        return callback(false,'没有获取到订单信息');
+    }
+    $delivery = M('delivery_doc')->where("order_id='$orderId'")->limit(1)->find();
+    if($delivery['shipping_name'] && $delivery['invoice_no']){
+        $result = queryExpress($delivery['shipping_name'],$delivery['invoice_no']);
+        return callback(true,"",$result);
+    }
+}
 
 /**
  * 给订单数组添加属性  包括按钮显示属性 和 订单状态显示属性
@@ -170,7 +181,7 @@ function set_btn_order_status($order)
 function orderStatusDesc($order_id = 0, $order = array())
 {
     if(empty($order)){
-        $order = M('Order')->where("order_id = $order_id")->find();
+        $order = M('Order')->where("order_id = '$order_id'")->find();
     }
     // 货到付款
     if($order['pay_code'] == 'cod')
@@ -274,3 +285,12 @@ function orderBtn($order_id = 0, $order = array())
     return $btn_arr;
 }
 
+
+/**
+ * 获取过期的订单
+ * @return array
+ */
+function getOverdueOrder(){
+    $orderList = M('Order')->where(' pay_status=0 AND order_status=0 AND pay_code !="cod" ')->select();
+    return $orderList;
+}

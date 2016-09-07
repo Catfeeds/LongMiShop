@@ -98,19 +98,6 @@
                         </div>
                     </volist>
                 </div>
-                <notempty name = "couponList">
-                    <div class="gray-sub-title">优惠券</div>
-                    <div class="order-discount-line" style="text-align:left; padding:20px; line-height:30px">
-                        <div class="mui-input-row mui-radio mui-left">
-                            <input name="coupon" type="radio" value="0"  checked>
-                            不使用优惠券<br>
-                            <volist name="couponList" id="coupon">
-                                <input name="coupon" type="radio" value="{$coupon.id}">
-                                {$coupon.name}<br>
-                            </volist>
-                        </div>
-                    </div>
-                </notempty>
 
                 <div class="order-discount-line">
                     <p>商品总计：¥ {$order.goods_price}</p>

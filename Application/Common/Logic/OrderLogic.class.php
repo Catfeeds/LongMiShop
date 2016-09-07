@@ -40,8 +40,12 @@ class OrderLogic extends BaseLogic
 
     /**
      * 取消订单
+     * @param $userId
+     * @param $orderId
+     * @param $isOverdue
+     * @return array
      */
-    public function cancelOrder($userId,$orderId){
+    public function cancelOrder($userId,$orderId,$isOverdue = false){
         $order = M('order')->where(array('order_id'=>$orderId,'user_id'=>$userId))->find();
         //检查是否未支付订单 已支付联系客服处理退款
         if(empty($order)){
@@ -67,7 +71,13 @@ class OrderLogic extends BaseLogic
         $data['pay_status'] = $order['pay_status'];
         $data['shipping_status'] = $order['shipping_status'];
         $data['log_time'] = time();
+        $data['action_note'] = '您取消了订单';
         $data['status_desc'] = '用户取消订单';
+        if($isOverdue){
+            $data['action_note'] = '订单过期';
+            $data['status_desc'] = '系统取消订单';
+        }
+
         M('order_action')->add($data);//订单操作记录
 
         if(!$row){

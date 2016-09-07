@@ -252,12 +252,6 @@ class UserController extends BaseIndexController {
         $bank_img = include_once 'Application/Common/Conf/bank.php'; // 银行对应图片
         $payment = M('Plugin')->where("`type`='payment' and status = 1")->select();
 
-
-
-        $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCoupon( $this->user_id);
-        $this->assign('couponList',$result['data']['result']);
-
         $orderLogic = new \Common\Logic\OrderLogic();
         $data = $orderLogic -> getOrderGoods($order['order_id']);
         $this->assign('goodsList',$data['data']);
