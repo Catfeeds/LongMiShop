@@ -43,9 +43,10 @@ class UserController extends BaseIndexController {
 
         $logic = new \Common\Logic\UsersLogic();
         $res = $logic->login($username,$password);
-        $cartLogic = new \Common\Logic\CartLogic();
-        $cartLogic->login_cart_handle($this->session_id,session(__UserID__));  //用户登录后 需要对购物车 一些操作
-
+        if( $res['state'] == 1 ){
+            $cartLogic = new \Common\Logic\CartLogic();
+            $cartLogic->login_cart_handle($this->session_id,session(__UserID__));  //用户登录后 需要对购物车 一些操作
+        }
         exit(json_encode($res));
 
 // //        if($res['status'] == 1){
