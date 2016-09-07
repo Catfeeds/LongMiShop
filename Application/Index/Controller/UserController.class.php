@@ -350,9 +350,9 @@ class UserController extends BaseIndexController {
      * 发送手机注册验证码
      */
     public function send_sms_reg_code(){
-        exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));exit;
+        // exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));exit;
         $mobile = I('post.mobile');
-        $userLogic = new \Common\Logic\UsersLogic();
+        $userLogic = new UsersLogic();
         if(!check_mobile($mobile))
             exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
         $code =  rand(1000,9999);
