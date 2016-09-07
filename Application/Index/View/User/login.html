@@ -59,7 +59,7 @@
             dataType : 'json',
             success : function(res){
                 if(res.state == 1){
-                    window.location.href = "{:U('Index/Index/index')}";
+                    window.location.href = res.data.url;
                     // res.data;
                 }else{
                     showErrorMsg(res.msg);

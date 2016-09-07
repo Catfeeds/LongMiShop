@@ -29,6 +29,7 @@ class UserController extends BaseIndexController {
     }
 
     public function login(){
+        session('skip_url',$_SERVER['HTTP_REFERER']); //记录上次url
         $this->display();
     }
 
@@ -42,8 +43,12 @@ class UserController extends BaseIndexController {
         $res = $logic->login($username,$password);
         $cartLogic = new \Common\Logic\CartLogic();
         $cartLogic->login_cart_handle($this->session_id,session(__UserID__));  //用户登录后 需要对购物车 一些操作
-        exit(json_encode($res));
-//        if($res['status'] == 1){
+        $skip_url = session('skip_url');
+        !empty($skip_url) ? session('skip_url',null) : ''; //删除seesion
+        $res ?  exit(json_encode(callback(true,$res,array('url'=>$skip_url)))) :  exit(json_encode(callback(false,$res))) ;
+        // exit(json_encode($res));
+
+// //        if($res['status'] == 1){
 //            $res['url'] =  urldecode(I('post.referurl'));
 //            session('user',$res['result']);
 //            setcookie('user_id',$res['result']['user_id'],null,'/');
