@@ -86,14 +86,16 @@ function checkSubmit()
 		//return false;
 	}	
 	//$('#login-form').submit();
+
 	$.ajax({
 		type : 'post',
 		url : '/index.php?m=Mobile&c=User&a=do_login&t='+Math.random(),
 		data : {username:username,password:password,referurl:referurl},		
 		dataType : 'json',
 		success : function(res){
-			if(res.status == 1){
-				top.location.href = res.url;
+//			 console.log(res);return false;
+			if(res.state == 1){
+				window.location.href = res.url;
 			}else{
 				showErrorMsg(res.msg);
 			}

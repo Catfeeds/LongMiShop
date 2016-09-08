@@ -14,11 +14,13 @@ class UserController extends MobileBaseController {
         */
     public function _initialize() {
         parent::_initialize();
-        if(session('?user'))
+        // dd(session('lm_UserId'));
+        if(session('?lm_UserId'))
         {
-        	$user = session('user');
-                $user = M('users')->where("user_id = {$user['user_id']}")->find();
-                session('user',$user);  //覆盖session 中的 user                               
+            $user = session('lm_UserId');
+
+            $user = M('users')->where("user_id = {$user['user_id']}")->find();
+            session('user',$user);  //覆盖session 中的 user                               
         	$this->user = $user;
         	$this->user_id = $user['user_id'];
         	$this->assign('user',$user); //存储用户信息
@@ -126,7 +128,7 @@ class UserController extends MobileBaseController {
     	$password = trim($password);
     	$logic = new \Common\Logic\UsersLogic();
     	$res = $logic->login($username,$password);
-    	if($res['status'] == 1){
+    	if($res['state'] == 1){
     		$res['url'] =  urldecode(I('post.referurl'));
     		session('user',$res['result']);
     		setcookie('user_id',$res['result']['user_id'],null,'/');
