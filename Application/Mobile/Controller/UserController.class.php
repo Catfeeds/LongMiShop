@@ -15,9 +15,9 @@ class UserController extends MobileBaseController {
     public function _initialize() {
         parent::_initialize();
         // dd(session('lm_UserId'));
-        if(session(?__UserID__))
+        if(session('?lm_UserId'))
         {
-            $user = session(__UserID__);
+            $user = session('lm_UserId');
 
             $user = M('users')->where("user_id = {$user['user_id']}")->find();
             session('user',$user);  //覆盖session 中的 user                               
@@ -535,9 +535,6 @@ class UserController extends MobileBaseController {
 
     //修改个人信息
     public function edit_details(){
-        if(IS_POST){
-
-        }
         $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $this->assign('user_info',$user_info['result']);
@@ -582,12 +579,19 @@ class UserController extends MobileBaseController {
 
     //修改手机号码
     public function edit_mobile(){
+        $item = 60;
+        $userLogic = new \Common\Logic\UsersLogic();
+        $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
+        $this->assign('user_info',$user_info['result']);
+        $this->assign('item',$item);
         $this->display();
     }
 
     //修改密码
     public function edit_password(){
-
+        $item = 60;
+        $this->assign('item',$item);
+        $this->display();
     }
 
     /*
