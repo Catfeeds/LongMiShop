@@ -12,6 +12,7 @@ class ShopController extends BaseIndexController {
             'cart',
             'ajaxAddCart',
             'ajaxCartList',
+            'ajax_trolley',
         );
     }
 
@@ -205,7 +206,7 @@ class ShopController extends BaseIndexController {
         $tro_list = M('cart')->where($where)->order('id DESC')->limit(3)->select();
         $list = M('cart')->field('member_goods_price')->where($where)->select();
         $count_cart = M('cart')->where($where)->count();
-        // dump($tro_list);exit;
+        $count_money = 0;
         foreach($list as $item){
             $count_money += $item['member_goods_price'];
         }

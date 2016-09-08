@@ -44,4 +44,15 @@ class ServiceController extends BaseIndexController {
         $this->display();
     }
 
+
+    public function refund(){
+        $id = I('get.id');
+        $this->display();
+    }
+
+    public function exchange(){
+        $id = I('get.id');
+        $this->display();
+    }
+
 }

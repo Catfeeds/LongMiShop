@@ -2,7 +2,7 @@
   <div class="show1_user">
     <volist name="tro_list" id="id">
     <div class="cart_li">
-      <div class="cart_li_left"><a href="#"><img src="__PUBLIC__/img/cp5.png" width="92" height="92"></a></div>
+      <div class="cart_li_left"><a href="#"><img src="{$id.goods_id|goods_thum_images=92,92}" width="92" height="92"></a></div>
       <div class="cart_li_right">
         <p>{: $id['goods_name']}</p>
         <p><span>￥{: $id['member_goods_price']}</span> X{: $id['goods_num']}</p>
