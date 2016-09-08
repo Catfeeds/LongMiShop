@@ -3903,7 +3903,7 @@ div.discount-cart div.items-params .name {
 }
 .order-list-cart .prod-info .name {
 	float: none;
-	width: 220px;
+	width: 330px;
 	height: 25px;
 	line-height: 25px
 }
@@ -4902,6 +4902,7 @@ div.address-form select.city {
 	top: 70px;
 	width: 210px;
 	margin-top: 80px;
+	padding-bottom: 200px;
 }
 .account-content {
 	margin-left: 230px

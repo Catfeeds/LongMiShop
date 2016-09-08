@@ -18,8 +18,11 @@
 <div class="E-shop_cp">
   <div class="E-shop_cp_l"><img src="{$goods.goods_id|goods_thum_images=520,520}" width="520" height="520"></div>
   <div class="E-shop_cp_r">
-    <p class="m1">{$goods.goods_name}</p>
-    <p class="m2">
+      <div class="price1_box">
+          <p class="m1">{$goods.goods_name}</p>
+          <p class="price1"><span>￥</span>199.00</p>
+      </div>
+      <p class="m2">
       <if condition="$flash_sale['description'] neq ''">
       {$flash_sale['description']}
       <else/>
