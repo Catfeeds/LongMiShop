@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title>修改基本信息</title>
+<script src="__STATIC__/js/mui.min.js"></script>
+<script src="__STATIC__/js/TouchSlide.js"></script>
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery-form.js"></script>
+<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
+<link href="__STATIC__/css/css.css" rel="stylesheet" />
+</head>
+<body>
+<div class="my_nav">
+  <ul>
+<li>
+	<a href="javascript:file_img();"   style="line-height:58px !important">头像</a>
+		<form id="myuploads" action="{:U('Mobile/User/upload_lcon')}" method="post" enctype="multipart/form-data">
+			<input type="file" name="file" style="display:none"   id="file_imgs"/>
+		</form>
+	<div class="user_img"><img src="{: $user_info['head_pic']}" width="48" height="48" id="user_imgs"></div>
+</li>
+<li>
+	<form class="mui-input-group">
+		<div class="mui-input-row">
+		  <label>昵称</label>
+		  <input style="float:right; text-align:right" type="text" value="{: $user_info['nickname']}">
+		</div>
+	</form>
+</li>
+<li><a href="#">我的地址</a></li>
+
+</ul>
+</div>
+    <div class="login_btn1"><a href="{: U('Mobile/User/userinfo')}">返回</a></div>
+</div>
+</body>
+</html>
+
+<script>
+	function file_img(){
+		$('#file_imgs').trigger('click');
+	}
+
+	$('#file_imgs').change(['Data'],function(){
+		$("#myuploads").ajaxSubmit({
+            dataType:  'json',
+            success: function(res) {
+            	console.log(res);
+            	// console.log(res.file.urlpath);
+            	console.log(res.file);return false;
+                // closeDiv();//关闭浮层
+                alert(res['msg']);
+                $('#user_imgs').attr('src',res['data']['path']);
+
+            },
+            error:function(res){
+                alert(res['msg']);
+            }
+
+        });
+	})
+        
+    
+</script>

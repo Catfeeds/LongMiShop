@@ -15,9 +15,9 @@ class UserController extends MobileBaseController {
     public function _initialize() {
         parent::_initialize();
         // dd(session('lm_UserId'));
-        if(session('?lm_UserId'))
+        if(session(?__UserID__))
         {
-            $user = session('lm_UserId');
+            $user = session(__UserID__);
 
             $user = M('users')->where("user_id = {$user['user_id']}")->find();
             session('user',$user);  //覆盖session 中的 user                               
@@ -494,6 +494,7 @@ class UserController extends MobileBaseController {
         $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $user_info = $user_info['result'];
+
         if(IS_POST){
             I('post.nickname') ? $post['nickname'] = I('post.nickname') : false; //昵称
             I('post.qq') ? $post['qq'] = I('post.qq') : false;  //QQ号码
@@ -529,6 +530,64 @@ class UserController extends MobileBaseController {
         $this->assign('user',$user_info);
         $this->assign('sex',C('SEX'));
         $this->display();
+    }
+
+
+    //修改个人信息
+    public function edit_details(){
+        if(IS_POST){
+
+        }
+        $userLogic = new \Common\Logic\UsersLogic();
+        $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
+        $this->assign('user_info',$user_info['result']);
+        $this->display();
+    }
+
+    //修改头像
+    public function upload_lcon(){
+        if(IS_POST){
+            if(empty($this->user_id)){
+                exit(json_encode(callback(false,"请先登录")));
+            }
+            $uploadConfig = array(
+                "savePath" =>"head_pic/",
+                "exts"     => array('jpg','gif','png','jpeg'),
+                "saveName" => $this->user_id.'_'.mt_rand(),
+                "replace"  => True,
+                "maxSize"  => 1024*1024,
+            );
+            $upload = new \Think\Upload($uploadConfig);//实例化上传类
+            $info = $upload->upload();
+            // exit(json_encode($this->user_id));
+            if($info){
+                $this->del_before($this->user_id); //删除旧头像
+                $data['head_pic'] = '.'.$info['file']['urlpath'];
+                $data['user_id'] = $this->user_id;
+                M('users')->save($data);
+                exit(json_encode(callback(true,"上传成功",array('path'=>$data['head_pic']))));
+            }
+            exit(json_encode(callback(false,$upload->getError())));
+        }
+        exit(json_encode(callback(false,"上传出错啦")));
+    }
+
+    /*修改删除文件*/
+    public function del_before($id){
+        $res = M('users')->field('head_pic')->where('user_id = '.$id)->find();
+        unlink($res['head_pic']);//删除
+    }
+
+    //
+
+    //修改手机号码
+    public function edit_mobile(){
+        $this->display();
+    }
+
+    //修改密码
+    public function edit_password(){
+
     }
 
     /*
