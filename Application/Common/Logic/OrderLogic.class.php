@@ -27,7 +27,7 @@ class OrderLogic extends BaseLogic
 
 
     //获取订单商品
-    public function getOrderGoods($order_id = null){
+    public function getOrderGoods($order_id = null ){
         if( is_null($order_id) ){
             return callback(false,'',array());
         }
@@ -107,4 +107,33 @@ class OrderLogic extends BaseLogic
         return callback(true,'操作成功','');
     }
 
+
+    /**
+     * 通过rec_id找订单详情
+     * @param $recId
+     * @param $userId
+     * @param $needGoodsList
+     * @return array
+     */
+    public function getOrderInfoByRecId( $recId ,$userId ,$needGoodsList = false){
+        $condition = array();
+        $condition["rec_id"] = $recId;
+        $orderGoodsInfo = M('order_goods')->where( $condition )->find();
+        if( empty($orderGoodsInfo) ){
+            return callback(false,'找不到订单商品');
+        }
+        $orderId = $orderGoodsInfo['order_id'];
+        $orderInfo = $this -> getOrderInfo( $orderId , $userId );
+        if( empty($orderInfo) ){
+            return callback(false,'找不到订单');
+        }
+        $orderInfo['recGoodsInfo'] = $orderGoodsInfo;
+        if( $needGoodsList == true ){
+            $result = $this -> getOrderGoods( $orderId );
+            if( callbackIsTrue($result) ){
+                $orderInfo['goodsList'] = $result['data'];
+            }
+        }
+        return callback(true,'',$orderInfo);
+    }
 }

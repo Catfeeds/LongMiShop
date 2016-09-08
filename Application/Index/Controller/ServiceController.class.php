@@ -23,10 +23,10 @@ class ServiceController extends BaseIndexController {
         if(!empty($goods_id_arr)){
             $goodsList = M('goods')->where("goods_id in (".  implode(',',$goods_id_arr).")")->getField('goods_id,goods_name');
         }
-        $this->assign('goodsList', $goodsList);
-        $this->assign('list', $list);
-        $this->assign('page', $page->show());// 赋值分页输出
-        $this->display();
+        $this -> assign('goodsList', $goodsList);
+        $this -> assign('list', $list);
+        $this -> assign('page', $page->show());// 赋值分页输出
+        $this -> display();
     }
 
 
@@ -35,24 +35,54 @@ class ServiceController extends BaseIndexController {
         $orderLogic = new \Common\Logic\OrderLogic();
         $orderInfo =  $orderLogic -> getOrderInfo( $id , $this->user_id );
         if(!$orderInfo){
-            $this->error('没有获取到订单信息');
+            $this -> error('没有获取到订单信息');
             exit;
         }
         $data = $orderLogic -> getOrderGoods($orderInfo['order_id']);
         $orderInfo['goods_list'] = $data['data'];
-        $this->assign('orderInfo',$orderInfo);
-        $this->display();
+        $this -> assign('orderInfo',$orderInfo);
+        $this -> display();
     }
 
 
     public function refund(){
         $id = I('get.id');
-        $this->display();
+        $orderLogic = new \Common\Logic\OrderLogic();
+        $result =  $orderLogic -> getOrderInfoByRecId( $id , $this->user_id );
+        if( !callbackIsTrue($result) ){
+            $this -> error( $result['msg'] );
+            exit;
+        }
+        $orderInfo = $result['data'];
+        $this -> assign('recId',$id);
+        $this -> assign('orderInfo',$orderInfo);
+        $this -> display();
     }
 
     public function exchange(){
         $id = I('get.id');
-        $this->display();
+        $orderLogic = new \Common\Logic\OrderLogic();
+        $result =  $orderLogic -> getOrderInfoByRecId( $id , $this->user_id );
+        if( !callbackIsTrue($result) ){
+            $this -> error( $result['msg'] );
+            exit;
+        }
+        $orderInfo = $result['data'];
+        $this -> assign('recId',$id);
+        $this -> assign('orderInfo',$orderInfo);
+        $this -> display();
     }
 
+    public function applicationFinish(){
+        $id = I('get.id');
+        $orderLogic = new \Common\Logic\OrderLogic();
+        $result =  $orderLogic -> getOrderInfoByRecId( $id , $this->user_id );
+        if( !callbackIsTrue($result) ){
+            $this -> error( $result['msg'] );
+            exit;
+        }
+        $orderInfo = $result['data'];
+        $this -> assign('orderInfo',$orderInfo);
+        $this -> display();
+    }
 }

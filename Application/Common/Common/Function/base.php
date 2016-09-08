@@ -569,16 +569,15 @@ function callback($state = true, $msg = '', $data = array()) {
 
 /**
  * 规范数据返回函数判断
- * @param array $data
+ * @param array $result
  * @return bool
  */
-function callbackIsTrue($data){
-    if( $data['state'] == 1 ){
+function callbackIsTrue($result){
+    if( $result['state'] == 1 ){
         return true;
     }
     return false;
 }
-
 /**
  * 获取文件类型后缀
  * @param $file_name
@@ -594,3 +593,4 @@ function extend($file_name){
     return $extend;
 
 }
+
