@@ -580,6 +580,10 @@ class UserController extends MobileBaseController {
     //修改手机号码
     public function edit_mobile(){
         $item = 60;
+        if(IS_POST){
+            $data['mobile']  = I('mobile');
+
+        }
         $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $this->assign('user_info',$user_info['result']);
@@ -590,6 +594,12 @@ class UserController extends MobileBaseController {
     //修改密码
     public function edit_password(){
         $item = 60;
+        if(IS_POST){
+            $data = I('post.');
+            $data['user_id'] = $this->user_id;
+            $res = M('users')->save($data);
+            $res ?  exit(json_encode(callback(true,"修改成功"))) : exit(json_encode(callback(false,"修改失败")));
+        }
         $this->assign('item',$item);
         $this->display();
     }
