@@ -20,7 +20,7 @@
   <div class="E-shop_cp_r">
       <div class="price1_box">
           <p class="m1">{$goods.goods_name}</p>
-          <p class="price1"><span>￥</span>199.00</p>
+          <p class="price1"><span>￥</span><i id="goods_price"></i></p>
       </div>
       <p class="m2">
       <if condition="$flash_sale['description'] neq ''">
@@ -66,6 +66,7 @@
 <script>
 $(document).ready(function(){
     ajax_trolley(); //
+    get_goods_price();
 });
 
 /*购物车*/
@@ -78,6 +79,9 @@ function ajax_trolley(){
     }
   });
 }
+
+// 价格
+
 
 
 
@@ -122,7 +126,8 @@ function ajax_trolley(){
   {
   	$(spec).children('input').attr("checked",'checked'); 	 // 让隐藏的 单选按钮选中
   	$(spec).parent().find('li').removeClass('m33_hover');
-	$(spec).addClass('m33_hover');
+	  $(spec).addClass('m33_hover');
+    get_goods_price();
   }
 
   /**
@@ -135,7 +140,7 @@ function ajax_trolley(){
     if(num2 < 1) num2 = 1; // 保证购买数量不能少于 1
     $("#goods_num").val(num2); // 修改商品购买数量
     // 更新商品价格
-    //get_goods_price();
+    get_goods_price();
   }
   // 用作 sort 排序用
   function sortNumber(a,b)

@@ -24,7 +24,7 @@
             <input name="coupon" type="radio" value="0"  checked>
             不使用优惠券<br>
             <volist name="couponList" id="coupon">
-              <input name="coupon" type="radio" value="{$coupon.id}">
+              <input name="coupon" type="radio" data-type="{$coupon.is_discount}"  data-money="{$coupon.money}" value="{$coupon.id}" class="coupon_redio">
               {$coupon.name}<br>
             </volist>
           </div>
@@ -84,7 +84,7 @@
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="17%">&nbsp;</td>
-            <td width="70%"><div class="mo">应付金额  ￥{: $total_price}<input name="total_price" type="hidden" value="{: $total_price}"></div></td>
+            <td width="70%"><div class="mo">应付金额  ￥<i id="total_price">{: $total_price}</i><input name="total_price" type="hidden" value="{: $total_price}"></div></td>
             <td width="13%"><div class="m4_btn"><a href="javascript:void(0);" onclick="submit_order()">提交订单</a></div></td>
           </tr>
         </table>
@@ -114,6 +114,23 @@
     ajax_address(); // 获取用户收货地址列表
     add_address(); //新增收货地址
   });
+
+  //优惠券选择
+$(".coupon_redio").change(['data'],function(){
+  var values = $(this).val();
+  var total_price = parseInt({$total_price});
+  var type = $(this).data('type');
+  var money = parseInt($(this).data('money'));
+  var price = $('#total_price');
+  var price_money = 0;
+  if(type==1){
+    price_money = (money /100) * total_price;
+  }else{
+    price_money = total_price - money;
+  }
+  $('#total_price').html(price_money);
+
+});
 
   /*
    * ajax 获取当前用户的收货地址列表

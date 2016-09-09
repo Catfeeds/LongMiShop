@@ -75,31 +75,8 @@
                             <div class="express_list">
                                 <a href="javascript:;">查看物流</a>
                             </div>
-                            <div class="express_box">
-                                <div class="express_txt">
-                                    <p>
-                                        <span>快递编号：</span>21818838047
-                                        <span>承运人：</span>顺丰快递
-                                        <span>预计送达时间：</span>2016-08-25
-                                    </p>
-                                </div>
-                                <div class="course_box">
-                                    <div class="course">
-                                        <div class="before">
-                                            <p>感谢您在龙米商城购物，欢迎您再次光临！</p>
-                                            <span>2016-08-25 10:12</span></div>
-                                        <div class="now">
-                                            <p>您的订单已到达广州站！</p>
-                                            <span>2016-08-24 10:12</span></div>
-                                        <div class="now">
-                                            <p>订单已打包完成！将会顺丰快递！</p>
-                                            <span>2016-08-24 10:12</span></div>
-                                    </div>
-                                    <div class="now1">
-                                        <p>订单已打印！</p>
-                                        <span>2016-08-24 10:12</span>
-                                    </div>
-                                </div>
+                            <div class="express_box" id="ajax_logistics">
+                                
                             </div>
                             <div class="pack-up">
                                 <a href="javascript:;">收起物流详情</a>
@@ -199,3 +176,27 @@
 
 </body>
 </html>
+
+<script>
+    $(document).ready(function(){
+        ajax_trolley(); //
+    });
+
+    /*物流信息*/
+    function ajax_trolley(){
+
+      $.ajax({
+        url:"{: U('Index/Widget/express',array('id'=>$order_info['order_id']))}",
+        success:function(res){
+            console.log(res)
+          if(res.state == 1){
+            $("#ajax_logistics").html('');
+            $('#ajax_logistics').append(res);
+          }else{
+            $("#ajax_logistics").html('');
+            $('#ajax_logistics').append(res);
+          } 
+        }
+      });
+    }
+</script>

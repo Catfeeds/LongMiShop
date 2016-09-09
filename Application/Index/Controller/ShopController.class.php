@@ -60,6 +60,7 @@ class ShopController extends BaseIndexController {
         $this->assign('look_see',$goodsLogic->get_look_see($goods));//看了又看
         $this->assign('goods',$goods);
         $this->assign('cart_count',$cart_count);
+        // dd($spec_goods_price);
         $this->display();
     }
 
@@ -92,7 +93,6 @@ class ShopController extends BaseIndexController {
         $usersLogic = new \Common\Logic\UsersLogic();
         $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum);
         $this->assign('couponList',$result['data']['result']);
-
         $this->assign('total_price', $sum); // 总计
         $this->display();
     }
@@ -201,7 +201,8 @@ class ShopController extends BaseIndexController {
         $this->display();
     }
 
-    function ajax_trolley(){
+    //购物车懒加载
+    public function ajax_trolley(){
         $where['user_id'] = $this->user_id;
         $tro_list = M('cart')->where($where)->order('id DESC')->limit(3)->select();
         $list = M('cart')->field('member_goods_price')->where($where)->select();
@@ -215,6 +216,21 @@ class ShopController extends BaseIndexController {
         $this->assign('count_cart',$count_cart);
         $this->display();
     }
+
+    // //优惠券
+    // public function ajax_coupon(){
+    //     $coupon = I('post.coupon');
+    //     $price = I('post.total_price');
+    //     if(!empty($coupon) && !empty($price)){
+    //         $coupon_list = M('coupon_list')->filed('')->where("id = '".$coupon."'")->find();
+    //         $coupon_res = M('coupon')->where("id = '".$coupon_list['cid']."'")->find();
+    //         if($coupon_res['is_discount']==1){ //折扣券
+
+    //         }else{ //代金券
+
+    //         }
+    //     }
+    // }
 
 
 }

@@ -8,16 +8,36 @@
 <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
 <link href="__STATIC__/css/css.css" rel="stylesheet" />
 <script src="__STATIC__/js/jquery.min.js"></script>
+<style>
+/*    .note input {
+        border: 1px solid #B02F4B;
+        border-radius: 4px;
+        color: #B02F4B;
+        font-size: 14px;
+        width: 100px;
+        display: block;
+        line-height: 40px;
+        position: absolute;
+        z-index: 33;
+        padding-top: 0px;
+        padding-right: 5px;
+        height: 40px;
+        top: 0px;
+        right: 5px;
+        text-align: center;
+        margin-top: 5px;
+    }*/
+</style>
 </head>
 <body>
 <div class="mui-content">
-			<form id='login-form' class="mui-input-group">
+			<form id='login-form' class="mui-input-group" method="post" action="{: U('Moblie/User/edit_mobile')}">
 				<div class="mui-input-row login_text">
 				  <input type="text" class="login_text" placeholder="新手机号" name="mobile" id="new_mobile">
 				</div>
 			  <div class="mui-input-row login_text">
-                <div class="note"><a href="javascript:a_code();">获取验证码</a></div>
-				  <input type="button" class="mui-input login_text" placeholder="验证码" id="new_code" intervaltime="{: $time}" onClick="sendCode(this,'new_mobile')" style="display:none">
+                <div class="note"><a href="javascript:a_code();" id="">获取验证码</a></div>
+				  <input type="button" class="mui-input login_text" placeholder="验证码" id="new_code" intervaltime="{: $time}" onClick="sendCode(this,'new_mobile')" >
 				</div>
 			
 		  	<div class="login_btn"><a href="javascript:submit_form();" >确认提交</a></div>
@@ -42,6 +62,7 @@
 		alert('验证码不能为空');
 		return false;     
 		}
+		$('#login-form').submit();
 	}
 
 	function a_code(){

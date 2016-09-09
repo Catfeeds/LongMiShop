@@ -134,9 +134,9 @@ function getExpress($orderId){
     }
     $delivery = M('delivery_doc')->where("order_id='$orderId'")->limit(1)->find();
     if($delivery['shipping_name'] && $delivery['invoice_no']){
-        $result = queryExpress($delivery['shipping_name'],$delivery['invoice_no']);
-        return callback(true,"",$result);
+        return queryExpress($delivery['shipping_name'],$delivery['invoice_no']);
     }
+    return callback(false,'没获取到物流信息');
 }
 
 /**

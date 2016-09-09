@@ -355,9 +355,10 @@ function queryExpress($postcom , $getNu){
 			$snoopy->fetch($url);
 			$get_content = $snoopy->results;
 		}
-		return json_decode($get_content,true);
+        $data = json_decode($get_content,true);
+        return callback(true,'',$data);
 	}else{
-		return array('status'=>0,'message'=>'查询失败，参数有误');
+        return callback(false,'查询失败，参数有误');
 	}
 }
 /**
