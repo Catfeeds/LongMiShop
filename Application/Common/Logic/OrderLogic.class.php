@@ -64,6 +64,22 @@ class OrderLogic extends BaseLogic
 
         $row = M('order')->where(array('order_id'=>$orderId,'user_id'=>$userId))->save(array('order_status'=>3));
 
+
+
+        $condition = array(
+            "order_id" => $orderId,
+            "uid" => $userId
+        );
+        $save = array(
+            "order_id" => 0,
+            "use_time" => "",
+        );
+        $result = M('coupon_list') -> where($condition) -> save($save);
+        if(empty($result)){
+            return callback(false,'操作失败','');
+        }
+
+
         $data['order_id'] = $orderId;
         $data['action_user'] = $userId;
         $data['action_note'] = '您取消了订单';

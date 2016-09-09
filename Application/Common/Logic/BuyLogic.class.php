@@ -47,6 +47,7 @@ class BuyLogic extends BaseLogic
             //第5步 订单后续处理
             $this->_createOrderStep5();
 
+//            throw new \Exception('我是断点！');
             $this -> model -> commit();
 
             return callback(true,'',$this -> _post_data['orderData']['order_id']);
@@ -64,6 +65,7 @@ class BuyLogic extends BaseLogic
     private function _createOrderStep1(){
 
         $address_id = $this -> _post_data['address_id'];
+        $userCouponId = $this -> _post_data['coupon'];
         if( is_null($this -> userId) ){
             throw new \Exception('登录超时请重新登录');
         }
@@ -75,6 +77,31 @@ class BuyLogic extends BaseLogic
         if( empty($this -> _post_data['address'] ) ){
             throw new \Exception('收货人信息有误！');
         }
+
+        //检查优惠券情况
+        if( !empty( $userCouponId ) ){
+            $userCouponInfo = M('coupon_list') -> where("id = '{$userCouponId}' ") -> find();
+            if( empty($userCouponInfo) ){
+                throw new \Exception('您的优惠券信息有误！');
+            }
+            if( !empty($userCouponInfo['order_id']) ){
+                throw new \Exception('优惠券已被使用！');
+            }
+            $couponInfo = M('coupon') -> where("id = '{$userCouponInfo['cid']}' ") -> find();
+            if( empty($couponInfo) ){
+                throw new \Exception('优惠券信息有误！');
+            }
+            if( $userCouponInfo['use_start_time'] > $this -> nowTime ){
+                throw new \Exception('此优惠券还未到使用时间！');
+            }
+            if( $userCouponInfo['use_end_time'] < $this -> nowTime  ){
+                throw new \Exception('此优惠券已过期！');
+            }
+            $this -> _post_data['userCouponId'] = $userCouponId;
+            $this -> _post_data['couponInfo'] = $couponInfo;
+            $this -> _post_data['useCoupon']  = true;
+        }
+
     }
 
     //第2步 得到购买商品信息
@@ -198,7 +225,7 @@ class BuyLogic extends BaseLogic
             'integral_money'   =>$car_price['pointsFee'],//'使用积分抵多少钱',
             'total_amount'     =>($car_price['goodsFee'] + $car_price['postFee']),// 订单总额
             'order_amount'     =>$car_price['payables'],//'应付款金额',
-            'add_time'         =>time(), // 下单时间
+            'add_time'         =>$this -> nowTime, // 下单时间
             'order_prom_id'    =>$car_price['order_prom_id'],//'订单优惠活动id',
             'order_prom_amount'=>$car_price['order_prom_amount'],//'订单优惠活动优惠了多少钱',
         );
@@ -243,7 +270,7 @@ class BuyLogic extends BaseLogic
         $data4['user_id'] = $user_id;
         $data4['user_money'] = -$car_price['balance'];
         $data4['pay_points'] = -($car_price['pointsFee'] * tpCache('shopping.point_rate'));
-        $data4['change_time'] = time();
+        $data4['change_time'] = $this -> nowTime;
         $data4['desc'] = '下单消费';
         $data4['order_sn'] = $order['order_sn'];
         $data4['order_id'] = $order_id;
@@ -255,7 +282,29 @@ class BuyLogic extends BaseLogic
 
     //第5步 订单后续处理
     private function _createOrderStep5(){
+
         $order = $this -> _post_data['orderData'];
+
+        //改变优惠券状态
+        if( $this -> _post_data['useCoupon'] == true && !empty($this -> _post_data['couponInfo'])){
+            $condition = array(
+                "id" => $this -> _post_data["userCouponId"],
+                "uid" => $this -> user['user_id'],
+                "order_id" => 0,
+            );
+            $save = array(
+                "order_id" => $order["order_id"],
+                "use_time" => $this -> nowTime,
+            );
+
+            $result = M('coupon_list') -> where($condition) -> save($save);
+            if(empty($result)){
+                throw new \Exception('优惠券使用失败！');
+            }
+        }
+
+
+
         // 如果有微信公众号 则推送一条消息到微信
         $user = $this -> user;
         if($user['oauth']== 'weixin') {
@@ -271,7 +320,7 @@ class BuyLogic extends BaseLogic
      */
     function getOrderPromotion($order_amount){
         $parse_type = array('0'=>'满额打折','1'=>'满额优惠金额','2'=>'满额送倍数积分','3'=>'满额送优惠券','4'=>'满额免运费');
-        $now = time();
+        $now = $this -> nowTime;
         $prom = M('prom_order')->where("type<2 and end_time>$now and start_time<$now and money<=$order_amount")->order('money desc')->find();
         $res = array('order_amount'=>$order_amount,'order_prom_id'=>0,'order_prom_amount'=>0);
         if($prom){
