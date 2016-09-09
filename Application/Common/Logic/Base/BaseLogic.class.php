@@ -23,10 +23,13 @@ class BaseLogic extends RelationModel
      */
     protected $_member_info = array();
 
+    public $nowTime = null;
+
     public function __construct($name = "")
     {
         parent::__construct($name);
         $this -> _post_data = I('post.');
+        $this -> nowTime = time();
     }
 
     /**

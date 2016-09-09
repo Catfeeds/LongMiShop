@@ -312,11 +312,15 @@ class UsersLogic extends BaseLogic
         $couponList     = $result['data']['result'];
         $couponCount    = $result['data']['count'];
         if( !empty( $couponList ) ){
-            foreach ( $couponList as &$couponItem ){
-                if( $sum < $couponItem['condition'] ){
-                    unset($couponItem);
+            foreach ( $couponList as $couponKey => $couponItem ){
+                if( $sum < $couponList[$couponKey]['condition'] ){
+                    unset($couponList[$couponKey]);
+                    continue;
                 }
-
+                if( $couponList[$couponKey]['order_id'] != 0 ){
+                    unset($couponList[$couponKey]);
+                    continue;
+                }
             }
         }
         return callback(true,"获取成功",array("result" => $couponList , "count" => $couponCount));
@@ -328,19 +332,14 @@ class UsersLogic extends BaseLogic
      * @return array
      */
     public function getCoupon($userId){
-        $where = ' AND l.order_id = 0 AND c.use_end_time > '.time(); // 未使用
-        //获取数量
-        $sql = "SELECT count(l.id) as total_num FROM __PREFIX__coupon_list".
-            " l LEFT JOIN __PREFIX__coupon".
-            " c ON l.cid =  c.id WHERE l.uid = {$userId} {$where}";
-        $count = $this->query($sql);
-        $count = $count[0]['total_num'];
+        //调试使用
+//        $where = ' AND l.order_id = 0 AND c.use_end_time > '.time(); // 未使用
         $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
             " c ON l.cid =  c.id WHERE l.uid = {$userId} {$where}  ORDER BY l.send_time DESC,l.use_time";
         //"LIMIT {$Page->firstRow},{$Page->listRows}";
         $logs = $this->query($sql);
-        return callback(true,"获取成功",array("result" => $logs , "count" => $count));
+        return callback(true,"获取成功",array("result" => $logs , "count" => count($logs)));
     }
 
     /**
