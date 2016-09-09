@@ -225,9 +225,9 @@ class UserController extends BaseIndexController {
             M('user_address')->where("address_id = {$address['address_id']}")->save(array('is_default'=>1));
         }
         if(!$row)
-            $this->error('操作失败',U('/Mobile/User/address_list'));
+            $this->error('操作失败');
         else
-            $this->success("操作成功",U('/Mobile/User/address_list'));
+            $this->success("操作成功");
     }
 
     public function payment(){

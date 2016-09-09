@@ -54,7 +54,10 @@
                                 <!--<p>您的订单已关闭。</p>-->
 
                                 <p>
-                                    您可以
+                                    <!--您可以-->
+                                    <if condition="$order_info.return_btn eq 1">
+                                        <a class="blue-small-btn js-payment-order"  href="{:U('/Index/Service/applicationService',array('order_id'=>$order_info[order_id]))}">申请售后</a>
+                                    </if>
                                     <if condition="$order_info.pay_btn eq 1">
                                         <a class="blue-small-btn js-payment-order"  href="{:U('/Index/User/payment',array('order_id'=>$order_info[order_id]))}">立即支付</a>
                                     </if>
@@ -62,7 +65,7 @@
                                         <a class="gray-small-btn js-cancel-order" href="javascript:showDiv()">取消订单</a>
                                     </if>
                                     <if condition="$order_info.receive_btn eq 1">
-                                        <a class="blue-small-btn js-payment-order"  onClick=" if(confirm('你确定收到货了吗?')) location.href='{:U('Home/Order/orderConfirm',array('id'=>$order_info['order_id']))}'">收货确认</a>
+                                        <a class="blue-small-btn js-payment-order"  onClick=" if(confirm('你确定收到货了吗?')) location.href='{:U('Index/Order/orderConfirm',array('id'=>$order_info['order_id']))}'">收货确认</a>
                                     </if>
                                 </p>
 

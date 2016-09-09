@@ -82,16 +82,17 @@ class OrderController extends BaseIndexController {
         $id = I('get.id');
         $orderLogic = new \Common\Logic\OrderLogic();
         $data = $orderLogic -> cancelOrder($this->user_id,$id);
-        if($data['state'] == 0)
+        if( !callbackIsTrue($data) ) {
             $this->error($data['msg']);
+        }
         $this->success($data['msg']);
     }
     //确认订单
     public function orderConfirm(){
         $id = I('get.id',0);
         $orderLogic = new \Common\Logic\OrderLogic();
-        $data = $orderLogic -> confirmOrder($this->user_id,$id);
-        if($data['status']== 0){
+        $data = $orderLogic -> confirmOrder($id);
+        if( !callbackIsTrue($data) ){
             $this->error($data['msg']);
         }
         $this->success($data['msg']);

@@ -773,7 +773,7 @@ class UserController extends BaseController {
         $order_id = I('order_id',0);
         $order_sn = I('order_sn',0);
         $goods_id = I('goods_id',0);        
-	$spec_key = I('spec_key');        
+	    $spec_key = I('spec_key');
         
         $return_goods = M('return_goods')->where("order_id = $order_id and goods_id = $goods_id and status in(0,1) and spec_key = '$spec_key'")->find();            
         if(!empty($return_goods))

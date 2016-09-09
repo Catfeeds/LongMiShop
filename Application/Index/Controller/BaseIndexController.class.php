@@ -14,8 +14,6 @@ abstract class BaseIndexController extends BaseController {
 
     abstract function exceptAuthActions();
 
-
-
     public function _initialize() {
         parent::_initialize();
 
@@ -38,18 +36,6 @@ abstract class BaseIndexController extends BaseController {
             $this -> assign('user',$this -> user_info );
             $this -> assign('auth',true);
         }
-
-//
-//
-////            $userModel = User::currentInfo();
-////            $this -> assign('user',$userModel -> getInfo());
-//
-//            $this -> user_id = User::getCurrentUserID();
-//            $userLogic = new UsersLogic();
-//            $user_info = $userLogic->get_info($this -> user_id);
-//            $this -> user_info  = $user_info['result'];
-//            $this -> user  = $this -> user_info;
-
     }
 
     protected function needAuth(){

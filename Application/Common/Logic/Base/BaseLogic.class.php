@@ -14,16 +14,13 @@ use Think\Model\RelationModel;
 class BaseLogic extends RelationModel
 {
 
-    /**
-     * 表单数据
-     */
-    protected $_post_data = array();
-    /**
-     * 会员信息
-     */
-    protected $_member_info = array();
-
-    public $nowTime = null;
+    public          $nowTime                 = null;
+    public          $userId                  = null;
+    public          $orderId                 = null;
+    public          $user                    = null;
+    public          $model                   = null;
+    private         $cartLogic               = null;
+    protected       $_post_data              = array();
 
     public function __construct($name = "")
     {

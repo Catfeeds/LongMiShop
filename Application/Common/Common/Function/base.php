@@ -594,3 +594,33 @@ function extend($file_name){
 
 }
 
+
+/**
+ * 根据条件查表 返回存不存在
+ * @param $tableName
+ * @param array $condition
+ * @return bool
+ */
+function isExistenceDataWithCondition( $tableName , $condition = array() ){
+    $result = M($tableName) -> where($condition) -> find();
+    if( empty($result) ){
+        return false;
+    }
+    return true;
+}
+
+/**
+ * 插入表 返回成不成功
+ * @param $tableName
+ * @param array $data
+ * @return bool
+ */
+function isSuccessToAddData( $tableName , $data = array() ){
+    $result = M($tableName) -> add($data);
+    if( empty($result) ){
+        return false;
+    }
+    return true;
+}
+
+

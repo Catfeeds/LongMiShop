@@ -66,6 +66,7 @@ class OrderLogic extends BaseLogic
 
 
 
+        //退回优惠券
         $condition = array(
             "order_id" => $orderId,
             "uid" => $userId

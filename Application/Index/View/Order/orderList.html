@@ -97,7 +97,7 @@
                                                     </a>
                                                 </if>
                                                 <if condition="$list.receive_btn eq 1">
-                                                    <a  onClick=" if(confirm('你确定收到货了吗?')) location.href='{:U('Home/Order/orderConfirm',array('id'=>$list['order_id']))}'" class="blue-small-btn js-payment-order">
+                                                    <a  onClick=" if(confirm('你确定收到货了吗?')) location.href='{:U('Index/Order/orderConfirm',array('id'=>$list['order_id']))}'" class="blue-small-btn js-payment-order">
                                                         收货确认
                                                     </a>
                                                 </if>

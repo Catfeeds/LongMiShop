@@ -74,6 +74,16 @@ class ServiceController extends BaseIndexController {
     }
 
     public function applicationFinish(){
+        if(IS_POST){
+            $serviceLogic = new \Common\Logic\BuyLogic();
+            $result =  $serviceLogic -> createServiceOrder();
+            if( !callbackIsTrue($result) ){
+                $this -> error( $result['msg'] );
+                exit;
+            }
+            $this -> success( $result['msg'] );
+            exit;
+        }
         $id = I('get.id');
         $orderLogic = new \Common\Logic\OrderLogic();
         $result =  $orderLogic -> getOrderInfoByRecId( $id , $this->user_id );

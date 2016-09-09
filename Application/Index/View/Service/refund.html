@@ -3,61 +3,69 @@
     <div class="content fn-clear">
         <div class="account-wrapper account-min-wrapper">
             <include file="Public/user_menu"/>
-            <div class="account-content">
-                <div class="account-order-detail">
-                    <div class="gray-box fn-clear confirm-detail">
-                        <div class="title columns-title pre-title">
-                            <h2>订单号：{$orderInfo.order_sn}</h2>
-                        </div>
-                        <div class="order-info-wrapper" style="padding-bottom:10px">
-                            <div class="order-status-inner order-process">
-                                <div class="order-status-wrapper">
-                                    <div class="order-status-process"> <span class="status-process" style="width:50%"></span>
-                                        <div class="order-status-text status-first  status-done" style="width:33%; left:-16.5%">
-                                            <h5 style=" margin-left:50px">选择产品及服务</h5>
-                                            <span class="point"></span> </div>
-                                        <div class="order-status-text  status-on" style="width:33%; left:35.5%">
-                                            <h5>填写申请单</h5>
-                                            <span class="point"></span>
-                                            <p> </p>
-                                            <p> </p>
-                                        </div>
-                                        <div class="order-status-text  status-last  " style="width:25%; left:87.5%">
-                                            <h5>完成申请</h5>
-                                            <span class="point"></span>
-                                            <p> </p>
-                                            <p> </p>
+            <form method="post" action="{:U('Index/Service/applicationFinish')}" id="form">
+                <input type="hidden" name="id" value="{$recId}">
+                <input type="hidden" name="order_id" value="{$orderInfo.order_id}">
+                <input type="hidden" name="order_sn" value="{$orderInfo.order_sn}">
+                <input type="hidden" name="goods_id" value="{$orderInfo.recGoodsInfo.goods_id}">
+                <input type="hidden" name="spec_key" value="{$orderInfo.recGoodsInfo.spec_key}">
+                <div class="account-content">
+                    <div class="account-order-detail">
+                        <div class="gray-box fn-clear confirm-detail">
+                            <div class="title columns-title pre-title">
+                                <h2>订单号：{$orderInfo.order_sn}</h2>
+                            </div>
+                            <div class="order-info-wrapper" style="padding-bottom:10px">
+                                <div class="order-status-inner order-process">
+                                    <div class="order-status-wrapper">
+                                        <div class="order-status-process">
+                                            <span class="status-process" style="width:50%"></span>
+                                            <div class="order-status-text status-first  status-done" style="width:33%; left:-16.5%">
+                                                <h5 style=" margin-left:50px">选择产品及服务</h5>
+                                                <span class="point"></span> </div>
+                                            <div class="order-status-text  status-on" style="width:33%; left:35.5%">
+                                                <h5>填写申请单</h5>
+                                                <span class="point"></span>
+                                                <p> </p>
+                                                <p> </p>
+                                            </div>
+                                            <div class="order-status-text  status-last  " style="width:25%; left:87.5%">
+                                                <h5>完成申请</h5>
+                                                <span class="point"></span>
+                                                <p> </p>
+                                                <p> </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mo1" style="margin-left:40px; line-height:60px">
-                            <div>退款原因：
-                                <label for="select"></label>
-                                <select name="select" id="select" class="refund-a">
-                                    <option>不想买了</option>
-                                    <option>买错了</option>
-                                </select>
-                            </div>
-                            <p>支付明细：￥{$orderInfo.recGoodsInfo.goods_price}</p>
-                            <div class="mui-input-row mui-radio mui-left" style="float:left"> 返款方式：<br>
-                                <input name="radio1" type="radio" checked>
-                                返回到龙米账户（即时到账）<br>
-                                <input name="radio1" type="radio">
-                                原路返回（3~7个工作日） </div>
-                            <div style="clear:both"></div>
-                            <div>联系方式：
-                                <input type="text" name="refundName" id="refundName" class="refund-b" placeholder="称呼" style="width:120px">
-                                <input type="text" name="refundPhone" id="refundPhone" class="refund-b" placeholder="电话">
-                            </div>
-                            <div class="m4_btn" style="margin-top:20px">
-                                <a href="{:U('Index/Service/applicationFinish',array('id' => $recId))}">提交申请</a>
+                            <div class="mo1" style="margin-left:40px; line-height:60px">
+                                <div>退款原因：
+                                    <label for="select"></label>
+                                    <select name="select" id="select" class="refund-a">
+                                        <option>不想买了</option>
+                                        <option>买错了</option>
+                                    </select>
+                                </div>
+                                <p>支付明细：￥{$orderInfo.recGoodsInfo.goods_price}</p>
+                                <div class="mui-input-row mui-radio mui-left" style="float:left"> 返款方式：<br>
+                                    <input name="returnWay" value="YU_E" type="radio" checked>
+                                    返回到龙米账户（即时到账）<br>
+                                    <input name="returnWay" value="YUAN_LU" type="radio">
+                                    原路返回（3~7个工作日） </div>
+                                <div style="clear:both"></div>
+                                <div>联系方式：
+                                    <input type="text" name="refundName" id="refundName" class="refund-b" placeholder="称呼" style="width:120px">
+                                    <input type="text" name="refundPhone" id="refundPhone" class="refund-b" placeholder="电话">
+                                </div>
+                                <div class="m4_btn" style="margin-top:20px">
+                                    <a href="javascript:$('#form').submit();">提交申请</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
