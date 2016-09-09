@@ -47,7 +47,7 @@ class BuyLogic extends BaseLogic
             //第5步 订单后续处理
             $this->_createOrderStep5();
 
-//            throw new \Exception('我是断点！');
+           // throw new \Exception('我是断点！');
             $this -> model -> commit();
 
             return callback(true,'',$this -> _post_data['orderData']['order_id']);
@@ -128,6 +128,7 @@ class BuyLogic extends BaseLogic
         $num= 0;
         $shipping_price = 0;
         $coupon_price = 0;
+        $couponInfo_list =  $this -> _post_data['couponInfo'];
 
         $goods_id_arr = get_arr_column($order_goods,'goods_id');
         $goods_arr = M('goods')->where("goods_id in(".  implode(',',$goods_id_arr).")")->getField('goods_id,weight,market_price,is_free_shipping'); // 商品id 和重量对应的键值对
@@ -152,7 +153,11 @@ class BuyLogic extends BaseLogic
             $num        += $val['goods_num']; // 购买数量
         }
 
-
+        if($couponInfo_list['is_discount'] == 1){ //判断优惠券类型  1折扣券  0代金券
+            $coupon_price = ( intval($couponInfo_list['money']) / 100 ) * $goods_price;
+        }else{
+            $coupon_price = $goods_price - intval($couponInfo_list['money']);
+        }
         $order_amount = $goods_price + $shipping_price - $coupon_price; // 应付金额 = 商品价格 + 物流费 - 优惠券
         $total_amount = $goods_price + $shipping_price;
         $pay_points = 0;
