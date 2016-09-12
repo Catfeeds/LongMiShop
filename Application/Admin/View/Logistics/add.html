@@ -63,8 +63,10 @@
                                         <td>配送方式</td>
                                         <td>
                                             <select name="log_delivery" id="">
-                                                <option value="顺丰快递">顺丰快递</option>
-                                                <option value="申通快递">申通快递</option>
+                                                <option value="0">请选择配送方式</option>
+                                                <volist name="region_list" id="item">
+                                                    <option value="{: $item}">{: $item}</option>
+                                                </volist>
                                             </select>
                                         </td>
                                     </tr>

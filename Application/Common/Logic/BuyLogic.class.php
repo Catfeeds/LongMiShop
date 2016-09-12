@@ -42,7 +42,7 @@ class BuyLogic extends BaseLogic
             //第5步 订单后续处理
             $this->_createOrderStep5();
 
-           // throw new \Exception('我是断点！');
+//            throw new \Exception('我是断点！');
             $this -> model -> commit();
 
             return callback(true,'',$this -> _post_data['orderData']['order_id']);
@@ -294,6 +294,15 @@ class BuyLogic extends BaseLogic
         $user_id = $this-> userId;
         $address = $this -> _post_data['address'];
         $car_price = $this -> _post_data['carPrice'];
+
+        //查询配送id
+        $delivery_way = M('goods')->field('delivery_way')->where("goods_id = '".$this -> _post_data['orderGoods'][0]['goods_id']."'")->find();
+        //查询配送名字
+        $logistics = M('logistics')->field('log_delivery')->where("log_id = '".$delivery_way['delivery_way']."'")->find();
+        !empty($logistics) ? $logistics   : $logistics = '';
+        //判断发票类型
+        $invoice_title = $this -> _post_data['invoice_title'] == 1 ?  '个人' : $this -> _post_data['invoice'];
+
         $data = array(
             'order_sn'         => date('YmdHis').rand(1000,9999), // 订单编号
             'user_id'          =>$user_id, // 用户id
@@ -307,8 +316,8 @@ class BuyLogic extends BaseLogic
             'zipcode'          =>$address['zipcode'],//'邮编',
             'email'            =>$address['email'],//'邮箱',
 //            'shipping_code'    =>$shipping_code,//'物流编号',
-//            'shipping_name'    =>$shipping['name'], //'物流名称',
-//            'invoice_title'    =>$invoice_title, //'发票抬头',
+           'shipping_name'    =>$logistics['log_delivery'], //'物流名称',
+            'invoice_title'    =>$invoice_title, //'发票抬头',
             'goods_price'      =>$car_price['goodsFee'],//'商品价格',
             'shipping_price'   =>$car_price['postFee'],//'物流价格',
             'user_money'       =>$car_price['balance'],//'使用余额',

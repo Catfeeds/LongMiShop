@@ -23,7 +23,7 @@ class LogisticsController extends BaseController {
     //新增
     public function add(){
         $id = I('get.id',0,'int');
-
+        $region_list = include_once 'Application/Common/Conf/express.php'; //快递名称
         if(!empty($id)){
             $where['log_id'] = $id;
             $edit_list = $this->logi->where($where)->find();
@@ -38,6 +38,7 @@ class LogisticsController extends BaseController {
         //省
         $province_list = $this->region->where('level = 1')->select();
         $this->assign('province_list',$province_list);
+        $this->assign('region_list',$region_list);
     	$this->display();
     }
 

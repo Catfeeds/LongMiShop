@@ -20,12 +20,12 @@ class WidgetController extends BaseIndexController {
 //        $obj = '{"message":"如风达 单号116082SS458010059001，没有查到相关信息。单号暂未收录或已过期","comcontact":"400-010-6660","ischeck":"0","status":"0","comurl":"http://www.rufengda.com"}';
 //        $res = json_decode($obj,true);
          $result = getExpress($id);
-//          dd($result);
          if( callbackIsTrue($result) ){
-             $this->assign('expressData', $result['data'] );
+            $result['data']['status'] == 1 ? $this->assign('expressData', $result['data']) :  $this->assign('expressMessage', $result['data']['message']);
          }else{
              $this->assign('expressMessage', $result['msg'] );
          }
+
 //        $this->assign('expressData',$res);
         $this->display();
     }

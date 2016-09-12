@@ -62,24 +62,28 @@ class OrderLogic extends BaseLogic
 //            accountLog($userId,$order['user_money'],$order['integral'],"订单取消，退回{$order['user_money']}元,{$order['integral']}积分");
 //        }
 
-        $row = M('order')->where(array('order_id'=>$orderId,'user_id'=>$userId))->save(array('order_status'=>3));
 
 
 
-        //退回优惠券
-        $condition = array(
-            "order_id" => $orderId,
-            "uid" => $userId
-        );
-        $save = array(
-            "order_id" => 0,
-            "use_time" => "",
-        );
-        $result = M('coupon_list') -> where($condition) -> save($save);
-        if(empty($result)){
-            return callback(false,'操作失败','');
+        if(!empty($order['tp_order'])){
+            //退回优惠券
+            $condition = array(
+                "order_id" => $orderId,
+                "uid" => $userId
+            );
+            $save = array(
+                "order_id" => 0,
+                "use_time" => "",
+            );
+            $result = M('coupon_list') -> where($condition) -> save($save);
+            if(empty($result)){
+                return callback(false,'操作失败','');
+            }
         }
 
+
+
+        $row = M('order')->where(array('order_id'=>$orderId,'user_id'=>$userId))->save(array('order_status'=>3));
 
         $data['order_id'] = $orderId;
         $data['action_user'] = $userId;
