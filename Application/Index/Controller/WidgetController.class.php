@@ -26,7 +26,7 @@ class WidgetController extends BaseIndexController {
          }else{
              $this->assign('expressMessage', $result['msg'] );
          }
-         // dd($result);
+         dd($result);
 //        $this->assign('expressData',$res);
         $this->display();
     }
