@@ -73,7 +73,7 @@ class BuyLogic extends BaseLogic
             //第2步 生成退货退款单单
             $this->_createServiceOrderStep2();
 
-//            throw new \Exception('我是断点！');
+            throw new \Exception('我是断点！');
             $this -> model -> commit();
 
             return callback(true,'申请成功,客服第一时间会帮你处理!');

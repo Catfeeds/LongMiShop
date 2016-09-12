@@ -504,12 +504,6 @@ transform: translate(0, 0)
 .m33 a {
 	color: #141414;
 }
-.m33 ul {
-	margin: 0px !important;
-	padding: 0px !important;
-	display: block;
-	overflow: hidden;
-}
 .m33_hover {
 	border: 1px solid #ff6c00 !important;
 	transition: all .3s ease-out;
@@ -753,12 +747,11 @@ transform: translate(0, 0)
 	float: left;
 }
 .add_dz {
-	margin-right: 10px;
 }
 .add_dz a {
 	display: block;
 	height: 100px;
-	width: 200px;
+	width: 228px;
 	border: 1px solid #F0F0F0;
 	text-align: center;
 	background-image: url(../img/add.png);
@@ -769,13 +762,12 @@ transform: translate(0, 0)
 	color: #999;
 }
 .m333 {
-	float: left;
 	font-size: 16px;
 }
 .m333 li {
 	display: block;
 	height: 160px;
-	width: 200px;
+	width: 227px;
 	border: 1px solid #F0F0F0;
 	text-align: center;
 	border-radius: 4px;
@@ -1874,4 +1866,9 @@ transform: translate(0, 0)
 }
 .price1 span {
 	font-size: 14px;
+}
+.yh{
+	display: block;
+	height: 45px;
+	overflow: hidden;
 }
