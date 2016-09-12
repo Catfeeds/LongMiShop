@@ -278,7 +278,7 @@ abstract class Controller {
         if($status) { //发送成功信息
             $this->assign('message',$message);// 提示信息
             // 成功操作后默认停留1秒
-            if(!isset($this->waitSecond))    $this->assign('waitSecond','1');
+            if(!isset($this->waitSecond))    $this->assign('waitSecond','3');
             // 默认操作成功自动返回操作前页面
             if(!isset($this->jumpUrl)) $this->assign("jumpUrl",$_SERVER["HTTP_REFERER"]);
             $this->display(C('TMPL_ACTION_SUCCESS'));
