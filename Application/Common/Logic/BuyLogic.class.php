@@ -299,7 +299,7 @@ class BuyLogic extends BaseLogic
         $delivery_way = M('goods')->field('delivery_way')->where("goods_id = '".$this -> _post_data['orderGoods'][0]['goods_id']."'")->find();
         //查询配送名字
         $logistics = M('logistics')->field('log_delivery')->where("log_id = '".$delivery_way['delivery_way']."'")->find();
-        // dd($logistics);
+        !empty($logistics) ? $logistics   : $$logistics = '';
         $data = array(
             'order_sn'         => date('YmdHis').rand(1000,9999), // 订单编号
             'user_id'          =>$user_id, // 用户id
