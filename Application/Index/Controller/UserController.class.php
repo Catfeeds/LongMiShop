@@ -301,7 +301,16 @@ class UserController extends BaseIndexController {
                 $data['password'] = encrypt($password);
                 $data['user_id'] = $this->user_id;
                 $res = $this->users->save($data);
-                $res ? $this->success('修改成功',U('/Index/User/info')) : $this->error('修改失败',U('/Index/User/edit_pwd'));exit;
+                if($res){
+                    session_unset();
+                    session_destroy();
+                    $this->success('修改成功,请重新登录',U('Index/Index/index'));
+
+
+                }else{
+                    $this->error('修改失败',U('/Index/User/edit_pwd'));
+                }
+                exit;
             }
         }
         $this->display();
@@ -384,13 +393,13 @@ class UserController extends BaseIndexController {
      */
     public function email_validate(){
         $send_email_time = session('send_email_time');
-        $res_time = $send_email_time + 300;
+        $res_time = $send_email_time + 10;
         $now_time = time();
         if($res_time > $now_time){
             $time = $res_time - $now_time;
         }else if($res_time < $now_time){
             session('send_email_time',null);
-            $time = 300;
+            $time = 10;
             $info = time();
             session('send_email_time',$info);
         }
@@ -409,21 +418,29 @@ class UserController extends BaseIndexController {
         $data['time'] = time();
         $data['secret_key'] = $secret_key;
 
-        if($type=='anew'){ //ajax请求重新发送
+        $res_count = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->count();
+        if($res_count){ //ajax请求重新发送
             $res = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->save($data);
         }else{
             $data['user_id']  = $user_info['result']['user_id'];
             $res = $this->email_log->add($data);
         }
+        
         if($user_info['result']['email_validated'] != 0) { //状态修改为 未验证
             $datas['email_validated'] = 0;
-            $this->users->where("user_id = '".$user_info['result']['user_id']."'")->save($datas); //验证
+            M('users')->where("user_id = '".$user_info['result']['user_id']."'")->save($datas); //验证
         }
+
 
         if($res){
             $url = 'http://'.$_SERVER['SERVER_NAME'].U('Index/User/check_email',array('secret_key'=>$secret_key,'user_id'=>$user_info['result']['user_id']));
-            send_email($user_info['result']['email'],'邮箱验证','尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);
-            exit(json_encode(callback(true,'发送成功',array('status'=>1))));
+            $mail_res = send_email($user_info['result']['email'],'邮箱验证','尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);
+            if($mail_res){
+                exit(json_encode(callback(true,'发送成功',array('status'=>1))));
+            }else{
+                exit(json_encode(callback(false,'服务器繁忙请稍后再试')));
+            }
+
         }else{
             exit(json_encode(callback(false,'发送失败')));
         }
