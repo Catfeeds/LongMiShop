@@ -73,7 +73,7 @@ class BuyLogic extends BaseLogic
             //第2步 生成退货退款单单
             $this->_createServiceOrderStep2();
 
-//            throw new \Exception('我是断点！');
+           // throw new \Exception('我是断点！');
             $this -> model -> commit();
 
             return callback(true,'申请成功,客服第一时间会帮你处理!');
@@ -294,6 +294,12 @@ class BuyLogic extends BaseLogic
         $user_id = $this-> userId;
         $address = $this -> _post_data['address'];
         $car_price = $this -> _post_data['carPrice'];
+
+        //查询配送id
+        $delivery_way = M('goods')->field('delivery_way')->where("goods_id = '".$this -> _post_data['orderGoods'][0]['goods_id']."'")->find();
+        //查询配送名字
+        $logistics = M('logistics')->field('log_delivery')->where("log_id = '".$delivery_way['delivery_way']."'")->find();
+        // dd($logistics);
         $data = array(
             'order_sn'         => date('YmdHis').rand(1000,9999), // 订单编号
             'user_id'          =>$user_id, // 用户id
@@ -307,7 +313,7 @@ class BuyLogic extends BaseLogic
             'zipcode'          =>$address['zipcode'],//'邮编',
             'email'            =>$address['email'],//'邮箱',
 //            'shipping_code'    =>$shipping_code,//'物流编号',
-//            'shipping_name'    =>$shipping['name'], //'物流名称',
+           'shipping_name'    =>$logistics['log_delivery'], //'物流名称',
 //            'invoice_title'    =>$invoice_title, //'发票抬头',
             'goods_price'      =>$car_price['goodsFee'],//'商品价格',
             'shipping_price'   =>$car_price['postFee'],//'物流价格',

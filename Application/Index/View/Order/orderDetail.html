@@ -188,7 +188,7 @@
       $.ajax({
         url:"{: U('Index/Widget/express',array('id'=>$order_info['order_id']))}",
         success:function(res){
-            console.log(res)
+            // console.log(res)
           if(res.state == 1){
             $("#ajax_logistics").html('');
             $('#ajax_logistics').append(res);
