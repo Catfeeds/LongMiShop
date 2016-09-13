@@ -6,7 +6,7 @@
  * @param $orderInfo
  * @return array
  */
-function getOderProgressBar($orderInfo){
+function getOrderProgressBar($orderInfo){
     $orderStatus    = $orderInfo['order_status'];
     $shippingStatus = $orderInfo['shipping_status'];
     $payStatus      = $orderInfo['pay_status'];

@@ -30,6 +30,27 @@ class ServiceController extends BaseIndexController {
     }
 
 
+    public function serviceDetail(){
+        $id = I('get.id');
+        $serviceOrderInfo = getServiceOrderInfo($id , $this->user_id);
+        if( empty($serviceOrderInfo) ){
+            $this->error('没有获取到服务单信息');
+            exit;
+        }
+        $orderId = $serviceOrderInfo['order_id'];
+        $orderLogic = new \Common\Logic\OrderLogic();
+        $orderInfo =  $orderLogic -> getOrderInfo( $orderId , $this->user_id );
+        if( empty($orderInfo) ){
+            $this -> error('没有获取到订单信息');
+            exit;
+        }
+        $progressBar = getServiceOrderProgressBar($serviceOrderInfo);
+        $this -> assign('orderInfo',$orderInfo);
+        $this -> assign('progressBar',$progressBar);
+        $this -> assign('serviceOrderInfo',$serviceOrderInfo);
+        $this -> display();
+    }
+
     public function applicationService(){
         $id = I('get.order_id');
         $orderLogic = new \Common\Logic\OrderLogic();

@@ -6,6 +6,7 @@ require_once "Function/order.php";
 require_once "Function/verify.php";
 require_once "Function/goods.php";
 require_once "Function/email.php";
+require_once "Function/service.php";
 
 
 function dd($x) {

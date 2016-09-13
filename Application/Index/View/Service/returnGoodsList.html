@@ -44,8 +44,8 @@
                                             <span class="date">{$item.addtime|date='Y-m-d',###}</span>
                                             <span class="order-id"> 订单号： <a href="#">{$item.order_sn}</a> </span>
                                             <span class="order-detail">
-                                                <a href="#">
-                                                    <!--查看详情-->
+                                                <a href="{:U('Index/Service/serviceDetail',array('id'=>$item['id']))}">
+                                                    查看详情
                                                 </a>
                                             </span>
                                             <span class="sub-total">状态</span>
