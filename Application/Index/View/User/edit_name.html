@@ -17,10 +17,25 @@
     </div>
     <div class="tab_box2" style="border-radius:0 0 6px 6px!important">
       <input name="nickname" type="text" class="pop_text1" style="width:100%" placeholder="昵称">
-      <div class="m5_btn"><a name="submit"  onclick="document.getElementById('edit_subform').submit();return false" >确定更改昵称</a></div>
+      <div class="m5_btn"><a name="submit"  onclick="edit_subform()" >确定更改昵称</a></div>
     </div>
   </div>
 </div>
 </form>
 </body>
 </html>
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script>
+  function edit_subform(){
+    var nickname = $('input[name="nickname"]').val();
+    if(nickname.length == ''){
+      alert('昵称不能为空');
+      return false;
+    }else if(nickname.length > 15){
+      alert('昵称长度不能大于15位');
+      return false;
+    }else{
+      $('#edit_subform').submit();
+    }
+  }
+</script>

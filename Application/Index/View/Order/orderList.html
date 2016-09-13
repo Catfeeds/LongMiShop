@@ -13,33 +13,61 @@
                     <div class="gray-box empty-order-box">
                         <div class="title columns-title pre-title">
                             <h2>我的订单</h2>
-                            <!--<div class="gray-btn-menu sort-status-menu sort-time-menu2">-->
-                            <!--<span class="label">-->
-                            <!--<img src="__PUBLIC__/img/i.gif" class="arrow"> 全部状态-->
-                            <!--</span>-->
-                            <!--<ul class="menu-list menu-list2">-->
-                            <!--<li class="selected">-->
-                            <!--<a href="{:U('Index/Order/orderList')}">全部状态</a>-->
-                            <!--</li>-->
-                            <!--<li class="">-->
-                            <!--<a href="{:U('Index/Order/orderList')}">未完成</a>-->
-                            <!--</li>-->
-                            <!--<li class="">-->
-                            <!--<a href="{:U('Index/Order/orderList')}">已完成</a>-->
-                            <!--</li>-->
-                            <!--<li class="">-->
-                            <!--<a href="{:U('Index/Order/orderList')}">已关闭</a>-->
-                            <!--</li>-->
-                            <!--</ul>-->
-                            <!--</div>-->
-                            <!--<div class="gray-btn-menu sort-time-menu sort-time-menu1"> <span class="label"> <img src="__PUBLIC__/img/i(1).gif" class="arrow"> 最近三个月 </span>-->
-                            <!--<ul class="menu-list  menu-list1">-->
-                            <!--<li class="selected"> <a href="#">最近三个月</a> </li>-->
-                            <!--<li class=""> <a href="#">今年内</a> </li>-->
-                            <!--<li class=""> <a href="#">2015 年</a> </li>-->
-                            <!--<li class=""> <a href="#">2014 年</a> </li>-->
-                            <!--</ul>-->
-                            <!--</div>-->
+                             <div class="gray-btn-menu sort-status-menu sort-time-menu2">
+                            <span class="label">
+                            <img src="__PUBLIC__/img/i.gif" class="arrow">
+                                <if condition="$status eq 0">
+                                    全部状态
+                                <elseif condition="$status eq 2" /> 
+                                    未完成
+                                <elseif condition="$status eq 4" />
+                                    已完成
+                                <else />
+                                    已关闭 
+                                </if>
+                            </span>
+                            <ul class="menu-list menu-list2">
+                            <li class="{: $status == 0 ? 'selected' : ''}">
+                            <a href="{:U('Index/Order/orderList')}">全部状态</a>
+                            </li>
+                            <li class="{: $status == 2 ? 'selected' : ''}" >
+                            <a href="{:U('Index/Order/orderList',array('status'=>'2','time' => $times))}" >未完成</a>
+                            </li>
+                            <li class="{: $status == 4 ? 'selected' : ''}">
+                            <a href="{:U('Index/Order/orderList',array('status'=>'4','time' =>$times ))}">已完成</a>
+                            </li>
+                            <li class="{: $status == 3 ? 'selected' : ''}">
+                            <a href="{:U('Index/Order/orderList',array('status'=>3,'time' => $times))}">已关闭</a>
+                            </li>
+                            </ul>
+                            </div>
+                            <div class="gray-btn-menu sort-time-menu sort-time-menu1"> 
+                            <span class="label"> <img src="__PUBLIC__/img/i(1).gif" class="arrow">
+                                <if condition="$times eq trimester">
+                                    最近三个月
+                                <elseif condition="$times eq thisyear" /> 
+                                    今年内
+                                <elseif condition="$times eq lastyear" />
+                                    {: date('Y',time()) - 1}年
+                                <else />
+                                    {: date('Y',time()) - 2}年 
+                                </if>
+                            </span>
+                            <ul class="menu-list  menu-list1">
+                            <li class="{: $times == 'trimester' ? 'selected' : ''}" > 
+                                <a href="{:U('Index/Order/orderList',array('status'=>$status,'time'=>'trimester'))}">最近三个月</a> 
+                            </li>
+                            <li class="{: $times == 'thisyear' ? 'selected' : ''}"> 
+                                <a href="{:U('Index/Order/orderList',array('status'=>$status,'time'=>'thisyear'))}">今年内</a> 
+                            </li>
+                            <li class="{: $times == 'lastyear' ? 'selected' : ''}"> 
+                                <a href="{:U('Index/Order/orderList',array('status'=>$status,'time'=>'lastyear'))}">{: date('Y',time()) - 1}年</a> 
+                            </li>
+                            <li class="{: $times == 'yearbefore' ? 'selected' : ''}"> 
+                                <a href="{:U('Index/Order/orderList',array('status'=>$status,'time'=>'yearbefore'))}">{: date('Y',time()) - 2}年</a> 
+                            </li>
+                            </ul>
+                            </div>
                         </div>
                         <empty name = "lists">
                             <div class="box-inner">
