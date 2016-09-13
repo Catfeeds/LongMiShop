@@ -22,22 +22,10 @@
 	</if>
 	
 </volist>
+<include file="Widget/open"/>
 <div class="add_dz_box">
-	<div class="add_dz"><a href="javascript:showDiv()">使用新地址</a></div>
+	<div class="add_dz">
+		<a class="add" href="javascript:address_edit(0)">使用新地址</a> </span>
+	</div>
 </div>
 
-<script>
-	$(function(){
-
-	$('.m333').find('li').each(function(i){
-	$(this).click(function(){
-		$('.m333').find('li').removeClass('m333_hover');
-		$(this).addClass('m333_hover');
-		$(this).children('input').attr("checked",'checked'); 
-		
-		})
-	})
-
-	})
-	
-</script>

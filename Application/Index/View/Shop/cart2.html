@@ -166,39 +166,6 @@ $(".coupon_redio").change(['data'],function(){
     });
   }
 
-  function checkForm(){
-    var consignee = $('input[name="consignee"]').val();
-    var province = $('select[name="province"]').find('option:selected').val();
-    var city = $('select[name="city"]').find('option:selected').val();
-    var district = $('select[name="district"]').find('option:selected').val();
-    var address = $('textarea[name="address"]').val();
-    var mobile = $('input[name="mobile"]').val();
-    var error = '';
-    if(consignee == ''){
-      error += '收货人不能为空 <br/>';
-    }
-    if(province==0){
-      error += '请选择省份 <br/>';
-    }
-    if(city==0){
-      error += '请选择城市 <br/>';
-    }
-    if(district==0){
-      error += '请选择区域 <br/>';
-    }
-    if(address == ''){
-      error += '请填写地址 <br/>';
-    }
-    if(!checkMobile(mobile))
-      error += '手机号码格式有误 <br/>';
-    if(error){
-      alert(error);
-//            layer.alert(error, {icon: 2});
-      //  layer.msg('只想弱弱提示');
-      return false;
-    }
-    return true;
-  }
 
   //提交订单
   function submit_order(){

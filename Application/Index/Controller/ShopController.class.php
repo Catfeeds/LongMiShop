@@ -178,24 +178,6 @@ class ShopController extends BaseIndexController {
     }
 
     public function add_address(){
-        if(IS_POST){ //新增地址
-            $data = I('post.');
-            $data['user_id'] = $this->user['user_id'];
-            $this->address = M('user_address');
-            if(!empty($data['subBox'])){
-                $where['user_id'] = $this->user['user_id'];
-                $where['is_default'] = 1;
-                $datas['is_default'] = 0;
-                $this->address->where($where)->save($datas);
-                $data['is_default'] = 1;
-            }
-            $res = $this->address->add($data);
-            if($res){
-                $this->redirect('Index/Shop/cart2');exit;
-            }else{
-                $this->error('修改失败',U('Index/Shop/cart2'));exit;
-            }
-        }
         $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
         $this->assign('province',$p);
         $this->display();
