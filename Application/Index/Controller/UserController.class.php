@@ -411,7 +411,9 @@ class UserController extends BaseIndexController {
     //发送邮箱验证
     public function  send_email(){
         $userLogic = new UsersLogic();
+
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
+        
         $this->email_log = M('email_log');
         $type = I('type');
         $secret_key = sha1(md5(mt_rand(0,999999)).'longmi');
@@ -419,7 +421,7 @@ class UserController extends BaseIndexController {
         $data['secret_key'] = $secret_key;
 
         $res_count = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->count();
-        if($res_count){ //ajax请求重新发送
+        if($res_count){ 
             $res = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->save($data);
         }else{
             $data['user_id']  = $user_info['result']['user_id'];
@@ -430,11 +432,12 @@ class UserController extends BaseIndexController {
             $datas['email_validated'] = 0;
             M('users')->where("user_id = '".$user_info['result']['user_id']."'")->save($datas); //验证
         }
-
+        // exit(json_encode(callback(false,$user_info)));
 
         if($res){
             $url = 'http://'.$_SERVER['SERVER_NAME'].U('Index/User/check_email',array('secret_key'=>$secret_key,'user_id'=>$user_info['result']['user_id']));
             $mail_res = send_email($user_info['result']['email'],'邮箱验证','尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);
+            
             if($mail_res){
                 exit(json_encode(callback(true,'发送成功',array('status'=>1))));
             }else{

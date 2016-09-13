@@ -36,19 +36,20 @@ class OrderController extends BaseIndexController {
         $add_time = !empty($add_time) ? $add_time : 'trimester';
         if($add_time == 'trimester'){ //前三个月
             $tiem = strtotime('-3 months');
-            $where .= " AND add_time <= '".$tiem."'"; 
+            $where .= " AND add_time >= '".$tiem."'"; 
         }else if($add_time == 'thisyear'){ //今年
-            $tiem = strtotime(date('Y'));
-            $where .= " AND add_time <= '".$tiem."'";
+            $tiem = strtotime(date('Y').'-01-01 00:00:00');
+            $where .= " AND add_time >= '".$tiem."'";
         }else if($add_time == 'lastyear'){ //去年
-            $tiem = strtotime(date('Y')); 
-            $tiem_lastyear = strtotime(date('Y',time()) - 1 ); 
-            $where .= " AND add_time <= ' ".$tiem_lastyear." ' "." AND add_time >= ' ".$tiem." ' ";
+            $tiem = strtotime(date('Y').'-01-01 00:00:00'); 
+            $tiem_lastyear = strtotime(date('Y',time()) - 1 .'-01-01 00:00:00' ); 
+            $where .= " AND add_time >= ' ".$tiem_lastyear." ' "." AND add_time < ' ".$tiem." ' ";
         }else if($add_time == 'yearbefore'){ //前年
-            $tiem_lastyear = strtotime(date('Y',time()) - 1 ); 
-            $tiem_yearbefore = strtotime(date('Y',time()) - 2 );  
-            $where .= " AND add_time <= '".$tiem_yearbefore."'"." AND add_time >= '".$tiem_lastyear."'";
+            $tiem_lastyear = strtotime(date('Y',time()) - 1 .'-01-01 00:00:00'); 
+            $tiem_yearbefore = strtotime(date('Y',time()) - 2 .'-01-01 00:00:00');  
+            $where .= " AND add_time >= '".$tiem_yearbefore."'"." AND add_time < '".$tiem_lastyear."'";
         }
+
 
 
         // 搜索订单 根据商品名称 或者 订单编号
@@ -64,7 +65,6 @@ class OrderController extends BaseIndexController {
         $show = $Page->show();
         $order_str = "order_id DESC";
         $order_list = M('order')->order($order_str)->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
-
         //获取订单商品
         $model = new UsersLogic();
         foreach($order_list as $k=>$v)
