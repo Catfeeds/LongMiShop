@@ -226,7 +226,6 @@ function send_email($to,$subject='',$content=''){
     //添加附件
     //$mail->addAttachment('images/phpmailer_mini.png');
     //send the message, check for errors
-//    dd(1);
 //    exit;
     if (!$mail->send()) {
         return false;

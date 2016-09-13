@@ -432,7 +432,8 @@ class UserController extends BaseIndexController {
         }
         if($res){
             $url = 'http://'.$_SERVER['SERVER_NAME'].U('Index/User/check_email',array('secret_key'=>$secret_key,'user_id'=>$user_info['result']['user_id']));
-            $mail_res = send_email($user_info['result']['email'],'邮箱验证','尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);
+//            $mail_res = send_email($user_info['result']['email'],'邮箱验证','尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);
+            $mail_res = sendMail($user_info['result']['email'],"邮箱验证",'尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);
             if($mail_res){
                 exit(json_encode(callback(true,'发送成功',array('status'=>1))));
             }else{
