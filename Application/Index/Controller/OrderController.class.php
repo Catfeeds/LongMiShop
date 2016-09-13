@@ -20,6 +20,37 @@ class OrderController extends BaseIndexController {
         if(I('get.type')){
             $where .= C(strtoupper(I('get.type')));
         }
+        //订单状态条件
+        $status = I('get.status','','int');
+        $status = !empty($status) ? $status : 0;
+        if($status ==2){
+            $where .= " AND order_status IN(0,1)";
+        }else if($status == 3){
+            $where .= C('CANCEL');
+        }else if($status == 4){
+            $where .= " AND order_status IN(2,4)";
+        }
+
+        //订单时间条件
+        $add_time  = I('get.time');
+        $add_time = !empty($add_time) ? $add_time : 'trimester';
+        if($add_time == 'trimester'){ //前三个月
+            $tiem = strtotime('-3 months');
+            $where .= " AND add_time <= '".$tiem."'"; 
+        }else if($add_time == 'thisyear'){ //今年
+            $tiem = strtotime(date('Y'));
+            $where .= " AND add_time <= '".$tiem."'";
+        }else if($add_time == 'lastyear'){ //去年
+            $tiem = strtotime(date('Y')); 
+            $tiem_lastyear = strtotime(date('Y',time()) - 1 ); 
+            $where .= " AND add_time <= ' ".$tiem_lastyear." ' "." AND add_time >= ' ".$tiem." ' ";
+        }else if($add_time == 'yearbefore'){ //前年
+            $tiem_lastyear = strtotime(date('Y',time()) - 1 ); 
+            $tiem_yearbefore = strtotime(date('Y',time()) - 2 );  
+            $where .= " AND add_time <= '".$tiem_yearbefore."'"." AND add_time >= '".$tiem_lastyear."'";
+        }
+
+
         // 搜索订单 根据商品名称 或者 订单编号
         $search_key = trim(I('search_key'));
         if($search_key)
@@ -50,6 +81,8 @@ class OrderController extends BaseIndexController {
         $this->assign('lists',$order_list);
         $this->assign('active','order_list');
         $this->assign('active_status',I('get.type'));
+        $this->assign('status',$status);
+        $this->assign('times',$add_time);
         $this->display();
     }
 
