@@ -459,7 +459,7 @@ class UserController extends BaseIndexController {
             $res = $this->users->save($data); //修改验证字段
             if($res){
                 M('email_log')->where($where)->delete();
-                $this->success('验证成功',U('Index/User/Info'));
+                $this->success('验证成功',U('Index/User/info'));
             }else{
                 $this->error('验证失败');
             }
