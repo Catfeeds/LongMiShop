@@ -480,8 +480,9 @@ class UserController extends BaseIndexController {
 
             $data['email'] = I('email');
             $where['email'] = I('email');
+            $find_res = $this->users->field('user_id,email')->where($where)->count();
             $find_res = $this->users->field('user_id,email')->where($where)->find();
-            if($find_res['email'] == $data['email']){
+            if($find_res['user_id'] == session(__UserID__) ){
                 $this->error('修改邮箱和原邮箱一致');exit;
             }else if(!empty($find_res)){
                 $this->error('此邮箱已绑定');exit;
