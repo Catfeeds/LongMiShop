@@ -73,7 +73,6 @@ class BuyLogic extends BaseLogic
             //第2步 生成退货退款单单
             $this->_createServiceOrderStep2();
 
-            throw new \Exception('我是断点！');
             $this -> model -> commit();
 
             return callback(true,'申请成功,客服第一时间会帮你处理!');
@@ -104,11 +103,21 @@ class BuyLogic extends BaseLogic
         if( empty($this -> user) ){
             throw new \Exception('用户信息出错！');
         }
-        $this -> _post_data["orderId"] = $order_id = I('order_id',0);
-        $this -> _post_data["orderSn"] = $order_sn = I('order_sn',0);
-        $this -> _post_data["goodsId"] = $goods_id = I('goods_id',0);
-        $this -> _post_data["speckey"] = $spec_key = I('spec_key');
+        $this -> _post_data["orderId"]      = $order_id = I('order_id',0);
+        $this -> _post_data["orderSn"]      = $order_sn = I('order_sn',0);
+        $this -> _post_data["goodsId"]      = $goods_id = I('goods_id',0);
+        $this -> _post_data["speckey"]      = $spec_key = I('spec_key');
+        $this -> _post_data["type"]         = I('type') == "REFUND0" ? 0 : 1;
+        $this -> _post_data["refund_way"]   = I('returnWay') != "YUAN_LU" ? 1 : 0;
 
+        if( empty($this -> _post_data["refundName"]) ){
+            $msg =  !$this -> _post_data["type"]  ? "快递公司必填" : "联系人称呼必填";
+            throw new \Exception( $msg );
+        }
+        if( empty($this -> _post_data["refundCode"]) ){
+            $msg =  !$this -> _post_data["type"]  ? "快递单号必填" : "联系人电话必填";
+            throw new \Exception( $msg );
+        }
         $condition = array(
             "order_id"  => $order_id,
             "order_sn"  => $order_sn,
@@ -120,7 +129,7 @@ class BuyLogic extends BaseLogic
             "order_id"  => $order_id,
             "order_sn"  => $order_sn,
             "goods_id"  => $goods_id,
-//            "status"    => array("in" => array( 0 , 1 )),
+            "status"    => array("in" ,"0 , 1"),
             "spec_key"  => $spec_key,
         );
         if( isExistenceDataWithCondition( 'return_goods' , $condition ) ){
@@ -129,17 +138,19 @@ class BuyLogic extends BaseLogic
     }
     //退货退款单生成第2步 生成订单
     private function _createServiceOrderStep2(){
-
         $data = array(
-            "order_id" => $this -> _post_data["orderId"],
-            "order_sn" => $this -> _post_data["orderSn"],
-            "goods_id" => $this -> _post_data["goodsId"],
-            "addtime" => time(),
-            "user_id" => $this->userId,
-            "type" => I('type'), // 服务类型  退货 或者 换货
-            "reason" => I('reason'),// 问题描述
-            "imgs" => I('imgs'), // 用户拍照的相片
-            "spec_key" => $this -> _post_data["speckey"],
+            "order_id"      => $this -> _post_data["orderId"],
+            "order_sn"      => $this -> _post_data["orderSn"],
+            "goods_id"      => $this -> _post_data["goodsId"],
+            "addtime"       => time(),
+            "user_id"       => $this->userId,
+            "type"          => $this -> _post_data["type"], // 服务类型  退货 或者 换货
+            "reason"        => I('reason'),// 问题描述
+            "imgs"          => I('imgs'), // 用户拍照的相片
+            "spec_key"      => $this -> _post_data["speckey"],
+            "refund_name"   => $this -> _post_data["refundName"],
+            "refund_code"   => $this -> _post_data["refundCode"],
+            "refund_way"    => $this -> _post_data["refund_way"],
         );
         if( !isSuccessToAddData( "return_goods",$data) ){
             throw new \Exception('提交失败！');

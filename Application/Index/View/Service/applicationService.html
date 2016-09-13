@@ -39,32 +39,45 @@
                                 <span class="name">选择订单中的商品</span>
                             </div>
                             <div class="cart">
-                                <volist name="orderInfo.goods_list" id="good">
+                                <notempty name = "orderInfo.goods_list">
+                                    <volist name="orderInfo.goods_list" id="good">
 
+                                        <div class="cart-items fn-clear" data-id="{$good.goods_id}">
+                                            <div class="prod-info">
+                                                <div class="items-thumb">
+                                                    <a href="#" target="_blank" title="{$good.goods_name}">
+                                                        <img src="{$good.goods_id|goods_thum_images=80,80}">
+                                                    </a>
+                                                </div>
+                                                <div class="items-params fn-clear">
+                                                    <div class="name">
+                                                        <a href="http://www.smartisan.com/shop/#/t2" target="_blank" title="{$good.goods_name}">{$good.goods_name}</a>
+                                                    </div>
+                                                    <div class="detail">{$good.spec_key_name}</div>
+                                                </div>
+                                                <div class="subtotal" style="line-height:30px">
+                                                    <div class="status">
+                                                        <a href="{:U('Index/Service/refund',array('id' => $good['rec_id'] ))}" class="blue-small-btn js-payment-order" style=" margin-top:0px">退款</a>
+                                                    </div>
+                                                    <div class="status">
+                                                        <a href="{:U('Index/Service/exchange',array('id' => $good['rec_id'] ))}" class="blue-small-btn js-payment-order">换货</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </volist>
+                                    <else/>
                                     <div class="cart-items fn-clear" data-id="{$good.goods_id}">
                                         <div class="prod-info">
-                                            <div class="items-thumb">
-                                                <a href="#" target="_blank" title="{$good.goods_name}">
-                                                    <img src="{$good.goods_id|goods_thum_images=80,80}">
-                                                </a>
-                                            </div>
                                             <div class="items-params fn-clear">
-                                                <div class="name">
-                                                    <a href="http://www.smartisan.com/shop/#/t2" target="_blank" title="{$good.goods_name}">{$good.goods_name}</a>
-                                                </div>
-                                                <div class="detail">{$good.spec_key_name}</div>
-                                            </div>
-                                            <div class="subtotal" style="line-height:30px">
-                                                <div class="status">
-                                                    <a href="{:U('Index/Service/refund',array('id' => $good['rec_id'] ))}" class="blue-small-btn js-payment-order" style=" margin-top:0px">退款</a>
-                                                </div>
-                                                <div class="status">
-                                                    <a href="{:U('Index/Service/exchange',array('id' => $good['rec_id'] ))}" class="blue-small-btn js-payment-order">换货</a>
+                                                <div class="name" style="text-align: center;">
+                                                   暂无可售后的商品
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </volist>
+                                </notempty>
+
                             </div>
                         </div>
                     </div>

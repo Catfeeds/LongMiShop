@@ -15,18 +15,15 @@ class ServiceController extends BaseIndexController {
     }
 
     public function returnGoodsList(){
-        $count = M('return_goods')->where("user_id = '{$this->user_id}'") -> group('order_id')->select();
-        $count = count($count);
+        $count = M('return_goods')->where("user_id = '{$this->user_id}'") -> count();
         $page = new Page($count,10);
-        $list = M('return_goods')->where("user_id = '{$this->user_id}'")  -> group('order_id')->order("id desc")->limit("{$page->firstRow},{$page->listRows}")->select();
-        dd($list);
+        $list = M('return_goods')->where("user_id = '{$this->user_id}'") -> order("id desc")->limit("{$page->firstRow},{$page->listRows}")->select();
         $goods_id_arr = get_arr_column($list, 'goods_id');
         $goodsList = array();
         if(!empty($goods_id_arr)){
             $goodsList = M('goods')->where("goods_id in (".  implode(',',$goods_id_arr).")")->getField('goods_id,goods_name');
         }
         $this -> assign('goodsList', $goodsList);
-//        dd($list);
         $this -> assign('lists', $list);
         $this -> assign('page', $page->show());// 赋值分页输出
         $this -> display();
@@ -42,6 +39,13 @@ class ServiceController extends BaseIndexController {
             exit;
         }
         $data = $orderLogic -> getOrderGoods($orderInfo['order_id']);
+
+//        $goodsList = M('return_goods')->where("order_id = '{$orderInfo['order_id']}'")->getField('goods_id,goods_id');
+//        foreach ($data as $key => $dataItem){
+//            if( in_array($dataItem['goods_id'],$goodsList) ){
+//                unset($data[$key]);
+//            }
+//        }
         $orderInfo['goods_list'] = $data['data'];
         $this -> assign('orderInfo',$orderInfo);
         $this -> display();
@@ -57,6 +61,8 @@ class ServiceController extends BaseIndexController {
             exit;
         }
         $orderInfo = $result['data'];
+        $expressList = include_once 'Application/Common/Conf/express.php'; //快递名称
+        $this -> assign('expressList',$expressList);
         $this -> assign('recId',$id);
         $this -> assign('orderInfo',$orderInfo);
         $this -> display();
@@ -71,6 +77,8 @@ class ServiceController extends BaseIndexController {
             exit;
         }
         $orderInfo = $result['data'];
+        $expressList = include_once 'Application/Common/Conf/express.php'; //快递名称
+        $this -> assign('expressList',$expressList);
         $this -> assign('recId',$id);
         $this -> assign('orderInfo',$orderInfo);
         $this -> display();

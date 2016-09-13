@@ -41,35 +41,46 @@
                                 <volist name="lists" id="item">
                                     <div class="box-inner order-cart order-list-cart fn-clear" data-id="{$item.id}">
                                         <div class="gray-sub-title cart-title">
-                                            <span class="date">{$item.addtime}</span>
+                                            <span class="date">{$item.addtime|date='Y-m-d',###}</span>
                                             <span class="order-id"> 订单号： <a href="#">{$item.order_sn}</a> </span>
                                             <span class="order-detail">
-                                                <a href="#">查看详情</a>
+                                                <a href="#">
+                                                    <!--查看详情-->
+                                                </a>
                                             </span>
                                             <span class="sub-total">状态</span>
-                                            <span class="operation">数量</span>
-                                            <span class="num">单价</span>
+                                            <!--<span class="operation">数量</span>-->
+                                            <!--<span class="num">单价</span>-->
                                         </div>
                                         <div class="cart">
-                                            <div class="cart-items fn-clear" data-id="{$item.id}">
+                                            <div class="cart-items fn-clear" data-id="{$item.goods_id}">
                                                 <div class="prod-info">
                                                     <div class="items-thumb">
                                                         <a href="#" target="_blank">
-                                                            <img src="img/cp5.png"></a>
-                                                        <a href="http://www.smartisan.com/shop/#/item/100001102" target="_blank" title=""></a>
+                                                            <img src="{$item.goods_id|goods_thum_images=80,80}">
+                                                        </a>
+                                                        <a href="#" target="_blank" title=""></a>
                                                     </div>
                                                     <div class="items-params fn-clear">
-                                                        <div class="name"> <a href="#" target="_blank">龙米</a></div>
-                                                        <div class="detail"> 商品编号：100014501 </div>
+                                                        <div class="name">
+                                                            <a href="#" target="_blank">{$goodsList[$item['goods_id']]}</a>
+                                                        </div>
+                                                        <!--<div class="detail"> {$goodsList[$detailItem['goods_id']]} </div>-->
                                                     </div>
-                                                    <div class="num">1</div>
-                                                    <div class="price">¥ 499.00</div>
+                                                    <!--<div class="num">1</div>-->
+                                                    <!--<div class="price">¥ 499.00</div>-->
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="prod-operation">
                                             <div class="status">
-                                                <div class="transparent-small-btn"> <span>已完成</span></div>
+                                                <div class="transparent-small-btn">
+                                                    <span>
+                                                        <if condition="$item['status'] eq 0">待客服处理</if>
+                                                        <if condition="$item['status'] eq 1">客服处理中</if>
+                                                        <if condition="$item['status'] eq 2">已完成</if>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
