@@ -430,8 +430,6 @@ class UserController extends BaseIndexController {
             $datas['email_validated'] = 0;
             M('users')->where("user_id = '".$user_info['result']['user_id']."'")->save($datas); //验证
         }
-
-
         if($res){
             $url = 'http://'.$_SERVER['SERVER_NAME'].U('Index/User/check_email',array('secret_key'=>$secret_key,'user_id'=>$user_info['result']['user_id']));
             $mail_res = send_email($user_info['result']['email'],'邮箱验证','尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);

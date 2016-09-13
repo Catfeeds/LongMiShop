@@ -65,7 +65,7 @@ class OrderLogic extends BaseLogic
 
 
 
-        if(!empty($order['tp_order'])){
+        if(!empty($order['coupon_price'])){
             //退回优惠券
             $condition = array(
                 "order_id" => $orderId,
@@ -80,10 +80,6 @@ class OrderLogic extends BaseLogic
                 return callback(false,'操作失败','');
             }
         }
-
-
-
-        $row = M('order')->where(array('order_id'=>$orderId,'user_id'=>$userId))->save(array('order_status'=>3));
 
         $data['order_id'] = $orderId;
         $data['action_user'] = $userId;
@@ -100,7 +96,7 @@ class OrderLogic extends BaseLogic
         }
 
         M('order_action')->add($data);//订单操作记录
-
+        $row = M('order')->where(array('order_id'=>$orderId,'user_id'=>$userId))->save(array('order_status'=>3));
         if(!$row){
             return callback(false,'操作失败','');
         }

@@ -5,6 +5,7 @@
             <include file="Public/user_menu"/>
             <form method="post" action="{:U('Index/Service/applicationFinish')}" id="form">
                 <input type="hidden" name="id" value="{$recId}">
+                <input type="hidden" name="type" value="EXCHANGE">
                 <input type="hidden" name="order_id" value="{$orderInfo.order_id}">
                 <input type="hidden" name="order_sn" value="{$orderInfo.order_sn}">
                 <input type="hidden" name="goods_id" value="{$orderInfo.recGoodsInfo.goods_id}">
@@ -41,14 +42,15 @@
                             <div class="mo1" style="margin-left:40px; line-height:60px">
                                 <div>请选择:
                                     <label for="select"></label>
-                                    <select name="select" id="select" class="refund-a" style="width:240px">
-                                        <option>顺丰快递</option>
-                                        <option>畅通快递</option>
+                                    <select name="refundName" id="select" class="refund-a" style="width:240px">
+                                        <volist name="expressList" id="expressItem">
+                                            <option value="{$expressItem}">{$expressItem}</option>
+                                        </volist>
                                     </select>
                                 </div>
                                 <div style="clear:both"></div>
                                 <div>请输入:
-                                    <input type="text" name="textfield" id="textfield" class="refund-b" placeholder="请输入物流单号" style="width:240px">
+                                    <input type="text" name="refundCode" id="textfield" class="refund-b" placeholder="请输入物流单号" style="width:240px">
                                 </div>
                                 <div class="m4_btn" style="margin-top:20px">
                                     <a href="javascript:$('#form').submit();">提交申请</a>

@@ -5,6 +5,7 @@
             <include file="Public/user_menu"/>
             <form method="post" action="{:U('Index/Service/applicationFinish')}" id="form">
                 <input type="hidden" name="id" value="{$recId}">
+                <input type="hidden" name="type" value="REFUND">
                 <input type="hidden" name="order_id" value="{$orderInfo.order_id}">
                 <input type="hidden" name="order_sn" value="{$orderInfo.order_sn}">
                 <input type="hidden" name="goods_id" value="{$orderInfo.recGoodsInfo.goods_id}">
@@ -42,21 +43,21 @@
                             <div class="mo1" style="margin-left:40px; line-height:60px">
                                 <div>退款原因：
                                     <label for="select"></label>
-                                    <select name="select" id="select" class="refund-a">
+                                    <select name="reason" id="select" class="refund-a">
                                         <option>不想买了</option>
                                         <option>买错了</option>
                                     </select>
                                 </div>
                                 <p>支付明细：￥{$orderInfo.recGoodsInfo.goods_price}</p>
                                 <div class="mui-input-row mui-radio mui-left" style="float:left"> 返款方式：<br>
-                                    <input name="returnWay" value="YU_E" type="radio" checked>
-                                    返回到龙米账户（即时到账）<br>
-                                    <input name="returnWay" value="YUAN_LU" type="radio">
+                                    <!--<input name="returnWay" value="YU_E" type="radio" checked>-->
+                                    <!--返回到龙米账户（即时到账）<br>-->
+                                    <input name="returnWay" value="YUAN_LU" type="radio" checked>
                                     原路返回（3~7个工作日） </div>
                                 <div style="clear:both"></div>
                                 <div>联系方式：
                                     <input type="text" name="refundName" id="refundName" class="refund-b" placeholder="称呼" style="width:120px">
-                                    <input type="text" name="refundPhone" id="refundPhone" class="refund-b" placeholder="电话">
+                                    <input type="text" name="refundCode" id="refundPhone" class="refund-b" placeholder="电话">
                                 </div>
                                 <div class="m4_btn" style="margin-top:20px">
                                     <a href="javascript:$('#form').submit();">提交申请</a>
