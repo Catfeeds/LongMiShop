@@ -8,10 +8,17 @@
       <td width="10%" class="td">操作</td>
     </tr>
     <foreach name="cartList" item="v" key="k" >
-      <tr>
+      <tr class="<if condition='$v[store_count] eq 0' > gray1 </if>">
         <td width="6%">
           <div class="mui-input-row mui-checkbox mui-left">
-            <input name="cart_select[{$v.id}]" <if condition="$v[selected] eq 1" >checked="checked"</if> value="1" onclick="ajax_cart_list();" type="checkbox" class="check-one check check_titel">
+            <if condition='$v[store_count] eq 0' >
+              <span class="gray2">已失效</span>
+              <else/>
+              <input name="cart_select[{$v.id}]" <if condition="$v[selected] eq 1" >checked="checked"</if> value="1" onclick="ajax_cart_list();" type="checkbox" class="check-one check check_titel">
+            </if>
+
+
+
           </div>
         </td>
         <td width="8%">
@@ -28,11 +35,17 @@
 
         <td align="center">￥{$v.goods_price}</td>
         <td>
-          <div class="gw_num gw_num1">
-            <em class="jian" onClick="switch_num(-1,{$v.id},{$v.store_count});" >-</em>
-            <input type="text" value="{$v.goods_num}" name="goods_num[{$v.id}]" id="goods_num[{$v.id}]" readonly="" class="num"/>
-            <em class="add"  onClick="switch_num(1,{$v.id},{$v.store_count});">+</em>
-          </div>
+          <if condition='$v[store_count] neq 0' >
+            <div class="gw_num gw_num1">
+              <em class="jian" onClick="switch_num(-1,{$v.id},{$v.store_count});" >-</em>
+              <input type="text" value="{$v.goods_num}" name="goods_num[{$v.id}]" id="goods_num[{$v.id}]" readonly="" class="num"/>
+              <em class="add"  onClick="switch_num(1,{$v.id},{$v.store_count});">+</em>
+            </div>
+            <if condition='$v[isLack]' >
+              <div class="tip_c">库存紧张</div>
+            </if>
+
+          </if>
         </td>
         <td align="center">￥{$v.goods_fee}</td>
         <td align="center">
@@ -43,11 +56,11 @@
       </tr>
     </foreach>
     <!--<tr>-->
-      <!--<td colspan="3">&nbsp;</td>-->
-      <!--<td>&nbsp;</td>-->
-      <!--<td>&nbsp;</td>-->
-      <!--<td></td>-->
-      <!--<td></td>-->
+    <!--<td colspan="3">&nbsp;</td>-->
+    <!--<td>&nbsp;</td>-->
+    <!--<td>&nbsp;</td>-->
+    <!--<td></td>-->
+    <!--<td></td>-->
     <!--</tr>-->
 
   </table>

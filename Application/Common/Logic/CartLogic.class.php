@@ -168,6 +168,15 @@ class CartLogic extends BaseLogic
                 $cartList[$k] = $val;
                 $cartList[$k]['goods_fee'] = $val['goods_num'] * $val['member_goods_price'];
                 $cartList[$k]['store_count']  = getGoodNum($val['goods_id'],$val['spec_key']); // 最多可购买的库存数量
+                if( $cartList[$k]['store_count'] == 0 ){
+                    M('Cart')->where("id = '{$val['id']}'")->save(array("selected" => 0));
+                    $val['goods_num']= 0;
+                }
+                if( $cartList[$k]['store_count'] < $val['goods_num'] ){
+                    M('Cart')->where("id = '{$val['id']}'")->save(array("goods_num" => $cartList[$k]['store_count'] ));
+                    $cartList[$k]['goods_num'] = $val['goods_num'] = $cartList[$k]['store_count'];
+                    $cartList[$k]['isLack'] = true;
+                }
                 $num += $val['goods_num'];
                 $cut_fee += $val['goods_num'] * $val['market_price'] - $val['goods_num'] * $val['member_goods_price'];
                 $total_price += $val['goods_num'] * $val['member_goods_price'];
