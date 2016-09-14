@@ -13,6 +13,7 @@ class UserController extends BaseIndexController {
             'login',
             'doLogin',
             'register',
+            'send_sms_reg_code',
         );
     }
 
@@ -367,7 +368,8 @@ class UserController extends BaseIndexController {
      */
     public function send_sms_reg_code(){
         // exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));exit;
-        $mobile = I('post.mobile');
+//        $mobile = I('post.mobile');
+        $mobile = I('send');
         $userLogic = new UsersLogic();
         if(!check_mobile($mobile))
             exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
