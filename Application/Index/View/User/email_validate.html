@@ -31,8 +31,9 @@
 <script src="./Public/js/jquery-1.8.2.min.js"></script>
 <script>
 $(document).ready(function(){
-  var intAs_time=parseInt($('#btnemailAuthCode2').attr("IntervalTime"));
-  if(intAs_time==300){
+  var intAs_time= parseInt($('#btnemailAuthCode2').attr("IntervalTime"));
+  var item = "{: $time}";
+  if(intAs_time == item){
     sendCode('btnemailAuthCode2');
   }
   jsInnerTimeout('btnemailAuthCode2');

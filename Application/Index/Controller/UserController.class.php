@@ -433,7 +433,7 @@ class UserController extends BaseIndexController {
         if($res){
             $url = 'http://'.$_SERVER['SERVER_NAME'].U('Index/User/check_email',array('secret_key'=>$secret_key,'user_id'=>$user_info['result']['user_id']));
 //            $mail_res = send_email($user_info['result']['email'],'邮箱验证','尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);
-            $mail_res = sendMail($user_info['result']['email'],"邮箱验证",'尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);
+            $mail_res = sendMail($user_info['result']['email'],"123456",'尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);
             if($mail_res){
                 exit(json_encode(callback(true,'发送成功',array('status'=>1))));
             }else{
@@ -462,11 +462,11 @@ class UserController extends BaseIndexController {
                 M('email_log')->where($where)->delete();
                 $this->success('验证成功',U('Index/User/info'));
             }else{
-                $this->error('验证失败');
+                $this->error('验证失败',U('Index/Index/index'));
             }
 
         }else{
-            $this->error('验证失败');
+            $this->error('验证失败',U('Index/Index/index'));
         }
         exit;
     }
@@ -480,7 +480,6 @@ class UserController extends BaseIndexController {
 
             $data['email'] = I('email');
             $where['email'] = I('email');
-            $find_res = $this->users->field('user_id,email')->where($where)->count();
             $find_res = $this->users->field('user_id,email')->where($where)->find();
             if($find_res['user_id'] == session(__UserID__) ){
                 $this->error('修改邮箱和原邮箱一致');exit;
