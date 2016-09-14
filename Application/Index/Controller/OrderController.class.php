@@ -120,6 +120,7 @@ class OrderController extends BaseIndexController {
         }
         $this->success($data['msg']);
     }
+
     //确认订单
     public function orderConfirm(){
         $id = I('get.id',0);

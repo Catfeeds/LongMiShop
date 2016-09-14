@@ -2495,7 +2495,6 @@ opacity:1
 	background: #E6E7E8;
 	border-bottom: 1px solid #E1E1E1;
 	line-height: 38px;
-	color: #666
 }
 .gray-box .gray-sub-title a, .gray-box .gray-sub-title span {
 	float: right
@@ -3645,7 +3644,6 @@ opacity:1
 .order-cart .items-params .name {
 	overflow: hidden;
 	float: left;
-	color: #666;
 	width: 435px;
 	height: 44px;
 	text-align: left
@@ -7402,4 +7400,3 @@ div.address-form select.city {
 	border-radius: 6px;
 	text-indent: 4px;
 }
-

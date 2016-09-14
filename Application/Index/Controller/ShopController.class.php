@@ -128,12 +128,11 @@ class ShopController extends BaseIndexController {
             foreach($post_goods_num as $key => $val)
             {
                 $data['goods_num'] = $val < 1 ? 1 : $val;
-
-                if($cartList[$key]['prom_type'] == 1) //限时抢购 不能超过购买数量
-                {
-                    $flash_sale = M('flash_sale')->where("id = {$cartList[$key]['prom_id']}")->find();
-                    $data['goods_num'] = $data['goods_num'] > $flash_sale['buy_limit'] ? $flash_sale['buy_limit'] : $data['goods_num'];
-                }
+//                if($cartList[$key]['prom_type'] == 1) //限时抢购 不能超过购买数量
+//                {
+//                    $flash_sale = M('flash_sale')->where("id = {$cartList[$key]['prom_id']}")->find();
+//                    $data['goods_num'] = $data['goods_num'] > $flash_sale['buy_limit'] ? $flash_sale['buy_limit'] : $data['goods_num'];
+//                }
 
                 $data['selected'] = $post_cart_select[$key] ? 1 : 0 ;
                 if(($cartList[$key]['goods_num'] != $data['goods_num']) || ($cartList[$key]['selected'] != $data['selected']))
@@ -145,7 +144,6 @@ class ShopController extends BaseIndexController {
         $result = $cartLogic->cartList($this->user, $this->session_id,0,1); // 选中的商品
         if(empty($result['total_price']))
             $result['total_price'] = Array( 'total_fee' =>0, 'cut_fee' =>0, 'num' => 0);
-
         $this->assign('cartList', $result['cartList']); // 购物车的商品
         $this->assign('total_price', $result['total_price']); // 总计
         $this->display();
