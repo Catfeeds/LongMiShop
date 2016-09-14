@@ -49,7 +49,8 @@ class ShopController extends BaseIndexController {
         $spec_goods_price  = M('spec_goods_price')->where("goods_id = $goods_id")->getField("key,price,store_count"); // 规格 对应 价格 库存表
         M('Goods')->where("goods_id=$goods_id")->save(array('click_count'=>$goods['click_count']+1 )); //统计点击数
         $commentStatistics = $goodsLogic->commentStatistics($goods_id);// 获取某个商品的评论统计
-        $cart_count = M('cart')->where("user_id = '".$this->user_id."'")->count();
+
+        $cart_count = getCartNumber( $this->session_id , $this->user_id );
         $this->assign('spec_goods_price', json_encode($spec_goods_price,true)); // 规格 对应 价格 库存表
         $this->assign('commentStatistics',$commentStatistics);//评论概览
         $this->assign('goods_attribute',$goods_attribute);//属性值
@@ -185,10 +186,15 @@ class ShopController extends BaseIndexController {
 
     //购物车懒加载
     public function ajax_trolley(){
-        $where['user_id'] = $this->user_id;
+        $where = array(
+            'session_id' => $this->session_id,
+        );
+        if( $this->user_id ){
+            $where["user_id"] = $this->user_id;
+        }
         $tro_list = M('cart')->where($where)->order('id DESC')->limit(3)->select();
         $list = M('cart')->field('member_goods_price')->where($where)->select();
-        $count_cart = M('cart')->where($where)->count();
+        $count_cart = getCartNumber( $this->session_id , $this->user_id );
         $count_money = 0;
         foreach($list as $item){
             $count_money += $item['member_goods_price'];

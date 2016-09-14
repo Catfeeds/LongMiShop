@@ -624,3 +624,19 @@ function isSuccessToAddData( $tableName , $data = array() ){
 }
 
 
+/**
+ * 获取购物车数量
+ * @param $sessionId
+ * @param null $userId
+ * @return mixed
+ */
+function getCartNumber( $sessionId , $userId = null ){
+    $condition = array(
+        "session_id" => $sessionId
+    );
+    if( !is_null($userId) ){
+        $condition["user_id"] = $userId;
+    }
+    return M('cart')->where( $condition )->count();
+}
+
