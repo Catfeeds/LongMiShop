@@ -632,7 +632,7 @@ class UsersLogic extends BaseLogic
             return array('status'=>-1,'msg'=>'发送失败');
         //$send = sendSMS($mobile,'您好，你的验证码是：'.$code);
         $send = sendSMS($mobile,$code);
-        return array('status'=>1,'msg'=>'发送成功');
+//        return array('status'=>1,'msg'=>'发送成功');
         if(!$send)
             return array('status'=>-1,'msg'=>'发送失败');
         return array('status'=>1,'msg'=>'发送成功');

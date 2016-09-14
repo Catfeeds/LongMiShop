@@ -83,10 +83,17 @@ class UserController extends BaseIndexController {
         $config = tpCache('sms');
         $sms_time_out = $config['sms_time_out'];
         if(IS_POST){
-            $verify = new \Think\Verify();
-            $code=I("post.verify");
-            if(!$verify->check($code,$id)){
-                $this->error('验证码输入错误!',U('Index/User/register'),3);
+//            $verify = new \Think\Verify();
+//            $code=I("post.verify");
+//
+//            if(!$verify->check($code,$id)){
+//                $this->error('验证码输入错误!');exit;
+//            }
+            $wheres['code'] = I('phone_verify');
+            $wheres['session_id'] = $this->session_id;
+            $phone_res = M('sms_log')->where($wheres)->count();
+            if(empty($phone_res)){
+                $this->error('手机验证码错误!');exit;
             }
             $data = I('post.');
             //是否注册
@@ -370,6 +377,17 @@ class UserController extends BaseIndexController {
         // exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));exit;
 //        $mobile = I('post.mobile');
         $mobile = I('send');
+        $where['mobile'] = $mobile;
+        $verify = new \Think\Verify();
+        $code=I("new_code");
+        if(!$verify->check($code,$id)){
+            exit(json_encode(array('status'=>-1,'msg'=>'验证码输入错误')));
+        }
+        $user_res = M('users')->where($where)->count();
+        if(!empty($user_res)){
+            exit(json_encode(array('status'=>-1,'msg'=>'此手机已被注册')));
+        }
+
         $userLogic = new UsersLogic();
         if(!check_mobile($mobile))
             exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));

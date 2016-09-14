@@ -312,7 +312,7 @@ function sendSMS($mobile, $code)
     //发送短信
     $resp = $c->execute($req);
     //短信发送成功返回True，失败返回false
-    if (!$resp) 
+    if ($resp)
     {
         // 从数据库中查询是否有验证码
         $data = M('sms_log')->where("code = '$code' and add_time > ".(time() - 60*60))->find();

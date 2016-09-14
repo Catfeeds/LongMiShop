@@ -1,5 +1,7 @@
 <?php
 namespace Index\Controller;
+use Common\Logic\UsersLogic;
+use Think\Verify;
 
 class ForgetController extends BaseIndexController {
 
@@ -11,6 +13,8 @@ class ForgetController extends BaseIndexController {
             'forget_email',
             'send_email',
             'check_forget',
+            'send_sms_reg_code',
+            'check_forget_mobile'
 
 
 
@@ -19,6 +23,7 @@ class ForgetController extends BaseIndexController {
 
     public function _initialize() {
         parent::_initialize();
+        
     }
 
     public function index(){
@@ -48,11 +53,12 @@ class ForgetController extends BaseIndexController {
 
             if(is_numeric($genre)){
                 session('forget_mobile',$res['mobile']);
+                session('forget_id',$res['user_id']); //用户id
                 header('Location: '.U('Index/Forget/forget_mobile'));exit;
             }else{
                 // dd($res['email']);
                 session('forget_email',$res['email']); 
-                session('forget_email_id',$res['user_id']); //用户id
+                session('forget_id',$res['user_id']); //用户id
                 session('forget_email_nickname',$resp['nickname']); //用户名字
                 header('Location: '.U('Index/Forget/forget_email'));exit;
             }
@@ -65,13 +71,92 @@ class ForgetController extends BaseIndexController {
     }
 
 
-    //手机修改视图
+    //手机验证密码修改视图
     public function forget_mobile(){
         $mobile = session('forget_mobile');
         if(empty($mobile)){
+            $this->error('参数错误');exit;
+        }
+        session('forget_time',60);
+        $send_email_time = session('send_email_time');
+        $res_time = $send_email_time + session('forget_time');
+        $now_time = time();
+        if($res_time > $now_time){
+            $time = $res_time - $now_time;
+            session('forget_time',$time);
+        }else if($res_time < $now_time){
+            session('send_email_time',null);
+            $info = time();
+            session('send_email_time',$info);
+        }
+
+        if(IS_POST){
+            $where['mobile'] = session('forget_mobile');
+            $where['code'] = I('code');
+            $where['session_id'] = session('forget_id');
+            $res = M('sms_log')->where($where)->count();
+            if($res){
+                session('check_forget_mobile',true);
+                $this->success('验证通过',U('Index/Forget/check_forget_mobile'));
+            }else{
+                $this->error('验证码错误');
+            }
+            exit;
+        }
+
+        $this->assign('mobile',$mobile);
+        $this->display();
+    }
+
+    //手机验证密码修改
+    public function check_forget_mobile(){
+        $check_forget_mobile = session('check_forget_mobile');
+        if(empty($check_forget_mobile)){
             $this->error('参数错误',U('Index/Forget/index'));exit;
         }
+        if(IS_POST){
+            $data['password'] = encrypt(I('password'));
+            $data['user_id'] = session('forget_id');
+            $detection = M('users')->where($data)->count();
+            if($detection){
+                $this->error('修改密码不能和旧密码一致');exit;
+            }
+            $res = M('users')->save($data);
+            if($res){
+                $wheres['session_id'] = session('forget_id');
+                M('sms_log')->where($wheres)->delete();
+                session_unset();
+                session_destroy();
+               $this->success('修改成功,请用新密码登录',U('Index/Index/index'));
+            }else{
+                $this->error('修改失败',U('Index/Forget/index'));
+            }
+            exit;
+        }
+
         $this->display();
+
+    }
+
+    /**
+     * 发送手机注册验证码
+     */
+    public function send_sms_reg_code(){
+        
+        $mobile = session('forget_mobile');
+        $user_id = session('forget_id');
+        $userLogic = new UsersLogic();
+        
+        if(!check_mobile($mobile))
+            exit(json_encode(callback(false,'手机号码格式有误')));
+        $code =  rand(1000,9999);
+        $send = $userLogic->sms_log($mobile,$code,$user_id);
+//        exit(json_encode(callback(false,$send)));
+        if($send['status'] != 1)
+            exit(json_encode(array('status'=>-1,'msg'=>$send['msg'])));
+//            exit(json_encode(callback(false,$send['msg'])));
+         exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
+//        exit(json_encode(callback(true,'验证码已发送，请注意查收',array('status'=>1))));
     }
 
     //邮件修改视图
@@ -92,6 +177,7 @@ class ForgetController extends BaseIndexController {
             $info = time();
             session('send_email_time',$info);
         }
+        
         $this->display();
     }
 
@@ -103,7 +189,7 @@ class ForgetController extends BaseIndexController {
         $secret_key = sha1(md5(mt_rand(0,999999)).'longmi');
         $data['time'] = time();
         $data['secret_key'] = $secret_key;
-        $user_id = session('forget_email_id');
+        $user_id = session('forget_id');
         
         $res_count = $this->email_log->where("user_id = '".$user_id."'")->find();
         if(!empty($res_count)){
@@ -133,8 +219,9 @@ class ForgetController extends BaseIndexController {
 
     }
 
+    //密码修改
     public function check_forget(){
-        $user_id = session('forget_email_id');
+        $user_id = session('forget_id');
         $secret_key = I('secret_key');
         $where['secret_key'] = $secret_key;
         $where['user_id'] = $user_id ;
@@ -169,6 +256,10 @@ class ForgetController extends BaseIndexController {
         $this->display();
 
     }
+
+
+
+
 
 
 }
