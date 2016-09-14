@@ -399,7 +399,7 @@ class UserController extends BaseIndexController {
      */
     public function email_validate(){
         $send_email_time = session('send_email_time');
-        $item = 60;
+        $item = session('Interval','60');
         $res_time = $send_email_time + $item;
         $now_time = time();
         if($res_time > $now_time){
@@ -408,8 +408,6 @@ class UserController extends BaseIndexController {
             session('send_email_time',null);
             session('send_email_time',$now_time);
         }
-
-        $this->assign('time',$time);
         $this->display();
     }
 
@@ -418,40 +416,42 @@ class UserController extends BaseIndexController {
         $userLogic = new UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $this->email_log = M('email_log');
-        $type = I('type');
-        $secret_key = sha1(md5(mt_rand(0,999999)).'longmi');
-        $data['time'] = time();
-        $data['secret_key'] = $secret_key;
-        
-        $res_count = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->find();
-        $time = time() - $res_count['time'];
-        if($time < 300){
-            exit(json_encode(callback(false,'请多少秒后再次发送')));
-        }
-        if(!empty($res_count)){ //ajax请求重新发送
-            $res = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->save($data);
-        }else{
-            $data['user_id']  = $user_info['result']['user_id'];
-            $res = $this->email_log->add($data);
-        }
-        
-        if($user_info['result']['email_validated'] != 0) { //状态修改为 未验证
-            $datas['email_validated'] = 0;
-            M('users')->where("user_id = '".$user_info['result']['user_id']."'")->save($datas); //验证
-        }
-        if($res){
-            $url = 'http://'.$_SERVER['SERVER_NAME'].U('Index/User/check_email',array('secret_key'=>$secret_key,'user_id'=>$user_info['result']['user_id']));
-//            $mail_res = send_email($user_info['result']['email'],'邮箱验证','尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url);
-            $mail_res = sendMail($user_info['result']['email'],"邮箱验证",'尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url.'<p style="color:red;">有效时间：半小时</p>');
-            if($mail_res){
-                exit(json_encode(callback(true,'发送成功',array('status'=>1))));
-            }else{
-                exit(json_encode(callback(false,'服务器繁忙请稍后再试')));
+        $type = I('post.type');
+        if($type == 'anew'){
+            $secret_key = sha1(md5(mt_rand(0,999999)).'longmi');
+            $data['time'] = time();
+            $data['secret_key'] = $secret_key;
+            
+            $res_count = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->find();
+            $time = time() - $res_count['time'];
+            if($time < seesion('Interval') ){ 
+                exit(json_encode(callback(false,'发送失败')));
             }
+            if(!empty($res_count)){ //ajax请求重新发送
+                $res = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->save($data);
+            }else{
+                $data['user_id']  = $user_info['result']['user_id'];
+                $res = $this->email_log->add($data);
+            }
+            
+            if($user_info['result']['email_validated'] != 0) { //状态修改为 未验证
+                $datas['email_validated'] = 0;
+                M('users')->where("user_id = '".$user_info['result']['user_id']."'")->save($datas); //验证
+            }
+            if($res){
+                $url = 'http://'.$_SERVER['SERVER_NAME'].U('Index/User/check_email',array('secret_key'=>$secret_key,'user_id'=>$user_info['result']['user_id']));
+                $mail_res = sendMail($user_info['result']['email'],"邮箱验证",'尊敬的'.$user_info['result']['nickname'].'用户您好，请下面链接进行邮箱验证：'.$url.'<p style="color:red;">有效时间：半小时</p>');
+                if($mail_res){
+                    exit(json_encode(callback(true,'发送成功',array('status'=>1))));
+                }else{
+                    exit(json_encode(callback(false,'服务器繁忙请稍后再试')));
+                }
 
-        }else{
-            exit(json_encode(callback(false,'发送失败')));
+            }else{
+                exit(json_encode(callback(false,'发送失败')));
+            }
         }
+
 
 
 
