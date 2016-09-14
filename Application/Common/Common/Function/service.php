@@ -37,22 +37,24 @@ function getServiceOrderProgressBar($serviceOrderInfo){
         )
     );
 
-    if( $serviceOrderStatus == 0){  //订单查询状态 待支付
+    if( $serviceOrderStatus == 0){
         $parameter['speed'] = 0;
         $parameter['first']['on'] = 1;
         $parameter['first']['done'] = 1;
-    }elseif( $serviceOrderStatus == 1 ){ //订单查询状态 待发货
-        $parameter['speed'] = 33;
+    }elseif( $serviceOrderStatus == 1 ){
+        $parameter['speed'] = 50;
         $parameter['first']['on'] = 0;
         $parameter['first']['done'] = 1;
         $parameter['second']['on'] = 1;
         $parameter['second']['done'] = 1;
-    }elseif( $serviceOrderStatus == 2){ //订单查询状态 待发货
-        $parameter['speed'] = 33;
+    }elseif( $serviceOrderStatus == 2){
+        $parameter['speed'] = 100;
         $parameter['first']['on'] = 0;
         $parameter['first']['done'] = 1;
-        $parameter['second']['on'] = 1;
+        $parameter['second']['on'] = 0;
         $parameter['second']['done'] = 1;
+        $parameter['third']['on'] = 1;
+        $parameter['third']['done'] = 1;
     }
     return $parameter;
 

@@ -3,6 +3,13 @@
     <div class="content fn-clear">
         <div class="account-wrapper account-min-wrapper">
             <include file="Public/user_menu"/>
+            <form method="post" action="{:U('Index/Service/applicationFinish')}" id="form">
+                <input type="hidden" name="id" value="{$recId}">
+                <input type="hidden" name="type" value="EXCHANGE">
+                <input type="hidden" name="order_id" value="{$orderInfo.order_id}">
+                <input type="hidden" name="order_sn" value="{$orderInfo.order_sn}">
+                <input type="hidden" name="goods_id" value="{$orderInfo.recGoodsInfo.goods_id}">
+                <input type="hidden" name="spec_key" value="{$orderInfo.recGoodsInfo.spec_key}">
                 <div class="account-content">
                     <div class="account-order-detail">
                         <div class="gray-box fn-clear confirm-detail">
@@ -52,6 +59,7 @@
                         </div>
                     </div>
                 </div>
+            </form>
         </div>
     </div>
 </div>
