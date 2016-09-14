@@ -108,7 +108,12 @@ class BuyLogic extends BaseLogic
         $this -> _post_data["goodsId"]      = $goods_id = I('goods_id',0);
         $this -> _post_data["speckey"]      = $spec_key = I('spec_key');
         $this -> _post_data["type"]         = I('type') == "REFUND0" ? 0 : 1;
-        $this -> _post_data["refund_way"]   = I('returnWay') != "YUAN_LU" ? 1 : 0;
+        $this -> _post_data["refundWay"]    = I('returnWay') != "YUAN_LU" ? 1 : 0;
+        $this -> _post_data["refundMoney"]  = I('refundMoney')  ? I('refundMoney') : 0;
+
+        if( $this -> _post_data["type"] && $this -> _post_data["refundMoney"] == 0 ){
+            throw new \Exception("退款金额有误！");
+        }
 
         if( empty($this -> _post_data["refundName"]) ){
             $msg =  !$this -> _post_data["type"]  ? "快递公司必填" : "联系人称呼必填";
@@ -150,7 +155,8 @@ class BuyLogic extends BaseLogic
             "spec_key"      => $this -> _post_data["speckey"],
             "refund_name"   => $this -> _post_data["refundName"],
             "refund_code"   => $this -> _post_data["refundCode"],
-            "refund_way"    => $this -> _post_data["refund_way"],
+            "refund_way"    => $this -> _post_data["refundWay"],
+            "refund_money"  => $this -> _post_data["refundMoney"],
         );
         if( !isSuccessToAddData( "return_goods",$data) ){
             throw new \Exception('提交失败！');
