@@ -13,8 +13,8 @@ function sendMail($to, $title, $content) {
     $mail->FromName = "龙米"; //发件人姓名
     $mail->AddAddress($to,"尊敬的客户");
     $mail->WordWrap = 50; //设置每行字符长度
-    $mail->IsHTML(C('MAIL_ISHTML')); // 是否HTML格式邮件
-    $mail->CharSet=C('MAIL_CHARSET'); //设置邮件编码
+    $mail->IsHTML(true); // 是否HTML格式邮件
+    $mail->CharSet="UTF-8"; //设置邮件编码
     $mail->Subject =$title; //邮件主题
     $mail->Body = $content; //邮件内容
     $mail->AltBody =$title; //邮件正文不支持HTML的备用显示
