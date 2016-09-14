@@ -111,7 +111,7 @@ class BuyLogic extends BaseLogic
         $this -> _post_data["refundWay"]    = I('returnWay') != "YUAN_LU" ? 1 : 0;
         $this -> _post_data["refundMoney"]  = I('refundMoney')  ? I('refundMoney') : 0;
 
-        if( $this -> _post_data["type"] && $this -> _post_data["refundMoney"] == 0 ){
+        if( $this -> _post_data["type"] != 1  && $this -> _post_data["refundMoney"] == 0 ){
             throw new \Exception("退款金额有误！");
         }
 
