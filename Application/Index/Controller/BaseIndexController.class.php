@@ -2,7 +2,6 @@
 namespace Index\Controller;
 
 use Common\Base\BaseController;
-use Common\Logic\UsersLogic;
 
 abstract class BaseIndexController extends BaseController {
 
@@ -23,12 +22,11 @@ abstract class BaseIndexController extends BaseController {
                 $redirectedUrl = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
                 $redirectedUrl = urlencode($redirectedUrl);
                 header("Location: ". U( '/Index/User/login' , array("redirectedUrl" => $redirectedUrl)));
-                return;
+                exit;
             }
         }
-
         $this -> user_id = session(__UserID__);
-        $userLogic = new UsersLogic();
+        $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this -> user_id);
         if(!empty($user_info['result'])){
             $this -> user_info  = $user_info['result'];
