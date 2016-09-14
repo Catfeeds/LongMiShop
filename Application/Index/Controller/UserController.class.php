@@ -399,14 +399,16 @@ class UserController extends BaseIndexController {
      */
     public function email_validate(){
         $send_email_time = session('send_email_time');
-        $item = session('Interval','60');
-        $res_time = $send_email_time + $item;
+        session('Interval',60);
+        $res_time = $send_email_time + session('Interval');
         $now_time = time();
         if($res_time > $now_time){
             $time = $res_time - $now_time;
+            session('Interval',$time);
         }else if($res_time < $now_time){
             session('send_email_time',null);
-            session('send_email_time',$now_time);
+            $info = time();
+            session('send_email_time',$info);
         }
         $this->display();
     }
@@ -416,7 +418,7 @@ class UserController extends BaseIndexController {
         $userLogic = new UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $this->email_log = M('email_log');
-        $type = I('post.type');
+        $type = I('get.type');
         if($type == 'anew'){
             $secret_key = sha1(md5(mt_rand(0,999999)).'longmi');
             $data['time'] = time();
@@ -424,7 +426,7 @@ class UserController extends BaseIndexController {
             
             $res_count = $this->email_log->where("user_id = '".$user_info['result']['user_id']."'")->find();
             $time = time() - $res_count['time'];
-            if($time < seesion('Interval') ){ 
+            if($time < session('Interval') ){ 
                 exit(json_encode(callback(false,'发送失败')));
             }
             if(!empty($res_count)){ //ajax请求重新发送
