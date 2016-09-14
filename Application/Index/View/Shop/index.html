@@ -173,8 +173,12 @@ function ajax_trolley(){
     if(goods_num > store_count)
     {
       goods_num = store_count;
-      layer.msg('库存仅剩 '+store_count+' 件', {icon: 2}); //alert('库存仅剩 '+store_count+' 件');
-      $("#goods_num").val(goods_num);
+        if(store_count != 0){
+            layer.msg('库存仅剩 '+store_count+' 件', {icon: 2}); //alert('库存仅剩 '+store_count+' 件');
+            $("#goods_num").val(goods_num);
+        }else{
+
+        }
     }
     $("#goods_price").html(goods_price * goods_num); // 变动价格显示
   }

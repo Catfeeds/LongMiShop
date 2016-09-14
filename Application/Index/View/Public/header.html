@@ -34,45 +34,45 @@
             <img src="__PUBLIC__/img/logo.png" width="75" height="50">
         </a>
         <include file="Public/nav"/>
-        <if condition=" $auth eq ture " >
-            <div class="user">
-                <a href="javascript:;">个人中心</a>
-                <div class="show">
-                    <div class="show_ul">
-                        <div class="show_user"><img src="{$user.head_pic|default='__PUBLIC__/img/user.png'}" width="133" height="133" class="user_img">
-                            <p>{$user.nickname}</p>
-                        </div>
-                        <ul>
-                            <li>
-                                <a href="{:U('Order/orderList')}" style="background-image:url(__PUBLIC__/img/b1.png)">我的订单</a>
-                            </li>
-                            <li>
-                                <a href="{:U('Service/returnGoodsList')}" style="background-image:url(__PUBLIC__/img/b2.png)">售后服务</a>
-                            </li>
-                            <li>
-                                <a href="{:U('User/coupon')}" style="background-image:url(__PUBLIC__/img/b3.png)">我的优惠</a>
-                            </li>
-                            <li>
-                                <a href="{:U('User/info')}" style="background-image:url(__PUBLIC__/img/b4.png)">账户资料</a>
-                            </li>
-                            <li>
-                                <a href="{:U('User/addressList')}" style="background-image:url(__PUBLIC__/img/b5.png)">收货地址</a>
-                            </li>
-                            <li>
-                                <a href="{:U('User/logout')}" style="background-image:url(__PUBLIC__/img/b6.png)">退出</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        <else/>
-            <div class="login1">
-                <a href="{:U('User/login')}">登录</a>
-            </div>
-            <div class="login">
-                <a href="{:U('User/register')}">注册</a>
-            </div>
-        </if>
+        <!--<if condition=" $auth eq ture " >-->
+            <!--<div class="user">-->
+                <!--<a href="javascript:;">个人中心</a>-->
+                <!--<div class="show">-->
+                    <!--<div class="show_ul">-->
+                        <!--<div class="show_user"><img src="{$user.head_pic|default='__PUBLIC__/img/user.png'}" width="133" height="133" class="user_img">-->
+                            <!--<p>{$user.nickname}</p>-->
+                        <!--</div>-->
+                        <!--<ul>-->
+                            <!--<li>-->
+                                <!--<a href="{:U('Order/orderList')}" style="background-image:url(__PUBLIC__/img/b1.png)">我的订单</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="{:U('Service/returnGoodsList')}" style="background-image:url(__PUBLIC__/img/b2.png)">售后服务</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="{:U('User/coupon')}" style="background-image:url(__PUBLIC__/img/b3.png)">我的优惠</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="{:U('User/info')}" style="background-image:url(__PUBLIC__/img/b4.png)">账户资料</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="{:U('User/addressList')}" style="background-image:url(__PUBLIC__/img/b5.png)">收货地址</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="{:U('User/logout')}" style="background-image:url(__PUBLIC__/img/b6.png)">退出</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--<else/>-->
+            <!--<div class="login1">-->
+                <!--<a href="{:U('User/login')}">登录</a>-->
+            <!--</div>-->
+            <!--<div class="login">-->
+                <!--<a href="{:U('User/register')}">注册</a>-->
+            <!--</div>-->
+        <!--</if>-->
 
 
 
