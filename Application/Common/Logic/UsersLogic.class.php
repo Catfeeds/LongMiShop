@@ -625,8 +625,8 @@ class UsersLogic extends BaseLogic
         $sms_time_out = tpCache('sms.sms_time_out');
         $sms_time_out = $sms_time_out ? $sms_time_out : 120;
         //120秒以内不可重复发送
-        if($data && (time() - $data['add_time']) < $sms_time_out)
-            return array('status'=>-1,'msg'=>$sms_time_out.'秒内不允许重复发送');
+//        if($data && (time() - $data['add_time']) < $sms_time_out)
+//            return array('status'=>-1,'msg'=>$sms_time_out.'秒内不允许重复发送');
         $row = M('sms_log')->add(array('mobile'=>$mobile,'code'=>$code,'add_time'=>time(),'session_id'=>$session_id));
         if(!$row)
             return array('status'=>-1,'msg'=>'发送失败');
