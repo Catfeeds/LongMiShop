@@ -374,8 +374,6 @@ class UserController extends BaseIndexController {
      * 发送手机注册验证码
      */
     public function send_sms_reg_code(){
-        // exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));exit;
-//        $mobile = I('post.mobile');
         $mobile = I('send');
         $where['mobile'] = $mobile;
         $verify = new \Think\Verify();
@@ -397,6 +395,30 @@ class UserController extends BaseIndexController {
             exit(json_encode(array('status'=>-1,'msg'=>$send['msg'])));
         exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
     }
+
+    //手机验证
+    public function send_sms_reg(){
+        $mobile = I('send');
+        if(!check_mobile($mobile))
+            exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
+        $where['mobile'] = $mobile;
+        $user_res = M('users')->where($where)->find();
+        if(!empty($user_res)){
+            if($user_res['user_id'] != $this->user_id){
+                exit(json_encode(array('status'=>-1,'msg'=>'此手机已被注册')));
+            }  
+        }
+        
+
+        $userLogic = new UsersLogic();
+        
+        $code =  rand(1000,9999);
+        $send = $userLogic->sms_log($mobile,$code,$this->session_id);
+        if($send['status'] != 1)
+            exit(json_encode(array('status'=>-1,'msg'=>$send['msg'])));
+        exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
+    }
+
 
     //验证手机是否已绑定
     public function check_phones(){
