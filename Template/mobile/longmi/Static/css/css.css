@@ -1536,3 +1536,35 @@ body {
 	height: 48px;
 	width: 48px;
 }
+.site2 {
+	background-color: rgb( 254, 254, 254 );
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: rgb( 235, 235, 235 );
+	border-bottom-color: rgb( 235, 235, 235 );
+	padding-left: 35px;
+	line-height: 16px;
+	padding-top: 10px;
+	padding-right: 10px;
+}
+.default-setting{
+	background-image: url(../SVG/order.svg);
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-size: 18px 18px
+}
+.modification{
+	position: absolute;
+	z-index: 999999999;
+	top: 15px;
+	right: 5px;
+}
+.modification img{
+	height: 24px;
+	width: 24px;
+}

@@ -378,6 +378,7 @@ class ToolsController extends BaseController {
     	$data = I('post.');
     	$id = I('id');
     	$referurl =  isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Tools/region");
+        $this->fwrite();
     	if(empty($id)){
     		$data['level'] = $data['level']+1;
     		if(empty($data['name'])){
@@ -396,4 +397,41 @@ class ToolsController extends BaseController {
     		$this->success("操作成功", $referurl);
     	}
     }
+
+
+    //地区写入文件
+    public function fwrite(){
+        set_time_limit(0);
+        // 获取省份
+        $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
+        $c = M('region')->where(array('level'=> 2))->select();
+        $d = M('region')->where(array('level'=> 3))->select();
+
+        foreach($p as $key_p=>$item_p){
+           $cityData[$key_p]['value'] = $item_p['id'];   
+           $cityData[$key_p]['text'] = $item_p['name'];
+           foreach($c as $key_c=>$item_c){
+                if($item_c['parent_id'] == $item_p['id']){
+                    $cityData[$key_p]['children'][$key_c]['value'] = $item_c['id']; 
+                    $cityData[$key_p]['children'][$key_c]['text'] = $item_c['name']; 
+                }
+
+                foreach($d as $key_d=>$item_d){
+                    if($item_d['parent_id'] == $item_c['id']){
+                      $cityData[$key_p]['children'][$key_c]['children'][$key_d]['value'] = $item_d['id'];   
+                      $cityData[$key_p]['children'][$key_c]['children'][$key_d]['text'] = $item_d['name'];   
+                    }
+                }
+                
+           }
+
+        }
+
+        dd($cityData);
+        
+
+
+        
+    }
+
 }

@@ -2,16 +2,18 @@
  * =====================================================
  * Mui v3.3.0 (http://dev.dcloud.net.cn/mui)
  * =====================================================
- *//*! normalize.css v3.0.1 | MIT License | git.io/normalize */html {
+ *//*! normalize.css v3.0.1 | MIT License | git.io/normalize */body {
+	min-width: 320px;
+	max-width: 800px;
+	margin-right: auto !important;
+	margin-left: auto !important;
+}
+html {
 	font-family: sans-serif;
 	-webkit-text-size-adjust: 100%
 }
 body {
-	margin: 0;
-	min-width: 320px;
-	max-width: 800px;
-	margin-right: auto;
-	margin-left: auto;
+	margin: 0
 }
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
 	display: block
@@ -147,11 +149,11 @@ td, th {
 }
 body {
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
-	font-size: 17px;
+	font-size: 16px;
 	line-height: 21px;
 	color: #000;
 	background-color: #efeff4;
-	-webkit-overflow-scrolling: touch
+	-webkit-overflow-scrolling: touch;
 }
 a {
 	text-decoration: none;
@@ -327,7 +329,7 @@ p {
 	font-size: 14px;
 	margin-top: 0;
 	margin-bottom: 10px;
-	color: #8f8f94
+	color: #818181;
 }
 .mui-row:after, .mui-row:before {
 	display: table;
@@ -1329,10 +1331,10 @@ transform:rotate(360deg)
 	position: absolute;
 	right: 0;
 	left: 0;
-	height: 1px;
 	content: '';
 	-webkit-transform: scaleY(.5);
 	transform: scaleY(.5);
+	background-color: #c8c7cc;
 	top: -1px
 }
 .mui-table-view-icon .mui-table-view-cell .mui-navigate-right .mui-icon {
@@ -1420,7 +1422,8 @@ transform:rotate(360deg)
 	height: 1px;
 	content: '';
 	-webkit-transform: scaleY(.5);
-	transform: scaleY(.5)
+	transform: scaleY(.5);
+	background-color: #c8c7cc
 }
 .mui-table-view-cell.mui-checkbox input[type=checkbox], .mui-table-view-cell.mui-radio input[type=radio] {
 	top: 8px
@@ -1634,7 +1637,6 @@ transform:rotate(360deg)
 	right: 35px
 }
 .mui-content>.mui-table-view:first-child {
-	margin-top: 0px
 }
 .mui-table-view-cell.mui-collapse .mui-table-view .mui-table-view-cell:last-child:after, .mui-table-view-cell.mui-collapse .mui-table-view:after, .mui-table-view-cell.mui-collapse .mui-table-view:before {
 	height: 0
@@ -1697,7 +1699,8 @@ transform:rotate(360deg)
 	height: 1px;
 	content: '';
 	-webkit-transform: scaleY(.5);
-	transform: scaleY(.5)
+	transform: scaleY(.5);
+	background-color: #c8c7cc
 }
 .mui-table-view.mui-grid-view {
 	font-size: 0;
@@ -1808,6 +1811,16 @@ input:focus, select:focus, textarea:focus {
 	-webkit-user-modify: read-write-plaintext-only
 }
 input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea {
+	line-height: 21px;
+	width: 100%;
+	height: 40px;
+	margin-bottom: 15px;
+	padding: 10px 15px;
+	-webkit-user-select: text;
+	border: 1px solid rgba(0,0,0,.2);
+	border-radius: 3px;
+	outline: 0;
+	background-color: #fff;
 	-webkit-appearance: none
 }
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
@@ -1856,7 +1869,6 @@ select:focus {
 	content: '';
 	-webkit-transform: scaleY(.5);
 	transform: scaleY(.5);
-	background-color: #c8c7cc
 }
 .mui-input-group:before {
 	position: absolute;
@@ -1867,7 +1879,6 @@ select:focus {
 	content: '';
 	-webkit-transform: scaleY(.5);
 	transform: scaleY(.5);
-	background-color: #c8c7cc
 }
 .mui-input-group input, .mui-input-group textarea {
 	margin-bottom: 0;
@@ -1885,7 +1896,8 @@ select:focus {
 }
 .mui-input-row {
 	clear: left;
-	overflow: hidden
+	overflow: hidden;
+	margin-bottom: 1px;
 }
 .mui-input-row select {
 	font-size: 17px;
@@ -1907,14 +1919,13 @@ select:focus {
 	content: '';
 	-webkit-transform: scaleY(.5);
 	transform: scaleY(.5);
-	background-color: #c8c7cc
 }
 .mui-input-row label {
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 	line-height: 1.1;
 	float: left;
 	width: 35%;
-	padding: 11px 15px
+	padding: 12px 0px
 }
 .mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea {
 	float: right;
@@ -1997,13 +2008,16 @@ select:focus {
 	padding-right: 58px
 }
 .mui-checkbox.mui-left input[type=checkbox], .mui-radio.mui-left input[type=radio] {
-	left: 0px
+	left: 20px
 }
 .mui-checkbox.mui-left label, .mui-radio.mui-left label {
 	padding-right: 15px;
 	padding-left: 58px
 }
 .mui-checkbox input[type=checkbox], .mui-radio input[type=radio] {
+	position: absolute;
+	top: 4px;
+	right: 20px;
 	display: inline-block;
 	width: 28px;
 	height: 26px;
@@ -2017,7 +2031,7 @@ select:focus {
 }
 .mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
 	font-family: Muiicons;
-	font-size: 24px;
+	font-size: 22px;
 	font-weight: 400;
 	line-height: 1;
 	text-decoration: none;
@@ -2360,7 +2374,8 @@ background-clip:padding-box;
 	height: 1px;
 	content: '';
 	-webkit-transform: scaleY(.5);
-	transform: scaleY(.5)
+	transform: scaleY(.5);
+	background-color: #c8c7cc
 }
 .mui-popover.mui-popover-action .mui-table-view small {
 	font-weight: 400;
@@ -3013,8 +3028,8 @@ transform:translate3d(100%, 0, 0) scaleX(.5)
 	width: 38px
 }
 .mui-switch.mui-active {
-	border-color: #4cd964;
-	background-color: #4cd964
+	border-color: #b02f4b;
+	background-color: #b02f4b
 }
 .mui-switch.mui-active .mui-switch-handle {
 	-webkit-transform: translate(43px, 0);
@@ -3183,14 +3198,14 @@ transform:translate3d(100%, 0, 0) scaleX(.5)
 	position: relative;
 	display: inline-block;
 	overflow: hidden;
-	width: 120px;
-	height: 35px;
-	padding: 0 40px;
+	width: 80px;
+	height: 30px;
+	padding: 0 00px;
 	vertical-align: top;
 	vertical-align: middle;
-	border: solid 1px #bbb;
+	border: solid 1px #f5f5f5;
 	border-radius: 3px;
-	background-color: #efeff4
+	background-color: #f5f5f5
 }
 .mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn] {
 	font-size: 18px;
@@ -3199,7 +3214,7 @@ transform:translate3d(100%, 0, 0) scaleX(.5)
 	position: absolute;
 	top: 0;
 	overflow: hidden;
-	width: 40px;
+	width: 25px;
 	height: 100%;
 	padding: 0;
 	color: #555;
@@ -3610,4 +3625,10 @@ transform:translate3d(100%, 0, 0) scaleX(.5)
 	width: 100%;
 	height: 100%;
 	border: 0
+}
+.line{
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #EFEFF4;
+	padding-left: 5px;
 }

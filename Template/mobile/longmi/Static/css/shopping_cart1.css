@@ -51,7 +51,6 @@
 }
 .foot #priceTotal, .foot #selectedTotal {
 	color: #b02f4b;
-	font-family: "Microsoft Yahei";
 	font-weight: bold;
 }
 .foot .selected {

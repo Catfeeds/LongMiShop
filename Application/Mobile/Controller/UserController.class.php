@@ -302,63 +302,27 @@ class UserController extends MobileBaseController {
     public function address_list(){
         $address_lists = get_user_address_list($this->user_id);
         $region_list = get_region_list();
+        // dd($address_lists);
         $this->assign('region_list',$region_list);
         $this->assign('lists',$address_lists);
         $this->display();
     }
-    /*
-     * 添加地址
-     */
-    public function add_address()
-    {
-        if(IS_POST)
-        {
-            $logic = new \Common\Logic\UsersLogic();
-            $data = $logic->add_address($this->user_id,0,I('post.'));
-            if($data['status'] != 1)
-                $this->error($data['msg']);
-            elseif($_POST['source'] == 'cart2')
-            {
-               header ('Location:'.U('/Mobile/Cart/cart2',array('address_id'=>$data['result'])));
-               exit;
-            }
-
-            $this->success($data['msg'],U('/Mobile/User/address_list'));
-            exit();
-        }
-        $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
-        $this->assign('province',$p);
-        //$this->display('edit_address');
-        $this->display();
-
-    }
 
     /*
-     * 地址编辑
+     * 收货地址视图
      */
-    public function edit_address()
-    {
+    public function edit_address(){
         $id = I('id');
-        $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
-        if(IS_POST)
-        {
-            $logic = new \Common\Logic\UsersLogic();
-            $data = $logic->add_address($this->user_id,$id,I('post.'));
-            if($_POST['source'] == 'cart2'){
-                header ('Location:'.U('/Mobile/Cart/cart2',array('address_id'=>$id)));
-                exit;
-            }
-            else
-                $this->success($data['msg'],U('/Mobile/User/address_list'));
-            exit();
+        if(!empty($id)){
+           $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find(); 
         }
-        //获取省份
+        // 获取省份
         $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
         $c = M('region')->where(array('parent_id'=>$address['province'],'level'=> 2))->select();
         $d = M('region')->where(array('parent_id'=>$address['city'],'level'=> 3))->select();
         if($address['twon']){
-        	$e = M('region')->where(array('parent_id'=>$address['district'],'level'=>4))->select();
-        	$this->assign('twon',$e);
+         $e = M('region')->where(array('parent_id'=>$address['district'],'level'=>4))->select();
+         $this->assign('twon',$e);
         }
 
         $this->assign('province',$p);
@@ -367,7 +331,84 @@ class UserController extends MobileBaseController {
 
         $this->assign('address',$address);
         $this->display();
+        
     }
+
+    /*
+    *
+    *地址修改
+    *
+    */
+    public function save_address(){
+        $id = I('address_id');
+        if($id==0){ //新增
+            
+        }else{ //修改
+            
+        }
+    }
+    /*
+     * 添加地址
+     */
+    // public function add_address()
+    // {
+    //     if(IS_POST)
+    //     {
+    //         $logic = new \Common\Logic\UsersLogic();
+    //         $data = $logic->add_address($this->user_id,0,I('post.'));
+    //         if($data['status'] != 1)
+    //             $this->error($data['msg']);
+    //         elseif($_POST['source'] == 'cart2')
+    //         {
+    //            header ('Location:'.U('/Mobile/Cart/cart2',array('address_id'=>$data['result'])));
+    //            exit;
+    //         }
+
+    //         $this->success($data['msg'],U('/Mobile/User/address_list'));
+    //         exit();
+    //     }
+    //     $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
+    //     $this->assign('province',$p);
+    //     //$this->display('edit_address');
+    //     $this->display();
+
+    // }
+
+    /*
+     * 地址编辑
+     */
+    // public function edit_address()
+    // {
+    //     $id = I('id');
+    //     $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
+    //     if(IS_POST)
+    //     {
+    //         $logic = new \Common\Logic\UsersLogic();
+    //         $data = $logic->add_address($this->user_id,$id,I('post.'));
+    //         if($_POST['source'] == 'cart2'){
+    //             header ('Location:'.U('/Mobile/Cart/cart2',array('address_id'=>$id)));
+    //             exit;
+    //         }
+    //         else
+    //             $this->success($data['msg'],U('/Mobile/User/address_list'));
+    //         exit();
+    //     }
+    //     //获取省份
+    //     $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
+    //     $c = M('region')->where(array('parent_id'=>$address['province'],'level'=> 2))->select();
+    //     $d = M('region')->where(array('parent_id'=>$address['city'],'level'=> 3))->select();
+    //     if($address['twon']){
+    //     	$e = M('region')->where(array('parent_id'=>$address['district'],'level'=>4))->select();
+    //     	$this->assign('twon',$e);
+    //     }
+
+    //     $this->assign('province',$p);
+    //     $this->assign('city',$c);
+    //     $this->assign('district',$d);
+
+    //     $this->assign('address',$address);
+    //     $this->display();
+    // }
 
     /*
      * 设置默认收货地址

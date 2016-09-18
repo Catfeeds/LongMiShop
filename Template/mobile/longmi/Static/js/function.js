@@ -46,3 +46,11 @@ $(function() {
                 $("#checkAll").attr("checked",$subBox.length == $("input[name='subBox']:checked").length ? true : false);
             });
         });
+		
+		
+		
+$(document).ready(function(){
+  $(".site_txt1 a").click(function(){
+  $(".mui-input-group").toggle()
+  });
+});
