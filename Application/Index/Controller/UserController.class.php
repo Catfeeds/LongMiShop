@@ -79,7 +79,6 @@ class UserController extends BaseIndexController {
         if(session('auth') == true){ //是否登录
             header("location:".U('Index/Order/orderList'));exit;
         }
-        // session_start();
         $config = tpCache('sms');
         $sms_time_out = $config['sms_time_out'];
         if(IS_POST){
@@ -101,10 +100,28 @@ class UserController extends BaseIndexController {
             !empty($data['mobile']) ? $where['mobile'] = $data['mobile'] : '';
             $res = M('users')->where($where)->count();
             if(empty($res)){
+                $password = $data['password'];
                 $data['password'] = encrypt($data['password']);
                 $data['reg_time'] = time();
+                if( !empty($data['mobile']) ){
+                    $data['mobile_validated'] = 1 ;
+                    $username = $data['mobile'];
+                }else{
+                    $username = $data['email'];
+                }
                 $res = M('users')->add($data);
-                $res ? $this->success('注册成功',U('Index/Index/index')) : $this->error('注册失败');exit;
+                if($res){
+                    $logic = new \Common\Logic\UsersLogic();
+                    $result = $logic->login($username,$password);
+                    if( !callbackIsTrue($result) ){
+                        $this->error($result['msg']);
+                        exit;
+                    }
+                    $this->success('注册成功',U('Index/Index/index'));
+                    exit;
+                }
+                $this->error('注册失败');
+                exit;
             }else{
                 $this->error('手机号码或邮箱已注册');
                 exit;
