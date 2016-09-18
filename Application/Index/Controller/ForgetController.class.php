@@ -48,7 +48,7 @@ class ForgetController extends BaseIndexController {
 
             $res = M('users')->where($where)->find();
             if(empty($res)){
-                $this->error('密保方式不存在，请重新输入',U('Index/Forget/index'));exit;
+                $this->error('帐号不存在，请重新输入',U('Index/Forget/index'));exit;
             }
 
             if(is_numeric($genre)){
@@ -97,7 +97,7 @@ class ForgetController extends BaseIndexController {
             $res = M('sms_log')->where($where)->count();
             if($res){
                 session('check_forget_mobile',true);
-                $this->success('验证通过',U('Index/Forget/check_forget_mobile'));
+                $this->success('验证码正确，请填写新密码',U('Index/Forget/check_forget_mobile'));
             }else{
                 $this->error('验证码错误');
             }
