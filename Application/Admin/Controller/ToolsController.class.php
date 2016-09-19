@@ -378,7 +378,7 @@ class ToolsController extends BaseController {
     	$data = I('post.');
     	$id = I('id');
     	$referurl =  isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Tools/region");
-        $this->fwrite();
+        
     	if(empty($id)){
     		$data['level'] = $data['level']+1;
     		if(empty($data['name'])){
@@ -387,6 +387,7 @@ class ToolsController extends BaseController {
     			$res = M('region')->where("parent_id = ".$data['parent_id']." and name='".$data['name']."'")->find();
     			if(empty($res)){
     				M('region')->add($data);
+                    $this->fwrite();
     				$this->success("操作成功", $referurl);
     			}else{
     				$this->error("该区域下已有该地区,请不要重复添加", $referurl);
@@ -394,6 +395,7 @@ class ToolsController extends BaseController {
     		}
     	}else{
     		M('region')->where("id=$id or parent_id=$id")->delete();
+            $this->fwrite();
     		$this->success("操作成功", $referurl);
     	}
     }
@@ -406,28 +408,31 @@ class ToolsController extends BaseController {
         $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
         $c = M('region')->where(array('level'=> 2))->select();
         $d = M('region')->where(array('level'=> 3))->select();
+        $content = "<?php return $cityData3=array(" ;
+        // foreach($p as $key_p=>$item_p){
+        //    $cityData[$key_p]['value'] = $item_p['id'];   
+        //    $cityData[$key_p]['text'] = $item_p['name'];
+        //    foreach($c as $key_c=>$item_c){
+        //         if($item_p['id'] == $item_c['parent_id']){
+        //             $cityData[$key_p]['children'][$key_c]['value'] = $item_c['id']; 
+        //             $cityData[$key_p]['children'][$key_c]['text'] = $item_c['name']; 
+        //                 foreach($d as $key_d=>$item_d){
+        //                     if($item_c['id'] == $item_d['parent_id'] ){
+        //                       $cityData[$key_p]['children'][$key_c]['children'][$key_d]['value'] = $item_d['id'];   
+        //                       $cityData[$key_p]['children'][$key_c]['children'][$key_d]['text'] = $item_d['name'];   
+        //                     }
+        //                 }
+        //         }
 
-        foreach($p as $key_p=>$item_p){
-           $cityData[$key_p]['value'] = $item_p['id'];   
-           $cityData[$key_p]['text'] = $item_p['name'];
-           foreach($c as $key_c=>$item_c){
-                if($item_c['parent_id'] == $item_p['id']){
-                    $cityData[$key_p]['children'][$key_c]['value'] = $item_c['id']; 
-                    $cityData[$key_p]['children'][$key_c]['text'] = $item_c['name']; 
-                }
+            
+        //    }
+        // }
+        $path = "./Application/Common/Conf/region.php";
+        $a = var_export($cityData, TRUE); 
+        
+        file_put_contents($path,$content);
 
-                foreach($d as $key_d=>$item_d){
-                    if($item_d['parent_id'] == $item_c['id']){
-                      $cityData[$key_p]['children'][$key_c]['children'][$key_d]['value'] = $item_d['id'];   
-                      $cityData[$key_p]['children'][$key_c]['children'][$key_d]['text'] = $item_d['name'];   
-                    }
-                }
-                
-           }
-
-        }
-
-        dd($cityData);
+        
         
 
 
