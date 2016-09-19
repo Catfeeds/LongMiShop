@@ -14,9 +14,12 @@ class UsersLogic extends BaseLogic
      * 登陆
      */
     public function login($username,$password){
-        if(!$username || !$password)
-           return callback(false,'请填写账号或密码');
-        $user = M('users')->where("mobile='{$username}' OR email='{$username}'")->find();
+        if(!$username || !$password){
+            return callback(false,'请填写账号或密码');
+        }
+        $condition = "( mobile='{$username}' and  mobile_validated = 1 ) or ( email='{$username}' and  email_validated = 1  )";
+        $condition = "( mobile='{$username}' ) or ( email='{$username}'  )";
+        $user = M('users')->where($condition)->find();
         if(!$user){
             return callback(false,'账号不存在');
         }elseif(encrypt($password) != $user['password']){

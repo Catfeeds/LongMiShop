@@ -315,9 +315,12 @@ class UserController extends MobileBaseController {
         header("content-Type: text/html; charset=utf-8");
         $id = I('id');
         if(!empty($id)){
-           $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
-           $citys  = $address['province']."|| {}".$address['city']."|| {}".$address['district']."|| {}";
-           // dd($citys);
+            $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
+            $region_list = get_region_list();
+            $citys  = $region_list[$address['province']]['name']." ". $region_list[$address['city']]['name']." ". $region_list[$address['district']]['name'];
+            $this->assign('citys',$citys);
+            $this->assign('region_list',$region_list);
+            $this->assign('address',$address);
         }
         // $region_list = include_once 'Application/Common/Conf/region.js'; 
 
