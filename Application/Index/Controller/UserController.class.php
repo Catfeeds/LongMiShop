@@ -289,6 +289,10 @@ class UserController extends BaseIndexController {
         $this->assign('goodsList',$data['data']);
 
         $region_list = get_region_list();
+
+        $buyLLogic = new \Common\Logic\BuyLogic();
+        $codeStr = $buyLLogic -> getWeChatCode($order_id);
+        $this->assign('codeStr',$codeStr);
         $this->assign('paymentList',$paymentList);
         $this->assign('region_list',$region_list);
         $this->assign('bank_img',$bank_img);

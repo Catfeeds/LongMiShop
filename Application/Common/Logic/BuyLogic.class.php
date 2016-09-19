@@ -457,4 +457,40 @@ class BuyLogic extends BaseLogic
 
 
 
+
+
+
+
+
+
+
+    /***
+     * 其他
+     */
+
+
+    /**
+     * @param $orderId
+     * @return mixed
+     */
+    public function getWeChatCode($orderId){
+        $payCode = "weixin"; // 支付 code
+        //获取通知的数据
+        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        // 导入具体的支付类文件
+        include_once  "plugins/payment/{$payCode}/{$payCode}.class.php";
+        $code = '\\'.$payCode; // \alipay
+        $payment = new $code();
+        C('TOKEN_ON',false);
+        header("Content-type:text/html;charset=utf-8");
+        // 修改订单的支付方式
+        $payment_arr = M('Plugin')->where("`type` = 'payment'")->getField("code,name");
+        M('order')->where("order_id = $orderId")->save(array('pay_code'=>$payCode,'pay_name'=>$payment_arr[$payCode]));
+        $order = M('order')->where("order_id = $orderId")->find();
+        $pay_radio = "pay_code";
+        $config_value = parse_url_param($pay_radio);
+        $code_str = $payment->get_code($order,$config_value);
+        return $code_str;
+    }
+
 }
