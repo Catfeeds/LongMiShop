@@ -22,12 +22,10 @@
 	<div class="user_img"><img src="{: $user_info['head_pic']}" width="48" height="48" id="user_imgs"></div>
 </li>
 <li>
-	<form class="mui-input-group">
-		<div class="mui-input-row">
-		  <label>昵称</label>
-		  <input style="float:right; text-align:right" type="text" value="{: $user_info['nickname']}">
-		</div>
-	</form>
+	<div class="mui-input-row" id="promptBtn">
+	    <label>昵称</label>
+	    <input id="info" type="text"  placeholder="{: $user_info['nickname']}"  value="" style="float:right; text-align:right; width:60%; padding-right:30px" readonly>
+	  </div>
 </li>
 <li><a href="{: U('Mobile/User/address_list')}">我的地址</a></li>
 
@@ -47,10 +45,6 @@
 		$("#myuploads").ajaxSubmit({
             dataType:  'json',
             success: function(res) {
-            	console.log(res);
-            	// console.log(res.file.urlpath);
-            	console.log(res.file);return false;
-                // closeDiv();//关闭浮层
                 alert(res['msg']);
                 $('#user_imgs').attr('src',res['data']['path']);
 
@@ -61,6 +55,41 @@
 
         });
 	})
+
+	//mui初始化
+	mui.init({
+		swipeBack: true //启用右滑关闭功能
+	});
+	var info = document.getElementById("info");
+	document.getElementById("promptBtn").addEventListener('tap', function(e) {
+		e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+		var btnArray = ['取消', '确定'];
+		mui.prompt('请输入昵称', '', '', btnArray, function(e) {
+			if (e.index == 1) {
+				$.ajax({
+					type:'post',
+					data:{'nickname':e.value},
+					url:"{: U('Mobile/User/edit_nickname')}",
+					dataType:'json',
+					success:function(res){
+						if(res.data.status == 1){
+							info.value = '' + e.value;
+		                    alert('修改成功');
+		                }else{
+		                    alert(res.msg);//alert('发送失败');
+		                }
+					},
+					error:function(res){
+						alert('服务器繁忙，请扫后再试');
+						// info.value = '';
+					}
+				})
+			} else {
+				// info.value = '';
+			}
+		})
+	});
+		
         
     
 </script>

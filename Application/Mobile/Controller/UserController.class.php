@@ -297,12 +297,25 @@ class UserController extends MobileBaseController {
     }
 
     /*
+     * 修改昵称
+     */
+    public function edit_nickname(){
+        if(IS_POST){
+            $data['nickname'] = I('nickname');
+            $data['user_id'] = $this->user_id;
+            $res = M('users')->save($data);
+            $res ? exit(json_encode(callback(true,'修改成功',array('status'=>1)))) : exit(json_encode(callback(false,'修改失败')));
+
+        }
+    }
+
+
+    /*
      * 用户地址列表
      */
     public function address_list(){
         $address_lists = get_user_address_list($this->user_id);
         $region_list = get_region_list();
-        // dd($address_lists);
         $this->assign('region_list',$region_list);
         $this->assign('lists',$address_lists);
         $this->display();
@@ -351,68 +364,7 @@ class UserController extends MobileBaseController {
             $res ? $this->success('修改成功',U('Mobile/User/address_list')) : $this->error('修改失败');
         }
     }
-    /*
-     * 添加地址
-     */
-    // public function add_address()
-    // {
-    //     if(IS_POST)
-    //     {
-    //         $logic = new \Common\Logic\UsersLogic();
-    //         $data = $logic->add_address($this->user_id,0,I('post.'));
-    //         if($data['status'] != 1)
-    //             $this->error($data['msg']);
-    //         elseif($_POST['source'] == 'cart2')
-    //         {
-    //            header ('Location:'.U('/Mobile/Cart/cart2',array('address_id'=>$data['result'])));
-    //            exit;
-    //         }
 
-    //         $this->success($data['msg'],U('/Mobile/User/address_list'));
-    //         exit();
-    //     }
-    //     $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
-    //     $this->assign('province',$p);
-    //     //$this->display('edit_address');
-    //     $this->display();
-
-    // }
-
-    /*
-     * 地址编辑
-     */
-    // public function edit_address()
-    // {
-    //     $id = I('id');
-    //     $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
-    //     if(IS_POST)
-    //     {
-    //         $logic = new \Common\Logic\UsersLogic();
-    //         $data = $logic->add_address($this->user_id,$id,I('post.'));
-    //         if($_POST['source'] == 'cart2'){
-    //             header ('Location:'.U('/Mobile/Cart/cart2',array('address_id'=>$id)));
-    //             exit;
-    //         }
-    //         else
-    //             $this->success($data['msg'],U('/Mobile/User/address_list'));
-    //         exit();
-    //     }
-    //     //获取省份
-    //     $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
-    //     $c = M('region')->where(array('parent_id'=>$address['province'],'level'=> 2))->select();
-    //     $d = M('region')->where(array('parent_id'=>$address['city'],'level'=> 3))->select();
-    //     if($address['twon']){
-    //     	$e = M('region')->where(array('parent_id'=>$address['district'],'level'=>4))->select();
-    //     	$this->assign('twon',$e);
-    //     }
-
-    //     $this->assign('province',$p);
-    //     $this->assign('city',$c);
-    //     $this->assign('district',$d);
-
-    //     $this->assign('address',$address);
-    //     $this->display();
-    // }
 
     /*
      * 设置默认收货地址
