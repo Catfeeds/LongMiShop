@@ -97,15 +97,16 @@ class MobileBaseController extends BaseController {
     // 网页授权登录获取 OpendId
     public function GetOpenid()
     {
-        if($_SESSION['openid'])
+        if($_SESSION['openid']){
             return $_SESSION['openid'];
+        }
         //通过code获得openid
         if (!isset($_GET['code'])){
             //触发微信返回code码
             //$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
             $baseUrl = urlencode($this->get_url());
             $url = $this->__CreateOauthUrlForCode($baseUrl); // 获取 code地址
-            Header("Location: $url"); // 跳转到微信授权页面 需要用户确认登录的页面
+            header("Location: $url"); // 跳转到微信授权页面 需要用户确认登录的页面
             exit();
         } else {
             // 上面跳转, 这里跳了回来
@@ -114,7 +115,7 @@ class MobileBaseController extends BaseController {
             $data = $this->getOpenidFromMp($code);
             $data2 = $this->GetUserInfo($data['access_token'],$data['openid']);
             $data['nickname'] = $data2['nickname'];
-            $data['sex'] = $data2['sex'];
+            $data['sex'] = empty($data2['sex']) ? 1 : $data2['sex'] ;
             $data['headimgurl'] = $data2['headimgurl']; 
             $data['subscribe'] = $data2['subscribe'];                         
             $_SESSION['openid'] = $data['openid'];
