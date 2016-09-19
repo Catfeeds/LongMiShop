@@ -315,15 +315,17 @@ class UserController extends MobileBaseController {
         header("content-Type: text/html; charset=utf-8");
         $id = I('id');
         if(!empty($id)){
-           $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find(); 
+           $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
+           $citys  = $address['province']."|| {}".$address['city']."|| {}".$address['district']."|| {}";
+           // dd($citys);
         }
-        $region_list = include_once 'Application/Common/Conf/region.php'; 
+        // $region_list = include_once 'Application/Common/Conf/region.js'; 
+
         // $region_list = json_encode($region_list);
         if($address['twon']){
          $e = M('region')->where(array('parent_id'=>$address['district'],'level'=>4))->select();
          $this->assign('twon',$e);
         }
-        $this->assign('region_list',$region_list);
         $this->assign('address',$address);
         $this->display();
         
@@ -336,10 +338,14 @@ class UserController extends MobileBaseController {
     */
     public function save_address(){
         $id = I('address_id');
+        $data = I('post.');
+        $data['user_id'] = $this->user_id;
         if($id==0){ //新增
-            
+            $res = M('user_address')->add($data);
+            $res ? $this->success('新增成功',U('Mobile/User/address_list')) : $this->error('新增失败');
         }else{ //修改
-            
+            $res = M('user_address')->save($data);
+            $res ? $this->success('修改成功',U('Mobile/User/address_list')) : $this->error('修改失败');
         }
     }
     /*

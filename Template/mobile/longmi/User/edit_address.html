@@ -20,7 +20,7 @@
     <div class="mui-input-row mui-search mui-plus-visible">
       <input id="search" type="search" class="mui-input-speech mui-input-clear" placeholder="带语音输入的搜索框">
     </div>
-    <form class="mui-input-group" method="post" action="{: U('Mobile/User/save_address')}">
+    <form class="mui-input-group" method="post" action="{: U('Mobile/User/save_address')}" id="save_form">
       <input type="hidden" name="address_id" value="{: !empty($address)? $address['address_id'] : 0}">
       <div class="mui-input-row line">
         <label>收货人</label>
@@ -32,7 +32,10 @@
       </div>
       <div class="mui-input-row line" id='showCityPicker3'>
         <label >选择地地区</label>
-        <input type="text" id='cityResult3' placeholder="请选择" value="" readonly>
+        <input type="text" id='cityResult3' placeholder="请选择" value="{: $citys}" readonly name="citys">
+        <input type="hidden" id='province'  value="" readonly name="province">
+        <input type="hidden" id='city'  value="" readonly name="city">
+        <input type="hidden" id='district'  value="" readonly name="district">
       </div>
       <div class="mui-input-row line">
         <label>详细地址</label>
@@ -41,28 +44,40 @@
     </form>
   </div>
 </div>
- <div class="login_btn"><a href="{: U('Mobile/User/save_address')}">保存</a></div>
+ <div class="login_btn"><a href="javascript:void(0);" onclick="save_form()">保存</a></div>
  <div class="login_btn1"><a href="{: U('Mobile/User/address_list')}">取消</a></div>
 <script src="__STATIC__/js/mui.min.js"></script> 
+<script src="__STATIC__/js/jquery.js"></script>
 <script src="__STATIC__/js/mui.picker.js"></script> 
 <script src="__STATIC__/js/mui.poppicker.js"></script> 
-<script src="__STATIC__/js/city.data.js" type="text/javascript" charset="utf-8"></script> 
-<script src="__STATIC__/js/city.data-3.js" type="text/javascript" charset="utf-8"></script> 
+<script src="__ROOT__/Application/Common/Conf/region.js"></script>
+<!-- <script src="__STATIC__/js/city.data.js" type="text/javascript" charset="utf-8"></script>  -->
+<!-- <script src="__STATIC__/js/city.data-3.js" type="text/javascript" charset="utf-8"></script>  -->
 <script>
+
+      function save_form(){
+        $('#save_form').submit();
+      }
 			(function($, doc) {
 				$.init();
 				$.ready(function() {
 					var cityPicker3 = new $.PopPicker({
 						layer: 3
 					});
-          console.log("{: $region_list[0]}");return false;
-					cityPicker3.setData("{: $region_list}");
+          // console.log("{: $region_list}");return false;
+					cityPicker3.setData(cityData3);
           
 					var showCityPickerButton = doc.getElementById('showCityPicker3');
-					var cityResult3 = doc.getElementById('cityResult3');
+          var cityResult3 = doc.getElementById('cityResult3');
+          var province = doc.getElementById('province');
+          var city = doc.getElementById('city');
+          var district = doc.getElementById('district');
 					showCityPickerButton.addEventListener('tap', function(event) {
 						cityPicker3.show(function(items) {
-							cityResult3.value =(items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+              cityResult3.value =(items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+              province.value =(items[0] || {}).value;
+              city.value =(items[1] || {}).value;
+							district.value =(items[2] || {}).value;
 							//返回 false 可以阻止选择框的关闭
 							//return false;
 						});

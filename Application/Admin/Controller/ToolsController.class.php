@@ -408,7 +408,48 @@ class ToolsController extends BaseController {
         $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
         $c = M('region')->where(array('level'=> 2))->select();
         $d = M('region')->where(array('level'=> 3))->select();
-        $content = "<?php return $cityData3=array(" ;
+        $content = "var  cityData3 = [" ;
+        foreach($p as $key_p => $item_p){
+            $content .= "{ \r\n value: '".$item_p['id']."', \r\n";
+            $content .= " text : '" .$item_p['name']."', \r\n";
+            // $content .= " children : {}, \r\n";
+            
+            foreach($c as $key_c => $item_c){ 
+                if($key_c == 0){
+                   $content .= " children : [ "; 
+                }
+                if($item_p['id'] == $item_c['parent_id']){
+                  $content .= "{ \r\n value : '". $item_c['id']."', \r\n";
+                  $content .= " text : '".$item_c['name']."' , \r\n";
+
+                  foreach($d as $key_d => $item_d){
+                    if($key_d ==0 ){
+                       $content .= " children : [ ";  
+                    }
+                    if($item_d['parent_id'] == $item_c['id']){
+                        $content .= "{ \r\n value : '".$item_d['id']."', \r\n";
+                        $content .= " text : '".$item_d['name']."' ";
+                        $content .= "},";
+                    }
+                    if($key_d == count($d)-1 ){
+                        $content .= "] \r\n"; 
+                    }
+                    
+
+                  }
+
+                  $content .= "} ,";
+                }
+                if($key_c == count($c)-1 ){
+                  $content .= " \r\n ]";  
+                }
+                 
+            }
+            $content .= "} ,";
+            if($key_p == count($p)-1 ){
+                $content .= "\r\n ]"; 
+            } 
+        }
         // foreach($p as $key_p=>$item_p){
         //    $cityData[$key_p]['value'] = $item_p['id'];   
         //    $cityData[$key_p]['text'] = $item_p['name'];
@@ -427,7 +468,7 @@ class ToolsController extends BaseController {
             
         //    }
         // }
-        $path = "./Application/Common/Conf/region.php";
+        $path = "./Application/Common/Conf/region.js";
         $a = var_export($cityData, TRUE); 
         
         file_put_contents($path,$content);
