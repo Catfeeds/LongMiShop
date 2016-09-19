@@ -106,9 +106,10 @@
                 </div>
                 <div class="gray-sub-title">收货信息</div>
                 <div class="gray-sub-con">
-                    <p>姓名：刘华</p>
-                    <p>联系电话：13570303888</p>
-                    <p>详细地址：上海市市辖区徐汇区龙口东路</p>
+                    <p>姓名：{$order.consignee}</p>
+                    <p>联系电话：{$order.mobile}</p>
+                    <p>详细地址：{$region_list[$order['province']]['name']}，{$region_list[$order['city']]['name']}，
+                        {$region_list[$order['district']]['name']}，{$order.address}</p>
                 </div>
             </div>
         </div>

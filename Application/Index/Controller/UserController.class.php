@@ -69,7 +69,8 @@ class UserController extends BaseIndexController {
     public function logout(){
         session_unset();
         session_destroy();
-        $redirectedUrl = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Index/Index/index");
+//        $redirectedUrl = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Index/Index/index");
+        $redirectedUrl = U("Index/Index/index");
         header("Location: ".$redirectedUrl);
         exit;
     }
@@ -175,10 +176,9 @@ class UserController extends BaseIndexController {
         $formUrl = U('addressAdd');
         if(IS_POST){
             $logic = new UsersLogic();
-            $post = I('post.');
-            $data = $logic->add_address($this->user_id,0,$post);
-            if($data['status'] != 1){
-                $this->error('操作失败');exit;
+            $result = $logic -> setAddress($this->user_id,I('post.'));
+            if( !callbackIsTrue($result) ){
+                $this->error( $result['msg'] );exit;
             }
             $this->success("操作成功");exit;
         }
@@ -203,9 +203,9 @@ class UserController extends BaseIndexController {
         if(IS_POST){
             $id = I('post.id');
             $logic = new UsersLogic();
-            $data = $logic->add_address($this->user_id,$id,I('post.'));
-            if($data['status'] != 1) {
-                $this->error('操作失败');exit;
+            $result = $logic -> setAddress($this->user_id,I('post.'),$id);
+            if( !callbackIsTrue($result) ) {
+                $this->error($result['msg']);exit;
             }
             $this->success("操作成功");exit;
         }
@@ -253,7 +253,7 @@ class UserController extends BaseIndexController {
         if($address['is_default'] == 1)
         {
             $address = M('user_address')->where("user_id = {$this->user_id}")->find();
-            M('user_address')->where("address_id = {$address['address_id']}")->save(array('is_default'=>1));
+            M('user_address')->where("address_id = '{$address['address_id']}'")->save(array('is_default'=>1));
         }
         if(!$row)
             $this->error('操作失败');
@@ -288,7 +288,9 @@ class UserController extends BaseIndexController {
         $data = $orderLogic -> getOrderGoods($order['order_id']);
         $this->assign('goodsList',$data['data']);
 
+        $region_list = get_region_list();
         $this->assign('paymentList',$paymentList);
+        $this->assign('region_list',$region_list);
         $this->assign('bank_img',$bank_img);
         $this->assign('order',$order);
         $this->assign('bankCodeList',$bankCodeList);
@@ -333,11 +335,7 @@ class UserController extends BaseIndexController {
                 $data['user_id'] = $this->user_id;
                 $res = $this->users->save($data);
                 if($res){
-                    session_unset();
-                    session_destroy();
-                    $this->success('修改成功,请重新登录',U('Index/Index/index'));
-
-
+                    $this->success('修改成功',U('Index/User/index'));
                 }else{
                     $this->error('修改失败',U('/Index/User/edit_pwd'));
                 }

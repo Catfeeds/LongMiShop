@@ -5,6 +5,24 @@
 <title>龙米</title>
 <link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/css/mui.min.css" rel="stylesheet" type="text/css" />
+  <style>
+    .in4_r1_btn input {
+      border-radius: 4px;
+      background-image: -moz-linear-gradient( 90deg, rgb(239,239,239) 0%, rgb(255,255,255) 100%);
+      background-image: -webkit-linear-gradient( 90deg, rgb(239,239,239) 0%, rgb(255,255,255) 100%);
+      background-image: -ms-linear-gradient( 90deg, rgb(239,239,239) 0%, rgb(255,255,255) 100%);
+      box-shadow: 0.5px 0.866px 7px 0px rgb( 234, 234, 234 );
+      height: 54px;
+      display: block;
+      line-height: 43px;
+      color: #999999;
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 20px;
+      float: right;
+      width: 220px;
+    }
+  </style>
 </head>
 <body>
 <form  method="post" cation="{: U('Index/User/mobile_validate')}" id="edit_phone"> 
@@ -20,8 +38,8 @@
    
       <input name="code" type="text" class="pop_text1 icon_bg" placeholder="请输入验证码" style="width:50%; margin-top:0px; float:left; background-image:url(__PUBLIC__/img/icon-b.png)" id="new_code">
       <div class="in4_r1_btn">
-      <input type="button" intervaltime="{: $time}" value="获取验证码 " id="btnemailAuthCode2" onClick="sendCode(this,'new_mobile')">
-      <!-- <a href="javascript:void(0);" id="btnemailAuthCode2" onClick="sendCode(this,'new_mobile')">点击发送</a> -->
+        <input type="button" intervaltime="{: $time}" value="获取验证码 " id="btnemailAuthCode2" onClick="sendCode(this,'new_mobile')">
+       <!--<a intervaltime="{: $time}" value="获取验证码 " id="btnemailAuthCode2" onClick="sendCode(this,'new_mobile')">获取验证码</a>-->
       </div>
       <div style="clear:both"></div>
       <div class="m5_btn"><a href="javascript:void(0);" onclick="check_form()">下一步</a></div>
@@ -69,12 +87,10 @@ function check_form()
             url  : "/index.php?m=Index&c=User&a=send_sms_reg&send="+input,
             dataType : 'json',
             error: function(request) {
-                console.log(request);
                 alert('服务器繁忙, 请联系管理员!');//alert("服务器繁忙, 请联系管理员!");
                 return;
             },
             success: function(res) {
-              console.log(res);
                 if(res.status == 1){
                     jsInnerTimeout(id);
                 }else{
@@ -91,7 +107,6 @@ function check_phone(input){
     url :"/index.php?m=Index&c=User&a=check_phones&phone="+input,
     dataType : 'json',
     error: function(request) {
-        console.log(request);
         alert('服务器繁忙, 请联系管理员!');//alert("服务器繁忙, 请联系管理员!");
         return;
     },

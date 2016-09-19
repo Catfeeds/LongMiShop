@@ -603,7 +603,7 @@ function get_region_list(){
  * 获取用户地址列表
  */
 function get_user_address_list($user_id){
-    $lists = M('user_address')->where(array('user_id'=>$user_id))->select();
+    $lists = M('user_address')->where(array('user_id'=>$user_id)) ->order('address_id desc')->select();
     return $lists;
 }
 

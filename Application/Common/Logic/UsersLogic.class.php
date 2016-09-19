@@ -183,7 +183,8 @@ class UsersLogic extends BaseLogic
          $user_info['order_count'] = $user_info['waitPay'] + $user_info['waitSend'] + $user_info['waitReceive'];
          return array('status'=>1,'msg'=>'获取成功','result'=>$user_info);
      }
-     
+
+
     /*
      * 获取最近一笔订单
      */
@@ -514,6 +515,7 @@ class UsersLogic extends BaseLogic
             if($post['is_default'] == 1 && $address['is_default'] != 1)
                 M('user_address')->where(array('user_id'=>$user_id))->save(array('is_default'=>0));
             $row = M('user_address')->where(array('address_id'=>$address_id,'user_id'=> $user_id))->save($post);
+            dd($post);
             if(!$row)
                 return array('status'=>-1,'msg'=>'操作完成','result'=>'');
             return array('status'=>1,'msg'=>'编辑成功','result'=>'');
@@ -538,6 +540,68 @@ class UsersLogic extends BaseLogic
         
         
         return array('status'=>1,'msg'=>'添加成功','result'=>$address_id);
+    }
+
+    /**
+     * 地址添加/编辑
+     * @param $userId 用户id
+     * @param $data 数据
+     * @param int $addressId 地址id(编辑时需传入)
+     * @return array
+     */
+    public function setAddress($userId,$data,$addressId=0){
+        $userAddressModel = M('user_address');
+        $saveData = array(
+            "consignee"     => $data["consignee"],
+            "mobile"        => $data["mobile"],
+            "province"      => $data["province"],
+            "city"          => $data["city"],
+            "district"      => $data["district"],
+            "address"       => $data["address"],
+            "twon"          => time(),
+        );
+        $isDefault = empty($data['is_default']) ? 0 : 1;
+
+        if( $saveData['consignee'] == ''){
+            return callback( false , '收货人不能为空' );
+        }
+        if( !$saveData['province'] || !$saveData['city'] || !$saveData['district']){
+            return callback( false , '所在地区不能为空' );
+        }
+        if( !$saveData['address'] ){
+            return callback( false , '地址不能为空' );
+        }
+        if( !check_mobile( $saveData['mobile'] ) ){
+            return callback( false , '手机号码格式有误' );
+        }
+
+        if( $isDefault == 1 ){
+            $saveData['is_default'] = 1;
+            $userAddressModel -> where(array('user_id'=>$userId)) -> save(array('is_default'=>0));
+        }
+
+
+        if($addressId <= 0){
+            $addressCount = $userAddressModel -> where( array('user_id'=>$userId) ) -> count();
+            if($addressCount >= 20){
+                return callback( false , '最多只能添加20个收货地址' );
+            }
+            if( $addressCount <= 0 ){
+                $saveData['is_default'] = 1;
+            }
+            $saveData['user_id'] = $userId;
+            $addressId = $userAddressModel -> add($saveData);
+            if( !empty($addressId) ){
+                return callback( true , '添加成功' , $addressId );
+            }
+            return callback( false , '添加失败' );
+        }else{
+            $row = $userAddressModel -> where( array('address_id'=>$addressId,'user_id'=> $userId) ) -> save($saveData);
+            if( !empty($row) ){
+                return callback( true , '编辑成功' );
+            }
+            return callback( false , '保存编辑失败' );
+        }
     }
 
     /**
