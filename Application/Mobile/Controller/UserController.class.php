@@ -312,23 +312,18 @@ class UserController extends MobileBaseController {
      * 收货地址视图
      */
     public function edit_address(){
+        header("content-Type: text/html; charset=utf-8");
         $id = I('id');
         if(!empty($id)){
            $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find(); 
         }
-        // 获取省份
-        $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
-        $c = M('region')->where(array('parent_id'=>$address['province'],'level'=> 2))->select();
-        $d = M('region')->where(array('parent_id'=>$address['city'],'level'=> 3))->select();
+        $region_list = include_once 'Application/Common/Conf/region.php'; 
+        // $region_list = json_encode($region_list);
         if($address['twon']){
          $e = M('region')->where(array('parent_id'=>$address['district'],'level'=>4))->select();
          $this->assign('twon',$e);
         }
-
-        $this->assign('province',$p);
-        $this->assign('city',$c);
-        $this->assign('district',$d);
-
+        $this->assign('region_list',$region_list);
         $this->assign('address',$address);
         $this->display();
         

@@ -55,9 +55,9 @@
 					var cityPicker3 = new $.PopPicker({
 						layer: 3
 					});
-
-					cityPicker3.setData(cityData3);
-          console.log(cityData3);
+          console.log("{: $region_list[0]}");return false;
+					cityPicker3.setData("{: $region_list}");
+          
 					var showCityPickerButton = doc.getElementById('showCityPicker3');
 					var cityResult3 = doc.getElementById('cityResult3');
 					showCityPickerButton.addEventListener('tap', function(event) {
