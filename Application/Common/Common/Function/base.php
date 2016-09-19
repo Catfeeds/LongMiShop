@@ -623,7 +623,6 @@ function isSuccessToAddData( $tableName , $data = array() ){
     return true;
 }
 
-
 /**
  * 获取购物车数量
  * @param $sessionId

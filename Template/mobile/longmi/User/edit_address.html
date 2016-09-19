@@ -33,9 +33,9 @@
       <div class="mui-input-row line" id='showCityPicker3'>
         <label >选择地地区</label>
         <input type="text" id='cityResult3' placeholder="请选择" value="{: $citys}" readonly name="citys">
-        <input type="hidden" id='province'  value="" readonly name="province">
-        <input type="hidden" id='city'  value="" readonly name="city">
-        <input type="hidden" id='district'  value="" readonly name="district">
+        <input type="hidden" id='province'  value="{$address['province']}" readonly name="province">
+        <input type="hidden" id='city'  value="{$address['city']}" readonly name="city">
+        <input type="hidden" id='district'  value="{$address['district']}" readonly name="district">
       </div>
       <div class="mui-input-row line">
         <label>详细地址</label>
@@ -72,13 +72,22 @@
       var city = doc.getElementById('city');
       var district = doc.getElementById('district');
 
-      cityPicker3.pickers[0].setSelectedIndex("{$region_list[$address['province']]['name']}");
-      cityPicker3.pickers[0].setSelectedValue("{$address['province']}");
-      cityPicker3.pickers[1].setSelectedIndex("{$region_list[$address['city']]['name']}");
-      cityPicker3.pickers[1].setSelectedValue("{$address['city']}");
-      cityPicker3.pickers[2].setSelectedIndex("{$region_list[$address['district']]['name']}");
-      cityPicker3.pickers[2].setSelectedValue("{$address['district']}");
-      console.log(cityPicker3.pickers);
+      var setSelectedDistrictValue = function(){
+        cityPicker3.pickers[2].setSelectedValue('{$address["district"]}',1000);
+        if(cityPicker3.pickers[2].getSelectedValue() != "{$address['district']}"){
+          setTimeout(setSelectedDistrictValue,100);
+        }
+      }
+      var setSelectedCityValue = function(){
+        cityPicker3.pickers[1].setSelectedValue('{$address["city"]}',1000);
+        if(cityPicker3.pickers[1].getSelectedValue() == "{$address['city']}"){
+          setTimeout(setSelectedDistrictValue,1000);
+        }else{
+          setTimeout(setSelectedCityValue,100);
+        }
+      }
+      cityPicker3.pickers[0].setSelectedValue("{$address['province']}" ,1000, setSelectedCityValue);
+
       showCityPickerButton.addEventListener('tap', function(event) {
         cityPicker3.show(function(items) {
           cityResult3.value =(items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
