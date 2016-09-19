@@ -491,7 +491,7 @@ class UserController extends MobileBaseController {
         $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $user_info = $user_info['result'];
-
+        // dd($user_info);
         if(IS_POST){
             I('post.nickname') ? $post['nickname'] = I('post.nickname') : false; //昵称
             I('post.qq') ? $post['qq'] = I('post.qq') : false;  //QQ号码
@@ -578,7 +578,25 @@ class UserController extends MobileBaseController {
     public function edit_mobile(){
         $item = 60;
         if(IS_POST){
-            $data['mobile']  = I('mobile');
+            $mobile  = I('mobile');
+            $code = I('phone_code');
+            // dd($code);
+            $userLogic = new UsersLogic();
+            $info = $userLogic->sms_code_verify($mobile,$code,$this->session_id);
+            if($info['status'] == 1){
+                $where['mobile'] = $mobile;
+                $where['mobile_validated'] = 1;
+                $where['user_id'] =  $this->user_id;
+                $res = M('users')->save($where);
+                if($res){
+                  $this->success('绑定成功',U('Mobile/User/userinfo'));exit;
+                }else{
+                    $this->error('绑定失败');exit;
+                }
+            }else{
+                $this->error($info['msg']);
+            }
+            exit;
 
         }
         $userLogic = new \Common\Logic\UsersLogic();
@@ -592,10 +610,29 @@ class UserController extends MobileBaseController {
     public function edit_password(){
         $item = 60;
         if(IS_POST){
-            $data = I('post.');
-            $data['user_id'] = $this->user_id;
-            $res = M('users')->save($data);
-            $res ?  exit(json_encode(callback(true,"修改成功"))) : exit(json_encode(callback(false,"修改失败")));
+            $mobile  = I('mobile');
+            $code = I('phone_code');
+            $password = I('password');
+            $password = encrypt($pwd);
+            $user = M('users')->field('password')->where("user_id = '".$this->user_id."'")->find();
+            if($user['password'] == $password){
+                $this->error('新密码和旧密码一致');exit;
+            }
+            $userLogic = new UsersLogic();
+            $info = $userLogic->sms_code_verify($mobile,$code,$this->session_id);
+            if($info['status'] == 1){
+                $where['password'] = $password;
+                $where['user_id'] =  $this->user_id;
+                $res = M('users')->save($where);
+                if($res){
+                  $this->success('修改成功',U('Mobile/User/userinfo'));
+                }else{
+                    $this->error('修改失败');
+                }
+            }else{
+                $this->error($info['msg']);
+            }
+            exit;
         }
         $this->assign('item',$item);
         $this->display();
@@ -643,46 +680,67 @@ class UserController extends MobileBaseController {
         $this->display();
     }
 
-    /*
-    * 手机验证
-    */
-    public function mobile_validate(){
-        $userLogic = new \Common\Logic\UsersLogic();
-        $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
-        $user_info = $user_info['result'];
-        $step = I('get.step',1);
-        //验证是否未绑定过
-        if($user_info['mobile_validated'] == 0)
-            $step = 2;
-        //原手机验证是否通过
-        if($user_info['mobile_validated'] == 1 && session('mobile_step1') == 1)
-            $step = 2;
-        if($user_info['mobile_validated'] == 1 && session('mobile_step1') != 1)
-            $step = 1;
-        if(IS_POST){
-            $mobile = I('post.mobile');
-            $code = I('post.code');
-            $info = session('mobile_code');
-            if(!$info)
-                $this->error('非法操作');
-            if($info['email'] == $mobile || $info['code'] == $code){
-                if($user_info['email_validated'] == 0 || session('email_step1') == 1){
-                    session('mobile_code',null);
-                    session('mobile_step1',null);
-                    if(!$userLogic->update_email_mobile($mobile,$this->user_id,2))
-                        $this->error('手机已存在');
-                    $this->success('绑定成功',U('Home/User/index'));
-                }else{
-                    session('mobile_code',null);
-                    session('email_step1',1);
-                    redirect(U('Home/User/mobile_validate',array('step'=>2)));
-                }
-                exit;
-            }
-            $this->error('验证码手机不匹配');
+    // /*
+    // * 手机验证
+    // */
+    // public function mobile_validate(){
+    //     $userLogic = new UsersLogic();
+    //     $user_info = $userLogic->get_info($this->user_id); //获取用户信息
+    //     $user_info = $user_info['result'];
+    //     $config = tpCache('sms');
+    //     $sms_time_out = $config['sms_time_out'];
+    //     $step = I('get.step',1);
+    //     //验证是否未绑定过
+    //     if($user_info['mobile_validated'] == 0)
+    //         $step = 2;
+    //     //原手机验证是否通过
+    //     if($user_info['mobile_validated'] == 1 && session('mobile_step1') == 1)
+    //         $step = 2;
+    //     if($user_info['mobile_validated'] == 1 && session('mobile_step1') != 1)
+    //         $step = 1;
+    //     if(IS_POST){ //修改绑定手机
+    //         $mobile = I('post.mobile');
+    //         $code = I('post.code');
+    //         $info = $userLogic->sms_code_verify($mobile,$code,$this->session_id);
+    //         if($info['status'] == 1){
+    //             $where['mobile'] = $mobile;
+    //             $where['mobile_validated'] = 1;
+    //             $where['user_id'] =  $this->user_id;
+    //             $res = $this->users->save($where);
+    //             $res ? $this->success('绑定成功',U('Index/User/info')) :  $this->error('绑定失败');
+    //         }else{
+    //             $this->error($info['msg']);
+    //         }
+    //         exit;
+    //     }
+    //     $phone = $user_info['mobile'];
+    //     $this->assign('time',$sms_time_out);
+    //     $this->assign('step',$step);
+    //     $this->assign('phone',$phone);
+    //     $this->display();
+    // }
+
+    //手机验证码发送
+    public function send_sms_reg(){
+        exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
+        $mobile = I('send');
+        if(!check_mobile($mobile))
+            exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
+        $where['mobile'] = $mobile;
+        $user_res = M('users')->where($where)->find();
+        if($user_res['user_id'] == $this->user_id ){
+            exit(json_encode(array('status'=>-1,'msg'=>'修改号码和旧号码一致')));
+        }else if(!empty($user_res)){
+            if($user_res['user_id'] != $this->user_id){
+                exit(json_encode(array('status'=>-1,'msg'=>'此手机已被注册')));
+            }  
         }
-        $this->assign('step',$step);
-        $this->display();
+        $userLogic = new UsersLogic();
+        $code =  rand(1000,9999);
+        // $send = $userLogic->sms_log($mobile,$code,$this->session_id);
+        if($send['status'] != 1)
+            exit(json_encode(array('status'=>-1,'msg'=>$send['msg'])));
+        exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
     }
 
     public function collect_list(){
