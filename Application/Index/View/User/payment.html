@@ -124,24 +124,52 @@
 </form>
 <include file="Public/footer"/>
 <script>
+    var needMonitorOrderStatus = false;
+
     $(document).ready(function(){
         $("input[name='pay_radio']").first().trigger('click');
+        setWeChatCode();
+        setInterval("monitorOrderStatus()",2000);
     });
+
     // 切换支付方式
     function change_pay(obj)
     {
         $(obj).siblings('input[name="pay_radio"]').trigger('click');
+        setWeChatCode();
+    }
+
+    function setWeChatCode(){
         var checkedValue = $('input[name="pay_radio"]:checked').val();
         if(checkedValue == "pay_code=weixin"){
+            needMonitorOrderStatus = true;
             $('#weChatCode').show();
             $('#submitBtn').hide();
         }else{
+            needMonitorOrderStatus = false;
             $('#weChatCode').hide();
             $('#submitBtn').show();
         }
-
     }
+
+    function monitorOrderStatus(){
+        if( needMonitorOrderStatus == true ){
+            $.ajax({
+                url : "{:U('Index/Order/getOrderPayStatus',array('orderId'=>$order['order_id']))}",
+                dataType : 'json',
+                success : function(res){
+                    if(res.state == 1){
+                        window.location.href = "{:U('Index/Order/orderDetail',array('id'=>$order['order_id']))}";
+                    }
+                }
+            })
+        }
+    }
+
 </script>
+<style>
+    #weChatCode img{width:196px !important;    height: 196px !important;}
+</style>
 </body>
 </html>
 
