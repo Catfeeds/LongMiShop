@@ -29,3 +29,14 @@
 	</div>
 </div>
 
+<script>
+	$('.m333').find('li').each(function (i) {
+		$(this).click(function () {
+			$('.m333').find('li').removeClass('m333_hover');
+			$('.m333').find('li input').attr("checked",false);
+			$(this).addClass('m333_hover');
+			$(this).find('input').attr("checked",true);
+		})
+	});
+</script>
+

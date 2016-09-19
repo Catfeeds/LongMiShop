@@ -63,8 +63,12 @@
                         <if condition="$user['email_validated'] eq 0">
                             <p>绑定邮箱后，可用邮箱登录。</p>
                             <div class="safe-todo">
+                            <empty name="$user['email']">
+                                <a href="{: U('Index/User/edit_email')}" target="_blank">绑定</a>
+                                <else/>
                                 <a href="{:U('Index/User/email_validate')}" target="_blank">发送验证邮件</a>
                                 <a href="{: U('Index/User/edit_email')}" target="_blank">修改</a>
+                            </empty>
                             </div>
                             <else/>
                             <p>您验证的邮箱：{$user.email}</p>
