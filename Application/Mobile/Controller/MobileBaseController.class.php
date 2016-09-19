@@ -23,7 +23,7 @@ class MobileBaseController extends BaseController {
             cookie('is_mobile','0',3600);                 
         
         //微信浏览器
-        if(1==1 || strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
+        if(strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
             //获取微信配置
             $wechat_list = M('wx_user')->select();
             $wechat_config = $wechat_list[0];
