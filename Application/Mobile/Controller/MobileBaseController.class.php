@@ -23,7 +23,7 @@ class MobileBaseController extends BaseController {
             cookie('is_mobile','0',3600);                 
         
         //微信浏览器
-        if(strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
+        if(1==1 || strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
             //获取微信配置
             $wechat_list = M('wx_user')->select();
             $wechat_config = $wechat_list[0];
@@ -45,11 +45,11 @@ class MobileBaseController extends BaseController {
                     'nickname'=>trim($wxuser['nickname']) ? trim($wxuser['nickname']) : '微信用户',
                     'sex'=>$wxuser['sex'],
                     'head_pic'=>$wxuser['headimgurl'],
-                );                                                   
-                
+                );
                 $logic = new \Common\Logic\UsersLogic();
-                $data = $logic->thirdLogin($data);                                
-                
+                $data = $logic->thirdLogin($data);
+
+
                 if($data['status'] == 1){
                     session('user',$data['result']);
                     setcookie('user_id',$data['result']['user_id'],null,'/');
@@ -156,7 +156,6 @@ class MobileBaseController extends BaseController {
         $res = curl_exec($ch);//运行curl，结果以jason形式返回            
         $data = json_decode($res,true);//取出openid access_token                
         curl_close($ch);
-                
         return $data;
     }
     
