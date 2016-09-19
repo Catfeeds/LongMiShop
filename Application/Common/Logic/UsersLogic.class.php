@@ -561,7 +561,6 @@ class UsersLogic extends BaseLogic
             "city"          => $data["city"],
             "district"      => $data["district"],
             "address"       => $data["address"],
-            "twon"          => time(),
         );
         $isDefault = empty($data['is_default']) ? 0 : 1;
 
@@ -583,7 +582,6 @@ class UsersLogic extends BaseLogic
             $userAddressModel -> where(array('user_id'=>$userId)) -> save(array('is_default'=>0));
         }
 
-
         if($addressId <= 0){
             $addressCount = $userAddressModel -> where( array('user_id'=>$userId) ) -> count();
             if($addressCount >= 20){
@@ -599,11 +597,11 @@ class UsersLogic extends BaseLogic
             }
             return callback( false , '添加失败' );
         }else{
-            $row = $userAddressModel -> where( array('address_id'=>$addressId,'user_id'=> $userId) ) -> save($saveData);
-            if( !empty($row) ){
-                return callback( true , '编辑成功' );
+            $result = $userAddressModel -> where( array('address_id'=>$addressId,'user_id'=> $userId) ) -> save($saveData);
+            if ( $result === FALSE ) {
+                return callback( false , '保存编辑失败' );
             }
-            return callback( false , '保存编辑失败' );
+            return callback( true , '编辑成功' );
         }
     }
 
