@@ -5,6 +5,24 @@
 <title>龙米</title>
 <link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/css/mui.min.css" rel="stylesheet" type="text/css" />
+<style>
+  .in4_r1_btn input {
+  border-radius: 4px;
+  background-image: -moz-linear-gradient( 90deg, rgb(239,239,239) 0%, rgb(255,255,255) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(239,239,239) 0%, rgb(255,255,255) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(239,239,239) 0%, rgb(255,255,255) 100%);
+  box-shadow: 0.5px 0.866px 7px 0px rgb( 234, 234, 234 );
+  height: 54px;
+  display: block;
+  line-height: 44px;
+  color: #999999;
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+  float: right;
+  width: 220px;
+}
+</style>
 </head>
 <body>
 <div class="mydiv1">
@@ -16,7 +34,7 @@
       <p style="font-size:24px; padding-bottom:20px">验证邮件发送成功</p>
       <p  style="color:#CCC">如果没有收到邮件，请检查垃圾邮件，或点击重新发送按钮</p>
       <div class="in4_box">
-        <div class="in4_l_btn"><a href="#">查看我的邮箱</a></div>
+        <div class="in4_l_btn"><a href="http://{: $email_url}" target="_blank">查看我的邮箱</a></div>
         <div class="in4_r1_btn">
         <input type="button" intervaltime="{: session('Interval')}" value="重新发送邮件 " id="btnemailAuthCode2" onClick="sendCode(this)">
         <!-- <a href="#">重新发送邮件（298）</a> -->
