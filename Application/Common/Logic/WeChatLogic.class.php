@@ -5,7 +5,7 @@ use Common\Logic\Base\BaseLogic;
 
 class WeChatLogic extends BaseLogic
 {
-    
+
     const  ACCESS_TOKEN_URL     = "https://api.weixin.qq.com/sns/oauth2/access_token?";
     const  SNS_USER_INFO_URL    = "https://api.weixin.qq.com/sns/userinfo?";
     const  USER_INFO_URL        = "https://api.weixin.qq.com/cgi-bin/user/info?";
@@ -65,7 +65,9 @@ class WeChatLogic extends BaseLogic
             //获取code码，以获取openid
             $code = $_GET['code'];
             $data = $this -> getOpenidFromMp($code);
+            setLogResult("data1".json_encode($data));
             $data2 = $this -> getUserInfo( $data['access_token'],$data['openid']);
+            setLogResult("data2".json_encode($data2));
             $data['nickname'] = $data2['nickname'];
             $data['sex'] = empty($data2['sex']) ? 1 : $data2['sex'] ;
             $data['headimgurl'] = $data2['headimgurl'];
