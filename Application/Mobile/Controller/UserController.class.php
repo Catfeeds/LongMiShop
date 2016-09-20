@@ -15,14 +15,14 @@ class UserController extends MobileBaseController {
     public function _initialize() {
         parent::_initialize();
         // dd(session('lm_UserId'));
-        if(session('?lm_UserId'))
+        if(session('?'.__UserID__))
         {
-            $user = session('lm_UserId');
-
-            $user = M('users')->where("user_id = {$user['user_id']}")->find();
-            session('user',$user);  //覆盖session 中的 user                               
+            $user_id = session(__UserID__);
+            dd($user);
+            $user = M('users')->where("user_id = {$user_id}")->find();
+            session('user',$user);  //覆盖session 中的 user
         	$this->user = $user;
-        	$this->user_id = $user['user_id'];
+        	$this->user_id = $user_id;
         	$this->assign('user',$user); //存储用户信息
         }        
         $nologin = array(
@@ -50,6 +50,7 @@ class UserController extends MobileBaseController {
     public function index(){
         
         $order_count = M('order')->where("user_id = {$this->user_id}")->count(); // 我的订单数
+        dd($this->user_id);
         $goods_collect_count = M('goods_collect')->where("user_id = {$this->user_id}")->count(); // 我的商品收藏
         $comment_count = M('comment')->where("user_id = {$this->user_id}")->count();//  我的评论数
         $coupon_count = M('coupon_list')->where("uid = {$this->user_id}")->count(); // 我的优惠券数量
@@ -491,7 +492,7 @@ class UserController extends MobileBaseController {
         $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $user_info = $user_info['result'];
-        // dd($user_info);
+//        dd($user_info);
         if(IS_POST){
             I('post.nickname') ? $post['nickname'] = I('post.nickname') : false; //昵称
             I('post.qq') ? $post['qq'] = I('post.qq') : false;  //QQ号码
