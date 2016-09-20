@@ -60,4 +60,19 @@ class BaseController extends Controller
             return;
         }
     }
+//
+//
+//    /**
+//     * 是否需要验证
+//     * @return bool
+//     */
+//    protected function needAuth(){
+//        if ($this->exceptAuthActions() == null) {
+//            return true;
+//        }
+//        if (in_array(ACTION_NAME, $this->exceptAuthActions())) {
+//            return false;
+//        };
+//        return true;
+//    }
 }

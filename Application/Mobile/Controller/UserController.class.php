@@ -8,8 +8,9 @@ use Think\Verify;
 class UserController extends MobileBaseController {
     
     public $user_id = 0;
-    public $user = array();    
-        /*
+    public $user = array();
+
+        /**
         * 初始化操作
         */
     public function _initialize() {

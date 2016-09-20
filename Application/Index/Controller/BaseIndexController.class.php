@@ -11,7 +11,7 @@ abstract class BaseIndexController extends BaseController {
 
 
 
-    abstract function exceptAuthActions();
+//    abstract function exceptAuthActions();
 
     public function _initialize() {
         parent::_initialize();
@@ -37,13 +37,14 @@ abstract class BaseIndexController extends BaseController {
     }
 
     protected function needAuth(){
-        if ($this->exceptAuthActions() == null) {
-            return true;
-        }
-        if (in_array(ACTION_NAME, $this->exceptAuthActions())) {
-            return false;
-        };
-        return true;
+        return false;
+//        if ($this->exceptAuthActions() == null) {
+//            return true;
+//        }
+//        if (in_array(ACTION_NAME, $this->exceptAuthActions())) {
+//            return false;
+//        };
+//        return true;
     }
 
 }
