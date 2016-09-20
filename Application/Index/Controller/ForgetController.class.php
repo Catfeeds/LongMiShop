@@ -235,18 +235,24 @@ class ForgetController extends BaseIndexController {
            $this->error('链接已失效，请重新发送邮件',U('Index/Forget/index')); 
         }
         if(IS_POST){
-            $data['password'] = encrypt(I('password'));
+            $password = I('password');
             $data['user_id'] = $user_id;
-            $detection = M('users')->where($data)->count();
-            if($detection){
+            $userInfo = M('users')->where($data)->find();
+            if($userInfo['password'] == encrypt($password)){
                 $this->error('修改密码不能和旧密码一致');exit;
             }
+            $username = $userInfo['email'];
+            $data['password'] = encrypt($password);
             $res = M('users')->save($data);
             if($res){
-                session_unset();
-                session_destroy();
                 M('email_log')->where($where)->delete();
-               $this->success('修改成功,请用新密码登录',U('Index/Index/index'));
+                $logic = new \Common\Logic\UsersLogic();
+                $result = $logic->login($username,$password);
+                if( !callbackIsTrue($result) ){
+                    $this->error($result['msg']);
+                    exit;
+                }
+               $this->success('修改成功',U('Index/Index/index'));
             }else{
                 $this->error('修改失败',U('Index/Forget/index'));
             }
