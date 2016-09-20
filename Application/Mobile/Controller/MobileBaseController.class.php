@@ -1,6 +1,6 @@
 <?php
 namespace Mobile\Controller;
-use Home\Logic\UsersLogic;
+
 use Common\Base\BaseController;
 class MobileBaseController extends BaseController {
     public $user = array();

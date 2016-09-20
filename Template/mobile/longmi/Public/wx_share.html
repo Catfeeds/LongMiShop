@@ -71,7 +71,7 @@ wx.ready(function(){
 
 
 <!--微信关注提醒 start-->
-<if condition="$Think.session.subscribe eq 0">
+<if condition=" 1== 1 && $Think.session.subscribe eq 0">
 <button class="guide" onclick="follow_wx()">关注公众号</button>
 <style type="text/css">
 .guide{width:20px;height:100px;text-align: center;border-radius: 8px ;font-size:12px;padding:8px 0;border:1px solid #adadab;color:#000000;background-color: #fff;position: fixed;right: 6px;bottom: 200px;}
@@ -96,3 +96,4 @@ function follow_wx()
 </script> 
 </if>
 <!--微信关注提醒  end-->
+<!--<php>echo "openid":$_SESSION['openid']."22";print_r($_SESSION);</php>-->
