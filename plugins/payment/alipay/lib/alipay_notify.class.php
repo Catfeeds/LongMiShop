@@ -38,6 +38,8 @@ class AlipayNotify {
      * @return 验证结果
      */
 	function verifyNotify(){
+			$log_text = "ininininin";
+			logResult($log_text);
 		if(empty($_POST)) {//判断POST来的数组是否为空
 			return false;
 		}
