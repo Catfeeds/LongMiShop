@@ -9,7 +9,7 @@ class WeChatLogic extends BaseLogic
     const  ACCESS_TOKEN_URL     = "https://api.weixin.qq.com/sns/oauth2/access_token?";
     const  SNS_USER_INFO_URL    = "https://api.weixin.qq.com/sns/userinfo?";
     const  USER_INFO_URL        = "https://api.weixin.qq.com/cgi-bin/user/info?";
-    const  AUTHORIZATION_URL    = "https://open.weixin.qq.com/connect/oauth2/authorize? ";
+    const  AUTHORIZATION_URL    = "https://open.weixin.qq.com/connect/oauth2/authorize?";
 
 
 
@@ -209,13 +209,13 @@ class WeChatLogic extends BaseLogic
     private function _getWeChatConfig()
     {
         $this -> weChatConfig = M('wx_user') -> where(array()) -> find();
-        $this -> _getMainWechatConfig();
+        $this -> _getMainWeChatConfig();
         return $this -> weChatConfig ;
     }
     /**
      * 获取主服务号微信配置
      */
-    private function _getMainWechatConfig()
+    private function _getMainWeChatConfig()
     {
         if( $this -> weChatConfig['type'] == 1 || $this -> weChatConfig['type'] == 2 ){
             $weChatConfig = M('wx_myuser') -> find();
