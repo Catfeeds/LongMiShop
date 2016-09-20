@@ -252,7 +252,7 @@ class UserController extends BaseIndexController {
         // 如果删除的是默认收货地址 则要把第一个地址设置为默认收货地址
         if($address['is_default'] == 1)
         {
-            $address = M('user_address')->where("user_id = {$this->user_id}")->find();
+            $address = M('user_address')->where("user_id = '{$this->user_id}'")->find();
             M('user_address')->where("address_id = '{$address['address_id']}'")->save(array('is_default'=>1));
         }
         if(!$row)
@@ -263,7 +263,11 @@ class UserController extends BaseIndexController {
 
     public function payment(){
         $order_id = I('order_id');
-        $order = M('Order')->where("order_id = $order_id")->find();
+        $order = M('Order')->where(array('order_id' => $order_id,'user_id' => $this->user_id))->find();
+        if( empty($order) ){
+            $order_list_url = U("Index/Order/orderList");
+            header("Location: $order_list_url");
+        }
         // 如果已经支付过的订单直接到订单详情页面. 不再进入支付页面
         if($order['pay_status'] == 1){
             $order_detail_url = U("Index/Order/orderDetail",array('id'=>$order_id));

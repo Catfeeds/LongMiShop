@@ -64,21 +64,22 @@ class PaymentController extends BaseIndexController {
     }
 
 
-    // 服务器点对点 // http://www.tp-shop.cn/index.php/Home/Payment/notifyUrl
+    // 服务器点对点
     public function notifyUrl(){
         $this->payment->response();
         exit();
     }
 
-    // 页面跳转 // http://www.tp-shop.cn/index.php/Home/Payment/returnUrl
+    // 页面跳转
     public function returnUrl(){
         $result = $this->payment->respond2(); // $result['order_sn'] = '201512241425288593';
         $order = M('order')->where("order_sn = '{$result['order_sn']}'")->find();
         $this->assign('order', $order);
-        if($result['status'] == 1)
-            $this->display('success');
-        else
-            $this->display('error');
+        if($result['status'] == 1){
+            header("Location: ".U('Index/Order/orderList'));
+        }else{
+            $this->error('支付失败');
+        }
     }
 
 }

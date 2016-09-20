@@ -53,7 +53,7 @@ class alipay extends RelationModel
                         "notify_url"	=> SITE_URL.U('Payment/notifyUrl',array('pay_code'=>'alipay')) , //服务器异步通知页面路径 //必填，不能修改
                         "return_url"	=> SITE_URL.U('Payment/returnUrl',array('pay_code'=>'alipay')),  //页面跳转同步通知页面路径
                         "out_trade_no"	=> $order['order_sn'], //商户订单号                        
-                        "subject"	=> 'TPshop 商城', //订单名称 可以中文
+                        "subject"	=> ' 商城', //订单名称 可以中文
                         "total_fee"	=> $order['order_amount'], //付款金额
                         "_input_charset"=> trim(strtolower($this->alipay_config['input_charset'])) //字符编码格式 目前支持 gbk 或 utf-8
                     );
@@ -123,7 +123,8 @@ class alipay extends RelationModel
                     $trade_status = $_GET['trade_status']; //交易状态
                     
                     if($_GET['trade_status'] == 'TRADE_FINISHED' || $_GET['trade_status'] == 'TRADE_SUCCESS') 
-                    {                           
+                    {
+                        update_pay_status($order_sn); // 修改订单支付状态
                        return array('status'=>1,'order_sn'=>$order_sn);//跳转至成功页面
                     }
                     else {                        
