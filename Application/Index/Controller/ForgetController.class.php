@@ -52,10 +52,16 @@ class ForgetController extends BaseIndexController {
             }
 
             if(is_numeric($genre)){
+                if($res['mobile_validated'] == 0){
+                   $this->error('帐号不存在，请重新输入',U('Index/Forget/index'));exit; 
+                }
                 session('forget_mobile',$res['mobile']);
                 session('forget_id',$res['user_id']); //用户id
                 header('Location: '.U('Index/Forget/forget_mobile'));exit;
             }else{
+                if($res['email_validated'] == 0 ){
+                    $this->error('帐号不存在，请重新输入',U('Index/Forget/index'));exit; 
+                }
                 // dd($res['email']);
                 session('forget_email',$res['email']); 
                 session('forget_id',$res['user_id']); //用户id
