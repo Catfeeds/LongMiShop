@@ -38,6 +38,8 @@ class AlipayNotify {
      * @return 验证结果
      */
 	function verifyNotify(){
+			$log_text = "ininininin";
+			logResult($log_text);
 		if(empty($_POST)) {//判断POST来的数组是否为空
 			return false;
 		}
@@ -48,16 +50,16 @@ class AlipayNotify {
 			$responseTxt = 'false';
 			if (! empty($_POST["notify_id"])) {$responseTxt = $this->getResponse($_POST["notify_id"]);}
 			
-			//写日志记录
-			//if ($isSign) {
-			//	$isSignStr = 'true';
-			//}
-			//else {
-			//	$isSignStr = 'false';
-			//}
-			//$log_text = "responseTxt=".$responseTxt."\n notify_url_log:isSign=".$isSignStr.",";
-			//$log_text = $log_text.createLinkString($_POST);
-			//logResult($log_text);
+//			写日志记录
+			if ($isSign) {
+				$isSignStr = 'true';
+			}
+			else {
+				$isSignStr = 'false';
+			}
+			$log_text = "responseTxt=".$responseTxt."\n notify_url_log:isSign=".$isSignStr.",";
+			$log_text = $log_text.createLinkString($_POST);
+			logResult($log_text);
 			
 			//验证
 			//$responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关

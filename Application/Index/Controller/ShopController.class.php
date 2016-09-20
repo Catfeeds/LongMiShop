@@ -37,7 +37,7 @@ class ShopController extends BaseIndexController {
         $goods_images_list = M('GoodsImages')->where("goods_id = $goods_id")->select(); // 商品 图册
         $goods_attribute = M('GoodsAttribute')->getField('attr_id,attr_name'); // 查询属性
         $goods_attr_list = M('GoodsAttr')->where("goods_id = $goods_id")->select(); // 查询商品属性表
-        $filter_spec = $goodsLogic->get_spec($goods_id);
+        $filter_spec = $goodsLogic->getSpec($goods_id);
         //商品是否正在促销中
         if($goods['prom_type'] == 1)
         {

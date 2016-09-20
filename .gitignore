@@ -3,6 +3,7 @@
 /backup
 /index.html
 /.git
+/log.txt
 /Public/upload
 /Application/Common/Conf/db.php
 /TOP_SDK_WORK_DIR

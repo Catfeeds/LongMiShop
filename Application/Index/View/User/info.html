@@ -62,7 +62,7 @@
                         </div>
                         <if condition="$user['email_validated'] eq 0">
 
-                            <empty name="user.email"><p>绑定邮箱后，可用邮箱登录。</p>
+                            <empty name="user.email">
                                 <p>绑定邮箱后，可用邮箱登录。</p>
                                 <div class="safe-todo">
                                     <a href="{: U('Index/User/edit_email')}" target="_blank">绑定</a>
@@ -112,7 +112,10 @@
                 </form>
                 </p>
             </div>
-            <div class="Favicon_r"></div>
+            <div class="Favicon_r">
+
+
+            </div>
         </div>
         <div class="tab_box1" style="border-radius:0 0 6px 6px!important">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">

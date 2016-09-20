@@ -132,4 +132,19 @@ class OrderController extends BaseIndexController {
         $this->success($data['msg']);
     }
 
+
+    //订单支付状态
+    public function getOrderPayStatus(){
+        $orderId = I('orderId');
+        $orderLogic = new \Common\Logic\OrderLogic();
+        $orderInfo =  $orderLogic -> getOrderInfo( $orderId , $this->user_id );
+        if(!$orderInfo){
+            exit(json_encode( callback( false , "没有获取到订单信息" ) ) );
+        }
+        if( $orderInfo['pay_status'] == 1 ){
+            exit(json_encode( callback( true , "订单已支付" ) ) );
+        }
+        exit(json_encode( callback( false , "订单尚未支付" ) ) );
+    }
+
 }

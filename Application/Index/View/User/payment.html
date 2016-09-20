@@ -26,11 +26,17 @@
                             <ul>
                                 <foreach name="paymentList" item="v"  key="k">
                                     <li>
-                                        <input type="radio" id="input-ALIPAY-1" value="pay_code={$v['code']}" style="display:none;" name="pay_radio" >
+                                        <input  type="radio" id="input-ALIPAY-1" value="pay_code={$v['code']}" style="display:none;" name="pay_radio" >
                                         <img src="/plugins/{$v['type']}/{$v['code']}/{$v['icon']}" width="144" height="34"  onClick="change_pay(this);" >
                                     </li>
                                 </foreach>
                             </ul>
+                            <div class="payment-code-panel js-payment-code-panel" id="weChatCode" style="display: none;">
+                                <div class="weixin-code">
+                                    {$codeStr}
+                                </div>
+                                <p> 请使用微信扫一扫<br> 扫描二维码支付 </p>
+                            </div>
                         </div>
                     </ul>
                     <!--<ul>-->
@@ -52,7 +58,7 @@
             </div>
             <script type="text/javascript">jQuery(".slideTxtBox").slide({trigger:"click"});</script>
             <div class="box-inner payment-checkout-panel fn-clear">
-                <div class="m4_btn" style="float:right; margin-left:10px">
+                <div class="m4_btn" style="float:right; margin-left:10px" id="submitBtn">
                     <a href="javascript:void(0);" onClick="$('#cart4_form').submit();">现在支付</a>
                 </div>
                 <span class="prices">
@@ -118,15 +124,52 @@
 </form>
 <include file="Public/footer"/>
 <script>
+    var needMonitorOrderStatus = false;
+
     $(document).ready(function(){
         $("input[name='pay_radio']").first().trigger('click');
+        setWeChatCode();
+        setInterval("monitorOrderStatus()",2000);
     });
+
     // 切换支付方式
     function change_pay(obj)
     {
         $(obj).siblings('input[name="pay_radio"]').trigger('click');
+        setWeChatCode();
     }
+
+    function setWeChatCode(){
+        var checkedValue = $('input[name="pay_radio"]:checked').val();
+        if(checkedValue == "pay_code=weixin"){
+            needMonitorOrderStatus = true;
+            $('#weChatCode').show();
+            $('#submitBtn').hide();
+        }else{
+            needMonitorOrderStatus = false;
+            $('#weChatCode').hide();
+            $('#submitBtn').show();
+        }
+    }
+
+    function monitorOrderStatus(){
+        if( needMonitorOrderStatus == true ){
+            $.ajax({
+                url : "{:U('Index/Order/getOrderPayStatus',array('orderId'=>$order['order_id']))}",
+                dataType : 'json',
+                success : function(res){
+                    if(res.state == 1){
+                        window.location.href = "{:U('Index/Order/orderDetail',array('id'=>$order['order_id']))}";
+                    }
+                }
+            })
+        }
+    }
+
 </script>
+<style>
+    #weChatCode img{width:196px !important;    height: 196px !important;}
+</style>
 </body>
 </html>
 
