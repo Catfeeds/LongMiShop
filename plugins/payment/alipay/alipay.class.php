@@ -124,7 +124,6 @@ class alipay extends RelationModel
                     
                     if($_GET['trade_status'] == 'TRADE_FINISHED' || $_GET['trade_status'] == 'TRADE_SUCCESS') 
                     {
-                        update_pay_status($order_sn); // 修改订单支付状态
                        return array('status'=>1,'order_sn'=>$order_sn);//跳转至成功页面
                     }
                     else {                        

@@ -8,7 +8,9 @@ class PaymentController extends BaseIndexController {
 
     function exceptAuthActions()
     {
-        return null;
+        return array(
+            "notifyUrl",
+        );
     }
 
     public function _initialize() {
