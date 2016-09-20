@@ -18,7 +18,7 @@ class MobileBaseController extends BaseController {
      */
     public function _initialize() {
 
-        if( 1==1|| isWeChatBrowser() ){
+        if( isWeChatBrowser() ){
 
             $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
 
