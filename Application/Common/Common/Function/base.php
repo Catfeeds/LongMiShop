@@ -654,3 +654,15 @@ function setLogResult($word='' ,$file = "log.txt") {
     flock($fp, LOCK_UN);
     fclose($fp);
 }
+
+
+/**
+ * 是否在微信浏览器
+ * @return bool
+ */
+function isWeChatBrowser() {
+    if(strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
+        return true;
+    }
+    return false;
+}

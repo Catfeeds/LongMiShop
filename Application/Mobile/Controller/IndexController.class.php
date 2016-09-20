@@ -8,9 +8,9 @@ class IndexController extends MobileBaseController {
             //获取微信配置
             $wechat_list = M('wx_user')->select();
             $wechat_config = $wechat_list[0];
-            $this->weixin_config = $wechat_config;        
+            $this->weChatConfig = $wechat_config;
             // 微信Jssdk 操作类 用分享朋友圈 JS            
-            $jssdk = new \Mobile\Logic\Jssdk($this->weixin_config['appid'], $this->weixin_config['appsecret']);
+            $jssdk = new \Mobile\Logic\Jssdk($this->weChatConfig['appid'], $this->weChatConfig['appsecret']);
             $signPackage = $jssdk->GetSignPackage();              
             print_r($signPackage);
         */
