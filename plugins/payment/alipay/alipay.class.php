@@ -50,10 +50,8 @@ class alipay extends RelationModel
                         "partner" => trim($this->alipay_config['partner']),
                         "seller_email" => trim($this->alipay_config['seller_email']),
                         "payment_type"	=> 1, // 默认值为：1（商品购买）。
-                        "notify_url"	=> SITE_URL."/Index/Payment/notifyUrl/pay_code/alipay.html",
-                //U('Payment/notifyUrl',array('pay_code'=>'alipay')) , //服务器异步通知页面路径 //必填，不能修改
-                        "return_url"	=> SITE_URL."/Index/Payment/returnUrl/pay_code/alipay.html",
-                //.U('Payment/returnUrl',array('pay_code'=>'alipay')),  //页面跳转同步通知页面路径
+                        "notify_url"	=> SITE_URL.U('Payment/notifyUrl',array('pay_code'=>'alipay')) , //服务器异步通知页面路径 //必填，不能修改
+                        "return_url"	=> SITE_URL.U('Payment/returnUrl',array('pay_code'=>'alipay')),  //页面跳转同步通知页面路径
                         "out_trade_no"	=> $order['order_sn'], //商户订单号                        
                         "subject"	=> ' 商城', //订单名称 可以中文
                         "total_fee"	=> $order['order_amount'], //付款金额
