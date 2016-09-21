@@ -11,10 +11,14 @@
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/public.css"/>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/login.css"/>  
+<link href="__STATIC__/css/css.css" rel="stylesheet" /> 
 <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
 <script src="__PUBLIC__/js/global.js"></script>
 <script src="__PUBLIC__/js/mobile_common.js"></script>
 <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+<style>
+	.m_phone{ width:45%; float:right; height:37px;display:block; border:0px; height:35px; background:#b02f4b; font-size:14px; text-align:center; margin-top:2px;border-radius:0; }
+</style>
 </head>
 <body>
 <header id="header" class='header'>
@@ -58,9 +62,10 @@
 				<input id="zemail" type="button" value="获取邮箱验证码" class="m_phone" style=" color:#FFF">
 				</div>
 			</div>
-            <div class="submit-btn " style=" padding-top:40px;">
+            <!-- <div class="submit-btn " style=" padding-top:40px;">
 				<input type="button" name="button" id="btn_submit" class="btn_big1" value="提 交" />
-			</div>
+			</div> -->
+			<div class="login_btn" style=" padding-top:40px;"><a href="javascript:void(0);" id="btn_submit">提&nbsp;交</a></div>
 	</form>
    </section>
 <include file="Public/footer"/>
