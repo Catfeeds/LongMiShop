@@ -688,11 +688,19 @@ class UsersLogic extends BaseLogic
         $data = M('sms_log')->where(array('mobile'=>$mobile,'session_id'=>$session_id))->order('id DESC')->find();
         //获取时间配置
         $sms_time_out = tpCache('sms.sms_time_out');
-        $sms_time_out = $sms_time_out ? $sms_time_out : 120;
+        $sms_time_out = $sms_time_out ? $sms_time_out : 120 ;
         //120秒以内不可重复发送
-//        if($data && (time() - $data['add_time']) < $sms_time_out)
-//            return array('status'=>-1,'msg'=>$sms_time_out.'秒内不允许重复发送');
-        $row = M('sms_log')->add(array('mobile'=>$mobile,'code'=>$code,'add_time'=>time(),'session_id'=>$session_id));
+       if($data && (time() - $data['add_time']) < $sms_time_out){
+           return array('status'=>-1,'msg'=>$sms_time_out.'秒内不允许重复发送');
+       }
+
+        if(!empty($data)){
+            $datas['code'] = $code;
+            $datas['add_time'] = time();
+            $row = M('sms_log')->where("id = '".$data['id']."'")->save($datas);
+        }else{
+            $row = M('sms_log')->add(array('mobile'=>$mobile,'code'=>$code,'add_time'=>time(),'session_id'=>$session_id));
+        }
         if(!$row)
             return array('status'=>-1,'msg'=>'发送失败');
         //$send = sendSMS($mobile,'您好，你的验证码是：'.$code);

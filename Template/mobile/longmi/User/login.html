@@ -1,65 +1,44 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html>
 <head>
-<meta name="Generator" content="TPshop1.2" />
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<title>登录-{$lmshop_config['shop_info_store_title']}</title>
-<meta http-equiv="keywords" content="{$lmshop_config['shop_info_store_keyword']}" />
-<meta name="description" content="{$lmshop_config['shop_info_store_desc']}" />
-
-<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/public.css"/>
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/login.css"/>  
-<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
-<script src="__PUBLIC__/js/global.js"></script>
-<script src="__PUBLIC__/js/mobile_common.js"></script>
-<script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title>登录</title>
+<script src="__STATIC__/js/mui.min.js"></script>
+<script src="__STATIC__/js/jquery.js"></script>
+<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
+<link href="__STATIC__/css/css.css" rel="stylesheet" />
 </head>
 <body>
-  <header id="header" class='header'>
-    <div class="h-left"><a href="javascript:history.back(-1)" class="sb-back"></a></div>
-	<div class="h-mid">会员登录     </div>
- </header>
-  	<div class="denglu">
-		<form action="" method="post">        	
-            <div class="Login">
-				<dl>
-	            <dt>用户名：</dt>
-			    	<dd><input type="text" name="username" id="username" placeholder="请输入邮箱/手机号" value="" /></dd>
-				</dl>
-                <dl style=" margin-top:15px;">
-                <dt>密码：</dt>
-					<dd><input type="password" name="password" id="password" placeholder="密码"/></dd>
-	            </dl>
-				<div class="field submit-btn">
-					<input type="button" class="btn_big1" onClick="checkSubmit()" value="登 录" />
-					<input type="hidden" name="referurl" id="referurl" value="{$referurl}">
+<div class="mui-content">
+			<form id='login-form' class="mui-input-group" method="post">
+				<div class="mui-input-row login_text">
+				  <input type="text" name="username" id="username" class="mui-input login_text" placeholder="手机号/邮箱
+">
 				</div>
-            <div class="ng-foot">
-              <div class="ng-cookie-area" >
-                <label class="bf1 login_ffri">
-					<input type="checkbox" name="remember" value="1" checked=""> &nbsp;自动登录 
-				</label>
-              </div>
-              <div class="ng-link-area" >
-                <span style=" margin-right:5px; border-right:1px solid #eeeeee">
-                  <a href="{:U('User/reg')}" >免费注册</a>
-                </span>
-                 <span class="user_line"></span>
-                   <span >
-                  <a href="{:U('User/forget_pwd')}" >忘记密码？</a>
-                </span>
-              </div>
-              <div class="third-area ">
-                <div class="third-area-a">第三方登录</div>
-                <a class="ta-qq" href="{:U('LoginApi/login',array('oauth'=>'qq'))}" target="_blank" title="QQ"></a>
-                <a class="ta-alipay" href="{:U('LoginApi/login',array('oauth'=>'alipay'))}" target="_blank" title="alipay"></a>
-              </div>
-            </div>			
-          </div>
-		</form>
-	</div>
+				<div class="mui-input-row mui-password login_text">
+				  <input type="password" name="password" id="password" class="mui-input-password login_text" placeholder="密码">
+				</div>
+			<!-- </form>
+  <form class="mui-input-group" style="margin-top:15px"> -->
+				<ul class="mui-table-view mui-table-view-chevron login_text" >
+					<li class="mui-table-view-cell">
+						<span style="font-size:16px">自动登录</span>
+						<div id="autoLogin" class="mui-switch">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+			</form>
+			<div class="login_btn"><a href="javascript:void(0);" onclick="checkSubmit()">登录</a></div>
+			<div class="mui-content-padded oauth-area">
+
+			</div>
+		</div>
+        
+        <div class="login_txt"><a href="{:U('User/reg')}">注册龙米ID</a>|<a href="{:U('User/forget_pwd')}">忘记密码？</a></div>
+</body>
+</html>
 <script type="text/javascript">
 
 function checkSubmit()
@@ -69,22 +48,22 @@ function checkSubmit()
 	var password = $.trim($('#password').val());
 	var referurl = $('#referurl').val();
 	if(username == ''){
-		showErrorMsg('用户名不能为空!');
+		alert('用户名不能为空!');
 		return false;
 	}
 	if(!checkMobile(username) && !checkEmail(username)){
-		showErrorMsg('账号格式不匹配!');
+		alert('账号格式不匹配!');
 		return false;
 	}
 	if(password == ''){
-		showErrorMsg('密码不能为空!');
+		alert('密码不能为空!');
 		return false;
 	}
 	
-	if($.trim($('#verify_code').val()) == ''){
-		//showErrorMsg('验证码不能为空!');
-		//return false;
-	}	
+	// if($.trim($('#verify_code').val()) == ''){
+	// 	//alert('验证码不能为空!');
+	// 	//return false;
+	// }	
 	//$('#login-form').submit();
 
 	$.ajax({
@@ -97,11 +76,11 @@ function checkSubmit()
 			if(res.state == 1){
 				window.location.href = res.url;
 			}else{
-				showErrorMsg(res.msg);
+				alert(res.msg);
 			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			showErrorMsg('网络失败，请刷新页面后重试');
+			alert('网络失败，请刷新页面后重试');
 		}
 	})
 }
@@ -131,10 +110,6 @@ function checkSubmit()
     	layer.open({content:msg,time:2});
     }
     
-    function verify(){
-        $('#verify_code_img').attr('src','/index.php?m=Home&c=User&a=verify&r='+Math.random());
-     }
+   
 
-</script>	
-</body>
-</html>
+</script>

@@ -80,8 +80,6 @@ class UserController extends BaseIndexController {
         if(session('auth') == true){ //是否登录
             header("location:".U('Index/Order/orderList'));exit;
         }
-        $config = tpCache('sms');
-        $sms_time_out = $config['sms_time_out'];
         if(IS_POST){
 //            $verify = new \Think\Verify();
 //            $code=I("post.verify");
@@ -89,13 +87,12 @@ class UserController extends BaseIndexController {
 //            if(!$verify->check($code,$id)){
 //                $this->error('验证码输入错误!');exit;
 //            }
-            $wheres['code'] = I('phone_verify');
-            $wheres['session_id'] = $this->session_id;
-            $phone_res = M('sms_log')->where($wheres)->count();
-            if(empty($phone_res)){
-                $this->error('手机验证码错误!');exit;
-            }
             $data = I('post.');
+            $logic = new \Common\Logic\UsersLogic();
+            $phone_res = $logic->sms_code_verify($data['mobile'],$data['phone_verify'],$this->session_id);
+            if($phone_res['status'] != 1){
+                $this->error($phone_res['msg']);exit;
+            }
             //是否注册
             !empty($data['email']) ? $where['email'] = $data['email'] : '' ; 
             !empty($data['mobile']) ? $where['mobile'] = $data['mobile'] : '';
@@ -112,7 +109,6 @@ class UserController extends BaseIndexController {
                 }
                 $res = M('users')->add($data);
                 if($res){
-                    $logic = new \Common\Logic\UsersLogic();
                     $result = $logic->login($username,$password);
                     if( !callbackIsTrue($result) ){
                         $this->error($result['msg']);
@@ -129,7 +125,7 @@ class UserController extends BaseIndexController {
             }
 
         }
-        $this->assign('time',$sms_time_out);
+        $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
         $this->display();
     }
 
@@ -360,8 +356,6 @@ class UserController extends BaseIndexController {
         $userLogic = new UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); //获取用户信息
         $user_info = $user_info['result'];
-        $config = tpCache('sms');
-        $sms_time_out = $config['sms_time_out'];
         $step = I('get.step',1);
         //验证是否未绑定过
         if($user_info['mobile_validated'] == 0)
@@ -387,7 +381,7 @@ class UserController extends BaseIndexController {
             exit;
         }
         $phone = $user_info['mobile'];
-        $this->assign('time',$sms_time_out);
+        $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
         $this->assign('step',$step);
         $this->assign('phone',$phone);
         $this->display();

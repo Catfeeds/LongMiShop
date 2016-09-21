@@ -152,34 +152,69 @@ class UserController extends MobileBaseController {
 
         if(IS_POST){
             $logic = new \Common\Logic\UsersLogic();
-            //验证码检验
-            //$this->verifyHandle('user_reg');
-            $username = I('post.username','');
-            $password = I('post.password','');
-            $password2 = I('post.password2','');
-            //是否开启注册验证码机制
-
-            if(check_mobile($username) && tpCache('sms.regis_sms_enable')){
-                $code = I('post.mobile_code','');
-
-                if(!$code)
-                    $this->error('请输入验证码');
-                $check_code = $logic->sms_code_verify($username,$code,$this->session_id);
-                if($check_code['status'] != 1)
-                    $this->error($check_code['msg']);
-
+            $data = I('post.');
+            $phone_res = $logic->sms_code_verify($data['mobile'],$data['phone_code'],$this->session_id);
+            if($phone_res['status'] != 1){
+                $this->error($phone_res['msg']);exit;
             }
+            $where = "email = '".$data['email']."' OR "."mobile = '".$data['mobile']."'";
+            $res = M('users')->where($where)->count();
+            if(empty($res)){
+                $password = $data['password'];
+                $data['password'] = encrypt($data['password']);
+                $data['reg_time'] = time();
+                if( !empty($data['mobile']) ){
+                    $data['mobile_validated'] = 1 ;
+                    $username = $data['mobile'];
+                }else{
+                    $username = $data['email'];
+                }
+                $res = M('users')->add($data);
+                if($res){
+                    $logic = new \Common\Logic\UsersLogic();
+                    $result = $logic->login($username,$password);
+                    if( !callbackIsTrue($result) ){
+                        $this->error($result['msg']);
+                        exit;
+                    }
+                    $this->success('注册成功',U('/Mobile/User/index'));
+                    exit;
+                }
+                $this->error('注册失败');
+                exit;
+            }else{
+                $this->error('手机号码或邮箱已注册');
+                exit;
+            }
+            // $logic = new \Common\Logic\UsersLogic();
+            // //验证码检验
+            // //$this->verifyHandle('user_reg');
+            // $username = I('post.username','');
+            // $password = I('post.password','');
+            // $password2 = I('post.password2','');
+            // //是否开启注册验证码机制
 
-            $data = $logic->reg($username,$password,$password2);
-            if($data['status'] != 1)
-                $this->error($data['msg']);
-            session('user',$data['result']);
-            setcookie('user_id',$data['result']['user_id'],null,'/');
-            setcookie('is_distribut',$data['result']['is_distribut'],null,'/');
-            $cartLogic = new \Common\Logic\CartLogic();
-            $cartLogic->login_cart_handle($this->session_id,$data['result']['user_id']);  //用户登录后 需要对购物车 一些操作
-            $this->success($data['msg'],U('Mobile/User/index'));
-            exit;
+            // if(check_mobile($username) && tpCache('sms.regis_sms_enable')){
+            //     $code = I('post.mobile_code','');
+
+            //     if(!$code)
+            //         $this->error('请输入验证码');
+            //     $check_code = $logic->sms_code_verify($username,$code,$this->session_id);
+            //     if($check_code['status'] != 1)
+            //         $this->error($check_code['msg']);
+
+            // }
+
+            // $data = $logic->reg($username,$password,$password2);
+            // if($data['status'] != 1)
+            //     $this->error($data['msg']);
+            // session('user',$data['result']);
+            // setcookie('user_id',$data['result']['user_id'],null,'/');
+            // setcookie('is_distribut',$data['result']['is_distribut'],null,'/');
+            // $cartLogic = new \Common\Logic\CartLogic();
+            // $cartLogic->login_cart_handle($this->session_id,$data['result']['user_id']);  //用户登录后 需要对购物车 一些操作
+            // $this->success($data['msg'],U('Mobile/User/index'));
+            // exit;
         }
         $this->assign('regis_sms_enable',tpCache('sms.regis_sms_enable')); // 注册启用短信：
         $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
@@ -724,7 +759,7 @@ class UserController extends MobileBaseController {
     //     $this->display();
     // }
 
-    //手机验证码发送
+    //手机修改验证码发送
     public function send_sms_reg(){
         exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
         $mobile = I('send');
@@ -746,6 +781,34 @@ class UserController extends MobileBaseController {
             exit(json_encode(array('status'=>-1,'msg'=>$send['msg'])));
         exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
     }
+    //手机注册验证码
+   public function send_sms_reg_code(){
+        //调试
+        exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
+        $mobile = I('send');
+        $where['mobile'] = $mobile;
+        $code=I("code");
+        $verify = new \Think\Verify();
+        if(!$verify->check($code,'user_login')){
+            exit(json_encode(array('status'=>-1,'msg'=>'验证码输入错误')));
+        }
+        if(!check_mobile($mobile)){
+            exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
+        }
+        $user_res = M('users')->where($where)->count();
+        if(!empty($user_res)){
+            exit(json_encode(array('status'=>-1,'msg'=>'此手机已被注册')));
+        }
+
+        $userLogic = new UsersLogic();
+        $code =  rand(1000,9999);
+        
+         $send = $userLogic->sms_log($mobile,$code,$this->session_id);
+        if($send['status'] != 1)
+            exit(json_encode(array('status'=>-1,'msg'=>$send['msg'])));
+        exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
+    }
+
 
     public function collect_list(){
     	$userLogic = new \Common\Logic\UsersLogic();
