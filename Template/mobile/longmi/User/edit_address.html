@@ -31,7 +31,7 @@
         <input type="text" placeholder="请输入" name="mobile" value="{: !empty($address)? $address['mobile'] : ''}">
       </div>
       <div class="mui-input-row line" id='showCityPicker3'>
-        <label >选择地地区</label>
+        <label >选择地区</label>
         <input type="text" id='cityResult3' placeholder="请选择" value="{: $citys}" readonly name="citys">
         <input type="hidden" id='province'  value="{$address['province']}" readonly name="province">
         <input type="hidden" id='city'  value="{$address['city']}" readonly name="city">
@@ -41,6 +41,15 @@
         <label>详细地址</label>
         <input type="text" placeholder="请输入" name="address" value="{: !empty($address)? $address['address'] : ''}">
       </div>
+      <ul class="mui-table-view mui-table-view-chevron login_text">
+          <li class="mui-table-view-cell"  style=" padding-left:5px">
+            <span style="font-size:16px">设置为默认地址</span>
+            <div id="autoLogin" class="mui-switch {: $address['is_default'] == 1? 'mui-active' : ''}">
+              <input name="is_default" type="hidden" id='is_default' value="{: !empty($address)? $address['is_default'] : ''}">
+              <div class="mui-switch-handle"></div>
+            </div>
+          </li>
+        </ul>
     </form>
   </div>
 </div>
@@ -56,8 +65,56 @@
 <script>
 
   function save_form(){
+    var consignee = $('input[name="consignee"]').val();
+    var mobile = $('input[name="mobile"]').val();
+    var citys = $('input[name="citys"]').val();
+    var address = $('input[name="address"]').val();
+    if(consignee == ''){
+      alert('收货人不能为空');
+      return false;
+    }else if(consignee.length > 10){
+      alert('收货人名字过长');
+      return false;
+    }else if(!checkMobile(mobile)){
+      alert('请填写正确的手机号码');
+      return false;
+    }else if(citys == ''){
+      alert('请选择地区');
+      return false;
+    }else if(address == ''){
+      alert('请填写地址');
+      return false;
+    }else if(address.length > 50){
+      alert('地址长度请小于50字符');
+      return false;
+    }
     $('#save_form').submit();
   }
+
+  /**
+     * 手机号码格式判断
+     * @param tel
+     * @returns {boolean}
+     */
+    function checkMobile(tel) {
+        var reg = /(^1[3|4|5|7|8][0-9]{9}$)/;
+        if (reg.test(tel)) {
+            return true;
+        }else{
+            return false;
+        };
+    }
+
+  //设置默认地址
+  $('#autoLogin').on('click',function(){
+    if($("#autoLogin").is('.mui-switch') && $("#autoLogin").is('.mui-active')){ 
+      $('#is_default').val(1);
+    }else{
+      $('#is_default').val(0);
+    } 
+  });
+  
+
   (function($, doc) {
     $.init();
     $.ready(function() {

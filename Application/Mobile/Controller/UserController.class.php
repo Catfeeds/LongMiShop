@@ -18,7 +18,6 @@ class UserController extends MobileBaseController {
         if(session('?'.__UserID__))
         {
             $user_id = session(__UserID__);
-            dd($user);
             $user = M('users')->where("user_id = {$user_id}")->find();
             session('user',$user);  //覆盖session 中的 user
         	$this->user = $user;
@@ -50,7 +49,6 @@ class UserController extends MobileBaseController {
     public function index(){
         
         $order_count = M('order')->where("user_id = {$this->user_id}")->count(); // 我的订单数
-        dd($this->user_id);
         $goods_collect_count = M('goods_collect')->where("user_id = {$this->user_id}")->count(); // 我的商品收藏
         $comment_count = M('comment')->where("user_id = {$this->user_id}")->count();//  我的评论数
         $coupon_count = M('coupon_list')->where("uid = {$this->user_id}")->count(); // 我的优惠券数量
@@ -357,6 +355,10 @@ class UserController extends MobileBaseController {
         $id = I('address_id');
         $data = I('post.');
         $data['user_id'] = $this->user_id;
+        //默认地址修改
+        if($data['is_default'] == 1){
+        	$res = M('user_address')->where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
+        }
         if($id==0){ //新增
             $res = M('user_address')->add($data);
             $res ? $this->success('新增成功',U('Mobile/User/address_list')) : $this->error('新增失败');
