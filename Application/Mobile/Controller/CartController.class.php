@@ -4,7 +4,18 @@ class CartController extends MobileBaseController {
     
     public $cartLogic; // 购物车逻辑操作类    
     public $user_id = 0;
-    public $user = array();        
+    public $user = array();
+
+    function exceptAuthActions()
+    {
+        return array(
+            'cart',
+            'addCart',
+            'ajaxAddCart',
+            'ajaxCartList',
+            'cartList',
+        );
+    }
     /**
      * 析构流函数
      */

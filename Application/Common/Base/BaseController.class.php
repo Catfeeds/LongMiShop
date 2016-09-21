@@ -9,16 +9,23 @@ class BaseController extends Controller
     public $shopConfig = array();
 
     public function _initialize() {
-        $this -> session_id = session_id();
-        $this -> public_assign();
+
+        if( isMobile() ){
+            cookie('is_mobile','1',3600);
+        }else{
+            cookie('is_mobile','0',3600);
+        }
+
+        $this->session_id = session_id();
+        define('SESSION_ID', $this->session_id);
+
+        $this -> _publicAssign();
     }
-
-
 
     /**
      * 保存公共变量
      */
-    public function public_assign()
+    private function _publicAssign()
     {
         $shopConfig = array();
         $config = M('config')->cache(true,MY_CACHE_TIME)->select();
@@ -53,4 +60,19 @@ class BaseController extends Controller
             return;
         }
     }
+//
+//
+//    /**
+//     * 是否需要验证
+//     * @return bool
+//     */
+//    protected function needAuth(){
+//        if ($this->exceptAuthActions() == null) {
+//            return true;
+//        }
+//        if (in_array(ACTION_NAME, $this->exceptAuthActions())) {
+//            return false;
+//        };
+//        return true;
+//    }
 }

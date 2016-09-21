@@ -8,31 +8,36 @@ use Think\Verify;
 class UserController extends MobileBaseController {
     
     public $user_id = 0;
-    public $user = array();    
-        /*
+    public $user = array();
+
+    function exceptAuthActions()
+    {
+        return array(
+            'login',
+            'pop_login',
+            'do_login',
+            'logout',
+            'verify',
+            'set_pwd',
+            'finished',
+            'verifyHandle',
+            'reg',
+            'send_sms_reg_code',
+            'find_pwd',
+            'check_validate_code',
+            'forget_pwd',
+            'check_captcha',
+            'check_username',
+            'send_validate_code',
+            'express',
+        );
+    }
+
+        /**
         * 初始化操作
         */
     public function _initialize() {
         parent::_initialize();
-        // dd(session('lm_UserId'));
-        if(session('?'.__UserID__))
-        {
-            $user_id = session(__UserID__);
-            $user = M('users')->where("user_id = {$user_id}")->find();
-            session('user',$user);  //覆盖session 中的 user
-        	$this->user = $user;
-        	$this->user_id = $user_id;
-        	$this->assign('user',$user); //存储用户信息
-        }        
-        $nologin = array(
-        	'login','pop_login','do_login','logout','verify','set_pwd','finished',
-        	'verifyHandle','reg','send_sms_reg_code','find_pwd','check_validate_code',
-        	'forget_pwd','check_captcha','check_username','send_validate_code','express',
-        );
-        if(!$this->user_id && !in_array(ACTION_NAME,$nologin)){
-        	header("location:".U('Mobile/User/login'));
-        	exit;
-        }
 
         $order_status_coment = array(
             'WAITPAY'=>'待付款 ', //订单查询状态 待支付
@@ -355,10 +360,6 @@ class UserController extends MobileBaseController {
         $id = I('address_id');
         $data = I('post.');
         $data['user_id'] = $this->user_id;
-        //默认地址修改
-        if($data['is_default'] == 1){
-        	$res = M('user_address')->where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
-        }
         if($id==0){ //新增
             $res = M('user_address')->add($data);
             $res ? $this->success('新增成功',U('Mobile/User/address_list')) : $this->error('新增失败');
