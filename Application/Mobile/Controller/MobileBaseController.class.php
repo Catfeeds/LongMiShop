@@ -16,7 +16,7 @@ abstract class MobileBaseController extends BaseController {
     public $weChatConfig        = array();
 
 
-    abstract function exceptAuthActions();
+//    abstract function exceptAuthActions();
 
     /**
      * 初始化操作
@@ -80,13 +80,14 @@ abstract class MobileBaseController extends BaseController {
     }
 
     protected function needAuth(){
-        if ($this->exceptAuthActions() == null) {
-            return true;
-        }
-        if (in_array(ACTION_NAME, $this->exceptAuthActions())) {
             return false;
-        };
-        return true;
+//        if ($this->exceptAuthActions() == null) {
+//            return true;
+//        }
+//        if (in_array(ACTION_NAME, $this->exceptAuthActions())) {
+//            return false;
+//        };
+//        return true;
     }
 
 
