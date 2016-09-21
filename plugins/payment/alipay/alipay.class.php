@@ -63,7 +63,9 @@ class alipay extends RelationModel
                 $parameter["paymethod"] = 'bankPay'; // 若要使用纯网关，取值必须是bankPay（网银支付）。如果不设置，默认为directPay（余额支付）。
                 $parameter["defaultbank"] = $config_value['bank_code'];
                 $parameter["service"] = 'create_direct_pay_by_user';
-            }        
+            }
+            $log = "$parameter: \n \r ".json_encode($parameter);
+            setLogResult($log);
             //建立请求
             require_once("lib/alipay_submit.class.php");            
             $alipaySubmit = new AlipaySubmit($this->alipay_config);
