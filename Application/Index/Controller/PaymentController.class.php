@@ -14,9 +14,9 @@ class PaymentController extends BaseIndexController {
     }
 
     public function _initialize() {
-        parent::_initialize();
-        $log = json_encode($_GET)."/n/r \n \r ".json_encode($_GET);
+        $log = json_encode($_GET)." \n \r ".json_encode($_POST);
         setLogResult($log);
+        parent::_initialize();
         $pay_radio = I('pay_radio');
         if(!empty($pay_radio))
         {

@@ -62,18 +62,18 @@ function count_postage(){
         *  pinkage    指定区域包邮
         */
 
-        $condition = unserialize($log_res['log_condition']); 
+        $condition = unserialize($log_res['log_condition']);
         dump($condition);exit;
 
         if(!empty($condition['pinkage'])){ //是否属于包邮地区
             foreach ($condition['pinkage'] as $items) {
-            	//pinkage_mode  1价钱  2重量
-                if($items['pinkage_area'] == $item['site']['province'] && $items['pinkage_mode'] == 1 && $items['pinkage_bound'] >= $item['goods_price']) {  
+                //pinkage_mode  1价钱  2重量
+                if($items['pinkage_area'] == $item['site']['province'] && $items['pinkage_mode'] == 1 && $items['pinkage_bound'] >= $item['goods_price']) {
                     $postage += 0;
                     $goods_postage[$item['goods_name']] = 0; //商品单个邮费
                     break;
                 }else if($items['pinkage_area'] == $item['site']['province'] && $items['pinkage_mode'] == 2 && $items['pinkage_bound'] >= $baseValue){
-                	$postage += 0;
+                    $postage += 0;
                     $goods_postage[$item['goods_name']] = 0; //商品单个邮费
                     break;
                 }
@@ -116,7 +116,7 @@ function count_postage(){
 
         $goods_postage[$item['goods_name']] = 0;
 
-        
+
     }
 
 
@@ -127,4 +127,35 @@ function count_postage(){
 
 
 
-?>
+
+/**
+ * 获取商品一二三级分类
+ * @return array type
+ */
+function getGoodsCategoryTree(){
+    $result     = array();
+    $arr        = array();
+    $tree       = array();
+    $cat_list = M('goods_category') -> where("is_show = 1") -> order('sort_order') -> cache(true) -> select();//所有分类
+    foreach ($cat_list as $val){
+        if($val['level'] == 2){
+            $arr[$val['parent_id']][] = $val;
+        }
+        if($val['level'] == 3){
+            $crr[$val['parent_id']][] = $val;
+        }
+        if($val['level'] == 1){
+            $tree[] = $val;
+        }
+    }
+    foreach ($arr as $k => $v){
+        foreach ($v as $kk => $vv){
+            $arr[$k][$kk]['sub_menu'] = empty($crr[$vv['id']]) ? array() : $crr[$vv['id']];
+        }
+    }
+    foreach ($tree as $val){
+        $val['tmenu'] = empty($arr[$val['id']]) ? array() : $arr[$val['id']];
+        $result[$val['id']] = $val;
+    }
+    return $result;
+}
