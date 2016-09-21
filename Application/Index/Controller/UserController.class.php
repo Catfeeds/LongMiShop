@@ -52,17 +52,6 @@ class UserController extends BaseIndexController {
             $cartLogic->login_cart_handle($this->session_id,session(__UserID__));  //用户登录后 需要对购物车 一些操作
         }
         exit(json_encode($result));
-
-// //        if($res['status'] == 1){
-//            $res['url'] =  urldecode(I('post.referurl'));
-//            session('user',$res['result']);
-//            setcookie('user_id',$res['result']['user_id'],null,'/');
-//            setcookie('is_distribut',$res['result']['is_distribut'],null,'/');
-//            $nickname = empty($res['result']['nickname']) ? $username : $res['result']['nickname'];
-//            setcookie('uname',urlencode($nickname),null,'/');
-//            setcookie('cn','',time()-3600,'/');
-//        }
-//        exit(json_encode($res));
     }
 
     //退出
@@ -149,9 +138,9 @@ class UserController extends BaseIndexController {
 
     public function info(){
         $user_info = $this -> user_info;
-        //  获取省份
+        //获取省份
         $province = M('region')->where(array('parent_id'=>0,'level'=>1))->select();
-        //  获取订单城市
+        //获取订单城市
         $city =  M('region')->where(array('parent_id'=>$user_info['province'],'level'=>2))->select();
         //获取订单地区
         $area =  M('region')->where(array('parent_id'=>$user_info['city'],'level'=>3))->select();
