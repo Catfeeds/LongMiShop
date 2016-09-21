@@ -38,7 +38,7 @@
         </div>
         <input name="phone_verify" type="text" class="pop_text1 icon_bg" placeholder="请输入验证码" style="width:50%; margin-top:0px; margin-bottom:0px; float:left;background-image:url(__PUBLIC__/img/icon-b.png)" id="phone_verify">
         <div class="in4_r1_btn">
-          <input type="button" intervaltime="{: $time}" value="获取验证码 " id="btnemailAuthCode2" onClick="sendCode(this,'new_mobile')" style="margin-bottom:0px">
+          <input type="button" intervaltime="{: $sms_time_out}" value="获取验证码 " id="btnemailAuthCode2" onClick="sendCode(this,'new_mobile')" style="margin-bottom:0px">
           <!-- <a href="#" style="margin-bottom:0px">重新发送（60）</a> -->
         </div>
         <div style="clear:both"></div>
@@ -161,7 +161,7 @@
     if(intAs<=-1)
     {
       codeObj.removeAttr("disabled");
-      codeObj.attr("IntervalTime","{: $time}");
+      codeObj.attr("IntervalTime","{: $sms_time_out}");
       codeObj.val("获取验证码");
       return true;
     }
