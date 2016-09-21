@@ -3,17 +3,15 @@
 namespace Mobile\Controller;
 class IndexController extends MobileBaseController {
 
-    public function index(){                
-        /*
-            //获取微信配置
-            $wechat_list = M('wx_user')->select();
-            $wechat_config = $wechat_list[0];
-            $this->weChatConfig = $wechat_config;
-            // 微信Jssdk 操作类 用分享朋友圈 JS            
-            $jssdk = new \Mobile\Logic\Jssdk($this->weChatConfig['appid'], $this->weChatConfig['appsecret']);
-            $signPackage = $jssdk->GetSignPackage();              
-            print_r($signPackage);
-        */
+    function exceptAuthActions()
+    {
+        return array(
+            "index",
+            "goodsList"
+        );
+    }
+
+    public function index(){
         $hot_goods = M('goods')->where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,MY_CACHE_TIME)->select();//首页热卖商品
         $thems = M('goods_category')->where('level=1')->order('sort_order')->limit(9)->cache(true,MY_CACHE_TIME)->select();
         $this->assign('thems',$thems);

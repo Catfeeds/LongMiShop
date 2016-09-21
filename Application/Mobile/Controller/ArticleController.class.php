@@ -6,6 +6,15 @@ use Think\Controller;
 use Think\Page;
 use Think\Verify;
 class ArticleController extends MobileBaseController {
+
+    function exceptAuthActions()
+    {
+        return array(
+            'index',
+            'articleList',
+            'article',
+        );
+    }
     public function index(){       
         $article_id = I('article_id',38);
     	$article = D('article')->where("article_id=$article_id")->find();

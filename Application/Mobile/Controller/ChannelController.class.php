@@ -2,11 +2,17 @@
 
 namespace Mobile\Controller;
 class ChannelController extends MobileBaseController {
-	
+    function exceptAuthActions()
+    {
+        return array(
+            'index',
+        );
+    }
 	public function index(){
 		$cat_id = I('cat_id',1);
 		$channel_cate = $this->cateTrre[$cat_id]['tmenu'];
 		$sub_id = ''; $sub_goods = array();
+        $second_str = "";
 		foreach ($channel_cate as $k=>$val){
 			foreach ($val['sub_menu'] as $v){
 				$sub_id .= $v['id'].',';//三级分类ID集

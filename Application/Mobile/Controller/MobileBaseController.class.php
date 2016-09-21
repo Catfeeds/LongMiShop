@@ -16,7 +16,7 @@ abstract class MobileBaseController extends BaseController {
     public $weChatConfig        = array();
 
 
-//    abstract function exceptAuthActions();
+    abstract function exceptAuthActions();
 
     /**
      * 初始化操作
@@ -29,6 +29,7 @@ abstract class MobileBaseController extends BaseController {
 //                $redirectedUrl = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 //                $redirectedUrl = urlencode($redirectedUrl);
 //                header("Location: ". U( '/Index/User/login' , array("redirectedUrl" => $redirectedUrl)));
+                header("location:".U('Mobile/User/login'));
                 exit;
             }
         }
@@ -80,14 +81,13 @@ abstract class MobileBaseController extends BaseController {
     }
 
     protected function needAuth(){
+        if ($this->exceptAuthActions() == null) {
+            return true;
+        }
+        if (in_array(ACTION_NAME, $this->exceptAuthActions())) {
             return false;
-//        if ($this->exceptAuthActions() == null) {
-//            return true;
-//        }
-//        if (in_array(ACTION_NAME, $this->exceptAuthActions())) {
-//            return false;
-//        };
-//        return true;
+        };
+        return true;
     }
 
 

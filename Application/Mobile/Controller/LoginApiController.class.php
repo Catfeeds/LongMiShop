@@ -8,6 +8,14 @@ class LoginApiController extends MobileBaseController {
     public $oauth;
     public $class_obj;
 
+    function exceptAuthActions()
+    {
+        return array(
+            "login",
+            "callback"
+        );
+    }
+
     public function __construct(){
         parent::__construct();
         $this->oauth = I('get.oauth');

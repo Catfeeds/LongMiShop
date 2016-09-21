@@ -3,6 +3,15 @@
 namespace Mobile\Controller;
 
 class ActivityController extends MobileBaseController {
+
+    function exceptAuthActions()
+    {
+        return array(
+            'index',
+            'group',
+            'group_list',
+        );
+    }
     public function index(){      
         $this->display();
     }
