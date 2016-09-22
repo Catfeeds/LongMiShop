@@ -74,7 +74,7 @@ function checkSubmit()
 		success : function(res){
 //			 console.log(res);return false;
 			if(res.state == 1){
-				window.location.href = res.url;
+				window.location.href = res.data;
 			}else{
 				alert(res.msg);
 			}
