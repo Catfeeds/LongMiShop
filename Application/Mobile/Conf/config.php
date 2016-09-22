@@ -13,7 +13,7 @@ return array(
 			//'index:goodsList'=>array('{:module}_{:controller}_{:action}_{id}',MY_CACHE_TIME),  // 列表页静态缓存 3秒钟
 			//ajax 请求的商品列表内容在 ajaxGoodsList 函数中  S($keys,$html,300); 缓存
 			//'Goods:goodsInfo'=>array('{:module}_{:controller}_{:action}_{id}',MY_CACHE_TIME),  // 商品详情页静态缓存 3秒钟
-			'Goods:ajaxComment'=>array('{:module}_{:controller}_{:action}_{goods_id}_{commentType}_{p}',MY_CACHE_TIME),  // 商品评论页静态缓存 3秒钟
+//			'Goods:ajaxComment'=>array('{:module}_{:controller}_{:action}_{goods_id}_{commentType}_{p}',MY_CACHE_TIME),  // 商品评论页静态缓存 3秒钟
 	),
 	//默认错误跳转对应的模板文件
 	'TMPL_ACTION_ERROR' => 'Public:tpmsg',

@@ -100,11 +100,11 @@
 <div style="height:55px"></div>
 <div class="com_d">
     <div class="com_d_l">
-        <div class="collect"  onclick="collect_goods({$goods.goods_id})" id="favorite_add"> </div>
+        <div class="collect"  onclick="collect_goods({$goods.goods_id})" id="favorite_add"></div>
     </div>
     <div class="com_d_r">
-        <div class="c_btn1"><a href="#picture" onclick="$('#next1').show();$('#next2').hide();">立即购买</a></div>
-        <div class="c_btn2"><a href="#picture" onclick="$('#next2').show();$('#next1').hide();">加入购物车</a></div>
+        <div class="c_btn1"><a href="#picture" >立即购买</a></div>
+        <div class="c_btn2"><a href="#picture" >加入购物车</a></div>
     </div>
 </div>
 <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
@@ -113,11 +113,11 @@
         <div class="cp2_r">
             <p>{$goods.goods_name}</p>
             <span>￥{$goods.shop_price}</span>
-            <div class="gw_num">
-                <em class="jian" onClick="goods_cut();">-</em>
-                <input type="text" value="1"  min="1" max="1000" name="goods_num"  id="number"  class="num"/>
+            <div class="mui-numbox z-index" data-numbox-min="1" data-numbox-max="99">
+                <button class="mui-btn mui-btn-numbox-minus" type="button" disabled=""  >-</button>
+                <input id="number"  name="goods_num"   class="mui-input-numbox" type="text" value="1">
                 <input type="hidden" name="goods_id" value="{$goods.goods_id}"/>
-                <em class="add" onClick="goods_add();">+</em>
+                <button class="mui-btn mui-btn-numbox-plus" type="button"  >+</button>
             </div>
         </div>
     </div>
@@ -136,7 +136,7 @@
         </foreach>
 
         <div class="m33_btn" id="next1"><a href="javascript:void(0);"  onclick="AjaxAddCart({$goods.goods_id},1,1);">下一步</a></div>
-        <div class="m33_btn" id="next2"><a href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a></div>
+        <!--<div class="m33_btn" id="next2"><a href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a></div>-->
 
     </div>
 </div>
@@ -175,7 +175,7 @@ function changeAtt(t) {
 		}
 	}
 	t.className = "hover";
-	changePrice();
+//	changePrice();
 }
 
 function changeAtt1(t) {
@@ -190,22 +190,22 @@ function changeAtt1(t) {
 			t.childNodes[0].checked = true;
 		}
 	}
-	changePrice();
+//	changePrice();
 }
 
-	function goods_cut(){
-  		var num_val=document.getElementById('number');
-  		var new_num=num_val.value;
-  		var Num = parseInt(new_num);
-  		if(Num>1)Num=Num-1;
-  		num_val.value=Num;
-  	}
-  	function goods_add(){
-  		var num_val=document.getElementById('number');
-  		var new_num=num_val.value;
-  		var Num = parseInt(new_num);
-  		Num=Num+1;  num_val.value=Num;
-  	}
+//	function goods_cut(){
+//  		var num_val=document.getElementById('number');
+//  		var new_num=num_val.value;
+//  		var Num = parseInt(new_num);
+//  		if(Num>1)Num=Num-1;
+//  		num_val.value=Num;
+//  	}
+//  	function goods_add(){
+//  		var num_val=document.getElementById('number');
+//  		var new_num=num_val.value;
+//  		var Num = parseInt(new_num);
+//  		Num=Num+1;  num_val.value=Num;
+//  	}
     function switch_spec(spec)
     {
         $(spec).siblings().removeClass('m33_hover');
