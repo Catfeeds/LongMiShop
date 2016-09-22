@@ -16,8 +16,9 @@ class LoginApiController extends MobileBaseController {
         );
     }
 
-    public function __construct(){
-        parent::__construct();
+
+    public function  _initialize() {
+        parent::_initialize();
         $this->oauth = I('get.oauth');
         //获取配置
         $data = M('Plugin')->where("code='{$this->oauth}' and  type = 'login' ")->find();

@@ -6,9 +6,6 @@ use Think\Page;
 use Think\Verify;
 
 class UserController extends MobileBaseController {
-    
-    public $user_id = 0;
-    public $user = array();
 
     function exceptAuthActions()
     {
@@ -130,19 +127,16 @@ class UserController extends MobileBaseController {
     	$password = I('post.password');
     	$username = trim($username);
     	$password = trim($password);
-    	$logic = new \Common\Logic\UsersLogic();
-    	$res = $logic->login($username,$password);
-    	if($res['state'] == 1){
-    		$res['url'] =  urldecode(I('post.referurl'));
-    		session('user',$res['result']);
-    		setcookie('user_id',$res['result']['user_id'],null,'/');
-    		setcookie('is_distribut',$res['result']['is_distribut'],null,'/');
-    		$nickname = empty($res['result']['nickname']) ? $username : $res['result']['nickname'];
-    		setcookie('uname',$nickname,null,'/');
-    		$cartLogic = new \Common\Logic\CartLogic();
-    		$cartLogic->login_cart_handle($this->session_id,$res['result']['user_id']);  //用户登录后 需要对购物车 一些操作
-    	}
-    	exit(json_encode($res));
+
+        $logic = new \Common\Logic\UsersLogic();
+        $result = $logic -> login($username,$password);
+        if( callbackIsTrue($result) ){
+            $res['url'] =  urldecode(I('post.referurl'));
+            session('user',$res['result']);
+            $cartLogic = new \Common\Logic\CartLogic();
+            $cartLogic->login_cart_handle($this->session_id,session(__UserID__));  //用户登录后 需要对购物车 一些操作
+        }
+    	exit(json_encode($result));
     }
 
     /**

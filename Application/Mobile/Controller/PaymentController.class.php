@@ -18,8 +18,9 @@ class PaymentController extends MobileBaseController {
     /**
      * 析构流函数
      */
-    public function  __construct() {
-        parent::__construct();
+
+    public function  _initialize() {
+        parent::_initialize();
         // tpshop 订单支付提交
         $pay_radio = $_REQUEST['pay_radio'];
         if(!empty($pay_radio))

@@ -1,0 +1,129 @@
+<empty name ="cartList">
+    <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
+    <div class="empty_txt">购物列表空！</div>
+    <div class="empty_btn"><a href="{:U('Index/index')}">去购物</a></div>
+    <else/>
+
+    <foreach name="cartList" item="v" key="k" >
+        <!--<div class="titel_box">-->
+            <!--<div class="titel_box_l">龙米自营</div>-->
+        <!--</div>-->
+        <div class="cp7">
+            <div class="checkbox_s">
+                <label class="fl select-all" style="width:50px !important">
+                <span class="mui-input-row mui-checkbox mui-left" >
+                    <input  name="cart_select[{$v.id}]" class="check-all check-one check" type="checkbox" <if condition="$v[selected] eq 1" >checked="checked"</if>  value="1" onclick="ajax_cart_list();">
+                </span>
+                </label>
+            </div>
+            <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}"></a></div>
+            <div class="cp1_l"><img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
+            <div class="cp1_r">
+                <p>{$v.goods_name}</p>
+                <span>￥{$v.member_goods_price}</span>
+
+                <div class="mui-numbox z-index" data-numbox-min='1' data-numbox-max='99'>
+                    <button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,{$v.id},{$v.store_count});" type="button">-</button>
+                    <input id="goods_num[{$v.id}]" class="mui-input-numbox" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{$v.goods_num}"  name="goods_num[{$v.id}]" onblur="ajax_cart_list()"/>
+                    <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,{$v.id},{$v.store_count});" type="button">+</button>
+                </div>
+            </div>
+        </div>
+    </foreach>
+    <div class="foot" id="foot">
+        <label class="fl select-all" style="width:100px !important">
+            <span class="mui-input-row mui-checkbox mui-left" >
+                <input type="checkbox" class="check-all check-one check checked_longmi"  <if condition="$select_all eq 1" >checked="checked"</if>  id="quanxuan" style="margin-top:-6px" onclick="chkAll_onclick()">
+            </span>
+            <span style="margin-left:50px">全选</span>
+        </label>
+        <div class="fr closing">
+            <a  onclick="return selcart_submit();" style="color:#FFF">结 算</a>
+        </div>
+        <div class="fr total">
+            合计:￥<span id="cart_amount_desc">{$total_price.total_fee}</span>
+        </div>
+        <div class="fr selected" id="selected" style="display:none">
+            已选商品
+            <span id="selectedTotal">4</span>件<span class="arrow down">︾</span>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(".check-wrapper .cart-checkbox").click(function(){
+            if($(this).hasClass('checked')){
+                $(this).removeClass('checked');
+                $(this).find('input').attr('checked',false);
+            }else{
+                $(this).addClass('checked');
+                $(this).find('input').attr('checked',true);
+            }
+            ajax_cart_list();
+        })
+
+        var is_checked = true;
+        $('.cp_box .cart-checkbox input').each(function(){
+            if(!$(this).attr('checked'))
+            {
+                is_checked = false;
+                return false;
+            }
+        });
+        if(is_checked){
+            $('#quanxuan').attr('checked',true);
+            $('#quanxuan').addClass('checked_longmi');
+        }else
+        {
+            $('#quanxuan').attr('checked',false);
+            $('#quanxuan').removeClass('checked_longmi');
+        }
+
+        function chkAll_onclick()
+        {
+            if($('#quanxuan').hasClass('checked_longmi')){
+                $('#quanxuan').removeClass('checked_longmi');
+                $('#quanxuan').attr('checked',false);
+                $('.cp_box .cart-checkbox').removeClass('checked');
+                $("input[name^='cart_select']").prop('checked',false);
+                is_checked = false;
+            }
+            else{
+                $('#quanxuan').addClass('checked_longmi');
+                $('#quanxuan').attr('checked',true);
+                $('.cp_box .cart-checkbox').addClass('checked');
+                $("input[name^='cart_select']").prop('checked',true);
+                is_checked = true;
+            }
+            ajax_cart_list();
+        }
+
+        function del_cart_goods(goods_id)
+        {
+            if(!confirm('确定要删除吗?'))
+                return false;
+            var chk_value = [];
+            chk_value.push(goods_id);
+            // ajax调用删除
+            if(chk_value.length > 0)
+                ajax_del_cart(chk_value.join(','));
+        }
+
+
+        function selcart_submit()
+        {
+            var j=0;
+            $('input[name^="cart_select"]:checked').each(function(){
+                j++;
+            });
+            if (j>0)
+            {
+                window.location.href="{:U('Mobile/Cart/cart2')}"
+            }
+            else
+            {
+                alert('请选择要结算的商品！');
+                return false;
+            }
+        }
+    </script>
+</empty>

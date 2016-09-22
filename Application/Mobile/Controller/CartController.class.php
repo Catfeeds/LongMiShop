@@ -2,9 +2,7 @@
 namespace Mobile\Controller;
 class CartController extends MobileBaseController {
     
-    public $cartLogic; // 购物车逻辑操作类    
-    public $user_id = 0;
-    public $user = array();
+    public $cartLogic; // 购物车逻辑操作类
 
     function exceptAuthActions()
     {
@@ -19,8 +17,8 @@ class CartController extends MobileBaseController {
     /**
      * 析构流函数
      */
-    public function  __construct() {   
-        parent::__construct();                
+    public function  _initialize() {
+        parent::_initialize();
         $this->cartLogic = new \Common\Logic\CartLogic();
         if(session('?user'))
         {
@@ -260,13 +258,13 @@ class CartController extends MobileBaseController {
             $this->assign('select_all', $_POST['select_all']); // 全选框
         }
 
-        $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1);        
-        if(empty($result['total_price']))
+        $result = $this -> cartLogic-> cartList($this->user, $this->session_id,1,1);
+        if(empty($result['total_price'])){
             $result['total_price'] = Array( 'total_fee' =>0, 'cut_fee' =>0, 'num' => 0, 'atotal_fee' =>0, 'acut_fee' =>0, 'anum' => 0);
-        
+        }
         $this->assign('cartList', $result['cartList']); // 购物车的商品                
         $this->assign('total_price', $result['total_price']); // 总计       
-        $this->display('ajax_cart_list');
+        $this->display();
     }
 
     /*

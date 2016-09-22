@@ -11,6 +11,9 @@ class IndexController extends MobileBaseController {
         );
     }
 
+    public function  _initialize() {
+        parent::_initialize();
+    }
     public function index(){
         $hot_goods = M('goods')->where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,MY_CACHE_TIME)->select();//首页热卖商品
         $thems = M('goods_category')->where('level=1')->order('sort_order')->limit(9)->cache(true,MY_CACHE_TIME)->select();

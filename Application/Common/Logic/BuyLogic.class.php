@@ -7,6 +7,8 @@ use Think\Model;
 class BuyLogic extends BaseLogic
 {
 
+    private         $cartLogic               = null;
+
     public function __construct()
     {
         parent::__construct("config");
@@ -28,19 +30,19 @@ class BuyLogic extends BaseLogic
             $this -> model -> startTrans();
 
             //第1步 验证数据初始化
-            $this->_createOrderStep1();
+            $this -> _createOrderStep1();
 
             //第2步 得到购买商品信息
-            $this->_createOrderStep2();
+            $this -> _createOrderStep2();
 
             //第3步 得到购买相关金额计算等信息
-            $this->_createOrderStep3();
+            $this -> _createOrderStep3();
 
             //第4步 生成订单
-            $this->_createOrderStep4();
+            $this -> _createOrderStep4();
 
             //第5步 订单后续处理
-            $this->_createOrderStep5();
+            $this -> _createOrderStep5();
 
 //            throw new \Exception('我是断点！');
             $this -> model -> commit();
@@ -68,10 +70,10 @@ class BuyLogic extends BaseLogic
             $this -> model -> startTrans();
 
             //第1步 验证数据初始化
-            $this->_createServiceOrderStep1();
+            $this -> _createServiceOrderStep1();
 
             //第2步 生成退货退款单单
-            $this->_createServiceOrderStep2();
+            $this -> _createServiceOrderStep2();
 
             $this -> model -> commit();
 

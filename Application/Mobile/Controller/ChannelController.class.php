@@ -8,6 +8,9 @@ class ChannelController extends MobileBaseController {
             'index',
         );
     }
+    public function  _initialize() {
+        parent::_initialize();
+    }
 	public function index(){
 		$cat_id = I('cat_id',1);
 		$channel_cate = $this->cateTrre[$cat_id]['tmenu'];

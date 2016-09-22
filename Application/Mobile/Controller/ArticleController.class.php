@@ -15,6 +15,9 @@ class ArticleController extends MobileBaseController {
             'article',
         );
     }
+    public function  _initialize() {
+        parent::_initialize();
+    }
     public function index(){       
         $article_id = I('article_id',38);
     	$article = D('article')->where("article_id=$article_id")->find();

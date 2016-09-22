@@ -19,7 +19,6 @@ class BaseLogic extends RelationModel
     public          $orderId                 = null;
     public          $user                    = null;
     public          $model                   = null;
-    private         $cartLogic               = null;
     protected       $_post_data              = array();
 
     public function __construct($name = "")

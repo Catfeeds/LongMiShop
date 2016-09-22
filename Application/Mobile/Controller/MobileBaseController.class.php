@@ -23,6 +23,7 @@ abstract class MobileBaseController extends BaseController {
      */
     public function _initialize() {
         parent::_initialize();
+//        session(null);
         //验证部分
         if (session('auth') != true) {
             if( $this -> needAuth() ){
