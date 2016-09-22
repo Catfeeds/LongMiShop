@@ -39,49 +39,69 @@
 		</form>
 <div style="padding:10px; font-size:14px">
 <form>
-	  <div class="mui-input-row mui-checkbox mui-left" style="padding:0px">
-						<label>我已阅读并同意遵守<a href="#">法律声明</a>和<a href="#">隐私条款</a></label>
-						<input name="checkbox" value="Item 1" type="checkbox" >
-					</div>
+  <div class="mui-input-row mui-checkbox mui-left" style="padding:0px">
+    <label>我已阅读并同意遵守<a href="#">法律声明</a>和<a href="#">隐私条款</a></label>
+    <input name="checkbox" onclick="terms()" value="Item 1" type="checkbox" >
+  </div>
 </form>
-    </div>
-          <div class="login_btn"><a href="javascript:void(0);" onclick="sign_in()">注册</a></div>
+</div>
+    <input id="login_btn_off" class="login_btn_off" name="" value="注册" type="button" onclick="sign_in()">
+          <!-- <div class="login_btn"><a href="javascript:void(0);" onclick="sign_in()">注册</a></div> -->
 <div class="mui-content-padded oauth-area">
 
-			</div>
-		</div>
+	</div>
+</div>
 <div class="login_txt"><a href="#"></a>如果已拥有龙米ID，请在此处<a href="{: U('Mobile/User/login')}">登录</a></div>
 </body>
 </html>
 
 <script>
 
+    var sign_but = false;
+    function terms(){  
+        if(!$("input[type='checkbox']").is(':checked'))  
+        {  
+            $("#login_btn_off").attr("disabled", true).addClass("login_btn_off")
+            $("#login_btn_off").removeClass("login_btn_on");
+            sign_but = false;
+        }else{  
+            $("#login_btn_off").attr("disabled", false).addClass("login_btn_on")
+            $("#login_btn_off").removeClass("login_btn_off");
+            sign_but = true;
+        }  
+    } 
+
 	//提交按钮
 	function sign_in(){
-		var mobile = $('#mobile').val();
-		var phone_code = $('#phone_code').val();
-		var email = $('#email').val();
-		var password = $('#password').val();
-		var emailVerify = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-		if(!checkMobile(mobile)){
-            alert('手机号码格式错误');//alert('手机号码格式错误');
-            return false;
-        }else if(phone_code == ""){
-        	alert('短信验证码不能为空');
-        	return false;
-        }else if(!emailVerify.test(email)){
-        	alert('邮箱格式不对');
-        	return false;
-        }else if(password.indexOf(" ") != -1) {
-			alert("登录密码不能包含空格");
-			return false;
-		}else if(password.length < 6) {
-			alert('登录密码不能少于 6 个字符。');
-			return false;
-		}else{
-			$('#login-form').submit();
-		}
+        if(sign_but){
+            var mobile = $('#mobile').val();
+            var phone_code = $('#phone_code').val();
+            var email = $('#email').val();
+            var password = $('#password').val();
+            var emailVerify = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if(!checkMobile(mobile)){
+                alert('手机号码格式错误');//alert('手机号码格式错误');
+                return false;
+            }else if(phone_code == ""){
+                alert('短信验证码不能为空');
+                return false;
+            }else if(!emailVerify.test(email)){
+                alert('邮箱格式不对');
+                return false;
+            }else if(password.indexOf(" ") != -1) {
+                alert("登录密码不能包含空格");
+                return false;
+            }else if(password.length < 6) {
+                alert('登录密码不能少于 6 个字符。');
+                return false;
+            }else{
+                $('#login-form').submit();
+            }   
+        }
+		
 	}
+
+
 	var kong = true;
 	function sendCode(obj,input_id){
         var id = $(obj).attr('id');
