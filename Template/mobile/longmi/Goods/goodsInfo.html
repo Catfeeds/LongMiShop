@@ -103,13 +103,8 @@
         <div class="collect"  onclick="collect_goods({$goods.goods_id})" id="favorite_add"> </div>
     </div>
     <div class="com_d_r">
-        <div class="c_btn1"><a id="buy" href="#picture" onclick="alert(1);$('#next1').show();$('#next2').hide();document.getElementById('pictureClick').click(); " >立即购买</a></div>
-        <div class="c_btn2"><a id="next" href="#picture" onclick="alert(1);$('#next2').show();$('#next1').hide();$('#pictureClick').trigger('click');">加入购物车</a></div>
-        <script>
-            $(function(){
-
-            });
-        </script>
+        <div class="c_btn1"><a href="#picture" onclick="$('#next1').show();$('#next2').hide();">立即购买</a></div>
+        <div class="c_btn2"><a href="#picture" onclick="$('#next2').show();$('#next1').hide();">加入购物车</a></div>
     </div>
 </div>
 <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
@@ -167,6 +162,10 @@ function click_search (){
 	}
 }
 
+function nexts(){
+    
+}
+
 function changeAtt(t) {
 	t.lastChild.checked='checked';
 	for (var i = 0; i<t.parentNode.childNodes.length;i++) {
@@ -205,8 +204,7 @@ function changeAtt1(t) {
   		var num_val=document.getElementById('number');
   		var new_num=num_val.value;
   		var Num = parseInt(new_num);
-  		Num=Num+1;
-        num_val.value=Num;
+  		Num=Num+1;  num_val.value=Num;
   	}
     function switch_spec(spec)
     {
