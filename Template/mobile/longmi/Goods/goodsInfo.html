@@ -82,7 +82,7 @@
     <div class="price_main">
     <div class="titel_box">用户评价</div>
     </div>
-    <div class=evaluate_box" id="my_comment_list">
+    <div class="evaluate_box" id="my_comment_list">
     </div>
 
 
@@ -103,8 +103,9 @@
         <div class="collect"  onclick="collect_goods({$goods.goods_id})" id="favorite_add"> </div>
     </div>
     <div class="com_d_r">
-        <div class="c_btn1"><a href="#picture" onclick="$('#next1').show();$('#next2').hide();">立即购买</a></div>
-        <div class="c_btn2"><a href="#picture" onclick="$('#next2').show();$('#next1').hide();">加入购物车</a></div>
+        <div class="c_btn1"><a onclick="$('#next1').show();$('#next2').hide();document.getElementById('pictureClick').click(); ">立即购买</a></div>
+        <div class="c_btn2"><a onclick="$('#next2').show();$('#next1').hide();$('#pictureClick').trigger('click');">加入购物车</a></div>
+        <a  href="#picture" id="pictureClick" style ="dispaly: none;"></a>
     </div>
 </div>
 <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">

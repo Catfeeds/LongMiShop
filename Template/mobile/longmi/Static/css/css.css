@@ -1568,3 +1568,31 @@ body {
 	height: 24px;
 	width: 24px;
 }
+.login_btn_on{
+	border: 1px solid #B02F4B;
+	border-radius: 4px;
+	color: #FFF !important;
+	font-size: 18px;
+	display: block !important;
+	line-height: 35px !important;
+	background-color: #b02f4b !important;
+	text-align: center;
+	margin-top: 15px;
+	width: 90% !important;
+	margin-right: auto !important;
+	margin-left: auto !important;
+}
+.login_btn_off{
+	border: 1px solid #999;
+	border-radius: 4px;
+	color: #999 !important;
+	font-size: 18px;
+	display: block !important;
+	line-height: 35px !important;
+	background-color: #CCCCCC !important;
+	text-align: center;
+	margin-top: 15px;
+	width: 90% !important;
+	margin-right: auto !important;
+	margin-left: auto !important;
+}
