@@ -347,10 +347,18 @@ class UserController extends MobileBaseController {
      * 用户地址列表
      */
     public function address_list(){
+    	//上一页url indent  center
+    	$skip_url = I('get.source');
+    	if($skip_url == 'cart2'){
+    		cookie('skip_url','Cart/'.$skip_url);
+    	}else if(is_null(cookie('skip_url'))){
+    		cookie('skip_url','User/edit_details');
+    	}
         $address_lists = get_user_address_list($this->user_id);
         $region_list = get_region_list();
         $this->assign('region_list',$region_list);
         $this->assign('lists',$address_lists);
+        $this->assign('skip_url',cookie('skip_url'));
         $this->display();
     }
 
