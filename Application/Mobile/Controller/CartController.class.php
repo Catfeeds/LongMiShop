@@ -20,18 +20,18 @@ class CartController extends MobileBaseController {
     public function  _initialize() {
         parent::_initialize();
         $this->cartLogic = new \Common\Logic\CartLogic();
-        if(session('?user'))
-        {
-        	$user = session('user');
-                $user = M('users')->where("user_id = {$user['user_id']}")->find();
-                session('user',$user);  //覆盖session 中的 user               			                
-        	$this->user = $user;
-        	$this->user_id = $user['user_id'];
-        	$this->assign('user',$user); //存储用户信息
-                // 给用户计算会员价 登录前后不一样
-                if($user)
-                    M('Cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price * {$user[discount]} where (user_id ={$user[user_id]} or session_id = '{$this->session_id}') and prom_type = 0");                
-        }            
+//        if(session('?user'))
+//        {
+//        	$user = session('user');
+//                $user = M('users')->where("user_id = {$user['user_id']}")->find();
+//                session('user',$user);  //覆盖session 中的 user
+//        	$this->user = $user;
+//        	$this->user_id = $user['user_id'];
+//        	$this->assign('user',$user); //存储用户信息
+//                // 给用户计算会员价 登录前后不一样
+//                if($user)
+//                    M('Cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price * {$user[discount]} where (user_id ={$user[user_id]} or session_id = '{$this->session_id}') and prom_type = 0");
+//        }
     }
     
     public function cart(){

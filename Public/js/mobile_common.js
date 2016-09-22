@@ -12,7 +12,7 @@ function AjaxAddCart(goods_id,num,to_catr)
     if($("#buy_goods_form").length > 0){        
         $.ajax({
             type : "POST",
-            url:"/index.php?m=Home&c=Cart&a=ajaxAddCart",
+            url:"/index.php?m=Mobile&c=Cart&a=ajaxAddCart",
             data : $('#buy_goods_form').serialize(),// 你的formid 搜索表单 序列化提交                        
 			dataType:'json',
             success: function(data){	
