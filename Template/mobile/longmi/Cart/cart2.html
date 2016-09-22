@@ -58,7 +58,9 @@
                     </div>
                 </foreach>
                 <else/>
-                <label>暂无可使用的优惠券</label>
+                <div class="mui-input-row mui-radio mui-left">
+                    <label>暂无可使用的优惠券</label>
+                </div>
             </notempty>
         </div>
     </div>
@@ -68,7 +70,7 @@
     <div class="com_d">
         <div class="com_d_r">
             <div class="c_btn1"><a href="#picture">立即支付</a></div>
-            <div class="c_btn2"><a href="#">取消</a></div>
+            <div class="c_btn2"><a href="{:U('Cart/cart')}">取消</a></div>
         </div>
     </div>
 
@@ -76,7 +78,7 @@
     <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
         <ul class="mui-table-view">
             <li class="mui-table-view-cell">
-                <a href="#">微信安全支付</a>
+                <a href="#" onclick="submit_order();">微信安全支付</a>
             </li>
         </ul>
         <ul class="mui-table-view">
@@ -87,4 +89,41 @@
     </div>
 </form>
 </body>
+<script>
+
+    // 提交订单
+    function submit_order()
+    {
+        $.ajax({
+            type : "POST",
+            url:"{:U('Mobile/Cart/cart3')}",
+            data : $('#cart2_form').serialize(),
+            dataType: "json",
+            success: function(data){
+
+                console.log(data);return;
+//                if(data.status != '1')
+//                {
+//                    alert(data.msg); //执行有误
+//// 登录超时
+//                    if(data.status == -100)
+//                        location.href ="{:U('Mobile/User/login')}";
+//
+//                    return false;
+//                }
+//// console.log(data);
+//                $("#postFee").text(data.result.postFee); // 物流费
+////            $("#couponFee").text(data.result.couponFee);// 优惠券
+////            $("#balance").text(data.result.balance);// 余额
+////            $("#pointsFee").text(data.result.pointsFee);// 积分支付
+//                $("#payables").text(data.result.payables);// 应付
+////			$("#order_prom_amount").text(data.result.order_prom_amount);// 订单 优惠活动
+//                alert('订单提交成功，跳转支付页面!');
+//                location.href = "/index.php?m=Mobile&c=Cart&a=cart4&order_id="+data.result;
+            }
+        });
+    }
+</script>
+
+
 </html>
