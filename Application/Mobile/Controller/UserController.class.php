@@ -114,7 +114,7 @@ class UserController extends MobileBaseController {
      */
     public function login(){
         if($this->user_id > 0){
-        	header("Location: ".U('Mobile/User/Index'));
+        	header("Location: ".U('Mobile/User/index'));
         }
         $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Mobile/User/index");
         $this->assign('referurl',$referurl);
