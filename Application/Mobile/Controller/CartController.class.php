@@ -122,7 +122,19 @@ class CartController extends MobileBaseController {
             $this->error ('你的购物车没有选中商品','Cart/cart');
 
         $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1); // 获取购物车商品
-        $shippingList = M('Plugin')->where("`type` = 'shipping' and status = 1")->select();// 物流公司
+        // $site = $region_list[$address['province']]['name']];
+        
+        //计算邮费
+        foreach($result['cartList'] as $key => $item){
+           
+            $goods_data[$key]['goods_id'] = $item['goods_id'];
+            $goods_data[$key]['goods_num'] = $item['goods_num'];
+            $goods_data[$key]['goods_name'] = $item['goods_name'];
+            $goods_data[$key]['goods_price'] = $item['goods_price'];
+        }
+         // dd($address);
+
+        // $shippingList = M('Plugin')->where("`type` = 'shipping' and status = 1")->select();// 物流公司
         
 
         $Model = new \Think\Model(); // 找出这个用户的优惠券 没过期的  并且 订单金额达到 condition 优惠券指定标准的

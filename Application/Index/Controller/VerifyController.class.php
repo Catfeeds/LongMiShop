@@ -32,7 +32,8 @@ class VerifyController extends BaseIndexController {
     }
 
     public function postage(){
-        count_postage();
+        $res = count_postage();
+        dd($res);
 
 
 

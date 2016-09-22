@@ -7,41 +7,43 @@
  *
  *
  */
-function count_postage(){
+function count_postage($array){
     // error_reporting(E_ALL);
-    $array = array(
-        0=>array(
-            'goods_id' =>1, //商品id
-            'weight'=> 14500, //商品重量
-            'goods_name'=>'平板液晶电视', //商品名称
-            'goods_num'=>1, //件数  重量
-            'shipping_code' =>15, //配送方式
-            'goods_price'=> 3000, //商品价格
-            'site' =>array(
-                'province' => '北京市'
-            ),
-        ),
-        2=>array(
-            'goods_id' =>1, //商品id
-            'weight'=> 14500, //商品重量
-            'goods_name'=>'平板液晶电视', //商品名称
-            'goods_num'=>1, // 件数  重量
-            'shipping_code' =>15, //配送方式
-            'goods_price'=> 3000, //商品价格
-            'site' =>array(
-                'province' => '北京市'
-            ),
-        ),
 
-    );
+    // $array = array(
+    //     0=>array(
+    //         'goods_id' =>143, //商品id
+    //         'weight'=> 14500, //商品重量
+    //         'goods_name'=>'平板液晶电视', //商品名称
+    //         'goods_num'=>1, //件数  重量
+    //         'shipping_code' =>18, //配送方式
+    //         'goods_price'=> 3000, //商品价格
+    //         'site' =>array(
+    //             'province' => '北京市'
+    //         ),
+    //     ),
+    //     2=>array(
+    //         'goods_id' =>143, //商品id
+    //         'weight'=> 14500, //商品重量
+    //         'goods_name'=>'平板液晶电视', //商品名称
+    //         'goods_num'=>1, // 件数  重量
+    //         'shipping_code' =>18, //配送方式
+    //         'goods_price'=> 3000, //商品价格
+    //         'site' =>array(
+    //             'province' => '北京市'
+    //         ),
+    //     ),
+
+    // );
 
     if(empty($array)){
-        return '参数错误';
+        return callback(false,"参数错误");
     }
     $postage = 0; //邮费总价
 
     foreach($array as $item){
         $log_res = M('logistics')->where("log_id = ".$item['shipping_code'])->find();
+
         $mode = $log_res['log_mode']; //记重方式
         $baseValue = $mode == 1 ? $item['goods_num'] : $item['goods_num'] * $item['weight'];
 
@@ -52,9 +54,10 @@ function count_postage(){
 
         if($log_res['log_is_free'] == 1){ //是否包邮
             $postage += 0;
-            $goods_postage[$item['goods_name']] = 0; //商品单个邮费
+            $goods_postage[$item['goods_id']] = 0; //商品单个邮费
             continue;
         }
+
 
 
         /*
@@ -63,18 +66,18 @@ function count_postage(){
         */
 
         $condition = unserialize($log_res['log_condition']);
-        dump($condition);exit;
+
 
         if(!empty($condition['pinkage'])){ //是否属于包邮地区
             foreach ($condition['pinkage'] as $items) {
                 //pinkage_mode  1价钱  2重量
                 if($items['pinkage_area'] == $item['site']['province'] && $items['pinkage_mode'] == 1 && $items['pinkage_bound'] >= $item['goods_price']) {
                     $postage += 0;
-                    $goods_postage[$item['goods_name']] = 0; //商品单个邮费
+                    $goods_postage[$item['goods_id']] = 0; //商品单个邮费
                     break;
                 }else if($items['pinkage_area'] == $item['site']['province'] && $items['pinkage_mode'] == 2 && $items['pinkage_bound'] >= $baseValue){
                     $postage += 0;
-                    $goods_postage[$item['goods_name']] = 0; //商品单个邮费
+                    $goods_postage[$item['goods_id']] = 0; //商品单个邮费
                     break;
                 }
             }
@@ -99,7 +102,7 @@ function count_postage(){
 
         if($baseValue <= $base){
             $postage += $money;
-            $goods_postage[$item['goods_name']] = $money;
+            $goods_postage[$item['goods_id']] = $money;
             continue;
         }else{
             $exceed = $baseValue - $base; //超出件数
@@ -111,17 +114,15 @@ function count_postage(){
             }
 
             $postage += $end_money;
-            $goods_postage[$item['goods_name']] = $end_money;
+            $goods_postage[$item['goods_id']] = $end_money; //商品邮费 
         }
 
-        $goods_postage[$item['goods_name']] = 0;
+        $goods_postage[$item['goods_id']] = 0;
 
 
     }
 
-
-
-
+    return callback(true,"邮费计算成功",array("result" => $goods_postage , "count" => $postage));
 
 }
 
