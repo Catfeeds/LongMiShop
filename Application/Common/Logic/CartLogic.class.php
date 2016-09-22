@@ -173,6 +173,7 @@ class CartLogic extends BaseLogic
                 }
                 // 如果要求只计算购物车选中商品的价格 和数量  并且  当前商品没选择 则跳过
                 if($selected == 1 && $val['selected'] == 0){
+                    unset($cartList[$k]);
                     continue;
                 }
                 $num += $val['goods_num'];
