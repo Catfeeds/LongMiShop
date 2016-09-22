@@ -108,7 +108,10 @@ class CartController extends MobileBaseController {
             $address = M('user_address')->where("address_id = $address_id")->find();
         else
             $address = M('user_address')->where("user_id = $this->user_id and is_default=1")->find();
-        
+
+        $region_list = get_region_list();
+        $this->assign('region_list',$region_list);
+
         if(empty($address)){
         	header("Location: ".U('Mobile/User/add_address',array('source'=>'cart2')));
         }else{
