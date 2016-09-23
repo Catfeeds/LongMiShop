@@ -35,7 +35,7 @@
           	<if condition="$vo[is_comment] eq 0">
           	<a class="remark" href="{:U('User/add_comment',array('rec_id'=>$vo[rec_id]))}">评价订单</a>
           	<else/>
-          	<a class="remark" href="{:U('User/order_detail',array('order_id'=>$vo[order_id]))}">查看订单</a>
+          	<a class="remark" href="{:U('Order/order_detail',array('order_id'=>$vo[order_id]))}">查看订单</a>
           	</if>
           </dd>
           </dl>

@@ -236,10 +236,7 @@ class UsersLogic extends BaseLogic
     public function getOrderGoods($order_id){
         $sql = "SELECT og.*,g.original_img FROM __PREFIX__order_goods og LEFT JOIN __PREFIX__goods g ON g.goods_id = og.goods_id WHERE order_id = ".$order_id;
         $goods_list = $this->query($sql);
-        $return['status'] = 1;
-        $return['msg'] = '';
-        $return['result'] = $goods_list;
-        return $return;
+        return callback(true,"",$goods_list);
     }
 
     /*

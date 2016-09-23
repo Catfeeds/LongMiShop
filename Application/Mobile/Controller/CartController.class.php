@@ -104,6 +104,8 @@ class CartController extends MobileBaseController {
             $this->error ('你的购物车没有选中商品','Cart/cart');
 
         $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1); // 获取购物车商品
+        $cartList = $result['cartList'];
+        $totalPrice = $result['total_price'];
         //计算邮费
         foreach($result['cartList'] as $key => $item){
             $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
@@ -123,8 +125,8 @@ class CartController extends MobileBaseController {
         $result = $usersLogic -> getCanUseCoupon( $this->user_id , $result['total_price']['total_fee']);
         $this->assign('couponList',$result['data']['result']);
         $this->assign('shippingList', $shippingList); // 物流公司
-        $this->assign('cartList', $result['cartList']); // 购物车的商品
-        $this->assign('total_price', $result['total_price']); // 总计
+        $this->assign('cartList', $cartList); // 购物车的商品
+        $this->assign('total_price', $totalPrice); // 总计
         $this->assign('carriage_sum',$count_postage['data']['count']); //总邮费
         $this->display();
     }
@@ -266,4 +268,8 @@ exit;
         $return_arr = array('status'=>1,'msg'=>'删除成功','result'=>''); // 返回结果状态
         exit(json_encode($return_arr));
     }
+
+
+
+
 }
