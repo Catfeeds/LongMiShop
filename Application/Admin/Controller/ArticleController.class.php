@@ -61,7 +61,7 @@ class ArticleController extends BaseController {
         $info['publish_time'] = time()+3600*24;
         if(I('GET.article_id')){
            $article_id = I('GET.article_id');
-           $info = D('article')->where('article_id='.$article_id)->find();
+           $info = M('article')->where('article_id='.$article_id)->find();
         }
         $cats = $ArticleCat->article_cat_list(0,$info['cat_id']);
         $this->assign('cat_select',$cats);
@@ -138,15 +138,15 @@ class ArticleController extends BaseController {
         if($data['act'] == 'add'){
                 $data['click'] = mt_rand(1000,1300);
         	$data['add_time'] = time(); 
-            $r = D('article')->add($data);
+            $r = M('article')->add($data);
         }
         
         if($data['act'] == 'edit'){
-            $r = D('article')->where('article_id='.$data['article_id'])->save($data);
+            $r = M('article')->where('article_id='.$data['article_id'])->save($data);
         }
         
         if($data['act'] == 'del'){
-        	$r = D('article')->where('article_id='.$data['article_id'])->delete();
+        	$r = M('article')->where('article_id='.$data['article_id'])->delete();
         	if($r) exit(json_encode(1));       	
         }
         $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U('Admin/Article/articleList');
