@@ -163,11 +163,11 @@
                                         </tr>
 
                                         <tr>
-                                            <td>按商品<span class="is_mode">重量</span>计算</td>
+                                            <td>按商品<span class="is_mode">{: !empty($edit_list) ? $edit_list['log_mode']==2 ? '重量' : '件数' : '件数'}</span>计算</td>
                                             <td>
-                                                <p>基础<input type="text" name="log_amount" value="{: !empty($edit_list) ? $edit_list['log_amount'] :''}"><span class="is_mode">重量</span></p>
+                                                <p>基础<input type="text" name="log_amount" value="{: !empty($edit_list) ? $edit_list['log_amount'] :''}"><span class="is_mode">{: !empty($edit_list) ? $edit_list['log_mode']==2 ? '重量' : '件数' : '件数'}</span></p>
                                                 <p>增加<input type="text" name="log_cost" value="{: !empty($edit_list) ? $edit_list['log_cost'] : ''}">元</p>
-                                                <p>每增加<input type="text" name="log_amount_add" value="{: !empty($edit_list) ? $edit_list['log_amount_add'] : ''}"><span class="is_mode">重量</span></p>
+                                                <p>每增加<input type="text" name="log_amount_add" value="{: !empty($edit_list) ? $edit_list['log_amount_add'] : ''}"><span class="is_mode">{: !empty($edit_list) ? $edit_list['log_mode']==2 ? '重量' : '件数' : '件数'}</span></p>
                                                 <p>增加<input type="text" name="log_cost_add" value="{: !empty($edit_list) ? $edit_list['log_cost_add'] : ''}">元</p>
                                             </td>
                                         </tr>
@@ -185,12 +185,12 @@
                                                             </h3>
                                                             <p>基础
                                                                 <input type='text' name='base[]' value='{: $item["base"]}' />
-                                                                <span class='is_mode'>重量</span>
+                                                                <span class='is_mode'>{: !empty($edit_list) ? $edit_list['log_mode']==2 ? '重量' : '件数' : '件数'}</span>
                                                             </p>
                                                             <p>增加<input type='text' name='money[]' value='{: $item["money"]}'>元</p>
                                                             <p>每增加
                                                                 <input type='text' name='add_base[]' value='{: $item["add_base"]}'> 
-                                                                <span class='is_mode'>重量</span>
+                                                                <span class='is_mode'>{: !empty($edit_list) ? $edit_list['log_mode']==2 ? '重量' : '件数' : '件数'}</span>
                                                             </p>
                                                             <p>增加
                                                             <input type='text' name='add_money[]' value='{: $item["add_money"]}'>元
@@ -293,9 +293,9 @@
         </volist>
         <br/>
         <br/>
-        <p>基础<input type="text"  id="div_base"><span class="is_mode">重量</span></p>
+        <p>基础<input type="text"  id="div_base"><span class="is_mode">{: !empty($edit_list) ? $edit_list['log_mode']==2 ? '重量' : '件数' : '件数'}</span></p>
         <p>增加<input type="text"  id="div_money">元</p>
-        <p>每增加<input type="text" id="div_add_base"><span class="is_mode">重量</span></p>
+        <p>每增加<input type="text" id="div_add_base"><span class="is_mode">{: !empty($edit_list) ? $edit_list['log_mode']==2 ? '重量' : '件数' : '件数'}</span></p>
         <p>增加<input type="text"  id="div_add_money">元</p>
         <p>
            <button type="button" id="selectAll"  >全选</button> 
@@ -359,7 +359,7 @@ $('#is_take_their').change(['Data'],function(){
 });
 
 $('#mode').change(['Data'],function(){
-    if($(this).val()==1){
+    if($(this).val()==2){
         $('.is_mode').text('重量');
     }else{
         $('.is_mode').text('件数');
