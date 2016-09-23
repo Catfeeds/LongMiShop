@@ -90,3 +90,15 @@ ADD COLUMN `refund_name`  varchar(60) NULL AFTER `spec_key`,
 ADD COLUMN `refund_code`  varchar(100) NULL AFTER `refund_name`,
 ADD COLUMN `refund_way`  int(1) NOT NULL DEFAULT 0 COMMENT '还款方式 0， 原路   1，余额 ' AFTER `refund_code`;
 ADD COLUMN `refund_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '金额' AFTER `refund_way`;
+
+
+//文章表  新增字段
+ALTER TABLE  `tp_article` ADD  `device_type` TINYINT( 3 ) NOT NULL COMMENT  '设备类型 1PC 2手机 3pc+手机' AFTER  `cat_id`
+
+//新增表 消息记录表
+CREATE TABLE `tp_push_message` (
+  `push_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
+  PRIMARY KEY (`push_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

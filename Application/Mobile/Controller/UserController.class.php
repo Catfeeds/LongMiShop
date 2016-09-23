@@ -1134,8 +1134,22 @@ class UserController extends MobileBaseController {
      */
     public function message()
     {
+        $this->push_message();
         $need_top = I('need_top',0);
         $this->assign('need_top',$need_top);
         $this->display();
     }
+
+    public function push_message(){
+        $res = M('push_message')->where("user_id = '".$this->user_id."'")->find();
+        $data['end_time'] = time();
+        $data['user_id'] = $this->user_id;
+        if(!empty($res)){
+            $data['push_id'] = $res['push_id'];
+            M('push_message')->save($data);
+        }else{
+            M('push_message')->add($data);
+        }
+    }
+
 }
