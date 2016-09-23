@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<title>LM商城</title>
+<script src="__STATIC__/js/mui.min.js"></script>
+<script src="__STATIC__/js/TouchSlide.js"></script>
+<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
+<link href="__STATIC__/css/css.css" rel="stylesheet" />
+<style >
+	#share{
+		z-index:9999999999999999999999;
+		position:fixed;
+		width:100%;
+		height:100%;
+		top:0px;
+		right:0px;
+		margin-top:0;
+		background:url('__STATIC__/images/share.png') right top no-repeat #000;
+		background-size:80%;
+	}
+</style>
+</head>
+<body>
+{$art|htmlspecialchars_decode}
+<div class="me_box">
+<div class="me_l"><a href="javascript:history.go(-1);">返回</a></div>
+<div class="me_r"><a href=" {: isWeChatBrowser() ? 'javascript:share();' : 'http://www.jiathis.com/share' }">分享</a></div>
+</div>
+
+<div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
+
+</body>
+</html>
+<script src="__STATIC__/js/jquery.js"></script>
+<script>
+	// 
+	function share(){
+		$('#share').show();
+	}
+</script>

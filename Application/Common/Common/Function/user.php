@@ -19,7 +19,7 @@ function getUserHeadImg( $userId = null ){
 //计算推送消息上次访问时间
 function push_message_time($user_id){
     $usr_time = M('push_message')->field('end_time')->where("user_id = '".$user_id."'")->find();
-    $art_time = M('article')->field('publish_time')->order('publish_time DESC')->limit(1)->find();
+    $art_time = M('article')->field('publish_time')->where('device_type = 2 OR device_type = 3')->order('publish_time DESC')->limit(1)->find();
     if($art_time['publish_time'] > $usr_time['end_time']){
     	return true;
     }else{
