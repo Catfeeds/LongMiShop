@@ -144,27 +144,27 @@ class CartController extends MobileBaseController {
      */
     public function cart4(){
 
-        $orderId = I('order_id');
-        $orderInfo = M('order')->where("order_id = $orderId")->find();
-        if( empty($orderInfo) ){
-
-        }
-        // 如果已经支付过的订单直接到订单详情页面. 不再进入支付页面
-        if( $orderInfo['pay_status'] == 1 ){
-            $order_detail_url = U("Mobile/User/order_detail",array( 'id' => $orderId ));
-            header("Location: $order_detail_url");
-        }
-        $paymentList = M('Plugin')->where("`type`='payment' and status = 1 and code in('weixin','cod')")->select();
-        $paymentList = convert_arr_key($paymentList, 'code');
-        foreach($paymentList as $key => $val)
-        {
-            $val['config_value'] = unserialize($val['config_value']);
-            if($val['config_value']['is_bank'] == 2)
-            {
-                $bankCodeList[$val['code']] = unserialize($val['bank_code']);
-            }
-        }
-exit;
+//        $orderId = I('order_id');
+//        $orderInfo = M('order')->where("order_id = $orderId")->find();
+//        if( empty($orderInfo) ){
+//
+//        }
+//        // 如果已经支付过的订单直接到订单详情页面. 不再进入支付页面
+//        if( $orderInfo['pay_status'] == 1 ){
+//            $order_detail_url = U("Mobile/User/order_detail",array( 'id' => $orderId ));
+//            header("Location: $order_detail_url");
+//        }
+//        $paymentList = M('Plugin')->where("`type`='payment' and status = 1 and code in('weixin','cod')")->select();
+//        $paymentList = convert_arr_key($paymentList, 'code');
+//        foreach($paymentList as $key => $val)
+//        {
+//            $val['config_value'] = unserialize($val['config_value']);
+//            if($val['config_value']['is_bank'] == 2)
+//            {
+//                $bankCodeList[$val['code']] = unserialize($val['bank_code']);
+//            }
+//        }
+//exit;
 
         $order_id = I('order_id');
         $order = M('Order')->where("order_id = $order_id")->find();

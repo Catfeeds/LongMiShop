@@ -61,13 +61,10 @@ class UserController extends MobileBaseController {
      * 账户资金
      */
     public function account(){
-        $user = session('user');
         //获取账户资金记录
         $logic = new \Common\Logic\UsersLogic();
         $data = $logic->get_account_log($this->user_id,I('get.type'));
         $account_log = $data['result'];
-
-        $this->assign('user',$user);
         $this->assign('account_log',$account_log);
         $this->assign('page',$data['show']);
 
