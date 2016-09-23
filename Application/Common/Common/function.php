@@ -8,6 +8,7 @@
 @require_once "Function/goods.php";
 @require_once "Function/email.php";
 @require_once "Function/service.php";
+@require_once "Function/address.php";
 
 
 function dd($x) {

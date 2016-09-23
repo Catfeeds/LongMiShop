@@ -29,15 +29,16 @@
     <!--<div class="titel_box_l">龙米自营</div>-->
     <!--</div>-->
     <foreach name="cartList" item="v" key="k" >
-
-        <div class="cp6">
-            <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}"></a></div>
-            <div class="cp1_l"><img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
-            <div class="cp1_r">
-                <p>{$v.goods_name}{: $v['spec_key_name'] ? "[".$v['spec_key_name']."]" : ""}</p>
-                <span>￥{$v.member_goods_price}</span><span style="float:right; color:#666">X{$v.goods_num}</span>
+        <if condition = "$v['selected'] == 1" >
+            <div class="cp6">
+                <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}"></a></div>
+                <div class="cp1_l"><img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
+                <div class="cp1_r">
+                    <p>{$v.goods_name}{: $v['spec_key_name'] ? "[".$v['spec_key_name']."]" : ""}</p>
+                    <span>￥{$v.member_goods_price}</span><span style="float:right; color:#666">X{$v.goods_num}</span>
+                </div>
             </div>
-        </div>
+        </if>
     </foreach>
     <div class="site_txt">运费<span>￥{: $carriage_sum}</span></div>
     <div class="site_txt" style="height:150px;  display: none;">
@@ -100,8 +101,12 @@
             data : $('#cart2_form').serialize(),
             dataType: "json",
             success: function(data){
-
-                console.log(data);return;
+                if(data.state != 1)
+                {
+                    alert(data.msg);
+                    return false;
+                }
+                location.href = "/index.php?m=Mobile&c=Cart&a=cart4&order_id="+data.data;
 //                if(data.status != '1')
 //                {
 //                    alert(data.msg); //执行有误
