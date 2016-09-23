@@ -4,6 +4,13 @@
         function alert(msg){
                 mui.toast(msg);
         }
+        //取消订单
+        function cancel_order(id){
+                if(!confirm("确定取消订单?")){
+                        return false;
+                }
+                location.href = "/index.php?m=Mobile&c=User&a=cancel_order&id="+id;
+        }
 </script>
 <style>
         .mui-toast-container{z-index: 9999999999999999999999999999;}
