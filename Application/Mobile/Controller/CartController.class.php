@@ -122,18 +122,19 @@ class CartController extends MobileBaseController {
             $this->error ('你的购物车没有选中商品','Cart/cart');
 
         $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1); // 获取购物车商品
-        // $site = $region_list[$address['province']]['name']];
-        
         //计算邮费
         foreach($result['cartList'] as $key => $item){
-           
-            $goods_data[$key]['goods_id'] = $item['goods_id'];
-            $goods_data[$key]['goods_num'] = $item['goods_num'];
-            $goods_data[$key]['goods_name'] = $item['goods_name'];
-            $goods_data[$key]['goods_price'] = $item['goods_price'];
+            $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
+            $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
+            $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
+            $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称
+            $goods_data[$key]['goods_price'] = $item['goods_price']; //商品价格
+            $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
+            $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
+            $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址
         }
-         // dd($address);
-
+        $count_postage = count_postage($goods_data); //运费
+        // dd($count_postage);
         // $shippingList = M('Plugin')->where("`type` = 'shipping' and status = 1")->select();// 物流公司
         
 
@@ -145,6 +146,7 @@ class CartController extends MobileBaseController {
         $this->assign('shippingList', $shippingList); // 物流公司
         $this->assign('cartList', $result['cartList']); // 购物车的商品
         $this->assign('total_price', $result['total_price']); // 总计
+        $this->assign('carriage_sum',$count_postage['data']['count']); //总邮费
         $this->display();
     }
 

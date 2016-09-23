@@ -45,6 +45,7 @@ function count_postage($array){
         $log_res = M('logistics')->where("log_id = ".$item['shipping_code'])->find();
 
         $mode = $log_res['log_mode']; //记重方式
+
         $baseValue = $mode == 1 ? $item['goods_num'] : $item['goods_num'] * $item['weight'];
 
         $base = $log_res['log_amount']; 			//基础件数 or 重量
@@ -101,23 +102,25 @@ function count_postage($array){
         }
 
         if($baseValue <= $base){
+
             $postage += $money;
             $goods_postage[$item['goods_id']] = $money;
             continue;
         }else{
             $exceed = $baseValue - $base; //超出件数
-
+            
             if( ($exceed % $add_base ) == 0){
                 $end_money = ($exceed / $add_base) * $add_money + $money;
             }else{
                 $end_money = ( ($exceed / $add_base) + 1 ) * $add_money + $money;
             }
 
+
             $postage += $end_money;
             $goods_postage[$item['goods_id']] = $end_money; //商品邮费 
         }
 
-        $goods_postage[$item['goods_id']] = 0;
+        // $goods_postage[$item['goods_id']] = 0;
 
 
     }

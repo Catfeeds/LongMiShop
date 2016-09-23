@@ -594,10 +594,10 @@ class UserController extends MobileBaseController {
             );
             $upload = new \Think\Upload($uploadConfig);//实例化上传类
             $info = $upload->upload();
-            // exit(json_encode($this->user_id));
+            // exit(json_encode(callback(true,"上传成功",array('path'=>$info))));
             if($info){
                 $this->del_before($this->user_id); //删除旧头像
-                $data['head_pic'] = '.'.$info['file']['urlpath'];
+                $data['head_pic'] = $info['file']['urlpath'];
                 $data['user_id'] = $this->user_id;
                 M('users')->save($data);
                 exit(json_encode(callback(true,"上传成功",array('path'=>$data['head_pic']))));
