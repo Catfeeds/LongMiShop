@@ -21,7 +21,7 @@
 <include file="Public/user_topnav"/>
 <div class="er">
 	<ul>
-		<li><p>优惠券</p><span>{$coupon_count}</span></li>
+		<li><p>优惠券</p><span>{$couponCount}</span></li>
 		<li><p>余额</p><span>￥{$user['user_money']}</span></li>
 		<li class="none"><p>积分</p><span>{$user['pay_points']}</span></li>
 	</ul>
@@ -31,16 +31,16 @@
 <div class="er1">
 	<ul>
 		<li>
-			<p><a href="{:U('Mobile/User/order_list',array('type'=>'WAITPAY'))}">待付款</a></p>
+			<p><a href="{:U('Mobile/Order/order_list',array('type'=>'WAITPAY'))}">待付款</a></p>
 		</li>
 		<li style="background-image:url('__STATIC__/SVG/a2.svg')">
-			<p><a href="{:U('Mobile/User/order_list',array('type'=>'WAITSEND'))}">待发货</a></p>
+			<p><a href="{:U('Mobile/Order/order_list',array('type'=>'WAITSEND'))}">待发货</a></p>
 		</li>
 		<li style="background-image:url('__STATIC__/SVG/a3.svg')">
-			<p><a href="{:U('Mobile/User/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a></p>
+			<p><a href="{:U('Mobile/Order/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a></p>
 		</li>
 		<li style="background-image:url('__STATIC__/SVG/a4.svg')">
-			<p><a href="{:U('Mobile/User/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a></p>
+			<p><a href="{:U('Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a></p>
 		</li>
 	</ul>
 
@@ -52,9 +52,12 @@
 		<li><a href="{:U('Mobile/User/account')}">钱包</a></li>
 		<li><a href="{:U('Mobile/User/coupon')}">优惠券</a></li>
 		<li><a href="{:U('User/points')}">积分</a></li>
+		<!--<li><a href="{:U('User/logout')}">注销</a></li>-->
 	</ul>
 </div>
 
 <include file="Public/nav"/>
+
 </body>
+<include file="Public/footer"/>
 </html>

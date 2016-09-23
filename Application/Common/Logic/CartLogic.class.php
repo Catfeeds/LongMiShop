@@ -10,14 +10,14 @@ use Common\Logic\Base\BaseLogic;
  */
 class CartLogic extends BaseLogic
 {
-
-
     /**
      * 加入购物车方法
-     * @param type $goods_id  商品id
-     * @param type $goods_num   商品数量
-     * @param type $goods_spec  选择规格
-     * @param type $user_id 用户id
+     * @param $goods_id 商品id
+     * @param $goods_num 商品数量
+     * @param $goods_spec 选择规格
+     * @param $session_id
+     * @param int $user_id 用户id
+     * @return array
      */
     function addCart($goods_id,$goods_num,$goods_spec,$session_id,$user_id = 0)
     {
@@ -158,11 +158,14 @@ class CartLogic extends BaseLogic
         $cartList = array();
         if(!empty($cartData)){
             foreach ($cartData as $k=>$val){
+
                 $cartList[$k] = $val;
                 $cartList[$k]['goods_fee'] = $val['goods_num'] * $val['member_goods_price'];
                 $cartList[$k]['store_count']  = getGoodNum($val['goods_id'],$val['spec_key']); // 最多可购买的库存数量
                 if( $cartList[$k]['store_count'] == 0 || empty( $cartList[$k]['store_count'] )){
                     $cartList[$k]['store_count'] = 0;
+                    $cartList[$k]['selected'] = 0;
+                    $val['selected'] = 0;
                     M('Cart')->where("id = '{$val['id']}'")->save(array("selected" => 0));
                     $cartList[$k]['goods_num']= 0;
                 }
@@ -173,7 +176,6 @@ class CartLogic extends BaseLogic
                 }
                 // 如果要求只计算购物车选中商品的价格 和数量  并且  当前商品没选择 则跳过
                 if($selected == 1 && $val['selected'] == 0){
-                    unset($cartList[$k]);
                     continue;
                 }
                 $num += $val['goods_num'];

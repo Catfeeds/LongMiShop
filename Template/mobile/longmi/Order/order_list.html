@@ -3,46 +3,43 @@
 <div class="top1_list">
     <ul>
         <li class="<if condition="$_GET[type] eq 'WAITPAY'">top1_list_h</if>">
-        <a href="{:U('/Mobile/User/order_list',array('type'=>'WAITPAY'))}">待付款</a>
+        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITPAY'))}">待付款</a>
         </li>
         <li class="<if condition="$_GET[type] eq 'WAITSEND'">top1_list_h</if>">
-        <a href="{:U('/Mobile/User/order_list',array('type'=>'WAITSEND'))}">待发货</a>
+        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITSEND'))}">待发货</a>
         </li>
         <li class="<if condition="$_GET[type] eq 'WAITRECEIVE'">top1_list_h</if>">
-        <a href="{:U('/Mobile/User/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a>
+        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a>
         </li>
         <li class="<if condition="$_GET[type] eq 'WAITCCOMMENT'">top1_list_h</if>">
-        <a href="{:U('/Mobile/User/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a>
+        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a>
         </li>
     </ul>
 </div>
 <notempty name="lists">
     <div id="ajax_return">
         <volist name="lists" id="list">
-            <foreach name="list.goods_list" item="admin_v" key="admin_k" >
-                <div class="titel_box">
-                    <a href="{:U('/Mobile/User/order_detail',array('id'=>$list['order_id']))}">
-                    <div class="titel_box_l">{$admin_v['admin_name']}</div>
-                    <!--<div class="titel_box_r" style="color:#C00">待付款</div>-->
-                    </a>
-                </div>
-                <div class="cp_box">
-                    <foreach name="admin_v.goods" item="good" key="k" >
-                        <div class="cp1">
-                            <div class="c"><a href="{:U('/Mobile/Goods/goodsInfo',array('id'=>$good['goods_id']))}"></a></div>
-                            <div class="cp1_l"><img src="{$good.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
-                            <div class="cp1_r">
-                                <p>{$good.goods_name}{$good.spec_key_name}</p>
-                                <span>￥{$good['member_goods_price']}</span>
-                                <div style="float:right">X{$good['goods_num']}</div>
-                            </div>
+            <div class="titel_box">
+                <div class="titel_box_l">订单号：{$list.order_sn}</div>
+                <div class="titel_box_r" style="color:#C00">{$list.order_status_desc}</div>
+            </div>
+            <div class="cp_box" style="margin:0px">
+                <div class="c"><a href="{:U('Mobile/Order/order_detail',array('id' => $list['order_id']))}"></a></div>
+                <foreach name="list.goods_list" item="good" key="k" >
+                    <div class="cp6">
+                        <div class="cp1_l"><img src="{$good.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
+                        <div class="cp1_r">
+                            <p>{$good.goods_name}{$good.spec_key_name}</p>
+                            <span>￥{$good['member_goods_price']}</span>
+                            <div style="float:right">X{$good['goods_num']}</div>
                         </div>
-                    </foreach>
-                </div>
-            </foreach>
+                    </div>
+                </foreach>
+            </div>
             <div class="l">
                 <div class="l_l">
-                    <p>共<span style="color:#900">{$list.goods_list|count}</span>件&nbsp;实付:￥{$list['order_amount']}</p>
+                    <p>共<span style="color:#900">{$list.goods_list|count}</span>件&nbsp;合计:￥{$list['order_amount']}</p>
+                    <!--（含运费￥0.00）-->
                 </div>
                 <div class="l_r">
                     <if condition="$list.cancel_btn eq 1">
@@ -52,12 +49,12 @@
                     </if>
                     <if condition="$list.pay_btn eq 1">
                         <div class="l_btn2">
-                            <a href="{:U('Mobile/Cart/cart4',array('order_id'=>$list['order_id']))}">立即付款</a>
+                            <a href="{:U('Mobile/Order/order_detail',array('id'=>$list['order_id']))}">立即付款</a>
                         </div>
                     </if>
                     <if condition="$list.receive_btn eq 1">
                         <div class="l_btn2">
-                            <a href="{:U('Mobile/User/order_confirm',array('id'=>$list['order_id']))}">收货确认</a>
+                            <a href="{:U('Mobile/Order/order_confirm',array('id'=>$list['order_id']))}">收货确认</a>
                         </div>
                     </if>
                     <if condition="$list.comment_btn eq 1">
@@ -71,7 +68,6 @@
                             <a href="{:U('User/express',array('order_id'=>$list['order_id']))}">查看物流</a>
                         </div>
                     </if>
-
                 </div>
             </div>
         </volist>
@@ -89,7 +85,7 @@
             page += 1;
             $.ajax({
                 type : "GET",
-                url:"/index.php?m=Mobile&c=User&a=order_list&type={$_GET['type']}&is_ajax=1&p="+page,//+tab,
+                url:"/index.php?m=Mobile&c=Order&a=order_list&type={$_GET['type']}&is_ajax=1&p="+page,//+tab,
                 success: function(data)
                 {
                     if(data == '')
@@ -107,7 +103,7 @@
         function cancel_order(id){
             if(!confirm("确定取消订单?"))
                 return false;
-            location.href = "/index.php?m=Mobile&c=User&a=cancel_order&id="+id;
+            location.href = "/index.php?m=Mobile&c=Order&a=cancel_order&id="+id;
         }
 
     </script>
@@ -120,4 +116,5 @@
 <include file="Public/nav"/>
 
 </body>
+<include file="Public/footer"/>
 </html>
