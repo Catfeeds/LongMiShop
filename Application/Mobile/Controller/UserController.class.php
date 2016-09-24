@@ -487,7 +487,6 @@ class UserController extends MobileBaseController {
 
     //修改手机号码
     public function edit_mobile(){
-        $item = 60;
         if(IS_POST){
             $mobile  = I('mobile');
             $code = I('phone_code');
@@ -513,13 +512,12 @@ class UserController extends MobileBaseController {
         $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $this->assign('user_info',$user_info['result']);
-        $this->assign('item',$item);
+        $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
         $this->display();
     }
 
     //修改密码
     public function edit_password(){
-        $item = 60;
         if(IS_POST){
             $mobile  = I('mobile');
             $code = I('phone_code');
@@ -548,7 +546,7 @@ class UserController extends MobileBaseController {
             exit;
         }
 
-        $this->assign('item',$item);
+        $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
         $this->display();
     }
 
