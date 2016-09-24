@@ -32,6 +32,11 @@ class OrderController extends MobileBaseController {
     }
 
 
+    public function weChatPaySuccess(){
+        $this->display();
+    }
+
+
     /*
      * 订单列表
      */

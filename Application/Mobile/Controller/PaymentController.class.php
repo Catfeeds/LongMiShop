@@ -67,7 +67,9 @@ class PaymentController extends MobileBaseController {
         $config_value = parse_url_param($pay_radio); // 类似于 pay_code=alipay&bank_code=CCB-DEBIT 参数
         //微信JS支付
         if($this->pay_code == 'weixin' && $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
-            $code_str = $this->payment->getJSAPI($order);
+            $goUrl= U('Mobile/Order/weChatPaySuccess');
+            $backUrl = U('Mobile/User/order_detail',array('id'=>$order['order_id']));
+            $code_str = $this->payment->getJSAPI($order,$goUrl,$backUrl);
             exit($code_str);
         }else{
             $code_str = $this->payment->get_code($order,$config_value);
