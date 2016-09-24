@@ -66,7 +66,7 @@
         if(kong){
             $.ajax({
                 type : "get",
-                url  : "/index.php?m=Mobile&c=User&a=send_sms_reg&send="+input,
+                url  : "/index.php?m=Mobile&c=User&a=send_sms_reg&type=edit&send="+input,
                 dataType : 'json',
                 error: function(request) {
                     console.log(request);
