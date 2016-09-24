@@ -1032,11 +1032,20 @@ class UserController extends MobileBaseController {
      */
     public function message()
     {
+        //记录访问时间
         $this->push_message();
-        $art_list = M('article')->field('article_id,title,content,thumb,publish_time')->where('device_type = 2 OR device_type = 3')->order('publish_time DESC')->limit(3)->select();
+        $where .= "device_type = 2 OR device_type = 3 ";
+        $count = M('article')->where($where)->count();
+        $Page = new Page($count,3);
+        $art_list = M('article')->field('article_id,title,content,thumb,publish_time')->where($where)->order('publish_time DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
         $need_top = I('need_top',0);
         $this->assign('need_top',$need_top);
         $this->assign('art_list',$art_list);
+        if($_GET['is_ajax'])
+        {
+            $this->display('ajax_message');
+            exit;
+        }
         $this->display();
     }
     //消息详情
