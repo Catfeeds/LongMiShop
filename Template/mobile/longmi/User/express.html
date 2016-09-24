@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="express_box">
-	<if condition="$expressData['status'] eq 2">
+	<if condition="$expressData['status'] eq 1">
 		<div class="express_txt">
 			<p><span>快递编号：</span>{: $expressData['codenumber']}</p>
 			<p><span>承运人：</span>{: $expressData['com']}</p>
@@ -25,7 +25,7 @@
 
 			</div>
 			<div class="now1"><p>订单已打印！</p>
-			<span>2016-08-24 10:12</span></div>
+			<span>{$pay_time|date='Y-m-d H:i:s',###}</span></div>
 		</div>
 	<else />
 		<div class="express_txt">
