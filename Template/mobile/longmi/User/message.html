@@ -23,29 +23,59 @@
         </ul>
     </div>
 </notempty>
-<notempty name="art_list">
-<volist name="art_list" id="item">
+<notempty name="art_list" >
+<div id="ajax_return">
+    <volist name="art_list" id="item">
 
-<div class="time"><?php if( date('m-d',$item['publish_time']) == date('m-d',time()) ){echo '今天';}else{echo  date('m-d',$item['publish_time']);}?> {$item['publish_time']|date="H:i",###}</div>
-<div class="mui-card">
-    <div class="c"><a href="{: U('Mobile/User/message_details',array('id'=>$item['article_id']))}"></a></div>
-    <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url({$item['thumb']})"></div>
-    <div class="mui-card-content">
-        <div class="mui-card-content-inner">
-            <p class="news_txt">{$item['title']}</p>
-            <p style="color: #333;">{$item['content']|htmlspecialchars_decode|strip_tags|subtext=60}</p>
+    <div class="time"><?php if( date('m-d',$item['publish_time']) == date('m-d',time()) ){echo '今天';}else{echo  date('m-d',$item['publish_time']);}?> {$item['publish_time']|date="H:i",###}</div>
+    <div class="mui-card">
+        <div class="c"><a href="{: U('Mobile/User/message_details',array('id'=>$item['article_id']))}"></a></div>
+        <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url({$item['thumb']})"></div>
+        <div class="mui-card-content">
+            <div class="mui-card-content-inner">
+                <p class="news_txt">{$item['title']}</p>
+                <p style="color: #333;">{$item['content']|htmlspecialchars_decode|strip_tags|subtext=60}</p>
+            </div>
         </div>
-    </div>
 
+    </div>
+    </volist>
 </div>
-</volist>
     <else/>
 
     <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
     <div class="empty_txt">暂无数据！</div>
 </notempty>
+<div id="getmore" style="font-size:.24rem;text-align: center;color:#888;padding:.25rem .24rem .4rem; clear:both">
+        <a href="javascript:void(0)" onClick="ajax_sourch_submit()">点击加载更多</a>
+    </div>
 
 <include file="Public/nav"/>
 </body>
 <include file="Public/footer"/>
 </html>
+<script>
+    var  page = 1;
+
+        /*** ajax 提交表单 查询订单列表结果*/
+        function ajax_sourch_submit()
+        {
+            page += 1;
+            // alert(1);
+            $.ajax({
+                type : "GET",
+                url:"/index.php?m=Mobile&c=User&a=message&is_ajax=1&p="+page,//+tab,
+                success: function(data)
+                {
+                    console.log(data);
+                    if(data == '')
+                        $('#getmore').hide();
+                    else
+                    {
+                        $("#ajax_return").append(data);
+                        $(".m_loading").hide();
+                    }
+                }
+            });
+        }
+</script>

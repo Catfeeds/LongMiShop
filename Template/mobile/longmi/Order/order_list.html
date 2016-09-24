@@ -57,17 +57,17 @@
                             <a href="{:U('Mobile/Order/order_confirm',array('id'=>$list['order_id']))}">收货确认</a>
                         </div>
                     </if>
-                    <!--<if condition="$list.comment_btn eq 1">-->
-                        <!--<div class="l_btn2">-->
-                            <!--<a href="{:U('/Mobile/User/comment')}">评价-->
-                            <!--</a>-->
-                        <!--</div>-->
-                    <!--</if>-->
-                    <!--<if condition="$list.shipping_btn eq 1">-->
-                        <!--<div class="l_btn1">-->
-                            <!--<a href="{:U('User/express',array('order_id'=>$list['order_id']))}">查看物流</a>-->
-                        <!--</div>-->
-                    <!--</if>-->
+                    <if condition="$list.comment_btn eq 1">
+                        <div class="l_btn2">
+                            <a href="{:U('/Mobile/User/comment')}">评价
+                            </a>
+                        </div>
+                    </if>
+                    <if condition="$list.shipping_btn eq 1">
+                        <div class="l_btn1">
+                            <a href="{:U('User/express',array('order_id'=>$list['order_id']))}">查看物流</a>
+                        </div>
+                    </if>
                 </div>
             </div>
         </volist>
