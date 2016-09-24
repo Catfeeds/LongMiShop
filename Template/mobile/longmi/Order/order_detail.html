@@ -31,7 +31,7 @@
 <div class="site_txt">合计<span>￥119.00</span></div>
 <div class="l">
 	<div class="l_r">
-		<div class="l_btn1"><a href="tel:4000787725" style="width:120px">拨打客服电话</a></div>
+		<!--<div class="l_btn1"><a href="tel:4000787725" style="width:120px">拨打客服电话</a></div>-->
 		<!--<div class="l_btn1"><a href="#" style="width:120px">留言给客服</a></div>-->
 
 	</div>
@@ -54,17 +54,17 @@
 				<a href="{:U('Mobile/Order/order_confirm',array('id'=>$order_info['order_id']))}">收货确认</a>
 			</div>
 		</if>
-		<if condition="$order_info.comment_btn eq 1">
-			<div class="l_btn2">
-				<a href="{:U('/Mobile/User/comment')}">评价
-				</a>
-			</div>
-		</if>
-		<if condition="$order_info.shipping_btn eq 1">
-			<div class="l_btn1">
-				<a href="{:U('User/express',array('order_id'=>$order_info['order_id']))}">查看物流</a>
-			</div>
-		</if>
+		<!--<if condition="$order_info.comment_btn eq 1">-->
+			<!--<div class="l_btn2">-->
+				<!--<a href="{:U('/Mobile/User/comment')}">评价-->
+				<!--</a>-->
+			<!--</div>-->
+		<!--</if>-->
+		<!--<if condition="$order_info.shipping_btn eq 1">-->
+			<!--<div class="l_btn1">-->
+				<!--<a href="{:U('User/express',array('order_id'=>$order_info['order_id']))}">查看物流</a>-->
+			<!--</div>-->
+		<!--</if>-->
 	</div>
 </div>
 <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
@@ -79,14 +79,6 @@
 		</li>
 	</ul>
 </div>
-<script>
-	//取消订单
-	function cancel_order(id){
-		if(!confirm("确定取消订单?"))
-			return false;
-		location.href = "/index.php?m=Mobile&c=User&a=cancel_order&id="+id;
-	}
-</script>
 </body>
 <include file="Public/footer"/>
 </html>

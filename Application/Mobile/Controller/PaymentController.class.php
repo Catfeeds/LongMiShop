@@ -63,7 +63,6 @@ class PaymentController extends MobileBaseController {
         if($order['advance']>0 && $order['is_advance']==1){
             $order['order_amount'] = $order['order_amount'] - $order['advance'];//再付尾款
         }
-        // tpshop 订单支付提交
         $pay_radio = $_REQUEST['pay_radio'];
         $config_value = parse_url_param($pay_radio); // 类似于 pay_code=alipay&bank_code=CCB-DEBIT 参数
         //微信JS支付
