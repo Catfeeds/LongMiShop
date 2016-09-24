@@ -633,7 +633,6 @@ class UserController extends MobileBaseController {
 
     //手机修改验证码发送
     public function send_sms_reg(){
-        // exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
         $mobile = I('send');
         if(!check_mobile($mobile))
             exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
@@ -641,14 +640,12 @@ class UserController extends MobileBaseController {
         $user_res = M('users')->where($where)->find();
         if($user_res['user_id'] == $this->user_id ){
             exit(json_encode(array('status'=>-1,'msg'=>'修改号码和旧号码一致')));
-        }else if(!empty($user_res)){
-            if($user_res['user_id'] != $this->user_id){
-                exit(json_encode(array('status'=>-1,'msg'=>'此手机已被注册')));
-            }  
+        }else if($user_res['user_id'] != $this->user_id && $user_res['mobile'] == $mobile){
+            exit(json_encode(array('status'=>-1,'msg'=>'此手机已被注册')));   
         }
         $userLogic = new UsersLogic();
         $code =  rand(1000,9999);
-        // $send = $userLogic->sms_log($mobile,$code,$this->session_id);
+        $send = $userLogic->sms_log($mobile,$code,$this->session_id);
         if($send['status'] != 1)
             exit(json_encode(array('status'=>-1,'msg'=>$send['msg'])));
         exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
