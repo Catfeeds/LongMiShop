@@ -55,6 +55,8 @@ class WeChatLogic extends BaseLogic
             return $_SESSION['openid'];
         }
 
+        $this -> _getMainWeChatConfig();
+
         if ( !isset($_GET['code']) ){  //触发微信返回code码
             $baseUrl = urlencode( $this -> _getUrl() );
             $url = $this -> __createOauthUrlForCode($baseUrl); // 获取 code地址
@@ -209,7 +211,6 @@ class WeChatLogic extends BaseLogic
     private function _getWeChatConfig()
     {
         $this -> weChatConfig = M('wx_user') -> where(array()) -> find();
-        $this -> _getMainWeChatConfig();
         return $this -> weChatConfig ;
     }
     /**
