@@ -285,6 +285,9 @@ class UserController extends MobileBaseController {
         $id = I('address_id');
         $data = I('post.');
         $data['user_id'] = $this->user_id;
+        if( !empty($data['is_default']) ){
+            M('user_address')->where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
+        }
         if($id==0){ //新增
             $res = M('user_address')->add($data);
             $res ? $this->success('新增成功',U('Mobile/User/address_list')) : $this->error('新增失败');
