@@ -16,7 +16,7 @@
 <volist name="lists" id="list">
 <div class="site2  {: $list['is_default'] == 1 ? 'default-setting' :''}">
 	<div class="modification"><a href="{: U('Mobile/User/edit_address',array('id'=>$list['address_id']))}"><img src="__STATIC__/SVG/modification.svg"></a></div>
-	  <div class="c"><a href="{: $skip_url == 'Cart/cart2' ?  U('Mobile/'.$skip_url,array('address_id'=>$list['address_id']))  : 2 }"></a></div>
+	  <div class="c"><a href="{: $skip_url == 'Cart/cart2' ?  U('Mobile/'.$skip_url,array('address_id'=>$list['address_id']))  : '#' }"></a></div>
 	 <div class="consignee"><p>收货人：{$list.consignee} {$list.mobile}</p>
 	 <p>地址：{$region_list[$list['province']]['name']} {$region_list[$list['city']]['name']} {$region_list[$list['district']]['name']} {$list.address}</p>
 	 </div>

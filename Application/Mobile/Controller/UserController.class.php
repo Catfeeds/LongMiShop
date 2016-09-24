@@ -355,29 +355,8 @@ class UserController extends MobileBaseController {
      */
     public function add_comment(){
     	if(IS_POST){
-    		// 晒图片
-    		if($_FILES[comment_img_file][tmp_name][0])
-    		{
-    			$upload = new \Think\Upload();// 实例化上传类
-    			$upload->maxSize   =    $map['author'] = (1024*1024*3);// 设置附件上传大小 管理员10M  否则 3M
-    			$upload->exts      =    array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-    			$upload->rootPath  =    './Public/upload/comment/'; // 设置附件上传根目录
-    			$upload->replace   =    true; // 存在同名文件是否是覆盖，默认为false
-    			//$upload->saveName  =  'file_'.$id; // 存在同名文件是否是覆盖，默认为false
-    			// 上传文件
-    			$upinfo  =  $upload->upload();
-    			if(!$upinfo) {// 上传错误提示错误信息
-    				$this->error($upload->getError());
-    			}else{
-    				foreach($upinfo as $key => $val)
-    				{
-    					$comment_img[] = '/Public/upload/comment/'.$val['savepath'].$val['savename'];
-    				}
-    				$add['img'] = serialize($comment_img); // 上传的图片文件
-    			}
-    		}
 
-    		$user_info = session('user');
+    		$user_info = $this->user;
     		$logic = new \Common\Logic\UsersLogic();
     		$add['goods_id'] = I('goods_id');
     		$add['email'] = $user_info['email'];
@@ -386,9 +365,9 @@ class UserController extends MobileBaseController {
     			$add['username'] = $user_info['nickname'];
     		}
     		$add['order_id'] = I('order_id');
-    		$add['service_rank'] = I('service_rank');
-    		$add['deliver_rank'] = I('deliver_rank');
-    		$add['goods_rank'] = I('goods_rank');
+    		$add['service_rank'] = I('score');
+    		$add['deliver_rank'] = I('score');
+    		$add['goods_rank'] = I('score');
     		//$add['content'] = htmlspecialchars(I('post.content'));
     		$add['content'] = I('content');
     		$add['add_time'] = time();

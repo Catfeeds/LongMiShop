@@ -90,11 +90,14 @@ class OrderController extends MobileBaseController {
      * 订单详情
      */
     public function order_detail(){
-        $id = I('get.id');
+        $id = I('get.order_id','','int');
         $map['order_id'] = $id;
         $map['user_id'] = $this->user_id;
+
         $order_info = M('order')->where($map)->find();
+
         $order_info = set_btn_order_status($order_info);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
+//         dd($order_info);
         if(!$order_info){
             $this->error('没有获取到订单信息');
             exit;
