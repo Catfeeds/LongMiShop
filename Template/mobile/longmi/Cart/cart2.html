@@ -40,7 +40,6 @@
             </div>
         </if>
     </foreach>
-    <div class="site_txt">运费<span>￥{: $carriage_sum}</span></div>
     <div class="site_txt" style="height:150px;  display: none;">
         <textarea class="c1" name="textarea" cols="" rows="" placeholder="点击给店家留言"></textarea>
     </div>
@@ -66,6 +65,7 @@
         </div>
     </div>
 
+    <div class="site_txt">运费<span>￥{$carriage_sum}</span></div>
     <div class="site_txt">合计<span>￥{$total_price.total_fee}</span></div>
     <div style="height:60px"></div>
     <div class="com_d">
@@ -91,7 +91,33 @@
 </form>
 </body>
 <script>
-
+    $(function(){
+//        $.ajax({
+//            type : "POST",
+//            url:'/index.php?m=Mobile&c=Cart&a=cart3&act=order_price&t='+Math.random(),
+//            data : $('#cart2_form').serialize(),
+//            dataType: "json",
+//            success: function(data){
+//
+//                if(data.status != 1)
+//                {
+//                    alert(data.msg);
+//                    // 登录超时
+//                    if(data.status == -100)
+//                        location.href ="{:U('Mobile/User/login')}";
+//
+//                    return false;
+//                }
+//                // console.log(data);
+//                $("#postFee").text(data.result.postFee); // 物流费
+//                $("#couponFee").text(data.result.couponFee);// 优惠券
+//                $("#balance").text(data.result.balance);// 余额
+//                $("#pointsFee").text(data.result.pointsFee);// 积分支付
+//                $("#payables").text(data.result.payables);// 应付
+//                $("#order_prom_amount").text(data.result.order_prom_amount);// 订单 优惠活动
+//            }
+//        });
+    });
     // 提交订单
     function submit_order()
     {
@@ -131,4 +157,5 @@
 </script>
 
 
+<include file="Public/footer"/>
 </html>

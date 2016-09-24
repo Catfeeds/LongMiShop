@@ -23,33 +23,29 @@
         </ul>
     </div>
 </notempty>
-<div class="time">今天 20:00</div>
+<notempty name="art_list">
+<volist name="art_list" id="item">
+
+<div class="time"><?php if( date('m-d',$item['publish_time']) == date('m-d',time()) ){echo '今天';}else{echo  date('m-d',$item['publish_time']);}?> {$item['publish_time']|date="H:i",###}</div>
 <div class="mui-card">
-    <div class="c"><a href="#"></a></div>
-    <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(__STATIC__/images/top_banner.jpg)"></div>
+    <div class="c"><a href="{: U('Mobile/User/message_details',array('id'=>$item['article_id']))}"></a></div>
+    <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url({$item['thumb']})"></div>
     <div class="mui-card-content">
         <div class="mui-card-content-inner">
-            <p class="news_txt">龙米 （黑龙江五常大米）</p>
-            <p style="color: #333;">产自山清水秀的黑龙江五常，孕育在唯一没有被重金属污染、没有残留农药超标、中国稻田非转基因...</p>
+            <p class="news_txt">{$item['title']}</p>
+            <p style="color: #333;">{$item['content']|htmlspecialchars_decode|strip_tags|subtext=60}</p>
         </div>
     </div>
 
 </div>
+</volist>
+    <else/>
 
-<div class="time">8月1日 16:55</div>
-
-<div class="mui-card">
-    <div class="c"><a href="#"></a></div>
-    <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(__STATIC__/images/top_banner.jpg)"></div>
-    <div class="mui-card-content">
-        <div class="mui-card-content-inner">
-            <p class="news_txt">龙米 （黑龙江五常大米）</p>
-            <p style="color: #333;">产自山清水秀的黑龙江五常，孕育在唯一没有被重金属污染、没有残留农药超标、中国稻田非转基因...</p>
-        </div>
-    </div>
-
-</div>
+    <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
+    <div class="empty_txt">暂无数据！</div>
+</notempty>
 
 <include file="Public/nav"/>
 </body>
+<include file="Public/footer"/>
 </html>

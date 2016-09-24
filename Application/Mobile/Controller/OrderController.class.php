@@ -26,7 +26,9 @@ class OrderController extends MobileBaseController {
 
 
     public function toWeChatPay(){
-
+        $orderId = I("id");
+        $url = U("Mobile/Payment/getCode",array("pay_code"=>"weixin","order_id"=>$orderId));
+        header("Location: ".$url);
     }
 
 
@@ -105,7 +107,7 @@ class OrderController extends MobileBaseController {
 
         $region_list = get_region_list();
         $invoice_no = M('DeliveryDoc')->where("order_id = $id")->getField('invoice_no',true);
-        $order_info[invoice_no] = implode(' , ', $invoice_no);
+        $order_info["invoice_no"] = implode(' , ', $invoice_no);
         //获取订单操作记录
         $order_action = M('order_action')->where(array('order_id'=>$id))->select();
         $this->assign('order_status',C('ORDER_STATUS'));

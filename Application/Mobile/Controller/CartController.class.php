@@ -139,66 +139,44 @@ class CartController extends MobileBaseController {
         $result = $buy_logic -> createOrder();
         die(json_encode($result));
     }	
-    /*
-     * 订单支付页面
-     */
-    public function cart4(){
-
-        $orderId = I('order_id');
-        $orderInfo = M('order')->where("order_id = $orderId")->find();
-        if( empty($orderInfo) ){
-
-        }
-        // 如果已经支付过的订单直接到订单详情页面. 不再进入支付页面
-        if( $orderInfo['pay_status'] == 1 ){
-            $order_detail_url = U("Mobile/User/order_detail",array( 'id' => $orderId ));
-            header("Location: $order_detail_url");
-        }
-        $paymentList = M('Plugin')->where("`type`='payment' and status = 1 and code in('weixin','cod')")->select();
-        $paymentList = convert_arr_key($paymentList, 'code');
-        foreach($paymentList as $key => $val)
-        {
-            $val['config_value'] = unserialize($val['config_value']);
-            if($val['config_value']['is_bank'] == 2)
-            {
-                $bankCodeList[$val['code']] = unserialize($val['bank_code']);
-            }
-        }
-exit;
-
-        $order_id = I('order_id');
-        $order = M('Order')->where("order_id = $order_id")->find();
-        // 如果已经支付过的订单直接到订单详情页面. 不再进入支付页面
-        if($order['pay_status'] == 1){
-            $order_detail_url = U("Mobile/User/order_detail",array('id'=>$order_id));
-            header("Location: $order_detail_url");
-        }
-
-        $paymentList = M('Plugin')->where("`type`='payment' and status = 1 and  scene in(0,1)")->select();        
-        //微信浏览器
-        if(strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
-            $paymentList = M('Plugin')->where("`type`='payment' and status = 1 and code in('weixin','cod')")->select();            
-        }        
-        $paymentList = convert_arr_key($paymentList, 'code');
-
-        foreach($paymentList as $key => $val)
-        {
-            $val['config_value'] = unserialize($val['config_value']);
-            if($val['config_value']['is_bank'] == 2)
-            {
-                $bankCodeList[$val['code']] = unserialize($val['bank_code']);
-            }
-        }
-
-        $bank_img = include 'Application/Home/Conf/bank.php'; // 银行对应图片
-        $payment = M('Plugin')->where("`type`='payment' and status = 1")->select();
-        $this->assign('paymentList',$paymentList);
-        $this->assign('bank_img',$bank_img);
-        $this->assign('order',$order);
-        $this->assign('bankCodeList',$bankCodeList);
-        $this->assign('pay_date',date('Y-m-d', strtotime("+1 day")));
-        $this->display();
-    }
+//    /*
+//     * 订单支付页面
+//     */
+//    public function cart4(){
+//
+//        $order_id = I('order_id');
+//        $order = M('Order')->where("order_id = $order_id")->find();
+//        // 如果已经支付过的订单直接到订单详情页面. 不再进入支付页面
+//        if($order['pay_status'] == 1){
+//            $order_detail_url = U("Mobile/User/order_detail",array('id'=>$order_id));
+//            header("Location: $order_detail_url");
+//        }
+//
+//        $paymentList = M('Plugin')->where("`type`='payment' and status = 1 and  scene in(0,1)")->select();
+//        //微信浏览器
+//        if(strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
+//            $paymentList = M('Plugin')->where("`type`='payment' and status = 1 and code in('weixin','cod')")->select();
+//        }
+//        $paymentList = convert_arr_key($paymentList, 'code');
+//
+//        foreach($paymentList as $key => $val)
+//        {
+//            $val['config_value'] = unserialize($val['config_value']);
+//            if($val['config_value']['is_bank'] == 2)
+//            {
+//                $bankCodeList[$val['code']] = unserialize($val['bank_code']);
+//            }
+//        }
+//
+//        $bank_img = include 'Application/Home/Conf/bank.php'; // 银行对应图片
+//        $payment = M('Plugin')->where("`type`='payment' and status = 1")->select();
+//        $this->assign('paymentList',$paymentList);
+//        $this->assign('bank_img',$bank_img);
+//        $this->assign('order',$order);
+//        $this->assign('bankCodeList',$bankCodeList);
+//        $this->assign('pay_date',date('Y-m-d', strtotime("+1 day")));
+//        $this->display();
+//    }
 
 
     /*
@@ -219,12 +197,12 @@ exit;
             foreach($post_goods_num as $key => $val)
             {                
                 $data['goods_num'] = $val < 1 ? 1 : $val;
-                if($cartList[$key]['prom_type'] == 1) //限时抢购 不能超过购买数量
-                {
-                    $flash_sale = M('flash_sale')->where("id = {$cartList[$key]['prom_id']}")->find();
-                    $data['goods_num'] = $data['goods_num'] > $flash_sale['buy_limit'] ? $flash_sale['buy_limit'] : $data['goods_num'];
-                }
-                
+//                if($cartList[$key]['prom_type'] == 1) //限时抢购 不能超过购买数量
+//                {
+//                    $flash_sale = M('flash_sale')->where("id = {$cartList[$key]['prom_id']}")->find();
+//                    $data['goods_num'] = $data['goods_num'] > $flash_sale['buy_limit'] ? $flash_sale['buy_limit'] : $data['goods_num'];
+//                }
+//
                 $data['selected'] = $post_cart_select[$key] ? 1 : 0 ;
                 if(($cartList[$key]['goods_num'] != $data['goods_num']) || ($cartList[$key]['selected'] != $data['selected']))
                     M('Cart')->where("id = $key")->save($data);
@@ -264,9 +242,8 @@ exit;
     public function ajaxDelCart()
     {
         $ids = I("ids"); // 商品 ids
-        $result = M("Cart")->where(" id in ($ids)")->delete(); // 删除id为5的用户数据
-        $return_arr = array('status'=>1,'msg'=>'删除成功','result'=>''); // 返回结果状态
-        exit(json_encode($return_arr));
+         M("Cart")->where(" id in ($ids)")->delete();
+        exit(json_encode(callback(true,"删除成功")));
     }
 
 

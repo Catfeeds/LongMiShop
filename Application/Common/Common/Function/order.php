@@ -119,7 +119,6 @@ function getOrderProgressBar($orderInfo){
         $parameter['fourth']['time'] = date('H:i:s' , $orderInfo['confirm_time']);
     }
     return $parameter;
-
 }
 
 

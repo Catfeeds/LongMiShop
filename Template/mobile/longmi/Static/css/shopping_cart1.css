@@ -16,7 +16,7 @@
  _margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop);
 	width: 100%;
 	max-width: 800px;
-	z-index: 999999999999999999999;
+	z-index: 99999999999;
 	margin-top: 10px;
 	color: #666;
 	background-color: #FFFFFF;

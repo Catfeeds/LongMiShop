@@ -3,38 +3,60 @@
     <div class="empty_txt">购物列表空！</div>
     <div class="empty_btn"><a href="{:U('Index/index')}">去购物</a></div>
     <else/>
+    <div class="mui-content">
+        <ul class="mui-table-view">
+            <foreach name="cartList" item="v" key="k" >
+                <li class="mui-table-view-cell">
+                    <div class="mui-slider-right mui-disabled">
+                        <a onclick="del_cart_goods('{$v.id}')" class="mui-btn mui-btn-red">删除</a>
+                    </div>
+                    <div class="mui-slider-handle">
+                        <div class="cp7">
+                            <if condition='$v[store_count] neq 0' >
+                                <div class="checkbox_s">
+                                    <label class="fl select-all" style="width:50px !important">
+                                        <span class="mui-input-row mui-checkbox mui-left" >
+                                            <input  name="cart_select[{$v.id}]" class="check-all check-one check" type="checkbox" <if condition="$v[selected] eq 1" >checked="checked"</if>  value="1" onclick="ajax_cart_list();">
+                                        </span>
+                                    </label>
+                                </div>
+                            </if>
+                            <div class="cp1_l">
+                                <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}">
+                                    <img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92">
+                                </a>
+                                <if condition='$v[isLack]' >
+                                    <div class="cj">库存紧张</div>
+                                </if>
+                                <if condition='$v[store_count] eq 0' >
+                                    <div class="cj1">失效</div>
+                                </if>
+                            </div>
+                            <div class="cp1_r">
+                                <p class="<if condition='$v[store_count] eq 0' >cj1</if>">{$v.goods_name}</p>
+                                <span class="<if condition='$v[store_count] eq 0' >cj1</if>">￥{$v.member_goods_price}</span>
 
-    <foreach name="cartList" item="v" key="k" >
-        <!--<div class="titel_box">-->
-            <!--<div class="titel_box_l">龙米自营</div>-->
-        <!--</div>-->
-        <div class="cp7">
-            <div class="checkbox_s">
-                <label class="fl select-all" style="width:50px !important">
-                <span class="mui-input-row mui-checkbox mui-left" >
-                    <input  name="cart_select[{$v.id}]" class="check-all check-one check" type="checkbox" <if condition="$v[selected] eq 1" >checked="checked"</if>  value="1" onclick="ajax_cart_list();">
-                </span>
-                </label>
-            </div>
-            <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}"></a></div>
-            <div class="cp1_l"><img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
-            <div class="cp1_r">
-                <p>{$v.goods_name}</p>
-                <span>￥{$v.member_goods_price}</span>
+                                <if condition='$v[store_count] neq 0' >
+                                    <div class="mui-numbox z-index" data-numbox-min='1' data-numbox-max='99'>
+                                        <button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,{$v.id},{$v.store_count});" type="button">-</button>
+                                        <input id="goods_num[{$v.id}]" class="mui-input-numbox" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{$v.goods_num}"  name="goods_num[{$v.id}]" onblur="ajax_cart_list()"/>
+                                        <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,{$v.id},{$v.store_count});" type="button">+</button>
+                                    </div>
+                                </if>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </foreach>
+        </ul>
+    </div>
 
-                <div class="mui-numbox z-index" data-numbox-min='1' data-numbox-max='99'>
-                    <button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,{$v.id},{$v.store_count});" type="button">-</button>
-                    <input id="goods_num[{$v.id}]" class="mui-input-numbox" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{$v.goods_num}"  name="goods_num[{$v.id}]" onblur="ajax_cart_list()"/>
-                    <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,{$v.id},{$v.store_count});" type="button">+</button>
-                </div>
-            </div>
-        </div>
-    </foreach>
+
     <div style="height:100px"></div>
     <div class="foot" id="foot">
         <label class="fl select-all" style="width:100px !important">
             <span class="mui-input-row mui-checkbox mui-left" >
-                <input type="checkbox" class="check-all check-one check checked_longmi"  <if condition="$select_all eq 1" >checked="checked"</if>  id="quanxuan" style="margin-top:-6px" onclick="chkAll_onclick()">
+                <input type="checkbox" class="check-all check-one check checked_longmi"   id="quanxuan" style="margin-top:-6px" onclick="chkAll_onclick()">
             </span>
             <span style="margin-left:50px">全选</span>
         </label>
@@ -63,7 +85,7 @@
         })
 
         var is_checked = true;
-        $('.cp_box .cart-checkbox input').each(function(){
+        $('.mui-table-view .mui-checkbox input').each(function(){
             if(!$(this).attr('checked'))
             {
                 is_checked = false;
