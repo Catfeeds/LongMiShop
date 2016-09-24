@@ -521,7 +521,7 @@ class UserController extends MobileBaseController {
         if(IS_POST){
             $mobile  = I('mobile');
             $code = I('phone_code');
-            $password = I('password');
+            $pwd = I('password');
             $password = encrypt($pwd);
             $user = M('users')->field('password')->where("user_id = '".$this->user_id."'")->find();
             if($user['password'] == $password){
