@@ -633,7 +633,7 @@ class UserController extends MobileBaseController {
 
     //手机修改验证码发送
     public function send_sms_reg(){
-        exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
+        // exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
         $mobile = I('send');
         if(!check_mobile($mobile))
             exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
@@ -656,7 +656,7 @@ class UserController extends MobileBaseController {
     //手机注册验证码
    public function send_sms_reg_code(){
         //调试
-        exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
+        // exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
         $mobile = I('send');
         $where['mobile'] = $mobile;
         $code=I("code");
