@@ -1016,7 +1016,7 @@ class UserController extends MobileBaseController {
     {
         //记录访问时间
         $this->push_message();
-        $where .= "device_type = 2 OR device_type = 3 ";
+        $where .= "is_open = 1 AND  device_type != 1 ";
         $count = M('article')->where($where)->count();
         $Page = new Page($count,3);
         $art_list = M('article')->field('article_id,title,content,thumb,publish_time')->where($where)->order('publish_time DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
