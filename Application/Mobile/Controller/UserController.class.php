@@ -35,31 +35,15 @@ class UserController extends MobileBaseController {
         */
     public function _initialize() {
         parent::_initialize();
-
-        $order_status_coment = array(
-            'WAITPAY'=>'待付款 ', //订单查询状态 待支付
-            'WAITSEND'=>'待发货', //订单查询状态 待发货
-            'WAITRECEIVE'=>'待收货', //订单查询状态 待收货
-            'WAITCCOMMENT'=>'待评价', //订单查询状态 待评价        
-        );
-        $this->assign('order_status_coment',$order_status_coment);
     }
 
-    /*
+    /**
      * 用户中心首页
      */
     public function index(){
-        
-        $order_count = M('order')->where("user_id = {$this->user_id}")->count(); // 我的订单数
-        $goods_collect_count = M('goods_collect')->where("user_id = {$this->user_id}")->count(); // 我的商品收藏
-        $comment_count = M('comment')->where("user_id = {$this->user_id}")->count();//  我的评论数
-        $coupon_count = M('coupon_list')->where("uid = {$this->user_id}")->count(); // 我的优惠券数量
-        $level_name = M('user_level')->where("level_id = {$this->user['level']}")->getField('level_name'); // 等级名称
-        $this->assign('level_name',$level_name);
-        $this->assign('order_count',$order_count);
-        $this->assign('goods_collect_count',$goods_collect_count);
-        $this->assign('comment_count',$comment_count);
-        $this->assign('coupon_count',$coupon_count);
+        $usersLogic = new \Common\Logic\UsersLogic();
+        $result = $usersLogic -> getCoupon( $this->user_id);
+        $this->assign('couponCount',$result['data']['count']);
         $this->display();
     }
 

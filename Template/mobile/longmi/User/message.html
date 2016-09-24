@@ -23,6 +23,7 @@
         </ul>
     </div>
 </notempty>
+<notempty name="art_list">
 <volist name="art_list" id="item">
 
 <div class="time"><?php if( date('m-d',$item['publish_time']) == date('m-d',time()) ){echo '今天';}else{echo  date('m-d',$item['publish_time']);}?> {$item['publish_time']|date="H:i",###}</div>
@@ -38,7 +39,11 @@
 
 </div>
 </volist>
+    <else/>
 
+    <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
+    <div class="empty_txt">暂无数据！</div>
+</notempty>
 
 <include file="Public/nav"/>
 </body>

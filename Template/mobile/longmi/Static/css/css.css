@@ -102,6 +102,7 @@ body {
 	padding-right: 5px;
 	padding-left: 5px;
 	overflow: hidden;
+	background-color: #F5F5F5;
 }
 .titel_box_l {
 	float: left;
@@ -251,6 +252,7 @@ body {
 }
 .cp1_l {
 	float: left;
+	
 }
 .cp1_r {
 	overflow: hidden;
@@ -295,7 +297,7 @@ body {
  _margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop);
 	width: 100%;
 	max-width: 800px;
-	z-index: 999999999999999999999;
+	z-index: 999999999999;
 }
 .nav_d ul {
 	background-color: #FFF;
@@ -1182,7 +1184,7 @@ body {
 	text-align: center;
 	margin-left: auto;
 	width: 120px;
-	background-color: #DA7289;	
+	background-color: #DA7289;
 }
 .login_text {
 	height: 50px !important;
@@ -1436,13 +1438,9 @@ body {
 	border-bottom-color: rgb( 235, 235, 235 );
 }
 .cp7 {
-	background-color: rgb( 254, 254, 254 );
 	width: 100%;
 	overflow: hidden;
 	position: relative;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: rgb( 235, 235, 235 );
 	padding-top: 10px;
 	padding-right: 10px;
 	padding-bottom: 10px;
@@ -1461,8 +1459,7 @@ body {
 .site_txt span {
 	float: right;
 }
-
-.c1{
+.c1 {
 	float: left;
 	padding: 0px;
 	margin-top: 10px;
@@ -1470,7 +1467,6 @@ body {
 	margin-bottom: 10px;
 	margin-left: 0px;
 	border: 1px solid #FFF;
-
 }
 .site_txt1 {
 	background-color: #FFF;
@@ -1485,19 +1481,18 @@ body {
 	background-position: right center;
 	display: block;
 	line-height: 45px;
-	
 }
-.setup_box{
+.setup_box {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	text-align: center;
 }
-.se-1{
+.se-1 {
 	font-size: 18px;
 	padding-bottom: 5px;
 	color: #333;
 }
-.se-2{
+.se-2 {
 	color: #999;
 }
 .login_btn1 a {
@@ -1516,7 +1511,7 @@ body {
 	margin-right: auto;
 	margin-left: auto;
 }
-.tip-a{
+.tip-a {
 	text-align: center;
 	padding-top: 20px;
 	padding-bottom: 20px;
@@ -1525,14 +1520,14 @@ body {
 	margin-right: auto;
 	margin-left: auto;
 }
-.user_img{
+.user_img {
 	float: right;
 	position: absolute;
 	z-index: 1;
 	top: 15px;
 	right: 40px;
 }
-.user_img img{
+.user_img img {
 	height: 48px;
 	width: 48px;
 }
@@ -1552,23 +1547,23 @@ body {
 	padding-top: 10px;
 	padding-right: 10px;
 }
-.default-setting{
+.default-setting {
 	background-image: url(../SVG/order.svg);
 	background-repeat: no-repeat;
 	background-position: 5px center;
 	background-size: 18px 18px
 }
-.modification{
+.modification {
 	position: absolute;
 	z-index: 999999999;
 	top: 15px;
 	right: 5px;
 }
-.modification img{
+.modification img {
 	height: 24px;
 	width: 24px;
 }
-.login_btn_on{
+.login_btn_on {
 	border: 1px solid #B02F4B;
 	border-radius: 4px;
 	color: #FFF !important;
@@ -1582,7 +1577,7 @@ body {
 	margin-right: auto !important;
 	margin-left: auto !important;
 }
-.login_btn_off{
+.login_btn_off {
 	border: 1px solid #999;
 	border-radius: 4px;
 	color: #999 !important;
@@ -1595,4 +1590,25 @@ body {
 	width: 90% !important;
 	margin-right: auto !important;
 	margin-left: auto !important;
+}
+.cj {
+	font-size: 12px;
+	color: #F00;
+	text-align: center;
+}
+.cj1 {
+	font-size: 12px;
+	color: #CCC !important;
+	text-align: center;
+}
+.gray6 {
+	color: #CCC !important;
+ filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+	-webkit-filter: grayscale(100%);
+}
+.gray6 a {
+	color: #CCC !important;
+}
+.gray5 {
+	color: #CCC !important;
 }
