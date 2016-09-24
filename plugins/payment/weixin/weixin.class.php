@@ -71,9 +71,7 @@ class weixin extends RelationModel
         // 微信扫码支付这里没有页面返回
     }
 
-    function getJSAPI($order){
-        $go_url = U('Mobile/User/order_detail',array('id'=>$order['order_id']));
-        $back_url = U('Mobile/Cart/cart4',array('order_id'=>$order['order_id']));
+    function getJSAPI($order , $go_url , $back_url){
         //①、获取用户openid
         $tools = new JsApiPay();
         //$openId = $tools->GetOpenid();

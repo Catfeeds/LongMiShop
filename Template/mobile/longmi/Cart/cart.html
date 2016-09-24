@@ -74,11 +74,8 @@
             data:{ids:ids},
             dataType:'json',
             success: function(data){
-                alert(data.msg);return;
-                if(data.state == 1)
-                {
-                    ajax_cart_list(); //ajax 请求获取购物车列表
-                }
+                alert(data.msg);
+                ajax_cart_list(); //ajax 请求获取购物车列表
             }
         });
     }
@@ -86,8 +83,7 @@
     // 批量删除购物车的商品
     function del_cart_more()
     {
-        if(!confirm('确定要删除吗?'))
-            return false;
+//        if(!confirm('确定要删除吗?'))return false;
         // 循环获取复选框选中的值
         var chk_value = [];
         $('input[name^="cart_select"]:checked').each(function(){
