@@ -487,7 +487,6 @@ class UserController extends MobileBaseController {
 
     //修改手机号码
     public function edit_mobile(){
-        $item = 60;
         if(IS_POST){
             $mobile  = I('mobile');
             $code = I('phone_code');
@@ -513,17 +512,16 @@ class UserController extends MobileBaseController {
         $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $this->assign('user_info',$user_info['result']);
-        $this->assign('item',$item);
+        $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
         $this->display();
     }
 
     //修改密码
     public function edit_password(){
-        $item = 60;
         if(IS_POST){
             $mobile  = I('mobile');
             $code = I('phone_code');
-            $password = I('password');
+            $pwd = I('password');
             $password = encrypt($pwd);
             $user = M('users')->field('password')->where("user_id = '".$this->user_id."'")->find();
             if($user['password'] == $password){
@@ -536,6 +534,8 @@ class UserController extends MobileBaseController {
                 $where['user_id'] =  $this->user_id;
                 $res = M('users')->save($where);
                 if($res){
+                    session_unset();
+                    session_destroy();
                   $this->success('修改成功',U('Mobile/User/userinfo'));
                 }else{
                     $this->error('修改失败');
@@ -545,7 +545,8 @@ class UserController extends MobileBaseController {
             }
             exit;
         }
-        $this->assign('item',$item);
+
+        $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
         $this->display();
     }
 
@@ -634,14 +635,18 @@ class UserController extends MobileBaseController {
     //手机修改验证码发送
     public function send_sms_reg(){
         $mobile = I('send');
-        if(!check_mobile($mobile))
+        $type = I('type');
+        if(!check_mobile($mobile)){
             exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
-        $where['mobile'] = $mobile;
-        $user_res = M('users')->where($where)->find();
-        if($user_res['user_id'] == $this->user_id ){
-            exit(json_encode(array('status'=>-1,'msg'=>'修改号码和旧号码一致')));
-        }else if($user_res['user_id'] != $this->user_id && $user_res['mobile'] == $mobile){
-            exit(json_encode(array('status'=>-1,'msg'=>'此手机已被注册')));   
+        }
+        if($type == 'edit'){ //修改手机
+            $where['mobile'] = $mobile;
+            $user_res = M('users')->where($where)->find();
+            if($user_res['user_id'] == $this->user_id ){
+                exit(json_encode(array('status'=>-1,'msg'=>'修改号码和旧号码一致')));
+            }else if($user_res['user_id'] != $this->user_id && $user_res['mobile'] == $mobile){
+                exit(json_encode(array('status'=>-1,'msg'=>'此手机已被注册')));   
+            }
         }
         $userLogic = new UsersLogic();
         $code =  rand(1000,9999);
@@ -1011,7 +1016,7 @@ class UserController extends MobileBaseController {
     {
         //记录访问时间
         $this->push_message();
-        $where .= "device_type = 2 OR device_type = 3 ";
+        $where .= "is_open = 1 AND  device_type != 1 ";
         $count = M('article')->where($where)->count();
         $Page = new Page($count,3);
         $art_list = M('article')->field('article_id,title,content,thumb,publish_time')->where($where)->order('publish_time DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
