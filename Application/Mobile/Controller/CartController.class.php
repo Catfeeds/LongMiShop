@@ -108,14 +108,16 @@ class CartController extends MobileBaseController {
         $totalPrice = $result['total_price'];
         //计算邮费
         foreach($result['cartList'] as $key => $item){
-            $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
-            $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
-            $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
-            $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称
-            $goods_data[$key]['goods_price'] = $item['goods_price']; //商品价格
-            $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
-            $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
-            $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址
+            if($item['selected'] == 1){ 
+              $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
+              $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
+              $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
+              $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称
+              $goods_data[$key]['goods_price'] = $item['goods_price']; //商品价格
+              $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
+              $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
+              $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址  
+            }
         }
         $count_postage = count_postage($goods_data); //运费
         // dd($count_postage);
