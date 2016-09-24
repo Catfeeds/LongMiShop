@@ -242,9 +242,8 @@ class CartController extends MobileBaseController {
     public function ajaxDelCart()
     {
         $ids = I("ids"); // 商品 ids
-        $result = M("Cart")->where(" id in ($ids)")->delete(); // 删除id为5的用户数据
-        $return_arr = array('status'=>1,'msg'=>'删除成功','result'=>''); // 返回结果状态
-        exit(json_encode($return_arr));
+         M("Cart")->where(" id in ($ids)")->delete();
+        exit(json_encode(callback(true,"删除成功")));
     }
 
 

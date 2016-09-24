@@ -74,7 +74,8 @@
             data:{ids:ids},
             dataType:'json',
             success: function(data){
-                if(data.status == 1)
+                alert(data.msg);return;
+                if(data.state == 1)
                 {
                     ajax_cart_list(); //ajax 请求获取购物车列表
                 }
