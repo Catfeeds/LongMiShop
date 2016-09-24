@@ -217,16 +217,6 @@ class UserController extends MobileBaseController {
          }
 
         $this->display();
-  //   	$order_id = I('get.order_id',195);
-  //   	$result = $order_goods = $delivery = array();
-  //   	$order_goods = M('order_goods')->where("order_id=$order_id")->select();
-  //   	$delivery = M('delivery_doc')->where("order_id=$order_id")->limit(1)->find();
-		// if($delivery['shipping_name'] && $delivery['invoice_no']){
-		// 	$result = queryExpress($delivery['shipping_name'],$delivery['invoice_no']);
-		// 	$this->assign('result',$result);
-		// 	$this->assign('order_goods',$order_goods);
-		// 	$this->assign('delivery',$delivery);
-		// }
     }
 
     /*
