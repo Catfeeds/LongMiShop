@@ -651,7 +651,6 @@ class UserController extends MobileBaseController {
         $userLogic = new UsersLogic();
         $code =  rand(1000,9999);
         $send = $userLogic->sms_log($mobile,$code,$this->session_id);
-        exit(json_encode(array('status'=>-1,'msg'=>$send)));
         if($send['status'] != 1)
             exit(json_encode(array('status'=>-1,'msg'=>$send['msg'])));
         exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
