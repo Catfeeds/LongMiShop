@@ -3,7 +3,7 @@ namespace Index\Controller;
 
 use Common\Logic\UsersLogic;
 use Common\Common\Page;
-class OrderController extends BaseIndexController {
+class OrderController extends IndexBaseController {
 
     function exceptAuthActions()
     {

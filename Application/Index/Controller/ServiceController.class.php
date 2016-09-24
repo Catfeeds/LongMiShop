@@ -6,7 +6,7 @@ namespace Index\Controller;
 
 use Common\Common\Page;
 
-class ServiceController extends BaseIndexController {
+class ServiceController extends IndexBaseController {
 
     function exceptAuthActions()
     {

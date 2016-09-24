@@ -1,7 +1,7 @@
 <?php
 namespace Index\Controller;
 
-class PaymentController extends BaseIndexController {
+class PaymentController extends IndexBaseController {
 
     public $payment    = null; //  具体的支付类
     public $payCode    = null; //  具体的支付code

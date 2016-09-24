@@ -5,7 +5,7 @@ use Common\Logic\UsersLogic;
 use Think\Page;
 use Think\Verify;
 
-class UserController extends BaseIndexController {
+class UserController extends IndexBaseController {
 
     function exceptAuthActions()
     {

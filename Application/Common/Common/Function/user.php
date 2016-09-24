@@ -25,5 +25,23 @@ function push_message_time($user_id){
     }else{
     	return false;
     }
+}
 
+
+/**
+ * 根据 id 登录
+ * @param $userId
+ * @return array
+ */
+function loginFromUserId($userId){
+    $condition = array(
+        "user_id" => $userId,
+        "is_lock" => 0
+    );
+    if( isExistenceDataWithCondition( 'users' ,$condition)){
+        session('auth',true);
+        session(__UserID__,$userId);
+        return callback(true,'登录成功');
+    }
+    return callback(false,'账号不存在或者异常被锁定');
 }

@@ -2,7 +2,7 @@
 namespace Index\Controller;
 
 
-class IndexController extends BaseIndexController {
+class IndexController extends IndexBaseController {
 
     function exceptAuthActions()
     {

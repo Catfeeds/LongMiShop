@@ -235,7 +235,6 @@ function orderBtn($order_id = 0, $order = array())
         'return_btn' => 0, // 退货按钮 (联系客服)
     );
 
-
     // 货到付款
     if($order['pay_code'] == 'cod')
     {

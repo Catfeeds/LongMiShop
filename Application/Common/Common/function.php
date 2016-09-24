@@ -9,6 +9,8 @@
 @require_once "Function/email.php";
 @require_once "Function/service.php";
 @require_once "Function/address.php";
+@require_once "Function/log.php";
+@require_once "Function/weChat.php";
 
 
 function dd($x) {

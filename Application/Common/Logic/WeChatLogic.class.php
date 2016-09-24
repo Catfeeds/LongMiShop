@@ -15,6 +15,7 @@ class WeChatLogic extends BaseLogic
 
     public $weChatConfig        = array();
     public $jsSdkLogic          = null;
+    public $openid              = null;
 
 
     public function __construct()
@@ -41,7 +42,20 @@ class WeChatLogic extends BaseLogic
      */
     public function authorization(){
         if( $this -> weChatConfig ){
-            $this -> getOpenid();
+            $this -> openid = $this -> getOpenid();
+
+            if( isLoginState() ){
+                if( isBindingOpenidAngUserId( $this -> openid ) && bindingOpenidAngUserId( $this -> openid )){
+                    /**
+                     * 绑定成功
+                     */
+                }
+            } else {
+                $userId = getOpenidBindingUserId($this -> openid);
+                if( !is_null($userId) ){
+                    loginFromUserId( $userId );
+                }
+            }
         }
     }
 
@@ -67,15 +81,13 @@ class WeChatLogic extends BaseLogic
             //获取code码，以获取openid
             $code = $_GET['code'];
             $data = $this -> getOpenidFromMp($code);
-            setLogResult("data1".json_encode($data));
             $data2 = $this -> getUserInfo( $data['access_token'],$data['openid']);
-            setLogResult("data2".json_encode($data2));
             $data['nickname'] = $data2['nickname'];
             $data['sex'] = empty($data2['sex']) ? 1 : $data2['sex'] ;
             $data['headimgurl'] = $data2['headimgurl'];
             $data['subscribe'] = $data2['subscribe'];
             $_SESSION['openid'] = $data['openid'];
-            return $data;
+            return $data['openid'];
         }
     }
 

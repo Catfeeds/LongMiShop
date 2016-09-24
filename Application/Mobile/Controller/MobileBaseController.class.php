@@ -23,13 +23,9 @@ abstract class MobileBaseController extends BaseController {
      */
     public function _initialize() {
         parent::_initialize();
-//        session(null);
         //验证部分
-        if (session('auth') != true) {
+        if ( !isLoginState() ) {
             if( $this -> needAuth() ){
-//                $redirectedUrl = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-//                $redirectedUrl = urlencode($redirectedUrl);
-//                header("Location: ". U( '/Index/User/login' , array("redirectedUrl" => $redirectedUrl)));
                 header("location:".U('Mobile/User/login'));
                 exit;
             }

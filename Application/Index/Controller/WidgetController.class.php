@@ -1,7 +1,7 @@
 <?php
 namespace Index\Controller;
 
-class WidgetController extends BaseIndexController {
+class WidgetController extends IndexBaseController {
 
     function exceptAuthActions()
     {

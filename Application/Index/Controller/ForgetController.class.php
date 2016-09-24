@@ -3,7 +3,7 @@ namespace Index\Controller;
 use Common\Logic\UsersLogic;
 use Think\Verify;
 
-class ForgetController extends BaseIndexController {
+class ForgetController extends IndexBaseController {
 
     function exceptAuthActions()
     {

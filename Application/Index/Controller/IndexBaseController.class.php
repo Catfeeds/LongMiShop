@@ -3,7 +3,7 @@ namespace Index\Controller;
 
 use Common\Base\BaseController;
 
-abstract class BaseIndexController extends BaseController {
+abstract class IndexBaseController extends BaseController {
 
     public $user_id     = null;
     public $user        = null;
@@ -17,7 +17,7 @@ abstract class BaseIndexController extends BaseController {
         parent::_initialize();
 
         //验证部分
-        if (session('auth') != true) {
+        if ( !isLoginState() ) {
             if( $this -> needAuth() ){
                 $redirectedUrl = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
                 $redirectedUrl = urlencode($redirectedUrl);

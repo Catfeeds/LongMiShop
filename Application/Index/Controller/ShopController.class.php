@@ -1,7 +1,7 @@
 <?php
 namespace Index\Controller;
 
-class ShopController extends BaseIndexController {
+class ShopController extends IndexBaseController {
 
     public $cartLogic;
 

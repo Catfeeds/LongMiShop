@@ -5,7 +5,7 @@
         <div class="titel_box_r" style="color:#C00">{$list.order_status_desc}</div>
     </div>
     <div class="cp_box" style="margin:0px">
-        <div class="c"><a href="{:U('Mobile/Order/order_detail',array('id' => $list['order_id']))}"></a></div>
+        <div class="c"><a href="{:U('Mobile/Order/order_detail',array('order_id' => $list['order_id']))}"></a></div>
         <foreach name="list.goods_list" item="good" key="k" >
             <div class="cp6">
                 <div class="cp1_l"><img src="{$good.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
