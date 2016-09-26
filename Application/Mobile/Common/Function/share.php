@@ -4,7 +4,7 @@
 /**
  * 获取分享气泡图片
  */
-function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ){
+function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$user = null ){
 
 
 	$default = $web_config['shop_info_default'];// 系统默认
