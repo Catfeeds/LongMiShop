@@ -158,7 +158,7 @@ class GoodsController extends MobileBaseController {
         $goods_id = I("get.id");
         $goods = M('Goods')->where("goods_id = $goods_id")->find();
         if(empty($goods)){
-        	$this->tp404('此商品不存在或者已下架');
+        	$this->error('此商品不存在或者已下架');
         }
         if($goods['brand_id']){
             $brnad = M('brand')->where("id =".$goods['brand_id'])->find();
@@ -167,7 +167,7 @@ class GoodsController extends MobileBaseController {
         $goods_images_list = M('GoodsImages')->where("goods_id = $goods_id")->select(); // 商品 图册
         $goods_attribute = M('GoodsAttribute')->getField('attr_id,attr_name'); // 查询属性
         $goods_attr_list = M('GoodsAttr')->where("goods_id = $goods_id")->select(); // 查询商品属性表
-		$filter_spec = $goodsLogic->get_spec($goods_id);
+		$filter_spec = $goodsLogic->getSpec($goods_id);
 
         $spec_goods_price  = M('spec_goods_price')->where("goods_id = $goods_id")->getField("key,price,store_count"); // 规格 对应 价格 库存表
         //M('Goods')->where("goods_id=$goods_id")->save(array('click_count'=>$goods['click_count']+1 )); //统计点击数
@@ -182,12 +182,13 @@ class GoodsController extends MobileBaseController {
             $this->assign('prom_goods',$prom_goods);// 商品促销
         }
 
+        $goods['discount'] = round($goods['shop_price']/$goods['market_price'],2)*10;
+
         $this->assign('commentStatistics',$commentStatistics);//评论概览
         $this->assign('goods_attribute',$goods_attribute);//属性值
         $this->assign('goods_attr_list',$goods_attr_list);//属性列表
         $this->assign('filter_spec',$filter_spec);//规格参数
         $this->assign('goods_images_list',$goods_images_list);//商品缩略图
-	$goods['discount'] = round($goods['shop_price']/$goods['market_price'],2)*10;
         $this->assign('goods',$goods);
         $this->display();
     }
