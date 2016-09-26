@@ -1,5 +1,5 @@
 <?php
-namespace Home\Behaviors;
+namespace Common\Behaviors;
 class testBehavior extends \Think\Behavior{
     //行为执行入口
     public function run(&$param){        
