@@ -358,10 +358,10 @@ class UserController extends MobileBaseController {
      */
     public function add_comment(){
     	if(IS_POST){
-
     		$user_info = $this->user;
     		$logic = new \Common\Logic\UsersLogic();
     		$add['goods_id'] = I('goods_id');
+            $orderId = I('order_id');
     		$add['email'] = $user_info['email'];
     		$hide_username = I('hide_username');
     		if(empty($hide_username)){
@@ -381,9 +381,7 @@ class UserController extends MobileBaseController {
     		$row = $logic->add_comment($add);
     		if($row[status] == 1)
     		{
-    			// $this->success('评论成功',U('/Mobile/Goods/goodsInfo',array('id'=>$add['goods_id'])));
-                // header("Location:".U('',array('id'=>)));
-                $this->redirect('/Mobile/Goods/goodsInfo', array('id' => $add['goods_id']), 0);
+                $this->redirect('Mobile/Order/order_list',0);
                 exit();
     		}
     		else
@@ -921,14 +919,6 @@ class UserController extends MobileBaseController {
 
         $orderId = I('order_id','','int'); //订单id
         $goodsId = I('goods_id','','int'); //订单id
-
-        // $where['order_id'] =$orderId;
-        // $where['user_id'] = $this->user_id;
-        // $return_goods = M('return_goods')->where($where)->find();
-        // if(!empty($return_goods)){
-        //     $this->success('已经提交过退货申请!',U('Mobile/Order/order_list',array('id'=>$return_goods['id'])));
-        //     exit;
-        // }
         $order = M('order')->where("order_id = '".$orderId."'")->find();
         $orderSn = $order['order_sn'];
         if(IS_POST){
@@ -938,8 +928,9 @@ class UserController extends MobileBaseController {
             $data['addtime'] = time(); 
             $data['user_id'] = $this->user_id;
             $data['reason'] = I('reason'); // 问题描述
-            M('return_goods')->add($data);            
-            $this->success('申请成功,客服第一时间会帮你处理',U('Mobile/Order/order_list'));
+            M('return_goods')->add($data);   
+            $this->redirect('Mobile/Order/order_list',0);         
+            // $this->success('申请成功,客服第一时间会帮你处理',U('Mobile/Order/order_list'));
             exit;
 
         }
