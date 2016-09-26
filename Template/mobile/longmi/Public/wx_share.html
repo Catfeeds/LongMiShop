@@ -23,7 +23,7 @@ if(parseInt(is_distribut) == 1 && parseInt(user_id) > 0)
 
 // 微信配置
 wx.config({
-    debug: true,
+    debug: false,
     appId: "{$signPackage['appId']}", 
     timestamp: '{$signPackage["timestamp"]}', 
     nonceStr: '{$signPackage["nonceStr"]}', 
@@ -61,10 +61,6 @@ wx.ready(function(){
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
 	});
-
-   <if condition="CONTROLLER_NAME eq 'User'"> 
-	wx.hideOptionMenu();  // 用户中心 隐藏微信菜单
-   </if>
 	
 });
 </script>
