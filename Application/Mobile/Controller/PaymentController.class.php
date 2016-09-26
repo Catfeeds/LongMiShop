@@ -68,7 +68,7 @@ class PaymentController extends MobileBaseController {
         //微信JS支付
         if($this->pay_code == 'weixin' && $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
             $goUrl= U('Mobile/Order/weChatPaySuccess');
-            $backUrl = U('Mobile/User/order_detail',array('id'=>$order['order_id']));
+            $backUrl = U('Mobile/Order/order_detail',array('order_id'=>$order['order_id']));
             $code_str = $this->payment->getJSAPI($order,$goUrl,$backUrl);
             exit($code_str);
         }else{

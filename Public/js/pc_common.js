@@ -24,7 +24,8 @@ function AjaxAddCart(goods_id,num,to_catr)
 							   // 加入购物车后再跳转到 购物车页面
 							   if(to_catr == 1)  //直接购买
 							   {
-								   location.href = "/index.php?m=Home&c=Cart&a=cart";   
+								   location.href = "/index.php?m=Home&c=Cart&a=cart";
+								   return false;
 							   }
 							   else
 							   {

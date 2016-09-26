@@ -552,32 +552,8 @@ function getFirstCharter($str){
 }
 
 
-/**
- * 规范数据返回函数
- * @param bool $state
- * @param string $msg
- * @param array $data
- * @return array
- */
-function callback($state = true, $msg = '', $data = array()) {
-    if( $state == false ){
-        //此处应该插入日志
-    }
-    $state = $state ? 1 : 0 ;
-    return array('state' => $state, 'msg' => $msg, 'data' => $data);
-}
 
-/**
- * 规范数据返回函数判断
- * @param array $result
- * @return bool
- */
-function callbackIsTrue($result){
-    if( $result['state'] == 1 ){
-        return true;
-    }
-    return false;
-}
+
 /**
  * 获取文件类型后缀
  * @param $file_name
