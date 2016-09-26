@@ -15,9 +15,6 @@ class ForgetController extends IndexBaseController {
             'check_forget',
             'send_sms_reg_code',
             'check_forget_mobile'
-
-
-
         );
     }
 
