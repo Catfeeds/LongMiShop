@@ -1,15 +1,20 @@
 <notempty name="commentlist">
       <foreach name="commentlist" item="v" key="k">
 		  <div class="evaluate">
-		  <div class="ev_box">
-		  <div class="ev_box_l"><img src="{$v['headImg']|default=" __STATIC__/images/user_48.png"}" width="48" height="48"></div>
-		  <div class="ev_box_r">{$v['username']}<span>{$v.add_time|date='Y/m/d',###}</span></div>
-		  </div>
-		  <div class="ev_txt"> {$v['content']|htmlspecialchars_decode}</div>
+			  <div class="ev_box">
+				  <div class="ev_box_l">
+					  <img class="userHeadImg" src="{$v['headImg']|default=" __STATIC__/images/user_48.png"}" width="48" height="48">
+				  </div>
+				  <div class="ev_box_r">
+					  {$v['username']}
+					  <span>{$v.add_time|date='Y/m/d',###}</span>
+				  </div>
+			  </div>
+			  <div class="ev_txt">{$v['content']|htmlspecialchars_decode}</div>
 		  </div>
   		</foreach>
 <else/>
-<div class="comment_list" >
-	<div class="score">暂时还没有任何用户评论</div>
-</div>
+	<div class="myEmpty" >
+		暂时还没有任何用户评论
+	</div>
 </notempty>

@@ -29,6 +29,11 @@
 	border-radius: 50%;
 }
 
+.myEmpty{
+	line-height: 35px;
+	text-align: center;
+}
+
 .Load—more{
 	line-height: 55px;
 	text-align: center;
