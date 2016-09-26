@@ -16,6 +16,7 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ){
 	$logo = "http://".$_SERVER[HTTP_HOST].$web_config['shop_info_store_logo']."";
 	//默认图片
 	$imgurl = $default==1 ? $logo : $user['head_pic'] ;
+    setLogResult($user['head_pic']);
 	//默认连接
 	$link = "http://".$_SERVER[HTTP_HOST]."/index.php?m=Mobile&c=Index&a=index";
 
@@ -31,7 +32,7 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ){
     	return json_encode(array('link'=>$like,'imgurl'=>$imgurl));
     }
 
-    setLogResult($imgurl);
+
     return json_encode(array('imgurl'=>$imgurl,'link'=>$link));
 
 }
