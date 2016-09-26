@@ -21,6 +21,6 @@ class IndexController extends IndexBaseController {
     }
 
     public function test(){
-        setLogResult("test");
+        setLogResult("测试：test");
     }
 }
