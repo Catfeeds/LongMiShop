@@ -29,7 +29,7 @@ function isBindingOpenidAngUserId( $openid = null ){
         "openid"     => $openid,
         "user_id"    => $userId,
     );
-    if( is_null($openid) || empty($userId) || !isExistenceDataWithCondition("binding",$condition)){
+    if( is_null($openid) || empty($userId) || isExistenceDataWithCondition("binding",$condition)){
         return false;
     }
     return true;
@@ -46,7 +46,7 @@ function bindingOpenidAngUserId( $openid = null ){
         "user_id"       => $userId,
         "openid"        => $openid,
         "create_time"   => time(),
-        "update_time"   =>time(),
+        "update_time"   => time(),
     );
     if( !is_null($openid) && !empty($userId) && isSuccessToAddData("binding",$data) ){
         return true;
