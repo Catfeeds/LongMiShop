@@ -24,7 +24,8 @@ function AjaxAddCart(goods_id,num,to_catr)
 				}
 			   if(to_catr == 1)  //直接购买
 			   {
-				   location.href = "/index.php?m=Mobile&c=Cart&a=cart";   
+				   location.href = "/index.php?m=Mobile&c=Cart&a=cart";
+				   return false;
 			   }
 			    cart_num = parseInt($('#tp_cart_info').html())+parseInt($('#number').val());
 			    $('#tp_cart_info').html(cart_num)

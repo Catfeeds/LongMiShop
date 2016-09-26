@@ -52,7 +52,9 @@
 		<li><a href="{:U('Mobile/User/account')}">钱包</a></li>
 		<li><a href="{:U('Mobile/User/coupon')}">优惠券</a></li>
 		<li><a href="{:U('User/points')}">积分</a></li>
-		<li><a href="{:U('User/logout')}">注销</a></li>
+		<if condition = " !isWeChatBrowser() " >
+			<li><a href="{:U('User/logout')}">注销</a></li>
+		</if>
 	</ul>
 </div>
 
