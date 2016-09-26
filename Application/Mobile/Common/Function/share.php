@@ -6,7 +6,7 @@
  */
 function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$user = null ){
 
-    setLogResult($user);
+
 	$default = $web_config['shop_info_default'];// 系统默认
 	$details = $web_config['shop_info_details'];// 商品详细页/单品页分享设置
 	$classify = $web_config['shop_info_classify'];// 商品分类页分享设置
@@ -16,7 +16,7 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$us
 	$logo = "http://".$_SERVER[HTTP_HOST].$web_config['shop_info_store_logo']."";
 	//默认图片
 	$imgurl = $default==1 ? $logo : $user['head_pic'] ;
-
+    setLogResult($imgurl);
 	//默认连接
 	$link = "http://".$_SERVER[HTTP_HOST]."/index.php?m=Mobile&c=Index&a=index";
 
@@ -32,7 +32,7 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$us
     	return json_encode(array('link'=>$like,'imgurl'=>$imgurl));
     }
 
-
+    setLogResult($imgurl);
     return json_encode(array('imgurl'=>$imgurl,'link'=>$link));
 
 }
