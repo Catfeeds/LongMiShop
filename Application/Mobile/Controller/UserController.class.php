@@ -358,7 +358,6 @@ class UserController extends MobileBaseController {
      */
     public function add_comment(){
     	if(IS_POST){
-
     		$user_info = $this->user;
     		$logic = new \Common\Logic\UsersLogic();
     		$add['goods_id'] = I('goods_id');
@@ -382,7 +381,7 @@ class UserController extends MobileBaseController {
     		$row = $logic->add_comment($add);
     		if($row[status] == 1)
     		{
-                $this->redirect('Mobile/Order/orderEvaluate/', array('order_id' => $orderId), 0);
+                $this->redirect('Mobile/Order/order_list',0);
                 exit();
     		}
     		else
