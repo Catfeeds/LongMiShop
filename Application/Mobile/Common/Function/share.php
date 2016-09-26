@@ -11,12 +11,12 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$us
 	$details = $web_config['shop_info_details'];// 商品详细页/单品页分享设置
 	$classify = $web_config['shop_info_classify'];// 商品分类页分享设置
 	$article = $web_config['shop_info_article'];// 文章页分享设置
-	$user = session('user');
+//	$user = session('user');
 	//logo
 	$logo = "http://".$_SERVER[HTTP_HOST].$web_config['shop_info_store_logo']."";
 	//默认图片
 	$imgurl = $default==1 ? $logo : $user['head_pic'] ;
-    setLogResult($user['head_pic']);
+    setLogResult($user);
 	//默认连接
 	$link = "http://".$_SERVER[HTTP_HOST]."/index.php?m=Mobile&c=Index&a=index";
 
