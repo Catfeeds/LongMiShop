@@ -19,6 +19,7 @@
 <notempty name="lists">
     <div id="ajax_return">
         <volist name="lists" id="list">
+        
             <div class="titel_box">
                 <div class="titel_box_l">订单号：{$list.order_sn}</div>
                 <div class="titel_box_r" style="color:#C00">{$list.order_status_desc}</div>
@@ -59,7 +60,13 @@
                     </if>
                     <if condition="$list.comment_btn eq 1">
                         <div class="l_btn2">
-                            <a href="{:U('/Mobile/User/comment')}">评价
+                            <a href="{:U('/Mobile/Order/orderEvaluate',array('order_id'=>$list['order_id']))}">评价
+                            </a>
+                        </div>
+                    </if>
+                    <if condition="$list.return_btn eq 1  ">
+                        <div class="l_btn2">
+                            <a href="{:U('/Mobile/Order/orderReturn',array('order_id'=>$list['order_id']))}">退货
                             </a>
                         </div>
                     </if>

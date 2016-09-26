@@ -381,8 +381,10 @@ class UserController extends MobileBaseController {
     		$row = $logic->add_comment($add);
     		if($row[status] == 1)
     		{
-    			$this->success('评论成功',U('/Mobile/Goods/goodsInfo',array('id'=>$add['goods_id'])));
-    			exit();
+    			// $this->success('评论成功',U('/Mobile/Goods/goodsInfo',array('id'=>$add['goods_id'])));
+                // header("Location:".U('',array('id'=>)));
+                $this->redirect('/Mobile/Goods/goodsInfo', array('id' => $add['goods_id']), 0);
+                exit();
     		}
     		else
     		{
@@ -916,60 +918,90 @@ class UserController extends MobileBaseController {
      */
     public function return_goods()
     {
-        $order_id = I('order_id',0);
-        $order_sn = I('order_sn',0);
-        $goods_id = I('goods_id',0);        
-	$spec_key = I('spec_key');        
-        $return_goods = M('return_goods')->where("order_id = $order_id and goods_id = $goods_id and status in(0,1)  and spec_key = '$spec_key'")->find();            
-        if(!empty($return_goods))
-        {
-            $this->success('已经提交过退货申请!',U('Mobile/User/return_goods_info',array('id'=>$return_goods['id'])));
-            exit;
-        }       
-        if(IS_POST)
-        {
-            
-    		// 晒图片
-    		if($_FILES[return_imgs][tmp_name][0])
-    		{
-    			$upload = new \Think\Upload();// 实例化上传类
-    			$upload->maxSize   =    $map['author'] = (1024*1024*3);// 设置附件上传大小 管理员10M  否则 3M
-    			$upload->exts      =    array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-    			$upload->rootPath  =    './Public/upload/return_goods/'; // 设置附件上传根目录
-    			$upload->replace   =    true; // 存在同名文件是否是覆盖，默认为false
-    			//$upload->saveName  =  'file_'.$id; // 存在同名文件是否是覆盖，默认为false
-    			// 上传文件
-    			$upinfo  =  $upload->upload();
-    			if(!$upinfo) {// 上传错误提示错误信息
-    				$this->error($upload->getError());
-    			}else{
-    				foreach($upinfo as $key => $val)
-    				{
-    					$return_imgs[] = '/Public/upload/return_goods/'.$val['savepath'].$val['savename'];
-    				}
-    				$data['imgs'] = implode(',', $return_imgs);// 上传的图片文件
-    			}
-    		}
-            
-            $data['order_id'] = $order_id; 
-            $data['order_sn'] = $order_sn; 
-            $data['goods_id'] = $goods_id; 
+
+        $orderId = I('order_id','','int'); //订单id
+        $goodsId = I('goods_id','','int'); //订单id
+
+        // $where['order_id'] =$orderId;
+        // $where['user_id'] = $this->user_id;
+        // $return_goods = M('return_goods')->where($where)->find();
+        // if(!empty($return_goods)){
+        //     $this->success('已经提交过退货申请!',U('Mobile/Order/order_list',array('id'=>$return_goods['id'])));
+        //     exit;
+        // }
+        $order = M('order')->where("order_id = '".$orderId."'")->find();
+        $orderSn = $order['order_sn'];
+        if(IS_POST){
+            $data['order_id'] = $orderId; 
+            $data['order_sn'] = $orderSn; 
+            $data['goods_id'] = $goodsId; 
             $data['addtime'] = time(); 
-            $data['user_id'] = $this->user_id;            
-            $data['type'] = I('type'); // 服务类型  退货 或者 换货
-            $data['reason'] = I('reason'); // 问题描述     
-            $data['spec_key'] = I('spec_key'); // 商品规格						       
+            $data['user_id'] = $this->user_id;
+            $data['reason'] = I('reason'); // 问题描述
             M('return_goods')->add($data);            
-            $this->success('申请成功,客服第一时间会帮你处理',U('Mobile/User/order_list'));
+            $this->success('申请成功,客服第一时间会帮你处理',U('Mobile/Order/order_list'));
             exit;
+
         }
-               
-        $goods = M('goods')->where("goods_id = $goods_id")->find();        
-        $this->assign('goods',$goods);
-        $this->assign('order_id',$order_id);
-        $this->assign('order_sn',$order_sn);
-        $this->assign('goods_id',$goods_id);
+        
+        $this->assign('orderId',$orderId);
+        $this->assign('orderSn',$orderSn);
+        $this->assign('goodsId',$goodsId);
         $this->display();
+     //    $order_id = I('order_id',0);
+     //    $order_sn = I('order_sn',0);
+     //    $goods_id = I('goods_id',0);        
+	    // $spec_key = I('spec_key');        
+     //    $return_goods = M('return_goods')->where("order_id = $order_id and goods_id = $goods_id and status in(0,1)  and spec_key = '$spec_key'")->find();            
+     //    if(!empty($return_goods))
+     //    {
+     //        $this->success('已经提交过退货申请!',U('Mobile/User/return_goods_info',array('id'=>$return_goods['id'])));
+     //        exit;
+     //    }       
+     //    if(IS_POST)
+     //    {
+            
+    	// 	// 晒图片
+    	// 	if($_FILES[return_imgs][tmp_name][0])
+    	// 	{
+    	// 		$upload = new \Think\Upload();// 实例化上传类
+    	// 		$upload->maxSize   =    $map['author'] = (1024*1024*3);// 设置附件上传大小 管理员10M  否则 3M
+    	// 		$upload->exts      =    array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+    	// 		$upload->rootPath  =    './Public/upload/return_goods/'; // 设置附件上传根目录
+    	// 		$upload->replace   =    true; // 存在同名文件是否是覆盖，默认为false
+    	// 		//$upload->saveName  =  'file_'.$id; // 存在同名文件是否是覆盖，默认为false
+    	// 		// 上传文件
+    	// 		$upinfo  =  $upload->upload();
+    	// 		if(!$upinfo) {// 上传错误提示错误信息
+    	// 			$this->error($upload->getError());
+    	// 		}else{
+    	// 			foreach($upinfo as $key => $val)
+    	// 			{
+    	// 				$return_imgs[] = '/Public/upload/return_goods/'.$val['savepath'].$val['savename'];
+    	// 			}
+    	// 			$data['imgs'] = implode(',', $return_imgs);// 上传的图片文件
+    	// 		}
+    	// 	}
+            
+     //        $data['order_id'] = $order_id; 
+     //        $data['order_sn'] = $order_sn; 
+     //        $data['goods_id'] = $goods_id; 
+     //        $data['addtime'] = time(); 
+     //        $data['user_id'] = $this->user_id;            
+     //        $data['type'] = I('type'); // 服务类型  退货 或者 换货
+     //        $data['reason'] = I('reason'); // 问题描述     
+     //        $data['spec_key'] = I('spec_key'); // 商品规格						       
+     //        M('return_goods')->add($data);            
+     //        $this->success('申请成功,客服第一时间会帮你处理',U('Mobile/Order/order_list'));
+     //        exit;
+     //    }
+               
+     //    $goods = M('goods')->where("goods_id = $goods_id")->find();        
+     //    $this->assign('goods',$goods);
+     //    $this->assign('order_id',$order_id);
+     //    $this->assign('order_sn',$order_sn);
+     //    $this->assign('goods_id',$goods_id);
+     //    $this->display();
     }    
     /**
      * 退换货列表

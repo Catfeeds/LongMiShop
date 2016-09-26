@@ -44,6 +44,8 @@ class OrderController extends MobileBaseController {
     {
         $where = ' user_id='.$this->user_id;
         $_GET['type'] = $type = I('type','WAITPAY');
+        $type = $type =="WAITCCOMMENT" ?"FINISHED":$type;
+        
         //条件搜索
 //        if(in_array(strtoupper($type), array('WAITCCOMMENT','COMMENTED')))
 //        {
@@ -128,6 +130,75 @@ class OrderController extends MobileBaseController {
         $this->display();
     }
 
+
+    /*
+     *退货
+     *
+     */
+     public function orderReturn(){
+        $id = I('get.order_id','','int');
+        $map['order_id'] = $id;
+        $map['user_id'] = $this->user_id;
+        $order_info = M('order')->where($map)->find();
+        if(!$order_info){
+            $this->error('没有获取到订单信息');
+            exit;
+        }
+        $order_info = set_btn_order_status($order_info);  // 添加属性  包括按钮显示属性 和 订单状态显示属性d
+        //获取订单商品
+        $model = new \Common\Logic\UsersLogic();
+        $data = $model -> getOrderGoods($order_info['order_id']);
+        //是否申请过售后
+        foreach($data['data'] as $key=>$item){
+            $where = '';
+            $where['order_id'] = $item['order_id'];
+            $where['user_id'] = $this->user_id;
+            $where['goods_id'] = $item['goods_id'];
+            $data['data'][$key]['isReturn'] = M('return_goods')->where($where)->count();
+        }
+        $order_info['goods_list'] = $data['data'];
+        $this->assign('order_status',C('ORDER_STATUS'));
+        $this->assign('shipping_status',C('SHIPPING_STATUS'));
+        $this->assign('pay_status',C('PAY_STATUS'));
+        $this->assign('order_info',$order_info);
+        $this->display();
+     }
+
+    /*
+     *评价
+     *
+     */
+    public function orderEvaluate(){
+        $id = I('get.order_id','','int');
+        $map['order_id'] = $id;
+        $map['user_id'] = $this->user_id;
+        $order_info = M('order')->where($map)->find();
+        if(!$order_info){
+            $this->error('没有获取到订单信息');
+            exit;
+        }
+        $order_info = set_btn_order_status($order_info);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
+        //获取订单商品
+        $model = new \Common\Logic\UsersLogic();
+        $data = $model -> getOrderGoods($order_info['order_id']);
+        //是否申请过售后
+        foreach($data['data'] as $key=>$item){
+            $where = '';
+            $where['order_id'] = $item['order_id'];
+            $where['user_id'] = $this->user_id;
+            $where['goods_id'] = $item['goods_id'];
+            $data['data'][$key]['isComment'] = M('comment')->where($where)->count();
+        }
+        // dd($data);
+        $order_info['goods_list'] = $data['data'];
+        $this->assign('order_status',C('ORDER_STATUS'));
+        $this->assign('shipping_status',C('SHIPPING_STATUS'));
+        $this->assign('pay_status',C('PAY_STATUS'));
+        $this->assign('order_info',$order_info);
+        $this->display();
+    }
+
+
     public function order_confirm(){
         $id = I('get.id',0);
         $data = confirm_order($id);
@@ -136,5 +207,8 @@ class OrderController extends MobileBaseController {
         else
             $this->success($data['msg']);
     }
+
+
+
 
 }
