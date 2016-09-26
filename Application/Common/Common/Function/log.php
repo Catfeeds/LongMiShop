@@ -19,10 +19,11 @@ function setLogResult($word='' ,$fileName = "base" ,$suffix = "html") {
     }
     $newLine = $suffix == "html" ? "<br><br>\n\n" : "\n\n";
     $fileUrl = $logPath.date('Y-m-d')."-".$fileName.".".$suffix;
+    $main    =  is_array($word) ?  json_encode($word) : $word;
 
     $content  = "Run Time:".date("Y-m-d H:i:s",time());
     $content .= $newLine;
-    $content .= $word;
+    $content .= $main;
     $content .= $newLine;
     $content .= "==============================";
     $content .= $newLine;
