@@ -71,8 +71,8 @@ class OrderController extends IndexBaseController {
         {
             $order_list[$k] = setBtnOrderStatus($v,"INDEX");  // 添加属性  包括按钮显示属性 和 订单状态显示属性
             //$order_list[$k]['total_fee'] = $v['goods_amount'] + $v['shipping_fee'] - $v['integral_money'] -$v['bonus'] - $v['discount']; //订单总额
-            $data = $model -> getOrderGoods($v['order_id']);
-            $order_list[$k]['goods_list'] = $data['result'];
+            $result = $model -> getOrderGoods($v['order_id']);
+            $order_list[$k]['goods_list'] = getCallbackData( $result );
         }
         $this->assign('order_status',C('ORDER_STATUS'));
         $this->assign('shipping_status',C('SHIPPING_STATUS'));

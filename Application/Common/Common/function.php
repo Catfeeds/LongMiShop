@@ -11,7 +11,7 @@
 @require_once "Function/address.php";
 @require_once "Function/log.php";
 @require_once "Function/weChat.php";
-
+@require_once "Function/callback.php";
 
 function dd($x) {
     echo "<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">";
