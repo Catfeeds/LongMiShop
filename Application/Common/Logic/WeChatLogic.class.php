@@ -46,18 +46,13 @@ class WeChatLogic extends BaseLogic
 
             setLogResult("获取openid：{$this -> openid}");
             if( isLoginState() ){
-                setLogResult("登录状态下：查看是否绑定");
                 if( isBindingOpenidAngUserId( $this -> openid ) ){
-                    setLogResult("绑定过程：开始绑定{$this -> openid}");
                     bindingOpenidAngUserId( $this -> openid );
-                    setLogResult("绑定成功");
                 }
             } else {
                 $userId = getOpenidBindingUserId($this -> openid);
                 if( !is_null($userId) ){
-                    setLogResult("微信自动登录：userId：{$userId}");
-                    $result = loginFromUserId( $userId );
-                    setLogResult("微信自动登录：结果：".json_encode($result));
+                    loginFromUserId( $userId );
                 }
             }
         }
