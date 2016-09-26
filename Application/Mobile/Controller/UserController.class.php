@@ -938,8 +938,9 @@ class UserController extends MobileBaseController {
             $data['addtime'] = time(); 
             $data['user_id'] = $this->user_id;
             $data['reason'] = I('reason'); // 问题描述
-            M('return_goods')->add($data);            
-            $this->success('申请成功,客服第一时间会帮你处理',U('Mobile/Order/order_list'));
+            M('return_goods')->add($data);   
+            $this->redirect('Mobile/Order/order_list',0);         
+            // $this->success('申请成功,客服第一时间会帮你处理',U('Mobile/Order/order_list'));
             exit;
 
         }
