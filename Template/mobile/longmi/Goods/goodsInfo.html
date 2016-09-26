@@ -90,7 +90,7 @@
     </script>
     <div class="price">
         <div class="price_left">{$goods.goods_name}</div>
-        <div class="price_right"  id="goods_price">￥{$goods.shop_price}</div>
+        <div class="price_right">￥{$goods.shop_price}</div>
     </div>
     <div class="price_main">
         {$goods.goods_content|htmlspecialchars_decode}
@@ -113,13 +113,15 @@
     </div>
     <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
         <div class="cp2">
-            <div class="cp2_l"><img src="{$goods.goods_id|goods_thum_images=400,400}" width="92" height="92"></div>
+            <div class="cp2_l">
+                <img src="{$goods.goods_id|goods_thum_images=400,400}" width="92" height="92">
+            </div>
             <div class="cp2_r">
                 <p>{$goods.goods_name}</p>
                 <span id="goods_price">￥{$goods.shop_price}</span>
-                <div class="mui-numbox z-index" data-numbox-min="1" data-numbox-max="99">
+                <div class="mui-numbox z-index" data-numbox-min="1" data-numbox-max="999999">
                     <button class="mui-btn mui-btn-numbox-minus" type="button" disabled=""  >-</button>
-                    <input id="number"  name="goods_num"   class="mui-input-numbox" type="text" value="1">
+                    <input id="goods_num"  name="goods_num"   class="mui-input-numbox" type="text" value="1">
                     <input type="hidden" name="goods_id" value="{$goods.goods_id}"/>
                     <button class="mui-btn mui-btn-numbox-plus" type="button"  >+</button>
                 </div>
@@ -137,7 +139,7 @@
                                 <p>
                                     <a href="javascript:;"  title="{$v2[item]}" >{$v2[item]}</a>
                                 </p>
-                                <input type="radio" style="display:none;" name="goods_spec[{$key}]" value="{$v2[item_id]}" <if condition="$k2 eq 0 ">checked="checked"</if>/>
+                                <input type="radio" style="display:none;" name="goods_spec[{$key}]" value="{$v2[item_id]}" />
                             </li>
                         </foreach>
                     </ul>
@@ -163,7 +165,10 @@
                     $('html,body').animate({'scrollTop':$('body')[0].scrollHeight},600);
                 }
             });
-            commentType = 1; // 评论类型
+
+            $("#goods_num").change(function(){
+                get_goods_price();
+            });
             get_goods_price();
             ajaxComment(1,1);// ajax 加载评价列表
         });
@@ -212,6 +217,7 @@
             get_goods_price();
         }
 
+
         function get_goods_price()
         {
             var goods_price = {$goods.shop_price}; // 商品起始价
@@ -244,6 +250,7 @@
                             $(this).parent().attr("disabled",false);
                         }
                     });
+                    return;
                 }
             }
             var goods_num = parseInt($("#goods_num").val());
