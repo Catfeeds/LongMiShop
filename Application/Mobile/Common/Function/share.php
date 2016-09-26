@@ -32,7 +32,7 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$us
     	return json_encode(array('link'=>$like,'imgurl'=>$imgurl));
     }
 
-    setLogResult($imgurl);
+
     return json_encode(array('imgurl'=>$imgurl,'link'=>$link));
 
 }
