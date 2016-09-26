@@ -43,8 +43,6 @@ class WeChatLogic extends BaseLogic
     public function authorization(){
         if( $this -> weChatConfig ){
             $this -> openid = $this -> getOpenid();
-
-            setLogResult("获取openid：{$this -> openid}");
             if( isLoginState() ){
                 if( isBindingOpenidAngUserId( $this -> openid ) ){
                     bindingOpenidAngUserId( $this -> openid );
