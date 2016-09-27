@@ -31,7 +31,15 @@ abstract class MobileBaseController extends BaseController {
             }
         }
 
-
+        $this -> user_id = session(__UserID__);
+        $userLogic = new \Common\Logic\UsersLogic();
+        $user_info = $userLogic -> get_info($this -> user_id);
+        if(!empty($user_info['result'])){
+            $this -> user_info  = $user_info['result'];
+            $this -> user  = $this -> user_info;
+            $this -> assign('user',$this -> user_info );
+            $this -> assign('auth',true);
+        }
         if( isWeChatBrowser() ){
 
             $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
@@ -50,15 +58,6 @@ abstract class MobileBaseController extends BaseController {
         }
 
 
-        $this -> user_id = session(__UserID__);
-        $userLogic = new \Common\Logic\UsersLogic();
-        $user_info = $userLogic -> get_info($this -> user_id);
-        if(!empty($user_info['result'])){
-            $this -> user_info  = $user_info['result'];
-            $this -> user  = $this -> user_info;
-            $this -> assign('user',$this -> user_info );
-            $this -> assign('auth',true);
-        }
 
         $this -> public_assign();
     }

@@ -1,17 +1,17 @@
 <?php
 
 
-@require_once "Function/base.php";
-@require_once "Function/order.php";
-@require_once "Function/user.php";
-@require_once "Function/verify.php";
-@require_once "Function/goods.php";
-@require_once "Function/email.php";
-@require_once "Function/service.php";
-@require_once "Function/address.php";
-@require_once "Function/log.php";
-@require_once "Function/weChat.php";
-@require_once "Function/callback.php";
+@include_once "Function/base.php";
+@include_once "Function/order.php";
+@include_once "Function/user.php";
+@include_once "Function/verify.php";
+@include_once "Function/goods.php";
+@include_once "Function/email.php";
+@include_once "Function/service.php";
+@include_once "Function/address.php";
+@include_once "Function/log.php";
+@include_once "Function/weChat.php";
+@include_once "Function/callback.php";
 
 function dd($x) {
     echo "<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">";
