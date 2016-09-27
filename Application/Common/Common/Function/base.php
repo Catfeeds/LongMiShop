@@ -647,7 +647,5 @@ function getConfigArray(){
     $appPath = dirname($_SERVER['SCRIPT_FILENAME']);
     $configPath = $appPath.'/Application/Common/Conf/weChat.php';
     $configArray =  include_once $configPath;
-    setLogResult("configArray:");
-    setLogResult($configArray);
     return $configArray;
 }
