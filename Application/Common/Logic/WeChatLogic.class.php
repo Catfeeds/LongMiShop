@@ -72,7 +72,7 @@ class WeChatLogic extends BaseLogic
             $data['sex'] = empty($data2['sex']) ? 1 : $data2['sex'] ;
             $data['headimgurl'] = $data2['headimgurl'];
             $data['subscribe'] = $data2['subscribe'];
-            $this -> weChatInfo = $data ;
+            $this -> weChatInfo = $data;
             session("openid",$data['openid']);
             return $data['openid'];
         }
@@ -160,12 +160,12 @@ class WeChatLogic extends BaseLogic
         $urlObj["appid"] = $this->weChatConfig['appid'];
         $urlObj["redirect_uri"] = "$redirectUrl";
         $urlObj["response_type"] = "code";
-//        if($this->weChatConfig['type'] == 1 ||$this->weChatConfig['type'] == 2 ){
-//            $urlObj["scope"] = "snsapi_base";
-//        }else{
-//            $urlObj["scope"] = "snsapi_userinfo";
-//        }
-        $urlObj["scope"] = "snsapi_base";
+        if( $this -> weChatConfig['type'] == 1 || $this -> weChatConfig['type'] == 2 ){
+            $urlObj["scope"] = "snsapi_base";
+        }else{
+            $urlObj["scope"] = "snsapi_userinfo";
+        }
+//        $urlObj["scope"] = "snsapi_base";
         $urlObj["state"] = "STATE"."#wechat_redirect";
         $bizString = $this -> _toUrlParams($urlObj);
         return self::AUTHORIZATION_URL . $bizString;
@@ -280,17 +280,15 @@ class WeChatLogic extends BaseLogic
             return;
         }
         if( openidBindingWayIsAutoRegister() ){
-            setLogResult("WeChat start");
-            setLogResult($this -> openid);
+            setLogResult("weChatInfo");
             setLogResult($this -> weChatInfo);
-            if( isExistenceUserWithOpenid( $this -> openid ) ){ //!isLoginState() &&
-                setLogResult("login");
-                loginFromOpenid( $this -> openid );
+            if( isExistenceUserWithOpenid( $this -> openid ) ){
+                if( !isLoginState() ){
+                    loginFromOpenid( $this -> openid );
+                }
             }else{
-                setLogResult("register");
                 registerFromOpenid( $this -> openid , $this -> weChatInfo );
             }
-            setLogResult("WeChat end");
             return;
         }
 
