@@ -8,7 +8,6 @@ class WeChatController extends Controller {
     public $wechat_config;
 
     public function _initialize(){
-        parent::_initialize();
         //获取微信配置信息
         $this->wechat_config = M('wx_user')->find();        
         $options = array(
