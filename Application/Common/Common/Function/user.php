@@ -80,7 +80,7 @@ function loginFromOpenid( $openid ){
  */
 function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
     $data = array(
-        'openid'        => $openid ,
+        'openid'        => $openid,
         'oauth'         => $fromTo,
         'nickname'      => $openid,
         'sex'           => 1,

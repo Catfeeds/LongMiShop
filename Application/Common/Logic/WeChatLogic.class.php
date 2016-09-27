@@ -1,7 +1,4 @@
 <?php
-/**
- * 微信逻辑
- */
 namespace Common\Logic;
 
 use Common\Logic\Base\BaseLogic;
