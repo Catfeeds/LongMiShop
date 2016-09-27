@@ -45,6 +45,10 @@ var  cityData3 = [{
  text : '密云县' },{ 
  value : '322', 
  text : '延庆县' },] 
+} ,{ 
+ value : '47517', 
+ text : '123' , 
+ children : [ ] 
 } , 
  ]} ,{ 
  value: '338', 
@@ -92,9 +96,7 @@ var  cityData3 = [{
  value : '586', 
  text : '静海县' },{ 
  value : '608', 
- text : '蓟县' },{ 
- value : '47498', 
- text : '1' },] 
+ text : '蓟县' },] 
 } , 
  ]} ,{ 
  value: '636', 
@@ -7805,6 +7807,10 @@ var  cityData3 = [{
  ]} ,{ 
  value: '47495', 
  text : '澳门特别行政区', 
- children : [  
+ children : [ { 
+ value : '47535', 
+ text : '123' , 
+ children : [ ] 
+} , 
  ]} ,
  ]
