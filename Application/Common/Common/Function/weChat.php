@@ -64,7 +64,7 @@ function getOpenidBindingWay()
 function openidBindingWayIsLoginForTheFirstTime()
 {
     $configArray = getConfigArray();
-    if( getOpenidBindingWay() == $configArray['OPENID_BINDING_WAY_DESC']['LoginForTheFirstTime'] ){
+    if( $configArray['OPENID_BINDING_WAY'] == $configArray['OPENID_BINDING_WAY_DESC']['LoginForTheFirstTime'] ){
         return true;
     }
     return false;
@@ -77,7 +77,7 @@ function openidBindingWayIsLoginForTheFirstTime()
 function openidBindingWayIsAutoRegister()
 {
     $configArray = getConfigArray();
-    if( getOpenidBindingWay() == $configArray['OPENID_BINDING_WAY_DESC']['AutoRegister'] ){
+    if( $configArray['OPENID_BINDING_WAY'] == $configArray['OPENID_BINDING_WAY_DESC']['AutoRegister'] ){
         return true;
     }
     return false;
