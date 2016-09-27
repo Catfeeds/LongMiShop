@@ -471,7 +471,7 @@ class ToolsController extends BaseController {
         //    }
         // }
         $path = "./Application/Common/Conf/region.js";
-        $a = var_export($cityData, TRUE); 
+        $a = var_export($cityData, TRUE);
         file_put_contents($path,$content);
     }
 
@@ -479,7 +479,7 @@ class ToolsController extends BaseController {
     public function cache(){
         $region_list = M('region')->select();
         $region_list = convert_arr_key($region_list,'id');
-        $a = var_export($region_list, TRUE); 
+        $a = var_export($region_list, TRUE);
         $resContent = "<?php return ".$a;
         $path = "./Application/Common/Conf/region.php";
         file_put_contents($path,$resContent);

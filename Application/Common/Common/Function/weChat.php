@@ -12,14 +12,48 @@ function isWeChatBrowser()
     }
     return false;
 }
-
+//
+///**
+// * 获取微信绑定方式
+// * @return int|mixed
+// */
+//function getOpenidBindingWay()
+//{
+//    $bindingWay = empty(C('OPENID_BINDING_WAY')) ? 1 : C('OPENID_BINDING_WAY');
+//    return $bindingWay;
+//}
+//
+///**
+// * 是否为首次需要登录注册的微信绑定方式
+// * @return bool
+// */
+//function openidBindingWayIsLoginForTheFirstTime()
+//{
+//    if( getOpenidBindingWay() == C("OPENID_BINDING_WAY_DESC.LoginForTheFirstTime")){
+//        return true;
+//    }
+//    return false;
+//}
+//
+///**
+// * 是否为自动注册的微信绑定方式
+// * @return bool
+// */
+//function openidBindingWayIsAutoRegister()
+//{
+//    if( getOpenidBindingWay() == C("OPENID_BINDING_WAY_DESC.AutoRegister")){
+//        return true;
+//    }
+//    return false;
+//}
 /**
  * 获取微信绑定方式
  * @return int|mixed
  */
 function getOpenidBindingWay()
 {
-    $bindingWay = empty(C('OPENID_BINDING_WAY')) ? 1 : C('OPENID_BINDING_WAY');
+    $configArray = getConfigArray();
+    $bindingWay = empty( $configArray['OPENID_BINDING_WAY'] ) ? 1 : $configArray['OPENID_BINDING_WAY'];
     return $bindingWay;
 }
 
@@ -29,7 +63,8 @@ function getOpenidBindingWay()
  */
 function openidBindingWayIsLoginForTheFirstTime()
 {
-    if( getOpenidBindingWay() == C("OPENID_BINDING_WAY_DESC.LoginForTheFirstTime")){
+    $configArray = getConfigArray();
+    if( getOpenidBindingWay() == $configArray['OPENID_BINDING_WAY_DESC']['LoginForTheFirstTime'] ){
         return true;
     }
     return false;
@@ -41,12 +76,12 @@ function openidBindingWayIsLoginForTheFirstTime()
  */
 function openidBindingWayIsAutoRegister()
 {
-    if( getOpenidBindingWay() == C("OPENID_BINDING_WAY_DESC.AutoRegister")){
+    $configArray = getConfigArray();
+    if( getOpenidBindingWay() == $configArray['OPENID_BINDING_WAY_DESC']['AutoRegister'] ){
         return true;
     }
     return false;
 }
-
 
 /**
  * 根据openid 获取用户ID

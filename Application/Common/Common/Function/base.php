@@ -637,3 +637,13 @@ function isLoginState(){
     }
     return false;
 }
+
+
+/**
+ * 获取配置数组
+ * @return mixed
+ */
+function getConfigArray(){
+    $configArray = include '/Application/Common/Conf/config.php';
+    return $configArray;
+}
