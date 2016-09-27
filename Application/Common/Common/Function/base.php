@@ -645,5 +645,7 @@ function isLoginState(){
  */
 function getConfigArray(){
     $configArray = include '/Application/Common/Conf/weChat.php';
+    setLogResult("configArray:");
+    setLogResult($configArray);
     return $configArray;
 }
