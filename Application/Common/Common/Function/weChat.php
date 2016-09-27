@@ -29,7 +29,7 @@ function getOpenidBindingWay()
  */
 function openidBindingWayIsLoginForTheFirstTime()
 {
-    if( getOpenidBindingWay() === C("OPENID_BINDING_WAY_DESC.LoginForTheFirstTime")){
+    if( getOpenidBindingWay() == C("OPENID_BINDING_WAY_DESC.LoginForTheFirstTime")){
         return true;
     }
     return false;
@@ -41,7 +41,7 @@ function openidBindingWayIsLoginForTheFirstTime()
  */
 function openidBindingWayIsAutoRegister()
 {
-    if( getOpenidBindingWay() === C("OPENID_BINDING_WAY_DESC.AutoRegister")){
+    if( getOpenidBindingWay() == C("OPENID_BINDING_WAY_DESC.AutoRegister")){
         return true;
     }
     return false;
