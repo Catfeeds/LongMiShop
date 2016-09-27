@@ -9,6 +9,7 @@ class BaseController extends Controller
     public $shopConfig = array();
 
     public function _initialize() {
+        dd(getConfigArray());
         if( isMobile() ){
             cookie('is_mobile','1',3600);
         }else{
