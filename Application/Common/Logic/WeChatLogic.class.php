@@ -15,6 +15,7 @@ class WeChatLogic extends BaseLogic
     const  AUTHORIZATION_URL    = "https://open.weixin.qq.com/connect/oauth2/authorize?";
 
     public $weChatConfig        = array();
+    public $weChatInfo          = array();
     public $openid              = null;
 
 
@@ -74,7 +75,8 @@ class WeChatLogic extends BaseLogic
             $data['sex'] = empty($data2['sex']) ? 1 : $data2['sex'] ;
             $data['headimgurl'] = $data2['headimgurl'];
             $data['subscribe'] = $data2['subscribe'];
-            $_SESSION['openid'] = $data['openid'];
+            $this -> weChatInfo = $data ;
+            session("openid",$data['openid']);
             return $data['openid'];
         }
     }
@@ -284,7 +286,7 @@ class WeChatLogic extends BaseLogic
             if( isExistenceUserWithOpenid( $this -> openid ) ){ //!isLoginState() &&
                 loginFromOpenid( $this -> openid );
             }else{
-                registerFromOpenid( $this -> openid  );
+                registerFromOpenid( $this -> openid , $this -> weChatInfo );
             }
             return;
         }

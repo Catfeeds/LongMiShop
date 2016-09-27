@@ -591,11 +591,10 @@ function isExistenceDataWithCondition( $tableName , $condition = array() ){
  * @param $tableName
  * @param array $condition
  * @param string $field
- * @param string $order
  * @return mixed
  */
-function findDataWithCondition( $tableName , $condition = array() , $field = " * ",$order = "id" ){
-    return M($tableName) -> where($condition) ->field($field) -> order($order) -> find();
+function findDataWithCondition( $tableName , $condition = array() , $field = " * "){
+    return M($tableName) -> where($condition) ->field($field) -> find();
 }
 
 /**

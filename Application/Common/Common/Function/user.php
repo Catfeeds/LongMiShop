@@ -65,7 +65,7 @@ function loginFromOpenid( $openid ){
     if( $userInfo = findDataWithCondition( 'users' ,$condition , 'user_id')){
         session('auth',true);
         session(__UserID__,$userInfo["user_id"]);
-        M('cart')->where("session_id = '{$this->session_id}'")->save(array('user_id'=>$userInfo["user_id"]));
+        M('cart')->where("session_id = '".session_id()."'")->save(array('user_id'=>$userInfo["user_id"]));
         return callback(true,'登录成功');
     }
     return callback(false,'账号不存在或者异常被锁定');
@@ -76,13 +76,22 @@ function loginFromOpenid( $openid ){
  * 通过第三方openid 注册
  * @param $openid
  */
-function registerFromOpenid( $openid ){
+function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
     $data = array(
         'openid'        => $openid ,
-        'oauth'         =>'WeChat',
+        'oauth'         => $fromTo,
         'nickname'      => $openid,
         'sex'           => 1,
     );
+    if( !empty( $info['nickname'] ) ){
+        $data['nickname'] = $info['nickname'];
+    }
+    if( !empty( $info['sex'] ) ){
+        $data['sex'] = intval( $info['sex'] );
+    }
+    if( !empty( $info['headimgurl'] ) ){
+        $data['head_pic'] = $info['headimgurl'];
+    }
     $usersLogic = new \Common\Logic\UsersLogic();
     $result = $usersLogic -> thirdLogin($data);
 
