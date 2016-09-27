@@ -589,7 +589,8 @@ function logOrder($order_id,$action_note,$status_desc,$user_id = 0)
  * 获取地区列表
  */
 function get_region_list(){
-    $region_list = include '/Application/Common/Conf/region.php';
+    $region_list = array();
+//    $region_list = include '/Application/Common/Conf/region.php';
     return $region_list;
 }
 /*
