@@ -644,6 +644,6 @@ function isLoginState(){
  * @return mixed
  */
 function getConfigArray(){
-    $configArray = include '/Application/Common/Conf/config.php';
+    $configArray = include '/Application/Common/Conf/weChat.php';
     return $configArray;
 }
