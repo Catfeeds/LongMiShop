@@ -1,8 +1,8 @@
 <?php
 namespace Common\Behaviors;
-class testBehavior extends \Think\Behavior{
+use \Think\Behavior;
+class testBehavior extends Behavior{
     //行为执行入口
-    public function run(&$param){        
-      //  echo '这是测试的试图解析之前';
+    public function run(&$params){
     }
 }

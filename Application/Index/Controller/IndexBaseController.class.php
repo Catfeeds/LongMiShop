@@ -42,7 +42,7 @@ abstract class IndexBaseController extends BaseController {
         }
         if (in_array(ACTION_NAME, $this->exceptAuthActions())) {
             return false;
-        };
+        }
         return true;
     }
 

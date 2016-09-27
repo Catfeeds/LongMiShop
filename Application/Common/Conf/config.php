@@ -139,4 +139,11 @@ return array(
 
     'OPEN_PC_MALL' => false,//是否开启电脑商城
     'OPEN_PHONE_MALL' => true,//是否开启手机商城
+
+
+    'OPENID_BINDING_WAY' => 1,
+//    'OPENID_BINDING_WAY_DESC' => array(
+//            1 => "Login for the first time",
+//    ),
+
 );
