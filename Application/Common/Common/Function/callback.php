@@ -8,12 +8,13 @@
  * @param array $data
  * @return array
  */
-function callback($state = true, $msg = '', $data = array()) {
+function callback( $state = true, $msg = '', $data = array() )
+{
     if( $state == false ){
         //此处应该插入日志
     }
     $state = $state ? 1 : 0 ;
-    return array('state' => $state, 'msg' => $msg, 'data' => $data);
+    return array( 'state' => $state , 'msg' => $msg , 'data' => $data );
 }
 
 /**
@@ -21,7 +22,8 @@ function callback($state = true, $msg = '', $data = array()) {
  * @param array $result
  * @return bool
  */
-function callbackIsTrue($result){
+function callbackIsTrue( $result )
+{
     if( $result['state'] == 1 ){
         return true;
     }
@@ -33,7 +35,8 @@ function callbackIsTrue($result){
  * @param $result
  * @return array
  */
-function getCallbackData($result){
+function getCallbackData( $result )
+{
     return $result['data'] ? $result['data'] : array();
 }
 
@@ -43,6 +46,7 @@ function getCallbackData($result){
  * @param $result
  * @return string
  */
-function getCallbackMessage($result){
-    return $result['msg'] ? $result['msg'] : "";
+function getCallbackMessage( $result )
+{
+    return $result['msg'] ? $result['msg'] : "" ;
 }

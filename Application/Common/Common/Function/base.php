@@ -585,6 +585,19 @@ function isExistenceDataWithCondition( $tableName , $condition = array() ){
     return true;
 }
 
+
+/**
+ * 根据条件查表 返回数据，单条
+ * @param $tableName
+ * @param array $condition
+ * @param string $field
+ * @param string $order
+ * @return mixed
+ */
+function findDataWithCondition( $tableName , $condition = array() , $field = " * ",$order = "id" ){
+    return M($tableName) -> where($condition) ->field($field) -> order($order) -> find();
+}
+
 /**
  * 插入表 返回成不成功
  * @param $tableName
@@ -613,18 +626,6 @@ function getCartNumber( $sessionId , $userId = null ){
         $condition["user_id"] = $userId;
     }
     return M('cart')->where( $condition )->count();
-}
-
-
-/**
- * 是否在微信浏览器
- * @return bool
- */
-function isWeChatBrowser() {
-    if(strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
-        return true;
-    }
-    return false;
 }
 
 /**

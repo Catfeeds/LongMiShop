@@ -1,18 +1,9 @@
-<script>
 
-        //重写alert函数
-        function alert(msg){
-                mui.toast(msg);
-        }
-        //取消订单
-        function cancel_order(id){
-                if(!confirm("确定取消订单?")){
-                        return false;
-                }
-                location.href = "/index.php?m=Mobile&c=User&a=cancel_order&id="+id;
-        }
-</script>
+
+
+<script src="__STATIC__/js/publicFunctionMobile.js"></script>
 <link href="__STATIC__/css/longmi.css" rel="stylesheet" />
+
 <!-- 微信浏览器 调用微信 分享js-->
 <if condition="$signPackage neq null">
         <include file="Public/wx_share"/>

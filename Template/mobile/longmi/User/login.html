@@ -1,116 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-<title>登录</title>
-<script src="__STATIC__/js/mui.min.js"></script>
-<script src="__STATIC__/js/jquery.js"></script>
-<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
-<link href="__STATIC__/css/css.css" rel="stylesheet" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>登录</title>
+	<script src="__STATIC__/js/mui.min.js"></script>
+	<script src="__STATIC__/js/jquery.js"></script>
+	<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
+	<link href="__STATIC__/css/css.css" rel="stylesheet" />
 </head>
 <body>
 <div class="mui-content">
-			<form id='login-form' class="mui-input-group" method="post">
-				<div class="mui-input-row login_text">
-				  <input type="text" name="username" id="username" class="mui-input login_text" placeholder="手机号/邮箱
-">
-				</div>
-				<div class="mui-input-row mui-password login_text">
-				  <input type="password" name="password" id="password" class="mui-input-password login_text" placeholder="密码">
-				</div>
-			<!-- </form>
-  <form class="mui-input-group" style="margin-top:15px"> -->
-				<ul class="mui-table-view mui-table-view-chevron login_text" >
-					<li class="mui-table-view-cell">
-						<span style="font-size:16px">自动登录</span>
-						<div id="autoLogin" class="mui-switch">
-							<div class="mui-switch-handle"></div>
-						</div>
-					</li>
-				</ul>
-			</form>
-			<div class="login_btn"><a href="javascript:void(0);" onclick="checkSubmit()">登录</a></div>
-			<div class="mui-content-padded oauth-area">
-
-			</div>
+	<form id='login-form' class="mui-input-group" method="post">
+		<div class="mui-input-row login_text">
+			<input type="text" name="username" id="username" class="mui-input login_text" placeholder="手机号/邮箱">
 		</div>
-        
-        <div class="login_txt"><a href="{:U('User/reg')}">注册龙米ID</a>|<a href="{:U('User/forget_pwd')}">忘记密码？</a></div>
+		<div class="mui-input-row mui-password login_text">
+			<input type="password" name="password" id="password" class="mui-input-password login_text" placeholder="密码">
+		</div>
+		<!--<ul class="mui-table-view mui-table-view-chevron login_text" >-->
+			<!--<li class="mui-table-view-cell">-->
+				<!--<span style="font-size:16px">自动登录</span>-->
+				<!--<div id="autoLogin" class="mui-switch">-->
+					<!--<div class="mui-switch-handle"></div>-->
+				<!--</div>-->
+			<!--</li>-->
+		<!--</ul>-->
+	</form>
+	<div class="login_btn"><a href="javascript:void(0);" onclick="checkSubmit()">登录</a></div>
+	<div class="mui-content-padded oauth-area">
+
+	</div>
+</div>
+
+<div class="login_txt"><a href="{:U('User/reg')}">注册龙米ID</a>|<a href="{:U('User/forget_pwd')}">忘记密码？</a></div>
 </body>
 <include file="Public/footer"/>
 </html>
 <script type="text/javascript">
 
-function checkSubmit()
-{
-	
-	var username = $.trim($('#username').val());
-	var password = $.trim($('#password').val());
-	var referurl = $('#referurl').val();
-	if(username == ''){
-		alert('用户名不能为空!');
-		return false;
-	}
-	if(!checkMobile(username) && !checkEmail(username)){
-		alert('账号格式不匹配!');
-		return false;
-	}
-	if(password == ''){
-		alert('密码不能为空!');
-		return false;
-	}
-	
-	// if($.trim($('#verify_code').val()) == ''){
-	// 	//alert('验证码不能为空!');
-	// 	//return false;
-	// }	
-	//$('#login-form').submit();
+	function checkSubmit()
+	{
 
-	$.ajax({
-		type : 'post',
-		url : '/index.php?m=Mobile&c=User&a=do_login&t='+Math.random(),
-		data : {username:username,password:password,referurl:referurl},		
-		dataType : 'json',
-		success : function(res){
-//			 console.log(res);return false;
-			if(res.state == 1){
-				window.location.href = res.data;
-			}else{
-				alert(res.msg);
-			}
-		},
-		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			alert('网络失败，请刷新页面后重试');
+		var username = $.trim($('#username').val());
+		var password = $.trim($('#password').val());
+		var referurl = $('#referurl').val();
+		if(username == ''){
+			alert('用户名不能为空!');
+			return false;
 		}
-	})
-}
+		if(!checkMobile(username) && !checkEmail(username)){
+			alert('账号格式不匹配!');
+			return false;
+		}
+		if(password == ''){
+			alert('密码不能为空!');
+			return false;
+		}
+
+		// if($.trim($('#verify_code').val()) == ''){
+		// 	//alert('验证码不能为空!');
+		// 	//return false;
+		// }
+		//$('#login-form').submit();
+
+		$.ajax({
+			type : 'post',
+			url : '/index.php?m=Mobile&c=User&a=do_login&t='+Math.random(),
+			data : {username:username,password:password,referurl:referurl},
+			dataType : 'json',
+			success : function(res){
+//			 console.log(res);return false;
+				if(res.state == 1){
+					window.location.href = res.data;
+				}else{
+					alert(res.msg);
+				}
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert('网络失败，请刷新页面后重试');
+			}
+		})
+	}
 
 
-    function checkMobile(tel) {
-        var reg = /(^1[3|4|5|7|8][0-9]{9}$)/;
-        if (reg.test(tel)) {
-            return true;
-        }else{
-            return false;
-        };
-    }
-    
-    function checkEmail(str){
-        var reg = /^([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-        if(reg.test(str)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    
-    function showErrorMsg(msg){
-    	//$('.msg-err').show();
-    	//$('.J-errorMsg').html(msg);
-    	layer.open({content:msg,time:2});
-    }
-    
-   
+	function checkMobile(tel) {
+		var reg = /(^1[3|4|5|7|8][0-9]{9}$)/;
+		if (reg.test(tel)) {
+			return true;
+		}else{
+			return false;
+		};
+	}
+
+	function checkEmail(str){
+		var reg = /^([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+		if(reg.test(str)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	function showErrorMsg(msg){
+		//$('.msg-err').show();
+		//$('.J-errorMsg').html(msg);
+		layer.open({content:msg,time:2});
+	}
+
+
 
 </script>

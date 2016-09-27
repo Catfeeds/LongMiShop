@@ -1,4 +1,7 @@
 <?php
+/**
+ * 微信逻辑
+ */
 namespace Common\Logic;
 
 use Common\Logic\Base\BaseLogic;
@@ -11,16 +14,13 @@ class WeChatLogic extends BaseLogic
     const  USER_INFO_URL        = "https://api.weixin.qq.com/cgi-bin/user/info?";
     const  AUTHORIZATION_URL    = "https://open.weixin.qq.com/connect/oauth2/authorize?";
 
-
-
     public $weChatConfig        = array();
-    public $jsSdkLogic          = null;
     public $openid              = null;
 
 
     public function __construct()
     {
-        parent::__construct("config");
+        parent::__construct( "config" );
         $this -> _getWeChatConfig();
     }
 
@@ -30,29 +30,20 @@ class WeChatLogic extends BaseLogic
      * @return array
      */
     public function getSignPackage(){
-        $appId          =   $this->weChatConfig['appid'];
-        $appSecret      =   $this->weChatConfig['appsecret'];
-        $this -> jsSdkLogic = new \Common\Logic\JsSdkLogic( $appId , $appSecret );
-        $signPackage = $this -> jsSdkLogic -> getSignPackage();
-        return $signPackage;
+
+        $jsSdkLogic = new \Common\Logic\JsSdkLogic( $this->weChatConfig['appid'] , $this->weChatConfig['appsecret'] );
+        return $jsSdkLogic -> getSignPackage();
+
     }
 
     /**
      * 授权开始
      */
-    public function authorization(){
+    public function authorization()
+    {
         if( $this -> weChatConfig ){
             $this -> openid = $this -> getOpenid();
-            if( isLoginState() ){
-                if( isBindingOpenidAngUserId( $this -> openid ) ){
-                    bindingOpenidAngUserId( $this -> openid );
-                }
-            } else {
-                $userId = getOpenidBindingUserId($this -> openid);
-                if( !is_null($userId) ){
-                    loginFromUserId( $userId );
-                }
-            }
+            $this -> runTheOpenidBindingWay();
         }
     }
 
@@ -270,6 +261,35 @@ class WeChatLogic extends BaseLogic
     }
 
 
+
+
+    /**
+     * 微信绑定方式
+     */
+    private function runTheOpenidBindingWay(){
+        if( openidBindingWayIsLoginForTheFirstTime() ){
+            if( isLoginState() ){
+                if( isBindingOpenidAngUserId( $this -> openid ) ){
+                    bindingOpenidAngUserId( $this -> openid );
+                }
+            } else {
+                $userId = getOpenidBindingUserId($this -> openid);
+                if( !is_null($userId) ){
+                    loginFromUserId( $userId );
+                }
+            }
+            return;
+        }
+        if( openidBindingWayIsAutoRegister() ){
+            if( isExistenceUserWithOpenid( $this -> openid ) ){ //!isLoginState() &&
+                loginFromOpenid( $this -> openid );
+            }else{
+                registerFromOpenid( $this -> openid  );
+            }
+            return;
+        }
+
+    }
 
 
 }

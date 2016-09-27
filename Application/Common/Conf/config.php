@@ -141,9 +141,10 @@ return array(
     'OPEN_PHONE_MALL' => true,//是否开启手机商城
 
 
-    'OPENID_BINDING_WAY' => 1,
-//    'OPENID_BINDING_WAY_DESC' => array(
-//            1 => "Login for the first time",
-//    ),
+    'OPENID_BINDING_WAY' => 2,
+    'OPENID_BINDING_WAY_DESC' => array(
+        "LoginForTheFirstTime" => 1,
+        "AutoRegister" =>2,
+    ),
 
 );

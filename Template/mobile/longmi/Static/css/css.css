@@ -1621,20 +1621,58 @@ body {
 	display: block;
 	font-size: 14px;
 	float: left;
-	line-height: 54px;
+	line-height: 55px;
 	margin-right: 5px;
 	margin-left: 5px;
 	margin-top: 0px !important;
 	margin-bottom: 5px !important;
 	border-radius: 4px;
 	background-color: #F9F9F9;
-	height: 54px;
+	height: 55px;
 	padding-right: 5px;
 	padding-left: 5px;
-	border: 1px dashed #E2E2E2;	
 	
 
 }
 .gray p{
 	color: #CCCCCC !important;
+}
+.Load—more{
+	line-height: 55px;
+	text-align: center;
+	background-color: #E9E9EF;
+}
+Load—more a{
+}
+.cut{
+	background-color: #FFF;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #E7E7E7;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E7E7E7;
+	padding: 10px;
+	margin-top: 10px;
+}
+.cut-titel{
+	font-weight: bold;
+	line-height: 45px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #EFEFF4;
+}
+.cut-box{
+	overflow: hidden;
+	padding-top: 10px;
+}
+.cut-left{
+	float: left;
+	margin-right: 10px;
+}
+.cut-right{
+	color: #999;
+}
+.cut-right span{
+	color: #000;
 }

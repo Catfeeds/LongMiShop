@@ -301,7 +301,10 @@ function set_first_leader()
 		  setCookies('first_leader', first_leader);
 	  }	
 }
-// 判断是否手机浏览器
+/**
+ * 判断是否手机浏览器
+ * @returns {boolean}
+ */
 function isMobileBrowser()
 {
     var sUserAgent = navigator.userAgent.toLowerCase();    
