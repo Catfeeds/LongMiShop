@@ -75,6 +75,8 @@ function loginFromOpenid( $openid ){
 /**
  * 通过第三方openid 注册
  * @param $openid
+ * @param array $info
+ * @param string $fromTo
  */
 function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
     $data = array(

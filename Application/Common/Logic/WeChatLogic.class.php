@@ -283,11 +283,17 @@ class WeChatLogic extends BaseLogic
             return;
         }
         if( openidBindingWayIsAutoRegister() ){
+            setLogResult("WeChat start");
+            setLogResult($this -> openid);
+            setLogResult($this -> weChatInfo);
             if( isExistenceUserWithOpenid( $this -> openid ) ){ //!isLoginState() &&
+                setLogResult("login");
                 loginFromOpenid( $this -> openid );
             }else{
+                setLogResult("register");
                 registerFromOpenid( $this -> openid , $this -> weChatInfo );
             }
+            setLogResult("WeChat end");
             return;
         }
 
