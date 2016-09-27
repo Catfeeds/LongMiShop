@@ -266,6 +266,8 @@ class WeChatLogic extends BaseLogic
      * 微信绑定方式
      */
     private function runTheOpenidBindingWay(){
+        setLogResult("runTheOpenidBindingWay start");
+        setLogResult($this -> openid);
         if( openidBindingWayIsLoginForTheFirstTime() ){
             if( isLoginState() ){
                 if( isBindingOpenidAngUserId( $this -> openid ) ){
