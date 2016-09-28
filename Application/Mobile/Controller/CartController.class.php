@@ -96,7 +96,7 @@ class CartController extends MobileBaseController {
 
         $address = getCurrentAddress( $this->user_id , I('address_id',null) );
         if( empty($address) ){
-        	header("Location: ".U('Mobile/User/add_address',array('source'=>'cart2')));
+        	header("Location: ".U('Mobile/User/edit_address',array('source'=>'cart2')));
         }
         $this->assign('address',$address);
 
