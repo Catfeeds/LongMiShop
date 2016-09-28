@@ -89,6 +89,8 @@ function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
             'user_id' => $result['result']['user_id']
         );
         M('cart')->where( $condition )->save( $save );
+        echo "<script language=JavaScript> location.replace(location.href);</script>";
+        exit;
     }
 }
 
