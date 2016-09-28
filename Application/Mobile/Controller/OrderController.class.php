@@ -209,6 +209,17 @@ class OrderController extends MobileBaseController {
     }
 
 
+    //取消订单
+    public function cancelOrder(){
+        $id = I('get.id');
+        $orderLogic = new \Common\Logic\OrderLogic();
+        $data = $orderLogic -> cancelOrder($this->user_id,$id);
+        if( !callbackIsTrue($data) ) {
+            $this->error($data['msg']);
+        }
+        $this->success($data['msg']);
+    }
+
 
 
 }
