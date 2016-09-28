@@ -22,12 +22,20 @@
 <div class="er">
 	<ul>
 		<li>
-			<a href="">
+			<a href="{:U('Mobile/User/coupon')}">
 				<p>优惠券</p><span>{$couponCount}</span>
 			</a>
 		</li>
-		<li><p>余额</p><span>￥{$user['user_money']}</span></li>
-		<li class="none"><p>积分</p><span>{$user['pay_points']}</span></li>
+		<li>
+			<a href="{:U('Mobile/User/account')}">
+				<p>余额</p><span>￥{$user['user_money']}</span>
+			</a>
+		</li>
+		<li class="none">
+			<a href="{:U('User/points')}">
+				<p>积分</p><span>{$user['pay_points']}</span>
+			</a>
+		</li>
 	</ul>
 
 </div>
