@@ -18,7 +18,12 @@
 		<div class="c">
 			<a href="{:U('/Mobile/Goods/goodsInfo',array('id'=>$good['goods_id']))}"></a>
 		</div>
-		<div class="cp1_l"><img src="{$good.goods_id|goods_thum_images=100,100}" width="92" height="92"></div>
+		<div class="cp1_l">
+			<img src="{$good.goods_id|goods_thum_images=100,100}" width="92" height="92">
+			<if condition='$good[isReturn]' >
+				<div class="cj">退货中</div>
+			</if>
+		</div>
 		<div class="cp1_r">
 			<p>{$good.goods_name}{$good.spec_key_name}</p>
 			<span>￥{$good['member_goods_price']}</span><span style="float:right; color:#666">X{$good['goods_num']}</span>
