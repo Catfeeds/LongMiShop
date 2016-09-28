@@ -6,7 +6,7 @@ if (extension_loaded('zlib')){
 }
 // 检测PHP环境
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
-//检测是否已安装TPshop系统
+//检测是否已安装系统
 if(file_exists("./Install/") && !file_exists("./Install/install.lock")){
 	if($_SERVER['PHP_SELF'] != '/index.php'){
 		header("Content-type: text/html; charset=utf-8");         

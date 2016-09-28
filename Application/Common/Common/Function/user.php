@@ -43,7 +43,7 @@ function loginFromUserId( $userId ){
         "user_id" => $userId,
         "is_lock" => 0
     );
-    if( isExistenceDataWithCondition( 'users' ,$condition)){
+    if( isExistenceDataWithCondition( 'users' ,$condition ) ){
         session('auth',true);
         session(__UserID__,$userId);
         return callback(true,'登录成功');
@@ -159,11 +159,12 @@ function isBinding( $userId ){
  */
 function registerFromMobile(  $info = array()  ){
     $data = array(
-        'mobile'        => $info['mobile'],
-        'nickname'      => $info['mobile'],
-        'sex'           => 1,
-        'password'      => "",
-        'reg_time'      => time()
+        'mobile'                => $info['mobile'],
+        'nickname'              => $info['mobile'],
+        'mobile_validated'      => 1,
+        'sex'                   => 1,
+        'password'              => "",
+        'reg_time'              => time()
 
     );
     if(isSuccessToAddData( 'users', $data )){

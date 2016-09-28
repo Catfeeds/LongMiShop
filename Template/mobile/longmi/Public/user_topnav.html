@@ -1,25 +1,10 @@
 <div class="user" style="background: none;">
-	<div class="myBlurBackGround"></div>
+	<div class="myBlurBackGround" style="background: url('{$user['head_pic']|default='__DefaultUserBackgroundImages__'}') no-repeat center center  !important;">
+
+	</div>
 	<p>
-		<img src="{$user['head_pic']|default="__STATIC__/images/user_48.png"}" class="userHeadImg" width="92" height="92">
+		<img src="{$user['head_pic']|default="__DefaultUserImages__"}" class="userHeadImg" width="92" height="92">
 	</p>
 	<p>{$user['nickname']}</p>
 	<div class="user_main"><a href="{:U('Mobile/User/userinfo')}"><img src="__STATIC__/SVG/move.svg"></a></div>
 </div>
-
-<style>
-	.myBlurBackGround {
-		position: absolute;
-		top: 0px;
-		width: 100%;
-		z-index: -1;
-		height: 100%;
-		background: url("{$user['head_pic']|default='__STATIC__/images/user_48.png'}") no-repeat center center  !important;
-		filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
-		-webkit-filter: blur(20px); /* Chrome, Opera */
-		-moz-filter: blur(20px);
-		-ms-filter: blur(20px);
-		filter: blur(20px);
-		filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
-	}
-</style>
