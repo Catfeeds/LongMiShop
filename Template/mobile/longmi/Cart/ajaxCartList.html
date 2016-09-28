@@ -25,11 +25,12 @@
                                 <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}">
                                     <img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92">
                                 </a>
-                                <if condition='$v[isLack]' >
-                                    <div class="cj">库存紧张</div>
-                                </if>
                                 <if condition='$v[store_count] eq 0' >
                                     <div class="cj1">失效</div>
+                                <else/>
+                                    <if condition='$v[isLack]' >
+                                        <div class="cj">库存紧张</div>
+                                    </if>
                                 </if>
                             </div>
                             <div class="cp1_r">

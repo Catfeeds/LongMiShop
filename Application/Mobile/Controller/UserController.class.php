@@ -351,7 +351,7 @@ class UserController extends MobileBaseController {
         if($address['is_default'] == 1)
         {
             $address = M('user_address')->where("user_id = {$this->user_id}")->find();
-            M('user_address')->where("address_id = {$address['address_id']}")->save(array('is_default'=>1));
+            M('user_address')->where("address_id = '{$address['address_id']}'")->save(array('is_default'=>1));
         }
 
         if(!$row)

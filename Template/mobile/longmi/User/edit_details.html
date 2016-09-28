@@ -19,7 +19,9 @@
 		<form id="myuploads" action="{:U('Mobile/User/upload_lcon')}" method="post" enctype="multipart/form-data">
 			<input type="file" name="file" style="display:none"   id="file_imgs"/>
 		</form>
-	<div class="user_img"><img src="{: $user_info['head_pic']}" width="48" height="48" id="user_imgs"></div>
+	<div class="user_img" style="top: 5px;">
+		<img src="{: $user_info['head_pic']}" width="48" height="48" id="user_imgs">
+	</div>
 </li>
 <li>
 	<div class="mui-input-row" id="promptBtn">
