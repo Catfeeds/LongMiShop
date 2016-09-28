@@ -326,29 +326,31 @@ function update_pay_status($order_sn,$pay_status = 1)
 
 /**
  * 获取退货情况
- * @param $goodsList
+ * @param $orderInfo
  * @param $userId
  * @return array
  */
-function setOrderReturnState( $goodsList , $userId ){
-    if( empty($goodsList) ){
-        return array();
+function setOrderReturnState( $orderInfo , $userId ){
+    $goodsList = $orderInfo['goods_list'];
+    if( empty($orderInfo) ){
+        return $orderInfo;
     }
-//    $goodsCount  = count( $goodsList );
-//    $returnCount = 0;
+    $goodsCount  = count( $goodsList );
+    $returnCount = 0;
     foreach ( $goodsList as $key => $goodsItem ){
         $where = array();
         $where['order_id']  = $goodsItem['order_id'];
         $where['user_id']   = $userId;
         $where['goods_id']  = $goodsItem['goods_id'];
         $goodsList[$key]['isReturn'] = $count = M('return_goods')->where($where)->count();
-//        if( $count > 0){
-//            $returnCount ++;
-//        }
+        if( $count > 0){
+            $returnCount ++;
+        }
     }
-//    if( $goodsCount == $returnCount ){
-//
-//    }
-    return $goodsList;
+    if( $goodsCount == $returnCount ){
+        $orderInfo['isReturn'] = true;
+    }
+    $orderInfo['goods_list'] = $goodsList;
+    return $orderInfo;
 }
 
