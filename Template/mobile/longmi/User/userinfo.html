@@ -56,50 +56,47 @@
     <div class="login_btn1"><a href="{: U('Mobile/User/index')}" style="width:100%">返回</a></div>
 </div>
 <notempty name = "bindingAccountInfo" >
-    <div class="cut">
-        <div class="cut-titel">可切换账号</div>
-        <div class="cut-box">
-            <div class="cut-left">
-                <img class="userHeadImg" src="{$bindingAccountInfo['head_pic']|default="__DefaultUserImages__"}" width="48" height="48">
-            </div>
-            <div class="cut-right">
-                <div>用户名：<span>{$bindingAccountInfo['nickname']}</span></div>
-                <div>手机：<span>{$bindingAccountInfo['mobile']}</span></div>
-                <div>邮箱：<span>{$bindingAccountInfo['email']}</span></div>
-            </div>
-            <div class="l_r">
-                <div class="l_btn2" id="promptBtn">
-                    <a href="#" id="info">解绑账号</a>
+    <if condition = "isWeChatBrowser()">
+        <div class="cut">
+            <div class="cut-titel">可切换账号</div>
+            <div class="cut-box">
+                <div class="cut-left">
+                    <img class="userHeadImg" src="{$bindingAccountInfo['head_pic']|default="__DefaultUserImages__"}" width="48" height="48">
                 </div>
-                <div class="l_btn1">
-                    <a href="{:U('Mobile/User/switchAccount')}">切换账号</a>
+                <div class="cut-right">
+                    <div>用户名：<span>{$bindingAccountInfo['nickname']}</span></div>
+                    <div>手机：<span>{$bindingAccountInfo['mobile']}</span></div>
+                    <div>邮箱：<span>{$bindingAccountInfo['email']}</span></div>
+                </div>
+                <div class="l_r">
+                    <div class="l_btn2" id="promptBtn">
+                        <a href="#" id="info">解绑账号</a>
+                    </div>
+                    <div class="l_btn1">
+                        <a href="{:U('Mobile/User/switchAccount')}">切换账号</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <script>
+            if(document.getElementById("promptBtn") != undefined){
+                document.getElementById("promptBtn").addEventListener('tap', function() {
+                    var btnArray = ['否', '是'];
+                    mui.confirm('是否解除绑定账号？', '提示', btnArray, function(e) {
+                        if (e.index == 1) {
+                            window.location.href = "{:U('Mobile/User/relieveBinding')}";
+                        } else {
 
+                        }
+                    })
+                });
+            }
+
+        </script>
+    </if>
 </notempty>
 </body>
 <include file="Public/footer"/>
+
+
 </html>
-
-<script>
-    $(function(){
-        // $("#phones").html($("#phones").substring(0,3)+"****"+$("#phones").substring(8,11));
-        // $("#phone").val($("#phone").val().substring(0, 3) + "****" + $("#phone").val().substring(7, 11));
-    });
-
-    if(document.getElementById("promptBtn") != undefined){
-        document.getElementById("promptBtn").addEventListener('tap', function() {
-            var btnArray = ['否', '是'];
-            mui.confirm('是否解除绑定账号？', '提示', btnArray, function(e) {
-                if (e.index == 1) {
-                    window.location.href = "{:U('Mobile/User/relieveBinding')}";
-                } else {
-
-                }
-            })
-        });
-    }
-
-</script>
