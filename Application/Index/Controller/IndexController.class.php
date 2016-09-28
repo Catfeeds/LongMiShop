@@ -21,8 +21,10 @@ class IndexController extends IndexBaseController {
     }
 
     public function test(){
-
-        setBindingCurrentAccount(1,2);
+        $messageData = array(
+            "orderSn" => "4236842368",
+        );
+        sendWeChatMessage( $_SESSION['openid'] , "下单" ,$messageData  );
 
     }
 }

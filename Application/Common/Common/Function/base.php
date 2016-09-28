@@ -650,7 +650,12 @@ function getConfigArray(){
     return $configArray;
 }
 
-function json_encode_ex($value)
+/**
+ * json_encode 相当于 json_encode($value, JSON_UNESCAPED_UNICODE);
+ * @param $value
+ * @return mixed|string
+ */
+function jsonEncodeEx($value)
 {
     if (version_compare(PHP_VERSION,'5.4.0','<'))
     {

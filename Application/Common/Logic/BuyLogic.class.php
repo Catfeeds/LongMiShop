@@ -433,11 +433,12 @@ class BuyLogic extends BaseLogic
 
         // 如果有微信公众号 则推送一条消息到微信
         $user = $this -> user;
-        if($user['oauth']== 'weixin') {
-            $wx_user = M('wx_user')->find();
-            $jsSdkLogic = new \Common\Logic\JsSdkLogic($wx_user['appid'], $wx_user['appsecret']);
-            $wx_content = "你刚刚下了一笔订单:{$order['order_sn']} 尽快支付,过期失效!";
-            $jsSdkLogic->push_msg($user['openid'], $wx_content);
+        if( isWeChatUser( $user['oauth'] )) {
+            $messageData = array(
+                "orderSn" => $order['order_sn'],
+            );
+            sendWeChatMessage( $user['openid'] , "下单" ,$messageData  );
+
         }
     }
 

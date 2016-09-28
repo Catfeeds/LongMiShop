@@ -133,3 +133,38 @@ function bindingOpenidAngUserId( $openid = null , $userId = null , $thirdUserId 
     }
     return false;
 }
+
+
+/**
+ * 发送微信推送
+ * @param $openid
+ * @param $type
+ * @param $data
+ * @return bool
+ */
+function sendWeChatMessage( $openid , $type , $data ){
+    $typeArray = array(
+        "下单",
+        "支付",
+        "发货",
+    );
+    if( ! in_array( $type , $typeArray )){
+        return false;
+    }
+    $messageArray = array(
+//        "下单" => __WeChatMessage_CreateOrder__,
+//        "支付" => __WeChatMessage_Payment__,
+//        "发货" => __WeChatMessage_Delivery__,
+        "下单" =>  "你刚刚下了一笔订单:{$data['orderSn']} 尽快支付,过期失效!",
+        "支付" =>  "你刚刚下了一笔订单:{$data['orderSn']} 尽快支付,过期失效!",
+        "发货" =>  "你刚刚下了一笔订单:{$data['orderSn']} 尽快支付,过期失效!",
+
+    );
+    $weChatConfig = M('wx_user')->find();
+    if( empty( $weChatConfig ) ){
+        return false;
+    }
+    $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
+    $jsSdkLogic->push_msg( $openid , $messageArray[$type] );
+    return true;
+}
