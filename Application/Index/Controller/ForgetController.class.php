@@ -50,7 +50,7 @@ class ForgetController extends IndexBaseController {
 
             if(is_numeric($genre)){
                 if($res['mobile_validated'] == 0){
-                   $this->error('帐号不存在，请重新输入',U('Index/Forget/index'));exit; 
+                   $this->error('该手机未验证，不能用于找回密码',U('Index/Forget/index'));exit; 
                 }
                 session('forget_mobile',$res['mobile']);
                 session('forget_id',$res['user_id']); //用户id
