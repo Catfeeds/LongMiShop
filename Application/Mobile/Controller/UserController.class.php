@@ -415,7 +415,7 @@ class UserController extends MobileBaseController {
             $bindingAccountInfo = getBindingAccountData( $this -> user , " user_id " );
             if( !empty( $bindingAccountInfo['user_id'] )  ){
                 setBindingCurrentAccount( $this -> user_id , $bindingAccountInfo['user_id'] );
-                session(__UserID__,null);
+                session(null);
                 $this->redirect('Mobile/User/index',0);
                 exit;
             }
