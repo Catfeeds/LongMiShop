@@ -101,6 +101,8 @@ class OrderController extends MobileBaseController {
         $map['order_id'] = $id;
         $map['user_id'] = $this->user_id;
         $order_info = M('order')->where($map)->find();
+        
+
 
 
 //         dd($order_info);
@@ -109,10 +111,19 @@ class OrderController extends MobileBaseController {
             exit;
         }
         $order_info = set_btn_order_status($order_info);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
+        
         //setLogResult
         //获取订单商品
         $model = new \Common\Logic\UsersLogic();
         $data = $model -> getOrderGoods($order_info['order_id']);
+        //是否申请过售后
+        foreach($data['data'] as $key=>$item){
+            $where = '';
+            $where['order_id'] = $item['order_id'];
+            $where['user_id'] = $this->user_id;
+            $where['goods_id'] = $item['goods_id'];
+            $data['data'][$key]['isReturn'] = M('return_goods')->where($where)->count();
+        }
         $order_info['goods_list'] = $data['data'];
         //$order_info['total_fee'] = $order_info['goods_price'] + $order_info['shipping_price'] - $order_info['integral_money'] -$order_info['coupon_price'] - $order_info['discount'];
 
