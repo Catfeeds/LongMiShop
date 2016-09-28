@@ -207,7 +207,7 @@ function loginFromOpenid( $openid ){
             return callback(true,'登录成功');
         }
         session('auth',true);
-        session(__UserID__,$userInfo["user_id"]);
+        session(__UserID__,$userId);
         M('cart')->where("session_id = '".session_id()."'")->save(array('user_id'=>$userInfo["user_id"]));
         return callback(true,'登录成功');
     }

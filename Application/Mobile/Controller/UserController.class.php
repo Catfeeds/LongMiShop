@@ -96,7 +96,7 @@ class UserController extends MobileBaseController {
      *  登录
      */
     public function login(){
-        if($this->user_id > 0){
+        if( isLoginState() ){
         	header("Location: ".U('Mobile/User/index'));
         }
         $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Mobile/User/index");
@@ -127,6 +127,9 @@ class UserController extends MobileBaseController {
      */
     public function reg(){
 
+        if( isLoginState() ){
+            header("Location: ".U('Mobile/User/index'));
+        }
         if(IS_POST){
             $logic = new \Common\Logic\UsersLogic();
             $data = I('post.');
@@ -412,8 +415,7 @@ class UserController extends MobileBaseController {
             $bindingAccountInfo = getBindingAccountData( $this -> user , " user_id " );
             if( !empty( $bindingAccountInfo['user_id'] )  ){
                 setBindingCurrentAccount( $this -> user_id , $bindingAccountInfo['user_id'] );
-                session_unset();
-                session_destroy();
+                session(__UserID__,null);
                 $this->redirect('Mobile/User/index',0);
                 exit;
             }
