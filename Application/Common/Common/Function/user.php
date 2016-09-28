@@ -79,16 +79,10 @@ function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
     $result = $usersLogic -> thirdLogin($data);
 
     if($result['status'] == 1){
-        session('auth',true);
-        session(__UserID__,$data['result']['user_id']);
+        $openid = session('openid');
+        session(null);
+        session('openid',$openid);
 
-        $condition = array(
-            "session_id" => session_id(),
-        );
-        $save = array(
-            'user_id' => $result['result']['user_id']
-        );
-        M('cart')->where( $condition )->save( $save );
         echo "<script language=JavaScript> location.replace(location.href);</script>";
         exit;
     }
