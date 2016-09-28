@@ -41,7 +41,7 @@
 	<div class="com_d_r">
 		<if condition="$order_info.cancel_btn eq 1">
 			<div class="l_btn1">
-				<a href="#" onClick="cancel_order({$list.order_id})">取消订单</a>
+				<a href="#" onClick="cancel_order({$order_info.order_id})">取消订单</a>
 			</div>
 		</if>
 		<if condition="$order_info.pay_btn eq 1">
