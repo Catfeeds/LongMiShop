@@ -51,7 +51,8 @@
 <script>
 $(document).ready(function(){
   var intAs_time= parseInt($('#btnemailAuthCode2').attr("IntervalTime"));
-  if(intAs_time == 60){
+  var sms_time_out = {$sms_time_out};
+  if(intAs_time == sms_time_out){
     sendCode('btnemailAuthCode2');
   }
   jsInnerTimeout('btnemailAuthCode2');
