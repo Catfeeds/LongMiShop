@@ -37,7 +37,7 @@
 .Load—more{
 	line-height: 55px;
 	text-align: center;
-	/*background-color: #E9E9EF;*/
+	background: none !important;
 }
 Load—more a{
 }
