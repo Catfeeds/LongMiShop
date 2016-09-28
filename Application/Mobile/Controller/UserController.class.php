@@ -240,12 +240,13 @@ class UserController extends MobileBaseController {
      */
     public function address_list(){
     	//上一页url indent  center
-    	$skip_url = I('get.source');
-    	if($skip_url == 'cart2'){
-    		cookie('skip_url','Cart/'.$skip_url);
-    	}else if(is_null(cookie('skip_url'))){
-    		cookie('skip_url','User/edit_details');
-    	}
+    	// $skip_url = I('get.source');
+    	// if($skip_url == 'cart2'){
+    	// 	cookie('skip_url','Cart/'.$skip_url);
+    	// }else 
+     //    if(is_null(cookie('skip_url'))){
+    	// 	cookie('skip_url','User/edit_details');
+    	// }
         $address_lists = get_user_address_list($this->user_id);
         $region_list = get_region_list();
         $this->assign('region_list',$region_list);
@@ -258,12 +259,13 @@ class UserController extends MobileBaseController {
      * 收货地址视图
      */
     public function edit_address(){
-        $skip_url = I('get.source');
-        if($skip_url == 'cart2'){
-            cookie('skip_url','Cart/'.$skip_url);
-        }else if(is_null(cookie('skip_url'))){
-            cookie('skip_url','User/edit_details');
-        }
+        // $skip_url = I('get.source');
+        // if($skip_url == 'cart2'){
+        //     cookie('skip_url','Cart/'.$skip_url);
+        // }else 
+        // if(is_null(cookie('skip_url'))){
+        //     cookie('skip_url','User/edit_details');
+        // }
         $id = I('id');
         if(!empty($id)){
             $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
@@ -299,7 +301,12 @@ class UserController extends MobileBaseController {
             M('user_address')->where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
         }
         $skip_url = cookie('skip_url');
-        $url = $skip_url == 'Cart/cart2' ? U('Mobile/Cart/cart2') : U('Mobile/User/address_list');
+        $url = $skip_url == 'Cart/cart2' ? U('Mobile/Cart/cart2') : U('Mobile/User/address_list'); 
+        $address = getCurrentAddress( $this->user_id);
+        if( empty($address) ){
+            $data['is_default'] = 1;
+        }
+        // dd($skip_url);
         if($id==0){ //新增
             $res = M('user_address')->add($data);
             $res ? $this->success('新增成功',$url) : $this->error('新增失败');
@@ -441,6 +448,7 @@ class UserController extends MobileBaseController {
 
     //修改个人信息
     public function edit_details(){
+        cookie('skip_url','User/edit_details');
         $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $this->assign('user_info',$user_info['result']);
