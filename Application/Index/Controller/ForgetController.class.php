@@ -80,7 +80,8 @@ class ForgetController extends IndexBaseController {
         if(empty($mobile)){
             $this->error('参数错误');exit;
         }
-        session('forget_time',60);
+        $sms_time_out = tpCache('sms.sms_time_out');
+        session('forget_time',$sms_time_out);
         $send_email_time = session('send_email_time');
         $res_time = $send_email_time + session('forget_time');
         $now_time = time();
