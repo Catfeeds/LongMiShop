@@ -112,6 +112,7 @@ function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
 }
 
 
+
 /**
  * 判断该账号是否为第三方账号
  * @param $userInfo
@@ -122,4 +123,71 @@ function isThirdAccount( $userInfo ){
         return false;
     }
     return true;
+}
+
+
+/**
+ * 获取绑定账号的数据
+ * @param $userInfo
+ * @param $field
+ * @return mixed
+ */
+function getBindingAccountData( $userInfo ,$field = " * " ){
+    $condition = array();
+    $userId = $userInfo['user_id'];
+    if( isThirdAccount( $userInfo ) ){
+        $condition['third_user_id'] = $userId;
+        $bindingInfo = findDataWithCondition( "binding" , $condition , "user_id" );
+        $otherUserId = $bindingInfo['user_id'];
+    }else{
+        $condition['user_id'] = $userId;
+        $bindingInfo = findDataWithCondition( "binding" , $condition , "third_user_id" );
+        $otherUserId = $bindingInfo['third_user_id'];
+    }
+    $condition = array();
+    $condition['user_id'] = $otherUserId;
+    return findDataWithCondition( "users" , $condition , $field );
+}
+
+
+/**
+ * 是否已经绑定
+ * @param $userId
+ * @return bool
+ */
+function isBinding( $userId ){
+    $condition = array();
+    $condition['user_id'] = $userId;
+    if( isExistenceDataWithCondition( "binding" , $condition ) ){
+        return true;
+    }
+    $condition = array();
+    $condition['third_user_id'] = $userId;
+    if( isExistenceDataWithCondition( "binding" , $condition ) ){
+        return true;
+    }
+    return false;
+}
+
+
+
+/**
+ * 通过手机号注册
+ * @param array $info
+ * @return bool
+ */
+function registerFromMobile(  $info = array()  ){
+    $data = array(
+        'mobile'        => $info['mobile'],
+        'nickname'      => $info['mobile'],
+        'sex'           => 1,
+        'password'      => "",
+        'reg_time'      => time()
+
+    );
+    if(isSuccessToAddData( 'users', $data )){
+        $userId = M() -> getLastInsID();
+        return $userId;
+    }
+    return false;
 }

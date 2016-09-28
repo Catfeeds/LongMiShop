@@ -12,40 +12,7 @@ function isWeChatBrowser()
     }
     return false;
 }
-//
-///**
-// * 获取微信绑定方式
-// * @return int|mixed
-// */
-//function getOpenidBindingWay()
-//{
-//    $bindingWay = empty(C('OPENID_BINDING_WAY')) ? 1 : C('OPENID_BINDING_WAY');
-//    return $bindingWay;
-//}
-//
-///**
-// * 是否为首次需要登录注册的微信绑定方式
-// * @return bool
-// */
-//function openidBindingWayIsLoginForTheFirstTime()
-//{
-//    if( getOpenidBindingWay() == C("OPENID_BINDING_WAY_DESC.LoginForTheFirstTime")){
-//        return true;
-//    }
-//    return false;
-//}
-//
-///**
-// * 是否为自动注册的微信绑定方式
-// * @return bool
-// */
-//function openidBindingWayIsAutoRegister()
-//{
-//    if( getOpenidBindingWay() == C("OPENID_BINDING_WAY_DESC.AutoRegister")){
-//        return true;
-//    }
-//    return false;
-//}
+
 /**
  * 获取微信绑定方式
  * @return int|mixed
@@ -142,17 +109,25 @@ function isBindingOpenidAngUserId( $openid = null )
 /**
  * 绑定
  * @param null $openid
+ * @param null $userId
+ * @param null $thirdUserId
  * @return bool
  */
-function bindingOpenidAngUserId( $openid = null )
+function bindingOpenidAngUserId( $openid = null , $userId = null , $thirdUserId = null )
 {
-    $userId = session(__UserID__);
+    if( is_null($userId) ){
+        $userId = session(__UserID__);
+    }
     $data = array(
         "user_id"       => $userId,
         "openid"        => $openid,
         "create_time"   => time(),
         "update_time"   => time(),
     );
+    if( !is_null( $thirdUserId ) ){
+        $data["third_user_id"]  = $thirdUserId;
+        $data["current_user_id"]  = $thirdUserId;
+    }
     if( !is_null($openid) && !empty($userId) && isSuccessToAddData("binding",$data) ){
         return true;
     }

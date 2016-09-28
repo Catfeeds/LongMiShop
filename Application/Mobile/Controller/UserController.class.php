@@ -27,6 +27,7 @@ class UserController extends MobileBaseController {
             'check_username',
             'send_validate_code',
             'express',
+            'sendSmsBindingCode',
         );
     }
 
@@ -399,47 +400,29 @@ class UserController extends MobileBaseController {
      * 个人信息
      */
     public function userinfo(){
-        $userLogic = new \Common\Logic\UsersLogic();
-        $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
-        $user_info = $user_info['result'];
-//        dd($user_info);
-        if(IS_POST){
-            I('post.nickname') ? $post['nickname'] = I('post.nickname') : false; //昵称
-            I('post.qq') ? $post['qq'] = I('post.qq') : false;  //QQ号码
-            I('post.head_pic') ? $post['head_pic'] = I('post.head_pic') : false; //头像地址
-            I('post.sex') ? $post['sex'] = I('post.sex') : false;  // 性别
-            I('post.birthday') ? $post['birthday'] = strtotime(I('post.birthday')) : false;  // 生日
-            I('post.province') ? $post['province'] = I('post.province') : false;  //省份
-            I('post.city') ? $post['city'] = I('post.city') : false;  // 城市
-            I('post.district') ? $post['district'] = I('post.district') : false;  //地区
-            I('post.email') ? $post['email'] = I('post.email') : false; //邮箱
-            I('post.mobile') ? $post['mobile'] = I('post.mobile') : false; //手机
-
-            $c = M('users')->where("email = '{$post['email']}' and user_id != {$this->user_id}")->count();
-            $c && $this->error("邮箱已被使用");
-
-            $c = M('users')->where("mobile = '{$post['mobile']}' and user_id != {$this->user_id}")->count();
-            $c && $this->error("手机已被使用");
-
-            if(!$userLogic->update_info($this->user_id,$post))
-                $this->error("保存失败");
-            $this->success("操作成功");
-            exit;
+        if( isBinding( $this -> user_id ) ){
+            $bindingAccountInfo = getBindingAccountData( $this -> user );
+            $this->assign('bindingAccountInfo',$bindingAccountInfo);
         }
-        //  获取省份
-        $province = M('region')->where(array('parent_id'=>0,'level'=>1))->select();
-        //  获取订单城市
-        $city =  M('region')->where(array('parent_id'=>$user_info['province'],'level'=>2))->select();
-        //  获取订单地区
-        $area =  M('region')->where(array('parent_id'=>$user_info['city'],'level'=>3))->select();
-        $this->assign('province',$province);
-        $this->assign('city',$city);
-        $this->assign('area',$area);
-        $this->assign('user',$user_info);
-        $this->assign('sex',C('SEX'));
         $this->display();
     }
 
+    public function switchAccount(){
+        if( isBinding( $this -> user_id ) ){
+            $bindingAccountInfo = getBindingAccountData( $this -> user , " user_id " );
+            if( !empty( $bindingAccountInfo['user_id'] )  ){
+                session_unset();
+                session_destroy();
+                setcookie('cn','',time()-3600,'/');
+                setcookie('user_id','',time()-3600,'/');
+                session('auth',true);
+                session(__UserID__,$bindingAccountInfo['user_id']);
+                $this->redirect('Mobile/User/index',0);
+                exit;
+            }
+        }
+        $this -> error("非法访问");
+    }
 
     //修改个人信息
     public function edit_details(){
@@ -1074,6 +1057,70 @@ class UserController extends MobileBaseController {
         }else{
             M('push_message')->add($data);
         }
+    }
+
+
+    public function binding(){
+        if(isBinding( $this->user_id )){
+            $this->error('您已经绑定过手机，请先解绑');exit;
+        }
+
+        if(IS_POST){
+            $mobile  = I('mobile');
+            $code = I('phone_code');
+            $userLogic = new UsersLogic();
+            $info = $userLogic->sms_code_verify($mobile,$code,$this->session_id);
+            if($info['status'] == 1){
+                $data = array();
+                $data['mobile'] = $mobile;
+                $userInfo= findDataWithCondition( 'users' , $data , " user_id ");
+                $userId = $userInfo['user_id'] ;
+                if( empty( $userId ) ){
+                    $userId = registerFromMobile( $data );
+                    if( empty( $userId ) ){
+                        $this->error('绑定失败');exit;
+                    }
+                }
+                if( !bindingOpenidAngUserId( session('openid') , $userId , $this -> user_id ) ){
+                    $this->error('绑定失败');exit;
+                }
+
+                $this->success('绑定成功',U('Mobile/User/userinfo'));exit;
+            }else{
+                $this->error($info['msg']);
+            }
+            exit;
+
+        }
+        $userLogic = new \Common\Logic\UsersLogic();
+        $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
+        $this->assign('user_info',$user_info['result']);
+        $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
+        $this->display();
+    }
+
+
+    public function sendSmsBindingCode(){
+        //调试
+        // exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
+        $mobile = I('send');
+        $where['mobile'] = $mobile;
+        if(!check_mobile($mobile)){
+            exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
+        }
+        $userInfo= findDataWithCondition( 'users' , $where , " user_id ");
+        if( !empty($userInfo) &&  isBinding( $userInfo['user_id'] )){
+            exit(json_encode(array('status'=>-1,'msg'=>'此手机已被绑定')));
+        }
+        if( $userInfo['user_id'] == $this -> user_id  ){
+            exit(json_encode(array('status'=>-1,'msg'=>'不能绑定自己的账号')));
+        }
+        $userLogic = new UsersLogic();
+        $code =  rand(1000,9999);
+        $send = $userLogic->sms_log($mobile,$code,$this->session_id);
+        if($send['status'] != 1)
+            exit(json_encode(array('status'=>-1,'msg'=>$send['msg'])));
+        exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
     }
 
 }
