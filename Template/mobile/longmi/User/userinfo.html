@@ -87,15 +87,17 @@
         // $("#phone").val($("#phone").val().substring(0, 3) + "****" + $("#phone").val().substring(7, 11));
     });
 
+    if(document.getElementById("promptBtn") != undefined){
+        document.getElementById("promptBtn").addEventListener('tap', function() {
+            var btnArray = ['否', '是'];
+            mui.confirm('是否解除绑定账号？', '提示', btnArray, function(e) {
+                if (e.index == 1) {
+                    window.location.href = "{:U('Mobile/User/relieveBinding')}";
+                } else {
 
-    document.getElementById("promptBtn").addEventListener('tap', function() {
-        var btnArray = ['否', '是'];
-        mui.confirm('是否解除绑定账号？', '提示', btnArray, function(e) {
-            if (e.index == 1) {
-                window.location.href = "{:U('Mobile/User/relieveBinding')}";
-            } else {
+                }
+            })
+        });
+    }
 
-            }
-        })
-    });
 </script>
