@@ -258,7 +258,12 @@ class UserController extends MobileBaseController {
      * 收货地址视图
      */
     public function edit_address(){
-        header("content-Type: text/html; charset=utf-8");
+        $skip_url = I('get.source');
+        if($skip_url == 'cart2'){
+            cookie('skip_url','Cart/'.$skip_url);
+        }else if(is_null(cookie('skip_url'))){
+            cookie('skip_url','User/edit_details');
+        }
         $id = I('id');
         if(!empty($id)){
             $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
@@ -276,6 +281,7 @@ class UserController extends MobileBaseController {
          $this->assign('twon',$e);
         }
         $this->assign('address',$address);
+        $this->assign('skip_url',cookie('skip_url'));
         $this->display();
         
     }
@@ -292,12 +298,14 @@ class UserController extends MobileBaseController {
         if( !empty($data['is_default']) ){
             M('user_address')->where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
         }
+        $skip_url = cookie('skip_url');
+        $url = $skip_url == 'Cart/cart2' ? U('Mobile/Cart/cart2') : U('Mobile/User/address_list');
         if($id==0){ //新增
             $res = M('user_address')->add($data);
-            $res ? $this->success('新增成功',U('Mobile/User/address_list')) : $this->error('新增失败');
+            $res ? $this->success('新增成功',$url) : $this->error('新增失败');
         }else{ //修改
             $res = M('user_address')->save($data);
-            $res ? $this->success('修改成功',U('Mobile/User/address_list')) : $this->error('修改失败');
+            $res ? $this->success('修改成功',$url) : $this->error('修改失败');
         }
     }
 
