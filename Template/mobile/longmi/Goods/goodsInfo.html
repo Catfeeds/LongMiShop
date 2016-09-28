@@ -105,7 +105,7 @@
     <div style="height:55px"></div>
     <div class="com_d">
         <div class="com_d_l">
-            <div class="collect {: $collectRes == 1 ? 'collect_click' : ''}"  onclick="collect_goods({$goods.goods_id})" id="favorite_add"></div>
+            <div class="collect {: $collectRes == 1 ? 'collect_click' : ''}"  onclick="collects_goods({$goods.goods_id})" id="favorite_add"></div>
         </div>
         <div class="com_d_r">
             <div class="c_btn1"><a href="#picture" >立即购买</a></div>
@@ -156,7 +156,7 @@
     <script type="text/javascript">
 
         //收藏
-        function collect_goods(goods_id){
+        function collects_goods(goods_id){
             $.ajax({
                 type:'post',
                 url:'/index.php?m=Mobile&c=Goods&a=ajaxCollectGoods',
