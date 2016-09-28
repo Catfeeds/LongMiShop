@@ -253,7 +253,7 @@ function relieveBinding( $userId ){
  * @return bool
  */
 function isWeChatUser( $key ){
-    if( $key == "weixin" || $key == "weChat"){
+    if( $key == "weixin" || $key == "weChat" || $key == "WeChat" ){
         return true;
     }
     return false;
