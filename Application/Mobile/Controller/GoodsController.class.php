@@ -17,6 +17,7 @@ class GoodsController extends MobileBaseController {
             "goodsAttr",
             "search",
             "ajaxSearch",
+            'ajaxCollectGoods',
         );
     }
     public function  _initialize() {
@@ -181,6 +182,12 @@ class GoodsController extends MobileBaseController {
             $prom_goods = M('prom_goods')->where("id = {$goods['prom_id']}  AND is_close=0")->find();
             $this->assign('prom_goods',$prom_goods);// 商品促销
         }
+        if(!empty($this->user_id)){
+            $where['user_id'] = $this->user_id;
+            $where['goods_id'] = $goods_id;
+            $collectRes = M('goods_collect')->where($where)->count();
+            $collectRes == 1 ? $this->assign('collectRes',$collectRes) : '';
+        }
 
         $goods['discount'] = round($goods['shop_price']/$goods['market_price'],2)*10;
 
@@ -324,6 +331,35 @@ class GoodsController extends MobileBaseController {
      */
     public function ajaxSearch()
     {
+
+    }
+
+    /*
+     *商品收藏
+     *
+     */
+    public function ajaxCollectGoods(){
+
+        //是否登录
+        if(empty($this->user_id)){
+            exit(json_encode(callback(false,'请登录收藏该商品')));
+        }
+
+        $goodsId = I('goods_id','','int');
+
+        $data['user_id'] = $this->user_id;
+        $data['goods_id'] = $goodsId;
+        $collectRes = M('goods_collect')->where($data)->count();
+        if(empty($collectRes)){ //新增收藏
+            $data['add_time'] = time();
+            $res = M('goods_collect')->add($data);
+            $res ? exit(json_encode(callback(true,'收藏成功',array('status'=>'add')))) : exit(json_encode(callback(false,'收藏失败'))) ;
+        }else{
+            $res = M('goods_collect')->where($data)->delete();
+            $res ? exit(json_encode(callback(true,'取消收藏',array('status'=>'del')))) : exit(json_encode(callback(false,'取消收藏失败')));
+        }
+
+
 
     }
 }
