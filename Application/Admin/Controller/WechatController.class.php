@@ -147,20 +147,22 @@ class WechatController extends BaseController {
         //获取父级菜单
         $p_menus = M('wx_menu')->where(array('token'=>$wechat['token'],'pid'=>0))->order('id ASC')->select();
         $p_menus = convert_arr_key($p_menus,'id');
-        setLogResult($wechat['token']);
+
         $post_str = $this->convert_menu($p_menus,$wechat['token']);
-        setLogResult($post_str);
+        // dd($post_str);
         // http post请求
         if(!count($p_menus) > 0){
            $this->error('没有菜单可发布',U('Wechat/menu'));
             exit;
         }
         $access_token = $this->get_access_token($wechat['appid'],$wechat['appsecret']);
+
         if(!$access_token){
             $this->error('获取access_token失败');
             exit;
         }
         $url ="https://api.weixin.qq.com/cgi-bin/menu/create?access_token={$access_token}";
+
 //        exit($post_str);
         $return = httpRequest($url,'POST',$post_str);
         $return = json_decode($return,1);
@@ -223,10 +225,10 @@ class WechatController extends BaseController {
             }
             $count++;
         }
-        setLogResult($new_arr);
-
-        return json_encode(array('button'=>$new_arr));
-//        return json_encode(array('button'=>$new_arr),JSON_UNESCAPED_UNICODE);
+        // $res = array('button'=>json_encode_ex($new_arr));
+        // dd($res);
+        // return json_encode(array('button'=>$new_arr));
+       return json_encode(array('button'=>$new_arr),JSON_UNESCAPED_UNICODE);
     }
 
     /*
