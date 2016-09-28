@@ -187,7 +187,7 @@ function setBindingCurrentAccount( $currentUserId , $switchUserId ){
         'update_time' => time(),
         'current_user_id' => $switchUserId,
     );
-    M('banding') -> where( $condition ) -> save( $save );
+    M('binding') -> where( $condition ) -> save( $save );
 }
 
 /**
