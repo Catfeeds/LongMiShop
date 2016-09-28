@@ -147,7 +147,7 @@ class WechatController extends BaseController {
         //获取父级菜单
         $p_menus = M('wx_menu')->where(array('token'=>$wechat['token'],'pid'=>0))->order('id ASC')->select();
         $p_menus = convert_arr_key($p_menus,'id');
-        setLogResult($p_menus);
+        setLogResult($wechat['token']);
         $post_str = $this->convert_menu($p_menus,$wechat['token']);
         setLogResult($post_str);
         // http post请求
@@ -223,6 +223,8 @@ class WechatController extends BaseController {
             }
             $count++;
         }
+        setLogResult($new_arr);
+
        // return json_encode(array('button'=>$new_arr));
         return json_encode(array('button'=>$new_arr),JSON_UNESCAPED_UNICODE);
     }
