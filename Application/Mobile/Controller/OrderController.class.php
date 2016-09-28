@@ -68,6 +68,7 @@ class OrderController extends MobileBaseController {
             $order_list[$k] = set_btn_order_status($v);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
             //$order_list[$k]['total_fee'] = $v['goods_amount'] + $v['shipping_fee'] - $v['integral_money'] -$v['bonus'] - $v['discount']; //订单总额
             $data = $model -> getOrderGoods($v['order_id']);
+            $data['data'] = setOrderReturnState( $data['data'] , $this ->user_id );
             $order_list[$k]['goods_list'] = $data['data'];
         }
         $this->assign('order_status',C('ORDER_STATUS'));
@@ -116,14 +117,8 @@ class OrderController extends MobileBaseController {
         //获取订单商品
         $model = new \Common\Logic\UsersLogic();
         $data = $model -> getOrderGoods($order_info['order_id']);
-        //是否申请过售后
-        foreach($data['data'] as $key=>$item){
-            $where = '';
-            $where['order_id'] = $item['order_id'];
-            $where['user_id'] = $this->user_id;
-            $where['goods_id'] = $item['goods_id'];
-            $data['data'][$key]['isReturn'] = M('return_goods')->where($where)->count();
-        }
+
+        $data['data'] = setOrderReturnState( $data['data'] , $this ->user_id );
         $order_info['goods_list'] = $data['data'];
         //$order_info['total_fee'] = $order_info['goods_price'] + $order_info['shipping_price'] - $order_info['integral_money'] -$order_info['coupon_price'] - $order_info['discount'];
 

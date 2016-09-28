@@ -28,7 +28,12 @@
                 <div class="c"><a href="{:U('Mobile/Order/order_detail',array('order_id' => $list['order_id']))}"></a></div>
                 <foreach name="list.goods_list" item="good" key="k" >
                     <div class="cp6">
-                        <div class="cp1_l"><img src="{$good.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
+                        <div class="cp1_l">
+                            <img src="{$good.goods_id|goods_thum_images=92,92}" width="92" height="92">
+                            <if condition='$good[isReturn]' >
+                                <div class="cj">退货中</div>
+                            </if>
+                        </div>
                         <div class="cp1_r">
                             <p>{$good.goods_name}{$good.spec_key_name}</p>
                             <span>￥{$good['member_goods_price']}</span>

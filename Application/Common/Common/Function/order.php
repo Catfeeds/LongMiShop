@@ -297,7 +297,8 @@ function getOverdueOrder(){
 /**
  * 支付完成修改订单
  * @param $order_sn 订单号
- * $pay_status 默认1 为已支付
+ * @param int $pay_status  默认1 为已支付
+ * @return bool
  */
 function update_pay_status($order_sn,$pay_status = 1)
 {
@@ -321,3 +322,33 @@ function update_pay_status($order_sn,$pay_status = 1)
 //    if($distribut_condition == 1)  // 购买商品付款才可以成为分销商
 //        M('users')->where("user_id = {$order['user_id']}")->save(array('is_distribut'=>1));
 }
+
+
+/**
+ * 获取退货情况
+ * @param $goodsList
+ * @param $userId
+ * @return array
+ */
+function setOrderReturnState( $goodsList , $userId ){
+    if( empty($goodsList) ){
+        return array();
+    }
+//    $goodsCount  = count( $goodsList );
+//    $returnCount = 0;
+    foreach ( $goodsList as $key => $goodsItem ){
+        $where = array();
+        $where['order_id']  = $goodsItem['order_id'];
+        $where['user_id']   = $userId;
+        $where['goods_id']  = $goodsItem['goods_id'];
+        $goodsList[$key]['isReturn'] = $count = M('return_goods')->where($where)->count();
+//        if( $count > 0){
+//            $returnCount ++;
+//        }
+    }
+//    if( $goodsCount == $returnCount ){
+//
+//    }
+    return $goodsList;
+}
+
