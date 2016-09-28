@@ -54,22 +54,28 @@
 				<a href="#picture">立即付款</a>
 			</div>
 		</if>
-		<if condition="$order_info.receive_btn eq 1">
+		<if condition="$order_info.receive_btn eq 1 && !$order_info.isReturn">
 			<div class="l_btn2">
 				<a href="{:U('Mobile/Order/order_confirm',array('id'=>$order_info['order_id']))}">收货确认</a>
 			</div>
 		</if>
-		<!--<if condition="$order_info.comment_btn eq 1">-->
-			<!--<div class="l_btn2">-->
-				<!--<a href="{:U('/Mobile/User/comment')}">评价-->
-				<!--</a>-->
-			<!--</div>-->
-		<!--</if>-->
-		<!--<if condition="$order_info.shipping_btn eq 1">-->
-			<!--<div class="l_btn1">-->
-				<!--<a href="{:U('User/express',array('order_id'=>$order_info['order_id']))}">查看物流</a>-->
-			<!--</div>-->
-		<!--</if>-->
+		<if condition="$order_info.comment_btn eq 1 && !$order_info.isReturn">
+			<div class="l_btn2">
+                <a href="{:U('/Mobile/Order/orderEvaluate',array('order_id'=>$order_info['order_id']))}">评价
+				</a>
+			</div>
+		</if>
+        <if condition="$order_info.return_btn eq 1 && !$order_info.isReturn">
+            <div class="l_btn2">
+                <a href="{:U('/Mobile/Order/orderReturn',array('order_id'=>$order_info['order_id']))}">退货
+                </a>
+            </div>
+        </if>
+		<if condition="$order_info.shipping_btn eq 1 ">
+			<div class="l_btn1">
+				<a href="{:U('User/express',array('order_id'=>$order_info['order_id']))}">查看物流</a>
+			</div>
+		</if>
 	</div>
 </div>
 <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
