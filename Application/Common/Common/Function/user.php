@@ -238,6 +238,8 @@ function loginBindingCurrentAccount( $userId ){
  */
 function relieveBinding( $userId ){
     $condition = array();
-    $condition['current_user_id'] = $userId;
+    $condition['user_id'] = $userId;
+    $condition['third_user_id'] = $userId;
+    $condition['_logic'] = 'or';
     M('binding') -> where( $condition ) -> delete();
 }
