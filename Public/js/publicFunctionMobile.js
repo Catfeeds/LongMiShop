@@ -19,7 +19,7 @@ function cancel_order(id){
     if(!confirm("确定取消订单?")){
         return false;
     }
-    location.href = "/index.php?m=Mobile&c=User&a=cancel_order&id="+id;
+    location.href = "/index.php?m=Mobile&c=Order&a=cancelOrder&id="+id;
 }
 
 
