@@ -128,11 +128,12 @@ class ForgetController extends IndexBaseController {
             }
             $res = M('users')->save($data);
             if($res){
-                $wheres['session_id'] = session('forget_id');
+                $user_id = session('forget_id');
+                $wheres['session_id'] = $user_id;
                 M('sms_log')->where($wheres)->delete();
-                session_unset();
-                session_destroy();
-               $this->success('修改成功,请用新密码登录',U('Index/Index/index'));
+                session('auth',true);
+                session(__UserID__,$user_id);
+               $this->success('修改成功',U('Index/User/info'));
             }else{
                 $this->error('修改失败',U('Index/Forget/index'));
             }
