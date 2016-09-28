@@ -49,12 +49,12 @@
             <notempty name="couponList">
                 <div class="mui-input-row mui-radio mui-left">
                     <label>不使用优惠券</label>
-                    <input name="coupon_id" type="radio" value="0" checked>
+                    <input name="coupon" type="radio" value="0" checked>
                 </div>
-                <foreach name="couponList" item="v"  key="k">-->
+                <foreach name="couponList" item="v"  key="k">
                     <div class="mui-input-row mui-radio mui-left">
                         <label>{$v['name']}</label>
-                        <input name="coupon_id" type="radio" value="{$v['id']}">
+                        <input name="coupon" type="radio" value="{$v['id']}">
                     </div>
                 </foreach>
                 <else/>
