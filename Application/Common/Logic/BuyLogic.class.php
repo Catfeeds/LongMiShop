@@ -261,7 +261,7 @@ class BuyLogic extends BaseLogic
         if($couponInfo_list['is_discount'] == 1){ //判断优惠券类型  1折扣券  0代金券
             $coupon_price = $goods_price - ( ( intval($couponInfo_list['money']) / 100 ) * $goods_price );
         }else{
-            $coupon_price = $goods_price - ($goods_price - intval($couponInfo_list['money']) );
+            $coupon_price = $goods_price - ($goods_price - $couponInfo_list['money'] );
         }
         // dd($coupon_price);
         $order_amount = $goods_price + $shipping_price - $coupon_price; // 应付金额 = 商品价格 + 物流费 - 优惠券
