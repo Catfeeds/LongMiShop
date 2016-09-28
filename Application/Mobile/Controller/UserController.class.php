@@ -411,12 +411,9 @@ class UserController extends MobileBaseController {
         if( isBinding( $this -> user_id ) ){
             $bindingAccountInfo = getBindingAccountData( $this -> user , " user_id " );
             if( !empty( $bindingAccountInfo['user_id'] )  ){
+                setBindingCurrentAccount( $this -> user_id , $bindingAccountInfo['user_id'] );
                 session_unset();
                 session_destroy();
-                setcookie('cn','',time()-3600,'/');
-                setcookie('user_id','',time()-3600,'/');
-                session('auth',true);
-                session(__UserID__,$bindingAccountInfo['user_id']);
                 $this->redirect('Mobile/User/index',0);
                 exit;
             }

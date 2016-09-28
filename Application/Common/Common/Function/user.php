@@ -52,25 +52,6 @@ function loginFromUserId( $userId ){
 }
 
 
-/**
- * 根据 openid 登录
- * @param $openid
- * @return array
- */
-function loginFromOpenid( $openid ){
-    $condition = array(
-        "openid" => $openid,
-        "is_lock" => 0
-    );
-    if( $userInfo = findDataWithCondition( 'users' ,$condition , 'user_id')){
-        session('auth',true);
-        session(__UserID__,$userInfo["user_id"]);
-        M('cart')->where("session_id = '".session_id()."'")->save(array('user_id'=>$userInfo["user_id"]));
-        return callback(true,'登录成功');
-    }
-    return callback(false,'账号不存在或者异常被锁定');
-}
-
 
 /**
  * 通过第三方openid 注册
@@ -190,4 +171,61 @@ function registerFromMobile(  $info = array()  ){
         return $userId;
     }
     return false;
+}
+
+
+/**
+ * 设置绑定的当前账号
+ * @param $currentUserId
+ * @param $switchUserId
+ */
+function setBindingCurrentAccount( $currentUserId , $switchUserId ){
+    $condition  = array(
+        'current_user_id' => $currentUserId,
+    );
+    $save = array(
+        'update_time' => time(),
+        'current_user_id' => $switchUserId,
+    );
+    M('banding') -> where( $condition ) -> save( $save );
+}
+
+/**
+ * 根据 openid 登录
+ * @param $openid
+ * @return array
+ */
+function loginFromOpenid( $openid ){
+    $condition = array(
+        "openid" => $openid,
+        "is_lock" => 0
+    );
+    if( $userInfo = findDataWithCondition( 'users' ,$condition , 'user_id')){
+        $userId = $userInfo["user_id"];
+        if( isBinding($userId) ){
+            loginBindingCurrentAccount( $userId );
+            return callback(true,'登录成功');
+        }
+        session('auth',true);
+        session(__UserID__,$userInfo["user_id"]);
+        M('cart')->where("session_id = '".session_id()."'")->save(array('user_id'=>$userInfo["user_id"]));
+        return callback(true,'登录成功');
+    }
+    return callback(false,'账号不存在或者异常被锁定');
+}
+
+
+/**
+ * 登录绑定的默认账号
+ * @param $userId
+ */
+function loginBindingCurrentAccount( $userId ){
+
+    $where =" user_id = '{$userId}' or third_user_id = '{$userId}'  ";
+    $bindingInfo = findDataWithCondition( "binding" , $where , "current_user_id" );
+    $loginUserId = $bindingInfo['current_user_id'];
+    session('auth',true);
+    session(__UserID__,$loginUserId);
+    M('cart')->where("session_id = '".session_id()."'")->save(array('user_id'=>$loginUserId));
+
 }
