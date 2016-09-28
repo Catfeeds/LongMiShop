@@ -45,11 +45,7 @@ var  cityData3 = [{
  text : '密云县' },{ 
  value : '322', 
  text : '延庆县' },] 
-} ,{ 
- value : '47517', 
- text : '123' , 
- children : [ ] 
-} , 
+} ,
  ]} ,{ 
  value: '338', 
  text : '天津市', 
