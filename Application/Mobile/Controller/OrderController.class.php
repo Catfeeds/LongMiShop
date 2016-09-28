@@ -103,11 +103,6 @@ class OrderController extends MobileBaseController {
         $map['order_id'] = $id;
         $map['user_id'] = $this->user_id;
         $order_info = M('order')->where($map)->find();
-        
-
-
-
-//         dd($order_info);
         if(!$order_info){
             $this->error('没有获取到订单信息');
             exit;
