@@ -423,6 +423,12 @@ class UserController extends MobileBaseController {
         $this -> error("非法访问");
     }
 
+    public function relieveBinding(){
+        relieveBinding( $this -> user_id );
+        $this ->success("解除成功");
+    }
+
+
     //修改个人信息
     public function edit_details(){
         $userLogic = new \Common\Logic\UsersLogic();
