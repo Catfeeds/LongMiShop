@@ -44,10 +44,37 @@
    }); 
 
     var redirectedUrl = $('#redirectedUrl').val();
+    
+
+    $('#username').change(['Data'],function(){
+        var username = $.trim($('#username').val());
+        if(!isNaN(username)){
+            if(!checkMobile(username)){
+              showErrorMsg('账号格式不匹配!');
+                return false;  
+            }else{
+              $.ajax({
+                    type:'post',
+                    url:'/index.php?m=Index&c=User&a=check_pwd',
+                    data:{username:username},
+                    dataType:'json',
+                    success : function(res){
+                        console.log(res);
+                        if(res.state == 1){
+                            alert('该帐号密码为空 请设置密码');
+                            
+                            window.location.href= res.data.status;
+                        }
+                    }
+                });  
+            }
+            
+        }
+    });
 
     function checkSubmit()
     {
-        var username = $.trim($('#username').val());
+        var username = $.trim($('#username').val())
         var password = $.trim($('#password').val());
         if(username == ''){
             showErrorMsg('用户名不能为空!');
@@ -103,6 +130,8 @@
     function showErrorMsg(msg){
         alert(msg);
     }
+
+
 </script>
 </body>
 </html>

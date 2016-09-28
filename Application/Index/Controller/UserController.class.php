@@ -14,6 +14,7 @@ class UserController extends IndexBaseController {
             'doLogin',
             'register',
             'send_sms_reg_code',
+            'check_pwd',
         );
     }
 
@@ -54,6 +55,23 @@ class UserController extends IndexBaseController {
         exit(json_encode($result));
     }
 
+    //检查帐号密码是否为空
+    public function check_pwd(){
+        if(IS_POST){
+            $where['mobile'] = I('username');
+            $user = M('users')->where($where)->find();
+            if(empty($user['password'])){
+                session('forget_mobile',$user['mobile']);
+                session('forget_id',$user['user_id']); //用户id
+                $url = U('Index/Forget/forget_mobile');
+                exit(json_encode(callback(true,'密码为空',array('status'=>$url))));
+                
+            }else{
+                exit(json_encode(callback(false,'密码不为空')));
+            }
+        }
+        
+    }
     //退出
     public function logout(){
         session_unset();
