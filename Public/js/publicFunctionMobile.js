@@ -21,3 +21,5 @@ function cancel_order(id){
     }
     location.href = "/index.php?m=Mobile&c=User&a=cancel_order&id="+id;
 }
+
+

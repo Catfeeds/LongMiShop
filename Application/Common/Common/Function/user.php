@@ -231,3 +231,13 @@ function loginBindingCurrentAccount( $userId ){
     M('cart')->where("session_id = '".session_id()."'")->save(array('user_id'=>$loginUserId));
 
 }
+
+/**
+ * 解除绑定
+ * @param $userId
+ */
+function relieveBinding( $userId ){
+    $condition = array();
+    $condition['current_user_id'] = $userId;
+    M('binding') -> where( $condition ) -> delete();
+}
