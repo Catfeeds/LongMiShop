@@ -220,9 +220,11 @@ function loginFromOpenid( $openid ){
  * @param $userId
  */
 function loginBindingCurrentAccount( $userId ){
-
-    $where =" user_id = '{$userId}' or third_user_id = '{$userId}'  ";
-    $bindingInfo = findDataWithCondition( "binding" , $where , "current_user_id" );
+    $condition = array();
+    $condition['user_id'] = $userId;
+    $condition['third_user_id'] = $userId;
+    $condition['_logic'] = 'or';
+    $bindingInfo = findDataWithCondition( "binding" , $condition , "current_user_id" );
     $loginUserId = $bindingInfo['current_user_id'];
     session('auth',true);
     session(__UserID__,$loginUserId);
