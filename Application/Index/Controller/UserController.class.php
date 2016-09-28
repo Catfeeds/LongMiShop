@@ -60,7 +60,7 @@ class UserController extends IndexBaseController {
         if(IS_POST){
             $where['mobile'] = I('username');
             $user = M('users')->where($where)->find();
-            if(empty($user['password'])){
+            if(!empty($user) && empty($user['password'])){
                 session('forget_mobile',$user['mobile']);
                 session('forget_id',$user['user_id']); //用户id
                 $url = U('Index/Forget/forget_mobile');
