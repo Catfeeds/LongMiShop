@@ -578,8 +578,8 @@ function extend($file_name){
  * @return bool
  */
 function isExistenceDataWithCondition( $tableName , $condition = array() ){
-    $result = M($tableName) -> where($condition) -> find();
-    if( empty($result) ){
+    $result = M($tableName) -> where($condition) -> count();
+    if( $result <= 0 ){
         return false;
     }
     return true;

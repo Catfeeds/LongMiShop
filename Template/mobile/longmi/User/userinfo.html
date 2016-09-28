@@ -22,16 +22,17 @@
             <div class="se-2">（地址，昵称，头像）</div>
         </div>
     </div>
-    <if condition = " isThirdAccount( $user ) " >
+    <if condition = " isThirdAccount( $user ) && !isBinding( $user['user_id'] ) " >
         <div class="cp1">
             <div class="c">
-                <a href="#"></a>
+                <a href="{: U('Mobile/User/binding')}"></a>
             </div>
             <div class="setup_box">
                 <div class="se-1">绑定手机号码</div>
             </div>
         </div>
-    <else/>
+    </if>
+    <if condition = " !isThirdAccount( $user ) " >
         <div class="cp1">
             <div class="c">
                 <a href="{: U('Mobile/User/edit_mobile')}"></a>
@@ -54,24 +55,28 @@
 
     <div class="login_btn1"><a href="{: U('Mobile/User/index')}" style="width:100%">返回</a></div>
 </div>
-
-<div class="cut">
-    <div class="cut-titel">可切换账号</div>
-    <div class="cut-box">
-        <div class="cut-left"><img src="images/user_48.png" width="48" height="48"></div>
-        <div class="cut-right">
-            <div>用户名：<span>李四</span></div>
-            <div>手机：<span>18665093666</span></div>
-            <div>邮箱：<span>lxp5820@qq.com</span></div>
-        </div>
-        <div class="l_r">
-            <div class="l_btn2" id="promptBtn"><a href="#" id="info">解绑账号</a></div>
-            <div class="l_btn1"><a href="my_a5_3_1.html">切换账号</a></div>
-
+<notempty name = "bindingAccountInfo" >
+    <div class="cut">
+        <div class="cut-titel">可切换账号</div>
+        <div class="cut-box">
+            <div class="cut-left"><img src="{$bindingAccountInfo['head_pic']|default="__STATIC__/images/user_48.png"}" width="48" height="48"></div>
+            <div class="cut-right">
+                <div>用户名：<span>{$bindingAccountInfo['nickname']}</span></div>
+                <div>手机：<span>{$bindingAccountInfo['mobile']}</span></div>
+                <div>邮箱：<span>{$bindingAccountInfo['email']}</span></div>
+            </div>
+            <div class="l_r">
+                <div class="l_btn2" id="promptBtn">
+                    <a href="#" id="info">解绑账号</a>
+                </div>
+                <div class="l_btn1">
+                    <a href="{:U('Mobile/User/switchAccount')}">切换账号</a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
+</notempty>
 </body>
 <include file="Public/footer"/>
 </html>
@@ -81,4 +86,18 @@
         // $("#phones").html($("#phones").substring(0,3)+"****"+$("#phones").substring(8,11));
         // $("#phone").val($("#phone").val().substring(0, 3) + "****" + $("#phone").val().substring(7, 11));
     });
+
+    if(document.getElementById("promptBtn") != undefined){
+        document.getElementById("promptBtn").addEventListener('tap', function() {
+            var btnArray = ['否', '是'];
+            mui.confirm('是否解除绑定账号？', '提示', btnArray, function(e) {
+                if (e.index == 1) {
+                    window.location.href = "{:U('Mobile/User/relieveBinding')}";
+                } else {
+
+                }
+            })
+        });
+    }
+
 </script>

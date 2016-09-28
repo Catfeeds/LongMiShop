@@ -21,5 +21,8 @@ class IndexController extends IndexBaseController {
     }
 
     public function test(){
+
+        setBindingCurrentAccount(1,2);
+
     }
 }
