@@ -95,6 +95,7 @@ class CartController extends MobileBaseController {
         $this->assign('region_list',$region_list);
 
         $address = getCurrentAddress( $this->user_id , I('address_id',null) );
+        cookie('skip_url','Cart/cart2');
         if( empty($address) ){
         	header("Location: ".U('Mobile/User/edit_address',array('source'=>'cart2')));
         }
