@@ -243,3 +243,18 @@ function relieveBinding( $userId ){
     session(null);
     session('openid',$openid);
 }
+
+
+
+
+/**
+ * 判断是否为微信用户
+ * @param $key
+ * @return bool
+ */
+function isWeChatUser( $key ){
+    if( $key == "weixin" || $key == "weChat"){
+        return true;
+    }
+    return false;
+}
