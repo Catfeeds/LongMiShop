@@ -466,19 +466,19 @@ body {
 	text-decoration: none;
 }
 .my_nav {
-	margin-top: 10px;
 }
 .my_nav ul {
 }
 .my_nav li {
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
-	border-bottom-color: #EFEFF4;
+	border-bottom-color: #E3E3E3;
 	background-color: #FFF;
 	padding-left: 10px;
 	background-image: url(../SVG/move.svg);
 	background-repeat: no-repeat;
 	background-position: right center;
+	line-height: 35px;
 }
 .my_nav a {
 	display: block;
@@ -1535,18 +1535,11 @@ body {
 	width: 48px;
 }
 .site2 {
-	background-color: rgb( 254, 254, 254 );
 	width: 100%;
 	overflow: hidden;
 	position: relative;
-	border-top-width: 1px;
-	border-bottom-width: 1px;
-	border-top-style: solid;
-	border-bottom-style: solid;
-	border-top-color: rgb( 235, 235, 235 );
-	border-bottom-color: rgb( 235, 235, 235 );
 	padding-left: 35px;
-	line-height: 16px;
+	line-height: 28px;
 	padding-top: 10px;
 	padding-right: 10px;
 }
