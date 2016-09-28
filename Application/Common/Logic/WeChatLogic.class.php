@@ -36,6 +36,7 @@ class WeChatLogic extends BaseLogic
 
     /**
      * 授权开始
+     *
      */
     public function authorization()
     {
@@ -282,7 +283,11 @@ class WeChatLogic extends BaseLogic
         if( openidBindingWayIsAutoRegister() ){
             if( isExistenceUserWithOpenid( $this -> openid ) ){
                 if( !isLoginState() ){
-                    loginFromOpenid( $this -> openid );
+                    $result = loginFromOpenid( $this -> openid );
+                    if( callbackIsTrue( $result ) ){
+                        echo "<script language=JavaScript> location.replace(location.href);</script>";
+                        exit;
+                    }
                 }
             }else{
                 registerFromOpenid( $this -> openid , $this -> weChatInfo );

@@ -43,7 +43,7 @@ function loginFromUserId( $userId ){
         "user_id" => $userId,
         "is_lock" => 0
     );
-    if( isExistenceDataWithCondition( 'users' ,$condition)){
+    if( isExistenceDataWithCondition( 'users' ,$condition ) ){
         session('auth',true);
         session(__UserID__,$userId);
         return callback(true,'登录成功');
@@ -79,16 +79,12 @@ function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
     $result = $usersLogic -> thirdLogin($data);
 
     if($result['status'] == 1){
-        session('auth',true);
-        session(__UserID__,$data['result']['user_id']);
+        $openid = session('openid');
+        session(null);
+        session('openid',$openid);
 
-        $condition = array(
-            "session_id" => session_id(),
-        );
-        $save = array(
-            'user_id' => $result['result']['user_id']
-        );
-        M('cart')->where( $condition )->save( $save );
+        echo "<script language=JavaScript> location.replace(location.href);</script>";
+        exit;
     }
 }
 
@@ -159,11 +155,12 @@ function isBinding( $userId ){
  */
 function registerFromMobile(  $info = array()  ){
     $data = array(
-        'mobile'        => $info['mobile'],
-        'nickname'      => $info['mobile'],
-        'sex'           => 1,
-        'password'      => "",
-        'reg_time'      => time()
+        'mobile'                => $info['mobile'],
+        'nickname'              => $info['mobile'],
+        'mobile_validated'      => 1,
+        'sex'                   => 1,
+        'password'              => "",
+        'reg_time'              => time()
 
     );
     if(isSuccessToAddData( 'users', $data )){
@@ -242,4 +239,7 @@ function relieveBinding( $userId ){
     $condition['third_user_id'] = $userId;
     $condition['_logic'] = 'or';
     M('binding') -> where( $condition ) -> delete();
+    $openid = session('openid');
+    session(null);
+    session('openid',$openid);
 }

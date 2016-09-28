@@ -41,3 +41,18 @@
 }
 Load—more a{
 }
+
+.myBlurBackGround {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	z-index: -1;
+	height: 100%;
+
+	filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
+	-webkit-filter: blur(20px); /* Chrome, Opera */
+	-moz-filter: blur(20px);
+	-ms-filter: blur(20px);
+	filter: blur(20px);
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
+}

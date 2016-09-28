@@ -59,7 +59,9 @@
     <div class="cut">
         <div class="cut-titel">可切换账号</div>
         <div class="cut-box">
-            <div class="cut-left"><img src="{$bindingAccountInfo['head_pic']|default="__STATIC__/images/user_48.png"}" width="48" height="48"></div>
+            <div class="cut-left">
+                <img class="userHeadImg" src="{$bindingAccountInfo['head_pic']|default="__DefaultUserImages__"}" width="48" height="48">
+            </div>
             <div class="cut-right">
                 <div>用户名：<span>{$bindingAccountInfo['nickname']}</span></div>
                 <div>手机：<span>{$bindingAccountInfo['mobile']}</span></div>
