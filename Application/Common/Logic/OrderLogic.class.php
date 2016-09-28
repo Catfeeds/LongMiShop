@@ -120,7 +120,7 @@ class OrderLogic extends BaseLogic
         if(!$row){
             return callback(false,'操作失败','');
         }
-        order_give($order);// 调用送礼物方法, 给下单这个人赠送相应的礼物
+//        order_give($order);// 调用送礼物方法, 给下单这个人赠送相应的礼物
 
         //分销设置
         M('rebate_log')->where("order_id = $id")->save(array('status'=>2));
