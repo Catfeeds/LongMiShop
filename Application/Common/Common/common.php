@@ -590,8 +590,17 @@ function logOrder($order_id,$action_note,$status_desc,$user_id = 0)
  */
 function get_region_list(){
 //    $region_list = array();
-    $region_list = @include '/Application/Common/Conf/region.php';
-    return $region_list;
+//    $region_list = @include '/Application/Common/Conf/region.php';
+//    return $region_list;
+    //获取地址列表 缓存读取
+    if(!S('region_list')){
+        $region_list = M('region')->select();
+        $region_list = convert_arr_key($region_list,'id');
+        $region_list = convert_arr_key($region_list,'id');
+        S('region_list',$region_list);
+    }
+
+    return $region_list ? $region_list : S('region_list');
 }
 /*
  * 获取用户地址列表

@@ -104,7 +104,7 @@ class weixin extends RelationModel
 				 if(res.err_msg == "get_brand_wcpay_request:ok") {
 				    location.href='$go_url';
 				 }else{
-				 	alert(res.err_code+res.err_desc+res.err_msg);
+//				 	alert(res.err_code+res.err_desc+res.err_msg);
 				    location.href='$back_url';
 				 }
 			}
