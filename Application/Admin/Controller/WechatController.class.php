@@ -225,8 +225,8 @@ class WechatController extends BaseController {
         }
         setLogResult($new_arr);
 
-       // return json_encode(array('button'=>$new_arr));
-        return json_encode(array('button'=>$new_arr),JSON_UNESCAPED_UNICODE);
+        return json_encode(array('button'=>$new_arr));
+//        return json_encode(array('button'=>$new_arr),JSON_UNESCAPED_UNICODE);
     }
 
     /*
