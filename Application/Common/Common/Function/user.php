@@ -239,4 +239,7 @@ function relieveBinding( $userId ){
     $condition['third_user_id'] = $userId;
     $condition['_logic'] = 'or';
     M('binding') -> where( $condition ) -> delete();
+    $openid = session('openid');
+    session(null);
+    session('openid',$openid);
 }
