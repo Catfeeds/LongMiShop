@@ -308,6 +308,11 @@ class UserController extends MobileBaseController {
         }
         // dd($skip_url);
         if($id==0){ //新增
+            //收货地址不能超过20个
+            $userAddCount = M('user_address')->where(array('user_id'=>$this->user_id))->count();
+            if($userAddCount >= 20){
+                $this->error('个人收货地址不能超过20个');exit;
+            }
             $res = M('user_address')->add($data);
             $res ? $this->success('新增成功',$url) : $this->error('新增失败');
         }else{ //修改
