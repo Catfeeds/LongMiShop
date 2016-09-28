@@ -108,7 +108,7 @@ class ForgetController extends IndexBaseController {
             exit;
         }
 
-        $this->assing('sms_time_out',$sms_time_out);
+        $this->assign('sms_time_out',$sms_time_out);
         $this->assign('mobile',$mobile);
         $this->display();
     }
