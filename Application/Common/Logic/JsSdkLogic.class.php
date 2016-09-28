@@ -121,7 +121,7 @@ class JsSdkLogic extends BaseLogic
                 'content'=>$content,
             )
         );
-        $post_str = json_encode($post_arr,JSON_UNESCAPED_UNICODE);
+        $post_str = jsonEncodeEx($post_arr);
         $return = httpRequest($url,'POST',$post_str);
         $return = json_decode($return,true);
     }

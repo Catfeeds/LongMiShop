@@ -121,8 +121,11 @@ class Jssdk extends RelationModel
                                 'content'=>$content,
                             )
                         );
-        $post_str = json_encode($post_arr,JSON_UNESCAPED_UNICODE);        
+        $post_str = jsonEncodeEx($post_arr);
         $return = httpRequest($url,'POST',$post_str);
+        setLogResult("推送");
+        setLogResult($post_str);
+        setLogResult($return);
         $return = json_decode($return,true);        
     }
  
