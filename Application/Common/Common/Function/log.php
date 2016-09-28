@@ -5,10 +5,11 @@
  * 写日志，方便测试
  * 注意：服务器需要开通 fopen 配置
  * @param string $word 要写入日志里的文本内容 默认值：空值
+ * @param string $title 要写入日志里的标题 默认值：空值
  * @param string $fileName
  * @param string $suffix 文件后缀
  */
-function setLogResult($word='' ,$fileName = "base" ,$suffix = "html") {
+function setLogResult($word='' , $title = null ,$fileName = "base" ,$suffix = "html") {
     $logPath = "data/log/";
     if (! file_exists ( $logPath )) {
         mkdir ( $logPath, 0777, true );
@@ -23,6 +24,9 @@ function setLogResult($word='' ,$fileName = "base" ,$suffix = "html") {
 
     $content  = "Run Time:".date("Y-m-d H:i:s",time());
     $content .= $newLine;
+    if( !is_null($title) ){
+        $content .= "【" .  $title . "】:";
+    }
     $content .= $main;
     $content .= $newLine;
     $content .= "==============================";

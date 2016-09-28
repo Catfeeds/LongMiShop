@@ -123,9 +123,7 @@ class JsSdkLogic extends BaseLogic
         );
         $post_str = jsonEncodeEx($post_arr);
         $return = httpRequest($url,'POST',$post_str);
-        setLogResult("推送");
-        setLogResult($post_str);
-        setLogResult($return);
+        setLogResult($return,"推送");
         $return = json_decode($return,true);
     }
 
