@@ -13,7 +13,7 @@
                             <div class="order-status-inner order-process">
                                 <div class="order-status-wrapper">
                                     <div class="order-status-process">
-                                        <span class="status-process" style="width:{$parameter.speed}%"></span>
+                                        <span class="status-process" style="width:{$progressBar.speed}%"></span>
                                         <div class="order-status-text status-first  <if condition='$progressBar[first][done] eq 1'>status-done</if>  <if condition='$progressBar[first][on] eq 1'>status-on</if>" style="width:33%; left:-16.5%">
                                             <h5>{$progressBar.first.name}</h5>
                                             <span class="point"></span>
