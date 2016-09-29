@@ -1527,7 +1527,7 @@ body {
 	float: right;
 	position: absolute;
 	z-index: 1;
-	top: 15px;
+	top: 5px;
 	right: 40px;
 }
 .user_img img {
@@ -1669,3 +1669,23 @@ Load—more a{
 .cut-right span{
 	color: #000;
 }
+.f_index{
+	right: 0px;
+	bottom: 0px;
+	z-index: 998;
+	position: fixed;
+	_position: absolute;
+	left: 40px;
+	_left: 40px;
+
+ _margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop);
+	margin-right: 10px;
+	height: 48px;
+	width: 48px;
+	margin-bottom: 5px;
+}
+.photo_sl{
+	text-align: center;
+	padding-bottom: 20px;
+}
+.OK{}
