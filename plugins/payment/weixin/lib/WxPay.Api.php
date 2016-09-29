@@ -50,21 +50,19 @@ class WxPayApi
 		
 		$inputObj->SetAppid(WxPayConfig::$appid);//公众账号ID
 		$inputObj->SetMch_id(WxPayConfig::$mchid);//商户号
-        setLogResult( $_SERVER , "微信支付_SERVER" , "payment" );
-		$inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']);//终端ip	  
+		$inputObj->SetSpbill_create_ip($_SERVER['SERVER_ADDR']);//终端ip
 		//$inputObj->SetSpbill_create_ip("1.1.1.1");  	    
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 		
 		//签名
 		$inputObj->SetSign();
 		$xml = $inputObj->ToXml();
-		
-		$startTimeStamp = self::getMillisecond();//请求开始时间
+
+        setLogResult($xml,"xml","payment");
+//		$startTimeStamp = self::getMillisecond();//请求开始时间
 		$response = self::postXmlCurl($xml, $url, false, $timeOut);
-        setLogResult( $xml , "微信支付xml" , "payment" );
 		$result = WxPayResults::Init($response);
-        setLogResult( $result , "微信支付result" , "payment" );
-		self::reportCostTime($url, $startTimeStamp, $result);//上报请求花费时间
+//		self::reportCostTime($url, $startTimeStamp, $result);//上报请求花费时间
 		
 		return $result;
 	}
@@ -319,6 +317,9 @@ class WxPayApi
 	public static function report($inputObj, $timeOut = 1)
 	{
 		$url = "https://api.mch.weixin.qq.com/payitil/report";
+        if(!$inputObj->IsUser_ipSet()){
+            $inputObj->SetUser_ip( $_SERVER['SERVER_ADDR'] );
+        }
 		//检测必填参数
 		if(!$inputObj->IsInterface_urlSet()) {
 			throw new WxPayException("接口URL，缺少必填参数interface_url！");
@@ -339,7 +340,8 @@ class WxPayApi
 		
 		$inputObj->SetSign();//签名
 		$xml = $inputObj->ToXml();
-		
+
+        setLogResult($xml,"xml","payment");
 		$startTimeStamp = self::getMillisecond();//请求开始时间
 		$response = self::postXmlCurl($xml, $url, false, $timeOut);
 		return $response;
