@@ -56,7 +56,6 @@ class WxPayDataBase
 		{
     		throw new WxPayException("数组数据异常！");
     	}
-    	
     	$xml = "<xml>";
     	foreach ($this->values as $key=>$val)
     	{
