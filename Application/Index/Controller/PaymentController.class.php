@@ -60,8 +60,6 @@ class PaymentController extends IndexBaseController {
             $code_str = $this->payment->getJSAPI($order,$config_value);
             exit($code_str);
         }
-//        dd($pay_radio);
-//        dd($this->payment);
         $this->assign('code_str', $code_str);
         $this->assign('order_id', $order_id);
         $this->display('payment');  // 分跳转 和不 跳转
