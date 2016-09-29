@@ -1,0 +1,47 @@
+<include file="Public/header"/>
+<body>
+<div class="photo_sl"><img src="__STATIC__/images/sl.png" width="320" height="196">
+    <p>示例</p>
+</div>
+<div class="mui-content">
+    <form id='login-form' class="mui-input-group" action="" method="post">
+        <div class="mui-input-row login_text">
+            <input type="text"  name="exchangeCode" id="exchangeCode" class="login_text" placeholder="输入密码">
+        </div>
+    </form>
+    <div class="login_btn">
+        <a href="#" onclick="exchangeSubmit();">确认</a>
+    </div>
+    <div class="login_btn1">
+        <a href="{:U('Mobile/User/index')}">取消</a>
+    </div>
+</div>
+</body>
+<script>
+    function exchangeSubmit(){
+        var exchangeCodeValue = $('#exchangeCode').val();
+        if( exchangeCodeValue == "" ){
+            alert("请输入密码");
+            return;
+        }
+        $.ajax({
+            type:'post',
+            url:"{:U('Mobile/exchange/checkExchangeCode')}",
+            data:{code:exchangeCodeValue},
+            dataType:'json',
+            success:function(res){
+                if(res.state == 1){
+                    window.location.href = "/index.php?m=Mobile&c=Exchange&a=exchangeInfo&code=" + exchangeCodeValue ;
+                }else{
+                    alert(res.msg);
+                }
+            },
+            error:function(){
+                alert('网络超时');
+            }
+
+        });
+    }
+</script>
+<include file="Public/footer"/>
+</html>
