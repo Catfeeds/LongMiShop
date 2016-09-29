@@ -26,7 +26,7 @@ class ExchangeController extends MobileBaseController {
             exit(json_encode(callback(false,"尚未登录")));
         }
         if( IS_POST ){
-            $code = I( 'exchangeCode' , 0 );
+            $code = I( 'code' , 0 );
             $result = checkCode( $code );
             exit(json_encode($result));
         }

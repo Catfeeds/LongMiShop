@@ -31,7 +31,7 @@
         $.ajax({
             type:'post',
             url:"{:U('Mobile/exchange/createExchangeOrder')}",
-            data:{exchangeCode:exchangeCode,addressId:addressId},
+            data:{code:exchangeCode,addressId:addressId},
             dataType:'json',
             success:function(res){
                 if(res.state == 1){

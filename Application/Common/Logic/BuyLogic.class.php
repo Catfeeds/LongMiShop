@@ -133,11 +133,12 @@ class BuyLogic extends BaseLogic
      * 以下是步骤
      */
 
+
     //商品兑换订单生成第1步 验证数据初始化
     private function _createExchangeOrderStep1(){
 
         $this -> _post_data['address_id']   = $this -> _post_data['addressId'];
-        $result = checkCode( $this -> _post_data['exchangeCode'] );
+        $result = checkCode( $this -> _post_data['code'] );
         if( !callbackIsTrue($result)){
             throw new \Exception( getCallbackMessage($result) );
         }
@@ -180,6 +181,8 @@ class BuyLogic extends BaseLogic
             throw new \Exception('修改订单支付状态失败');
         }
     }
+
+
 
     //退货退款单生成第1步 验证数据初始化
     private function _createServiceOrderStep1(){
@@ -250,6 +253,7 @@ class BuyLogic extends BaseLogic
             throw new \Exception('提交失败！');
         }
     }
+
 
 
     //订单生成第1步 验证数据初始化
@@ -518,27 +522,13 @@ class BuyLogic extends BaseLogic
         }
     }
 
-    /**
-     * 查看订单是否满足条件参加活动
-     */
-    public function getOrderPromotion($order_amount){
-        $parse_type = array('0'=>'满额打折','1'=>'满额优惠金额','2'=>'满额送倍数积分','3'=>'满额送优惠券','4'=>'满额免运费');
-        $now = $this -> nowTime;
-        $prom = M('prom_order')->where("type<2 and end_time>$now and start_time<$now and money<=$order_amount")->order('money desc')->find();
-        $res = array('order_amount'=>$order_amount,'order_prom_id'=>0,'order_prom_amount'=>0);
-        if($prom){
-            if($prom['type'] == 0){
-                $res['order_amount']  = round($order_amount*$prom['expression']/100,2);//满额打折
-                $res['order_prom_amount'] = $order_amount - $res['order_amount'] ;
-                $res['order_prom_id'] = $prom['id'];
-            }elseif($prom['type'] == 1){
-                $res['order_amount'] = $order_amount- $prom['expression'];//满额优惠金额
-                $res['order_prom_amount'] = $prom['expression'];
-                $res['order_prom_id'] = $prom['id'];
-            }
-        }
-        return $res;
-    }
+
+
+
+
+
+
+
 
 
 
@@ -555,6 +545,7 @@ class BuyLogic extends BaseLogic
 
 
     /**
+     * 获取pc微信支付二维码
      * @param $orderId
      * @return mixed
      */
@@ -576,6 +567,32 @@ class BuyLogic extends BaseLogic
         $config_value = parse_url_param($pay_radio);
         $code_str = $payment->get_code($order,$config_value);
         return $code_str;
+    }
+
+
+
+    /**
+     * 查看订单是否满足条件参加活动
+     * @param $order_amount
+     * @return array
+     */
+    public function getOrderPromotion($order_amount){
+        $parse_type = array('0'=>'满额打折','1'=>'满额优惠金额','2'=>'满额送倍数积分','3'=>'满额送优惠券','4'=>'满额免运费');
+        $now = $this -> nowTime;
+        $prom = M('prom_order')->where("type<2 and end_time>$now and start_time<$now and money<=$order_amount")->order('money desc')->find();
+        $res = array('order_amount'=>$order_amount,'order_prom_id'=>0,'order_prom_amount'=>0);
+        if($prom){
+            if($prom['type'] == 0){
+                $res['order_amount']  = round($order_amount*$prom['expression']/100,2);//满额打折
+                $res['order_prom_amount'] = $order_amount - $res['order_amount'] ;
+                $res['order_prom_id'] = $prom['id'];
+            }elseif($prom['type'] == 1){
+                $res['order_amount'] = $order_amount- $prom['expression'];//满额优惠金额
+                $res['order_prom_amount'] = $prom['expression'];
+                $res['order_prom_id'] = $prom['id'];
+            }
+        }
+        return $res;
     }
 
 }
