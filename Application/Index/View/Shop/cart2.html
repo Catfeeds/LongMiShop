@@ -6,83 +6,85 @@
       <div class="in1">收货地址</div>
       <div class="tab_box2">
         <div class="m333"  id="ajax_address">
+        </div>
       </div>
-    </div>
       <div class="inventory_box">
         <div class="in1">优惠券</div>
         <div class="mo1">
           <notempty name = "couponList">
-          <div class="mui-input-row mui-radio mui-left">
-            <input name="coupon" type="radio" value="0"  checked>
-            不使用优惠券<br>
-            <volist name="couponList" id="coupon">
-              <input name="coupon" type="radio" data-type="{$coupon.is_discount}"  data-money="{$coupon.money}" value="{$coupon.id}" class="coupon_redio">
-              {$coupon.name}<br>
-            </volist>
-          </div>
+            <div class="mui-input-row mui-radio mui-left">
+              <input name="coupon" type="radio" value="0"  checked>
+              不使用优惠券<br>
+              <volist name="couponList" id="coupon">
+                <input name="coupon" type="radio" data-type="{$coupon.is_discount}"  data-money="{$coupon.money}" value="{$coupon.id}" class="coupon_redio">
+                {$coupon.name}<br>
+              </volist>
+            </div>
             <else/>
             <p>暂无可使用的优惠券</p>
           </notempty>
         </div>
       </div>
-    <div class="inventory_box">
-      <div class="in1">发票信息</div>
-      <div class="mo1">
-        <div>
-          <p>发票类型：电子发票
-          </p>
-          <div class="mui-input-row mui-radio mui-left" style="float:left"> 发票抬头：
-            <input name="invoice_title" type="radio" value="1" checked='checked' onclick="selectedvalue()">
-            个人
-            <input name="invoice_title" type="radio"  value="2" onclick="selectedvalue()">
-            单位
+      <div class="inventory_box">
+        <div class="in1">发票信息</div>
+        <div class="mo1">
+          <div>
+            <p>发票类型：电子发票
+            </p>
+            <div class="mui-input-row mui-radio mui-left" style="float:left"> 发票抬头：
+              <input name="invoice_title" type="radio" value="1" checked='checked' onclick="selectedvalue()">
+              个人
+              <input name="invoice_title" type="radio"  value="2" onclick="selectedvalue()">
+              单位
+            </div>
           </div>
-        </div>
 
-        <div id="invoice_div" style="display:none"><br/>单位名称：<input name="invoice" type="text" class="pop_text" style="width:280px"></div>
-        <div style="clear:both"></div>
-        <p>发票内容：购买商品明细</p>
-        <span>电子发票是税务局认可的有效收付款凭证，可作为售后服务凭据。</span> <span>电子发票打印后可以用于企业报销。</span> </div>
-    </div>
-    <div class="inventory_box">
-      <div class="in1">清单</div>
-      <div class="tab_box">
-        <table width="100%" border="0" cellpadding="0" cellspacing="5">
-          <tr class="hr">
-            <td colspan="2" align="left" class="td">名称</td>
-            <td width="19%" class="td">单价</td>
-            <td width="9%" class="td">数量</td>
-            <td width="15%" class="td">小计</td>
-          </tr>
-          <volist name="cartList" id="item">
-            <tr>
-              <td width="4%"><div class="img"><img src="{$item['goods_id']|goods_thum_images=92,92}" width="92" height="92"></div></td>
-              <td width="53%">{: $item['goods_name']}</td>
-              <td align="center">￥{: $item['goods_price']}</td>
-              <td align="center">{: $item['goods_num']}</td>
-              <td align="center">￥{: $item['goods_price'] * $item['goods_num']}</td>
+          <div id="invoice_div" style="display:none"><br/>单位名称：<input name="invoice" type="text" class="pop_text" style="width:280px"></div>
+          <div style="clear:both"></div>
+          <p>发票内容：购买商品明细</p>
+          <span>电子发票是税务局认可的有效收付款凭证，可作为售后服务凭据。</span> <span>电子发票打印后可以用于企业报销。</span> </div>
+      </div>
+      <div class="inventory_box">
+        <div class="in1">清单</div>
+        <div class="tab_box">
+          <table width="100%" border="0" cellpadding="0" cellspacing="5">
+            <tr class="hr">
+              <td colspan="2" align="left" class="td">名称</td>
+              <td width="19%" class="td">单价</td>
+              <td width="9%" class="td">数量</td>
+              <td width="15%" class="td">小计</td>
             </tr>
-          </volist>
+            <volist name="cartList" id="item">
+              <if condition = "$item['selected'] == 1" >
+                <tr>
+                  <td width="4%"><div class="img"><img src="{$item['goods_id']|goods_thum_images=92,92}" width="92" height="92"></div></td>
+                  <td width="53%">{: $item['goods_name']}</td>
+                  <td align="center">￥{: $item['goods_price']}</td>
+                  <td align="center">{: $item['goods_num']}</td>
+                  <td align="center">￥{: $item['goods_price'] * $item['goods_num']}</td>
+                </tr>
+              </if>
+            </volist>
 
-          <tr>
-            <td colspan="2">&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td></td>
-          </tr>
-        </table>
-      </div>
-      <div class="tab_box1">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td width="17%">&nbsp;</td>
-            <td width="70%"><div class="mo">应付金额  ￥<i id="total_price">{: $total_price}</i><input name="total_price" type="hidden" value="{: $total_price}"></div></td>
-            <td width="13%"><div class="m4_btn"><a href="javascript:void(0);" onclick="submit_order()">提交订单</a></div></td>
-          </tr>
-        </table>
+            <tr>
+              <td colspan="2">&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+        <div class="tab_box1">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="17%">&nbsp;</td>
+              <td width="70%"><div class="mo">应付金额  ￥<i id="total_price">{: $total_price}</i><input name="total_price" type="hidden" value="{: $total_price}"></div></td>
+              <td width="13%"><div class="m4_btn"><a href="javascript:void(0);" onclick="submit_order()">提交订单</a></div></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
 
 </form>
 
@@ -108,21 +110,21 @@
   });
 
   //优惠券选择
-$(".coupon_redio").change(['data'],function(){
-  var values = $(this).val();
-  var total_price = parseInt({$total_price});
-  var type = $(this).data('type');
-  var money = parseInt($(this).data('money'));
-  var price = $('#total_price');
-  var price_money = 0;
-  if(type==1){
-    price_money = (money /100) * total_price;
-  }else{
-    price_money = total_price - money;
-  }
-  $('#total_price').html(price_money);
+  $(".coupon_redio").change(['data'],function(){
+    var values = $(this).val();
+    var total_price = parseInt({$total_price});
+    var type = $(this).data('type');
+    var money = parseInt($(this).data('money'));
+    var price = $('#total_price');
+    var price_money = 0;
+    if(type==1){
+      price_money = (money /100) * total_price;
+    }else{
+      price_money = total_price - money;
+    }
+    $('#total_price').html(price_money);
 
-});
+  });
 
   /*
    * ajax 获取当前用户的收货地址列表
