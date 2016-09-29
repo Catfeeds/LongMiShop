@@ -103,6 +103,8 @@ class OrderLogic extends BaseLogic
         if(!$row){
             return callback(false,'操作失败','');
         }
+        //订单数量加回库存
+        minus_stock($orderId,$stockBuildup = 1);
         return callback(true,'操作成功','');
 
     }
