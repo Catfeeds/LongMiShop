@@ -508,6 +508,7 @@ class WxPayApi
 		try{
 			self::report($objInput);
 		} catch (WxPayException $e){
+            setLogResult( $e -> errorMessage() , "微信支付" , "payment" );
 			//不做任何处理
 		}
 	}
