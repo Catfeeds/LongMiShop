@@ -675,3 +675,20 @@ function jsonEncodeEx($value)
         return json_encode($value, JSON_UNESCAPED_UNICODE);
     }
 }
+
+
+/**
+ * 手机端吐司提示
+ * @param $jumpUrl
+ * @param null $message
+ * @param null $error
+ */
+function mobileJumpToast( $jumpUrl , $message = null , $error = null ){
+    if( !is_null($message) ){
+        session( "mobileMessage" , $message );
+    }
+    if( !is_null($error) ){
+        session( "mobileMessage" , $error );
+    }
+    header("Location: ".$jumpUrl);
+}

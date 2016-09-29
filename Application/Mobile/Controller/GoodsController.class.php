@@ -32,6 +32,8 @@ class GoodsController extends MobileBaseController {
      * 分类列表显示
      */
     public function categoryList(){
+        $goods_category_tree = getGoodsCategoryTree();
+        $this->assign('goods_category_tree', $goods_category_tree);
         $this->display();
     }
 

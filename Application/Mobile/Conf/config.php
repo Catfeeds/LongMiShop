@@ -16,7 +16,7 @@ return array(
 //			'Goods:ajaxComment'=>array('{:module}_{:controller}_{:action}_{goods_id}_{commentType}_{p}',MY_CACHE_TIME),  // 商品评论页静态缓存 3秒钟
 	),
 	//默认错误跳转对应的模板文件
-	'TMPL_ACTION_ERROR' => 'Public:tpmsg',
+	'TMPL_ACTION_ERROR' => 'Public:message',
 	//默认成功跳转对应的模板文件
-	'TMPL_ACTION_SUCCESS' => 'Public:tpmsg',
+	'TMPL_ACTION_SUCCESS' => 'Public:message',
 );
