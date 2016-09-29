@@ -223,7 +223,8 @@
 //                layer.msg('没有库存了', {icon: 2}); //alert('库存仅剩 '+store_count+' 件');
             }
         }
-        $("#goods_price").html(goods_price * goods_num); // 变动价格显示
+        var moneyPri = goods_price * goods_num;
+        $("#goods_price").html(moneyPri.toFixed(2)); // 变动价格显示
     }
 
     /**
