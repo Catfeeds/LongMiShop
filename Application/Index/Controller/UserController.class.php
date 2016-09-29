@@ -376,6 +376,9 @@ class UserController extends IndexBaseController {
         if(IS_POST){ //修改绑定手机
             $mobile = I('post.mobile');
             $code = I('post.code');
+            if($mobile == $user_info['mobile']){
+                $this->error('修改手机和原手机一致');exit;
+            }
             $info = $userLogic->sms_code_verify($mobile,$code,$this->session_id);
             if($info['status'] == 1){
                 $where['mobile'] = $mobile;
