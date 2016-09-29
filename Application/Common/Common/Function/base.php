@@ -692,3 +692,21 @@ function mobileJumpToast( $jumpUrl , $message = null , $error = null ){
     }
     header("Location: ".$jumpUrl);
 }
+
+/**
+ * 地址跳转
+ *
+ */
+function addressTheJump($way = null){
+    if(empty($way)){
+        return cookie('skip_url');
+    }
+    if($way == 'cart2'){
+        $urlJump = 'Cart/'.$way;
+    }else if($way == 'edit_details'){
+        $urlJump ='User/'.$way;
+    }else if($way == 'exchangeInfo' ){
+        $urlJump = 'Exchange/'.$way;
+    }
+    cookie('skip_url',$urlJump);
+}
