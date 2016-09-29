@@ -49,12 +49,12 @@
             <notempty name="couponList">
                 <div class="mui-input-row mui-radio mui-left">
                     <label>不使用优惠券</label>
-                    <input name="coupon" type="radio" value="0" checked>
+                    <input name="coupon" type="radio" value="0" checked class="couponClass" />
                 </div>
                 <foreach name="couponList" item="v"  key="k">
                     <div class="mui-input-row mui-radio mui-left">
                         <label>{$v['name']}</label>
-                        <input name="coupon" type="radio" value="{$v['id']}">
+                        <input name="coupon" type="radio" value="{$v['id']}" class="couponClass" />
                     </div>
                 </foreach>
                 <else/>
@@ -66,7 +66,8 @@
     </div>
 
     <div class="site_txt">运费<span>￥{$carriage_sum}</span></div>
-    <div class="site_txt">合计<span>￥{$total_price.total_fee}</span></div>
+    <div class="site_txt">优惠金额<span id="privilege">￥0</span></div>
+    <div class="site_txt">合计<span id="total_fee">￥{$total_price.total_fee}</span></div>
     <div style="height:60px"></div>
     <div class="com_d">
         <div class="com_d_r">
@@ -91,7 +92,37 @@
 </form>
 </body>
 <script>
-    $(function(){
+
+    $(".couponClass").change(['Data'],function(){
+        var couponId = $(this).val();
+        var money = {$total_price.total_fee};
+        if(couponId != 0){
+            $.ajax({
+               type:'post',
+               url:'/index.php?m=Mobile&c=Cart&a=ajaxCoupon',
+               data:{couponId:couponId,money:money},
+               dataType:'json',
+               success:function(res){
+                    if(res.state == 1){
+                        $('#total_fee').text('￥'+res.data.money);
+                        $('#privilege').text('￥'+res.data.privilege);
+                    }else{
+                        alert(res.msg);
+                        $('#total_fee').text('￥'+money);
+                        $('#privilege').text('￥'+0);
+                    }
+               },
+               error:function(){
+                alert('网络超时');
+               }
+
+            });
+        }else{
+            $('#total_fee').text('￥'+money);
+            $('#privilege').text('￥'+0);
+        }
+    });
+            $(function(){
 //        $.ajax({
 //            type : "POST",
 //            url:'/index.php?m=Mobile&c=Cart&a=cart3&act=order_price&t='+Math.random(),

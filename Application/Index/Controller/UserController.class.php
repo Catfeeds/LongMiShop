@@ -111,8 +111,10 @@ class UserController extends IndexBaseController {
                 if( !empty($data['mobile']) ){
                     $data['mobile_validated'] = 1 ;
                     $username = $data['mobile'];
+                    $data['nickname'] = $data['mobile'];
                 }else{
                     $username = $data['email'];
+                    $data['nickname'] = $data['email'];
                 }
                 $res = M('users')->add($data);
                 if($res){
