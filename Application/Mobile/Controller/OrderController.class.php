@@ -43,7 +43,7 @@ class OrderController extends MobileBaseController {
         if( $this -> user['user_money'] < $orderInfo['order_amount']  ){
             exit(json_encode(callback(false, "余额不足" )));
         }
-        if( accountLog($this -> user_id,-$orderInfo['order_amount'],0,"支付,余额支付{$orderInfo['order_amount']}元,订单号【{$orderInfo['order_sn']}】")){
+        if( accountLog($this -> user_id,-$orderInfo['order_amount'],0,"下单消费")){
             if( update_pay_status($orderInfo['order_sn']) ) {
                 $condition = array(
                     "order_id" => $orderInfo['order_id'],
