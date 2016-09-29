@@ -165,6 +165,22 @@ function sendWeChatMessage( $openid , $type , $data ){
         return false;
     }
     $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
-    $jsSdkLogic->push_msg( $openid , $messageArray[$type] );
+    $jsSdkLogic -> push_msg( $openid , $messageArray[$type] );
     return true;
+}
+
+
+/**
+ * 根据用户信息发微信推送
+ * @param $userInfo
+ * @param $type
+ * @param $data
+ * @return bool
+ */
+function sendWeChatMessageUseUserInfo( $userInfo , $type , $data ){
+    // 如果有微信公众号 则推送一条消息到微信
+    if( isWeChatUser( $userInfo['oauth'] )) {
+        return sendWeChatMessage( $userInfo['openid'] , $type , $data  );
+    }
+    return false;
 }

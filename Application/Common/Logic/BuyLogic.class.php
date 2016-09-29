@@ -430,16 +430,7 @@ class BuyLogic extends BaseLogic
         }
 
 
-
-        // 如果有微信公众号 则推送一条消息到微信
-        $user = $this -> user;
-        if( isWeChatUser( $user['oauth'] )) {
-            $messageData = array(
-                "orderSn" => $order['order_sn'],
-            );
-            sendWeChatMessage( $user['openid'] , "下单" ,$messageData  );
-
-        }
+        sendWeChatMessageUseUserInfo( $this -> user , "下单" , array("orderSn" => $order['order_sn']) );
     }
 
     /**
