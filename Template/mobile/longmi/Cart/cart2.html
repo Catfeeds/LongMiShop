@@ -78,11 +78,11 @@
 
 
     <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
-        <!--<ul class="mui-table-view">-->
-            <!--<li class="mui-table-view-cell">-->
-                <!--<a href="#" onclick="submit_order('balance');">余额支付</a>-->
-            <!--</li>-->
-        <!--</ul>-->
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a href="#" onclick="submit_order('balance');">余额支付</a>
+            </li>
+        </ul>
         <ul class="mui-table-view">
             <li class="mui-table-view-cell">
                 <a href="#" onclick="submit_order('weChat');">微信安全支付</a>
@@ -173,31 +173,41 @@
                     return false;
                 }
                 if( key == "balance"){
-                    location.href = "/index.php?m=Mobile&c=Order&a=toBalancePay&id="+data.data;
+                    toBalancePay(data.data);
                     return false;
                 }
-
-//                if(data.status != '1')
-//                {
-//                    alert(data.msg); //执行有误
-//// 登录超时
-//                    if(data.status == -100)
-//                        location.href ="{:U('Mobile/User/login')}";
-//
-//                    return false;
-//                }
-//// console.log(data);
-//                $("#postFee").text(data.result.postFee); // 物流费
-////            $("#couponFee").text(data.result.couponFee);// 优惠券
-////            $("#balance").text(data.result.balance);// 余额
-////            $("#pointsFee").text(data.result.pointsFee);// 积分支付
-//                $("#payables").text(data.result.payables);// 应付
-////			$("#order_prom_amount").text(data.result.order_prom_amount);// 订单 优惠活动
-//                alert('订单提交成功，跳转支付页面!');
-//                location.href = "/index.php?m=Mobile&c=Cart&a=cart4&order_id="+data.result;
             }
         });
     }
+
+
+
+    function toBalancePay( id ){
+        $.ajax({
+            type:'post',
+            url:"{:U('Mobile/Order/toBalancePay')}",
+            data:{id:id},
+            dataType:'json',
+            success:function(res){
+                if(res.state == 1){
+                    alert(res.msg);
+                    window.location.href = "{:U('Mobile/Order/weChatPaySuccess')}" ;
+                    return
+                }else{
+                    alert(res.msg);
+                    window.location.href = "/index.php?m=Mobile&c=Order&a=order_detail&order_id="+id;
+                    return;
+                }
+            },
+            error:function(){
+                alert('网络超时');
+                window.location.href = "/index.php?m=Mobile&c=Order&a=order_detail&order_id="+id;
+                return;
+            }
+
+        });
+    }
+
 </script>
 
 

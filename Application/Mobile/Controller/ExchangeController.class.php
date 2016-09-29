@@ -34,7 +34,7 @@ class ExchangeController extends MobileBaseController {
     }
 
     public function exchangeInfo(){
-        $code = I( 'exchangeCode' , 0 );
+        $code = I( 'code' , 0 );
         $result = checkCode( $code );
         if( !callbackIsTrue($result) ){
             $this -> error( getCallbackMessage($result) );

@@ -396,3 +396,27 @@ function minus_stock($order_id,$goods_num = null ){
         }
     }
 }
+
+
+/**
+ * 是否在创建订单状态
+ * @param $key
+ * @return bool
+ */
+function isInCreateOrder( $key ){
+    if( $key == "inCreateOrder"){
+        return true;
+    }
+    return false;
+}
+/**
+ * 是否在创建兑换订单状态
+ * @param $key
+ * @return bool
+ */
+function isInCreateExchangeOrder( $key ){
+    if( $key == "inCreateExchangeOrder"){
+        return true;
+    }
+    return false;
+}

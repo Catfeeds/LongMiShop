@@ -5,8 +5,8 @@
  * 重写alert函数
  * @param msg
  */
-function alert(msg){
-     mui.toast(msg);
+function alert( msg ){
+     mui.toast( msg );
 }
 
 
@@ -15,11 +15,10 @@ function alert(msg){
  * @param id
  * @returns {boolean}
  */
-function cancel_order(id){
+function cancel_order( id ){
     if(!confirm("确定取消订单?")){
         return false;
     }
     location.href = "/index.php?m=Mobile&c=Order&a=cancelOrder&id="+id;
 }
-
 
