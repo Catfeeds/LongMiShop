@@ -361,15 +361,21 @@ function setOrderReturnState( $orderInfo , $userId ){
 /**
  * 根据 order_goods 表扣除商品库存
  * @param type $order_id  订单id
+ * @param 订单取消 $goods_num
  */
-function minus_stock($order_id){
+function minus_stock($order_id,$goods_num = null ){
     $orderGoodsArr = M('OrderGoods')->where("order_id = $order_id")->select();
     foreach($orderGoodsArr as $key => $val)
     {
         // 有选择规格的商品
         if(!empty($val['spec_key']))
         {   // 先到规格表里面扣除数量 再重新刷新一个 这件商品的总数量
-            M('SpecGoodsPrice')->where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->setDec('store_count',$val['goods_num']);
+            if(!empty($goods_num)){
+                M('SpecGoodsPrice')->where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->setInc('store_count',$val['goods_num']);
+            }else{
+                M('SpecGoodsPrice')->where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->setDec('store_count',$val['goods_num']);
+            }
+
             refresh_stock($val['goods_id']);
             //更新活动商品购买量
             if($val['prom_type']==1 || $val['prom_type']==2){
@@ -381,7 +387,12 @@ function minus_stock($order_id){
                 }
             }
         }else{
-            M('Goods')->where("goods_id = {$val['goods_id']}")->setDec('store_count',$val['goods_num']); // 直接扣除商品总数量
+            if(!empty($goods_num)){
+                M('Goods')->where("goods_id = {$val['goods_id']}")->setInc('store_count',$val['goods_num']); // 直接增加商品总数量
+            }else{
+                M('Goods')->where("goods_id = {$val['goods_id']}")->setDec('store_count',$val['goods_num']); // 直接扣除商品总数量
+            }
+
         }
     }
 }
