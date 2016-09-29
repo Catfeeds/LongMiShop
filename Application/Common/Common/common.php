@@ -153,33 +153,6 @@ function refresh_stock($goods_id){
     M("Goods")->where("goods_id = $goods_id")->save(array('store_count'=>$store_count)); // 更新商品的总库存
 }
 
-/**
- * 根据 order_goods 表扣除商品库存
- * @param type $order_id  订单id
- */
-function minus_stock($order_id){
-    $orderGoodsArr = M('OrderGoods')->where("order_id = $order_id")->select();
-    foreach($orderGoodsArr as $key => $val)
-    {
-        // 有选择规格的商品
-        if(!empty($val['spec_key']))
-        {   // 先到规格表里面扣除数量 再重新刷新一个 这件商品的总数量
-            M('SpecGoodsPrice')->where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->setDec('store_count',$val['goods_num']);
-            refresh_stock($val['goods_id']);
-            //更新活动商品购买量
-            if($val['prom_type']==1 || $val['prom_type']==2){
-            	$prom = get_goods_promotion($val['goods_id']);
-            	if($prom['is_end']==0){
-            		$tb = $val['prom_type']==1 ? 'flash_sale' : 'group_buy';
-            		M($tb)->where("id=".$val['prom_id'])->setInc('buy_num',$val['goods_num']);
-            		M($tb)->where("id=".$val['prom_id'])->setInc('order_num');
-            	}
-            }
-        }else{
-            M('Goods')->where("goods_id = {$val['goods_id']}")->setDec('store_count',$val['goods_num']); // 直接扣除商品总数量
-        }
-    }
-}
 
 /**
  * 邮件发送

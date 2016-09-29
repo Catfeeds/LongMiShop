@@ -382,13 +382,13 @@ class BuyLogic extends BaseLogic
             $data2['prom_id']            = $val['prom_id']; // 活动id
             $order_goods_id              = M("OrderGoods")->data($data2)->add();
 
-            $goodsInfo = findDataWithCondition("goods" , array('goods_id' => $val['goods_id']) , "store_count");
-            if( $goodsInfo["store_count"] < $val['goods_num']){
-                throw new \Exception('库存不足！');
-            }
+//            $goodsInfo = findDataWithCondition("goods" , array('goods_id' => $val['goods_id']) , "store_count");
+//            if( $goodsInfo["store_count"] < $val['goods_num']){
+//                throw new \Exception('库存不足！');
+//            }
 
-            // 扣除商品库存  扣除库存移到 付完款后扣除
-            M('Goods')->where("goods_id = ".$val['goods_id'])->setDec('store_count',$val['goods_num']); // 商品减少库存
+//            // 扣除商品库存  扣除库存移到 付完款后扣除
+//            M('Goods')->where("goods_id = ".$val['goods_id'])->setDec('store_count',$val['goods_num']); // 商品减少库存
         }
 
         M('Cart')->where("user_id = $user_id and selected = 1")->delete();
@@ -410,6 +410,8 @@ class BuyLogic extends BaseLogic
     private function _createOrderStep5(){
 
         $order = $this -> _post_data['orderData'];
+
+        minus_stock($order["order_id"]);
 
         //改变优惠券状态
         if( $this -> _post_data['useCoupon'] == true &&!empty($this -> _post_data['couponInfo']) ){
