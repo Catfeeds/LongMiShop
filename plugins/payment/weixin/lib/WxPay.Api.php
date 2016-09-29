@@ -57,13 +57,11 @@ class WxPayApi
 		//签名
 		$inputObj->SetSign();
 		$xml = $inputObj->ToXml();
-
-        setLogResult($xml,"xml","payment");
-//		$startTimeStamp = self::getMillisecond();//请求开始时间
+		$startTimeStamp = self::getMillisecond();//请求开始时间
 		$response = self::postXmlCurl($xml, $url, false, $timeOut);
 		$result = WxPayResults::Init($response);
-//		self::reportCostTime($url, $startTimeStamp, $result);//上报请求花费时间
-		
+        setLogResult($result,"微信支付result","payment");
+		self::reportCostTime($url, $startTimeStamp, $result);//上报请求花费时间
 		return $result;
 	}
 	
