@@ -315,6 +315,8 @@ function update_pay_status($order_sn,$pay_status = 1)
 //    update_user_level($order['user_id']);
     // 记录订单操作日志
     logOrder($order['order_id'],'订单付款成功','付款成功',$order['user_id']);
+
+    sendWeChatMessageUseUserId( $order['user_id'] , "支付" , array("orderSn" => $order_sn) );
     //分销设置
 //    M('rebate_log')->where("order_id = {$order['order_id']}")->save(array('status'=>1));
     // 成为分销商条件
