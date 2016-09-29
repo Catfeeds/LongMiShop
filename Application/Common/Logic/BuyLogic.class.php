@@ -18,6 +18,44 @@ class BuyLogic extends BaseLogic
 
 
 
+
+    /**
+     * 兑换订单生成
+     * @return array
+     */
+    public function createExchangeOrder()
+    {
+        $model = new Model();
+        try {
+            $model -> startTrans();
+
+            //第1步 验证数据初始化
+            $this -> _createExchangeOrderStep1();
+//
+//            //第2步 得到购买商品信息
+//            $this -> _createOrderStep2();
+//
+//            //第3步 得到购买相关金额计算等信息
+//            $this -> _createOrderStep3();
+//
+//            //第4步 生成订单
+//            $this -> _createOrderStep4();
+//
+//            //第5步 订单后续处理
+//            $this -> _createOrderStep5();
+
+            throw new \Exception('我是断点！');
+            $model -> commit();
+
+            return callback(true,'',$this -> _post_data['orderData']['order_id']);
+
+        } catch (\Exception $e){
+            $model -> rollback();
+
+            return callback(false, $e->getMessage());
+        }
+    }
+
     /**
      * 订单生成
      * @return array
@@ -96,6 +134,30 @@ class BuyLogic extends BaseLogic
      * 以下是步骤
      */
 
+
+
+    //商品兑换订单生成第1步 验证数据初始化
+    private function _createExchangeOrderStep1(){
+
+        $exchangeCode       = $this -> _post_data['exchangeCode'];
+        $addressId          = $this -> _post_data['addressId'];
+        $result = checkCode( $exchangeCode );
+        if( !callbackIsTrue($result)){
+            throw new \Exception( getCallbackMessage($result) );
+        }
+        if( is_null($this -> userId) ){
+            throw new \Exception('登录超时请重新登录');
+        }
+        $this -> user = findDataWithCondition('users',array("user_id" => $this->userId));
+        if( empty($this -> user) ){
+            throw new \Exception('用户信息出错！');
+        }
+        $this -> _post_data['address'] = findDataWithCondition('user_address',array("address_id" => $addressId));
+        if( empty($this -> _post_data['address'] ) ){
+            throw new \Exception('收货人信息有误！');
+        }
+    }
+
     //退货退款单生成第1步 验证数据初始化
     private function _createServiceOrderStep1(){
         if( is_null($this -> userId) ){
@@ -143,6 +205,7 @@ class BuyLogic extends BaseLogic
             throw new \Exception('已经提交过退货退款申请！');
         }
     }
+
     //退货退款单生成第2步 生成订单
     private function _createServiceOrderStep2(){
         $data = array(
@@ -380,15 +443,9 @@ class BuyLogic extends BaseLogic
             $data2['give_integral']      = $goods['give_integral']; // 购买商品赠送积分
             $data2['prom_type']          = $val['prom_type']; // 0 普通订单,1 限时抢购, 2 团购 , 3 促销优惠
             $data2['prom_id']            = $val['prom_id']; // 活动id
-            $order_goods_id              = M("OrderGoods")->data($data2)->add();
-
-//            $goodsInfo = findDataWithCondition("goods" , array('goods_id' => $val['goods_id']) , "store_count");
-//            if( $goodsInfo["store_count"] < $val['goods_num']){
-//                throw new \Exception('库存不足！');
-//            }
-
-//            // 扣除商品库存  扣除库存移到 付完款后扣除
-//            M('Goods')->where("goods_id = ".$val['goods_id'])->setDec('store_count',$val['goods_num']); // 商品减少库存
+            if( !isSuccessToAddData("order_goods" , $data2) ){
+                throw new \Exception('添加商品失败！');
+            }
         }
 
         M('Cart')->where("user_id = $user_id and selected = 1")->delete();

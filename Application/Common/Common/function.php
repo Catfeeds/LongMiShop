@@ -12,6 +12,7 @@
 @include_once "Function/log.php";
 @include_once "Function/weChat.php";
 @include_once "Function/callback.php";
+@include_once "Function/exchange.php";
 
 function dd($x) {
     echo "<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">";
