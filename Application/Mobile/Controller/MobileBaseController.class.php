@@ -61,23 +61,27 @@ abstract class MobileBaseController extends BaseController {
 
         $this -> public_assign();
     }
-    
+
     /**
-     * 保存公告变量到 smarty中 比如 导航 
-     */   
+     * 保存公告变量到 smarty中 比如 导航
+     */
     public function public_assign()
     {
         //用户上次访问时间
         $push_message_time = push_message_time($this->user_id);
         $this->assign('push_message_time',$push_message_time);
 
-       $goods_category_tree = getGoodsCategoryTree();
-       $this->cateTrre = $goods_category_tree;
-       $this->assign('goods_category_tree', $goods_category_tree);                     
-       $brand_list = M('brand')->cache(true,MY_CACHE_TIME)->field('id,parent_cat_id,logo,is_hot')->where("parent_cat_id>0")->select();
-       $this->assign('brand_list', $brand_list);
+        $mobileMessage = session("mobileMessage");
+        if ( !empty($mobileMessage) ){
+            $this->assign('mobileMessage', $mobileMessage);
+            session( "mobileMessage" , null );
+        }
 
-       $this->assign('lmshop_config', $this -> shopConfig);
+
+//        $brand_list = M('brand')->cache(true,MY_CACHE_TIME)->field('id,parent_cat_id,logo,is_hot')->where("parent_cat_id>0")->select();
+//        $this->assign('brand_list', $brand_list);
+
+        $this->assign('lmshop_config', $this -> shopConfig);
 
     }
 
@@ -92,23 +96,6 @@ abstract class MobileBaseController extends BaseController {
     }
 
 
-
-//
-//    /**
-//     * 操作错误跳转的快捷方法
-//     *
-//     * 重写测试
-//     *
-//     * @access protected
-//     * @param string $message 错误信息
-//     * @param string $jumpUrl 页面跳转地址
-//     * @param mixed $ajax 是否为Ajax方式 当数字时指定跳转时间
-//     * @return void
-//     */
-//    protected function error($message='',$jumpUrl='',$ajax=false) {
-//        $this->redirect($jumpUrl, array('message' => $message), 0);
-//
-//    }
 
 
 
