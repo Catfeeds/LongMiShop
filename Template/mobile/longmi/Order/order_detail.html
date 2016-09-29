@@ -79,11 +79,11 @@
 	</div>
 </div>
 <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
-	<!--<ul class="mui-table-view">-->
-		<!--<li class="mui-table-view-cell">-->
-			<!--<a href="{:U('Mobile/Order/toBalancePay',array('id' => $order_info['order_id']))}">余额支付</a>-->
-		<!--</li>-->
-	<!--</ul>-->
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell">
+			<a href="javascript:void(0);" onclick="toBalancePay('{$order_info.order_id}')" >余额支付</a>
+		</li>
+	</ul>
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
 			<a href="{:U('Mobile/Order/toWeChatPay',array('id' => $order_info['order_id']))}">微信安全支付</a>
@@ -96,5 +96,29 @@
 	</ul>
 </div>
 </body>
+<script>
+
+	function toBalancePay( id ){
+		$.ajax({
+			type:'post',
+			url:"{:U('Mobile/Order/toBalancePay')}",
+			data:{id:id},
+			dataType:'json',
+			success:function(res){
+				if(res.state == 1){
+					alert(res.msg);
+					window.location.href = "{:U('Mobile/Order/weChatPaySuccess')}" ;
+					return
+				}else{
+					alert(res.msg);
+				}
+			},
+			error:function(){
+				alert('网络超时');
+			}
+
+		});
+	}
+</script>
 <include file="Public/footer"/>
 </html>

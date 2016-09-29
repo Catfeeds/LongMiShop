@@ -35,7 +35,8 @@
             dataType:'json',
             success:function(res){
                 if(res.state == 1){
-//                    window.location.href = "/index.php?m=Mobile&c=Exchange&a=exchangeInfo&code=" + exchangeCodeValue ;
+                    alert(res.msg);
+                    window.location.href = "{:U('Mobile/Order/order_list',array('type'=>'WAITSEND'))}" ;
                 }else{
                     alert(res.msg);
                 }

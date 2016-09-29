@@ -14,6 +14,7 @@ class BuyLogic extends BaseLogic
         parent::__construct("config");
         $this -> cartLogic = new \Common\Logic\CartLogic();
         $this -> userId = session(__UserID__);
+        $this -> model = new Model();
     }
 
 
@@ -25,32 +26,30 @@ class BuyLogic extends BaseLogic
      */
     public function createExchangeOrder()
     {
-        $model = new Model();
         try {
-            $model -> startTrans();
+            $this -> status = "inCreateExchangeOrder";
+
+            $this -> model  -> startTrans();
 
             //第1步 验证数据初始化
             $this -> _createExchangeOrderStep1();
-//
-//            //第2步 得到购买商品信息
-//            $this -> _createOrderStep2();
-//
-//            //第3步 得到购买相关金额计算等信息
-//            $this -> _createOrderStep3();
-//
-//            //第4步 生成订单
-//            $this -> _createOrderStep4();
-//
-//            //第5步 订单后续处理
-//            $this -> _createOrderStep5();
 
-            throw new \Exception('我是断点！');
-            $model -> commit();
+            //第2步  得到购买商品信息
+            $this -> _createExchangeOrderStep2();
 
-            return callback(true,'',$this -> _post_data['orderData']['order_id']);
+            //第3步 生成订单
+            $this -> _createExchangeOrderStep3();
+
+            //第4步 订单后续处理
+            $this -> _createExchangeOrderStep4();
+
+//            throw new \Exception('我是断点！');
+            $this -> model  -> commit();
+
+            return callback(true,'兑换成功');
 
         } catch (\Exception $e){
-            $model -> rollback();
+            $this -> model  -> rollback();
 
             return callback(false, $e->getMessage());
         }
@@ -62,9 +61,10 @@ class BuyLogic extends BaseLogic
      */
     public function createOrder()
     {
-        $this -> model = new Model();
 
         try {
+            $this -> status = "inCreateOrder";
+
             $this -> model -> startTrans();
 
             //第1步 验证数据初始化
@@ -102,7 +102,6 @@ class BuyLogic extends BaseLogic
      */
     public function createServiceOrder()
     {
-        $this -> model = new Model();
 
         try {
             $this -> model -> startTrans();
@@ -134,14 +133,11 @@ class BuyLogic extends BaseLogic
      * 以下是步骤
      */
 
-
-
     //商品兑换订单生成第1步 验证数据初始化
     private function _createExchangeOrderStep1(){
 
-        $exchangeCode       = $this -> _post_data['exchangeCode'];
-        $addressId          = $this -> _post_data['addressId'];
-        $result = checkCode( $exchangeCode );
+        $this -> _post_data['address_id']   = $this -> _post_data['addressId'];
+        $result = checkCode( $this -> _post_data['exchangeCode'] );
         if( !callbackIsTrue($result)){
             throw new \Exception( getCallbackMessage($result) );
         }
@@ -152,9 +148,36 @@ class BuyLogic extends BaseLogic
         if( empty($this -> user) ){
             throw new \Exception('用户信息出错！');
         }
-        $this -> _post_data['address'] = findDataWithCondition('user_address',array("address_id" => $addressId));
-        if( empty($this -> _post_data['address'] ) ){
-            throw new \Exception('收货人信息有误！');
+    }
+
+    //商品兑换订单生成第2步 得到购买商品信息
+    private function _createExchangeOrderStep2(){
+        $this -> _post_data['orderGoods'] = getExchangeGoodsList( $this -> _post_data['exchangeCode'] );
+    }
+
+    //商品兑换订单生成第3步 生成订单
+    private function _createExchangeOrderStep3(){
+        //第1步 验证数据初始化
+        $this -> _createOrderStep1();
+
+        //第2步 得到购买商品信息
+        $this -> _createOrderStep2();
+
+        //第3步 得到购买相关金额计算等信息
+        $this -> _createOrderStep3();
+
+        //第4步 生成订单
+        $this -> _createOrderStep4();
+
+        //第5步 订单后续处理
+        $this -> _createOrderStep5();
+    }
+
+    //商品兑换订单生成第4步 订单后续处理
+    private function _createExchangeOrderStep4(){
+        $orderSn = $this -> _post_data['orderData']['order_sn'];
+        if(! update_pay_status( $orderSn ) ){
+            throw new \Exception('修改订单支付状态失败');
         }
     }
 
@@ -274,17 +297,19 @@ class BuyLogic extends BaseLogic
 
     //订单生成第2步 得到购买商品信息
     private function _createOrderStep2(){
-        $cart_count = $this -> cartLogic -> cart_count($this->userId,1);
-        if( $cart_count == 0 ){
-            throw new \Exception('你的购物车没有选中商品！');
-        }
+        if( empty($this -> _post_data['orderGoods']) ){
+            $cart_count = $this -> cartLogic -> cart_count($this->userId,1);
+            if( $cart_count == 0 ){
+                throw new \Exception('你的购物车没有选中商品！');
+            }
 
-        $order_goods = M('cart')->where("user_id = '{$this->userId}' and selected = 1")->select();
-        if(empty($order_goods)){
-            throw new \Exception('商品列表不能为空！');
-        }
+            $order_goods = M('cart')->where("user_id = '{$this->userId}' and selected = 1")->select();
+            if(empty($order_goods)){
+                throw new \Exception('商品列表不能为空！');
+            }
 
-        $this -> _post_data['orderGoods'] = $order_goods;
+            $this -> _post_data['orderGoods'] = $order_goods;
+        }
     }
 
     //订单生成第3步 得到购买相关金额计算等信息
@@ -423,7 +448,7 @@ class BuyLogic extends BaseLogic
 
         $order = M('Order')->where("order_id = $order_id")->find();
 
-        $cartList = M('Cart')->where("user_id = $user_id and selected = 1")->select();
+        $cartList = $this -> _post_data['orderGoods'];
         foreach($cartList as $key => $val)
         {
             $goods = M('goods')->where("goods_id = {$val['goods_id']} ")->find();
@@ -488,8 +513,9 @@ class BuyLogic extends BaseLogic
             }
         }
 
-
-        sendWeChatMessageUseUserInfo( $this -> user , "下单" , array("orderSn" => $order['order_sn']) );
+        if( isInCreateOrder( $this -> status )){
+            sendWeChatMessageUseUserInfo( $this -> user , "下单" , array("orderSn" => $order['order_sn']) );
+        }
     }
 
     /**

@@ -20,6 +20,7 @@ class BaseLogic extends RelationModel
     public          $user                    = null;
     public          $model                   = null;
     protected       $_post_data              = array();
+    protected       $status                  = null;
 
     public function __construct($name = "")
     {
