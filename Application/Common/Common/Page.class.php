@@ -87,11 +87,11 @@ class Page{
 
         //上一页
         $up_row  = $this->nowPage - 1;
-        $up_page = $up_row > 0 ? '<li class="mui-previous"><a href="' . $this->url($up_row) . '">&laquo;</a></li>' : '<li class="mui-previous mui-disabled"><a href="' . $this->url($up_row) . '">&laquo;</a></li>';
+        $up_page = $up_row > 0 ? '<li class="mui-previous"><a href="' . $this->url($up_row) . '">&laquo;</a></li>' : '' ;
 
         //下一页
         $down_row  = $this->nowPage + 1;
-        $down_page = ($down_row <= $this->totalPages) ? '<li class="mui-next" ><a href="' . $this->url($down_row) . '">&raquo;</a></li>' : '<li class="mui-next mui-disabled" ><a href="' . $this->url($down_row) . '">&raquo;</a></li>';
+        $down_page = ($down_row <= $this->totalPages) ? '<li class="mui-next" ><a href="' . $this->url($down_row) . '">&raquo;</a></li>' : '' ;
 
         //第一页
         $the_first = '';
