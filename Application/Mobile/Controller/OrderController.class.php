@@ -31,6 +31,28 @@ class OrderController extends MobileBaseController {
         header("Location: ".$url);
     }
 
+    public function toBalancePay(){
+        $orderId = I("id");
+        if( empty( $this -> user_id ) || empty( $this -> user )  ){
+            $this -> error( "找不到用户" );
+        }
+        $orderInfo = findDataWithCondition( 'order' , array('order_id' => $orderId) );
+        if( empty($orderInfo) ){
+            $this -> error( "找不到订单" );
+        }
+        if( $this -> user['user_money'] < $orderInfo['order_amount']  ){
+            $this -> error( "余额不足" );
+        }
+        if( accountLog($this -> user_id,-$orderInfo['order_amount'],0,"支付,余额支付{$orderInfo['order_amount']}元,订单号【{$orderInfo['order_sn']}】")){
+            if( update_pay_status($orderInfo['order_sn']) ) {
+                $url = U('Mobile/Order/weChatPaySuccess');
+                header("Location: ".$url);
+                exit;
+            }
+        }
+        $this -> error( "支付失败" );
+    }
+
 
     public function weChatPaySuccess(){
         $this->display();
