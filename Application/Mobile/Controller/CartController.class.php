@@ -134,6 +134,8 @@ class CartController extends MobileBaseController {
         $this->display();
     }
 
+
+
     /**
      * ajax 获取订单商品价格 或者提交 订单
      */
@@ -249,6 +251,37 @@ class CartController extends MobileBaseController {
         exit(json_encode(callback(true,"删除成功")));
     }
 
+    /*
+     *ajax计算优惠券
+     *
+     */
+    public function ajaxCoupon(){
+        if(IS_AJAX){
+            $money = I('money'); //总金额
+            $where['id'] = I('couponId');
+            $where['uid'] = $this->user_id;
+            $couponListRes = M('coupon_list')->where($where)->find();
+            if(!empty($couponListRes)){
+                $wheres['id'] = $couponListRes['cid'];
+                $couRes =  M('coupon')->where($wheres)->find();
+                if($couRes['is_discount'] == 1){ //折扣券
+                    $couResMoney = intval($couRes['money']) / 100;
+                    $moneyRes = $money * $couResMoney;
+                    $privilege = $money - $moneyRes;
+                    exit(json_encode(callback(true,"计算成功",array('money'=>$moneyRes,'privilege'=>$privilege))));
+                }else{
+                   $moneyRes = $money - intval($couRes['money']);
+                   $privilege = $money - $moneyRes;
+                   exit(json_encode(callback(true,"计算成功",array('money'=>$moneyRes,'privilege'=>$privilege))));
+                }
+            }else{
+               exit(json_encode(callback(false,"没有此优惠券",array('res'=>$couponListRes)))); 
+            }
+            
+        }
+        // 
+        
+    }
 
 
 
