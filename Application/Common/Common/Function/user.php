@@ -12,7 +12,7 @@ function getUserHeadImg( $userId = null ){
     $condition = array(
         "user_id" => $userId,
     );
-    $userInfo = M('users') -> where($condition) -> field("head_pic") -> find();
+    $userInfo = findDataWithCondition('users',$condition,"head_pic");
     return $userInfo["head_pic"];
 }
 
@@ -252,7 +252,10 @@ function relieveBinding( $userId ){
  * @param $key
  * @return bool
  */
-function isWeChatUser( $key ){
+function isWeChatUser( $key = null ){
+    if( is_null($key) ){
+        return false;
+    }
     if( $key == "weixin" || $key == "weChat" || $key == "WeChat" ){
         return true;
     }

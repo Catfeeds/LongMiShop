@@ -147,17 +147,19 @@ function sendWeChatMessage( $openid , $type , $data ){
         "下单",
         "支付",
         "发货",
+        "完成",
     );
     if( ! in_array( $type , $typeArray )){
         return false;
     }
-    $messageArray = array(
 //        "下单" => __WeChatMessage_CreateOrder__,
 //        "支付" => __WeChatMessage_Payment__,
 //        "发货" => __WeChatMessage_Delivery__,
-        "下单" =>  "你刚刚下了一笔订单:{$data['orderSn']} 尽快支付,过期失效!",
-        "支付" =>  "你刚刚下了一笔订单:{$data['orderSn']} 尽快支付,过期失效!",
-        "发货" =>  "你刚刚下了一笔订单:{$data['orderSn']} 尽快支付,过期失效!",
+    $messageArray = array(
+        "下单" =>  "您刚刚下了一笔订单【{$data['orderSn']}】尽快支付,过期失效!",
+        "支付" =>  "您的订单【{$data['orderSn']}】已支付,我们会尽快发货!",
+        "发货" =>  "您的订单【{$data['orderSn']}】已发货,物流单号【{$data['logisticsSn']}】!",
+        "完成" =>  "您的订单【{$data['orderSn']}】已确认收货，感谢您的购买!",
 
     );
     $weChatConfig = M('wx_user')->find();
@@ -183,4 +185,22 @@ function sendWeChatMessageUseUserInfo( $userInfo , $type , $data ){
         return sendWeChatMessage( $userInfo['openid'] , $type , $data  );
     }
     return false;
+}
+
+/**
+ * 根据用户 ID 发微信推送
+ * @param $userId
+ * @param $type
+ * @param $data
+ * @return bool
+ */
+function sendWeChatMessageUseUserId( $userId , $type , $data ){
+    $condition = array(
+        "user_id" => $userId,
+    );
+    $userInfo = findDataWithCondition('users',$condition);
+    if( empty($userInfo) ){
+        return false;
+    }
+    return sendWeChatMessageUseUserInfo( $userInfo , $type , $data );
 }

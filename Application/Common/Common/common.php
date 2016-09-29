@@ -642,8 +642,9 @@ function get_user_default_address($user_id){
         $row = M('order')->where(array('order_id'=>$id))->save($data);
         if(!$row)        
             return array('status'=>-3,'msg'=>'操作失败');
-        
-        order_give($order);// 调用送礼物方法, 给下单这个人赠送相应的礼物
+
+        sendWeChatMessageUseUserId( $order['user_id'] , "成功" , array("orderSn" => $order['order_sn']) );
+//        order_give($order);// 调用送礼物方法, 给下单这个人赠送相应的礼物
         
         //分销设置
         M('rebate_log')->where("order_id = $id")->save(array('status'=>2));

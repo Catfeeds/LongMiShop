@@ -81,6 +81,11 @@
 <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
+			<a href="{:U('Mobile/Order/toBalancePay',array('id' => $order_info['order_id']))}">余额支付</a>
+		</li>
+	</ul>
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell">
 			<a href="{:U('Mobile/Order/toWeChatPay',array('id' => $order_info['order_id']))}">微信安全支付</a>
 		</li>
 	</ul>

@@ -21,10 +21,7 @@ class IndexController extends IndexBaseController {
     }
 
     public function test(){
-        $messageData = array(
-            "orderSn" => "4236842368",
-        );
-        sendWeChatMessage( $_SESSION['openid'] , "下单" ,$messageData  );
+       dd($_SERVER);
 
     }
 }
