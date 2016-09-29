@@ -540,8 +540,6 @@ class UserController extends MobileBaseController {
                 $where['user_id'] =  $this->user_id;
                 $res = M('users')->save($where);
                 if($res){
-                    session_unset();
-                    session_destroy();
                   $this->success('修改成功',U('Mobile/User/userinfo'));
                 }else{
                     $this->error('修改失败');
