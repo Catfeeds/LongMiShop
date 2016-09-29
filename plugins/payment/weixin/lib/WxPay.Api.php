@@ -316,12 +316,9 @@ class WxPayApi
 	public static function report($inputObj, $timeOut = 1)
 	{
 		$url = "https://api.mch.weixin.qq.com/payitil/report";
-        setLogResult($inputObj->GetUser_ip(),"333","payment");
         if(!$inputObj->IsUser_ipSet()){
             $inputObj->SetUser_ip( $_SERVER['SERVER_ADDR'] );
-            setLogResult($inputObj->GetUser_ip(),"222","payment");
         }
-        setLogResult($inputObj->GetUser_ip(),"33344","payment");
 		//检测必填参数
 		if(!$inputObj->IsInterface_urlSet()) {
 			throw new WxPayException("接口URL，缺少必填参数interface_url！");
@@ -342,7 +339,8 @@ class WxPayApi
 		
 		$inputObj->SetSign();//签名
 		$xml = $inputObj->ToXml();
-		
+
+        setLogResult($xml,"xml","payment");
 		$startTimeStamp = self::getMillisecond();//请求开始时间
 		$response = self::postXmlCurl($xml, $url, false, $timeOut);
 		return $response;
