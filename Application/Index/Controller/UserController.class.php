@@ -20,7 +20,6 @@ class UserController extends IndexBaseController {
 
     public function _initialize() {
         parent::_initialize();
-        $this->users = M('users');
 
     }
 
@@ -340,13 +339,13 @@ class UserController extends IndexBaseController {
             }else if($initial_pwd == $password){
                 $this->error('新密码和旧密码一致',U('/Index/User/edit_pwd'));exit;
             }
-            $user = $this->users->field('password')->where("user_id = '".$this->user_id."'")->find();
+            $user = M('users')->field('password')->where("user_id = '".$this->user_id."'")->find();
             if(encrypt($initial_pwd) != $user['password']){
                 $this->error('旧密码错误',U('/Index/User/edit_pwd'));exit;
             }else{
                 $data['password'] = encrypt($password);
                 $data['user_id'] = $this->user_id;
-                $res = $this->users->save($data);
+                $res = M('users')->save($data);
                 if($res){
                     $this->success('修改成功',U('Index/User/index'));
                 }else{
@@ -382,7 +381,7 @@ class UserController extends IndexBaseController {
                 $where['mobile'] = $mobile;
                 $where['mobile_validated'] = 1;
                 $where['user_id'] =  $this->user_id;
-                $res = $this->users->save($where);
+                $res = M('users')->save($where);
                 $res ? $this->success('绑定成功',U('Index/User/info')) :  $this->error('绑定失败');
             }else{
                 $this->error($info['msg']);
@@ -451,7 +450,7 @@ class UserController extends IndexBaseController {
         if(IS_POST){
             $phone = I('phone');
             $where['mobile'] = $phone;
-            $phone_res  = $this->users->field('user_id,mobile')->where($where)->find();
+            $phone_res  = M('users')->field('user_id,mobile')->where($where)->find();
 
             if(empty($phone_res)){ //可以更换
                 $res = 1;
@@ -543,7 +542,7 @@ class UserController extends IndexBaseController {
         }else if(!empty($email_res)){
             $data['email_validated'] = 1;
             $data['user_id'] = $this->user_id;
-            $res = $this->users->save($data); //修改验证字段
+            $res = M('users')->save($data); //修改验证字段
             if($res){
                 M('email_log')->where($where)->delete();
                 $this->success('验证成功',U('Index/User/info'));
@@ -566,7 +565,7 @@ class UserController extends IndexBaseController {
 
             $data['email'] = I('email');
             $where['email'] = I('email');
-            $find_res = $this->users->field('user_id,email')->where($where)->find();
+            $find_res = M('users')->field('user_id,email')->where($where)->find();
             if($find_res['user_id'] == session(__UserID__) ){
                 $this->error('修改邮箱和原邮箱一致');exit;
             }else if(!empty($find_res)){
@@ -574,7 +573,7 @@ class UserController extends IndexBaseController {
             }else{
                 $data['user_id'] = $this->user_id;
                 $data['email_validated'] = 0;
-                $res = $this->users->save($data);
+                $res = M('users')->save($data);
                 if($res){
                     $info = time();
                     session('send_email_time',$info);
