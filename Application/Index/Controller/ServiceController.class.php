@@ -132,7 +132,7 @@ class ServiceController extends IndexBaseController {
                 $this -> error( $result['msg'] );
                 exit;
             }
-            $this -> success( $result['msg'] );
+            $this -> success( $result['msg'] ,U('Index/Service/returnGoodsList'));
             exit;
         }
         $id = I('get.id');
