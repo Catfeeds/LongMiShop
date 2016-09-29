@@ -50,6 +50,7 @@ class WxPayApi
 		
 		$inputObj->SetAppid(WxPayConfig::$appid);//公众账号ID
 		$inputObj->SetMch_id(WxPayConfig::$mchid);//商户号
+        setLogResult( $_SERVER , "微信支付_SERVER" , "payment" );
 		$inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']);//终端ip	  
 		//$inputObj->SetSpbill_create_ip("1.1.1.1");  	    
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
@@ -60,7 +61,9 @@ class WxPayApi
 		
 		$startTimeStamp = self::getMillisecond();//请求开始时间
 		$response = self::postXmlCurl($xml, $url, false, $timeOut);
+        setLogResult( $xml , "微信支付xml" , "payment" );
 		$result = WxPayResults::Init($response);
+        setLogResult( $result , "微信支付result" , "payment" );
 		self::reportCostTime($url, $startTimeStamp, $result);//上报请求花费时间
 		
 		return $result;
