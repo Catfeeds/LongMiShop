@@ -17,8 +17,8 @@ class RecommendController extends MobileBaseController {
     public function index(){
         $inviteData = getGiftInfo( $this -> shopConfig['invite_value'] , $this -> shopConfig['invite'] );
         $beInviteData = getGiftInfo( $this -> shopConfig['invited_to_value'] , $this -> shopConfig['invited_to'] );
-        $this -> assign('inviteData',$inviteData);
-        $this -> assign('beInviteData',$beInviteData);
+        $this -> assign('inviteData',getCallbackData($inviteData));
+        $this -> assign('beInviteData',getCallbackData($beInviteData));
         $this -> assign('number', getInviteNumber($this ->user) );
         $this -> display();
     }
@@ -55,8 +55,8 @@ class RecommendController extends MobileBaseController {
         }
         $inviteData = getGiftInfo( $this -> shopConfig['invite_value'] , $this -> shopConfig['invite'] );
         $beInviteData = getGiftInfo( $this -> shopConfig['invited_to_value'] , $this -> shopConfig['invited_to'] );
-        $this -> assign('inviteData',$inviteData);
-        $this -> assign('beInviteData',$beInviteData);
+        $this -> assign('inviteData',getCallbackData($inviteData));
+        $this -> assign('beInviteData',getCallbackData($beInviteData));
         $this -> assign('isNewUser',$isNewUser);
         $this -> display();
     }
