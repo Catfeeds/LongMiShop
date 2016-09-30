@@ -500,7 +500,9 @@ class BuyLogic extends BaseLogic
 
         $order = $this -> _post_data['orderData'];
 
-        minus_stock($order["order_id"]);
+        if( $this -> status == "inCreateOrder" ){
+            minus_stock($order["order_id"]);
+        }
 
         //改变优惠券状态
         if( $this -> _post_data['useCoupon'] == true &&!empty($this -> _post_data['couponInfo']) ){
