@@ -11,11 +11,14 @@ class SystemController extends BaseController{
 	{          
 		/*配置列表*/
 		$group_list = array('shop_info'=>'网站信息','basic'=>'基本设置','sms'=>'短信设置','shopping'=>'购物流程设置','smtp'=>'邮件设置','water'=>'水印设置','prize'=>'邀请奖品');		//,'distribut'=>'分销设置'
-		$this->assign('group_list',$group_list);
+		$coupon_list = M('coupon')->select();
+        $this->assign('coupon_list',$coupon_list);
+        $this->assign('group_list',$group_list);
 		$inc_type =  I('get.inc_type','shop_info');
 		$this->assign('inc_type',$inc_type);
 		$this->assign('config',tpCache($inc_type));//当前配置项
                 C('TOKEN_ON',false);
+
 		$this->display($inc_type);
 	}
 	
@@ -25,6 +28,12 @@ class SystemController extends BaseController{
 	public function handle()
 	{
 		$param = I('post.');
+        $param['invite_value'] = $param['invite'] == 1 ? $param['invite_value_select'] : $param['invite_value_input'];
+        $param['invited_to_value'] = $param['invited_to'] == 1 ? $param['invited_to_value_select'] : $param['invited_to_value_input'];
+        unset($param['invite_value_select']);
+        unset($param['invite_value_input']);
+        unset($param['invited_to_value_select']);
+        unset($param['invited_to_value_input']);
 		$inc_type = $param['inc_type'];
 		//unset($param['__hash__']);
 		unset($param['inc_type']);
