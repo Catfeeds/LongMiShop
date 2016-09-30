@@ -42,6 +42,7 @@ class RecommendController extends MobileBaseController {
             if(isSuccessToAddData( "invite_list" , $addData )){
                 giveBeInviteGift($this ->user_id);
             }
+            $this -> assign('inviteUserInfo',findDataWithCondition( "users",array("user_id"=>$inviteUserId) , " nickname" ));
             $isNewUser = true;
         }
         $this -> assign('isNewUser',$isNewUser);
