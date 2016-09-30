@@ -256,6 +256,7 @@ class WechatController extends BaseController {
         $wechat = M('wx_user')->find();
         if(IS_POST){
             $edit = I('get.edit');
+
             $add['keyword'] =  I('post.keyword');
             $add['token'] =  $wechat['token'];
             $add['text'] = I('post.text');
@@ -271,9 +272,11 @@ class WechatController extends BaseController {
             }else{
                 //编辑模式
                 $id = I('post.kid');
+
                 $model = M('wx_keyword')->where(array('id'=>$id));
 
                 $data = $model->find();
+
                 if($data){
                     $update = $model->create($_POST);
                     $update['type'] = 'TEXT';
