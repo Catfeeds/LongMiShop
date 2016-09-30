@@ -276,5 +276,14 @@ function getInviteList( $userId ){
         }
     }
     return $list;
-
 }
+
+/**
+ * 获取邀请人数量
+ * @param $userId
+ * @return mixed
+ */
+function getInviteNumber( $userId ){
+    return M('invite_list') -> where(array("parent_user_id" => $userId)) -> count();
+}
+

@@ -15,7 +15,7 @@ class RecommendController extends MobileBaseController {
     }
 
     public function index(){
-//        $list = getInviteNumber($this ->user);
+        $this -> assign('number', getInviteNumber($this ->user) );
         $this -> display();
     }
 
