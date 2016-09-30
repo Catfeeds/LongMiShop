@@ -3,12 +3,11 @@
 <div class="pay">
     <div class="pay-OK">兑换成功</div>
     <div class="pay-order">
-            <p style="text-align:center">
-                商品：
                 <volist name="goodsList" id="goodsItem">
-                    {$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}
+                    <p style="text-align:center">
+        {$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}
+                    </p>
                 </volist>
-            </p>
     </div>
 </div>
 
