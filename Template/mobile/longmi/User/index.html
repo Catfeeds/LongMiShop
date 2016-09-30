@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-	<title>{$lmshop_config['shop_info_store_title']}</title>
-	<meta http-equiv="keywords" content="{$lmshop_config['shop_info_store_keyword']}" />
-	<meta name="description" content="{$lmshop_config['shop_info_store_desc']}" />
-	<script src="__STATIC__/js/mui.min.js"></script>
-	<script src="__STATIC__/js/TouchSlide.js"></script>
-	<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
-	<link href="__STATIC__/css/css.css" rel="stylesheet" />
-	<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
-</head>
+<include file="Public/header"/>
 <body>
 
 <div class="top_box">
@@ -28,7 +15,7 @@
 		</li>
 		<li>
 			<a href="{:U('Mobile/User/account')}">
-				<p>余额</p><span>￥{$user['user_money']}</span>
+				<p>余额</p><span>{$user['user_money']}</span>
 			</a>
 		</li>
 		<li class="none">
@@ -63,10 +50,11 @@
 		<li><a href="{:U('Mobile/User/collect_list')}">收藏</a></li>
 		<li><a href="{:U('Mobile/User/account')}">钱包</a></li>
 		<li><a href="{:U('Mobile/User/coupon')}">优惠券</a></li>
-		<li><a href="{:U('User/points')}">积分</a></li>
-		<li><a href="{:U('Exchange/exchange')}">兑换码</a></li>
+		<li><a href="{:U('Mobile/User/points')}">积分</a></li>
+		<li><a href="{:U('Mobile/Exchange/exchange')}">兑换码</a></li>
+		<li><a href="{:U('Mobile/Recommend/index')}">推荐有奖</a></li>
 		<if condition = " !isWeChatBrowser() " >
-			<li><a href="{:U('User/logout')}">注销</a></li>
+			<li><a href="{:U('Mobile/User/logout')}">注销</a></li>
 		</if>
 	</ul>
 </div>
