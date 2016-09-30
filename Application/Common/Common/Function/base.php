@@ -714,3 +714,14 @@ function addressTheJump($way = null){
     }
     cookie('skip_url',$urlJump);
 }
+
+/**
+ * 随机数生成
+ * @param int $length
+ * @return int
+ */
+function generateCode($length = 4) {
+    $min = pow(10 , ($length - 1));
+    $max = pow(10, $length) - 1;
+    return rand($min, $max);
+}
