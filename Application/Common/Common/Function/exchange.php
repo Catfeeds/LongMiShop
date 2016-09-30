@@ -6,7 +6,6 @@
  * @return array
  */
 function checkCode( $code  ){
-    return callback( true , "可用兑换码" );
     if( !empty($code) ){
         $condition = array(
             "gift_coupon_id"    =>  array('neq',0),

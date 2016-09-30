@@ -49,8 +49,6 @@ class ExchangeController extends MobileBaseController {
             $this -> error( "商品获取失败" );
             exit;
         }
-        $this -> error( "商品获取失败" );
-        exit;
         $region_list = get_region_list();
         $this->assign('region_list',$region_list);
         $address = getCurrentAddress( $this->user_id , I('address_id',null) );
