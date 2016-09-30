@@ -26,15 +26,7 @@ class BaseController extends Controller
      */
     private function _publicAssign()
     {
-        $shopConfig = array();
-        $config = M('config')->cache(true,MY_CACHE_TIME)->select();
-        foreach($config as $k => $v)
-        {
-            if($v['name'] == 'hot_keywords'){
-                $shopConfig['hot_keywords'] = explode('|', $v['value']);
-            }
-            $shopConfig[$v['inc_type'].'_'.$v['name']] = $v['value'];
-        }
+        $shopConfig = getShopConfig();
         $this -> shopConfig = $shopConfig;
         $this->assign('shopConfig', $shopConfig);
     }

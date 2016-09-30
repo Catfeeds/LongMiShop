@@ -14,6 +14,7 @@
 @include_once "Function/callback.php";
 @include_once "Function/coupon.php";
 @include_once "Function/exchange.php";
+@include_once "Function/gift.php";
 
 function dd($x) {
     echo "<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">";

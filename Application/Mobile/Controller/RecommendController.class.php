@@ -7,7 +7,7 @@ class RecommendController extends MobileBaseController {
     function exceptAuthActions()
     {
         return array(
-            'index',
+            'share',
         );
     }
     public function  _initialize() {
@@ -19,13 +19,31 @@ class RecommendController extends MobileBaseController {
     }
 
     public function recommendList(){
-
-        $this -> assign('list',"");
+        $list = getInviteList($this ->user);
+        $this -> assign('list',$list);
         $this -> display();
     }
 
     public function share(){
-
+        $inviteUserId = I('inviteUserId');
+        $isNewUser = false;
+        if(
+            !empty($this ->user) &&
+            isExistenceDataWithCondition("user",array("user_id"=>$inviteUserId)) &&
+            !isExistenceDataWithCondition("invite_list",array( "user_id" =>$this ->user_id))
+        ){
+            $addData = array(
+                "user_id"           => $this ->user_id,
+                "parent_user_id"    => $inviteUserId,
+                "create_time"       => time(),
+                "update_time"       => time(),
+            );
+            if(isSuccessToAddData( "invite_list" , $addData )){
+                giveBeInviteGift($this ->user_id);
+            }
+            $isNewUser = true;
+        }
+        $this -> assign('isNewUser',$isNewUser);
         $this -> display();
     }
 

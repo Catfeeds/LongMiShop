@@ -1391,6 +1391,16 @@ body {
 	padding-top: 100px;
 	padding-bottom: 10px;
 }
+.pay-OK1 {
+	color: #B02F4B;
+	text-align: center;
+	background-color: #FFF;
+	background-image: url(../SVG/order1.svg);
+	background-position: center 20px;
+	background-repeat: no-repeat;
+	padding-top: 100px;
+	padding-bottom: 10px;
+}
 .pay-money {
 	line-height: 50px;
 	color: #000;
@@ -1689,3 +1699,16 @@ Load—more a{
 	padding-bottom: 20px;
 }
 .OK{}
+.OK-a{
+	line-height: 60px;
+	padding: 10px;
+	text-align: right;
+}
+.OK-a span{
+	color: #B02F4B;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+.OK-a a{
+	color: #666;
+}

@@ -261,3 +261,20 @@ function isWeChatUser( $key = null ){
     }
     return false;
 }
+
+
+/**
+ * 获取邀请人列表
+ * @param $userId
+ * @return mixed
+ */
+function getInviteList( $userId ){
+    $list = M('invite_list') -> where(array("parent_user_id" => $userId)) -> select();
+    if( !empty( $list ) ){
+        foreach ( $list as $key => $item){
+            $list[$key]['userInfo'] = findDataWithCondition( "users" , array( "user_id" => $item['user_id'] ) );
+        }
+    }
+    return $list;
+
+}
