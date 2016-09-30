@@ -19,12 +19,12 @@ class RecommendController extends MobileBaseController {
         $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );
         $this -> assign('inviteData',getCallbackData($inviteData));
         $this -> assign('beInviteData',getCallbackData($beInviteData));
-        $this -> assign('number', getInviteNumber($this ->user) );
+        $this -> assign('number', getInviteNumber($this ->user_id) );
         $this -> display();
     }
 
     public function recommendList(){
-        $list = getInviteList($this ->user);
+        $list = getInviteList($this ->user_id);
         $this -> assign('list',$list);
         $this -> display();
     }
@@ -32,7 +32,7 @@ class RecommendController extends MobileBaseController {
     public function share(){
         $inviteUserId = I('inviteUserId');
         $isNewUser = false;
-        if( $this ->user == $inviteUserId ){
+        if( $this ->user_id == $inviteUserId ){
             header("Location: ".U('Mobile/User/index'));
             exit;
         }
