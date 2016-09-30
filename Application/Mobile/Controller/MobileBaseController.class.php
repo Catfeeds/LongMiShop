@@ -71,11 +71,14 @@ abstract class MobileBaseController extends BaseController {
         $push_message_time = push_message_time($this->user_id);
         $this->assign('push_message_time',$push_message_time);
 
-        $mobileMessage = session("mobileMessage");
-        if ( !empty($mobileMessage) ){
-            $this->assign('mobileMessage', $mobileMessage);
-            session( "mobileMessage" , null );
-        }
+
+//        $mobileMessage = cookie("mobileMessage");
+//        if ( !empty($mobileMessage) ){
+//            $this->assign('mobileMessage', $mobileMessage);
+////            if( cookie('haveMobileMessage') == 1 ){
+////                session( "mobileMessage" , null );
+////            }
+//        }
 
 
 //        $brand_list = M('brand')->cache(true,MY_CACHE_TIME)->field('id,parent_cat_id,logo,is_hot')->where("parent_cat_id>0")->select();

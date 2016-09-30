@@ -6,11 +6,22 @@
  * @return array
  */
 function checkCode( $code  ){
+    return callback( true , "可用兑换码" );
     if( !empty($code) ){
-        return callback( true , "可用兑换码" );
+        $condition = array(
+            "gift_coupon_id"    =>  array('neq',0),
+            "coupon_id"         =>  array('eq',0),
+            "user_id"           =>  array('eq',0),
+            "state"             =>  array('eq',0),
+            "code"              =>  $code,
+        );
+        if( isExistenceDataWithCondition( "coupon_code" , $condition ) ){
+            return callback( true , "可用兑换码" );
+        }
     }
     return callback( false , "未找到兑换码" );
 }
+
 
 /**
  * 获取兑换商品信息
@@ -18,6 +29,20 @@ function checkCode( $code  ){
  * @return array
  */
 function getExchangeGoodsList( $code ){
+    $giftCouponId = getGiftCouponId( $code );
+    $condition = array(
+        "gift_coupon_id"    =>  $giftCouponId,
+    );
+    $goodsList = M('gift_coupon_goods_list') -> where( $condition ) -> select();
+    if( !empty($goodsList) ){
+        foreach ( $goodsList as $key => $goodsItem ){
+            if( !isExistenceDataWithCondition( "goods" , array( 'goods_id' => $goodsItem ) ) ){
+                unset( $goodsList[$key] );
+            }
+        }
+    }
+//    return $goodsList;
+//    return M('gift_coupon_goods_list') -> where( $condition ) -> select();
     return array(
         array(
             'goods_id'        => 66,   // 商品id
