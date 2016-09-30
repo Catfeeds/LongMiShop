@@ -28,13 +28,16 @@ class ExchangeController extends MobileBaseController {
         if( IS_POST ){
             $code = I( 'code' , 0 );
             $result = checkCode( $code );
+            if( callbackIsTrue( $result ) ){
+                session("exchangeCode" , $code);
+            }
             exit(json_encode($result));
         }
         exit(json_encode(callback(false,"错误访问")));
     }
 
     public function exchangeInfo(){
-        $code = I( 'code' , 0 );
+        $code = session("exchangeCode");
         $result = checkCode( $code );
         if( !callbackIsTrue($result) ){
             $this -> error( getCallbackMessage($result) );
@@ -56,6 +59,9 @@ class ExchangeController extends MobileBaseController {
     public function createExchangeOrder(){
         $bugLogic = new \Common\Logic\BuyLogic();
         $result = $bugLogic -> createExchangeOrder();
+        if ( callbackIsTrue( $result ) ){
+            session("exchangeCode" , null);
+        }
         exit(json_encode($result));
     }
 
