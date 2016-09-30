@@ -154,6 +154,9 @@ class BuyLogic extends BaseLogic
     //商品兑换订单生成第2步 得到购买商品信息
     private function _createExchangeOrderStep2(){
         $this -> _post_data['orderGoods'] = getExchangeGoodsList( $this -> _post_data['exchangeCode'] );
+        if( empty($this -> _post_data['orderGoods']) ){
+            throw new \Exception('商品获取失败');
+        }
     }
 
     //商品兑换订单生成第3步 生成订单

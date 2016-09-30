@@ -43,6 +43,14 @@ class ExchangeController extends MobileBaseController {
             $this -> error( getCallbackMessage($result) );
             exit;
         }
+
+        $goodsList =  getExchangeGoodsList( $code );
+        if( empty($goodsList) ){
+            $this -> error( "商品获取失败" );
+            exit;
+        }
+        $this -> error( "商品获取失败" );
+        exit;
         $region_list = get_region_list();
         $this->assign('region_list',$region_list);
         $address = getCurrentAddress( $this->user_id , I('address_id',null) );
@@ -50,6 +58,7 @@ class ExchangeController extends MobileBaseController {
         if( empty($address) ){
             header("Location: ".U('Mobile/User/edit_address',array('source'=>'exchange')));
         }
+        $this->assign('goodsList',$goodsList);
         $this->assign('exchangeCode',$code);
         $this->assign('region_list',$region_list);
         $this->assign('address',$address);

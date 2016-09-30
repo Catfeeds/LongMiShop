@@ -685,12 +685,15 @@ function jsonEncodeEx($value)
  */
 function mobileJumpToast( $jumpUrl , $message = null , $error = null ){
     if( !is_null($message) ){
-        session( "mobileMessage" , $message );
+        cookie( "mobileMessage" , $message );
     }
     if( !is_null($error) ){
-        session( "mobileMessage" , $error );
+        cookie( "mobileMessage" , $error );
     }
-    header("Location: ".$jumpUrl);
+    echo "<script>";
+    echo "window.location.href = '".$jumpUrl."' ";
+    echo "</script>";
+    exit;
 }
 
 /**

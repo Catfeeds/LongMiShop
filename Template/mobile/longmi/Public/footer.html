@@ -1,11 +1,25 @@
 
-<notempty name="mobileMessage">
+
         <script>
-                $(function(){
-                        alert("{$mobileMessage}");
-                });
+
+                //                        var mobileMessage = getMobileCookie('mobileMessage');
+                //                        if( mobileMessage != undefined && mobileMessage != "" && mobileMessage != null ){
+                //                                alert(mobileMessage);
+                //                                mobileMessage = decodeURIComponent( mobileMessage );
+                //                                alert(mobileMessage);
+                //                                delMobileCookie('mobileMessage');
+//                $(function(){
+//                        var mobileMessage = getMobileCookie('mobileMessage');
+//                        if( mobileMessage != undefined && mobileMessage != "" && mobileMessage != null ){
+//                                alert(mobileMessage);
+//                                delMobileCookie('mobileMessage');
+//                        }
+//                });
         </script>
-</notempty>
+        <php>cookie('mobileMessage',null);</php>
+
+
+
 <script src="__PUBLIC__/js/publicFunctionMobile.js" type="text/javascript"></script>
 <link href="__STATIC__/css/longmi.css" rel="stylesheet" />
 

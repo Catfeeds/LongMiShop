@@ -119,3 +119,67 @@ ALTER TABLE `tp_binding`
 ADD COLUMN `third_user_id`  int(10) NOT NULL COMMENT '第三方id' AFTER `update_time`,
 ADD COLUMN `current_user_id`  int(10) NOT NULL COMMENT '当前id' AFTER `third_user_id`;
 
+
+CREATE TABLE `tp_coupon_code` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`user_id`  int(11) NOT NULL DEFAULT 0 COMMENT '用户id' ,
+`gift_coupon_id`  int(11) NOT NULL DEFAULT 0 COMMENT '礼品券id' ,
+`coupon_id`  int(11) NOT NULL DEFAULT 0 COMMENT '优惠券id' ,
+`code`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '优惠码' ,
+`state`  int(1) NOT NULL DEFAULT 0 COMMENT '0 未领取   1 已领取  2  已使用' ,
+`use_time`  int(10) NULL COMMENT '使用时间' ,
+`receive_time`  int(10) NULL COMMENT '获取卡券时间' ,
+`create_time`  int(10) NULL COMMENT '创建时间' ,
+`update_time`  int(10) NULL COMMENT '修改时间' ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+;
+
+
+ALTER TABLE `tp_coupon`
+ADD COLUMN `use_code`  tinyint(1) NOT NULL DEFAULT 0 AFTER `type`;
+
+
+CREATE TABLE `tp_gift_coupon` (
+`id`  int(11) NOT NULL AUTO_INCREMENT COMMENT 'id' ,
+`is_create_code`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否已经生成兑换' ,
+`gift_coupon_name`  varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '礼品券名称' ,
+`send_start_time`  int(11) NULL COMMENT '发放开始时间' ,
+`send_end_time`  int(11) NULL COMMENT '发放结束时间' ,
+`use_start_time`  int(11) NULL COMMENT '使用开始时间' ,
+`use_end_time`  int(11) NULL COMMENT '使用结束时间' ,
+`create_time`  int(11) NULL COMMENT '添加时间' ,
+`update_time`  int(11) NULL COMMENT '修改时间' ,
+`create_num`  int(11) NULL COMMENT '发放数量' ,
+`send_num`  int(11) NULL COMMENT '已领取数量' ,
+`use_num`  int(11) NULL COMMENT '已使用数量' ,
+`condition`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '详情' ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+;
+
+
+
+CREATE TABLE `tp_gift_coupon_goods_list` (
+`id`  int(11) NOT NULL AUTO_INCREMENT COMMENT 'id' ,
+`gift_coupon_id`  int(11) NOT NULL DEFAULT 0 COMMENT '礼品券id' ,
+`admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT '供应商id' ,
+`goods_id`  int(11) NOT NULL COMMENT '商品id' ,
+`goods_sn`  varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商品货号' ,
+`goods_name`  varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商品名称' ,
+`spec_key`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '商品规格key 对应tp_spec_goods_price 表' ,
+`spec_key_name`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '商品规格组合名称' ,
+`goods_num`  int(11) NOT NULL COMMENT '商品数量' ,
+`create_time`  int(11) NULL COMMENT '添加时间' ,
+`update_time`  int(11) NULL COMMENT '修改时间' ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+;
+
+
