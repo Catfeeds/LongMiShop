@@ -706,6 +706,7 @@ function addressTheJump($way = null){
     }else if($way == 'edit_details'){
         $urlJump ='User/'.$way;
     }else if($way == 'exchangeInfo' ){
+
         $urlJump = 'Exchange/'.$way;
     }
     cookie('skip_url',$urlJump);
