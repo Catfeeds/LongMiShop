@@ -56,7 +56,7 @@ function giveGift( $userID , $value = null , $type = 1 , $isInvite = 0 ){
         $add['send_time'] = time();
         do{
             $code = get_rand_str(8,0,1);//获取随机8位字符串
-            $check_exist = findDataWithCondition('coupon_list',array('code'=>$code),"coed");
+            $check_exist = findDataWithCondition('coupon_list',array('code'=>$code),"code");
         }while($check_exist);
         $add['code'] = $code;
         M('coupon_list')->add($add);
