@@ -287,3 +287,13 @@ function getInviteNumber( $userId ){
     return M('invite_list') -> where(array("parent_user_id" => $userId)) -> count();
 }
 
+/**
+ * 获取邀请人id
+ * @param $userId
+ * @return mixed
+ */
+function getInvitedUserId( $userId ){
+    $invitedUserInfo = findDataWithCondition( "invite_list" , array("user_id" => $userId) , "parent_user_id" );
+    return $invitedUserInfo['parent_user_id'];
+}
+

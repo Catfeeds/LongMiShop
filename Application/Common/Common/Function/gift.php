@@ -25,7 +25,8 @@ function giveInviteGift( $userId ){
     $orderCount = M('order') -> where($condition) -> count();
     if( $orderCount == 1){
         $shopConfig = getShopConfig();
-        giveGift( $userId , $shopConfig['prize_invite_value'] , $shopConfig['prize_invite'] , 1);
+        $invitedUserId = getInvitedUserId( $userId );
+        giveGift( $invitedUserId , $shopConfig['prize_invite_value'] , $shopConfig['prize_invite'] , 1);
         return true;
     }
     return false;
