@@ -35,29 +35,14 @@ function getExchangeGoodsList( $code ){
     $goodsList = M('gift_coupon_goods_list') -> where( $condition ) -> select();
     if( !empty($goodsList) ){
         foreach ( $goodsList as $key => $goodsItem ){
-            if( !isExistenceDataWithCondition( "goods" , array( 'goods_id' => $goodsItem ) ) ){
+            $goodsInfo = findDataWithCondition( "goods" , array( 'goods_id' => $goodsItem['goods_id'] ) ) ;
+            if( empty($goodsInfo) ){
                 unset( $goodsList[$key] );
             }
+            $goodsList[$key]['market_price'] = $goodsInfo['market_price'];
+            $goodsList[$key]['goods_price'] = $goodsInfo['shop_price'];
+            $goodsList[$key]['member_goods_price'] = $goodsInfo['shop_price'];
         }
     }
-//    return $goodsList;
-//    return M('gift_coupon_goods_list') -> where( $condition ) -> select();
-    return array(
-        array(
-            'goods_id'        => 66,   // 商品id
-            'admin_id'        => 1,
-            'goods_sn'        => "",   // 商品货号
-            'goods_name'      => "迎馨家纺全棉斜纹印花双人四件套邂逅 AB版纯棉，亲肤透气",   // 商品名称
-            'market_price'    => 100,   // 市场价
-            'goods_price'     => 100,  // 购买价
-            'member_goods_price' => 100,  // 会员折扣价 默认为 购买价
-            'goods_num'       => 6, // 购买数量
-            'spec_key'        => "", // 规格key
-            'spec_key_name'   => "", // 规格 key_name
-            'sku'             => "", // 商品条形码
-            'add_time'        => time(), // 加入购物车时间
-            'prom_type'       => 0,   // 0 普通订单,1 限时抢购, 2 团购 , 3 促销优惠
-            'prom_id'         => 0,   // 活动id
-        ),
-    );
+    return $goodsList;
 }

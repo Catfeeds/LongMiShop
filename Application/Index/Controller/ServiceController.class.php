@@ -43,6 +43,7 @@ class ServiceController extends IndexBaseController {
     public function serviceDetail(){
         $id = I('get.id');
         $serviceOrderInfo = getServiceOrderInfo($id , $this->user_id);
+//        dd($serviceOrderInfo);
         if( empty($serviceOrderInfo) ){
             $this->error('没有获取到服务单信息');
             exit;
@@ -55,6 +56,7 @@ class ServiceController extends IndexBaseController {
             exit;
         }
         $progressBar = getServiceOrderProgressBar($serviceOrderInfo);
+
         $this -> assign('orderInfo',$orderInfo);
         $this -> assign('progressBar',$progressBar);
         $this -> assign('serviceOrderInfo',$serviceOrderInfo);

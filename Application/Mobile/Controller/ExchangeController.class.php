@@ -67,6 +67,13 @@ class ExchangeController extends MobileBaseController {
         $bugLogic = new \Common\Logic\BuyLogic();
         $result = $bugLogic -> createExchangeOrder();
         if ( callbackIsTrue( $result ) ){
+            $where['code'] = session("exchangeCode");
+            $couponCodeData['state'] = 2;
+            $couponCodeData['use_time'] = time();
+            $couponCodeData['user_id'] = $this->user_id;
+            $couponCodeData['receive_time'] = time();
+            M('coupon_code')->where($$where)->save($couponCodeData);
+
             session("exchangeCode" , null);
         }
         exit(json_encode($result));
