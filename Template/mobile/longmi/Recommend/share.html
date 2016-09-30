@@ -2,12 +2,9 @@
 <body style="background-image:url(__STATIC__/images/iPhone-6.jpg); background-size:100% 100%">
 <if condition =" $isNewUser">
 
-    <div class="login_btn">
-        <a href="{:U('Mobile/Recommend/index')}">去发券</a>
-    </div>
     <div class="OK-a" style="text-align:center">
         <a href="my_a9.html">
-            您的朋友<span>XXX</span>给你赠送了一张代金券
+            您的朋友<span>{$inviteUserInfo.nickname}</span>给你赠送了一张代金券
         </a>
     </div>
     <div class="cp_box">
@@ -35,6 +32,10 @@
             龙米的老朋友<span>{$user.nickname }</span>
         </a>
         <p>虽然您不能领取“新人券”，但是您获得了发券赚米特权！</p>
+    </div>
+
+    <div class="login_btn">
+        <a href="{:U('Mobile/Recommend/index')}">去发券</a>
     </div>
 </if>
 </body>
