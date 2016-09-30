@@ -15,6 +15,7 @@ class RecommendController extends MobileBaseController {
     }
 
     public function index(){
+//        $list = getInviteNumber($this ->user);
         $this -> display();
     }
 
@@ -29,7 +30,7 @@ class RecommendController extends MobileBaseController {
         $isNewUser = false;
         if(
             !empty($this ->user) &&
-            isExistenceDataWithCondition("user",array("user_id"=>$inviteUserId)) &&
+            isExistenceDataWithCondition("users",array("user_id"=>$inviteUserId)) &&
             !isExistenceDataWithCondition("invite_list",array( "user_id" =>$this ->user_id))
         ){
             $addData = array(
