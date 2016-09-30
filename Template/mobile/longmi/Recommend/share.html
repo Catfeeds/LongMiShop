@@ -8,15 +8,33 @@
         </a>
     </div>
     <div class="cp_box">
-        <div class="cp1">
-            <div class="c"><a href="#"></a></div>
-            <div class="cp1_r">
-                <div class="m9">新人专享</div>
-                <div class="m10">简介：满99元可用</div>
-                <div class="m11">￥20</div>
-                <div class="m12">有效期至：2016.11.30</div>
+        <if condition = " $beInviteData['type'] == 1 " >
+            <div class="cp1">
+                <div class="c"><a href="#"></a></div>
+                <div class="cp1_r">
+                    <div class="m9">{$beInviteData['coupon']['name']}</div>
+                    <div class="m10">简介：满{$beInviteData['coupon']['condition']}元可用</div>
+                    <div class="m11">￥{$beInviteData['coupon']['money']}</div>
+                    <div class="m12">有效期至：{:date("Y-m-d",$beInviteData['coupon']['use_end_time']);}</div>
+                </div>
             </div>
-        </div>
+        </if>
+        <if condition = " $beInviteData['type'] == 2 " >
+            <div class="cp1">
+                <div class="c"><a href="#"></a></div>
+                <div class="cp1_r">
+                    <div class="m9">现金：{$beInviteData['balance']}</div>
+                </div>
+            </div>
+        </if>
+        <if condition = " $beInviteData['type'] == 3 " >
+            <div class="cp1">
+                <div class="c"><a href="#"></a></div>
+                <div class="cp1_r">
+                    <div class="m9">积分：{$beInviteData['point']}</div>
+                </div>
+            </div>
+        </if>
     </div>
     <div class="pay-order">
         <p style="text-align:center">

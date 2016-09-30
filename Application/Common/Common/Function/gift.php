@@ -7,7 +7,7 @@
  */
 function giveBeInviteGift( $userId ){
     $shopConfig = getShopConfig();
-    giveGift( $userId , $config['invited_to_value'] , $config['invited_to'] , 0);
+    giveGift( $userId , $shopConfig['invited_to_value'] , $shopConfig['invited_to'] , 0);
     return true;
 }
 
@@ -25,7 +25,7 @@ function giveInviteGift( $userId ){
     $orderCount = M('order') -> where($condition) -> count();
     if( $orderCount == 1){
         $shopConfig = getShopConfig();
-        giveGift( $userId , $config['invite_value'] , $config['invite'] , 1);
+        giveGift( $userId , $shopConfig['invite_value'] , $shopConfig['invite'] , 1);
         return true;
     }
     return false;
@@ -63,4 +63,25 @@ function giveGift( $userID , $value = null , $type = 1 , $isInvite = 0 ){
         return true;
     }
    return false;
+}
+
+
+/**
+ * 获取礼品情况
+ * @param null $value
+ * @param int $type
+ * @return array
+ */
+function getGiftInfo( $value = null , $type = 1  ){
+    if( !is_null( $value ) ){
+        if( $type == 3 ){
+            return callback( true , "" ,array( 'point' => $value ,"type" => $type) );
+        }
+        if( $type == 2 ){
+            return callback( true , "" ,array( 'balance' => $value ,"type" => $type) );
+        }
+        $couponInfo = getCouponInfo($value);
+        return callback( true , "" ,array( 'coupon' => $couponInfo ,"type" => $type) );
+    }
+    return callback( false );
 }

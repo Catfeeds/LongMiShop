@@ -15,6 +15,10 @@ class RecommendController extends MobileBaseController {
     }
 
     public function index(){
+        $inviteData = getGiftInfo( $this -> shopConfig['invite_value'] , $this -> shopConfig['invite'] );
+        $beInviteData = getGiftInfo( $this -> shopConfig['invited_to_value'] , $this -> shopConfig['invited_to'] );
+        $this -> assign('inviteData',$inviteData);
+        $this -> assign('beInviteData',$beInviteData);
         $this -> assign('number', getInviteNumber($this ->user) );
         $this -> display();
     }
@@ -28,6 +32,10 @@ class RecommendController extends MobileBaseController {
     public function share(){
         $inviteUserId = I('inviteUserId');
         $isNewUser = false;
+        if( $this ->user != $inviteUserId ){
+            header("Location: ".U('Mobile/User/index'));
+            exit;
+        }
         if(
             !empty($this ->user) &&
             isExistenceDataWithCondition("users",array("user_id"=>$inviteUserId)) &&
@@ -45,6 +53,10 @@ class RecommendController extends MobileBaseController {
             $this -> assign('inviteUserInfo',findDataWithCondition( "users",array("user_id"=>$inviteUserId) , " nickname" ));
             $isNewUser = true;
         }
+        $inviteData = getGiftInfo( $this -> shopConfig['invite_value'] , $this -> shopConfig['invite'] );
+        $beInviteData = getGiftInfo( $this -> shopConfig['invited_to_value'] , $this -> shopConfig['invited_to'] );
+        $this -> assign('inviteData',$inviteData);
+        $this -> assign('beInviteData',$beInviteData);
         $this -> assign('isNewUser',$isNewUser);
         $this -> display();
     }
