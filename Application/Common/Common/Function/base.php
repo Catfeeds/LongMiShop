@@ -1,5 +1,26 @@
 <?php
 
+
+
+
+
+/**
+ * 获取系统数据
+ * @return array
+ */
+function getShopConfig(){
+    $shopConfig = array();
+    $config = M('config')->cache(true,MY_CACHE_TIME)->select();
+    foreach($config as $k => $v)
+    {
+        if($v['name'] == 'hot_keywords'){
+            $shopConfig['hot_keywords'] = explode('|', $v['value']);
+        }
+        $shopConfig[$v['inc_type'].'_'.$v['name']] = $v['value'];
+    }
+    return $shopConfig;
+}
+
 /**
  * @param $arr
  * @param $key_name

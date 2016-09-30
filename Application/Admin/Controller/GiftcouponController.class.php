@@ -118,7 +118,6 @@ class GiftcouponController extends BaseController {
             exit(json_encode(callback(true,'删除成功')));
         }
         exit(json_encode(callback(false,'删除失败')));
-
     }
 
     //生成兑换码

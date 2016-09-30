@@ -183,3 +183,15 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 ;
 
 
+CREATE TABLE `tp_invite_list` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`user_id`  int(11) NOT NULL ,
+`parent_user_id`  int(11) NULL ,
+`create_time`  int(11) NULL ,
+`update_time`  int(11) NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+;
+
