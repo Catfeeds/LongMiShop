@@ -15,8 +15,8 @@ class RecommendController extends MobileBaseController {
     }
 
     public function index(){
-        $inviteData = getGiftInfo( $this -> shopConfig['invite_value'] , $this -> shopConfig['invite'] );
-        $beInviteData = getGiftInfo( $this -> shopConfig['invited_to_value'] , $this -> shopConfig['invited_to'] );
+        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
+        $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );
         $this -> assign('inviteData',getCallbackData($inviteData));
         $this -> assign('beInviteData',getCallbackData($beInviteData));
         $this -> assign('number', getInviteNumber($this ->user) );
@@ -53,8 +53,8 @@ class RecommendController extends MobileBaseController {
             $this -> assign('inviteUserInfo',findDataWithCondition( "users",array("user_id"=>$inviteUserId) , " nickname" ));
             $isNewUser = true;
         }
-        $inviteData = getGiftInfo( $this -> shopConfig['invite_value'] , $this -> shopConfig['invite'] );
-        $beInviteData = getGiftInfo( $this -> shopConfig['invited_to_value'] , $this -> shopConfig['invited_to'] );
+        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
+        $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );
         $this -> assign('inviteData',getCallbackData($inviteData));
         $this -> assign('beInviteData',getCallbackData($beInviteData));
         $this -> assign('isNewUser',$isNewUser);
