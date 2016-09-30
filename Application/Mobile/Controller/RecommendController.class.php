@@ -32,7 +32,7 @@ class RecommendController extends MobileBaseController {
     public function share(){
         $inviteUserId = I('inviteUserId');
         $isNewUser = false;
-        if( $this ->user == $inviteUserId ){
+        if( $this ->user_id == $inviteUserId ){
             header("Location: ".U('Mobile/User/index'));
             exit;
         }
