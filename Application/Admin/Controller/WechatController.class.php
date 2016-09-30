@@ -276,12 +276,13 @@ class WechatController extends BaseController {
                 $model = M('wx_keyword')->where(array('id'=>$id));
 
                 $data = $model->find();
-
                 if($data){
-                    $update = $model->create($_POST);
+                    // $update = $model->create($_POST);
+                    $update = $_POST;
                     $update['type'] = 'TEXT';
-                    M('wx_keyword')->where(array('id'=>$id))->save($update);
+                    $res = M('wx_keyword')->where(array('id'=>$id))->save($update);
                     $row = M('wx_text')->where(array('id'=>$data['pid']))->save($add);
+                    
 
                 }
             }
@@ -369,7 +370,8 @@ class WechatController extends BaseController {
 
                 $data = $model->find();
                 if($data){
-                    $update = $model->create($_POST);
+                    // $update = $model->create($_POST);
+                    $update = $_POST;
                     $update['type'] = 'IMG';
                     M('wx_keyword')->where(array('id'=>$id))->save($update);
                     $add['uptatetime'] = time();
