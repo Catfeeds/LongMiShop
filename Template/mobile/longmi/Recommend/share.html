@@ -1,41 +1,41 @@
 <include file="Public/header"/>
-<script type="text/javascript">
-    function share(){
-        $('#share').show();
-    }
-</script>
-<style >
-    #share{
-        z-index:9999999999999999999999;
-        position:fixed;
-        width:100%;
-        height:100%;
-        top:0px;
-        right:0px;
-        margin-top:0;
-        background:url('__STATIC__/images/share.png') right top no-repeat #000;
-        background-size:80%;
-    }
-</style>
-<body>
-<div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
-<div class="pay">
-    <div class="OK-a">
-        <a href="{:U('Mobile/Recommend/recommendList')}">我推荐了<span>0</span>人</a>
+<body style="background-image:url(__STATIC__/images/iPhone-6.jpg); background-size:100% 100%">
+<if condition =" 1 ==1 ">
+    <div class="OK-a" style="text-align:center">
+        <a href="{:U('Mobile/User/index')}">
+            龙米的老朋友<span>{$user.nickname }</span>
+        </a>
+        <p>虽然您不能领取“新人券”，但是您获得了发券赚米特权！</p>
     </div>
-    <div class="pay-OK1"></div>
-    <div class="pay-order">
-        <p style="text-align:center">送给朋友25元，TA购买成功后，你赚10元</p>
-        <div class="login_btn">
-            <a href="javascript:share();">邀请好友</a>
+    <div class="login_btn">
+        <a href="{:U('Mobile/Recommend/index')}">去发券</a>
+    </div>
+    <else/>
+    <div class="OK-a" style="text-align:center">
+        <a href="my_a9.html">
+            您的朋友<span>XXX</span>给你赠送了一张代金券
+        </a>
+    </div>
+    <div class="cp_box">
+        <div class="cp1">
+            <div class="c"><a href="#"></a></div>
+            <div class="cp1_r">
+                <div class="m9">新人专享</div>
+                <div class="m10">简介：满99元可用</div>
+                <div class="m11">￥20</div>
+                <div class="m12">有效期至：2016.11.30</div>
+            </div>
         </div>
-        <!--<div style="text-align:center; padding-top:20px">-->
-            <!--<p>或</p>-->
-            <!--<p>告诉朋友我的邀请码：XDSS</p>-->
-            <!--<p>朋友可以在个人中心兑换码处兑换奖励</p>-->
-        <!--</div>-->
     </div>
-</div>
+    <div class="pay-order">
+        <p style="text-align:center">
+            <img src="__STATIC__/images/xx2.jpg" width="139" height="139">
+            <br>
+            长按二维码码关注龙米，买米使用<br>
+            您也可以给朋友送券，自已赚米
+        </p>
+    </div>
+</if>
 </body>
 <include file="Public/footer"/>
 </html>
