@@ -6,5 +6,9 @@
 		<img src="{$user['head_pic']|default='__DefaultUserImages__'}" class="userHeadImg" width="92" height="92">
 	</p>
 	<p>{$user['nickname']}</p>
-	<div class="user_main"><a href="{:U('Mobile/User/userinfo')}"><img src="__STATIC__/SVG/move.svg"></a></div>
+	<div class="user_main">
+		<a href="{:U('Mobile/User/userinfo')}">
+			<img src="__STATIC__/SVG/move.svg">
+		</a>
+	</div>
 </div>

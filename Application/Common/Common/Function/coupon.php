@@ -36,3 +36,11 @@ function getCouponCode( $number ){
     }
     return $codeArray;
 }
+
+
+function getCouponInfo( $couponId ){
+    $condition  = array(
+        "coupon_id" => $couponId,
+    );
+    return M('coupon') -> where( $condition )->find();
+}

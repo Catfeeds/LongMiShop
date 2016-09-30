@@ -21,11 +21,11 @@
 <div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
 <div class="pay">
     <div class="OK-a">
-        <a href="{:U('Mobile/Recommend/recommendList')}">我推荐了<span>0</span>人</a>
+        <a href="{:U('Mobile/Recommend/recommendList')}">我推荐了<span>{$number}</span>人</a>
     </div>
     <div class="pay-OK1"></div>
     <div class="pay-order">
-        <p style="text-align:center">送给朋友25元，TA购买成功后，你赚10元</p>
+        <p style="text-align:center">送给朋友{$shopConfig.invited_to_value}元，TA购买成功后，你赚{$shopConfig.invite_value}元</p>
         <div class="login_btn">
             <a href="javascript:share();">邀请好友</a>
         </div>

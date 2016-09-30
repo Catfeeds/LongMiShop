@@ -50,7 +50,16 @@ function giveGift( $userID , $value = null , $type = 1 , $isInvite = 0 ){
             accountLog( $userID , $value , 0 , $log);
             return true;
         }
-
+        $couponInfo = getCouponInfo($value);
+        $add['cid'] = $couponInfo;
+        $add['type'] = 3;
+        $add['send_time'] = time();
+        do{
+            $code = get_rand_str(8,0,1);//获取随机8位字符串
+            $check_exist = findDataWithCondition('coupon_list',array('code'=>$code),"coed");
+        }while($check_exist);
+        $add['code'] = $code;
+        M('coupon_list')->add($add);
         return true;
     }
    return false;
