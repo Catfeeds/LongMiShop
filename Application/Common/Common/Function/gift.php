@@ -52,16 +52,14 @@ function giveGift( $userID , $value = null , $type = 1 , $isInvite = 0 ){
         }
         $couponInfo = getCouponInfo($value);
         $add['cid'] = $couponInfo;
-        $add['type'] = $type;
+        $add['type'] = 3;
         $add['send_time'] = time();
-        for($i=0;$i<$num; $i++){
-            do{
-                $code = get_rand_str(8,0,1);//获取随机8位字符串
-                $check_exist = M('coupon_list')->where(array('code'=>$code))->find();
-            }while($check_exist);
-            $add['code'] = $code;
-            M('coupon_list')->add($add);
-        }
+        do{
+            $code = get_rand_str(8,0,1);//获取随机8位字符串
+            $check_exist = findDataWithCondition('coupon_list',array('code'=>$code),"coed");
+        }while($check_exist);
+        $add['code'] = $code;
+        M('coupon_list')->add($add);
         return true;
     }
    return false;
