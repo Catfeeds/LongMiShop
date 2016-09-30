@@ -26,6 +26,7 @@ class RecommendController extends MobileBaseController {
 
     public function share(){
         $inviteUserId = I('inviteUserId');
+        $isNewUser = false;
         if(
             !empty($this ->user) &&
             isExistenceDataWithCondition("user",array("user_id"=>$inviteUserId)) &&
@@ -40,7 +41,9 @@ class RecommendController extends MobileBaseController {
             if(isSuccessToAddData( "invite_list" , $addData )){
                 giveBeInviteGift($this ->user_id);
             }
+            $isNewUser = true;
         }
+        $this -> assign('isNewUser',$isNewUser);
         $this -> display();
     }
 
