@@ -50,9 +50,9 @@ function giveGift( $userID , $value = null , $type = 1 , $isInvite = 0 ){
             accountLog( $userID , $value , 0 , $log);
             return true;
         }
-        $couponInfo = getCouponInfo($value);
-        $add['cid'] = $couponInfo;
+        $add['cid'] = $value;
         $add['type'] = 3;
+        $add['uid'] = $userID;
         $add['send_time'] = time();
         do{
             $code = get_rand_str(8,0,1);//获取随机8位字符串
