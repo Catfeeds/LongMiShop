@@ -4,37 +4,22 @@
     <notempty name="list">
 
         <ul class="mui-table-view">
-            <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
-                    <img class="mui-media-object mui-pull-left" src="images/user_48.png">
-                    <div class="mui-media-body">
-                        幸福
-                        <p class='mui-ellipsis'>邀请成功 2016-07-08</p>
-                    </div>
-                </a>
-            </li>
-            <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;"><img class="mui-media-object mui-pull-left" src="images/user_48.png">
-                    <div class="mui-media-body">
-                        王小二
-                        <p class='mui-ellipsis'>邀请成功 2016-07-06
-                        </p></div>
-                </a>
-            </li>
-            <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;"><img class="mui-media-object mui-pull-left" src="images/user_48.png">
-                    <div class="mui-media-body">
-                        龙米
-                        <p class='mui-ellipsis'>邀请成功 2016-07-05
-                        </p></div>
-                </a>
-            </li>
+            <volist name="list" id="item">
+                <li class="mui-table-view-cell mui-media">
+                    <a href="javascript:;">
+                        <img class="mui-media-object mui-pull-left" src="{$item['userInfo']['head_pic']|default="__DefaultUserImages__"}">
+                        <div class="mui-media-body">
+                            {$item['userInfo']['nickname']}
+                            <p class='mui-ellipsis'>邀请成功 {:date('Y-m-d',$item['create_time'])}</p>
+                        </div>
+                    </a>
+                </li>
+            </volist>
         </ul>
         <else/>
         <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
         <div class="empty_txt">暂无数据！</div>
     </notempty>
-
 </div>
 </body>
 <include file="Public/footer"/>
