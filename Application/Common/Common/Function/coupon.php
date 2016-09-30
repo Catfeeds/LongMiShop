@@ -40,7 +40,7 @@ function getCouponCode( $number ){
 
 function getCouponInfo( $couponId ){
     $condition  = array(
-        "coupon_id" => $couponId,
+        "id" => $couponId,
     );
     return M('coupon') -> where( $condition )->find();
 }
