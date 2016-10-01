@@ -240,6 +240,7 @@ class OrderLogic extends RelationModel
 			$updata['shipping_status'] = 2;
 		}
 		M('order')->where("order_id=".$data['order_id'])->save($updata);//改变订单状态
+        sendWeChatMessageUseUserId( $order['user_id'] , "发货" , array("orderId" => $data['order_id']) );
 		$s = $this->orderActionLog($order['order_id'],'delivery',$data['note']);//操作日志
 		return $s && $r;
     }

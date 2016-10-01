@@ -523,7 +523,7 @@ class BuyLogic extends BaseLogic
         }
 
         if( isInCreateOrder( $this -> status )){
-            sendWeChatMessageUseUserInfo( $this -> user , "下单" , array("orderSn" => $order['order_sn']) );
+            sendWeChatMessageUseUserInfo( $this -> user , "下单" , array("orderId" => $order['order_id']) );
         }
     }
 
