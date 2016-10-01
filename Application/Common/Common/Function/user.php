@@ -78,14 +78,14 @@ function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
     $usersLogic = new \Common\Logic\UsersLogic();
     $result = $usersLogic -> thirdLogin($data);
 
-    if($result['status'] == 1){
+//    if($result['status'] == 1){
         $openid = session('openid');
         session(null);
         session('openid',$openid);
 
         echo "<script language=JavaScript> location.replace(location.href);</script>";
         exit;
-    }
+//    }
 }
 
 

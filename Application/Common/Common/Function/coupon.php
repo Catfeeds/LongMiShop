@@ -31,6 +31,11 @@ function getCouponCode( $number ){
 
 //        $codeNumber = $giftCouponCount + $i;
 //        $tempString = md5( $codeNumber . "LONGMI");
+        do{
+            $code = get_rand_str(8,0,1);//获取随机8位字符串
+            $check_exist = findDataWithCondition('coupon_list',array('code'=>$code),"code");
+        }while($check_exist);
+
         $codeArray[$key] = generateCode(18);
         $key ++;
     }

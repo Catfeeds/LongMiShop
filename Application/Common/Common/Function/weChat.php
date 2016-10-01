@@ -134,6 +134,32 @@ function bindingOpenidAngUserId( $openid = null , $userId = null , $thirdUserId 
     return false;
 }
 
+/**
+ * 生成推送数据
+ * @param $data
+ * @param $type
+ * @return array|string
+ */
+function getWeChatMessageData( $data , $type ){
+    $condition = array();
+    $returnArray = array();
+    if( empty( $data['orderId'] ) ){
+        $condition['order_id'] = $data['orderId'];
+        $orderInfo = findDataWithCondition("order" , $condition , "order_sn" );
+        $orderGoodsInfo = findDataWithCondition("order_goods" , $condition , "goods_name" );
+        $orderGoodsNumber = M("order_goods") -> where($condition) -> count();
+        if( $returnArray = "发货" ){
+            $deliveryDocInfo = findDataWithCondition("delivery_doc" , $condition , "invoice_no" );
+            $returnArray["invoiceNo"]         = $deliveryDocInfo["invoice_no"];
+        }
+        $returnArray["orderSn"]         = $orderInfo["order_sn"];
+        $returnArray["goodsName"]       = $orderGoodsInfo["goods_name"];
+        $returnArray["goodsNumber"]     = $orderGoodsNumber;
+        return $returnArray;
+    }
+
+    return $returnArray;
+}
 
 /**
  * 发送微信推送
@@ -148,18 +174,22 @@ function sendWeChatMessage( $openid , $type , $data ){
         "支付",
         "发货",
         "完成",
+        "送券",
+        "成功邀请",
+        "邀请奖励",
     );
     if( ! in_array( $type , $typeArray )){
         return false;
     }
-//        "下单" => __WeChatMessage_CreateOrder__,
-//        "支付" => __WeChatMessage_Payment__,
-//        "发货" => __WeChatMessage_Delivery__,
+    $data = getWeChatMessageData( $data , $type);
     $messageArray = array(
-        "下单" =>  "您刚刚下了一笔订单【{$data['orderSn']}】尽快支付,过期失效!",
-        "支付" =>  "您的订单【{$data['orderSn']}】已支付,我们会尽快发货!",
-        "发货" =>  "您的订单【{$data['orderSn']}】已发货,物流单号【{$data['logisticsSn']}】!",
-        "完成" =>  "您的订单【{$data['orderSn']}】已确认收货，感谢您的购买!",
+        "下单" =>  "为你生成了订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，24小时内请完成支付。",
+        "支付" =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，已支付成功，我们将尽快为您发货。",
+        "发货" =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，已发货，物流单号【{$data['invoiceNo']}】。请注意查收。",
+        "完成" =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，交易成功。感谢您的购买！",
+        "送券" =>  "我们向您送出了一张【优惠券名称】，请在个人中心-代金券处查收。",
+        "成功邀请" =>  "成功邀请的好友XXX，他首次成功购买后，您将获得奖励【10元】",
+        "邀请奖励" =>  "您邀请的XXX完成了首购，您获得奖励【10元】，请在个人中心-钱包里查收",
 
     );
     $weChatConfig = M('wx_user')->find();
@@ -183,6 +213,12 @@ function sendWeChatMessageUseUserInfo( $userInfo , $type , $data ){
     // 如果有微信公众号 则推送一条消息到微信
     if( isWeChatUser( $userInfo['oauth'] )) {
         return sendWeChatMessage( $userInfo['openid'] , $type , $data  );
+    }
+    if( isBinding( $userInfo['user_id'] ) ){
+        $bindingUserInfo = getBindingAccountData( $userInfo );
+        if( isWeChatUser( $bindingUserInfo['oauth'] )) {
+            return sendWeChatMessage( $bindingUserInfo['openid'] , $type , $data  );
+        }
     }
     return false;
 }
