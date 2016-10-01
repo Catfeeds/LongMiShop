@@ -143,14 +143,14 @@ function bindingOpenidAngUserId( $openid = null , $userId = null , $thirdUserId 
 function getWeChatMessageData( $data , $type ){
     $condition = array();
     $returnArray = array();
-    if( empty( $data['orderId'] ) ){
+    if( !empty( $data['orderId'] ) ){
         $condition['order_id'] = $data['orderId'];
         $orderInfo = findDataWithCondition("order" , $condition , "order_sn" );
         $orderGoodsInfo = findDataWithCondition("order_goods" , $condition , "goods_name" );
         $orderGoodsNumber = M("order_goods") -> where($condition) -> count();
-        if( $returnArray = "发货" ){
+        if( $type = "发货" ){
             $deliveryDocInfo = findDataWithCondition("delivery_doc" , $condition , "invoice_no" );
-            $returnArray["invoiceNo"]         = $deliveryDocInfo["invoice_no"];
+            $returnArray["invoiceNo"]   = $deliveryDocInfo["invoice_no"];
         }
         $returnArray["orderSn"]         = $orderInfo["order_sn"];
         $returnArray["goodsName"]       = $orderGoodsInfo["goods_name"];
@@ -181,7 +181,10 @@ function sendWeChatMessage( $openid , $type , $data ){
     if( ! in_array( $type , $typeArray )){
         return false;
     }
-    $data = getWeChatMessageData( $data , $type);
+    $data = getWeChatMessageData( $data , $type );
+    if( empty($data) ){
+        return false;
+    }
     $messageArray = array(
         "下单" =>  "为你生成了订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，24小时内请完成支付。",
         "支付" =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，已支付成功，我们将尽快为您发货。",
