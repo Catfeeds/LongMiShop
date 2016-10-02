@@ -125,11 +125,14 @@ class GiftcouponController extends BaseController {
         $data['gift_coupon_id'] = I('id');
         $return = findDataWithCondition("gift_coupon",array('id'=>$data['gift_coupon_id'],'is_create_code'=>0));
         if(!empty($Return)){
-            $codeList = getCouponCode( $return['create_num'] );
             for($i= 0;$i < $return['create_num'];$i++){
-                $data['code'] = $codeList[$i];
                 $data['state'] = 0;
                 $data['create_time'] = time();
+                do{
+                    $code = get_rand_str(8,0,1);//获取随机8位字符串
+                    $check_exist = findDataWithCondition('coupon_code',array('code'=>$code),"code");
+                }while($check_exist);
+                $data['code'] = $code;
                 M('coupon_code')->add($data);
             }
             M('gift_coupon')->save(array('id'=>$data['gift_coupon_id'],'is_create_code'=>1));
