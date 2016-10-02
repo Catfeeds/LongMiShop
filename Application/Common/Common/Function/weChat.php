@@ -163,6 +163,9 @@ function getWeChatMessageData( $data , $type ){
         $returnArray["couponName"]     = $couponInfo["name"];
         return $returnArray;
     }
+    if( $type == "成功邀请" || $type == "邀请奖励" ){
+        $returnArray = $data;
+    }
 
     return $returnArray;
 }
