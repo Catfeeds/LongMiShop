@@ -124,7 +124,7 @@ class GiftcouponController extends BaseController {
     public function convert(){
         $data['gift_coupon_id'] = I('id');
         $return = findDataWithCondition("gift_coupon",array('id'=>$data['gift_coupon_id'],'is_create_code'=>0));
-        if(!empty($Return)){
+        if(!empty($return)){
             for($i= 0;$i < $return['create_num'];$i++){
                 $data['state'] = 0;
                 $data['create_time'] = time();
