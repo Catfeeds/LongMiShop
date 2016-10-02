@@ -148,13 +148,19 @@ function getWeChatMessageData( $data , $type ){
         $orderInfo = findDataWithCondition("order" , $condition , "order_sn" );
         $orderGoodsInfo = findDataWithCondition("order_goods" , $condition , "goods_name" );
         $orderGoodsNumber = M("order_goods") -> where($condition) -> count();
-        if( $type = "发货" ){
+        if( $type == "发货" ){
             $deliveryDocInfo = findDataWithCondition("delivery_doc" , $condition , "invoice_no" );
             $returnArray["invoiceNo"]   = $deliveryDocInfo["invoice_no"];
         }
         $returnArray["orderSn"]         = $orderInfo["order_sn"];
         $returnArray["goodsName"]       = $orderGoodsInfo["goods_name"];
         $returnArray["goodsNumber"]     = $orderGoodsNumber;
+        return $returnArray;
+    }
+    if( !empty( $data['couponId'] ) ){
+        $condition['id'] = $data['couponId'];
+        $couponInfo = findDataWithCondition("coupon" , $condition , "name" );
+        $returnArray["couponName"]     = $couponInfo["name"];
         return $returnArray;
     }
 
@@ -186,13 +192,13 @@ function sendWeChatMessage( $openid , $type , $data ){
         return false;
     }
     $messageArray = array(
-        "下单" =>  "为你生成了订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，24小时内请完成支付。",
-        "支付" =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，已支付成功，我们将尽快为您发货。",
-        "发货" =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，已发货，物流单号【{$data['invoiceNo']}】。请注意查收。",
-        "完成" =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，交易成功。感谢您的购买！",
-        "送券" =>  "我们向您送出了一张【优惠券名称】，请在个人中心-代金券处查收。",
-        "成功邀请" =>  "成功邀请的好友XXX，他首次成功购买后，您将获得奖励【10元】",
-        "邀请奖励" =>  "您邀请的XXX完成了首购，您获得奖励【10元】，请在个人中心-钱包里查收",
+        "下单"            =>  "为你生成了订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，24小时内请完成支付。",
+        "支付"            =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，已支付成功，我们将尽快为您发货。",
+        "发货"            =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，已发货，物流单号【{$data['invoiceNo']}】。请注意查收。",
+        "完成"            =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，交易成功。感谢您的购买！",
+        "送券"            =>  "我们向您送出了一张【{$data['couponName']}】，请在个人中心-代金券处查收。",
+        "成功邀请"         =>  "成功邀请的好友{$data['userName']}，他首次成功购买后，您将获得奖励【{$data['money']}元】",
+        "邀请奖励"         =>  "您邀请的{$data['userName']}完成了首购，您获得奖励【{$data['money']}元】，请在个人中心-钱包里查收",
 
     );
     $weChatConfig = M('wx_user')->find();

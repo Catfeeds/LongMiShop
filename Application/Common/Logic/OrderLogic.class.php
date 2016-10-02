@@ -123,7 +123,9 @@ class OrderLogic extends BaseLogic
             return callback(false,'操作失败','');
         }
 
-        sendWeChatMessageUseUserId( $order['user_id'] , "成功" , array("orderId" => $id) );
+        sendWeChatMessageUseUserId( $order['user_id'] , "完成" , array("orderId" => $id) );
+
+
 //        order_give($order);// 调用送礼物方法, 给下单这个人赠送相应的礼物
 
         //分销设置

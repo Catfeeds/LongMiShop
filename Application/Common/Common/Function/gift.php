@@ -27,6 +27,11 @@ function giveInviteGift( $userId ){
         $shopConfig = getShopConfig();
         $invitedUserId = getInvitedUserId( $userId );
         giveGift( $invitedUserId , $shopConfig['prize_invite_value'] , $shopConfig['prize_invite'] , 1);
+        $userInfo = findDataWithCondition( "users" , array( "user_id" => $userId ) ,"nickname" );
+        $shopConfig = getShopConfig( );
+        if(  $shopConfig['prize_invite'] == 2 ){
+            sendWeChatMessageUseUserId( $invitedUserId , "邀请奖励" , array("userName" => $userInfo['nickname'],"money" => $shopConfig['prize_invite_value']) );
+        }
         return true;
     }
     return false;
@@ -34,13 +39,16 @@ function giveInviteGift( $userId ){
 
 /**
  * 获取奖励
- * @param $userID
+ * @param null $userID
  * @param null $value
  * @param int $type  1 为卡券  2 为余额 3 为积分
  * @param $isInvite
  * @return bool
  */
-function giveGift( $userID , $value = null , $type = 1 , $isInvite = 0 ){
+function giveGift( $userID = null , $value = null , $type = 1 , $isInvite = 0 ){
+    if( is_null( $userID ) ){
+        return false;
+    }
     $log = $isInvite ? "邀请奖励" : "系统奖励";
     if( !is_null( $value ) ){
         if( $type == 3 ){
@@ -63,7 +71,7 @@ function giveGift( $userID , $value = null , $type = 1 , $isInvite = 0 ){
         M('coupon_list')->add($add);
         return true;
     }
-   return false;
+    return false;
 }
 
 
