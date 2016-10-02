@@ -36,6 +36,8 @@ class RecommendController extends MobileBaseController {
             header("Location: ".U('Mobile/User/index'));
             exit;
         }
+        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
+        $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );
         if(
             !empty($this ->user) &&
             isExistenceDataWithCondition("users",array("user_id"=>$inviteUserId)) &&
@@ -50,11 +52,16 @@ class RecommendController extends MobileBaseController {
             if(isSuccessToAddData( "invite_list" , $addData )){
                 giveBeInviteGift($this ->user_id);
             }
-            $this -> assign('inviteUserInfo',findDataWithCondition( "users",array("user_id"=>$inviteUserId) , " nickname" ));
+            $inviteUserInfo = findDataWithCondition( "users",array("user_id"=>$inviteUserId) , " nickname" );
+            if(  $this -> shopConfig['prize_invited_to'] == 1 ){
+                sendWeChatMessageUseUserId( $this ->user_id , "送券" , array("couponId" => $this -> shopConfig['prize_invited_to_value']) );
+            }
+            if(  $this -> shopConfig['prize_invite'] == 2 ){
+                sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array("userName" => $this ->user['nickname'],"money" => $this -> shopConfig['prize_invite_value']) );
+            }
+            $this -> assign('inviteUserInfo',$inviteUserInfo);
             $isNewUser = true;
         }
-        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
-        $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );
         $this -> assign('inviteData',getCallbackData($inviteData));
         $this -> assign('beInviteData',getCallbackData($beInviteData));
         $this -> assign('isNewUser',$isNewUser);
