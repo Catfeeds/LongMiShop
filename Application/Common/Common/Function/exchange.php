@@ -28,9 +28,9 @@ function checkCode( $code  ){
  * @return array
  */
 function getExchangeGoodsList( $code ){
-    $giftCouponId = getGiftCouponId( $code );
+    $GiftCouponId = getGiftCouponId( $code );
     $condition = array(
-        "gift_coupon_id"    =>  $giftCouponId,
+        "gift_coupon_id"    =>  $GiftCouponId,
     );
     $goodsList = M('gift_coupon_goods_list') -> where( $condition ) -> select();
     if( !empty($goodsList) ){
