@@ -103,7 +103,7 @@ class CartController extends MobileBaseController {
         $this->assign('address',$address);
 
         if($this->cartLogic->cart_count($this->user_id,1) == 0 )
-            $this->error ('你的购物车没有选中商品','Cart/cart');
+            $this->error ('你的购物车没有选中商品',U('Mobile/Cart/cart'));
 
         $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1); // 获取购物车商品
         $cartList = $result['cartList'];
