@@ -24,10 +24,11 @@ class CartController extends MobileBaseController {
 //                    M('Cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price * {$user[discount]} where (user_id ={$user[user_id]} or session_id = '{$this->session_id}') and prom_type = 0");
 //        }
     }
-    
+
     public function cart(){
         $this->display();
     }
+
     /**
      * 将商品加入购物车
      */

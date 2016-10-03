@@ -38,29 +38,36 @@ class RecommendController extends MobileBaseController {
         }
         $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
         $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );
+
         if(
             !empty($this ->user) &&
             isExistenceDataWithCondition("users",array("user_id"=>$inviteUserId)) &&
             !isExistenceDataWithCondition("invite_list",array( "user_id" =>$this ->user_id))
         ){
-            $addData = array(
-                "user_id"           => $this ->user_id,
-                "parent_user_id"    => $inviteUserId,
-                "create_time"       => time(),
-                "update_time"       => time(),
+            $condition = array(
+                "user_id" => $this ->user,
+                "pay_status" => 1,
             );
-            if(isSuccessToAddData( "invite_list" , $addData )){
-                giveBeInviteGift($this ->user_id);
+            if( !isExistenceDataWithCondition('order',$condition) ){
+                $addData = array(
+                    "user_id"           => $this ->user_id,
+                    "parent_user_id"    => $inviteUserId,
+                    "create_time"       => time(),
+                    "update_time"       => time(),
+                );
+                if(isSuccessToAddData( "invite_list" , $addData )){
+                    giveBeInviteGift($this ->user_id);
+                }
+                $inviteUserInfo = findDataWithCondition( "users",array("user_id"=>$inviteUserId) , " nickname" );
+                if(  $this -> shopConfig['prize_invited_to'] == 1 ){
+                    sendWeChatMessageUseUserId( $this ->user_id , "送券" , array("couponId" => $this -> shopConfig['prize_invited_to_value']) );
+                }
+                if(  $this -> shopConfig['prize_invite'] == 2 ){
+                    sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array("userName" => $this ->user['nickname'],"money" => $this -> shopConfig['prize_invite_value']) );
+                }
+                $this -> assign('inviteUserInfo',$inviteUserInfo);
+                $isNewUser = true;
             }
-            $inviteUserInfo = findDataWithCondition( "users",array("user_id"=>$inviteUserId) , " nickname" );
-            if(  $this -> shopConfig['prize_invited_to'] == 1 ){
-                sendWeChatMessageUseUserId( $this ->user_id , "送券" , array("couponId" => $this -> shopConfig['prize_invited_to_value']) );
-            }
-            if(  $this -> shopConfig['prize_invite'] == 2 ){
-                sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array("userName" => $this ->user['nickname'],"money" => $this -> shopConfig['prize_invite_value']) );
-            }
-            $this -> assign('inviteUserInfo',$inviteUserInfo);
-            $isNewUser = true;
         }
         $this -> assign('inviteData',getCallbackData($inviteData));
         $this -> assign('beInviteData',getCallbackData($beInviteData));
