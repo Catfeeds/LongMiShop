@@ -26,6 +26,7 @@ abstract class MobileBaseController extends BaseController {
         //验证部分
         if ( !isLoginState() ) {
             if( $this -> needAuth() ){
+                echo "请在微信端访问！";exit;
                 header("location:".U('Mobile/User/login'));
                 exit;
             }
@@ -55,7 +56,6 @@ abstract class MobileBaseController extends BaseController {
             /**
              * 普通手机页面入口
              */
-            echo "请在微信端访问！";exit;
         }
 
 
