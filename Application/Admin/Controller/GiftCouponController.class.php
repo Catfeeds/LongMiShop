@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 use Think\AjaxPage;
 
-class GiftcouponController extends BaseController {
+class GiftCouponController extends BaseController {
     /**----------------------------------------------*/
     /*                优惠券控制器                  */
     /**----------------------------------------------*/
@@ -90,7 +90,7 @@ class GiftcouponController extends BaseController {
 
             if(!$row)
                 $this->error('编辑礼品券失败');
-            $this->success('编辑礼品券成功',U('Admin/Giftcoupon/index'));
+            $this->success('编辑礼品券成功',U('Admin/GiftCoupon/index'));
             exit;
         }
         $cid = I('get.id');

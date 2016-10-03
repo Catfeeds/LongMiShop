@@ -25,11 +25,11 @@ function getGiftCouponId( $code ){
  */
 function getCouponCode( $number ){
     $codeArray = array();
-//    $giftCouponCount = M('gift_coupon')->count();
+//    $GiftCouponCount = M('gift_coupon')->count();
     $key = 0;
     for( $i = 1 ; $i <= $number; $i++){
 
-//        $codeNumber = $giftCouponCount + $i;
+//        $codeNumber = $GiftCouponCount + $i;
 //        $tempString = md5( $codeNumber . "LONGMI");
         do{
             $code = get_rand_str(8,0,1);//获取随机8位字符串

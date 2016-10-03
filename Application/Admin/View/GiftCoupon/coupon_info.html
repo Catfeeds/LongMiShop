@@ -94,7 +94,7 @@
                                                                     <input type="hidden" name="list[{$list.goods_id}][goods_name]" value="{$list.goods_name}">
                                 
                                                                 </td>
-                                                                <td><a href="javascript:void(0)" data-url="{:U('Admin/Giftcoupon/delGoodsList',array('id'=>$list['id']))}" onclick="delfun(this)">删除</a></td>
+                                                                <td><a href="javascript:void(0)" data-url="{:U('Admin/GiftCoupon/delGoodsList',array('id'=>$list['id']))}" onclick="delfun(this)">删除</a></td>
                                                             </tr>
                                                            </volist>  
                                                      <else/>
@@ -111,7 +111,7 @@
                                                                  <input type="hidden" name="list[{$list.goods_id}][goods_id]" value="{$list.goods_id}">
                                                                  <input type="hidden" name="list[{$list.goods_id}][goods_sn]" value="{$list.goods_sn}">
                                                                  <input type="hidden" name="list[{$list.goods_id}][goods_name]" value="{$list.goods_name}">
-                                                            <td><a href="javascript:void(0)" data-url="{:U('Admin/Giftcoupon/delGoodsList',array('id'=>$list['id']))}" onclick="delfun(this)">删除</a></td>
+                                                            <td><a href="javascript:void(0)" data-url="{:U('Admin/GiftCoupon/delGoodsList',array('id'=>$list['id']))}" onclick="delfun(this)">删除</a></td>
                                                         </tr>                                
                                                      </if>   
                                                 </volist>
@@ -237,7 +237,7 @@ function data_pick(id){
 
 // 选择商品
 function selectGoods(){
-	var url = "{:U('Admin/Giftcoupon/search_goods')}";
+	var url = "{:U('Admin/GiftCoupon/search_goods')}";
 	layer.open({
 		type: 2,
 		title: '选择商品',
