@@ -21,10 +21,14 @@
 		background:url('__STATIC__/images/share.png') right top no-repeat #000;
 		background-size:80%;
 	}
+    img{width: 100%;}
 </style>
 </head>
 <body>
-{$art|htmlspecialchars_decode}
+<div style="width: 100%;">
+    {$art|htmlspecialchars_decode}
+
+</div>
 <div class="me_box">
 <div class="me_l"><a href="javascript:history.go(-1);">返回</a></div>
 <div class="me_r"><a href=" {: isWeChatBrowser() ? 'javascript:share();' : 'http://www.jiathis.com/share' }">分享</a></div>
