@@ -41,7 +41,7 @@ class OrderController extends MobileBaseController {
             exit(json_encode(callback(false, "找不到订单" )));
         }
         //订单金额为0
-        if( intval($orderInfo['order_amount']) <= 0){
+        if( intval($orderInfo['order_amount']) < 0){
             if( update_pay_status($orderInfo['order_sn']) ) {
                 $condition = array(
                     "order_id" => $orderInfo['order_id'],
