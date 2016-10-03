@@ -11,6 +11,7 @@ class IndexController extends IndexBaseController {
         return array(
             'index',
             'test',
+            'test2',
             "test3"
         );
     }
@@ -317,4 +318,49 @@ class IndexController extends IndexBaseController {
         }
 
     }
+
+    public function test2(){
+        exit;
+        set_time_limit(0);
+        $model = new Model();
+
+        try{
+            $model -> startTrans();
+            for ($i = 0;; ){
+
+                $userList = M("users") -> limit($i,100) -> select();
+                if(empty($userList)){
+                    $model -> commit();
+                    dd("ok");
+                }
+                foreach ( $userList as $userItem){
+
+
+                    $add['cid'] = 2;
+                    $add['type'] = 4;
+                    $add['uid'] = $userItem['user_id'];
+                    $add['send_time'] = time();
+                    do{
+                        $code = get_rand_str(8,0,1);//获取随机8位字符串
+                        $check_exist = findDataWithCondition('coupon_list',array('code'=>$code),"code");
+                    }while($check_exist);
+                    $add['code'] = $code;
+                    $id = M('coupon_list')->add($add);
+                    if( !$id ){
+                        throw new \Exception('添加失败！');
+                    }
+                }
+
+                $i+=100;
+            }
+
+        } catch (\Exception $e){
+            $model -> rollback();
+            echo  $e->getMessage();
+        }
+
+    }
+
+
+
 }
