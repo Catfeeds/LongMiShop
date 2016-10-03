@@ -104,7 +104,7 @@
         if(couponId != 0){
             $.ajax({
                type:'post',
-               url:'/index.php?m=Mobile&c=Cart&a=ajaxCoupon',
+               url:"{:U('Mobile/Cart/ajaxCoupon')}",
                data:{couponId:couponId,money:money},
                dataType:'json',
                success:function(res){
@@ -170,7 +170,7 @@
                     return false;
                 }
                 if( key == "weChat"){
-                    location.href = "/index.php?m=Mobile&c=Order&a=toWeChatPay&id="+data.data;
+                    location.href = "{:U('Mobile/Order/toWeChatPay')}?order_id="+data.data;
                     return false;
                 }
                 if( key == "balance"){
@@ -196,13 +196,13 @@
                     return
                 }else{
                     alert(res.msg);
-                    window.location.href = "/index.php?m=Mobile&c=Order&a=order_detail&order_id="+id;
+                    window.location.href = "{:U('Mobile/Order/order_detail')}?order_id="+id;
                     return;
                 }
             },
             error:function(){
                 alert('网络超时');
-                window.location.href = "/index.php?m=Mobile&c=Order&a=order_detail&order_id="+id;
+                window.location.href = "{:U('Mobile/Order/order_detail')}?order_id="+id;
                 return;
             }
 
