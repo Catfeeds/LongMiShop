@@ -32,7 +32,9 @@
 </volist>
 <div class="site_txt">运费<span>￥{$order_info.shipping_price}</span></div>
 <!--<div class="site_txt">留言：请发顺丰</div>-->
-<!--<div class="site_txt">代金券<span>-￥10.00</span></div>-->
+<if condition="$order_info['coupon_price'] neq null">
+	<div class="site_txt">优惠金额<span>￥{$order_info['coupon_price']}</span></div>
+</if>
 <div class="site_txt">合计<span>￥{$order_info['order_amount']}</span></div>
 <div class="l">
 	<div class="l_r">
@@ -81,7 +83,7 @@
 <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
-			<a href="javascript:void(0);" onclick="toBalancePay('{$order_info.order_id}')" >余额支付</a>
+			<a href="javascript:void(0);" onclick="if(confirm('是否使用余额支付')){toBalancePay('{$order_info.order_id}')};" >余额支付</a>
 		</li>
 	</ul>
 	<ul class="mui-table-view">
@@ -105,6 +107,7 @@
 			data:{id:id},
 			dataType:'json',
 			success:function(res){
+//				console.log(res);return false;
 				if(res.state == 1){
 					alert(res.msg);
 					window.location.href = "{:U('Mobile/Order/weChatPaySuccess')}" ;

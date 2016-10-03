@@ -80,7 +80,7 @@
     <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
         <ul class="mui-table-view">
             <li class="mui-table-view-cell">
-                <a href="#" onclick="submit_order('balance');">余额支付</a>
+                <a href="#" onclick="if(confirm('是否使用余额支付')){submit_order('balance')};">余额支付</a>
             </li>
         </ul>
         <ul class="mui-table-view">
@@ -157,6 +157,7 @@
     // 提交订单
     function submit_order( key )
     {
+
         $.ajax({
             type : "POST",
             url:"{:U('Mobile/Cart/cart3')}",
