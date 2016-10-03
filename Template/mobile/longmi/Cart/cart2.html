@@ -80,7 +80,7 @@
     <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
         <ul class="mui-table-view">
             <li class="mui-table-view-cell">
-                <a href="#" onclick="if(confirm('是否使用余额支付')){submit_order('balance')};">余额支付</a>
+                <a href="#" onclick="submit_order('balance');">余额支付</a>
             </li>
         </ul>
         <ul class="mui-table-view">
@@ -103,11 +103,11 @@
         var money = {$total_price.total_fee};
         if(couponId != 0){
             $.ajax({
-               type:'post',
-               url:"{:U('Mobile/Cart/ajaxCoupon')}",
-               data:{couponId:couponId,money:money},
-               dataType:'json',
-               success:function(res){
+                type:'post',
+                url:'/index.php?m=Mobile&c=Cart&a=ajaxCoupon',
+                data:{couponId:couponId,money:money},
+                dataType:'json',
+                success:function(res){
                     if(res.state == 1){
                         $('#total_fee').text('￥'+res.data.money);
                         $('#privilege').text('￥'+res.data.privilege);
@@ -116,10 +116,10 @@
                         $('#total_fee').text('￥'+money);
                         $('#privilege').text('￥'+0);
                     }
-               },
-               error:function(){
-                alert('网络超时');
-               }
+                },
+                error:function(){
+                    alert('网络超时');
+                }
 
             });
         }else{
@@ -127,7 +127,7 @@
             $('#privilege').text('￥'+0);
         }
     });
-            $(function(){
+    $(function(){
 //        $.ajax({
 //            type : "POST",
 //            url:'/index.php?m=Mobile&c=Cart&a=cart3&act=order_price&t='+Math.random(),
@@ -157,7 +157,6 @@
     // 提交订单
     function submit_order( key )
     {
-
         $.ajax({
             type : "POST",
             url:"{:U('Mobile/Cart/cart3')}",
@@ -170,7 +169,7 @@
                     return false;
                 }
                 if( key == "weChat"){
-                    location.href = "{:U('Mobile/Order/toWeChatPay')}?order_id="+data.data;
+                    location.href = "/index.php?m=Mobile&c=Order&a=toWeChatPay&id="+data.data;
                     return false;
                 }
                 if( key == "balance"){
@@ -196,13 +195,13 @@
                     return
                 }else{
                     alert(res.msg);
-                    window.location.href = "{:U('Mobile/Order/order_detail')}?order_id="+id;
+                    window.location.href = "/index.php?m=Mobile&c=Order&a=order_detail&order_id="+id;
                     return;
                 }
             },
             error:function(){
                 alert('网络超时');
-                window.location.href = "{:U('Mobile/Order/order_detail')}?order_id="+id;
+                window.location.href = "/index.php?m=Mobile&c=Order&a=order_detail&order_id="+id;
                 return;
             }
 
