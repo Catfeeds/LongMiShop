@@ -58,7 +58,7 @@ class PaymentController extends MobileBaseController {
         $order = M('order')->where("order_id = $order_id")->find();
 
         //应付金额为零
-        if(intval($order['order_amount']) <= 0 ){
+        if(intval($order['order_amount']) < 0 ){
             update_pay_status($order['order_sn']);
             $url = U("Mobile/Order/order_detail",array("order_id"=>$order['order_id']));
             header("Location: ".$url);
