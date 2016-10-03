@@ -539,8 +539,8 @@ class WechatController extends BaseController {
         
         if(IS_POST){
             $this->config = M('config');
-            $data[]['store_title'] = I('store_title');
-            $data[]['store_desc'] = I('store_desc');
+            $data[]['wx_title'] = I('wx_title');
+            $data[]['wx_desc'] = I('wx_desc');
             $data[]['default'] = I('default');
             $data[]['details'] = I('details');
             $data[]['classify'] = I('classify');

@@ -35,29 +35,29 @@ wx.config({
 wx.ready(function(){
     // 获取"分享到朋友圈"按钮点击状态及自定义分享内容接口
     wx.onMenuShareTimeline({
-        title: "{$lmshop_config['shop_info_store_title']}", // 分享标题
+        title: "{$lmshop_config['wechat_wx_title']}", // 分享标题
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
     });
 
     // 获取"分享给朋友"按钮点击状态及自定义分享内容接口
     wx.onMenuShareAppMessage({
-        title: "{$lmshop_config['shop_info_store_title']}", // 分享标题
-        desc: "{$lmshop_config['shop_info_store_desc']}", // 分享描述
+        title: "{$lmshop_config['wechat_wx_title']}", // 分享标题
+        desc: "{$lmshop_config['wechat_wx_desc']}", // 分享描述
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
     });
 	// 分享到QQ
 	wx.onMenuShareQQ({
-        title: "{$lmshop_config['shop_info_store_title']}", // 分享标题
-        desc: "{$lmshop_config['shop_info_store_desc']}", // 分享描述
+        title: "{$lmshop_config['wechat_wx_title']}", // 分享标题
+        desc: "{$lmshop_config['wechat_wx_desc']}", // 分享描述
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
 	});	
 	// 分享到QQ空间
 	wx.onMenuShareQZone({
-        title: "{$lmshop_config['shop_info_store_title']}", // 分享标题
-        desc: "{$lmshop_config['shop_info_store_desc']}", // 分享描述
+        title: "{$lmshop_config['wechat_wx_title']}", // 分享标题
+        desc: "{$lmshop_config['wechat_wx_desc']}", // 分享描述
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
 	});
