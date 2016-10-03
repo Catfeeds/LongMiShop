@@ -45,7 +45,7 @@ class RecommendController extends MobileBaseController {
             !isExistenceDataWithCondition("invite_list",array( "user_id" =>$this ->user_id))
         ){
             $condition = array(
-                "user_id" => $this ->user,
+                "user_id" => $this ->user_id,
                 "pay_status" => 1,
             );
             if( !isExistenceDataWithCondition('order',$condition) ){
