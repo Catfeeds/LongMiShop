@@ -148,9 +148,14 @@
                 <php> $number ++ ;</php>
             </foreach>
 
-            <div class="m33_btn" id="next1"><a href="javascript:void(0);"  onclick="newSubmit();">下一步</a></div>
-            <!--<div class="m33_btn" id="next2"><a href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a></div>-->
-
+            <if condition =" $goods['is_on_sale'] == 1">
+                <div class="m33_btn" id="next1"><a href="javascript:void(0);"  onclick="newSubmit();">下一步</a></div>
+                <!--<div class="m33_btn" id="next2"><a href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a></div>-->
+            <else/>
+                <div class="m33_btn " >
+                    <a style="background: #c2c2c2; border-color: #c0c0c0;" href="javascript:void(0);">商品已下架</a>
+                </div>
+            </if>
         </div>
     </div>
     <div class="f_index">

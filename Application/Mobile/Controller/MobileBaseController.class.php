@@ -55,6 +55,7 @@ abstract class MobileBaseController extends BaseController {
             /**
              * 普通手机页面入口
              */
+            echo "请在微信端访问！";exit;
         }
 
 
