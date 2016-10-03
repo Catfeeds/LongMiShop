@@ -148,7 +148,7 @@
                 <php> $number ++ ;</php>
             </foreach>
 
-            <if condition =" $$goods['is_on_sale'] == 1">
+            <if condition =" $goods['is_on_sale'] == 1">
                 <div class="m33_btn" id="next1"><a href="javascript:void(0);"  onclick="newSubmit();">下一步</a></div>
                 <!--<div class="m33_btn" id="next2"><a href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a></div>-->
             <else/>
