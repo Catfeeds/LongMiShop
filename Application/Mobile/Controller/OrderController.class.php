@@ -40,6 +40,22 @@ class OrderController extends MobileBaseController {
         if( empty($orderInfo) ){
             exit(json_encode(callback(false, "找不到订单" )));
         }
+        //订单金额为0
+        if( intval($orderInfo['order_amount']) <= 0){
+            if( update_pay_status($orderInfo['order_sn']) ) {
+                $condition = array(
+                    "order_id" => $orderInfo['order_id'],
+                );
+                $save = array(
+                    'pay_code'=>"balance",
+                    'pay_name'=>"余额支付"
+                );
+                M('order') -> where( $condition ) -> save( $save );
+                exit(json_encode(callback(true, "支付成功" )));
+                exit;
+            }
+        }
+
         if( $this -> user['user_money'] < $orderInfo['order_amount']  ){
             exit(json_encode(callback(false, "余额不足" )));
         }
@@ -151,6 +167,10 @@ class OrderController extends MobileBaseController {
         $order_info["invoice_no"] = implode(' , ', $invoice_no);
         //获取订单操作记录
         $order_action = M('order_action')->where(array('order_id'=>$id))->select();
+        //获取使用代金券
+        // $coupon_list = M('coupon_list')->where(array('order_id'=>$order_info['order_id']))->find();
+        // $coupon_res = empty($coupon_list) ? '' : M('coupon')->where(array('id'=>$coupon_list['cid']))->find();
+        // $this->assign('coupon_res',$coupon_res);
         $this->assign('order_status',C('ORDER_STATUS'));
         $this->assign('shipping_status',C('SHIPPING_STATUS'));
         $this->assign('pay_status',C('PAY_STATUS'));
