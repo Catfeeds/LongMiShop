@@ -78,14 +78,14 @@ function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
     $usersLogic = new \Common\Logic\UsersLogic();
     $result = $usersLogic -> thirdLogin($data);
 
-    if($result['status'] == 1){
+//    if($result['status'] == 1){
         $openid = session('openid');
         session(null);
         session('openid',$openid);
 
         echo "<script language=JavaScript> location.replace(location.href);</script>";
         exit;
-    }
+//    }
 }
 
 
@@ -276,5 +276,24 @@ function getInviteList( $userId ){
         }
     }
     return $list;
-
 }
+
+/**
+ * 获取邀请人数量
+ * @param $userId
+ * @return mixed
+ */
+function getInviteNumber( $userId ){
+    return M('invite_list') -> where(array("parent_user_id" => $userId)) -> count();
+}
+
+/**
+ * 获取邀请人id
+ * @param $userId
+ * @return mixed
+ */
+function getInvitedUserId( $userId ){
+    $invitedUserInfo = findDataWithCondition( "invite_list" , array("user_id" => $userId) , "parent_user_id" );
+    return $invitedUserInfo['parent_user_id'];
+}
+

@@ -318,7 +318,8 @@ function update_pay_status($order_sn,$pay_status = 1)
 
     giveInviteGift( $order['user_id'] );
 
-    sendWeChatMessageUseUserId( $order['user_id'] , "支付" , array("orderSn" => $order_sn) );
+
+    sendWeChatMessageUseUserId( $order['user_id'] , "支付" , array("orderId" => $order['order_id']) );
     return true;
     //分销设置
 //    M('rebate_log')->where("order_id = {$order['order_id']}")->save(array('status'=>1));
