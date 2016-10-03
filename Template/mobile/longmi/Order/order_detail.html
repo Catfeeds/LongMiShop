@@ -32,7 +32,9 @@
 </volist>
 <div class="site_txt">运费<span>￥{$order_info.shipping_price}</span></div>
 <!--<div class="site_txt">留言：请发顺丰</div>-->
-<!--<div class="site_txt">代金券<span>-￥10.00</span></div>-->
+<if condition="$order_info['coupon_price'] neq null">
+	<div class="site_txt">优惠金额<span>￥{$order_info['coupon_price']}</span></div>
+</if>
 <div class="site_txt">合计<span>￥{$order_info['order_amount']}</span></div>
 <div class="l">
 	<div class="l_r">
@@ -105,6 +107,7 @@
 			data:{id:id},
 			dataType:'json',
 			success:function(res){
+//				console.log(res);return false;
 				if(res.state == 1){
 					alert(res.msg);
 					window.location.href = "{:U('Mobile/Order/weChatPaySuccess')}" ;

@@ -15,7 +15,14 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$us
     //logo
     $logo = "http://".$_SERVER['HTTP_HOST'].$web_config['shop_info_store_logo']."";
     //默认图片
-    $imgurl = $default==1 ? $logo : "http://" . $_SERVER['HTTP_HOST'] . $user['head_pic'] ;
+    // $imgurl = $default==1 ? $logo : "http://" . $_SERVER['HTTP_HOST'] . $user['head_pic'] ;
+    if($default==1){
+       $imgurl =  $logo;
+    }else{
+        //是否微信头像
+        $str = substr($user['head_pic'],4);
+        $imgurl = $str == 'http' ? $user['head_pic'] : "http://" . $_SERVER['HTTP_HOST'] . $user['head_pic'] ;
+    }
 
     //默认连接
     $link = "http://".$_SERVER['HTTP_HOST']."/index.php?m=Mobile&c=Index&a=index";

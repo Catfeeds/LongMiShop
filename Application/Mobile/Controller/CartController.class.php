@@ -268,12 +268,14 @@ class CartController extends MobileBaseController {
                     $couResMoney = intval($couRes['money']) / 100;
                     $moneyRes = $money * $couResMoney;
                     $privilege = $money - $moneyRes;
-                    exit(json_encode(callback(true,"计算成功",array('money'=>$moneyRes,'privilege'=>$privilege))));
                 }else{
                    $moneyRes = $money - intval($couRes['money']);
                    $privilege = $money - $moneyRes;
-                   exit(json_encode(callback(true,"计算成功",array('money'=>$moneyRes,'privilege'=>$privilege))));
                 }
+                if($moneyRes < 0){
+                    $moneyRes = 0;
+                }
+                exit(json_encode(callback(true,"计算成功",array('money'=>$moneyRes,'privilege'=>$privilege))));
             }else{
                exit(json_encode(callback(false,"没有此优惠券",array('res'=>$couponListRes)))); 
             }
