@@ -117,7 +117,7 @@ class WeChatController extends Controller {
                                 <Content><![CDATA[%s]]></Content>
                                 <FuncFlag>0</FuncFlag>
                                 </xml>";
-        $contentStr = '欢迎来到龙米创意【'.$fromUsername.'】!';
+        $contentStr = '欢迎来到龙米!';
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
         exit($resultStr);
 
