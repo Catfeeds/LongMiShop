@@ -20,7 +20,7 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$us
        $imgurl =  $logo;
     }else{
         //是否微信头像
-        if(strpos($user['head_pic'],'http://wx.qlogo.cn/') > 0){
+        if(strstr($user['head_pic'],'wx.qlogo.cn')){
             $imgurl =  $user['head_pic'];
         }else{
             $imgurl = "http://" . $_SERVER['HTTP_HOST'] . $user['head_pic'] ;
