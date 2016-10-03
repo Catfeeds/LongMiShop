@@ -81,7 +81,7 @@
 <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
-			<a href="javascript:void(0);" onclick="toBalancePay('{$order_info.order_id}')" >余额支付</a>
+			<a href="javascript:void(0);" onclick="if(confirm('是否使用余额支付')){toBalancePay('{$order_info.order_id}')};" >余额支付</a>
 		</li>
 	</ul>
 	<ul class="mui-table-view">
