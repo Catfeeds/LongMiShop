@@ -184,9 +184,9 @@ class GoodsController extends BaseController {
             $grandson_ids = getCatGrandson($cat_id); 
             $where .= " and cat_id in(".  implode(',', $grandson_ids).") "; // 初始化搜索条件
         }
-        if(is_supplier()){
-            $where .= " and admin_id ='".session('admin_id')."'";
-        }
+//        if(is_supplier()){
+//            $where .= " and admin_id ='".session('admin_id')."'";
+//        }
 
         
         

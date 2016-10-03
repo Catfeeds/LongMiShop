@@ -7,6 +7,7 @@ return array(
     /* 加载公共函数 */
     'LOAD_EXT_FILE' =>'common',
     'AUTH_CODE' => "LongMi", //安装完毕之后不要改变，否则所有密码都会出错
+//    'AUTH_CODE' => "TPSHOP", //安装完毕之后不要改变，否则所有密码都会出错
     //'URL_CASE_INSENSITIVE' => false, //URL大小写不敏感
 //    'LOAD_EXT_CONFIG'=>'db.company,route', // 加载数据库配置文件
 //    'LOAD_EXT_CONFIG'=>'db.home,route', // 加载数据库配置文件
