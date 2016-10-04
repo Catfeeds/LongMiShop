@@ -198,7 +198,8 @@ function orderStatusDesc($order_id = 0, $order = array())
     if(($order['shipping_status'] == 1) && ($order['order_status'] == 1))
         return 'WAITRECEIVE'; //'待收货',
     if($order['order_status'] == 2)
-        return 'WAITCCOMMENT'; //'待评价',
+        return 'FINISH'; //'已完成',
+//        return 'WAITCCOMMENT'; //'待评价',
     if($order['order_status'] == 3)
         return 'CANCEL'; //'已取消',
     if($order['order_status'] == 4)

@@ -96,11 +96,11 @@
         {$goods.goods_content|htmlspecialchars_decode}
     </div>
 
-    <div class="price_main">
-        <div class="titel_box">用户评价</div>
-    </div>
-    <div class="evaluate_box" id="my_comment_list">
-    </div>
+    <!--<div class="price_main">-->
+        <!--<div class="titel_box">用户评价</div>-->
+    <!--</div>-->
+    <!--<div class="evaluate_box" id="my_comment_list">-->
+    <!--</div>-->
 
     <div style="height:55px"></div>
     <div class="com_d">
@@ -204,7 +204,7 @@
                 get_goods_price();
             });
             get_goods_price();
-            ajaxComment(1,1);// ajax 加载评价列表
+//            ajaxComment(1,1);// ajax 加载评价列表
         });
         function newSubmit(){
             var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表   //alert(spec_goods_price['28_100']['price']);
@@ -310,15 +310,15 @@
                 arr.splice(index, 1);
             return arr;
         };
-        function ajaxComment(commentType,page){
-            $.ajax({
-                type : "GET",
-                url:"/index.php?m=Mobile&c=goods&a=ajaxComment&goods_id={$goods['goods_id']}&commentType="+commentType+"&p="+page,//+tab,
-                success: function(data){
-                    $("#my_comment_list").empty().append(data);
-                }
-            });
-        }
+//        function ajaxComment(commentType,page){
+//            $.ajax({
+//                type : "GET",
+//                url:"/index.php?m=Mobile&c=goods&a=ajaxComment&goods_id={$goods['goods_id']}&commentType="+commentType+"&p="+page,//+tab,
+//                success: function(data){
+//                    $("#my_comment_list").empty().append(data);
+//                }
+//            });
+//        }
 //        setInterval("get_goods_price();console.log('123')",500);
 
 
