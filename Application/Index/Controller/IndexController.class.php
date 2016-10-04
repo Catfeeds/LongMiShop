@@ -26,6 +26,7 @@ class IndexController extends IndexBaseController {
     }
 
     public function test4(){
+        exit;
         $weChatConfig = M('wx_user')->find();
         if( empty( $weChatConfig ) ){
             return false;
