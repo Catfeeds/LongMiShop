@@ -231,6 +231,7 @@ function sendWeChatMessage( $openid , $type , $data ){
     if( empty( $weChatConfig ) ){
         return false;
     }
+
     $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
     $jsSdkLogic -> push_msg( $openid , $messageArray[$type] );
     return true;
