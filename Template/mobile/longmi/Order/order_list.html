@@ -3,16 +3,16 @@
 <div class="top1_list">
     <ul>
         <li class="<if condition="$_GET[type] eq 'WAITPAY'">top1_list_h</if>">
-        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITPAY'))}">待付款</a>
+        <a href="{:U('Mobile/Order/order_list',array('type'=>'WAITPAY'))}">待付款</a>
         </li>
         <li class="<if condition="$_GET[type] eq 'WAITSEND'">top1_list_h</if>">
-        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITSEND'))}">待发货</a>
+        <a href="{:U('Mobile/Order/order_list',array('type'=>'WAITSEND'))}">待发货</a>
         </li>
         <li class="<if condition="$_GET[type] eq 'WAITRECEIVE'">top1_list_h</if>">
-        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a>
+        <a href="{:U('Mobile/Order/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a>
         </li>
         <li class="<if condition="$_GET[type] eq 'WAITCCOMMENT'">top1_list_h</if>">
-        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a>
+        <a href="{:U('Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a>
         </li>
     </ul>
 </div>
@@ -63,12 +63,12 @@
                             <a href="{:U('Mobile/Order/order_confirm',array('id'=>$list['order_id']))}">收货确认</a>
                         </div>
                     </if>
-                    <if condition="$list.comment_btn eq 1 && $list.isReturn neq 1">
-                        <div class="l_btn2">
-                            <a href="{:U('/Mobile/Order/orderEvaluate',array('order_id'=>$list['order_id']))}">评价
-                            </a>
-                        </div>
-                    </if>
+                    <!--<if condition="$list.comment_btn eq 1 && $list.isReturn neq 1">-->
+                        <!--<div class="l_btn2">-->
+                            <!--<a href="{:U('/Mobile/Order/orderEvaluate',array('order_id'=>$list['order_id']))}">评价-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    <!--</if>-->
                     <if condition="$list.return_btn eq 1 && $list.isReturn neq 1">
                         <div class="l_btn2">
                             <a href="{:U('/Mobile/Order/orderReturn',array('order_id'=>$list['order_id']))}">退货

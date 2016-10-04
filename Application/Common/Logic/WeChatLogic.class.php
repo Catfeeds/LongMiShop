@@ -285,6 +285,12 @@ class WeChatLogic extends BaseLogic
                 if( !isLoginState() ){
                     $result = loginFromOpenid( $this -> openid );
                     if( callbackIsTrue( $result ) ){
+                        $redirectedUrl = session("redirectedUrl");
+                        if( !empty( $redirectedUrl ) ){
+                            session("redirectedUrl",null);
+                            header("Location: ".$redirectedUrl);
+                            exit;
+                        }
                         echo "<script language=JavaScript> location.replace(location.href);</script>";
                         exit;
                     }
