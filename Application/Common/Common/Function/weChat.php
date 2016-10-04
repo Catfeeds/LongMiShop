@@ -147,7 +147,13 @@ function getWeChatMessageData( $data , $type ){
         $condition['order_id'] = $data['orderId'];
         $orderInfo = findDataWithCondition("order" , $condition , "order_sn" );
         $orderGoodsInfo = findDataWithCondition("order_goods" , $condition , "goods_name" );
-        $orderGoodsNumber = M("order_goods") -> where($condition) -> count();
+        $orderGoodsNumber = 0;
+        $orderGoodsNumberList = M("order_goods") -> where($condition) -> field("goods_num") -> select();
+        if( !empty($orderGoodsNumberList) ){
+            foreach ($orderGoodsNumberList as $orderGoodsNumberItem){
+                $orderGoodsNumber += $orderGoodsNumberItem['goods_num'];
+            }
+        }
         if( $type == "发货" ){
             $deliveryDocInfo = findDataWithCondition("delivery_doc" , $condition , "invoice_no" );
             $returnArray["invoiceNo"]   = $deliveryDocInfo["invoice_no"];
