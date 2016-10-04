@@ -65,7 +65,7 @@
                                             <select name="log_delivery" id="region">
                                                 <option value="0">请选择配送方式</option>
                                                 <volist name="region_list" id="item">
-                                                    <option value="{: $item}">{: $item}</option>
+                                                    <option value="{: $item}" {: $edit_list['log_delivery'] == $item ? 'selected' : ''}>{: $item}</option>
                                                 </volist>
                                             </select>
                                             <span style="color:red">必选</span>
