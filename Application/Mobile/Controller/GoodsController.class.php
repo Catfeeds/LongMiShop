@@ -94,7 +94,8 @@ class GoodsController extends MobileBaseController {
     	$filter_attr  = $goodsLogic->get_filter_attr($filter_goods_id,$filter_param,'goodsList',1); // 获取指定分类下的帅选属性
 
     	$count = count($filter_goods_id);
-    	$page = new Page($count,4);
+        $limit = 4;
+    	$page = new Page($count,$limit);
     	if($count > 0)
     	{
     		$goods_list = M('goods')->where("goods_id in (".  implode(',', $filter_goods_id).")")->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows)->select();
@@ -116,6 +117,8 @@ class GoodsController extends MobileBaseController {
     	$this->assign('filter_param',$filter_param); // 帅选条件
     	$this->assign('cat_id',$id);
     	$this->assign('page',$page);// 赋值分页输出
+        $this->assign('count',$count);
+        $this->assign('limit',$limit);
     	$this->assign('sort_asc', $sort_asc == 'asc' ? 'desc' : 'asc');
     	C('TOKEN_ON',false);
 
