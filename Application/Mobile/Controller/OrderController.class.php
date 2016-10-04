@@ -7,7 +7,7 @@ class OrderController extends MobileBaseController {
 
     function exceptAuthActions()
     {
-        return null;
+        return null;//array("weChatPaySuccess");
     }
 
 
