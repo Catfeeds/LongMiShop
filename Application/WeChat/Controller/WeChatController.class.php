@@ -5,26 +5,30 @@ use Think\Controller;
 class WeChatController extends Controller {
 
     public $client;
-    public $wechat_config;
+    public $weChatConfig;
+    public $shopConfig;
 
     public function _initialize(){
+        $this -> shopConfig = getShopConfig();
+        dd($this -> shopConfig);
         //获取微信配置信息
-        $this->wechat_config = M('wx_user')->find();
+        $this->weChatConfig = M('wx_user')->find();
         $options = array(
-            'token'=>$this->wechat_config['w_token'], //填写你设定的key
-            'encodingaeskey'=>$this->wechat_config['aeskey'], //填写加密用的EncodingAESKey
-            'appid'=>$this->wechat_config['appid'], //填写高级调用功能的app id
-            'appsecret'=>$this->wechat_config['appsecret'], //填写高级调用功能的密钥
+            'token'=>$this->weChatConfig['w_token'], //填写你设定的key
+            'encodingaeskey'=>$this->weChatConfig['aeskey'], //填写加密用的EncodingAESKey
+            'appid'=>$this->weChatConfig['appid'], //填写高级调用功能的app id
+            'appsecret'=>$this->weChatConfig['appsecret'], //填写高级调用功能的密钥
         );
 
     }
+
 
     public function oauth(){
 
     }
 
     public function index(){
-        if($this->wechat_config['wait_access'] == 0)
+        if($this->weChatConfig['wait_access'] == 0)
             exit($_GET["echostr"]);
         else
             $this->responseMsg();
@@ -49,8 +53,7 @@ class WeChatController extends Controller {
         $keyword = trim($postObj->Content);
         $time = time();
 
-        setLogResult(json_encode($postObj),"微信进来","test");
-        setLogResult($postObj->MsgType,"微信进来事件","test");
+//        setLogResult(json_encode($postObj),"微信进来","test");
         //点击菜单拉取消息时的事件推送
         /*
          * 1、click：点击推事件
@@ -62,7 +65,12 @@ class WeChatController extends Controller {
             $keyword = trim($postObj->EventKey);
         }
 
-        setLogResult($keyword,"微信进来key","test");
+        if($postObj->MsgType == 'event' && $postObj->Event == 'subscribe')
+        {
+            $keyword = $this -> shopConfig['basic_subscribe_reply'];
+        }
+
+
 
         if(empty($keyword)){
             exit("Input something...");
