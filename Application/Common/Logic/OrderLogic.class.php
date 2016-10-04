@@ -19,7 +19,7 @@ class OrderLogic extends BaseLogic
     //获取订单数据
     public function getOrderInfo($id , $userId = null){
         $condition['order_id'] = $id;
-        if( is_null($userId) ){
+        if( !is_null($userId) ){
             $condition['user_id'] = $userId;
         }
         return M('order')->where($condition)->find();
