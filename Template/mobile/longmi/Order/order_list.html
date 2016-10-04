@@ -84,9 +84,11 @@
             </div>
         </volist>
     </div>
-    <div class="Load—more" id="getmore">
-        <a  href="javascript:void(0)" onClick="ajax_sourch_submit()">点击加载更多</a>
-    </div>
+    <if condition="$count gt $limit">
+        <div class="Load—more" id="getmore">
+            <a  href="javascript:void(0)" onClick="ajax_sourch_submit()">点击加载更多</a>
+        </div>
+    </if>
 
     <script language="javascript">
         var  page = 1;
