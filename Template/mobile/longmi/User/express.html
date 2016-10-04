@@ -9,15 +9,16 @@
 </head>
 <body>
 <div class="express_box">
-	<if condition="$expressData['status'] eq 1">
+	<if condition="$expressData['status'] eq 200">
 		<div class="express_txt">
-			<p><span>快递编号：</span>{: $expressData['codenumber']}</p>
+			<p><span>快递编号：</span>{: $odd_numbers}</p>
 			<p><span>承运人：</span>{: $expressData['com']}</p>
 			<!-- <p><span>预计送达时间：</span>2016-08-25</p> -->
 		</div>
 
 		<div class="course_box">
 			<div class="course">
+
 			<volist name="expressData['data']" id="id" key="key">
 				<div class="{: $key==1 ? 'before' : 'now'}"><p>{$id['context']}</p>
 				<span>{$id['time']}</span></div>
