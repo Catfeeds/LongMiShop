@@ -44,7 +44,7 @@
                 </div>
                 <div class="panel-body ">   
                     <!--表单数据-->
-                    <form action="__CONTROLLER__/save" method="post">              
+                    <form action="__CONTROLLER__/save" method="post" id="add_from">
                         <!--通用信息-->
                     <div class="tab-content col-md-10">                 	  
                         <div class="tab-pane active" id="tab_tongyong">                           
@@ -62,12 +62,13 @@
                                     <tr>
                                         <td>配送方式</td>
                                         <td>
-                                            <select name="log_delivery" id="">
+                                            <select name="log_delivery" id="region">
                                                 <option value="0">请选择配送方式</option>
                                                 <volist name="region_list" id="item">
                                                     <option value="{: $item}">{: $item}</option>
                                                 </volist>
                                             </select>
+                                            <span style="color:red">必选</span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -272,7 +273,10 @@
                                 		<input name="log_id" type="hidden" value="{: !empty($edit_list)?$edit_list['log_id']:0}">
                                 	</td>
                                 	<td class="col-sm-4"></td>
-                                	<td class="text-right"><input class="btn btn-primary" type="submit" value="保存"></td>
+                                	<td class="text-right">
+                                            <!--<input class="btn btn-primary" type="submit" value="保存" >-->
+                                        <button class="btn btn-primary" type="button" onclick="from_sub()">保存</button>
+                                    </td>
                                 	</tr>
                                 </tfoot>                               
                             </table>
@@ -492,6 +496,16 @@ function del_li(obj){
 }
 
 
+//表单提交
+    function from_sub(){
+        var region = $('#region').val();
+        if(region == 0) {
+            alert('请选择配送方式');
+            return false;
+        }else{
+            $('#add_from').submit();
+        }
+    }
 
 </script>
 </body>
