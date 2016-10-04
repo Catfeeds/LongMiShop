@@ -172,7 +172,8 @@ class GoodsController extends BaseController {
         I('brand_id') && $where = "$where and brand_id = ".I('brand_id') ;
         (I('is_on_sale') !== '') && $where = "$where and is_on_sale = ".I('is_on_sale') ;                
         $cat_id = I('cat_id');
-        // 关键词搜索               
+        $cat_id = I('cat_id');
+        // 关键词搜索
         $key_word = I('key_word') ? trim(I('key_word')) : '';
         if($key_word)
         {
@@ -268,9 +269,9 @@ class GoodsController extends BaseController {
             
             $goodsInfo = D('Goods')->where('goods_id='.I('GET.id',0))->find();
 
-            if(is_supplier() && $goodsInfo['admin_id'] != session('admin_id') ){
-                $this->error('商品id有误');
-            }
+//            if(is_supplier() && $goodsInfo['admin_id'] != session('admin_id') ){
+//                $this->error('商品id有误');
+//            }
             //$cat_list = $GoodsLogic->goods_cat_list(); // 已经改成联动菜单            
             $level_cat = $GoodsLogic->find_parent_cat($goodsInfo['cat_id']); // 获取分类默认选中的下拉框
             $level_cat2 = $GoodsLogic->find_parent_cat($goodsInfo['extend_cat_id']); // 获取分类默认选中的下拉框
