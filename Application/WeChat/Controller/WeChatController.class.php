@@ -49,6 +49,8 @@ class WeChatController extends Controller {
         $keyword = trim($postObj->Content);
         $time = time();
 
+        setLogResult(json_encode($postObj),"微信进来","test");
+        setLogResult($postObj->MsgType,"微信进来事件","test");
         //点击菜单拉取消息时的事件推送
         /*
          * 1、click：点击推事件
@@ -60,6 +62,7 @@ class WeChatController extends Controller {
             $keyword = trim($postObj->EventKey);
         }
 
+        setLogResult($keyword,"微信进来key","test");
 
         if(empty($keyword)){
             exit("Input something...");
