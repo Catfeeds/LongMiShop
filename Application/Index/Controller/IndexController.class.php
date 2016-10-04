@@ -12,7 +12,8 @@ class IndexController extends IndexBaseController {
             'index',
             'test',
             'test2',
-            "test3"
+            'test3',
+            "test4"
         );
     }
 
@@ -24,6 +25,14 @@ class IndexController extends IndexBaseController {
     	$this->display();
     }
 
+    public function test4(){
+        $weChatConfig = M('wx_user')->find();
+        if( empty( $weChatConfig ) ){
+            return false;
+        }
+        $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
+        $jsSdkLogic -> push_msg( "owjy5v4020Mh7yNAT0aVapESwqNM" , "<a href='http://www.baidu.com'>23333</a>" );
+    }
     public function test(){
         exit;
         set_time_limit(0);
