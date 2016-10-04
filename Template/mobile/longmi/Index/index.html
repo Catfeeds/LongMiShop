@@ -82,7 +82,7 @@
     <div class="bd">
         <ul>
             <assign name="fl" value="1"/>
-            <tpshop sql="select * from __PREFIX__goods where is_new=1 order by sort limit 8" item="v" key="k">
+            <tpshop sql="select * from __PREFIX__goods where is_new=1 order by sort limit 4" item="v" key="k">
                 <li>
                     <div class="cp">
                         <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}"></a></div>
@@ -92,7 +92,7 @@
                             <span>￥{$v.shop_price}</span> </div>
                     </div>
                 </li>
-                <if condition="($fl++%2 eq 0) && ($fl lt 8)"></ul><ul></if>
+                <if condition="($fl++%2 eq 0) && ($fl lt 4)"></ul><ul></if>
             </tpshop>
         </ul>
     </div>
