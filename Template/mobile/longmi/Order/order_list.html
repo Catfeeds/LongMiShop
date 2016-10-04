@@ -3,16 +3,16 @@
 <div class="top1_list">
     <ul>
         <li class="<if condition="$_GET[type] eq 'WAITPAY'">top1_list_h</if>">
-        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITPAY'))}">待付款</a>
+        <a href="{:U('Mobile/Order/order_list',array('type'=>'WAITPAY'))}">待付款</a>
         </li>
         <li class="<if condition="$_GET[type] eq 'WAITSEND'">top1_list_h</if>">
-        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITSEND'))}">待发货</a>
+        <a href="{:U('Mobile/Order/order_list',array('type'=>'WAITSEND'))}">待发货</a>
         </li>
         <li class="<if condition="$_GET[type] eq 'WAITRECEIVE'">top1_list_h</if>">
-        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a>
+        <a href="{:U('Mobile/Order/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a>
         </li>
         <li class="<if condition="$_GET[type] eq 'WAITCCOMMENT'">top1_list_h</if>">
-        <a href="{:U('/Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a>
+        <a href="{:U('Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a>
         </li>
     </ul>
 </div>
