@@ -3171,28 +3171,29 @@ transform:translate3d(100%, 0, 0) scaleX(.5)
 .mui-pull-caption span.mui-in {
 	display: inline
 }
-.mui-toast-container {
+.mui-toast-container{
 	position: fixed;
 	z-index: 9999;
+	bottom: 20px;
 	width: 100%;
 	-webkit-transition: opacity .8s;
 	transition: opacity .8s;
-	opacity: 0;
-	top: 40%;
+	opacity: 0
+
 }
-.mui-toast-container.mui-active {
-	opacity: 1
+.mui-toast-container.mui-active{
+	opacity:1
 }
-.mui-toast-message {
+.mui-toast-message{
 	font-size: 14px;
 	width: 270px;
 	margin: 5px auto;
 	padding: 5px;
 	text-align: center;
-	color: #FFFFFF;
+	color: #FFF;
 	border-radius: 7px;
-	background-color: #b02f4b;
-	line-height: 70px;
+	background-color: #000000;
+	line-height: 50px;
 }
 .mui-numbox {
 	position: relative;
