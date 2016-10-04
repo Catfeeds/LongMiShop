@@ -10,7 +10,6 @@ class WeChatController extends Controller {
 
     public function _initialize(){
         $this -> shopConfig = getShopConfig();
-        dd($this -> shopConfig);
         //获取微信配置信息
         $this->weChatConfig = M('wx_user')->find();
         $options = array(
@@ -53,7 +52,7 @@ class WeChatController extends Controller {
         $keyword = trim($postObj->Content);
         $time = time();
 
-        setLogResult(json_encode($postObj),"微信进来","test");
+//        setLogResult(json_encode($postObj),"微信进来","test");
         //点击菜单拉取消息时的事件推送
         /*
          * 1、click：点击推事件
@@ -69,7 +68,7 @@ class WeChatController extends Controller {
         {
             $keyword = $this -> shopConfig['basic_subscribe_reply'];
         }
-        setLogResult($keyword,"微信进来keyword","test");
+//        setLogResult($keyword,"微信进来keyword","test");
 
 
         if(empty($keyword)){
