@@ -69,6 +69,8 @@ class UserController extends MobileBaseController {
 
         $this->assign('account_log',$account_log);
         $this->assign('page',$data['show']);
+        $this->assign('count',$data['count']);
+        $this->assign('limit',$data['limit']);
 
         if($_GET['is_ajax'])
         {
@@ -85,6 +87,8 @@ class UserController extends MobileBaseController {
         $coupon_list = $data['result'];
         $this->assign('coupon_list',$coupon_list);
         $this->assign('page',$data['show']);
+        $this->assign('count',$data['count']);
+        $this->assign('limit',$data['limit']);
         if($_GET['is_ajax'])
         {
             $this->display('ajax_coupon_list');
@@ -712,6 +716,8 @@ class UserController extends MobileBaseController {
     	$data = $userLogic->get_goods_collect($this->user_id);
     	$this->assign('page',$data['show']);// 赋值分页输出
     	$this->assign('goods_list',$data['result']);
+        $this->assign('count',$data['count']);
+        $this->assign('limit',$data['limit']);
         if($_GET['is_ajax'])
         {
             $this->display('ajax_collect_list');
@@ -769,11 +775,14 @@ class UserController extends MobileBaseController {
     public function points(){
         $condition = "pay_points != 0 and user_id=".$this->user_id;
         $count = M('account_log')->where($condition)->count();
-        $Page = new Page($count,16);
+        $limit = 16;
+        $Page = new Page($count,$limit);
     	$account_log = M('account_log')->where($condition)->order('log_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
         $showpage = $Page->show();
     	$this->assign('account_log',$account_log);
         $this->assign('page',$showpage);
+        $thi->assign('count',$count);
+        $thi->assign('limit',$limit);
         if($_GET['is_ajax'])
         {
             $this->display('ajax_points');
@@ -1064,11 +1073,14 @@ class UserController extends MobileBaseController {
         $this->push_message();
         $where .= "is_open = 1 AND  device_type != 1 ";
         $count = M('article')->where($where)->count();
-        $Page = new Page($count,3);
+        $limit = 3;
+        $Page = new Page($count,$limit);
         $art_list = M('article')->field('article_id,title,content,thumb,publish_time')->where($where)->order('publish_time DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
         $need_top = I('need_top',0);
         $this->assign('need_top',$need_top);
         $this->assign('art_list',$art_list);
+        $this->assign('count',$count);
+        $this->assign('limit',$limit);
         if($_GET['is_ajax'])
         {
             $this->display('ajax_message');

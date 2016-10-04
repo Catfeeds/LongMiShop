@@ -256,13 +256,17 @@ class UsersLogic extends BaseLogic
         }
 
         $count = M('account_log')->where($where)->count();
-        $Page = new Page($count,16);
+        $limit = 16;
+        $Page = new Page($count,$limit);
         $logs = M('account_log')->where($where)->order('change_time desc')->limit($Page->firstRow.','.$Page->listRows)->select();
 
         $return['status'] = 1;
         $return['msg'] = '';
         $return['result'] = $logs;
         $return['show'] = $Page->show();
+        $return['count'] = $count;
+        $return['limit'] = $limit;
+
 
         return $return;
     }
@@ -290,8 +294,8 @@ class UsersLogic extends BaseLogic
             " c ON l.cid =  c.id WHERE l.uid = {$user_id} {$where}";
         $count = $this->query($sql);
         $count = $count[0]['total_num'];
-
-        $Page = new Page($count,10);
+        $limit = 10;
+        $Page = new Page($count,$limit);
 
         $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
@@ -303,6 +307,8 @@ class UsersLogic extends BaseLogic
         $return['msg'] = '获取成功';
         $return['result'] = $logs;
         $return['show'] = $Page->show();
+        $return['count'] = $count;
+        $return['limit'] = $limit;
         return $return;
     }
 
@@ -349,7 +355,8 @@ class UsersLogic extends BaseLogic
      */
     public function get_goods_collect($user_id){
         $count = M('goods_collect')->where(array('user_id'=>$user_id))->count();
-        $page = new Page($count,10);
+        $limit = 10;
+        $page = new Page($count,$limit);
         $show = $page->show();
         //获取我的收藏列表
         $sql = "SELECT c.collect_id,c.add_time,g.goods_id,g.goods_name,g.shop_price,g.original_img FROM __PREFIX__goods_collect c ".
@@ -360,7 +367,9 @@ class UsersLogic extends BaseLogic
         $return['status'] = 3;
         $return['msg'] = '获取成功';
         $return['result'] = $result;
-        $return['show'] = $show;        
+        $return['show'] = $show;
+        $return['count'] = $count;
+        $return['limit'] = $limit;
         return $return;
     }
 

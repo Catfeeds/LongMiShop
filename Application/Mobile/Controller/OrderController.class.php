@@ -99,8 +99,8 @@ class OrderController extends MobileBaseController {
         $where .= C(strtoupper($type));
 //        }
         $count = M('order')->where($where)->count();
-        $Page = new Page($count,10);
-
+        $limit = 10;
+        $Page = new Page($count,$limit);
         $show = $Page->show();
         $order_str = "order_id DESC";
         $order_list = M('order')->order($order_str)->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
@@ -124,6 +124,8 @@ class OrderController extends MobileBaseController {
         $this->assign('lists',$order_list);
         $this->assign('active','order_list');
         $this->assign('active_status',I('get.type'));
+        $this->assign('count',$count);
+        $this->assign('limit',$limit);
         if($_GET['is_ajax'])
         {
             $this->display('ajax_order_list');
