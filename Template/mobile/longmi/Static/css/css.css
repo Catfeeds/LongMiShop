@@ -12,7 +12,7 @@ html, body {
 	width: 100%;
 }
 body {
-	color: #666666;
+	color: #333333;
 	font-weight: normal;
 	max-width: 800px;
 	margin-right: auto;
@@ -1711,4 +1711,19 @@ Load—more a{
 }
 .OK-a a{
 	color: #666;
+}
+.login_btn9 a {
+	border: 1px solid #B02F4B;
+	border-radius: 4px;
+	color: #B02F4B;
+	font-size: 18px;
+	display: block;
+	line-height: 45px;
+	text-align: center;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-top: 15px;
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
 }

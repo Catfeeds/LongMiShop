@@ -56,3 +56,8 @@ Load—more a{
 	filter: blur(20px);
 	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
 }
+
+
+.f_index{
+	left: 10px;
+}
