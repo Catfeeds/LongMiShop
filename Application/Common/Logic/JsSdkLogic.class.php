@@ -123,6 +123,7 @@ class JsSdkLogic extends BaseLogic
         );
         $post_str = jsonEncodeEx($post_arr);
         $return = httpRequest($url,'POST',$post_str);
+        setLogResult( $post_str , "推送post" , "weChatMessage" );
         setLogResult( $return , "推送" , "weChatMessage" );
 //        $return = json_decode($return,true);
     }

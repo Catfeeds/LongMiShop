@@ -143,7 +143,10 @@ function bindingOpenidAngUserId( $openid = null , $userId = null , $thirdUserId 
 function getWeChatMessageData( $data , $type ){
     $condition = array();
     $returnArray = array();
+
+
     if( !empty( $data['orderId'] ) ){
+        $url = U('Mobile/Order/order_detail',array('order_id' => $data['orderId']));
         $condition['order_id'] = $data['orderId'];
         $orderInfo = findDataWithCondition("order" , $condition , "order_sn" );
         $orderGoodsInfo = findDataWithCondition("order_goods" , $condition , "goods_name" );
@@ -154,10 +157,21 @@ function getWeChatMessageData( $data , $type ){
                 $orderGoodsNumber += $orderGoodsNumberItem['goods_num'];
             }
         }
+//        if( $type == "下单" ){
+//            $url = U('Mobile/Order/order_list',array('type'=>'WAITPAY'));
+//        }
+//        if( $type == "支付" ){
+//            $url = U('Mobile/Order/order_list',array('type'=>'WAITSEND'));
+//        }
+//        if( $type == "完成" ){
+//            $url = U('Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'));
+//        }
         if( $type == "发货" ){
-            $deliveryDocInfo = findDataWithCondition("delivery_doc" , $condition , "invoice_no" );
-            $returnArray["invoiceNo"]   = $deliveryDocInfo["invoice_no"];
+            $url = U('Mobile/User/express',array('order_id'=> $data['orderId']));
+//            $deliveryDocInfo = findDataWithCondition("delivery_doc" , $condition , "invoice_no" );
+//            $returnArray["invoiceNo"]   = $deliveryDocInfo["invoice_no"];
         }
+        $returnArray["url"]             = $url;
         $returnArray["orderSn"]         = $orderInfo["order_sn"];
         $returnArray["goodsName"]       = $orderGoodsInfo["goods_name"];
         $returnArray["goodsNumber"]     = $orderGoodsNumber;
@@ -165,7 +179,9 @@ function getWeChatMessageData( $data , $type ){
     }
     if( !empty( $data['couponId'] ) ){
         $condition['id'] = $data['couponId'];
+        $url = U('Mobile/User/coupon');
         $couponInfo = findDataWithCondition("coupon" , $condition , "name" );
+        $returnArray["url"]             = $url;
         $returnArray["couponName"]     = $couponInfo["name"];
         return $returnArray;
     }
@@ -200,20 +216,22 @@ function sendWeChatMessage( $openid , $type , $data ){
     if( empty($data) ){
         return false;
     }
+
     $messageArray = array(
-        "下单"            =>  "为你生成了订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，24小时内请完成支付。",
-        "支付"            =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，已支付成功，我们将尽快为您发货。",
-        "发货"            =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，已发货，物流单号【{$data['invoiceNo']}】。请注意查收。",
-        "完成"            =>  "您的订单【{$data['orderSn']}】：{$data['goodsName']} 等{$data['goodsNumber']}件，交易成功。感谢您的购买！",
-        "送券"            =>  "我们向您送出了一张【{$data['couponName']}】，请在个人中心-代金券处查收。",
-        "成功邀请"         =>  "成功邀请的好友{$data['userName']}，他首次成功购买后，您将获得奖励【{$data['money']}元】",
-        "邀请奖励"         =>  "您邀请的{$data['userName']}完成了首购，您获得奖励【{$data['money']}元】，请在个人中心-钱包里查收",
+        "下单"            =>  "为你生成了订单：{$data['goodsName']} 等{$data['goodsNumber']}件，24小时内请完成支付【<a href = '{$data['url']}'>点击支付</a>】，客服热线：4000787725。",
+        "支付"            =>  "您的订单：{$data['goodsName']} 等{$data['goodsNumber']}件，已支付成功，我们将在48小时内为您发货【<a href = '{$data['url']}'>查看订单</a>】，客服热线：4000787725。",
+        "发货"            =>  "您的订单：{$data['goodsName']} 等{$data['goodsNumber']}件，已发货【<a href = '{$data['url']}'>查看物流信息</a>】。请注意查收，客服热线：4000787725。",
+        "完成"            =>  "您的订单：{$data['goodsName']} 等{$data['goodsNumber']}件，交易成功。感谢您的购买！【<a href = '{$data['url']}'>查看详情</a>】，客服热线：4000787725。",
+        "送券"            =>  "【系统消息】：我们向您送出了一张【{$data['couponName']}】，【<a href = '{$data['url']}'>点此查看</a>】，客服热线：4000787725。",
+        "成功邀请"         =>  "【系统消息】：成功邀请的好友{$data['userName']}，他首次成功购买后，您将获得奖励【{$data['money']}元】",
+        "邀请奖励"         =>  "【系统消息】：您邀请的{$data['userName']}完成了首购，您获得奖励【{$data['money']}元】，请在个人中心-钱包里查收",
 
     );
     $weChatConfig = M('wx_user')->find();
     if( empty( $weChatConfig ) ){
         return false;
     }
+
     $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
     $jsSdkLogic -> push_msg( $openid , $messageArray[$type] );
     return true;

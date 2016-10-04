@@ -10,7 +10,6 @@ class WeChatController extends Controller {
 
     public function _initialize(){
         $this -> shopConfig = getShopConfig();
-        dd($this -> shopConfig);
         //获取微信配置信息
         $this->weChatConfig = M('wx_user')->find();
         $options = array(
@@ -69,7 +68,7 @@ class WeChatController extends Controller {
         {
             $keyword = $this -> shopConfig['basic_subscribe_reply'];
         }
-
+//        setLogResult($keyword,"微信进来keyword","test");
 
 
         if(empty($keyword)){
