@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-<meta name="format-detection" content="telephone=no" />
-<title>LM商城</title>
-<script src="__STATIC__/js/mui.min.js"></script>
-<script src="__STATIC__/js/TouchSlide.js"></script>
-<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
-<link href="__STATIC__/css/css.css" rel="stylesheet" />
+<include file="Public/header"/>
 <style >
 	#share{
 		z-index:9999999999999999999999;
@@ -23,7 +13,12 @@
 	}
     img{width: 100%;}
 </style>
-</head>
+    <script>
+        //
+        function share(){
+            $('#share').show();
+        }
+    </script>
 <body>
 <div style="width: 100%;">
     {$art|htmlspecialchars_decode}
@@ -37,11 +32,5 @@
 <div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
 
 </body>
+<include file="Public/footer"/>
 </html>
-<script src="__STATIC__/js/jquery.js"></script>
-<script>
-	// 
-	function share(){
-		$('#share').show();
-	}
-</script>
