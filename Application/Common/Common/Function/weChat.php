@@ -171,7 +171,7 @@ function getWeChatMessageData( $data , $type ){
 //            $deliveryDocInfo = findDataWithCondition("delivery_doc" , $condition , "invoice_no" );
 //            $returnArray["invoiceNo"]   = $deliveryDocInfo["invoice_no"];
         }
-        $returnArray["url"]             = $url;
+        $returnArray["url"]             = 'http://'.$_SERVER["SERVER_NAME"].$url;
         $returnArray["orderSn"]         = $orderInfo["order_sn"];
         $returnArray["goodsName"]       = $orderGoodsInfo["goods_name"];
         $returnArray["goodsNumber"]     = $orderGoodsNumber;
@@ -181,7 +181,7 @@ function getWeChatMessageData( $data , $type ){
         $condition['id'] = $data['couponId'];
         $url = U('Mobile/User/coupon');
         $couponInfo = findDataWithCondition("coupon" , $condition , "name" );
-        $returnArray["url"]             = $url;
+        $returnArray["url"]            = 'http://'.$_SERVER["SERVER_NAME"].$url;
         $returnArray["couponName"]     = $couponInfo["name"];
         return $returnArray;
     }
