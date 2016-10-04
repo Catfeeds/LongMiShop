@@ -28,15 +28,19 @@ class SystemController extends BaseController{
 	public function handle()
 	{
 		$param = I('post.');
-        $param['invite_value'] = $param['invite'] == 1 ? $param['invite_value_select'] : $param['invite_value_input'];
-        $param['invited_to_value'] = $param['invited_to'] == 1 ? $param['invited_to_value_select'] : $param['invited_to_value_input'];
-        unset($param['invite_value_select']);
-        unset($param['invite_value_input']);
-        unset($param['invited_to_value_select']);
-        unset($param['invited_to_value_input']);
+
+        
 		$inc_type = $param['inc_type'];
 		//unset($param['__hash__']);
 		unset($param['inc_type']);
+        if($inc_type == 'prize'){
+            $param['invite_value'] = $param['invite'] == 1 ? $param['invite_value_select'] : $param['invite_value_input'];
+            $param['invited_to_value'] = $param['invited_to'] == 1 ? $param['invited_to_value_select'] : $param['invited_to_value_input'];
+            unset($param['invite_value_select']);
+            unset($param['invite_value_input']);
+            unset($param['invited_to_value_select']);
+            unset($param['invited_to_value_input']);
+        }
 		tpCache($inc_type,$param);
 		$this->success("操作成功",U('System/index',array('inc_type'=>$inc_type)));
 	}        
