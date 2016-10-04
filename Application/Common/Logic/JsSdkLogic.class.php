@@ -121,7 +121,8 @@ class JsSdkLogic extends BaseLogic
                 'content'=>$content,
             )
         );
-        $post_str = json_encode($post_arr);
+        $post_str = jsonEncodeEx($post_arr);
+        $post_str = str_replace( "<\/a>" , "</a>" , $post_str );
         $return = httpRequest($url,'POST',$post_str);
         setLogResult( $post_str , "推送post" , "weChatMessage" );
         setLogResult( $return , "推送" , "weChatMessage" );
