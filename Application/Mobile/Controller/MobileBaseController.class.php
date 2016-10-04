@@ -26,7 +26,8 @@ abstract class MobileBaseController extends BaseController {
         //验证部分
         if ( !isLoginState() ) {
             if( $this -> needAuth() ){
-                if( empty(session("redirectedUrl"))){
+                $redirectedUrl = session("redirectedUrl");
+                if( empty( $redirectedUrl ) ){
                     session("redirectedUrl",$_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]) ;
                 }
 //                echo "请在微信端访问！";exit;
