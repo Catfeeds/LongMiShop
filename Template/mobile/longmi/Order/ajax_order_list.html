@@ -1,6 +1,6 @@
 <notempty name = "lists">
     <if condition = " $p == 1 ">
-        <ul class="mui-table-view mui-grid-view">
+        <div id="ajax_return">
     </if>
     <volist name="lists" id="list">
     <div class="titel_box">
@@ -67,7 +67,7 @@
     </div>
 </volist>
     <if condition = " $p == 1 ">
-        </ul>
+        </div>
     </if>
     <if condition="$count gt $limit && $p == 1">
         <div class="Load—more" id="getmore{$number}">
