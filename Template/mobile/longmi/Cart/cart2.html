@@ -75,12 +75,12 @@
             <div class="c_btn2"><a href="{:U('Cart/cart')}">取消</a></div>
         </div>
     </div>
-
+    
 
     <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
         <ul class="mui-table-view">
-            <li class="mui-table-view-cell">
-                <a href="#" onclick="if(confirm('是否使用余额支付')){submit_order('balance')};">余额支付</a>
+            <li class="mui-table-view-cell" >
+                <a href="#" style="{: $user['user_money'] < $total_price['total_fee'] ? 'color:gray;' : '' }" onclick="<if condition=' $user.user_money gt $total_price.total_fee '>if(confirm('好')){ submit_order('balance'); }</if>">余额支付</a>
             </li>
         </ul>
         <ul class="mui-table-view">
