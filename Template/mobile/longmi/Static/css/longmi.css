@@ -61,3 +61,21 @@ Load—more a{
 .f_index{
 	left: 10px;
 }
+
+.nav_d img{
+	height: 20px;
+	line-height: 20px;
+}
+.nav_d li a span{
+	margin-top: -4px;
+	font-size:12px;
+	transform:scale(0.7);
+	line-height: 10px;
+	color: #b2b2b2;
+	/*width: 20px;*/
+	display: block;
+	text-align: center;
+}
+.nav_d li.h a span{
+	color: #b02f4b;
+}
