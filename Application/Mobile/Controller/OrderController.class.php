@@ -99,7 +99,7 @@ class OrderController extends MobileBaseController {
         $where .= C(strtoupper($type));
 //        }
         $count = M('order')->where($where)->count();
-        $limit = 1;
+        $limit = 12;
         $Page = new Page($count,$limit);
         $show = $Page->show();
         $order_str = "order_id DESC";
