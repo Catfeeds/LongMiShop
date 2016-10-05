@@ -45,6 +45,7 @@ class UserController extends MobileBaseController {
         $usersLogic = new \Common\Logic\UsersLogic();
         $result = $usersLogic -> getCoupon( $this->user_id);
         $this->assign('couponCount',$result['data']['count']);
+        $this -> assign('number', getInviteNumber($this ->user_id) );
         $this->display();
     }
 

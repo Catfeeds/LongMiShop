@@ -11,6 +11,7 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$us
     $details = $web_config['wechat_details'];// 商品详细页/单品页分享设置
     $classify = $web_config['wechat_classify'];// 商品分类页分享设置
     $article = $web_config['wechat_article'];// 文章页分享设置
+    $dift_img = $web_config['wechat_dift_img']; //分享有礼
 //	$user = session('user');
     //logo
     $logo = "http://".$_SERVER['HTTP_HOST'].$web_config['shop_info_store_logo']."";
@@ -32,6 +33,16 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$us
 
     if( CONTROLLER_NAME =="Recommend" && ACTION_NAME  == "index"){
         $link = "http://".$_SERVER['HTTP_HOST'].U('Mobile/Recommend/share',array('inviteUserId' => $user['user_id']));
+        if($dift_img == 1){
+            //是否微信头像
+            if(strstr($user['head_pic'],'wx.qlogo.cn')){
+                $imgurl =  $user['head_pic'];
+            }else{
+                $imgurl = "http://" . $_SERVER['HTTP_HOST'] . $user['head_pic'] ;
+            }
+        }else{
+            $imgurl = "http://" . $_SERVER['HTTP_HOST'] .$web_config['wechat_dift_file'];
+        }
     }
     if( !is_null($goodes_id) ){ //详细页
         $like = "http://".$_SERVER['HTTP_HOST']."/index.php?m=Mobile&c=Goods&a=goodsInfo&id=".$goodes_id."";
