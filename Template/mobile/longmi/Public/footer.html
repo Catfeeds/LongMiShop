@@ -5,8 +5,8 @@
                         var mobileMessage = getMobileCookie('mobileMessage');
                         if( mobileMessage != undefined && mobileMessage != "" && mobileMessage != null ){
                                 alert(mobileMessage);
-                                delMobileCookie('mobileMessage');
                         }
+                        delMobileCookie('mobileMessage');
                 });
         </script>
         <php>cookie('mobileMessage',null);</php>
