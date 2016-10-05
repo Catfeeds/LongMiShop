@@ -80,7 +80,11 @@
     <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
         <ul class="mui-table-view">
             <li class="mui-table-view-cell" >
-                <a href="#" style="{: $user['user_money'] < $total_price['total_fee'] ? 'color:gray;' : '' }" onclick="<if condition=' $user.user_money gt $total_price.total_fee '>if(confirm('好')){ submit_order('balance'); }</if>">余额支付</a>
+                <if condition = "$user['user_money'] lt $total_price['total_fee'] " >
+                    <a href="javascript:void(0);" style="color: grey;">余额支付(余额不足)</a>
+                <else/>
+                    <a href="#" id="balanceButton">余额支付</a>
+                </if>
             </li>
         </ul>
         <ul class="mui-table-view">
@@ -180,7 +184,23 @@
         });
     }
 
-
+    //mui初始化
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    if( document.getElementById("balanceButton") != undefined){
+        document.getElementById("balanceButton").addEventListener('tap', function(e) {
+            e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+            var btnArray = ['取消', '好'];
+            mui.confirm('立即支付？',  '', btnArray, function(e) {
+                if (e.index == 1) {
+                    submit_order('balance');
+                } else {
+                    // info.value = '';
+                }
+            })
+        });
+    }
 
     function toBalancePay( id ){
         $.ajax({

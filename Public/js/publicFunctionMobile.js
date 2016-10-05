@@ -46,7 +46,7 @@ function setMobileCookie(objName, objValue, objHours)
  */
 function getMobileCookie(objName)
 {
-    console.log( document.cookie );
+    // console.log( document.cookie );
     var arrStr = document.cookie.split("; ");
     for (var i = 0; i < arrStr.length; i++) {
         var temp = arrStr[i].split("=");
