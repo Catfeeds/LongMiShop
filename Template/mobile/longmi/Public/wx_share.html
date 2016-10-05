@@ -7,6 +7,18 @@
     var list = {:getShareImages($lmshop_config,$goods[goods_id],$goodsCate,$user)};
     var ShareLink = list.link;       //分享连接
     var ShareImgUrl = list.imgurl;   //分享图片
+    var controller = "{: CONTROLLER_NAME }"; //当前控制器
+    var method = "{: ACTION_NAME }"; //当前方法
+    var wx_title = '';
+    var wx_desc = '';
+
+    if(controller == 'Recommend' && method == 'index'){
+        wx_title = "{$lmshop_config['wechat_dift_title']}";
+        wx_desc =  "{$lmshop_config['wechat_dift_desc']}"
+    }else{
+        wx_title = "{$lmshop_config['wechat_wx_title']}";
+        wx_desc =  "{$lmshop_config['wechat_wx_desc']}"
+    }
 
 
 
@@ -35,29 +47,29 @@ wx.config({
 wx.ready(function(){
     // 获取"分享到朋友圈"按钮点击状态及自定义分享内容接口
     wx.onMenuShareTimeline({
-        title: "{$lmshop_config['wechat_wx_title']}", // 分享标题
+        title: wx_title, // 分享标题
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
     });
 
     // 获取"分享给朋友"按钮点击状态及自定义分享内容接口
     wx.onMenuShareAppMessage({
-        title: "{$lmshop_config['wechat_wx_title']}", // 分享标题
-        desc: "{$lmshop_config['wechat_wx_desc']}", // 分享描述
+        title: wx_title, // 分享标题
+        desc: wx_desc, // 分享描述
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
     });
 	// 分享到QQ
 	wx.onMenuShareQQ({
-        title: "{$lmshop_config['wechat_wx_title']}", // 分享标题
-        desc: "{$lmshop_config['wechat_wx_desc']}", // 分享描述
+        title: wx_title, // 分享标题
+        desc: wx_desc, // 分享描述
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
 	});	
 	// 分享到QQ空间
 	wx.onMenuShareQZone({
-        title: "{$lmshop_config['wechat_wx_title']}", // 分享标题
-        desc: "{$lmshop_config['wechat_wx_desc']}", // 分享描述
+        title: wx_title, // 分享标题
+        desc: wx_desc, // 分享描述
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
 	});

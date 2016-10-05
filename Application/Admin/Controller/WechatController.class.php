@@ -545,6 +545,34 @@ class WechatController extends BaseController {
             $data[]['details'] = I('details');
             $data[]['classify'] = I('classify');
             $data[]['article'] = I('article');
+            $data[]['dift_title'] = I('dift_title');
+            $data[]['dift_desc'] = I('dift_desc');
+            $data[]['dift_img'] = I('dift_img');
+            $dift_img = I('dift_img');
+
+            if($dift_img == 2){
+
+                $uploadConfig = array(
+                    "savePath" =>"weixin/",
+                    "exts"     => array('jpg','gif','png','jpeg'),
+                    "saveName" => time().mt_rand(),
+                    "replace"  => True,
+                    "maxSize"  => 1024*1024,
+                    'autoSub' => false,
+                );
+                $upload = new \Think\Upload($uploadConfig);//实例化上传类
+                $info = $upload->upload($_FILES);
+
+                if(!$info){
+                    $this->error($upload->getError());exit;
+                }
+                $data[]['dift_file'] = $info['dift_file']['urlpath'];
+//                $file_name = M('config')->where("name = 'dift_file' ")->find();
+//                $file_name = '.'.$file_name['value'];
+//                unlink($file_name);
+            }
+
+
             foreach($data as $key=>$item){
                 $where = array_keys($item);
                 $wheres['name'] = $where[0];
@@ -562,6 +590,25 @@ class WechatController extends BaseController {
             
         }
         $this->display();
+    }
+
+    //修改头像
+    public function upload_lcon($file){
+            $uploadConfig = array(
+                "savePath" =>"weixin/",
+                "exts"     => array('jpg','gif','png','jpeg'),
+                "saveName" => mt_rand(),
+                "replace"  => True,
+                "maxSize"  => 1024*1024,
+            );
+            $upload = new \Think\Upload($uploadConfig);//实例化上传类
+            $info = $upload->upload($file);
+            dd($upload);
+            if($info){
+                return $info;
+            }
+            $this->error($upload->getError());exit;
+
     }
 
 
