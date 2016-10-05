@@ -705,18 +705,23 @@ function jsonEncodeEx($value)
  * @param null $error
  */
 function mobileJumpToast( $jumpUrl , $message = null , $error = null ){
+    $mobileMessage = "";
     if( !is_null($message) ){
-        cookie( "mobileMessage" , $message );
+//        cookie( "mobileMessage" , $message );
+        $mobileMessage = $message;
     }
     if( !is_null($error) ){
-        cookie( "mobileMessage" , $error );
+//        cookie( "mobileMessage" , $error );
+        $mobileMessage = $error;
     }
 //    echo ($_COOKIE['mobileMessage']);
 //
 //    exit;
+    echo "<html>";
+    echo "<meta charset='utf-8'>";
     echo "<script>";
     echo "var objName = 'mobileMessage';";
-    echo "var objValue = '".$_COOKIE['mobileMessage']."';";
+    echo "var objValue = '".$mobileMessage."';";
     echo "var objHours = '3600';";
     echo "var str = objName + '=' + escape(objValue);";
     echo "if (objHours > 0) {";
@@ -728,6 +733,7 @@ function mobileJumpToast( $jumpUrl , $message = null , $error = null ){
     echo "  document.cookie = str;";
     echo "window.location.href = '".$jumpUrl."' ";
     echo "</script>";
+    echo "</html>";
     exit;
 }
 
