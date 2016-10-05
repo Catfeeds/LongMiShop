@@ -11,7 +11,7 @@
             <div class="se-2">（地址，昵称，头像）</div>
         </div>
     </div>
-    <if condition = " isThirdAccount( $user ) && !isBinding( $user['user_id'] ) " >
+    <if condition = " isThirdAccount( $user ) && !isBinding( $user['user_id'] )  && empty( $user['mobile'] )" >
         <div class="cp1">
             <div class="c">
                 <a href="{: U('Mobile/User/binding')}"></a>
