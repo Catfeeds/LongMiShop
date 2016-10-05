@@ -1129,12 +1129,19 @@ class UserController extends MobileBaseController {
                 $userInfo= findDataWithCondition( 'users' , $data , " user_id ");
                 $userId = $userInfo['user_id'] ;
                 if( empty( $userId ) ){
-                    $userId = registerFromMobile( $data );
-                    if( empty( $userId ) ){
-                        $this->error('绑定失败');exit;
+                    if(  empty( $this -> user['mobile'] ) ){
+                        $save = array(
+                            "mobile" => $mobile,
+                            "mobile_validated" => 1,
+                        );
+                        M("user") -> where( array( 'user_id' => $this -> user_id ) ) -> save( $save );
                     }
+//                    $userId = registerFromMobile( $data );
+//                    if( empty( $userId ) ){
+//                        $this->error('绑定失败');exit;
+//                    }
                 }
-                if( empty( $userId ) ){
+                if( !empty( $userId ) ){
                     if( !bindingOpenidAngUserId( session('openid') , $userId , $this -> user_id ) ){
                         $this->error('绑定失败');exit;
                     }
