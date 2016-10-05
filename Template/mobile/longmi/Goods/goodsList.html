@@ -1,84 +1,153 @@
 <include file="Public/header"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/app.css"/>
+<style>
+	.mui-control-content {
+		background-color: #FFF;
+		min-height: 600px;
+	}
+	.mui-control-content .mui-loading {
+		margin-top: 50px;
+	}
+</style>
 <body>
-<div class="banner_box">
-	<div class="top_box1">
-		<!--<div class="top_left1">-->
-			<!--<form name="sourch_form" id="sourch_form" method="post" action="{:U('Goods/search')}">-->
-				<!--<div class="t1">-->
-					<!--<input name="q" id="q"  class="t1_text" type="text" value="<?php echo I('q'); ?>" placeholder="搜索"  style="color:#333;border:0px;background-color:transparent;outline:none;">-->
-				<!--</div>-->
-				<!--<div class="t2" width="24" height="24">-->
-					<!--<a href="javascript:if($.trim($('#q').val()) != '') $('#sourch_form').submit();" >-->
-						<!--<img src="__STATIC__/SVG/search_r.svg">-->
-					<!--</a>-->
-				<!--</div>-->
-			<!--</form>-->
-		<!--</div>-->
-		<include file="Public/news"/>
-	</div>
-</div>
-<div class="top1_list">
-	<ul>
-		<li  class="<if condition="($_GET[sort] eq '') or ($_GET[sort] eq 'is_new')">top1_list_h</if>" >
-		<a href="<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort'=>'is_new')),''));?>">最新</a>
-		</li>
-		<li  class="<if condition="$_GET[sort] eq 'sales_sum'">top1_list_h</if>" >
-		<a href="<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort'=>'sales_sum')),''));?>">销量</a>
-		</li>
-		<li  class="<if condition="$_GET[sort] eq 'comment_count'">top1_list_h</if>" >
-		<a href="<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort'=>'comment_count')),''));?>">评论</a>
-		</li>
-		<li  class="<if condition="$_GET[sort] eq 'shop_price'">top1_list_h</if>" >
-		<a href="<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort'=>'shop_price','sort_asc'=>$sort_asc)),''));?>">价格</a>
-		</li>
-	</ul>
-</div>
-<notempty name="goods_list">
-	<div class="mui-content" style="background-color:#fff">
-		<ul class="mui-table-view mui-grid-view" id="goods_list">
-			<foreach name="goods_list" item="vo" key="k">
-				<li class="mui-table-view-cell mui-media mui-col-xs-6">
-					<a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$vo[goods_id]))}">
-						<img class="mui-media-object" src="{$vo.goods_id|goods_thum_images=400,400}">
-						<div class="to">
-							<div class="to1">{$vo.goods_name}</div>
-							<div class="to2">￥{$vo.shop_price}</div>
-						</div>
-					</a>
-				</li>
-			</foreach>
-		</ul>
-	</div>
-	<if condition="$count gt $limit">
-		<div class="Load—more" id="getmore">
-			<a  href="javascript:void(0)" onClick="ajax_sourch_submit()">点击加载更多</a>
+<div class="mui-content">
+	<div id="slider" class="mui-slider">
+		<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+			<a class="mui-control-item" href="#item1mobile"> 最新 </a>
+			<a class="mui-control-item" href="#item2mobile"> 销量 </a>
+			<a class="mui-control-item" href="#item3mobile"> 评论 </a>
+			<a class="mui-control-item" href="#item4mobile"> 价格 </a>
 		</div>
-	</if>
-	<script>
-		var  page = 1;
-		/*** ajax 提交表单 查询订单列表结果*/
-		function ajax_sourch_submit()
-		{
-			page += 1;
-			$.ajax({
-				type : "GET",
-				url:"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort'=>$_GET[sort],'sort_asc'=>$_GET[sort_asc])),''));?>/is_ajax/1/p/"+page,
-				success: function(data)
-				{
-					if($.trim(data) == '')
-						$('#getmore').hide();
-					else
-						$("#goods_list").append(data);
-				}
-			});
-		}
-	</script>
-<else />
-	<div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
-	<div class="empty_txt">暂无数据！</div>
-</notempty>
+		<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4">
+		</div>
+		<div class="mui-slider-group">
+			<div id="item1mobile" class="mui-slider-item mui-control-content <if condition="($_GET[sort] eq '') or ($_GET[sort] eq 'is_new')">mui-active </if>">
+				<div id="scroll1" class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<div class="mui-loading">
+								<div class="mui-spinner">
+								</div>
+							</div>
+						</div>
 
+				</div>
+			</div>
+			<div id="item2mobile" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'sales_sum'">mui-active </if>">
+				<div id="scroll2" class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<div class="mui-loading">
+								<div class="mui-spinner">
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+			<div id="item3mobile" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'comment_count'">mui-active </if>">
+				<div id="scroll3" class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<div class="mui-loading">
+								<div class="mui-spinner">
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+			<div id="item4mobile" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'sales_sum'">shop_price </if>">
+				<div id="scroll4" class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<div class="mui-loading">
+								<div class="mui-spinner">
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	mui.init({
+		swipeBack: false
+	});
+	(function($) {
+		$('.mui-scroll-wrapper').scroll({
+			indicators: true //是否显示滚动条
+		});
+
+		var item1 = document.getElementById('item1mobile');
+		var item2 = document.getElementById('item2mobile');
+		var item3 = document.getElementById('item3mobile');
+		var item4 = document.getElementById('item4mobile');
+		document.getElementById('slider').addEventListener('slide', function(e) {
+			if (e.detail.slideNumber === 0) {
+				if (item1.querySelector('.mui-loading')) {
+					ajax_sourch_submit( 0 , "item1mobile" , true);
+				}
+			}
+			if (e.detail.slideNumber === 1) {
+				if (item2.querySelector('.mui-loading')) {
+					ajax_sourch_submit( 1 , "item2mobile" , true);
+				}
+			}
+			if (e.detail.slideNumber === 2) {
+				if (item3.querySelector('.mui-loading')) {
+					ajax_sourch_submit( 2 , "item3mobile" , true);
+				}
+			}
+			if (e.detail.slideNumber === 3) {
+				if (item4.querySelector('.mui-loading')) {
+					ajax_sourch_submit( 3 , "item4mobile" , true);
+				}
+			}
+		});
+		var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
+		$('.mui-input-group').on('change', 'input', function() {
+			if (this.checked) {
+				sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
+				//force repaint
+				sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
+			}
+		});
+	})(mui);
+
+	var  page = [1,1,1,1];
+	var  url  = [
+		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'is_new')),''));?>",
+		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'sales_sum')),''));?>",
+		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'comment_count')),''));?>",
+		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'shop_price','sort_asc'=>'desc')),''));?>",
+	];
+	function ajax_sourch_submit( number , obj_name , is_first)
+	{
+		$.ajax({
+			type : "GET",
+			url:url[number] + "/is_ajax/1/p/"+page[number]+"/number/"+number,
+			success: function(data)
+			{
+
+				if( is_first == true ){
+					$("#"+obj_name+" .mui-scroll").html(data);
+				}else{
+					if($.trim(data) == ''){
+						$('#getmore'+number).hide();
+					}else{
+						$("#"+obj_name+" ul").append(data);
+					}
+				}
+			}
+		});
+		page[number] += 1;
+	}
+	$(function(){
+		<if condition="($_GET[sort] eq '') or ($_GET[sort] eq 'is_new')">ajax_sourch_submit( 0 , "item1mobile" , true);</if>
+		<if condition="$_GET[sort] eq 'sales_sum'">ajax_sourch_submit( 1 , "item2mobile" , true);</if>
+		<if condition="$_GET[sort] eq 'comment_count'">ajax_sourch_submit( 2 , "item3mobile" , true);</if>
+		<if condition="$_GET[sort] eq 'shop_price'">ajax_sourch_submit( 3 , "item4mobile" , true);</if>
+	});
+</script>
 <include file="Public/nav"/>
+
+
 </body>
 <include file="Public/footer"/>
 </html>

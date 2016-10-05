@@ -13,7 +13,8 @@ class IndexController extends IndexBaseController {
             'test',
             'test2',
             'test3',
-            "test4"
+            'test4',
+            'test5',
         );
     }
 
@@ -25,6 +26,10 @@ class IndexController extends IndexBaseController {
     	$this->display();
     }
 
+    public function test5(){
+        exit;
+        $send = sendSMS("13611462022","123");
+    }
     public function test4(){
         exit;
         $weChatConfig = M('wx_user')->find();
