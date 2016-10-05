@@ -11,19 +11,17 @@
             <div class="se-2">（地址，昵称，头像）</div>
         </div>
     </div>
-    <if condition = " isThirdAccount( $user ) " >
+    <if condition = " isThirdAccount( $user ) && !isBinding( $user['user_id'] )" >
         <if condition = " empty( $user['mobile'] ) ">
-            <if condition = " !isBinding( $user['user_id'] ) ">
-                <div class="cp1">
-                    <div class="c">
-                        <a href="{: U('Mobile/User/binding')}"></a>
-                    </div>
-                    <div class="setup_box">
-                        <div class="se-1">绑定手机号码</div>
-                    </div>
+            <div class="cp1">
+                <div class="c">
+                    <a href="{: U('Mobile/User/binding')}"></a>
                 </div>
-            </if>
-        <else/>
+                <div class="setup_box">
+                    <div class="se-1">绑定手机号码</div>
+                </div>
+            </div>
+            <else/>
             <div class="cp1">
                 <div class="c">
                     <a href="{: U('Mobile/User/edit_mobile')}"></a>
@@ -34,7 +32,9 @@
                 </div>
             </div>
         </if>
-    <else/>
+
+    </if>
+    <if condition = " !isThirdAccount( $user ) " >
         <div class="cp1">
             <div class="c">
                 <a href="{: U('Mobile/User/edit_mobile')}"></a>
