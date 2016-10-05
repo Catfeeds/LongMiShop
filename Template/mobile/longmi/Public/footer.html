@@ -1,20 +1,13 @@
 
 
         <script>
-
-                //                        var mobileMessage = getMobileCookie('mobileMessage');
-                //                        if( mobileMessage != undefined && mobileMessage != "" && mobileMessage != null ){
-                //                                alert(mobileMessage);
-                //                                mobileMessage = decodeURIComponent( mobileMessage );
-                //                                alert(mobileMessage);
-                //                                delMobileCookie('mobileMessage');
-//                $(function(){
-//                        var mobileMessage = getMobileCookie('mobileMessage');
-//                        if( mobileMessage != undefined && mobileMessage != "" && mobileMessage != null ){
-//                                alert(mobileMessage);
-//                                delMobileCookie('mobileMessage');
-//                        }
-//                });
+                $(function(){
+                        var mobileMessage = getMobileCookie('mobileMessage');
+                        if( mobileMessage != undefined && mobileMessage != "" && mobileMessage != null ){
+                                alert(mobileMessage);
+                                delMobileCookie('mobileMessage');
+                        }
+                });
         </script>
         <php>cookie('mobileMessage',null);</php>
 

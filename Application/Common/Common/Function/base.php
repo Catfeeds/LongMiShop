@@ -711,7 +711,21 @@ function mobileJumpToast( $jumpUrl , $message = null , $error = null ){
     if( !is_null($error) ){
         cookie( "mobileMessage" , $error );
     }
+//    echo ($_COOKIE['mobileMessage']);
+//
+//    exit;
     echo "<script>";
+    echo "var objName = 'mobileMessage';";
+    echo "var objValue = '".$_COOKIE['mobileMessage']."';";
+    echo "var objHours = '3600';";
+    echo "var str = objName + '=' + escape(objValue);";
+    echo "if (objHours > 0) {";
+    echo "var date = new Date();";
+    echo "var ms = objHours * 3600 * 1000;";
+    echo "date.setTime(date.getTime() + ms);";
+    echo "str += '; expires=' + date.toGMTString();";
+    echo "}";
+    echo "  document.cookie = str;";
     echo "window.location.href = '".$jumpUrl."' ";
     echo "</script>";
     exit;
