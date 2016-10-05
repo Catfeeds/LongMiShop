@@ -94,7 +94,7 @@ class GoodsController extends MobileBaseController {
     	$filter_attr  = $goodsLogic->get_filter_attr($filter_goods_id,$filter_param,'goodsList',1); // 获取指定分类下的帅选属性
 
     	$count = count($filter_goods_id);
-        $limit = 4;
+        $limit = 12;
     	$page = new Page($count,$limit);
     	if($count > 0)
     	{
@@ -117,6 +117,8 @@ class GoodsController extends MobileBaseController {
     	$this->assign('filter_param',$filter_param); // 帅选条件
     	$this->assign('cat_id',$id);
     	$this->assign('page',$page);// 赋值分页输出
+        $this->assign('p',I('p'));
+        $this->assign('number',I('number'));
         $this->assign('count',$count);
         $this->assign('limit',$limit);
     	$this->assign('sort_asc', $sort_asc == 'asc' ? 'desc' : 'asc');

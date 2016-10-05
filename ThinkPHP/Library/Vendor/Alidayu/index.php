@@ -18,7 +18,7 @@ $c->secretKey = "0cb345ffeb990e6db06a513b7c293259"; //App Secret的值也是在�
 $req = new AlibabaAliqinFcSmsNumSendRequest;
 $req->setExtend("123456"); //这个是用户名记录那个用户操作
 $req->setSmsType("normal"); //这个不用改你短信的话就默认这个就好了
-$req->setSmsFreeSignName("注册验证"); //这个是签名
+$req->setSmsFreeSignName("龙米科技"); //这个是签名
 $req->setSmsParam("{'code':'1234','product':'孤独患者'}"); //这个是短信签名
 $req->setRecNum("18670953667"); //这个是写手机号码
 $req->setSmsTemplateCode("SMS_4780636"); //这个是模版ID 主要也是短信内容
