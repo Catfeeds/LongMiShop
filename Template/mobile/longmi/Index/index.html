@@ -91,7 +91,7 @@
                             <span>￥{$v.shop_price}</span> </div>
                     </div>
                 </li>
-                <if condition="($fl++%2 eq 0) && ($fl lt $newGoodsNumber)"></ul><ul></if>
+                <if condition="($fl++%2 eq 0) && (($fl -1) != $newGoodsNumber)"></ul><ul></if>
             </foreach>
         </ul>
     </div>
