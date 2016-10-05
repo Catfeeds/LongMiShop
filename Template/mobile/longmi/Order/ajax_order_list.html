@@ -1,5 +1,8 @@
-
-<volist name="lists" id="list">
+<notempty name = "lists">
+    <if condition = " $p == 1 ">
+        <ul class="mui-table-view mui-grid-view">
+    </if>
+    <volist name="lists" id="list">
     <div class="titel_box">
         <div class="titel_box_l">订单号：{$list.order_sn}</div>
         <div class="titel_box_r" style="color:#C00">{$list.order_status_desc}</div>
@@ -63,3 +66,18 @@
         </div>
     </div>
 </volist>
+    <if condition = " $p == 1 ">
+        </ul>
+    </if>
+    <if condition="$count gt $limit && $p == 1">
+        <div class="Load—more" id="getmore{$number}">
+            <a  href="javascript:void(0)" onClick="ajax_sourch_submit({$number},'item{:++$number}mobile',false)">点击加载更多</a>
+        </div>
+    </if>
+    <else/>
+    <if condition = " $p == 1 ">
+        <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
+        <div class="empty_txt">暂无数据！</div>
+    </if>
+
+</notempty>
