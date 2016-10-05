@@ -87,7 +87,7 @@
 <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
-			<if condition = "$user['user_money'] lt $total_price['total_fee'] " >
+			<if condition = "$user.user_money lt $order_info.order_amount  " >
 				<a href="javascript:void(0);" style="color: grey;">余额支付(余额不足)</a>
 			<else/>
 				<a href="#" id="balanceButton">余额支付</a>
