@@ -1134,8 +1134,10 @@ class UserController extends MobileBaseController {
                         $this->error('绑定失败');exit;
                     }
                 }
-                if( !bindingOpenidAngUserId( session('openid') , $userId , $this -> user_id ) ){
-                    $this->error('绑定失败');exit;
+                if( empty( $userId ) ){
+                    if( !bindingOpenidAngUserId( session('openid') , $userId , $this -> user_id ) ){
+                        $this->error('绑定失败');exit;
+                    }
                 }
 
                 $this->success('绑定成功',U('Mobile/User/userinfo'));exit;
