@@ -191,6 +191,7 @@
         var specNumber = -1;
 
         $(function(){
+
             $(".subNav").click(function(){
                 $(this).next(".navContent").slideToggle(300).siblings(".navContent").slideUp(500);
                 $(this).toggleClass("on").siblings(".subNav").removeClass("on");
@@ -204,6 +205,20 @@
                 get_goods_price();
             });
             get_goods_price();
+/*           <php>if($number==1){</php>*/
+
+            var loadingClick = 0 ;
+            $(".optionsDiv li").each(function(){
+                if( loadingClick == 0){
+                    if( !$(this).hasClass("gray") ){
+                        loadingClick = 1;
+                        switch_spec($(this));
+                    }
+                }
+
+            });
+
+/*           <php>}</php>*/
 //            ajaxComment(1,1);// ajax 加载评价列表
         });
         function newSubmit(){
