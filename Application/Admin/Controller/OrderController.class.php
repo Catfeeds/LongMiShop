@@ -76,7 +76,9 @@ class OrderController extends BaseController {
     	$condition = array();
     	I('consignee') ? $condition['consignee'] = trim(I('consignee')) : false;
     	I('order_sn') != '' ? $condition['order_sn'] = trim(I('order_sn')) : false;
-    	$condition['order_status'] = array('egt',1);
+        // $condition['order_status'] = array('egt',1);
+    	$condition['order_status'] = array('eq',1);
+        $condition['pay_status'] = 1; //支付状态
     	$shipping_status = I('shipping_status');
     	$condition['shipping_status'] = empty($shipping_status) ? array('neq',1) : $shipping_status;
 
@@ -101,7 +103,7 @@ class OrderController extends BaseController {
     	}
     	$show = $Page->show();
     	$orderList = M('order')->where($condition)->limit($Page->firstRow.','.$Page->listRows)->order('add_time DESC')->select();
-    	$this->assign('orderList',$orderList);
+        $this->assign('orderList',$orderList);
     	$this->assign('page',$show);// 赋值分页输出
     	$this->display();
     }
