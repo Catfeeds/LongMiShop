@@ -1,11 +1,31 @@
-<foreach name="goods_list" item="vo" key="k">
-    <li class="mui-table-view-cell mui-media mui-col-xs-6">
-        <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$vo[goods_id]))}">
-            <img class="mui-media-object" src="{$vo.goods_id|goods_thum_images=400,400}">
-            <div class="to">
-                <div class="to1">{$vo.goods_name}</div>
-                <div class="to2">￥{$vo.shop_price}</div>
-            </div>
-        </a>
-    </li>
-</foreach>
+<notempty name = "goods_list">
+    <if condition = " $p == 1 ">
+        <ul class="mui-table-view mui-grid-view">
+    </if>
+    <foreach name="goods_list" item="vo" key="k">
+        <li class="mui-table-view-cell mui-media mui-col-xs-6">
+            <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$vo[goods_id]))}">
+                <img class="mui-media-object" src="{$vo.goods_id|goods_thum_images=400,400}">
+                <div class="to">
+                    <div class="to1">{$vo.goods_name}</div>
+                    <div class="to2">￥{$vo.shop_price}</div>
+                </div>
+            </a>
+        </li>
+
+    </foreach>
+    <if condition = " $p == 1 ">
+        </ul>
+    </if>
+    <if condition="$count gt $limit && $p == 1">
+        <div class="Load—more" id="getmore{$number}">
+            <a  href="javascript:void(0)" onClick="ajax_sourch_submit({$number},'item{:++$number}mobile',false)">点击加载更多</a>
+        </div>
+    </if>
+<else/>
+    <if condition = " $p == 1 ">
+        <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
+        <div class="empty_txt">暂无数据！</div>
+    </if>
+
+</notempty>
