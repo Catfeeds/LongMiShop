@@ -1134,7 +1134,7 @@ class UserController extends MobileBaseController {
                             "mobile" => $mobile,
                             "mobile_validated" => 1,
                         );
-                        M("user") -> where( array( 'user_id' => $this -> user_id ) ) -> save( $save );
+                        M("users") -> where( array( 'user_id' => $this -> user_id ) ) -> save( $save );
                     }
 //                    $userId = registerFromMobile( $data );
 //                    if( empty( $userId ) ){
