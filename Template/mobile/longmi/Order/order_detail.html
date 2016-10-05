@@ -80,10 +80,11 @@
 		</if>
 	</div>
 </div>
+
 <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
-			<a href="javascript:void(0);" onclick="if(confirm('是否使用余额支付')){toBalancePay('{$order_info.order_id}')};" >余额支付</a>
+			<a href="#" style="{: $user['user_money'] < $order_info['order_amount'] ? 'color:gray;' : '' }" onclick="<if condition=' $user.user_money gt $order_info.order_amount '>if(confirm('好')){ submit_order('balance'); }</if>">余额支付</a>
 		</li>
 	</ul>
 	<ul class="mui-table-view">
