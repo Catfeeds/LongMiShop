@@ -79,3 +79,41 @@ Load—more a{
 .nav_d li.h a span{
 	color: #b02f4b;
 }
+
+
+/*支付详情页*/
+.order_details .l_btn2 a,.order_details .l_btn1 a {
+	line-height: 45px;
+}
+
+.f_index img{
+	height: 20px;
+	line-height: 20px;
+}
+.f_index li {
+	float: left;
+	width: 25%;
+	text-align: center;
+	height: 50px;
+	margin-left:25px;
+}
+.f_index li a {
+	display: block;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	    text-decoration: none;
+    color: #b2b2b2;
+
+}
+.f_index li a span{
+	margin-top: -4px;
+	font-size:12px;
+	transform:scale(0.7);
+	line-height: 10px;
+	color: #b2b2b2;
+	width: 24px;
+	margin-left:-2px;
+	display: block;
+	text-align: center;
+	color: #b2b2b2;
+}
