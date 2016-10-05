@@ -27,7 +27,9 @@
     <div id="ajax_return">
         <volist name="art_list" id="item">
 
-        <div class="time"><?php if( date('m-d',$item['publish_time']) == date('m-d',time()) ){echo '今天';}else{echo  date('m-d',$item['publish_time']);}?> {$item['publish_time']|date="H:i",###}</div>
+        <div class="time">
+        <?php if( date('m-d',$item['publish_time']) == date('m-d',time()) ){echo '今天';}else{echo  date('m-d',$item['publish_time']);}?> 
+        </div>
         <div class="mui-card">
             <div class="c"><a href="{: U('Mobile/User/message_details',array('id'=>$item['article_id']))}"></a></div>
             <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url({$item['thumb']})"></div>

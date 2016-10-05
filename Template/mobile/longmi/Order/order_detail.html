@@ -1,7 +1,7 @@
 <include file="Public/header"/>
 <!--<script src="__STATIC__/js/shopping_cart.js"></script>-->
 <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
-<body style="background-color:#f5f5f5">
+<body style="background-color:#f5f5f5" class="order_details">
 <div class="titel_box">
 	<div class="titel_box_l">订单号：{$order_info.order_sn}</div>
 	<div class="titel_box_r" style="color:#C00">{$order_info.order_status_desc}</div>
@@ -44,8 +44,11 @@
 	</div>
 </div>
 <div style="height:60px"></div>
-<div class="com_d">
-	<div class="com_d_r">
+<div class="com_d" >
+	<div class="com_d_l">
+        <!--<div class="collect {: $collectRes == 1 ? 'collect_click' : ''}"  onclick="collects_goods({$goods.goods_id})" id="favorite_add"></div>-->
+    </div>
+	<div class="com_d_r ">
 		<if condition="$order_info.cancel_btn eq 1">
 			<div class="l_btn1">
 				<a href="#" onClick="cancel_order({$order_info.order_id})">取消订单</a>
@@ -102,6 +105,14 @@
 		</li>
 	</ul>
 </div>
+<div class="f_index">
+        <li>
+			<a href="{:U('Index/index')}">
+				<img src="__STATIC__/SVG/home.svg">
+				<span>首页</span>
+			</a>
+		</li>
+    </div>
 </body>
 <script>
 
