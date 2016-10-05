@@ -121,7 +121,7 @@
     {
         $.ajax({
             type : "GET",
-            url:url[number] + "&type={$_GET['type']}&is_ajax=1&p="+page[number]+"&number="+number,
+            url:url[number] + "&is_ajax=1&p="+page[number]+"&number="+number,
             success: function(data)
             {
 
@@ -131,7 +131,7 @@
                     if($.trim(data) == ''){
                         $('#getmore'+number).hide();
                     }else{
-                        $("#"+obj_name+" ul").append(data);
+                        $("#"+obj_name+" .ajax_return").append(data);
                     }
                 }
             }
