@@ -550,7 +550,7 @@ class WechatController extends BaseController {
             $data[]['dift_img'] = I('dift_img');
             $dift_img = I('dift_img');
 
-            if($dift_img == 2){
+            if($dift_img == 2 && $_FILES['dift_file']['size'] != 0){
 
                 $uploadConfig = array(
                     "savePath" =>"weixin/",
