@@ -28,6 +28,13 @@ class RecommendController extends MobileBaseController {
         $this -> assign('list',$list);
         $this -> display();
     }
+    public function rule(){
+        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
+        $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );
+        $this -> assign('inviteData',getCallbackData($inviteData));
+        $this -> assign('beInviteData',getCallbackData($beInviteData));
+        $this -> display();
+    }
 
     public function share(){
         $inviteUserId = I('inviteUserId');
