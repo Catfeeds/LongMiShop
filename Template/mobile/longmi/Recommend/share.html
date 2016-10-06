@@ -32,7 +32,7 @@
             <div class="g1_c">
                 <input name="new_mobile" id="new_mobile" type="text" class="g_text" placeholder="请输入手机号码">
             </div>
-            <div class="g1_c">
+            <div class="g1_c" id="codeDiv">
                 <div style="float:left">
                     <input name="phone_code"  id="phone_code" type="text" class="g_text" placeholder="请输入验证码" style="width:150px">
                 </div>
@@ -42,7 +42,7 @@
             </div>
             <div style="clear:both"></div>
             <div class="pop" id="tip" ></div>
-            <input type="submit" class="g_btn1"  value="立即领取">
+            <input type="button" id="my_btn" class="g_btn1"  value="立即领取">
         </div>
         <div class="t7"></div>
     </div>
@@ -55,6 +55,11 @@
     function showTip( string ){
         $("#tip").html(string);
     }
+    $(function(){
+        $("#my_btn").click(function(){
+            submit_form();
+        });
+    });
     function submit_form(){
         var new_mobile = $('#new_mobile').val();
         if(!checkMobile(new_mobile)){
@@ -63,10 +68,14 @@
         }
         if($.trim($('#phone_code').val()) == '')
         {
+            if($('#codeDiv').is(":hidden")){
+                $('#codeDiv').show();
+                return false;
+            }
             showTip('验证码不能为空');
             return false;
         }
-        $('#login-form').submit();
+        $('#form').submit();
     }
 
     function a_code(){
