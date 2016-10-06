@@ -28,7 +28,6 @@ class UserController extends MobileBaseController {
             'send_validate_code',
             'express',
             'sendSmsBindingCode',
-            'return_seesion',
         );
     }
 
