@@ -63,11 +63,9 @@
 		</if> -->
 	</ul>
 </div>
-
 <div class="copyright">
 	<div class="copyright_title">
-		<a href="{: U('Mobile/Index/index')}">商城首页</a>
-		<a href="">关注龙米</a>
+		<a href="javascript:$('#followMask').show();">关注龙米</a>
 	</div>
 	<p></p>
 	<img src="__STATIC__/SVG/bottom_logo.svg" alt="">
@@ -77,5 +75,11 @@
 <include file="Public/nav"/>
 
 </body>
+<if condition="$signPackage neq null">
+	<include file="Public/wx_button"/>
+</if>
+<style>
+	.gz{ display: none !important;}
+</style>
 <include file="Public/footer"/>
 </html>
