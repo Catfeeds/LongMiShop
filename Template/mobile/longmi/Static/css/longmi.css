@@ -101,8 +101,8 @@ Load—more a{
 	display: block;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	    text-decoration: none;
-    color: #b2b2b2;
+	text-decoration: none;
+	color: #b2b2b2;
 
 }
 .f_index li a span{
@@ -151,29 +151,50 @@ Load—more a{
 
 /*导航小图标*/
 /*.my_nav ul li a span{*/
-	/*line-height:23px;*/
-	/*width:23px;*/
-	/*height:23px;*/
-	/*display:inline-block;*/
-	/**/
+/*line-height:23px;*/
+/*width:23px;*/
+/*height:23px;*/
+/*display:inline-block;*/
+/**/
 /*}*/
 /*.my_nav ul li:nth-child(1) a span{*/
-	/*background:url('../images/uc_icon.png') no-repeat 0px -41px;*/
-	/*background-size: 20px 222px;*/
+/*background:url('../images/uc_icon.png') no-repeat 0px -41px;*/
+/*background-size: 20px 222px;*/
 /*}*/
 /*.my_nav ul li:nth-child(2) a span{*/
-	/*background:url('../images/uc_icon.png') no-repeat 0px -133px;*/
-	/*background-size: 20px 222px;*/
+/*background:url('../images/uc_icon.png') no-repeat 0px -133px;*/
+/*background-size: 20px 222px;*/
 /*}*/
 /*.my_nav ul li:nth-child(3) a span{*/
-	/*background:url('../images/uc_icon.png') no-repeat 0px -154px;*/
-	/*background-size: 20px 222px;*/
+/*background:url('../images/uc_icon.png') no-repeat 0px -154px;*/
+/*background-size: 20px 222px;*/
 /*}*/
 /*.my_nav ul li:nth-child(4) a span{*/
-	/*background:url('../images/uc_icon.png') no-repeat 0px -109px;*/
-	/*background-size: 20px 222px;*/
+/*background:url('../images/uc_icon.png') no-repeat 0px -109px;*/
+/*background-size: 20px 222px;*/
 /*}*/
 /*.my_nav ul li:nth-child(5) a span{*/
-	/*background:url('../images/uc_icon.png') no-repeat 0px -201px;*/
-	/*background-size: 20px 222px;*/
+/*background:url('../images/uc_icon.png') no-repeat 0px -201px;*/
+/*background-size: 20px 222px;*/
 /*}*/
+.my_nav a {
+	display: block;
+	line-height: 45px;
+	color: #838383;
+	text-decoration: none;
+	font-size: 16px;
+	padding-left: 30px;
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-size:24px 24px
+}
+.bottom_logo{
+	font-size: 12px;
+	text-align: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	color: #999;
+}
+.bottom_logo a{
+	color: #999;
+}
