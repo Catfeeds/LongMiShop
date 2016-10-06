@@ -15,8 +15,50 @@
     <div class="login_btn1">
         <a href="{:U('Mobile/User/index')}">取消</a>
     </div>
+    <div class="t12">
+        <p style=" font-size:16px;text-align:center; line-height:30px">兑换码是什么？</p>
+        <ul style=" padding-left:20px;margin-top:0px">
+            <li>龙米印制的实体礼品卡上，会有一个兑换码，做了保密处理，需要刮开查看，在此输入即可马上兑换。兑换成功后，礼品直接寄往持卡人所填收货地址。礼品卡兑换的礼品可以定制。</li>
+        </ul>
+        <p style=" font-size:16px; margin-top:10px;text-align:center; line-height:30px">如何获得兑换码？</p>
+        <ul style=" padding-left:20px;margin-top:0px">
+            <li>兑换码（礼品卡），是企业福利，也常作为节日礼品，张显个性。购买，定制礼品卡请联系龙米客服MM：4000-78-7725 。</li>
+        </ul>
+        <p style=" font-size:16px;margin-top:10px;text-align:center; line-height:30px">让龙米成为您的朋友</p>
+        <ul style=" padding-left:20px;margin-top:0px">
+            <li>关注龙米官方微信，微博或参与群讨论，也有机会获得兑换码，欢迎关注龙米。</li>
+        </ul>
+    </div>
+
 </div>
 </body>
+<style>
+
+    li {
+        list-style-position: outside;
+        list-style-image: none;
+        list-style-type: disc;
+    }
+    .t12 {
+        border-style: solid;
+        border-width: 3px;
+        border-color: rgb( 255, 217, 0 );
+        border-radius: 6px;
+        background-color: #ffee8a;
+        line-height: 20px;
+        padding: 10px;
+        width: 90%;
+        margin: 10px auto;
+    }
+    .t12 p{
+        font-family: 微软雅黑;
+    }
+    }
+    .t12 ul li{
+        font-family: 微软雅黑;
+        font-size: 12px;
+    }
+</style>
 <script>
     function exchangeSubmit(){
         var exchangeCodeValue = $('#exchangeCode').val();
