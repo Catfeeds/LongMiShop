@@ -707,12 +707,12 @@ function jsonEncodeEx($value)
 function mobileJumpToast( $jumpUrl , $message = null , $error = null ){
     $mobileMessage = "";
     if( !is_null($message) ){
-//        cookie( "mobileMessage" , $message );
-        $mobileMessage = $message;
+        cookie( "mobileMessage" , $message );
+//        $mobileMessage = $message;
     }
     if( !is_null($error) ){
-//        cookie( "mobileMessage" , $error );
-        $mobileMessage = $error;
+        cookie( "mobileMessage" , $error );
+//        $mobileMessage = $error;
     }
 //    echo ($_COOKIE['mobileMessage']);
 //
@@ -720,17 +720,18 @@ function mobileJumpToast( $jumpUrl , $message = null , $error = null ){
     echo "<html>";
     echo "<meta charset='utf-8'>";
     echo "<script>";
-    echo "var objName = 'mobileMessage';";
-    echo "var objValue = '".$mobileMessage."';";
-    echo "var objHours = '3600';";
-    echo "var str = objName + '=' + escape(objValue);";
-    echo "if (objHours > 0) {";
-    echo "var date = new Date();";
-    echo "var ms = objHours * 3600 * 1000;";
-    echo "date.setTime(date.getTime() + ms);";
-    echo "str += '; expires=' + date.toGMTString();";
-    echo "}";
-    echo "  document.cookie = str;";
+//    echo "".cookie('mobileMessage')."";
+//    echo "var objName = 'mobileMessage';";
+//    echo "var objValue = '".$mobileMessage."';";
+//    echo "var objHours = '3600';";
+//    echo "var str = objName + '=' + escape(objValue);";
+//    echo "if (objHours > 0) {";
+//    echo "var date = new Date();";
+//    echo "var ms = objHours * 3600 * 1000;";
+//    echo "date.setTime(date.getTime() + ms);";
+//    echo "str += '; expires=' + date.toGMTString();";
+//    echo "}";
+//    echo "  document.cookie = str;";
     echo "window.location.href = '".$jumpUrl."' ";
     echo "</script>";
     echo "</html>";
