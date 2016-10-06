@@ -2,14 +2,20 @@
 
         <script>
                 $(function(){
-                        var mobileMessage = getMobileCookie('mobileMessage');
+//                        var mobileMessage = getMobileCookie('mobileMessage');
+                        var mobileMessage = "<?php echo cookie('mobileMessage')?>";
+
                         if( mobileMessage != undefined && mobileMessage != "" && mobileMessage != null ){
                                 alert(mobileMessage);
+
                         }
                         delMobileCookie('mobileMessage');
+
                 });
         </script>
-        <php>cookie('mobileMessage',null);</php>
+        <div style="display:none">"<?php cookie('mobileMessage',null);?>"</div>
+
+        <!--<php>cookie('mobileMessage',null);</php>-->
 
 
 
