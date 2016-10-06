@@ -28,6 +28,7 @@ class UserController extends MobileBaseController {
             'send_validate_code',
             'express',
             'sendSmsBindingCode',
+            'return_seesion',
         );
     }
 
@@ -1183,6 +1184,16 @@ class UserController extends MobileBaseController {
         if($send['status'] != 1)
             exit(json_encode(array('status'=>-1,'msg'=>$send['msg'])));
         exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
+    }
+
+    public function returnSession(){
+        $mobileMessage = session('mobileMessage');
+        if( !empty($mobileMessage) ){
+            session('mobileMessage',null);
+            exit($mobileMessage);
+        }
+        exit(null);
+
     }
 
 }

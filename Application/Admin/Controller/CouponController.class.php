@@ -32,11 +32,15 @@ class CouponController extends BaseController {
             $data['send_end_time'] = strtotime($data['send_end_time']);
             $data['use_end_time'] = strtotime($data['use_end_time']);
             $data['use_start_time'] = strtotime($data['use_start_time']);
+
             if($data['send_start_time'] > $data['send_end_time']){
                 $this->error('发放日期填写有误');
             }
             if($data['condition'] < $data['money']){
                 $this->error('消费金额必须大于或等于优惠券');
+            }
+            if(empty($data['desc'])){
+                $this->error('请填写优惠券简介');
             }
             if(empty($data['id'])){
             	$data['add_time'] = time();

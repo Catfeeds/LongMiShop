@@ -9,6 +9,21 @@ function alert( msg ){
      mui.toast( msg );
 }
 
+$(function(){
+    var time = Date.parse(new Date());
+    time = time * 123465;
+    $.ajax({
+        type : "get",
+        url:"/index.php/Mobile/User/returnSession/time/"+time+".html",
+        success: function(data)
+        {
+            if( data != undefined && data != "" && data != null ){
+                alert(data);
+            }
+        }
+    });
+});
+
 
 /**
  * 取消订单
@@ -54,6 +69,8 @@ function getMobileCookie(objName)
             return unescape(temp[1]);
     }
 }
+
+
 
 /**
  * 删除cookie
