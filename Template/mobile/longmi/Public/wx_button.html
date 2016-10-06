@@ -1,0 +1,25 @@
+<div id="followMask" style="display: none;" onclick="$(this).css('display','none');"></div>
+<div class="gz" onclick="$('#followMask').show();"></div>
+<style>
+    #followMask{
+        z-index:9999999999999999999999;
+        position:fixed;
+        width:100%;
+        height:100%;
+        top:0px;
+        right:0px;
+        margin-top:0;
+        background:url('__STATIC__/images/follow.png') center center no-repeat #000;
+        background-size:80%;
+        opacity: 0.8;
+    }
+    .gz{
+        z-index: 9999;
+        position:fixed;
+        left: 0px;
+        top: 0px;
+        width: 30px;
+        height: 53px;
+        background:url('__STATIC__/SVG/gz.svg') center center no-repeat;
+    }
+</style>

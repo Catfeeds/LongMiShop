@@ -1,61 +1,154 @@
-<include file="Public/header"/>
-<body style="background-image:url(__STATIC__/images/iPhone-6.jpg); background-size:100% 100%">
-<if condition =" $isNewUser">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>{$lmshop_config['shop_info_store_title']}</title>
+    <meta http-equiv="keywords" content="{$lmshop_config['shop_info_store_keyword']}" />
+    <meta name="description" content="{$lmshop_config['shop_info_store_desc']}" />
+    <meta name="viewport"  content="width=device-width,user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
 
-    <div class="OK-a" style="text-align:center">
-        <a href="my_a9.html">
-            您的朋友<span>{$inviteUserInfo.nickname}</span>给你赠送了一张代金券
-        </a>
-    </div>
-    <div class="cp_box">
-        <if condition = " $beInviteData['type'] == 1 " >
-            <div class="cp1">
-                <div class="c"><a href="#"></a></div>
-                <div class="cp1_r">
-                    <div class="m9">{$beInviteData['coupon']['name']}</div>
-                    <div class="m10">简介：满{$beInviteData['coupon']['condition']}元可用</div>
-                    <div class="m11">￥{$beInviteData['coupon']['money']}</div>
-                    <div class="m12">有效期至：{:date("Y-m-d",$beInviteData['coupon']['use_end_time']);}</div>
+    <script src="__STATIC__/js/mui.min.js"></script>
+    <script src="__STATIC__/js/TouchSlide.js"></script>
+    <script src="__STATIC__/js/jquery.js"></script>
+    <link href="__STATIC__/css/red-packet.css" rel="stylesheet" type="text/css">
+</head>
+<body  style="background: url('__STATIC__/images/bg.jpg');">
+<form method="post" id="form">
+    <input name="inviteUserId" type="hidden" value="{$inviteUserId}">
+    <div class="main">
+        <div class="logo">
+            <img src="__STATIC__/SVG//logo.svg" width="70" height="100">
+        </div>
+        <div class="t1">
+            <img src="__STATIC__/images/r1.png" width="556" height="458">
+        </div>
+        <div class="g1">
+            <p>新朋友最多可得</p>
+            <p class="g1_a">￥<span>{$beInviteData.point}{$beInviteData.balance}{$beInviteData.coupon.money}</span></p>
+        </div>
+        <div class="g1_b">
+            <div class="g1_c">
+                <input name="new_mobile" id="new_mobile" type="text" class="g_text" placeholder="请输入手机号码">
+            </div>
+            <div class="g1_c" id="codeDiv" style="display: none;">
+                <div style="float:left">
+                    <input name="phone_code"  id="phone_code" type="text" class="g_text" placeholder="请输入验证码" style="width:150px">
+                </div>
+                <div style="float:right">
+                    <input type="button" class="g_btn" value="获取验证码" onClick="sendCode(this,'new_mobile')" id="cide" intervaltime="{$sms_time_out}">
                 </div>
             </div>
-        </if>
-        <if condition = " $beInviteData['type'] == 2 " >
-            <div class="cp1">
-                <div class="c"><a href="#"></a></div>
-                <div class="cp1_r">
-                    <div class="m9">现金：{$beInviteData['balance']}</div>
-                </div>
-            </div>
-        </if>
-        <if condition = " $beInviteData['type'] == 3 " >
-            <div class="cp1">
-                <div class="c"><a href="#"></a></div>
-                <div class="cp1_r">
-                    <div class="m9">积分：{$beInviteData['point']}</div>
-                </div>
-            </div>
-        </if>
+            <div style="clear:both"></div>
+            <div class="pop" id="tip" ></div>
+            <input type="button" id="my_btn" class="g_btn1"  value="立即领取">
+        </div>
+        <div class="t7"></div>
     </div>
-    <div class="pay-order">
-        <p style="text-align:center">
-            <img src="__STATIC__/images/xx2.jpg" width="139" height="139">
-            <br>
-            长按二维码码关注龙米，买米使用<br>
-            您也可以给朋友送券，自已赚米
-        </p>
-    </div>
-    <else/>
-    <div class="OK-a" style="text-align:center">
-        <a href="{:U('Mobile/User/index')}">
-            龙米的老朋友<span>{$user.nickname }</span>
-        </a>
-        <p>虽然您不能领取“新人券”，但是您获得了发券赚米特权！</p>
-    </div>
+</form>
 
-    <div class="login_btn">
-        <a href="{:U('Mobile/Recommend/index')}">去发券</a>
-    </div>
-</if>
 </body>
+
+<script>
+    var kong = true;
+    function showTip( string ){
+        $("#tip").html(string);
+    }
+    $(function(){
+        $("#my_btn").click(function(){
+            submit_form();
+        });
+    });
+    function submit_form(){
+        var new_mobile = $('#new_mobile').val();
+        if(!checkMobile(new_mobile)){
+            showTip('手机格式错误');
+            return false;
+        }
+        if($.trim($('#phone_code').val()) == '')
+        {
+            if($('#codeDiv').is(":hidden")){
+                $('#codeDiv').show();
+                return false;
+            }
+            showTip('验证码不能为空');
+            return false;
+        }
+        $('#form').submit();
+    }
+
+    function a_code(){
+        $('#new_code').trigger('click');
+    }
+
+    function sendCode(obj,input_id){
+        var id = $(obj).attr('id');
+        var input = $('#new_mobile').val();
+        if(!checkMobile(input)){
+            showTip('手机号码格式错误');
+            return false;
+        }
+        //发送验证码
+        if(kong){
+            $.ajax({
+                type : "get",
+                url  : "/index.php?m=Mobile&c=Recommend&a=sendSms&send="+input,
+                dataType : 'json',
+                error: function(request) {
+                    showTip('服务器繁忙, 请联系管理员!');
+                    return;
+                },
+                success: function(res) {
+                    if(res.state == 1){
+                        jsInnerTimeout(id);
+                        kong = false;
+                    }else{
+                        showTip(res.msg);
+                    }
+                }
+            });
+        }
+
+    }
+
+
+
+    //倒计时函数
+    function jsInnerTimeout(id)
+    {
+        var codeObj=$("#"+id);
+        var intAs=parseInt(codeObj.attr("intervaltime"));
+        intAs--;
+        codeObj.attr("disabled","disabled");
+        if(intAs<=-1)
+        {
+            codeObj.removeAttr("disabled");
+            codeObj.attr("intervaltime","{$sms_time_out}");
+            codeObj.val("获取验证码");
+            kong = true;
+            return true;
+        }
+
+        codeObj.val(intAs+'s后再次获取');
+        codeObj.attr("intervaltime",intAs);
+
+        setTimeout("jsInnerTimeout('"+id+"')",1000);
+    };
+
+    /**
+     * 手机号码格式判断
+     * @param tel
+     * @returns {boolean}
+     */
+    function checkMobile(tel) {
+        var reg = /(^1[3|4|5|7|8][0-9]{9}$)/;
+        if (reg.test(tel)) {
+            return true;
+        }else{
+            return false;
+        };
+    }
+</script>
 <include file="Public/footer"/>
 </html>

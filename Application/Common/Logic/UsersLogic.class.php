@@ -297,7 +297,7 @@ class UsersLogic extends BaseLogic
         $limit = 10;
         $Page = new Page($count,$limit);
 
-        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition FROM __PREFIX__coupon_list".
+        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.desc FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
             " c ON l.cid =  c.id WHERE l.uid = {$user_id} {$where}  ORDER BY l.send_time DESC,l.use_time LIMIT {$Page->firstRow},{$Page->listRows}";
 
@@ -341,7 +341,7 @@ class UsersLogic extends BaseLogic
     public function getCoupon($userId){
         //调试使用
         $where = ' AND l.order_id = 0 AND c.use_end_time > '.time(); // 未使用
-        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.is_discount FROM __PREFIX__coupon_list".
+        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.is_discount,c.desc FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
             " c ON l.cid =  c.id WHERE l.uid = '{$userId}' {$where}  ORDER BY l.send_time DESC,l.use_time";
         //"LIMIT {$Page->firstRow},{$Page->listRows}";
