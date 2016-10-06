@@ -82,4 +82,7 @@ class RecommendController extends MobileBaseController {
         $this -> display();
     }
 
+    public function result(){
+
+    }
 }
