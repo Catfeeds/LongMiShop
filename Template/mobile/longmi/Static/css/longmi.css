@@ -120,11 +120,12 @@ Load—more a{
 
 /*版权*/
 .copyright{
-	width:375px;
+	width:90%;
 	border-top-width: 1px;
 	padding-bottom:20px;
 	/*background:#fff;*/
 	padding-top:20px;
+    margin: 0 auto;
 	text-align: center;
 }
 .copyright .copyright_title{
