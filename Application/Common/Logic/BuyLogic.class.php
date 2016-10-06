@@ -183,6 +183,14 @@ class BuyLogic extends BaseLogic
         if(! update_pay_status( $orderSn ) ){
             throw new \Exception('修改订单支付状态失败');
         }
+        $result = setOrderPayCode( $this -> _post_data['orderData']['order_id'] , "GCode" , "G码兑换" );
+        if( !callbackIsTrue($result)){
+            throw new \Exception( getCallbackMessage($result) );
+        }
+        $result = changeCodeState( $this -> _post_data['code'] ,$this->userId );
+        if( !callbackIsTrue($result)){
+            throw new \Exception( getCallbackMessage($result) );
+        }
     }
 
 

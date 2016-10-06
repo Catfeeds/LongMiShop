@@ -21,6 +21,27 @@ function checkCode( $code  ){
     return callback( false , "未找到兑换码" );
 }
 
+/**
+ * 修改礼品券兑换码使用状态
+ * @param $code
+ * @param $userId
+ * @return array
+ */
+function changeCodeState( $code , $userId )
+{
+    $where = array();
+    $couponCodeData = array();
+    $where['code'] = $code;
+    $couponCodeData['state'] = 2;
+    $couponCodeData['use_time'] = time();
+    $couponCodeData['user_id'] = $userId;
+    $couponCodeData['receive_time'] = time();
+    $result = M('coupon_code')->where($where)->save($couponCodeData);
+    if ($result > 0 || $result === 0) {
+       return callback( true );
+    }
+    return callback( false , "修改礼品券状态失败" );
+}
 
 /**
  * 获取兑换商品信息

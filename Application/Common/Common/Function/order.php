@@ -424,3 +424,23 @@ function isInCreateExchangeOrder( $key ){
     }
     return false;
 }
+
+/**
+ * 设置订单支付类型
+ * @param $orderId
+ * @param $code
+ * @param $name
+ * @return array
+ */
+function setOrderPayCode( $orderId , $code , $name ){
+    $where = array();
+    $saveData = array();
+    $where['order_id'] = $orderId;
+    $saveData['pay_code'] = $code;
+    $saveData['pay_name'] = $name;
+    $result = M('order')->where($where)->save($saveData);
+    if ($result > 0 || $result === 0) {
+        return callback( true );
+    }
+    return callback( false , "修改失败" );
+}
