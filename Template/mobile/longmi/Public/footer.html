@@ -1,24 +1,3 @@
-
-
-        <script>
-                $(function(){
-//                        var mobileMessage = getMobileCookie('mobileMessage');
-                        var mobileMessage = "<?php echo cookie('mobileMessage')?>";
-
-                        if( mobileMessage != undefined && mobileMessage != "" && mobileMessage != null ){
-                                alert(mobileMessage);
-
-                        }
-                        delMobileCookie('mobileMessage');
-
-                });
-        </script>
-        <div style="display:none">"<?php cookie('mobileMessage',null);?>"</div>
-
-        <!--<php>cookie('mobileMessage',null);</php>-->
-
-
-
 <script src="__PUBLIC__/js/publicFunctionMobile.js?42368" type="text/javascript"></script>
 <link href="__STATIC__/css/longmi.css?42368" rel="stylesheet" />
 

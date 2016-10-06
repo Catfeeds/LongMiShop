@@ -705,15 +705,14 @@ function jsonEncodeEx($value)
  * @param null $error
  */
 function mobileJumpToast( $jumpUrl , $message = null , $error = null ){
-    $mobileMessage = "";
     if( !is_null($message) ){
-        cookie( "mobileMessage" , $message );
-//        $mobileMessage = $message;
+        session('mobileMessage', $message);
     }
     if( !is_null($error) ){
-        cookie( "mobileMessage" , $error );
-//        $mobileMessage = $error;
+        session('mobileMessage', $error);
     }
+
+    header("Location: ".$jumpUrl);exit;
 //    echo ($_COOKIE['mobileMessage']);
 //
 //    exit;
