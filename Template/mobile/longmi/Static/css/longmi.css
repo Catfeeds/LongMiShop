@@ -123,23 +123,18 @@ Load—more a{
 	width:375px;
 	border-top-width: 1px;
 	padding-bottom:20px;
-	background:#fff;
+	/*background:#fff;*/
 	padding-top:20px;
+	text-align: center;
 }
 .copyright .copyright_title{
 	display:block;
 	width:100%;
 }
 .copyright a{
-	width:87px;
-	display:inline-block;
 	margin:0 auto;
-	background:#fff;
-	padding-bottom:20px;
-	font-weight:bolder;
-	color:#999;
-	text-align:center;
-	clear :left;
+	font-size: 8px;
+	color:#000;
 }
 .copyright p{
 	width:340px;
@@ -155,30 +150,30 @@ Load—more a{
 }
 
 /*导航小图标*/
-.my_nav ul li a span{
-	line-height:23px;
-	width:23px;
-	height:23px;
-	display:inline-block;
-	
-}
-.my_nav ul li:nth-child(1) a span{
-	background:url('../images/uc_icon.png') no-repeat 0px -41px;
-	background-size: 20px 222px;
-}
-.my_nav ul li:nth-child(2) a span{
-	background:url('../images/uc_icon.png') no-repeat 0px -133px;
-	background-size: 20px 222px;
-}
-.my_nav ul li:nth-child(3) a span{
-	background:url('../images/uc_icon.png') no-repeat 0px -154px;
-	background-size: 20px 222px;
-}
-.my_nav ul li:nth-child(4) a span{
-	background:url('../images/uc_icon.png') no-repeat 0px -109px;
-	background-size: 20px 222px;
-}
-.my_nav ul li:nth-child(5) a span{
-	background:url('../images/uc_icon.png') no-repeat 0px -201px;
-	background-size: 20px 222px;
-}
+/*.my_nav ul li a span{*/
+	/*line-height:23px;*/
+	/*width:23px;*/
+	/*height:23px;*/
+	/*display:inline-block;*/
+	/**/
+/*}*/
+/*.my_nav ul li:nth-child(1) a span{*/
+	/*background:url('../images/uc_icon.png') no-repeat 0px -41px;*/
+	/*background-size: 20px 222px;*/
+/*}*/
+/*.my_nav ul li:nth-child(2) a span{*/
+	/*background:url('../images/uc_icon.png') no-repeat 0px -133px;*/
+	/*background-size: 20px 222px;*/
+/*}*/
+/*.my_nav ul li:nth-child(3) a span{*/
+	/*background:url('../images/uc_icon.png') no-repeat 0px -154px;*/
+	/*background-size: 20px 222px;*/
+/*}*/
+/*.my_nav ul li:nth-child(4) a span{*/
+	/*background:url('../images/uc_icon.png') no-repeat 0px -109px;*/
+	/*background-size: 20px 222px;*/
+/*}*/
+/*.my_nav ul li:nth-child(5) a span{*/
+	/*background:url('../images/uc_icon.png') no-repeat 0px -201px;*/
+	/*background-size: 20px 222px;*/
+/*}*/
