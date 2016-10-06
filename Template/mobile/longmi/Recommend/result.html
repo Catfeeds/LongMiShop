@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>{$lmshop_config['shop_info_store_title']}</title>
+    <meta http-equiv="keywords" content="{$lmshop_config['shop_info_store_keyword']}" />
+    <meta name="description" content="{$lmshop_config['shop_info_store_desc']}" />
+    <meta name="viewport"  content="width=device-width,user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+
+    <script src="__STATIC__/js/mui.min.js"></script>
+    <script src="__STATIC__/js/TouchSlide.js"></script>
+    <script src="__STATIC__/js/jquery.js"></script>
+    <link href="__STATIC__/css/red-packet.css" rel="stylesheet" type="text/css">
+</head>
+<body  style="background: url('__STATIC__/images/f-bg.jpg');">
+
+<if condition =" !$isNewUser">
+    <div class="main">
+        <div class="logo">
+            <img src="__STATIC__/SVG//logo.svg" width="70" height="100">
+        </div>
+        <div class="t1">
+            <img src="__STATIC__/images/r3.png" width="556" height="458">
+        </div>
+        <div class="t8">
+            <p>恭喜你，成功领取新用户红包<br>
+                快去<span>龙米商城</span>消费吧</p>
+        </div>
+        <div class="t11">
+            <div class="e1">
+                <div class="e1_left"> {$beInviteData['coupon']['name']}<br>
+                    <span>满{$beInviteData['coupon']['condition']}元可用</span> </div>
+                <div class="e1_right"><span>￥</span>{$beInviteData['coupon']['money']}</div>
+            </div>
+            <div class="e2">有效期至：{:date("Y-m-d",$beInviteData['coupon']['use_end_time']);}</div>
+        </div>
+        <div class="t5"><a href="{:U('Mobile/Index/index');}">立即使用</a></div>
+        <div class="t6"><a href="{:U('Mobile/Recommend/index');}">邀请好友再得{$inviteData.point}{$inviteData.balance}{$inviteData.coupon.money}元</a></div>
+        <div class="t12">
+            <p style=" font-size:16px;text-align:center; line-height:30px">活动说明</p>
+            <ul style=" padding-left:20px;margin-top:0px">
+                <li>您的朋友若从未在龙米公众号进行过消费，可以通过您分享的链接领取“新人券”；</li>
+                <li>您的朋友只要在完成领券行为后进行首次消费，则您就可获得返利奖励，返利现金会立即存入您的账户余额；</li>
+                <li>每个新人只能领取一次“新人券”；</li>
+                <li>若您领取了“新人券”，请于活动截止日期前使用。即2017年2月28日；</li>
+                <li>您若获得现金奖励，可在公众号商城的“个人中心-余额“中查询，余额可用于支付买米费用，暂不支持余额+微信的混合支付模式。</li>
+            </ul>
+            <div class="wm"><img src="__STATIC__/images/xx2.jpg" width="139" height="139">
+                <p>长按二维码码关注龙米，买米使用<br>
+                    您也可以给朋友送券，自已赚米</p>
+            </div>
+        </div>
+
+        <div class="t7"></div>
+    </div>
+    <else/>
+    <div class="main">
+        <div class="logo">
+            <img src="__STATIC__/SVG/logo.svg" width="70" height="100">
+        </div>
+        <div class="t1">
+            <img src="__STATIC__/images/r5.png" width="556" height="454">
+        </div>
+        <div class="t8">
+            <p>
+                您已经是龙米商城的老朋友啦<br>
+                <span>仅限新用户参与</span>
+            </p>
+        </div>
+        <div class="t9"></div>
+        <div class="t10">邀请好友，可以赢大红包哦</div>
+        <div class="t5">
+            <a href="{:U('Mobile/Recommend/index');}">送好友红包，奖励拿不停</a>
+        </div>
+        <div class="t7"></div>
+    </div>
+</if>
+</body>
+<include file="Public/footer"/>
+</html>
