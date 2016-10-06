@@ -51,12 +51,15 @@ class RecommendController extends MobileBaseController {
                 $where['user_id'] =  $this -> user_id;
                 $res = M('users')->save($where);
                 if($res){
-                    $this->success('绑定成功',U('Mobile/Recommend/result',array("inviteUserId"=>$inviteUserId)));exit;
+                    header("Location: ".U('Mobile/Recommend/result',array("inviteUserId"=>$inviteUserId)));
+                    exit;
                 }else{
-                    $this->success('绑定失败',U('Mobile/Recommend/share',array("inviteUserId"=>$inviteUserId)));exit;
+                    header("Location: ".U('Mobile/Recommend/share',array("inviteUserId"=>$inviteUserId)));
+                    exit;
                 }
             }else{
-                $this->success($info['msg'],U('Mobile/Recommend/share',array("inviteUserId"=>$inviteUserId)));exit;
+                header("Location: ".U('Mobile/Recommend/share',array("inviteUserId"=>$inviteUserId)));
+                exit;
             }
             exit;
         }
@@ -77,6 +80,10 @@ class RecommendController extends MobileBaseController {
             !isExistenceDataWithCondition("invite_list",array( "user_id" =>$this ->user_id)) &&
             !isExistenceDataWithCondition('order',array("user_id" => $this ->user_id,"pay_status" => 1))
         ){
+            if( !empty($this ->user['mobile']) ){
+                header("Location: ".U('Mobile/Recommend/result',array("inviteUserId"=>$inviteUserId)));
+                exit;
+            }
             $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
             $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );
             $this -> assign('inviteData',getCallbackData($inviteData));
