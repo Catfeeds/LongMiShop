@@ -37,6 +37,13 @@ class WeChatController extends Controller {
     {
         //get post data, May be due to the different environments
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $postStr = '<xml><ToUserName><![CDATA[gh_6f32040b5c91]]></ToUserName>
+<FromUserName><![CDATA[owjy5v4020Mh7yNAT0aVapESwqNM]]></FromUserName>
+<CreateTime>1475810581</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[subscribe]]></Event>
+<EventKey><![CDATA[]]></EventKey>
+</xml>';
         //extract post data
         if (empty($postStr)){
             exit("");
@@ -67,23 +74,24 @@ class WeChatController extends Controller {
         if($postObj->MsgType == 'event' && $postObj->Event == 'subscribe')
         {
             $keyword = $this -> shopConfig['basic_subscribe_reply'];
-            $where = array("openid" => $fromUsername);
-            $data = array();
-            $data['is_follow'] = 1;
-            $data['follow_time'] = time();
-            $re = M('users') -> where($where) -> save($data);
-            setLogResult($keyword,"subscribe keyword","test");
-            setLogResult($re,"subscribe re","test");
+            if( !empty($fromUsername) ){
+                $data = array();
+                $where = " openid = '$fromUsername'";
+                $data['is_follow'] = 1;
+                $data['follow_time'] = time();
+                M('users') -> where($where) -> save($data);
+            }
         }
         if($postObj->MsgType == 'event' && $postObj->Event == 'unsubscribe')
         {
-            $where = array("openid" => $fromUsername);
-            $data = array();
-            $data['is_follow'] = 0;
-            $data['unfollow_time'] = time();
-            $re = M('users') -> where($where) -> save($data);
-            setLogResult($fromUsername,"unsubscribe fromUsername","test");
-            setLogResult($re,"unsubscribe re","test");
+            if( !empty($fromUsername) ){
+                $data = array();
+                $where = " openid = '$fromUsername'";
+                $data['is_follow'] = 0;
+                $data['unfollow_time'] = time();
+                M('users') -> where($where) -> save($data);
+            }
+
         }
         if(empty($keyword)){
             exit("Input something...");
