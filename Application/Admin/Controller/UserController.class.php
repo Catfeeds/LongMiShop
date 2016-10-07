@@ -266,8 +266,8 @@ class UserController extends BaseController {
                 $user =  $this->user->where($where)->find();
                 if( !empty($user["openid"]) ){
                     $WeChatLogic = new \Common\Logic\WeChatLogic();
-                    dd($WeChatLogic);
                     $userData = $WeChatLogic->WechatFans($user['openid']);
+                    dd($userData);
 
                 }
             }
