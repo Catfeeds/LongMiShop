@@ -261,14 +261,22 @@ class UserController extends BaseController {
                 $this->error('没有数据');exit;
             }
             $this->user = M('users');
+            $WeChatLogic = new \Common\Logic\WeChatLogic();
             foreach($data as $item){
                 $where['user_id'] = $item;
                 $user =  $this->user->where($where)->find();
                 if( !empty($user["openid"]) ){
-                    $WeChatLogic = new \Common\Logic\WeChatLogic();
                     $userData = $WeChatLogic->WechatFans($user['openid']);
-                    dd($userData);
-
+                    $where['head_pic'] = $userData['headimgurl'];
+                    $where['nickname'] = $userData['nickname'];
+                    $res[] = M('users')->save($where);
+                    $isin = in_array('1',$res);
+                    if($isin){
+                        $this->success('拉取成功',U('Admin/User/index'));
+                    }else{
+                        $this->error("拉取失败");
+                    }
+                    exit;
                 }
             }
 
