@@ -67,6 +67,19 @@ class WeChatController extends Controller {
         if($postObj->MsgType == 'event' && $postObj->Event == 'subscribe')
         {
             $keyword = $this -> shopConfig['basic_subscribe_reply'];
+            $where = array("openid" => $fromUsername);
+            $data = array();
+            $data['is_follow'] = 1;
+            $data['follow_time'] = time();
+            M('users') -> where($where) -> save($data);
+        }
+        if($postObj->MsgType == 'event' && $postObj->Event == 'unsubscribe')
+        {
+            $where = array("openid" => $fromUsername);
+            $data = array();
+            $data['is_follow'] = 0;
+            $data['unfollow_time'] = time();
+            M('users') -> where($where) -> save($data);
         }
 //        setLogResult($keyword,"微信进来keyword","test");
 
