@@ -202,3 +202,7 @@ ADD COLUMN `unfollow_time`  int(11) NULL COMMENT '取消关注时间' AFTER `follow_ti
 
 //用户表新增同步时间字段
 ALTER TABLE  `lm_users` ADD  `sync_time` INT( 11 ) DEFAULT NULL COMMENT  '上次同步时间' AFTER  `unfollow_time`;
+
+
+ALTER TABLE `lm_goods_images`
+ADD COLUMN `sort`  int(11) DEFAULT '0' COMMENT '排序';

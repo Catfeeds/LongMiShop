@@ -281,7 +281,7 @@ class SystemController extends BaseController{
                  in_array('logs',$_POST['clear'])  && delFile('./Application/Runtime/Logs');// logs日志                 
                  in_array('temp',$_POST['clear'])  && delFile('./Application/Runtime/Temp');// 临时数据
                  in_array('cacheAll',$_POST['clear'])  && delFile('./Application/Runtime');// 清除所有                 
-                 //in_array('goods_thumb',$_POST['clear'])  && delFile('./Public/upload/goods/thumb'); // 删除缩略图
+                 in_array('goods_thumb',$_POST['clear'])  && delFile('./Public/upload/goods/thumb'); // 删除缩略图
                  
                 // 删除静态文件                
                 $html_arr = glob("./Application/Runtime/Html/*.html");

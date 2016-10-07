@@ -22,7 +22,7 @@ class BaseController extends Controller {
 
 
 
-        delFile('./Application/Runtime');//调试使用
+//        delFile('./Application/Runtime');//调试使用
    }    
     
     /*
