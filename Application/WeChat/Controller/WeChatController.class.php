@@ -64,6 +64,7 @@ class WeChatController extends Controller {
             $keyword = trim($postObj->EventKey);
         }
 
+        setLogResult($postObj,"微信进来postObj","test");
         if($postObj->MsgType == 'event' && $postObj->Event == 'subscribe')
         {
             $keyword = $this -> shopConfig['basic_subscribe_reply'];
@@ -81,7 +82,6 @@ class WeChatController extends Controller {
             $data['unfollow_time'] = time();
             M('users') -> where($where) -> save($data);
         }
-//        setLogResult($keyword,"微信进来keyword","test");
 
 
         if(empty($keyword)){
