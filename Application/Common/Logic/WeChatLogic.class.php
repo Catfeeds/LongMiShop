@@ -307,7 +307,7 @@ class WeChatLogic extends BaseLogic
      * 重新拉取用户数据
      */
     public function WechatFans($openid){
-        dd($openid);
+        return $data;
 //        $access_token = $this->_getWeChatConfig();
 //        // 获取用户 信息
 //        return $access_token;
