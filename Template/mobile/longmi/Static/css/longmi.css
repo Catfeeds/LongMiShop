@@ -211,3 +211,17 @@ Load—more a{
 .bottom_logo a{
 	color: #999;
 }
+
+.postage .countPostage{
+	width:62px;
+}
+.postage div{
+	float:left;
+	color:#b2b2b2;
+}
+.postage .virtualSales{
+	margin-left:53px;
+}
+.postage .virtualAddress{
+	float:right;
+}
