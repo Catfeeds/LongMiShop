@@ -64,7 +64,7 @@ class WeChatController extends Controller {
             $keyword = trim($postObj->EventKey);
         }
 
-        setLogResult($postObj,"微信进来postObj","test");
+        setLogResult($postStr,"微信进来postStr","test");
         if($postObj->MsgType == 'event' && $postObj->Event == 'subscribe')
         {
             $keyword = $this -> shopConfig['basic_subscribe_reply'];
