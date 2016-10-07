@@ -64,11 +64,10 @@ class WeChatController extends Controller {
             $keyword = trim($postObj->EventKey);
         }
 
-        setLogResult($postStr,"微信进来postStr","test");
-        setLogResult($fromUsername,"微信[".$fromUsername."]进来fromUsername","test");
         if($postObj->MsgType == 'event' && $postObj->Event == 'subscribe')
         {
             $keyword = $this -> shopConfig['basic_subscribe_reply'];
+            setLogResult($keyword,"subscribe keyword","test");
             $where = array("openid" => $fromUsername);
             $data = array();
             $data['is_follow'] = 1;
@@ -77,14 +76,13 @@ class WeChatController extends Controller {
         }
         if($postObj->MsgType == 'event' && $postObj->Event == 'unsubscribe')
         {
+            setLogResult($fromUsername,"unsubscribe fromUsername","test");
             $where = array("openid" => $fromUsername);
             $data = array();
             $data['is_follow'] = 0;
             $data['unfollow_time'] = time();
             M('users') -> where($where) -> save($data);
         }
-
-dd(111);
         if(empty($keyword)){
             exit("Input something...");
         }
