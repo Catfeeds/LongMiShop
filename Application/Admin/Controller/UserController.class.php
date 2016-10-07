@@ -267,9 +267,11 @@ class UserController extends BaseController {
                 $user =  $this->user->where($where)->find();
                 if( !empty($user["openid"]) ){
                     $userData = $WeChatLogic->WechatFans($user['openid']);
+                    $userData = json_decode(json_encode($userData),true);
+                    dd($userData);
                     $where['head_pic'] = $userData['headimgurl'];
                     $where['nickname'] = $userData['nickname'];
-                    $res[] = M('users')->save($where);
+                    $res[] = $this->user->save($where);
                     $isin = in_array('1',$res);
                     if($isin){
                         $this->success('拉取成功',U('Admin/User/index'));
