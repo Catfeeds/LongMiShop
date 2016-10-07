@@ -96,8 +96,8 @@
     </div>
     <div class="price postage">
         <div class="countPostage">快递:{$count_postage}</div>
-        <div class="virtualSales">月销量:{: !empty($goods['virtual_sales']) ? $goods['virtual_sales'] : $goods['sales_sum'] }</div>
-        <div class="virtualAddress">发货地:{: !empty($goods['virtual_address']) ? $goods['virtual_address'] : $logAdd }</div>
+        <div class="virtualSales">总销量:{: !empty($goods['virtual_sales']) ? $goods['virtual_sales'] : $goods['sales_sum'] }</div>
+        <div class="virtualAddress">{: !empty($goods['virtual_address']) ? $goods['virtual_address'] : $logAdd }</div>
     </div>
     <div class="price_main">
         {$goods.goods_content|htmlspecialchars_decode}
