@@ -75,6 +75,10 @@ function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
     if( !empty( $info['headimgurl'] ) ){
         $data['head_pic'] = $info['headimgurl'];
     }
+    if( !empty( $info['subscribe'] ) ){
+        $data['is_follow'] = 1;
+        $data['follow_time'] = time();
+    }
     $usersLogic = new \Common\Logic\UsersLogic();
     $result = $usersLogic -> thirdLogin($data);
 
