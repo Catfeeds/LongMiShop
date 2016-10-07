@@ -125,7 +125,7 @@
     <img src="__STATIC__/SVG/bottom_logo.svg" alt="">
 </div>
 <include file="Public/nav"/>
-<if condition="$signPackage neq null">
+<if condition="$signPackage neq null && $user['is_follow'] neq 1">
     <include file="Public/wx_button"/>
 </if>
 
