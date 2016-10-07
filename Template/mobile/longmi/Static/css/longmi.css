@@ -206,7 +206,11 @@ Load—more a{
 .bottom_logo a{
 	color: #999;
 }
-
+.postage{
+	padding-top: 0px;
+	margin-top: -5px;
+	margin-bottom: 10px;
+}
 .postage .countPostage{
 	width:89px;
 }
