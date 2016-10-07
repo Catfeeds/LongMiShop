@@ -51,8 +51,8 @@ class GoodsModel extends Model {
         // 商品图片相册  图册
         if(count($_POST['goods_images']) > 1)
         {
-            array_unshift($_POST['goods_images'],$_POST['original_img']); // 商品原始图 默认为 相册第一张图片
-            array_pop($_POST['goods_images']); // 弹出最后一个
+//            array_unshift($_POST['goods_images'],$_POST['original_img']); // 商品原始图 默认为 相册第一张图片
+//            array_pop($_POST['goods_images']); // 弹出最后一个
             $goodsImagesArr = M('GoodsImages')->where("goods_id = $goods_id")->getField('img_id,image_url'); // 查出所有已经存在的图片
 
             // 删除图片
@@ -73,9 +73,16 @@ class GoodsModel extends Model {
                     );
                     M("GoodsImages")->data($data)->add();; // 实例化User对象
                 }
+                $where = array(
+                    'goods_id' => $goods_id,
+                    'image_url' => $val,
+                );
+                $data = array(
+                    "sort" => $_POST['goods_images_sort'][$key],
+                );
+                M('GoodsImages') -> where($where) -> save($data);
             }
         }
-
         // 商品规格价钱处理
         if($_POST['item'])
         {

@@ -252,12 +252,12 @@ class GoodsController extends BaseController {
                     else
                     {                           
                         $goods_id = $insert_id = $Goods->add(); // 写入数据到数据库
-                        $Goods->adminSave($goods_id);
+//                        $Goods->adminSave($goods_id);
                         $Goods->afterSave($goods_id);
                     }                                        
                     
                     $GoodsLogic->saveGoodsAttr($goods_id, $_POST['goods_type']); // 处理商品 属性
-                    
+                    delFile('./Public/upload/goods/thumb/'.$goods_id);
                     $return_arr = array(
                         'status' => 1,
                         'msg'   => '操作成功',                        
