@@ -217,6 +217,7 @@ Load—more a{
 }
 .postage div{
 	float:left;
+	font-size: 12px;
 	color:#b2b2b2;
 }
 .postage .virtualSales{
