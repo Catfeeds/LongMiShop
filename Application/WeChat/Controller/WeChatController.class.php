@@ -37,13 +37,6 @@ class WeChatController extends Controller {
     {
         //get post data, May be due to the different environments
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        $postStr = '<xml><ToUserName><![CDATA[gh_6f32040b5c91]]></ToUserName>
-<FromUserName><![CDATA[owjy5v4020Mh7yNAT0aVapESwqNM]]></FromUserName>
-<CreateTime>1475810581</CreateTime>
-<MsgType><![CDATA[event]]></MsgType>
-<Event><![CDATA[subscribe]]></Event>
-<EventKey><![CDATA[]]></EventKey>
-</xml>';
         //extract post data
         if (empty($postStr)){
             exit("");
