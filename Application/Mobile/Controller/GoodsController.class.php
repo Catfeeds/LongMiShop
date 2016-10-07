@@ -211,7 +211,7 @@ class GoodsController extends MobileBaseController {
             ),
         );
         $logAdd = M('logistics')->field('log_province,log_city')->where("log_id = '".$goods_res['delivery_way']."'")->find();
-        $logAdd = $logAdd['log_province'].'-'.$logAdd['log_city'];
+        $logAdd = $logAdd['log_province'].' '.$logAdd['log_city'];
         $count_postage = count_postage($count_data);
         $this->assign('count_postage',sprintf(" %1\$.2f",$count_postage['data']['count']));
         $this->assign('logAdd',$logAdd);
