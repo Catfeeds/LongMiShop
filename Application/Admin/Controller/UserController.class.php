@@ -269,6 +269,7 @@ class UserController extends BaseController {
                     $userData = $WeChatLogic->WechatFans($user['openid']);
                     $where['head_pic'] = $userData['headimgurl'];
                     $where['nickname'] = $userData['nickname'];
+                    $where['sync_time'] = time();
                     $res[] = $this->user->save($where);
                     $isin = in_array('1',$res);
                     if($isin){
