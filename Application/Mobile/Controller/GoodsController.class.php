@@ -173,7 +173,7 @@ class GoodsController extends MobileBaseController {
             $brnad = M('brand')->where("id =".$goods['brand_id'])->find();
             $goods['brand_name'] = $brnad['name'];
         }
-        $goods_images_list = M('GoodsImages')->where("goods_id = $goods_id") -> order('sort')->select(); // 商品 图册
+        $goods_images_list = M('GoodsImages')->where("goods_id = $goods_id")->select(); // 商品 图册
         $goods_attribute = M('GoodsAttribute')->getField('attr_id,attr_name'); // 查询属性
         $goods_attr_list = M('GoodsAttr')->where("goods_id = $goods_id")->select(); // 查询商品属性表
 		$filter_spec = $goodsLogic->getSpec($goods_id);
@@ -199,6 +199,22 @@ class GoodsController extends MobileBaseController {
 
         $goods['discount'] = round($goods['shop_price']/$goods['market_price'],2)*10;
 
+        $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$goods['goods_id']."'")->find();
+        $count_data = array(
+            0=>array(
+                'goods_id'=>$goods['goods_id'], //商品id
+                'goods_name'=>$goods['goods_name'], //商品名称
+                'shop_price'=> $goods['shop_price'], //商品价格
+                'weight'=>$goods_res['weight'], //商品重量
+                'shipping_code'=>$goods_res['delivery_way'], //配送方式
+                'goods_num'=> 1,   //件数  重量
+            ),
+        );
+        $logAdd = M('logistics')->field('log_province,log_city')->where("log_id = '".$goods_res['delivery_way']."'")->find();
+        $logAdd = $logAdd['log_province'].'-'.$logAdd['log_city'];
+        $count_postage = count_postage($count_data);
+        $this->assign('count_postage',$count_postage['data']['count']);
+        $this->assign('logAdd',$logAdd);
         $this->assign('commentStatistics',$commentStatistics);//评论概览
         $this->assign('goods_attribute',$goods_attribute);//属性值
         $this->assign('goods_attr_list',$goods_attr_list);//属性列表

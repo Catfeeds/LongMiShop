@@ -38,6 +38,7 @@
             opacity: 0.8;
         }
     </style>
+    <link rel="stylesheet" href="../Static/css/longmi.css">
 </head>
 <body>
 <div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
@@ -92,6 +93,11 @@
     <div class="price">
         <div class="price_left">{$goods.goods_name}</div>
         <div class="price_right">￥{$goods.shop_price}</div>
+    </div>
+    <div class="price postage">
+        <div class="countPostage">快递:{$count_postage}</div>
+        <div class="virtualSales">月销量:{: !empty($goods['virtual_sales']) ? $goods['virtual_sales'] : $goods['sales_sum'] }</div>
+        <div class="virtualAddress">发货地:{: !empty($goods['virtual_address']) ? $goods['virtual_address'] : $logAdd }</div>
     </div>
     <div class="price_main">
         {$goods.goods_content|htmlspecialchars_decode}

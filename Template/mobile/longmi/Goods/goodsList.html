@@ -21,7 +21,7 @@
 		<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4">
 		</div>
 		<div class="mui-slider-group">
-			<div id="item1mobile" class="mui-slider-item mui-control-content <if condition="($_GET[sort] eq '') or ($_GET[sort] eq 'is_new')">mui-active </if>">
+			<div id="item1mobile" class="mui-slider-item mui-control-content <if condition="($_GET[sort] eq 'is_new') or ($_GET[sort] eq 'is_new')">mui-active </if>">
 				<div id="scroll1" class="mui-scroll-wrapper">
 						<div class="mui-scroll">
 							<div class="mui-loading">
@@ -52,7 +52,7 @@
 						</div>
 				</div>
 			</div>
-			<div id="item4mobile" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'sales_sum'">shop_price </if>">
+			<div id="item4mobile" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'shop_price'">mui-active </if>">
 				<div id="scroll4" class="mui-scroll-wrapper">
 						<div class="mui-scroll">
 							<div class="mui-loading">
