@@ -271,6 +271,12 @@ class UserController extends BaseController {
                     $where['nickname'] = $userData['nickname'];
                     $where['sync_time'] = time();
                     $res[] = $this->user->save($where);
+                    $userRes =  $this->user->where($where)->find();
+                    if(empty($userRes['nickname'])){
+                        $datas['nickname'] = '龙米会员'.$item;
+                        $datas['user_id'] = $item;
+                        $this->user->save($datas);
+                    }
                     $isin = in_array('1',$res);
                     if($isin){
                         $this->success('拉取成功',U('Admin/User/index'));
