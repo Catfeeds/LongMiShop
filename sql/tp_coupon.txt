@@ -199,3 +199,8 @@ ALTER TABLE `lm_users`
 ADD COLUMN `is_follow`  int(1) NOT NULL DEFAULT 0 COMMENT '是否关注' AFTER `third_leader`,
 ADD COLUMN `follow_time`  int(11) NULL COMMENT '关注时间' AFTER `is_follow`,
 ADD COLUMN `unfollow_time`  int(11) NULL COMMENT '取消关注时间' AFTER `follow_time`;
+
+
+
+ALTER TABLE `lm_goods_images`
+ADD COLUMN `sort`  int(11) DEFAULT '0' COMMENT '排序';
