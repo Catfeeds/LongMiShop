@@ -78,7 +78,13 @@ class UsersLogic extends BaseLogic
 //                $map['is_distribut']  = 1;
             
             $row = M('users')->add($map);
+
             $user = get_user_info($openid,3,$oauth);
+            if(empty($user['nickname'])){
+                $data['nickname'] = '龙米会员'.$user['user_id'];
+                $data['user_id'] = $user['user_id'];
+                M('users')->save($data);
+            }
 //			// 会员注册送优惠券
 //			$coupon = M('coupon')->where("send_end_time > ".time()." and ((createnum - send_num) > 0 or createnum = 0) and type = 2")->select();
 //			foreach ($coupon as $key => $val)

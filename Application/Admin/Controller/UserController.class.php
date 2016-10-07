@@ -249,4 +249,49 @@ class UserController extends BaseController {
           $list = M('users')->where("first_leader = 1")->select();
           $this->display();
     }
+
+
+    /**
+     * 同步粉丝信息
+     */
+    public function obtainFans(){
+        if(IS_POST){
+            $data  = I('post.selected');
+            if(empty($data)){
+                $this->error('没有数据');exit;
+            }
+            $this->user = M('users');
+            $WeChatLogic = new \Common\Logic\WeChatLogic();
+            foreach($data as $item){
+                $where['user_id'] = $item;
+                $user =  $this->user->where($where)->find();
+                if( !empty($user["openid"]) ){
+                    $userData = $WeChatLogic->WechatFans($user['openid']);
+                    $where['head_pic'] = $userData['headimgurl'];
+                    $where['nickname'] = $userData['nickname'];
+                    $where['sync_time'] = time();
+                    $res[] = $this->user->save($where);
+                    $userRes =  $this->user->where($where)->find();
+                    if(empty($userRes['nickname'])){
+                        $datas['nickname'] = '龙米会员'.$item;
+                        $datas['user_id'] = $item;
+                        $this->user->save($datas);
+                    }
+                    $isin = in_array('1',$res);
+                    if($isin){
+                        $this->success('拉取成功',U('Admin/User/index'));
+                    }else{
+                        $this->error("拉取失败");
+                    }
+                    exit;
+                }
+            }
+
+
+
+        }
+
+
+    }
+
 }

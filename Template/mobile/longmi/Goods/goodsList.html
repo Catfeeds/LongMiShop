@@ -13,9 +13,9 @@
 <div class="mui-content">
 	<div id="slider" class="mui-slider">
 		<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-			<a class="mui-control-item" href="#item1mobile"> 最新 </a>
+			<a class="mui-control-item" href="#item1mobile"> 新品 </a>
 			<a class="mui-control-item" href="#item2mobile"> 销量 </a>
-			<a class="mui-control-item" href="#item3mobile"> 评论 </a>
+			<a class="mui-control-item" href="#item3mobile"> 推荐 </a>
 			<a class="mui-control-item" href="#item4mobile"> 价格 </a>
 		</div>
 		<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4">
@@ -42,7 +42,7 @@
 						</div>
 				</div>
 			</div>
-			<div id="item3mobile" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'comment_count'">mui-active </if>">
+			<div id="item3mobile" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'is_recommend'">mui-active </if>">
 				<div id="scroll3" class="mui-scroll-wrapper">
 						<div class="mui-scroll">
 							<div class="mui-loading">
@@ -114,7 +114,7 @@
 	var  url  = [
 		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'is_new')),''));?>",
 		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'sales_sum')),''));?>",
-		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'comment_count')),''));?>",
+		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'is_recommend')),''));?>",
 		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'shop_price','sort_asc'=>'desc')),''));?>",
 	];
 	function ajax_sourch_submit( number , obj_name , is_first)
@@ -141,7 +141,7 @@
 	$(function(){
 		<if condition="($_GET[sort] eq '') or ($_GET[sort] eq 'is_new')">ajax_sourch_submit( 0 , "item1mobile" , true);</if>
 		<if condition="$_GET[sort] eq 'sales_sum'">ajax_sourch_submit( 1 , "item2mobile" , true);</if>
-		<if condition="$_GET[sort] eq 'comment_count'">ajax_sourch_submit( 2 , "item3mobile" , true);</if>
+		<if condition="$_GET[sort] eq 'is_recommend'">ajax_sourch_submit( 2 , "item3mobile" , true);</if>
 		<if condition="$_GET[sort] eq 'shop_price'">ajax_sourch_submit( 3 , "item4mobile" , true);</if>
 	});
 </script>

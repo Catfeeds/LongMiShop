@@ -200,6 +200,8 @@ ADD COLUMN `is_follow`  int(1) NOT NULL DEFAULT 0 COMMENT '是否关注' AFTER `thir
 ADD COLUMN `follow_time`  int(11) NULL COMMENT '关注时间' AFTER `is_follow`,
 ADD COLUMN `unfollow_time`  int(11) NULL COMMENT '取消关注时间' AFTER `follow_time`;
 
+//用户表新增同步时间字段
+ALTER TABLE  `lm_users` ADD  `sync_time` INT( 11 ) DEFAULT NULL COMMENT  '上次同步时间' AFTER  `unfollow_time`;
 
 
 ALTER TABLE `lm_goods_images`
