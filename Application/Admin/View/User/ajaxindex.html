@@ -73,7 +73,7 @@
                                         </td>
                                         <td class="text-left">{$list.pay_points}</td>
                                         <td class="text-left">{$list.reg_time|date='Y-m-d H:i',###}</td>
-                                        <td class="text-left"><if condition="$list['sync_time'] neq null">{$list['sync_time']|date='Y-m-d H:i',###}</if></td>
+                                        <td class="text-left"><if condition="!empty($list['sync_time'])">{$list['sync_time']|date='Y-m-d H:i',###}</if></td>
                                         <td class="text-right">
                                             <a href="{:U('Admin/user/detail',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>
                                             <a href="{:U('Admin/user/address',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="收货地址"><i class="fa fa-home"></i></a>
