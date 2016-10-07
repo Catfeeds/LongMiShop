@@ -308,10 +308,19 @@ class WeChatLogic extends BaseLogic
      */
     public function WechatFans($openid){
         $access_token = $this->_getWeChatConfig();
-        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$access_token['web_access_token']".&openid=".$openid."";
-        $subscribe_info = httpRequest($url,'GET');
-        $subscribe_info = json_decode($subscribe_info,true);
-        return $subscribe_info;
+        // 获取用户 信息
+        $url = $this -> __createOauthUrlForUserinfo($access_token['web_access_token'],$openid);
+        $ch = curl_init();//初始化curl
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);//设置超时
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,FALSE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $res = curl_exec($ch);//运行curl，结果以jason形式返回
+        $data = json_decode($res,true);//取出openid access_token
+        curl_close($ch);
+        return $data;
     }
 
 
