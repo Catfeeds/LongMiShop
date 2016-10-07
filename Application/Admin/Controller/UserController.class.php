@@ -264,7 +264,7 @@ class UserController extends BaseController {
             foreach($data as $item){
                 $where['user_id'] = $item;
                 $user =  $this->user->where($where)->find();
-                if( isWeChatUser($user["oauth"]) ){
+                if( !empty($user["openid"]) ){
                     $userData = WechatFans($user['openid']);
                     dd($userData);
                 }
