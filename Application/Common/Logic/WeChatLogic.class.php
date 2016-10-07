@@ -315,7 +315,7 @@ class WeChatLogic extends BaseLogic
             exit;
         }
 
-        return $data;
+        return $call_back_url;
 
     }
 
