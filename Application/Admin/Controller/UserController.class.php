@@ -249,4 +249,32 @@ class UserController extends BaseController {
           $list = M('users')->where("first_leader = 1")->select();
           $this->display();
     }
+
+
+    /**
+     * 同步粉丝信息
+     */
+    public function obtainFans(){
+        if(IS_POST){
+            $data  = I('post.selected');
+            if(empty($data)){
+                $this->error('没有数据');exit;
+            }
+            $this->user = M('users');
+            foreach($data as $item){
+                $where['user_id'] = $item;
+                $user =  $this->user->where($where)->find();
+                if( isWeChatUser($user["oauth"]) ){
+                    $userData = WechatFans($user['openid']);
+                    dd($userData);
+                }
+            }
+
+
+
+        }
+
+
+    }
+
 }
