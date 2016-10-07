@@ -206,3 +206,8 @@ ALTER TABLE  `lm_users` ADD  `sync_time` INT( 11 ) DEFAULT NULL COMMENT  '上次同
 
 ALTER TABLE `lm_goods_images`
 ADD COLUMN `sort`  int(11) DEFAULT '0' COMMENT '排序';
+
+//商品表新增字段
+ALTER TABLE  `lm_goods` ADD  `virtual_sales` INT( 11 ) NOT NULL COMMENT  '商品虚拟销量' AFTER  `goods_sn`;
+ALTER TABLE  `lm_goods` ADD  `virtual_address` VARCHAR( 255 ) NOT NULL COMMENT  '商品虚拟发货地址' AFTER  `virtual_sales`;
+
