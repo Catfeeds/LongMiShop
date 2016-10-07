@@ -307,8 +307,8 @@ class WeChatLogic extends BaseLogic
      * 重新拉取用户数据
      */
     public function WechatFans($openid){
-        $web_access_token = $this->_getWeChatConfig();
-        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token2&openid=$openid";
+        $access_token = $this->_getWeChatConfig();
+        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$access_token['web_access_token']".&openid=".$openid."";
         $subscribe_info = httpRequest($url,'GET');
         $subscribe_info = json_decode($subscribe_info,true);
         return $subscribe_info;
