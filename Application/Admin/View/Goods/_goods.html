@@ -261,7 +261,8 @@
                                         <input type="text" class="input-sm"  name="original_img" id="original_img" value="{$goodsInfo.original_img}"/>
                                         <if condition="$goodsInfo['original_img'] neq null">
                                             &nbsp;&nbsp;
-                                            <a target="_blank" href="{$goodsInfo.original_img}" id="original_img2">
+                                            <img width="150" height="150" src="{$goodsInfo.original_img}">
+                                            <a target="_blank" style="display: none" href="{$goodsInfo.original_img}" id="original_img2">
                                                 <img width="25" height="25" src="/Public/images/image_icon.jpg">
                                             </a>
                                         </if>
