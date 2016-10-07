@@ -314,7 +314,6 @@ class WeChatLogic extends BaseLogic
         if(isset($call_back_url->errcode)){
             exit;
         }
-
         return $call_back_url;
 
     }
