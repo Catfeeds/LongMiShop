@@ -1,10 +1,10 @@
 
-                    <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+                    <form method="post" enctype="multipart/form-data" target="_blank" id="form-order" action="{: U('Admin/User/obtainFans')}">
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+                                    <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" ></td>
     
                                     <td class="text-right">
                                         <a href="javascript:sort('user_id');">ID</a>
@@ -48,7 +48,7 @@
                                 <volist name="userList" id="list">
                                     <tr>
                                         <td class="text-center">
-                                            <input type="checkbox" name="selected[]" value="6">
+                                            <input type="checkbox" name="selected[]" value="{$list.user_id}">
                                             <input type="hidden" name="shipping_code[]" value="flat.flat">
                                         </td>
                                         <td class="text-right">{$list.user_id}</td>

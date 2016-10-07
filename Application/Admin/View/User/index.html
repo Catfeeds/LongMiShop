@@ -28,12 +28,16 @@
                                 </div>
                                 <input type="hidden" name="order_by" value="user_id">
                                 <input type="hidden" name="sort" value="desc">
+                                <button type="submit" onclick="obtainFans()" id="button-filter search-order" class="btn btn-primary pull-right"><i class="fa fa-search"></i> 同步信息</button>
+
                                 <button type="submit" onclick="ajax_get_table('search-form2',1)" id="button-filter search-order" class="btn btn-primary pull-right"><i class="fa fa-search"></i> 筛选</button>
                             </form>
                     </div>
+                    <!--<form action="{: U('Admin/User/obtainFans')}" method="post" id="FansFrom">-->
                     <div id="ajax_return">
 
                     </div>
+                    <!--</form>-->
                 </div>
             </div>
         </div>        <!-- /.row -->
@@ -59,6 +63,17 @@
                     $("#ajax_return").append(data);
                 }
             });
+    }
+
+    //ajax同步粉丝信息
+    function obtainFans(){
+        var length = $("input[type='checkbox']:checked").length;
+        if(length == 0){
+            alert('请选择粉丝');
+            return false;
+        }
+        $('#form-order').submit();
+
     }
 
     // 点击排序
