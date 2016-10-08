@@ -1,6 +1,18 @@
 <script src="__PUBLIC__/js/publicFunctionMobile.js?{$versionToken}" type="text/javascript"></script>
 <link href="__STATIC__/css/longmi.css?{$versionToken}" rel="stylesheet" />
 
+<script>
+        $(function(){
+                $('img').each(function(){
+                        if($(this).attr('src') == ''){
+                                $(this).attr('src',"__DefaultGoodsgroundImages__");
+                        }
+                });
+                $('img').error(function(){
+                        $(this).attr('src',"__DefaultGoodsgroundImages__");
+                });
+        });
+</script>
 <!-- 微信浏览器 调用微信 分享js-->
 <if condition="$signPackage neq null">
         <include file="Public/wx_share"/>

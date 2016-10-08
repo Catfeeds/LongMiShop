@@ -5,7 +5,7 @@
     <foreach name="goods_list" item="vo" key="k">
         <li class="mui-table-view-cell mui-media mui-col-xs-6">
             <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$vo[goods_id]))}">
-                <img class="mui-media-object" src="{$vo.goods_id|goods_thum_images=400,400}">
+                <img class="mui-media-object" src="{$vo.goods_id|goods_thum_images=400,400}" >
                 <div class="to">
                     <div class="to1">{$vo.goods_name}</div>
                     <div class="to2">￥{$vo.shop_price}</div>
@@ -29,3 +29,17 @@
     </if>
 
 </notempty>
+
+<script src="__STATIC__/js/mui.min.js"></script>
+<script>
+    $(function(){
+        $('img').each(function(){
+            if($(this).attr('src') == ''){
+                $(this).attr('src',"__DefaultGoodsgroundImages__");
+            }
+        });
+        $('img').error(function(){
+            $(this).attr('src',"__DefaultGoodsgroundImages__");
+        });
+    });
+</script>
