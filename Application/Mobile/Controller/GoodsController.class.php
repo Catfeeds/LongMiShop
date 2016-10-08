@@ -17,6 +17,7 @@ class GoodsController extends MobileBaseController {
             "goodsAttr",
             "search",
             "ajaxSearch",
+            "setGoodsComment",
             'ajaxCollectGoods',
         );
     }
@@ -213,6 +214,27 @@ class GoodsController extends MobileBaseController {
         $logAdd = M('logistics')->field('log_province,log_city')->where("log_id = '".$goods_res['delivery_way']."'")->find();
         $logAdd = $logAdd['log_province'].' '.$logAdd['log_city'];
         $count_postage = count_postage($count_data);
+
+        $condition3 = array('user_id' => $this -> user_id , 'goods_id' => $goods_id, 'is_delete' => 0 , 'is_buyer' => 0);
+        if( isExistenceDataWithCondition("goods_comment",$condition3) ){
+            $isComment = true;
+        }else{
+            $isComment = false;
+        }
+        $condition2 = array('user_id' => $this -> user_id , 'goods_id' => $goods_id);
+        if( isExistenceDataWithCondition("order_goods",$condition2) ){
+            $this->assign('isBought',true);
+            $condition4 = array('user_id' => $this -> user_id , 'goods_id' => $goods_id, 'is_delete' => 0 , 'is_buyer' => 1);
+            if( isExistenceDataWithCondition("goods_comment",$condition4) ){
+                $isComment = true;
+            }else{
+                $isComment = false;
+            }
+        }else{
+            $this->assign('isBought',false);
+        }
+
+        $this->assign('isComment',$isComment);
         $this->assign('count_postage',sprintf(" %1\$.2f",$count_postage['data']['count']));
         $this->assign('logAdd',$logAdd);
         $this->assign('commentStatistics',$commentStatistics);//评论概览
@@ -251,27 +273,43 @@ class GoodsController extends MobileBaseController {
      */
     public function ajaxComment(){
         $goods_id = I("goods_id",'0');
-        $commentType = I('commentType','1'); // 1 全部 2好评 3 中评 4差评
-        $page_limit = 3;
-        if($commentType==$page_limit){
-        	$where = "goods_id = $goods_id and parent_id = 0 and img !='' ";
-        }else{
-        	$typeArr = array('1'=>'0,1,2,3,4,5','2'=>'4,5','3'=>'3','4'=>'0,1,2');
-        	$where = "goods_id = $goods_id and parent_id = 0 and ceil((deliver_rank + goods_rank + service_rank) / 3) in($typeArr[$commentType])";
+        $is_buyer = I("is_buyer","0");
+        $page_limit = 100;
+        $where = "goods_id = '$goods_id' and is_show = 1 and is_delete = 0";
+        if(!empty($is_buyer)){
+            $where .= " and is_buyer = 1";
         }
-        $count = M('Comment')->where($where)->count();
+        $count = M('goods_comment')->where($where)->count();
 
         $page = new AjaxPage($count,$page_limit);
         $show = $page->show();
-        $list = M('Comment')->where($where)->order("add_time desc")->limit($page->firstRow.','.$page->listRows)->select();
-        $replyList = M('Comment')->where("goods_id = $goods_id and parent_id > 0")->order("add_time desc")->select();
-        foreach($list as $k => $v){
-            $list[$k]['img'] = unserialize($v['img']); // 晒单图片
-            $list[$k]['headImg'] = getUserHeadImg($v['user_id']);
-        }
-        $this->assign('commentlist',$list);// 商品评论
-        $this->assign('replyList',$replyList); // 管理员回复
+        $list = M('goods_comment')->where($where)->order("create_time desc")->limit($page->firstRow.','.$page->listRows)->select();
+        $this->assign('commentList',$list);// 商品评论
+        $this->assign('limit',$page_limit);// 赋值分页输出
+        $this->assign('count',$count);// 赋值分页输出
         $this->assign('page',$show);// 赋值分页输出
+
+//        $commentType = I('commentType','1'); // 1 全部 2好评 3 中评 4差评
+//        $page_limit = 3;
+//        if($commentType==$page_limit){
+//        	$where = "goods_id = $goods_id and parent_id = 0 and img !='' ";
+//        }else{
+//        	$typeArr = array('1'=>'0,1,2,3,4,5','2'=>'4,5','3'=>'3','4'=>'0,1,2');
+//        	$where = "goods_id = $goods_id and parent_id = 0 and ceil((deliver_rank + goods_rank + service_rank) / 3) in($typeArr[$commentType])";
+//        }
+//        $count = M('Comment')->where($where)->count();
+//
+//        $page = new AjaxPage($count,$page_limit);
+//        $show = $page->show();
+//        $list = M('Comment')->where($where)->order("add_time desc")->limit($page->firstRow.','.$page->listRows)->select();
+//        $replyList = M('Comment')->where("goods_id = $goods_id and parent_id > 0")->order("add_time desc")->select();
+//        foreach($list as $k => $v){
+//            $list[$k]['img'] = unserialize($v['img']); // 晒单图片
+//            $list[$k]['headImg'] = getUserHeadImg($v['user_id']);
+//        }
+//        $this->assign('commentlist',$list);// 商品评论
+//        $this->assign('replyList',$replyList); // 管理员回复
+//        $this->assign('page',$show);// 赋值分页输出
         $this->display();
     }
 
@@ -382,8 +420,53 @@ class GoodsController extends MobileBaseController {
             $res = M('goods_collect')->where($data)->delete();
             $res ? exit(json_encode(callback(true,'取消收藏',array('status'=>'del')))) : exit(json_encode(callback(false,'取消收藏失败')));
         }
+    }
 
+    /**
+     * 添加新的商品评价
+     */
+    public function setGoodsComment(){
+        if( empty( $this -> user_id ) ){
+            exit(json_encode(callback(false,"登陆后才可评价")));
+        }
+        if( IS_POST ) {
+            $goodsCommentContent = I("commentContent");
+            $goodsCommentLevel = I("commentLevel");
+            $goodsId = I("goodsId");
+            $condition1 = array('user_id' => $this -> user_id , 'goods_id' => $goodsId, 'is_delete' => 0 , 'is_buyer' => 1);
+            $condition2 = array('user_id' => $this -> user_id , 'goods_id' => $goodsId);
+            $condition3 = array('user_id' => $this -> user_id , 'goods_id' => $goodsId, 'is_delete' => 0 , 'is_buyer' => 0);
+            if( !isExistenceDataWithCondition("goods_comment",$condition1) ){
+                $newData = array(
+                    "user_id"     => $this->user_id,
+                    "goods_id"    => $goodsId,
+                    "create_time" => time(),
+                    "update_time" => time(),
+                    "is_show"     => 1,
+                    "user_name"   => $this->user['nickname'],
+                    "user_img"    => $this->user['head_pic'],
+                    "level"       => $goodsCommentLevel,
+                    "content"     => $goodsCommentContent,
+                    "is_delete"   => 0,
+                );
+                if( isExistenceDataWithCondition("order_goods",$condition2) ){
+                    $newData['is_buyer'] = 1;
+                    M('goods_comment') -> where($condition3) -> save( array('update_time' => time() ,'is_delete' => 1 ));
+                    if( isSuccessToAddData("goods_comment" , $newData) ){
+                        exit(json_encode(callback(true,"评价成功")));
+                    }
+                    exit(json_encode(callback(false,"评价失败")));
+                }
 
-
+                if( !isExistenceDataWithCondition("goods_comment",$condition3) ){
+                    $newData['is_buyer'] = 0;
+                    if( isSuccessToAddData("goods_comment" , $newData) ){
+                        exit(json_encode(callback(true,"评价成功")));
+                    }
+                    exit(json_encode(callback(false,"评价失败")));
+                }
+            }
+        }
+        exit(json_encode(callback(false,"您已经评论过了")));
     }
 }
