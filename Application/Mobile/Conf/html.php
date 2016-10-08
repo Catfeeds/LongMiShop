@@ -7,6 +7,7 @@ return array(
         '__STATIC__'     => '/Template/mobile/longmi/Static', // 增加新的image  css js  访问路径  后面给 php 改了
         "__DefaultUserImages__"=>"/Public/images/default/user.png",
         "__DefaultUserBackgroundImages__"=>"/Public/images/default/userBg.jpg",
+        '__DefaultGoodsgroundImages__'=>'/Public/images/default/goodsimg.jpg',
     ),
     //'DATA_CACHE_TIME'=>60, // 查询缓存时间
 );

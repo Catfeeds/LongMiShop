@@ -211,6 +211,17 @@ ADD COLUMN `sort`  int(11) DEFAULT '0' COMMENT '排序';
 ALTER TABLE  `lm_goods` ADD  `virtual_sales` INT( 11 ) NOT NULL COMMENT  '商品虚拟销量' AFTER  `goods_sn`;
 ALTER TABLE  `lm_goods` ADD  `virtual_address` VARCHAR( 255 ) NOT NULL COMMENT  '商品虚拟发货地址' AFTER  `virtual_sales`;
 
+//新增反馈表
+CREATE TABLE `lm_user_feedback` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL COMMENT '用户id',
+  `nickname` varchar(255) DEFAULT NULL COMMENT '用户昵称',
+  `phone_model` varchar(255) DEFAULT NULL COMMENT '手机型号',
+  `phone_network` varchar(255) DEFAULT NULL COMMENT '手机网络',
+  `user_proposal` text COMMENT '反馈内容',
+  `time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 CREATE TABLE `lm_goods_comment` (
 `id`  int(11) NOT NULL AUTO_INCREMENT ,
 `user_id`  int(11) NOT NULL ,

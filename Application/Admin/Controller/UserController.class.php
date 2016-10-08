@@ -299,4 +299,41 @@ class UserController extends BaseController {
 
     }
 
+    public function feedback(){
+        $this->display();
+    }
+
+    public function ajaxfeedback(){
+        // 搜索条件
+        $condition = array();
+        I('nickname') ? $condition['nickname'] = I('nickname') : false;
+        I('user_id') ? $condition['user_id'] = I('user_id') : false;
+        $sort_order = I('order_by','user_id').' '.I('sort','desc');
+
+        $model = M('user_feedback');
+        $count = $model->where($condition)->count();
+        $Page  = new AjaxPage($count,10);
+        //  搜索条件下 分页赋值
+        foreach($condition as $key=>$val) {
+            $Page->parameter[$key]   =   urlencode($val);
+        }
+
+        $userList = $model->where($condition)->order($sort_order)->limit($Page->firstRow.','.$Page->listRows)->select();
+
+        $show = $Page->show();
+        $this->assign('userList',$userList);
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display();
+    }
+
+    public function detailfeedback(){
+        $id = I('id');
+        if(empty($id)){
+            $this->error('参数错误');exit;
+        }
+        $list = M('user_feedback')->where(array('id'=>$id))->find();
+        $this->assign('list',$list);
+        $this->display();
+    }
+
 }
