@@ -7,8 +7,10 @@
               <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="fa fa-bell"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text">待处理订单</span>
-                  <span class="info-box-number">{$count.handle_order}</span>
+                    <a href="{: U('Admin/Order/index')}">
+                        <span class="info-box-text">待处理订单</span>
+                        <span class="info-box-number">{$count.handle_order}</span>
+                    </a>
                 </div>
               </div>
             </div>
@@ -16,8 +18,10 @@
               <div class="info-box">
                 <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text">商品数量</span>
-                  <span class="info-box-number">{$count.goods}</span>
+                    <a href="{: U('Admin/Goods/goodsList')}">
+                        <span class="info-box-text">商品数量</span>
+                        <span class="info-box-number">{$count.goods}</span>
+                    </a>
                 </div>
               </div>
             </div>
@@ -25,8 +29,10 @@
               <div class="info-box">
                 <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text">文章数量</span>
-                  <span class="info-box-number">{$count.article}</span>
+                    <a href="{: U('Admin/Article/articleList')}">
+                        <span class="info-box-text">文章数量</span>
+                        <span class="info-box-number">{$count.article}</span>
+                    </a>
                 </div>
               </div>
             </div>
@@ -34,8 +40,10 @@
               <div class="info-box">
                 <span class="info-box-icon bg-red"><i class="fa fa-user-plus"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text">会员总数</span>
-                  <span class="info-box-number">{$count.users}</span>
+                    <a href="{: U('Admin/User/index')}">
+                        <span class="info-box-text">会员总数</span>
+                        <span class="info-box-number">{$count.users}</span>
+                    </a>
                 </div>
               </div>
             </div>
