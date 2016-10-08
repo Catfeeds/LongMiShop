@@ -16,7 +16,7 @@
 			<a class="mui-control-item" href="#item1mobile"> 新品 </a>
 			<a class="mui-control-item" href="#item2mobile"> 销量 </a>
 			<a class="mui-control-item" href="#item3mobile"> 推荐 </a>
-			<a class="mui-control-item" href="#item4mobile"> 价格 </a>
+			<a class="mui-control-item" id="item4mobiless" href="#item4mobile"> 价格 <span id="mobile_symbol"></span> <span id="mobile_spans" style="display:none">1</span></a>
 		</div>
 		<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4">
 		</div>
@@ -69,11 +69,29 @@
 	mui.init({
 		swipeBack: false
 	});
+	var  rank = 1;
+	var  sort_asc = '';
+
 	(function($) {
 		$('.mui-scroll-wrapper').scroll({
 			indicators: true //是否显示滚动条
 		});
-
+		document.getElementById('item4mobiless').addEventListener('tap', function(e) {
+			var spans = document.getElementById('mobile_spans').innerHTML;
+			var loadingHtml  = '<div class="mui-scroll"><div class="mui-loading"><div class="mui-spinner"></div></div></div>';
+			document.getElementById('scroll4').innerHTML = loadingHtml;
+			if( spans == 1 ){
+				document.getElementById('mobile_spans').innerHTML = '2';
+				document.getElementById('mobile_symbol').innerHTML = '↓';
+				rank = 2;
+				ajax_sourch_submit( 3 , "item4mobile" , true);
+			}else{
+				document.getElementById('mobile_spans').innerHTML = '1';
+				document.getElementById('mobile_symbol').innerHTML = '↑';
+				rank = 1;
+				ajax_sourch_submit( 4 , "item4mobile" , true);
+			}
+		});
 		var item1 = document.getElementById('item1mobile');
 		var item2 = document.getElementById('item2mobile');
 		var item3 = document.getElementById('item3mobile');
@@ -96,7 +114,21 @@
 			}
 			if (e.detail.slideNumber === 3) {
 				if (item4.querySelector('.mui-loading')) {
-					ajax_sourch_submit( 3 , "item4mobile" , true);
+//					ajax_sourch_submit( 3 , "item4mobile" , true);
+//
+//					if(rank == 1){
+//						ajax_sourch_submit( 3 , "item4mobile" , true);
+//						document.getElementById('mobile_spans').innerHTML = '2';
+//						document.getElementById('mobile_symbol').innerHTML = '↑';
+//						rank = 2;
+//
+//					}else{
+//						ajax_sourch_submit( 4 , "item4mobile" , true);
+//						document.getElementById('mobile_spans').innerHTML = '1';
+//						document.getElementById('mobile_symbol').innerHTML = '↓';
+//						rank = 1;
+//					}
+
 				}
 			}
 		});
@@ -110,15 +142,25 @@
 		});
 	})(mui);
 
-	var  page = [1,1,1,1];
+	var  page = [1,1,1,1,1];
+
+
 	var  url  = [
 		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'is_new')),''));?>",
 		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'sales_sum')),''));?>",
 		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'is_recommend')),''));?>",
 		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'shop_price','sort_asc'=>'desc')),''));?>",
+		"<?php echo urldecode(U('Mobile/Goods/goodsList',array_merge($filter_param,array('sort' => 'shop_price','sort_asc'=>'asc')),''));?>",
 	];
 	function ajax_sourch_submit( number , obj_name , is_first)
 	{
+
+		console.log(url[number]);
+		console.log(rank);
+
+		if( is_first == true ){
+			page[number] = 1;
+		}
 		$.ajax({
 			type : "GET",
 			url:url[number] + "/is_ajax/1/p/"+page[number]+"/number/"+number,
