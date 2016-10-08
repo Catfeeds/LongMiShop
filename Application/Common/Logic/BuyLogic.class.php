@@ -351,9 +351,10 @@ class BuyLogic extends BaseLogic
             }
             $goods_weight = 0;
             //如果商品不是包邮的
-            if($goods_arr[$val['goods_id']]['is_free_shipping'] == 0) {
-                $goods_weight += $goods_arr[$val['goods_id']]['weight'] * $val['goods_num']; //累积商品重量 每种商品的重量 * 数量
-            }
+
+//            if($goods_arr[$val['goods_id']]['is_free_shipping'] == 0) {
+//                $goods_weight += $goods_arr[$val['goods_id']]['weight'] * $val['goods_num']; //累积商品重量 每种商品的重量 * 数量
+//            }
             $order_goods[$key]['goods_fee'] = $val['goods_num'] * $val['member_goods_price'];    // 小计
             $order_goods[$key]['store_count']  = getGoodNum($val['goods_id'],$val['spec_key']); // 最多可购买的库存数量
             $goods_price += $order_goods[$key]['goods_fee']; // 商品总价
@@ -366,7 +367,23 @@ class BuyLogic extends BaseLogic
         }else{
             $coupon_price = $goods_price - ($goods_price - $couponInfo_list['money'] );
         }
-        // dd($coupon_price);
+
+        //计算邮费
+        $region_list = get_region_list();
+        $addRess = $this -> _post_data['address'];
+        foreach($order_goods as $key => $item){
+                $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
+                $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
+                $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
+                $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称
+                $goods_data[$key]['goods_price'] = $item['goods_price']; //商品价格
+                $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
+                $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
+                $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址
+        }
+        $count_postage = count_postage($goods_data);
+        $shipping_price = $count_postage['data']['count'];//运费
+
         $order_amount = $goods_price + $shipping_price - $coupon_price; // 应付金额 = 商品价格 + 物流费 - 优惠券
         $total_amount = $goods_price + $shipping_price;
         $pay_points = 0;
