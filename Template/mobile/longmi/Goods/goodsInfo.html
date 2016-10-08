@@ -106,11 +106,14 @@
         <div class="virtualAddress">{: !empty($goods['virtual_address']) ? $goods['virtual_address'] : $logAdd }</div>
     </div>
     <style>
+        .safeguard {
+            line-height: 25px;
+        }
         .myUl{
-            overflow: hidden;height: 40px;
+            overflow: hidden;height: 25px;
         }
         .myUl2{
-            min-height: 40px;
+            min-height: 25px;
             background-image: url(__STATIC__/SVG/move.svg);
             background-repeat: no-repeat;
             background-position: right center;
