@@ -19,8 +19,7 @@ function adminLog($log_info){
  * 是否为供应商
  * @return bool
  */
-function is_supplier(){
-    return false;
+function isSupplier(){
     if(session('admin_role_id') == 2){
         return true;
     }

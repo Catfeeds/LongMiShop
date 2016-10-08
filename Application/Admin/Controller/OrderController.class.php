@@ -82,7 +82,7 @@ class OrderController extends BaseController {
     	$shipping_status = I('shipping_status');
     	$condition['shipping_status'] = empty($shipping_status) ? array('neq',1) : $shipping_status;
 
-        if(is_supplier()){
+        if(isSupplier()){
             $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('order_id') -> select();
             $temp_string = "";
             if(!empty($id_lists)){
@@ -464,7 +464,7 @@ class OrderController extends BaseController {
     	$this->assign('order',$order);
     	$this->assign('orderGoods',$orderGoods);
         $condition = 'order_id='.$order_id;
-        if(is_supplier()){
+        if(isSupplier()){
             $condition .= " and admin_id = '".session('admin_id')."'";
         }
 		$delivery_record = M('delivery_doc')->where($condition)->select();
