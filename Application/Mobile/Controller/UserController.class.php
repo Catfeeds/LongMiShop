@@ -1196,4 +1196,46 @@ class UserController extends MobileBaseController {
 
     }
 
+    /*意见反馈*/
+    public function feedback(){
+        if(IS_POST){
+            $user = $this -> user;
+            $data = I('post.');
+            if(empty($data['phone_network'])){
+                $this->error('请选择网络信号');exit;
+            }else if(empty($data['user_proposal'])){
+                $this->error('内容不能为空');exit;
+            }
+            $data['user_id'] = $user['user_id'];
+            $data['nickname'] = $user['nickname'];
+            $data['phone_model'] = $this->getOS();
+            $data['time'] = time();
+            $res = M('user_feedback')->add($data);
+            if($res){
+                $this->success('谢谢您的宝贵意见',U('Mobile/User/index'));
+            }else{
+                $this->error('反馈失败');
+            }
+            exit;
+
+        }
+        $this->display();
+    }
+
+    //检测用户手机型号
+    private function getOS()
+    {
+        $ua = $_SERVER['HTTP_USER_AGENT'];//这里只进行IOS和Android两个操作系统的判断，其他操作系统原理一样
+        if (strpos($ua, 'Android') !== false) {//strpos()定位出第一次出现字符串的位置，这里定位为0
+            preg_match("/(?<=Android )[\d\.]{1,}/", $ua, $version);
+            return 'Platform:Android OS_Version:'.$version[0];
+        } elseif (strpos($ua, 'iPhone') !== false) {
+            preg_match("/(?<=CPU iPhone OS )[\d\_]{1,}/", $ua, $version);
+            return 'Platform:iPhone OS_Version:'.str_replace('_', '.', $version[0]);
+        } elseif (strpos($ua, 'iPad') !== false) {
+            preg_match("/(?<=CPU OS )[\d\_]{1,}/", $ua, $version);
+            return 'Platform:iPad OS_Version:'.str_replace('_', '.', $version[0]);
+        }
+    }
+
 }
