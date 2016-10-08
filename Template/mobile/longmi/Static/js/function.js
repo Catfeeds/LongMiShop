@@ -56,3 +56,22 @@ $(document).ready(function(){
 });
 
 
+
+$(document).ready(function(){
+  $(".c_btn55").click(function(){
+  $(".c_btn55_box").fadeOut(300);
+  $(".me1_box").fadeToggle(300);
+  });
+});
+$(document).ready(function(){
+  $(".c_btn555").click(function(){
+  $(".c_btn55_box").fadeIn(300);
+  $(".me1_box").fadeToggle(300);
+  });
+});
+$(document).ready(function(){
+  $(".c_btn666").click(function(){
+  $(".c_btn55_box").fadeIn(300);
+  $(".me1_box").fadeToggle(600);
+  });
+});

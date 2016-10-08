@@ -9,6 +9,8 @@
     <meta name="description" content="{$lmshop_config['shop_info_store_desc']}" />
     <script src="__STATIC__/js/mui.min.js"></script>
     <script src="__STATIC__/js/jquery.min.js"></script>
+    <script src="__STATIC__/js/function.js"></script>
+    <script src="__STATIC__/js/TouchSlide.js"></script>
     <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
     <link href="__STATIC__/css/css.css" rel="stylesheet" />
     <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
@@ -38,6 +40,10 @@
             opacity: 0.8;
         }
     </style>
+    <link href="__STATIC__/css/htmleaf-demo.css" rel="stylesheet" />
+
+    <script src="__STATIC__/js/jquery.ratyli.js"></script>
+
 </head>
 <body>
 <div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
@@ -93,20 +99,95 @@
         <div class="price_left">{$goods.goods_name}</div>
         <div class="price_right">￥{$goods.shop_price}</div>
     </div>
+
     <div class="price postage">
         <div class="countPostage">快递:{$count_postage}</div>
         <div class="virtualSales">总销量:{: !empty($goods['virtual_sales']) ? $goods['virtual_sales'] : $goods['sales_sum'] }</div>
         <div class="virtualAddress">{: !empty($goods['virtual_address']) ? $goods['virtual_address'] : $logAdd }</div>
     </div>
-    <div class="price_main">
-        {$goods.goods_content|htmlspecialchars_decode}
+    <div class="safeguard">
+            <ul>
+                <li>龙米认证产品</li>
+                <li>48小时快速发货</li>
+                <li>7天退货承诺</li>
+                <!--<li>2223</li>-->
+                <!--<li>dfgfdhhh</li>-->
+                <!--<li>2223</li>-->
+                <!--<li>48小时快速发货</li>-->
+                <!--<li>2223</li>-->
+                <!--<li>7天退货承诺</li>-->
+                <!--<li>龙米认证产品</li>-->
+                <!--<li>2223</li>-->
+                <!--<li>48小时快速发货</li>-->
+                <!--<li>2223</li>-->
+                <!--<li>7天退货承诺</li>-->
+                <!--<li>龙米认证产品</li>-->
+                <!--<li>48小时快速发货</li>-->
+                <!--<li>7天退货承诺</li>-->
+                <!--<li>龙米认证产品</li>-->
+                <!--<li>48小时快速发货</li>-->
+                <!--<li>7天退货承诺</li>-->
+            </ul>
+    </div>
+    <div style="clear:both"></div>
+    <div id="leftTabBox" class="tabBox">
+        <div class="hd">
+            <ul class="fixed">
+                <li><a>商品信息</a></li>
+                <li><a>评论</a></li>
+            </ul>
+        </div>
+        <div class="bd">
+            <ul>
+                <div class="price_main">
+                    {$goods.goods_content|htmlspecialchars_decode}
+                </div>
+            </ul>
+            <ul>
+                <div class="c_btn55_box">
+                    <div class="c_btn55">
+                        <a href="javascript:;">我要评论</a>
+                    </div>
+                    <div class="c_btn66">
+                        <a href="javascript:;" id="CommentListButton">只看买家</a>
+                    </div>
+                </div>
+                <div class="me1_box">
+                    <if condition = " !$isComment">
+                        <textarea class="me1_text" id="commentContent" cols="" rows="" placeholder="请发表您的评论！"></textarea>
+                        <if condition = "$isBought">
+                            <div id="demo1" class="demo" style="float:left; padding-left:10px">
+                                <span>评分：</span>
+                                <span class="ratyli"  id="commentLevel"></span>
+                            </div>
+                        </if>
+                        <div class="c_btn555_box" style="float:right">
+                            <div class="c_btn555">
+                                <a href="javascript:;" id="setCommentButton">确定</a>
+                            </div>
+                            <div class="c_btn666">
+                                <a href="javascript:;">取消</a>
+                            </div>
+                        </div>
+                        <else/>
+                        <textarea class="me1_text"  cols="" rows="" readonly>您已评论</textarea>
+
+                        <div class="c_btn555_box" style="float:right">
+                            <div class="c_btn666">
+                                <a href="javascript:;">取消</a>
+                            </div>
+                        </div>
+                    </if>
+
+                    <div style="clear:both"></div>
+                </div>
+                <div class="evaluate_box" id="my_comment_list">
+                </div>
+            </ul>
+        </div>
     </div>
 
-    <!--<div class="price_main">-->
-        <!--<div class="titel_box">用户评价</div>-->
-    <!--</div>-->
-    <!--<div class="evaluate_box" id="my_comment_list">-->
-    <!--</div>-->
+    <script type="text/javascript">TouchSlide({ slideCell:"#leftTabBox" });</script>
 
     <div style="height:55px"></div>
     <div class="com_d">
@@ -200,11 +281,12 @@
                     }
                 }
             });
-        } 
+        }
 
 
+        var inCommentAjax = 0;
         var specNumber = -1;
-
+        var show_is_buyer = 0;
         $(function(){
 
             $(".subNav").click(function(){
@@ -214,6 +296,34 @@
                 {
                     $('html,body').animate({'scrollTop':$('body')[0].scrollHeight},600);
                 }
+            });
+
+            $("#CommentListButton").click(function(){
+                if( inCommentAjax == 1){
+                    return;
+                }
+                show_is_buyer = show_is_buyer ==1 ?0 : 1;
+                var string  = show_is_buyer == 1 ? "查看全部" : "只看买家" ;
+                $("#CommentListButton").html(string);
+                ajaxComment(1,1,show_is_buyer);
+            });
+            $("#setCommentButton").click(function(){
+                var commentContent = $('#commentContent').val();
+                var commentLevel = $('#commentLevel').data("rate");
+                $.ajax({
+                    type : "post",
+                    dataType:'json',
+                    data : { commentContent :　commentContent　, commentLevel : commentLevel , goodsId : "{$goods.goods_id}"},
+                    url:"{:U('Mobile/Goods/setGoodsComment')}",
+                    success: function(data){
+                        alert(data.msg);
+                        if( data.state == 1 ){
+                            window.location.reload();
+                            return;
+                        }
+//                        $("#my_comment_list").empty().append(data);
+                    }
+                })
             });
 
             $("#goods_num").change(function(){
@@ -234,7 +344,7 @@
             });
 
 /*           <php>}</php>*/
-//            ajaxComment(1,1);// ajax 加载评价列表
+            ajaxComment(1,1,0);// ajax 加载评价列表
         });
         function newSubmit(){
             var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表   //alert(spec_goods_price['28_100']['price']);
@@ -340,15 +450,20 @@
                 arr.splice(index, 1);
             return arr;
         };
-//        function ajaxComment(commentType,page){
-//            $.ajax({
-//                type : "GET",
-//                url:"/index.php?m=Mobile&c=goods&a=ajaxComment&goods_id={$goods['goods_id']}&commentType="+commentType+"&p="+page,//+tab,
-//                success: function(data){
-//                    $("#my_comment_list").empty().append(data);
-//                }
-//            });
-//        }
+        function ajaxComment(commentType,page,is_buyer){
+            inCommentAjax  = 1;
+            var html = '<div class="mui-loading"><div class="mui-spinner"></div></div>';
+            $("#my_comment_list").html(html);
+
+            $.ajax({
+                type : "GET",
+                url:"/index.php?m=Mobile&c=goods&a=ajaxComment&goods_id={$goods['goods_id']}&commentType="+commentType+"&p="+page+"&is_buyer="+is_buyer,//+tab,
+                success: function(data){
+                    $("#my_comment_list").html(data);
+                    inCommentAjax  = 0;
+                }
+            });
+        }
 //        setInterval("get_goods_price();console.log('123')",500);
 
 

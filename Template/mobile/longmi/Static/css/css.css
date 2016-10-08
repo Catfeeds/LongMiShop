@@ -90,8 +90,8 @@ body {
 .news_t {
 	position: absolute;
 	z-index: 999999;
-	top: -5px;
-	right: 0px;
+	top: 1px;
+	right: 3px;
 }
 .news_t img {
 	height: 12px;
@@ -466,6 +466,7 @@ body {
 	text-decoration: none;
 }
 .my_nav {
+	margin-top: 1px;
 }
 .my_nav ul {
 }
@@ -486,6 +487,10 @@ body {
 	color: #838383;
 	text-decoration: none;
 	font-size: 16px;
+	padding-left: 30px;
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-size:24px 24px
 }
 .top_box3 {
 	overflow: hidden;
@@ -1727,3 +1732,61 @@ Load—more a{
 	margin-right: auto;
 	margin-left: auto;
 }
+.gz{
+	z-index: 9999;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+.bottom_logo{
+	font-size: 12px;
+	text-align: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	color: #999;
+}
+.bottom_logo a{
+	color: #999;
+}
+
+
+
+
+
+.tip_b{
+	color: #858585;
+	line-height: 24px;
+	font-weight: normal;
+	font-size: 12px;
+	margin-top: 20px;
+	border-top-width: 1px;
+	border-top-style: dotted;
+	border-top-color: #CCC;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	padding-top: 10px;
+}
+.tip_b strong{
+	border-left-width: 3px;
+	border-left-style: solid;
+	border-left-color: #B02F4B;
+	line-height: 32px;
+	padding-left: 5px;
+	font-size: 14px;
+	font-weight: normal;
+	color: #333;
+}
+.tip_b span{
+	color: #B02F4B;
+}
+.tip_text{
+	width: 90% !important;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	 background-image: -moz-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
+  background-image: -webkit-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
+  background-image: -ms-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
+}
+

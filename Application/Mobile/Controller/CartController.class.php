@@ -122,11 +122,13 @@ class CartController extends MobileBaseController {
             }
         }
         $count_postage = count_postage($goods_data); //运费
+        $totalPrice['goods_fee'] = $totalPrice['total_fee'];
+        $totalPrice['total_fee'] = $totalPrice['total_fee'] + $count_postage['data']['count'];
         // dd($count_postage);
          $shippingList = M('Plugin')->where("`type` = 'shipping' and status = 1")->select();// 物流公司
 
         $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCanUseCoupon( $this->user_id , $result['total_price']['total_fee']);
+        $result = $usersLogic -> getCanUseCoupon( $this->user_id , $totalPrice['goods_fee'] );
         $this->assign('couponList',$result['data']['result']);
         $this->assign('shippingList', $shippingList); // 物流公司
         $this->assign('cartList', $cartList); // 购物车的商品

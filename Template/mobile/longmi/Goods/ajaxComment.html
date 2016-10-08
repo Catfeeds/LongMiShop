@@ -1,13 +1,18 @@
-<notempty name="commentlist">
-      <foreach name="commentlist" item="v" key="k">
+<notempty name="commentList">
+      <foreach name="commentList" item="v" key="k">
 		  <div class="evaluate">
 			  <div class="ev_box">
 				  <div class="ev_box_l">
-					  <img class="userHeadImg" src="{$v['headImg']|default="__DefaultUserImages__"}" width="48" height="48">
+					  <img class="userHeadImg" src="{$v['user_img']|default="__DefaultUserImages__"}" width="48" height="48">
 				  </div>
 				  <div class="ev_box_r">
-					  {$v['username']}
-					  <span>{$v.add_time|date='Y/m/d',###}</span>
+					  {$v['user_name']}
+					  <span>{$v.create_time|date='Y/m/d',###}</span>
+					  <if condition = "$v['is_buyer'] == 1">
+						  <span>买家评论</span>
+						  <else/>
+						  <span>开放评论</span>
+					  </if>
 				  </div>
 			  </div>
 			  <div class="ev_txt">{$v['content']|htmlspecialchars_decode}</div>
