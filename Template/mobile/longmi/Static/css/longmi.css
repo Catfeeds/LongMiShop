@@ -143,6 +143,7 @@ Load—more a{
 	margin:0 auto;
 	font-size: 8px;
 	color:#000;
+	margin-left:13px;
 }
 .copyright p{
 	width:340px;
@@ -227,6 +228,9 @@ Load—more a{
 }
 
 /*cart2 优惠券*/
+.site_txt1 a:hover{
+	color:#b02f4b;
+}
 .coupon_span{
 	float:right;
 	padding-right:20px;

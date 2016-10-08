@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<title>用户反馈</title>
+<script src="__STATIC__/js/mui.min.js"></script>
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__STATIC__/js/function.js"></script>
+<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
+<link href="__STATIC__/css/css.css" rel="stylesheet" />
+<link href="__STATIC__/css/htmleaf-demo.css" rel="stylesheet" />
+</head>
+<body>
+<form method="post" id="feedback_form" action="{: U('Mobile/User/feedback')}">
+<div class="feedback1">
+  <div class="input_l">网络信号</div>
+  <select name="phone_network" class="input">
+    <option value="0">请选择</option>
+    <option value="wifi">wifi</option>
+    <option value="联通2G">联通2G</option>
+    <option value="联通3G">联通3G</option>
+    <option value="联通4G">联通4G</option>
+    <option value="移动2G">移动2G</option>
+    <option value="移动3G">移动3G</option>
+    <option value="移动4G">移动4G</option>
+    <option value="电信2G">电信2G</option>
+    <option value="电信3G">电信3G</option>
+    <option value="电信4G">电信4G</option>
+  </select>
+</div>
+<textarea class="me2_text" cols="" rows="" placeholder="有什么想说的，尽管吐槽吧~" name="user_proposal"></textarea>
+<input id="login_btn_on" class="login_btn_on" name="" value="提交" type="button" onclick="feedback_form()">
+  </form>
+</body>
+</html>
+<script>
+  function feedback_form(){
+    var proposal = $('.me2_text').val();
+    var network = $('.input').val();
+    if(network == 0){
+      alert('请选择网络信号');
+      return false;
+    }else if(proposal.length == 0){
+      alert('反馈意见不能为空');
+      return false;
+    }else if(proposal.length< 15 ){
+      alert('反馈意见请大于十五个字');
+      return false;
+    }
+
+    $('#feedback_form').submit();
+  }
+</script>
