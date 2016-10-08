@@ -221,8 +221,8 @@ class GoodsController extends MobileBaseController {
         }else{
             $isComment = false;
         }
-        $condition2 = array('user_id' => $this -> user_id , 'goods_id' => $goods_id);
-        if( isExistenceDataWithCondition("order_goods",$condition2) ){
+        $condition2 = 'og.order_id=o.order_id and og.goods_id="'.$goods_id.'" and o.user_id = "'.$this -> user_id.'"';
+        if( M()->table(array('lm_order_goods'=>'og','lm_order'=>'o'))->where($condition2)->count() > 0 ){
             $this->assign('isBought',true);
             $condition4 = array('user_id' => $this -> user_id , 'goods_id' => $goods_id, 'is_delete' => 0 , 'is_buyer' => 1);
             if( isExistenceDataWithCondition("goods_comment",$condition4) ){
@@ -434,7 +434,8 @@ class GoodsController extends MobileBaseController {
             $goodsCommentLevel = I("commentLevel");
             $goodsId = I("goodsId");
             $condition1 = array('user_id' => $this -> user_id , 'goods_id' => $goodsId, 'is_delete' => 0 , 'is_buyer' => 1);
-            $condition2 = array('user_id' => $this -> user_id , 'goods_id' => $goodsId);
+            $condition2 = 'og.order_id=o.order_id and og.goods_id="'.$goodsId.'" and o.user_id = "'.$this -> user_id.'"';
+            //array('user_id' => $this -> user_id , 'goods_id' => $goodsId);
             $condition3 = array('user_id' => $this -> user_id , 'goods_id' => $goodsId, 'is_delete' => 0 , 'is_buyer' => 0);
             if( !isExistenceDataWithCondition("goods_comment",$condition1) ){
                 $newData = array(
@@ -449,7 +450,7 @@ class GoodsController extends MobileBaseController {
                     "content"     => $goodsCommentContent,
                     "is_delete"   => 0,
                 );
-                if( isExistenceDataWithCondition("order_goods",$condition2) ){
+                if( M()->table(array('lm_order_goods'=>'og','lm_order'=>'o'))->where($condition2)->count() > 0 ){
                     $newData['is_buyer'] = 1;
                     M('goods_comment') -> where($condition3) -> save( array('update_time' => time() ,'is_delete' => 1 ));
                     if( isSuccessToAddData("goods_comment" , $newData) ){
