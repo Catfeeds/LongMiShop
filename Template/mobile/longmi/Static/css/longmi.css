@@ -225,3 +225,14 @@ Load—more a{
 .postage .virtualAddress{
 	float:right;
 }
+
+/*cart2 优惠券*/
+.coupon_span{
+	float:right;
+	padding-right:20px;
+	display:inline-block;
+}
+/*cart 购物车按钮*/
+.checkbox_s{
+	margin-top:38px;
+}
