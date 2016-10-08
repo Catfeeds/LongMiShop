@@ -308,9 +308,18 @@
                 $("#CommentListButton").html(string);
                 ajaxComment(1,1,show_is_buyer);
             });
+            var isAjaxSetComment = 0;
             $("#setCommentButton").click(function(){
+                if(isAjaxSetComment == 1){
+                    return;
+                }
                 var commentContent = $('#commentContent').val();
                 var commentLevel = $('#commentLevel').data("rate");
+                if( commentContent.length < 10 ||commentContent.length > 144 ){
+                    alert("评论文字数量在 10 到 140 之间！");
+                    return;
+                }
+                isAjaxSetComment = 1;
                 $.ajax({
                     type : "post",
                     dataType:'json',
@@ -318,6 +327,7 @@
                     url:"{:U('Mobile/Goods/setGoodsComment')}",
                     success: function(data){
                         alert(data.msg);
+                        isAjaxSetComment = 0;
                         if( data.state == 1 ){
                             window.location.reload();
                             return;
