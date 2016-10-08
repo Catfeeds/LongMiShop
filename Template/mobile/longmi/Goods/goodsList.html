@@ -71,26 +71,32 @@
 	});
 	var  rank = 1;
 	var  sort_asc = '';
-
+	var loadingHtml  = '<div class="mui-scroll"><div class="mui-loading"><div class="mui-spinner"></div></div></div>';
+	var kong = true;
 	(function($) {
 		$('.mui-scroll-wrapper').scroll({
 			indicators: true //是否显示滚动条
 		});
 		document.getElementById('item4mobiless').addEventListener('tap', function(e) {
-			var spans = document.getElementById('mobile_spans').innerHTML;
-			var loadingHtml  = '<div class="mui-scroll"><div class="mui-loading"><div class="mui-spinner"></div></div></div>';
-			document.getElementById('scroll4').innerHTML = loadingHtml;
-			if( spans == 1 ){
-				document.getElementById('mobile_spans').innerHTML = '2';
-				document.getElementById('mobile_symbol').innerHTML = '↓';
-				rank = 2;
-				ajax_sourch_submit( 3 , "item4mobile" , true);
-			}else{
-				document.getElementById('mobile_spans').innerHTML = '1';
-				document.getElementById('mobile_symbol').innerHTML = '↑';
-				rank = 1;
-				ajax_sourch_submit( 4 , "item4mobile" , true);
+
+			if(kong){
+				var spans = document.getElementById('mobile_spans').innerHTML;
+				document.getElementById('scroll4').innerHTML = loadingHtml;
+				if( spans == 1 ){
+					document.getElementById('mobile_spans').innerHTML = '2';
+					document.getElementById('mobile_symbol').innerHTML = '↓';
+					rank = 2;
+					ajax_sourch_submit( 3 , "item4mobile" , true);
+					kong = false;
+				}else{
+					document.getElementById('mobile_spans').innerHTML = '1';
+					document.getElementById('mobile_symbol').innerHTML = '↑';
+					rank = 1;
+					ajax_sourch_submit( 4 , "item4mobile" , true);
+					kong = false;
+				}
 			}
+
 		});
 		var item1 = document.getElementById('item1mobile');
 		var item2 = document.getElementById('item2mobile');
@@ -114,20 +120,7 @@
 			}
 			if (e.detail.slideNumber === 3) {
 				if (item4.querySelector('.mui-loading')) {
-//					ajax_sourch_submit( 3 , "item4mobile" , true);
 //
-//					if(rank == 1){
-//						ajax_sourch_submit( 3 , "item4mobile" , true);
-//						document.getElementById('mobile_spans').innerHTML = '2';
-//						document.getElementById('mobile_symbol').innerHTML = '↑';
-//						rank = 2;
-//
-//					}else{
-//						ajax_sourch_submit( 4 , "item4mobile" , true);
-//						document.getElementById('mobile_spans').innerHTML = '1';
-//						document.getElementById('mobile_symbol').innerHTML = '↓';
-//						rank = 1;
-//					}
 
 				}
 			}
@@ -137,6 +130,7 @@
 			if (this.checked) {
 				sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
 				//force repaint
+
 				sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
 			}
 		});
@@ -166,6 +160,7 @@
 
 				if( is_first == true ){
 					$("#"+obj_name+" .mui-scroll").html(data);
+					kong = true;
 				}else{
 					if($.trim(data) == ''){
 						$('#getmore'+number).hide();
