@@ -105,28 +105,29 @@
         <div class="virtualSales">总销量:{: !empty($goods['virtual_sales']) ? $goods['virtual_sales'] : $goods['sales_sum'] }</div>
         <div class="virtualAddress">{: !empty($goods['virtual_address']) ? $goods['virtual_address'] : $logAdd }</div>
     </div>
+    <style>
+        .myUl{
+            overflow: hidden;height: 40px;
+        }
+        .myUl2{
+            min-height: 40px;
+            background-image: url(__STATIC__/SVG/move.svg);
+            background-repeat: no-repeat;
+            background-position: right center;
+        }
+    </style>
+    <script>
+        $(function(){
+            $('.myUl2').click(function(){
+                $(this).toggleClass("myUl");
+            });
+        });
+    </script>
     <div class="safeguard">
-            <ul>
+            <ul class="myUl myUl2 ">
                 <li>龙米认证产品</li>
                 <li>48小时快速发货</li>
                 <li>7天退货承诺</li>
-                <!--<li>2223</li>-->
-                <!--<li>dfgfdhhh</li>-->
-                <!--<li>2223</li>-->
-                <!--<li>48小时快速发货</li>-->
-                <!--<li>2223</li>-->
-                <!--<li>7天退货承诺</li>-->
-                <!--<li>龙米认证产品</li>-->
-                <!--<li>2223</li>-->
-                <!--<li>48小时快速发货</li>-->
-                <!--<li>2223</li>-->
-                <!--<li>7天退货承诺</li>-->
-                <!--<li>龙米认证产品</li>-->
-                <!--<li>48小时快速发货</li>-->
-                <!--<li>7天退货承诺</li>-->
-                <!--<li>龙米认证产品</li>-->
-                <!--<li>48小时快速发货</li>-->
-                <!--<li>7天退货承诺</li>-->
             </ul>
     </div>
     <div style="clear:both"></div>
@@ -307,9 +308,18 @@
                 $("#CommentListButton").html(string);
                 ajaxComment(1,1,show_is_buyer);
             });
+            var isAjaxSetComment = 0;
             $("#setCommentButton").click(function(){
+                if(isAjaxSetComment == 1){
+                    return;
+                }
                 var commentContent = $('#commentContent').val();
                 var commentLevel = $('#commentLevel').data("rate");
+                if( commentContent.length < 10 ||commentContent.length > 144 ){
+                    alert("评论文字数量在 10 到 140 之间！");
+                    return;
+                }
+                isAjaxSetComment = 1;
                 $.ajax({
                     type : "post",
                     dataType:'json',
@@ -317,6 +327,7 @@
                     url:"{:U('Mobile/Goods/setGoodsComment')}",
                     success: function(data){
                         alert(data.msg);
+                        isAjaxSetComment = 0;
                         if( data.state == 1 ){
                             window.location.reload();
                             return;
