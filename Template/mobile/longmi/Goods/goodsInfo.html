@@ -128,6 +128,8 @@
                 <li>龙米认证产品</li>
                 <li>48小时快速发货</li>
                 <li>7天退货承诺</li>
+                <li>如实描述</li>
+                <li>包邮非偏远地区</li>
             </ul>
     </div>
     <div style="clear:both"></div>
@@ -329,7 +331,9 @@
                         alert(data.msg);
                         isAjaxSetComment = 0;
                         if( data.state == 1 ){
-                            window.location.reload();
+                            $(".c_btn55_box").fadeIn(300);
+                            $(".me1_box").fadeToggle(600);
+                            ajaxComment(1,1,show_is_buyer);
                             return;
                         }
 //                        $("#my_comment_list").empty().append(data);
