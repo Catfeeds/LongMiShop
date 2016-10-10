@@ -201,8 +201,10 @@ class OrderLogic extends RelationModel
      * @param array $data  查询数量
      */
     public function deliveryHandle($data){
+
 		$order = $this->getOrderInfo($data['order_id']);
 		$orderGoods = $this->getOrderGoods($data['order_id']);
+
 		$selectgoods = $data['goods'];
 		$data['order_sn'] = $order['order_sn'];
 		$data['delivery_sn'] = $this->get_delivery_sn();
@@ -241,6 +243,13 @@ class OrderLogic extends RelationModel
 		}
 		M('order')->where("order_id=".$data['order_id'])->save($updata);//改变订单状态
         sendWeChatMessageUseUserId( $order['user_id'] , "发货" , array("orderId" => $data['order_id']) );
+
+        $mobileMessages = array(
+            "kuaidiname" => $order['shipping_name'],
+            "kuaidisn" => $data['invoice_no'],
+        );
+        sendMobileMessages( $order['mobile'] , $mobileMessages  );
+
 		$s = $this->orderActionLog($order['order_id'],'delivery',$data['note']);//操作日志
 		return $s && $r;
     }
