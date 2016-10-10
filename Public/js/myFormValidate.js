@@ -8,7 +8,12 @@ function ajax_submit_form(form_id,submit_url){
 
          if(before_request == 0)
             return false;
-              
+    var goodsNames = $('.goodsNames').val();
+    if(goodsNames.length > 30){
+        alert('商品名字请小于30个字符');
+        return false;
+    }
+
 	$("[id^='err_']").hide();  // 隐藏提示
     $.ajax({
                 type : "POST",
