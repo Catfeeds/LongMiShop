@@ -16,17 +16,19 @@
 				  <div class="remark_top_r">{$v.create_time|date='Y-m-d',###}</div>
 			  </div>
 
-			  <div class="remark_x">
-				  <php>
-					  for($i=1;$i<=5;$i++){
-					  if( $i <= $v['level'] ){
-					  	echo "★";
-					  }else{
-					  	echo "<span>★</span>";
-					  }
-					 }
-				  </php>
-			  </div>
+			  <if condition = "$v['is_buyer'] == 1">
+				  <div class="remark_x">
+					  <php>
+						  for($i=1;$i<=5;$i++){
+						  if( $i <= $v['level'] ){
+							echo "★";
+						  }else{
+							echo "<span>★</span>";
+						  }
+						 }
+					  </php>
+				  </div>
+			  </if>
 			  <div class="remark_txt">{$v['content']|htmlspecialchars_decode}</div>
 		  </div>
 

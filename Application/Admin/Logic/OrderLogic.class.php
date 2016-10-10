@@ -2,6 +2,8 @@
 
 
 namespace Admin\Logic;
+use Think\Exception;
+use Think\Model;
 use Think\Model\RelationModel;
 
 class OrderLogic extends RelationModel
@@ -202,56 +204,98 @@ class OrderLogic extends RelationModel
      */
     public function deliveryHandle($data){
 
-		$order = $this->getOrderInfo($data['order_id']);
-		$orderGoods = $this->getOrderGoods($data['order_id']);
+        $model = new Model();
+        try{
+            $model  -> startTrans();
+            $order = $this->getOrderInfo($data['order_id']);
+            $orderGoods = $this->getOrderGoods($data['order_id']);
+            $selectGoods = $data['goods'];
 
-		$selectgoods = $data['goods'];
-		$data['order_sn'] = $order['order_sn'];
-		$data['delivery_sn'] = $this->get_delivery_sn();
-		$data['zipcode'] = $order['zipcode'];
-		$data['user_id'] = $order['user_id'];
-		$data['admin_id'] = session('admin_id');
-		$data['consignee'] = $order['consignee'];
-		$data['mobile'] = $order['mobile'];
-		$data['country'] = $order['country'];
-		$data['province'] = $order['province'];
-		$data['city'] = $order['district'];
-		$data['district'] = $order['order_sn'];
-		$data['address'] = $order['address'];
-		$data['shipping_code'] = $order['shipping_code'];
-		$data['shipping_name'] = $order['shipping_name'];
-		$data['shipping_price'] = $order['shipping_price'];
-		$data['create_time'] = time();
-		$did = M('delivery_doc')->add($data);
-		$is_delivery = 0;
-		foreach ($orderGoods as $k=>$v){
-			if($v['is_send'] == 1){
-				$is_delivery++;
-			}			
-			if($v['is_send'] == 0 && in_array($v['rec_id'],$selectgoods)){
-				$res['is_send'] = 1;
-				$res['delivery_id'] = $did;
-				$r = M('order_goods')->where("rec_id=".$v['rec_id'])->save($res);//改变订单商品发货状态
-				$is_delivery++;
-			}
-		}
-		$updata['shipping_time'] = time();
-		if($is_delivery == count($orderGoods)){
-			$updata['shipping_status'] = 1;
-		}else{
-			$updata['shipping_status'] = 2;
-		}
-		M('order')->where("order_id=".$data['order_id'])->save($updata);//改变订单状态
-        sendWeChatMessageUseUserId( $order['user_id'] , "发货" , array("orderId" => $data['order_id']) );
 
-        $mobileMessages = array(
-            "kuaidiname" => $order['shipping_name'],
-            "kuaidisn" => $data['invoice_no'],
-        );
-        sendMobileMessages( $order['mobile'] , $mobileMessages  );
+            $data['order_sn'] = $order['order_sn'];
+            $data['delivery_sn'] = $this->get_delivery_sn();
+            $data['zipcode'] = $order['zipcode'];
+            $data['user_id'] = $order['user_id'];
+            $data['admin_id'] = session('admin_id');
+            $data['consignee'] = $order['consignee'];
+            $data['mobile'] = $order['mobile'];
+            $data['country'] = $order['country'];
+            $data['province'] = $order['province'];
+            $data['city'] = $order['district'];
+            $data['district'] = $order['order_sn'];
+            $data['address'] = $order['address'];
+            $data['shipping_code'] = $order['shipping_code'];
+            $data['shipping_name'] = $order['shipping_name'];
+            $data['shipping_price'] = $order['shipping_price'];
+            $data['create_time'] = time();
+            $did = M('delivery_doc')->add($data);
+            if( empty($did) ){
+                throw new \Exception('生成发货单失败！');
+            }
+            $shippingId = null;
+            $is_delivery = 0;
+            foreach ($orderGoods as $k=>$v){
+                if($v['is_send'] == 1){
+                    $is_delivery++;
+                }
+                if($v['is_send'] == 0 && in_array($v['rec_id'],$selectGoods)){
+                    $res['is_send'] = 1;
+                    $res['delivery_id'] = $did;
+                    if( ! is_null($shippingId) ){
+                        if( $shippingId != $v['delivery_way'] ){
+                            throw new \Exception('不同物流的商品不能同时发货！');
+                        }
+                    }else{
+                        $shippingId = $v['delivery_way'];
+                    }
+                    $r = M('order_goods')->where("rec_id=".$v['rec_id'])->save($res);//改变订单商品发货状态
+                    if( $r >0 || $r ===0 ){
+                        $is_delivery++;
+                    }else{
+                        throw new \Exception('修改订单商品状态失败！');
+                    }
 
-		$s = $this->orderActionLog($order['order_id'],'delivery',$data['note']);//操作日志
-		return $s && $r;
+                }
+            }
+//            if( empty($shippingId) ){
+//                throw new \Exception('物流ID错误！');
+//            }
+//
+//            $logisticsInfo = findDataWithCondition("logistics",array('log_id' => $shippingId));
+
+
+
+            $update['shipping_time'] = time();
+            if($is_delivery == count($orderGoods)){
+                $update['shipping_status'] = 1;
+            }else{
+                $update['shipping_status'] = 2;
+            }
+            M('order')->where("order_id=".$data['order_id'])->save($update);//改变订单状态
+            sendWeChatMessageUseUserId( $order['user_id'] , "发货" , array("orderId" => $data['order_id']) );
+
+
+
+            $s = $this->orderActionLog($order['order_id'],'delivery',$data['note']);//操作日志
+            if( !($s) ){
+                new \Exception('保存失败！');
+            }
+//            throw new \Exception('我是断点！');
+            $model  -> commit();
+
+            $mobileMessages = array(
+                "kuaidiname" => $order['shipping_name'],
+                "kuaidisn" => $data['invoice_no'],
+            );
+            sendMobileMessages( $order['mobile'] , $mobileMessages  );
+            
+            return callback(true,'');
+        }catch (\Exception $e){
+            $model  -> rollback();
+
+            return callback(false, $e->getMessage());
+        }
+
     }
 
     /**
