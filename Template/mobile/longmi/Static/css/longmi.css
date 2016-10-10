@@ -262,3 +262,48 @@ Load—more a{
 	color:#b2b2b2;
 	font-size:12px;
 }
+
+
+
+.safeguard {
+	line-height: 25px;
+	padding:10px 0;
+}
+.safeguard ul{
+	padding-right: 20px;
+}
+.myUl{
+	overflow: hidden;height: 25px;
+	background-image: url(../SVG/move.svg) !important;
+}
+.myUl2{
+	min-height: 25px;
+	background-image: url(../SVG/move1.svg);
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+
+.lm_t{
+	height: 48px !important;
+	display: block;
+	line-height: 24px !important;
+	text-overflow: clip !important;
+	-o-text-overflow: clip !important;
+	-webkit-text-overflow: clip !important;
+	-moz-text-overflow: clip !important;
+	white-space: normal !important;
+}
+.lm_z{
+	height: 38px !important;
+	line-height: 38px !important;
+	color: #999;
+	float: left;
+	font-size: 12px !important;
+}
+.lm_x{
+	height: 38px !important;
+	line-height: 38px !important;
+	float: right !important;
+	padding-right:15px !important;
+}
