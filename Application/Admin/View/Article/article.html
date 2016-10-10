@@ -31,6 +31,14 @@
                 </div>
                 <form class="form-horizontal" action="{:U('Admin/Article/aticleHandle')}" id="add_post" method="post">
                   <div class="box-body">
+                      <if condition="!empty($info)">
+                          <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-2 control-label">线上文章地址</label>
+                              <div class="col-sm-8">
+                                  {: 'http://'.$_SERVER['HTTP_HOST'].U('Mobile/User/message_details',array('id'=>$info['article_id']))}
+                              </div>
+                          </div>
+                      </if>
                     <div class="form-group">
                       <label for="inputEmail3" class="col-sm-2 control-label">文章标题</label>
                       <div class="col-sm-8">
