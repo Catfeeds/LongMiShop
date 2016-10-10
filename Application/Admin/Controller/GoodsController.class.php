@@ -223,6 +223,20 @@ class GoodsController extends BaseController {
             if(($_GET['is_ajax'] == 1) && IS_POST)
             {                
                 C('TOKEN_ON',false);
+                $mainPart = $_POST['mainPart'];
+
+                $tempArray = array();
+                if( !empty( $mainPart  )){
+                    foreach($mainPart as $key=>$item){
+                        if( !empty($_POST['norms_'.$key] )){
+                            foreach ($_POST['norms_'.$key] as $minKey => $minItem){
+                                $tempArray[$item][$minItem] = $_POST['parameters_'.$key][$minKey];
+                            }
+                        }
+                    }
+                }
+
+                $_POST["my_parameter"] = base64_encode(serialize($tempArray));
                 if(!$Goods->create(NULL,$type))// 根据表单提交的POST数据创建数据对象                 
                 {
                     //  编辑
@@ -240,9 +254,11 @@ class GoodsController extends BaseController {
                     $_POST['cat_id_2'] && ($Goods->cat_id = $_POST['cat_id_2']);
                     $_POST['cat_id_3'] && ($Goods->cat_id = $_POST['cat_id_3']);
 
+
                     $_POST['extend_cat_id_2'] && ($Goods->extend_cat_id = $_POST['extend_cat_id_2']);
-                    $_POST['extend_cat_id_3'] && ($Goods->extend_cat_id = $_POST['extend_cat_id_3']);                                        
-                    
+                    $_POST['extend_cat_id_3'] && ($Goods->extend_cat_id = $_POST['extend_cat_id_3']);
+
+
                     if ($type == 2)
                     {
                         $goods_id = $_POST['goods_id'];                                                
@@ -268,6 +284,9 @@ class GoodsController extends BaseController {
             }
             
             $goodsInfo = D('Goods')->where('goods_id='.I('GET.id',0))->find();
+            $goodsInfo['my_parameter'] = unserialize(base64_decode($goodsInfo['my_parameter']));
+            $paRcount = count($goodsInfo['my_parameter']);
+
 
 //            if(is_supplier() && $goodsInfo['admin_id'] != session('admin_id') ){
 //                $this->error('商品id有误');
@@ -287,11 +306,15 @@ class GoodsController extends BaseController {
             $this->assign('goodsInfo',$goodsInfo);  // 商品详情            
             $goodsImages = M("GoodsImages")->where('goods_id ='.I('GET.id',0))->select();
             $this->assign('goodsImages',$goodsImages);  // 商品相册
-            $this->assign('logistics_list',$logistics_list); 
+            $this->assign('logistics_list',$logistics_list);
+            $this->assign('paRcount',$paRcount);
+            $this->assign('parI',0);
             $this->initEditor(); // 编辑器
             $this->display('_goods');                                     
-    } 
-          
+    }
+
+
+
     /**
      * 商品类型  用于设置商品的属性
      */

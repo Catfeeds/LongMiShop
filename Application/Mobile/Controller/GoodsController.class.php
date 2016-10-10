@@ -233,6 +233,8 @@ class GoodsController extends MobileBaseController {
         }else{
             $this->assign('isBought',false);
         }
+        $goods['my_parameter'] = unserialize(base64_decode($goods['my_parameter']));
+//        dd($goods);
 
         $this->assign('isComment',$isComment);
         $this->assign('count_postage',sprintf(" %1\$.2f",$count_postage['data']['count']));
