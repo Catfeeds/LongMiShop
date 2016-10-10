@@ -39,7 +39,7 @@
             <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
             <div class="mui-slider-item  mui-slider-item-duplicate">
                 <a href="{$adv_array[$adv_array_count]['ad_link']}" <if condition="$adv_array[$adv_array_count]['target'] eq 1">target="_blank"</if>>
-                <img src="{$adv_array[$adv_array_count]['ad_code']}" title="$adv_array[$adv_array_count]['title']}"width="100%" style="$adv_array[$adv_array_count]['style']}">
+                <img src="{$adv_array[$adv_array_count]['ad_code']}" title="{$adv_array[$adv_array_count]['title']}"width="100%" style="{$adv_array[$adv_array_count]['style']}">
                 </a>
             </div>
             <foreach name="adv_array" item="v" >
@@ -52,7 +52,7 @@
             <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
             <div class="mui-slider-item  mui-slider-item-duplicate">
                 <a href="{$adv_array[0]['ad_link']}" <if condition="$adv_array[0]['target'] eq 1">target="_blank"</if>>
-                <img src="{$adv_array[0]['ad_code']}" title="$adv_array[0]['title']}"width="100%" style="$adv_array[0]['style']}">
+                <img src="{$adv_array[0]['ad_code']}" title="{$adv_array[0]['title']}"width="100%" style="{$adv_array[0]['style']}">
                 </a>
             </div>
         </div>
