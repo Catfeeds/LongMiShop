@@ -300,9 +300,9 @@ class BuyLogic extends BaseLogic
             if( $userCouponInfo['use_start_time'] > $this -> nowTime ){
                 throw new \Exception('此优惠券还未到使用时间！');
             }
-            if( $userCouponInfo['use_end_time'] < $this -> nowTime  ){
-                throw new \Exception('此优惠券已过期！');
-            }
+//            if( $userCouponInfo['use_end_time'] < $this -> nowTime  ){
+//                throw new \Exception('此优惠券已过期！');
+//            }
             $this -> _post_data['userCouponId'] = $userCouponId;
             $this -> _post_data['couponInfo'] = $couponInfo;
             $this -> _post_data['useCoupon']  = true;
