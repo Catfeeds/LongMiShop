@@ -246,3 +246,14 @@ Load—more a{
 	padding: 5px;
 	margin-top:-5px;
 }
+/*首页销量*/
+.cp_box .salesVolume{
+	color:#333333;
+	float:right;
+	margin-right:40px;
+	font-size:16px;
+}
+.cp_box .salesVolume b{
+	display:inline-block;
+	width:30px
+}
