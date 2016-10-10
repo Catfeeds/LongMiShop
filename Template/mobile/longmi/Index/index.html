@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,7 @@
     <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
     <link href="__STATIC__/css/css.css" rel="stylesheet" />
     <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+    <link rel="stylesheet" href="../Static/css/longmi.css">
 </head>
 <body>
 <div id="slider" class="mui-slider" >
@@ -111,12 +113,15 @@
 </div>
 <div class="cp_box">
     <foreach name="hotGoods" key ="k" item="v" >
+
         <div class="cp1">
             <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}"></a></div>
             <div class="cp1_l"><img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
             <div class="cp1_r">
                 <p>{$v.goods_name}</p>
-                <span>￥{$v.shop_price}</span> </div>
+                <span>￥{$v.shop_price}</span>
+                <span class="salesVolume">累计销售: <b>{: !empty($v['virtual_sales']) ? $v['virtual_sales'] : $v['sales_sum'] }</b></span>
+            </div>
         </div>
     </foreach>
 </div>
