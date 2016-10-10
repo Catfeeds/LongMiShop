@@ -118,7 +118,7 @@
             <div class="cp1_l"><img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
             <div class="cp1_r">
                 <p class="lm_t">{$v.goods_name}</p>
-                <p class="lm_z">总销售：{: !empty($v['virtual_sales']) ? $v['virtual_sales'] : $v['sales_sum'] }</p>
+                <p class="lm_z" style="font-size: 12px !important;">已销售：{: !empty($v['virtual_sales']) ? $v['virtual_sales'] : $v['sales_sum'] }</p>
                 <span class="lm_x">￥{$v.shop_price}</span>
             </div>
         </div>
