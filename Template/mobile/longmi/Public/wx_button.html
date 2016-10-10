@@ -1,6 +1,6 @@
 <div id="followMask" style="display:none ;" onclick="$(this).css('display','none');">
-    <span class=""></span>
-    <img src="__STATIC__/images/follow.png">
+    <img src="__STATIC__/images/follow.png" class="padlockImg">
+    <img src="__STATIC__/SVG/padlockImg.svg">
 </div>
 <div class="gz" onclick="$('#followMask').show();"></div>
 <style>
@@ -16,13 +16,13 @@
         /*background-size:50%;*/
         opacity: 0.9;
     }
-    #followMask span{
-       position: relative;
-        left: 50%;
-        top: 50%;
-        width: 240px;
-        height: 452px;
-        background:url('__STATIC__/SVG/padlockImg.svg') center center no-repeat;
+    #followMask .padlockImg{
+        position: relative;
+        left: 25%;
+        top: 25%;
+        width: 28px;
+        height: 28px;
+        margin: 10px auto;
     }
     #followMask img{
         position: relative;
