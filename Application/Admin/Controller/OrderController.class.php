@@ -447,11 +447,11 @@ class OrderController extends BaseController {
     public function deliveryHandle(){
         $orderLogic = new OrderLogic();
 		$data = I('post.');
-		$res = $orderLogic->deliveryHandle($data);
-		if($res){
+		$result = $orderLogic->deliveryHandle($data);
+		if( callbackIsTrue($result) ){
 			$this->success('操作成功',U('Admin/Order/delivery_info',array('order_id'=>$data['order_id'])));
 		}else{
-			$this->success('操作失败',U('Admin/Order/delivery_info',array('order_id'=>$data['order_id'])));
+			$this->success(getCallbackMessage($result),U('Admin/Order/delivery_info',array('order_id'=>$data['order_id'])));
 		}
     }
 
