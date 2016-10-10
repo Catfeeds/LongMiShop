@@ -117,9 +117,9 @@
             <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}"></a></div>
             <div class="cp1_l"><img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
             <div class="cp1_r">
-                <p>{$v.goods_name}</p>
-                <span>￥{$v.shop_price}</span>
-                <span class="salesVolume">累计销售: <b>{: !empty($v['virtual_sales']) ? $v['virtual_sales'] : $v['sales_sum'] }</b></span>
+                <p class="lm_t">{$v.goods_name}</p>
+                <p class="lm_z">总销售：{: !empty($v['virtual_sales']) ? $v['virtual_sales'] : $v['sales_sum'] }</p>
+                <span class="lm_x">￥{$v.shop_price}</span>
             </div>
         </div>
     </foreach>

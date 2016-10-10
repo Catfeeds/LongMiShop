@@ -105,20 +105,6 @@
         <div class="virtualSales">总销量:{: !empty($goods['virtual_sales']) ? $goods['virtual_sales'] : $goods['sales_sum'] }</div>
         <div class="virtualAddress">{: !empty($goods['virtual_address']) ? $goods['virtual_address'] : $logAdd }</div>
     </div>
-    <style>
-        .safeguard {
-            line-height: 25px;
-        }
-        .myUl{
-            overflow: hidden;height: 25px;
-        }
-        .myUl2{
-            min-height: 25px;
-            background-image: url(__STATIC__/SVG/move.svg);
-            background-repeat: no-repeat;
-            background-position: right center;
-        }
-    </style>
     <script>
         $(function(){
             $('.myUl2').click(function(){
@@ -140,6 +126,7 @@
         <div class="hd">
             <ul class="fixed">
                 <li><a>商品信息</a></li>
+                <li><a>规格参数</a></li>
                 <li><a>评论</a></li>
             </ul>
         </div>
@@ -148,6 +135,94 @@
                 <div class="price_main">
                     {$goods.goods_content|htmlspecialchars_decode}
                 </div>
+            </ul>
+            <ul>
+                <li>
+                    <div class="price_main" style="padding:20px">
+                        <div class="tab_cp">
+                            <table width="100%" border="0" cellpadding="3" cellspacing="0">
+                                <tbody>
+                                <tr>
+                                    <th colspan="2">主体</th>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td>品牌</td>
+                                    <td>三星</td>
+                                </tr>
+                                <tr>
+                                    <td>系列</td>
+                                    <td>850 EVO系列</td>
+                                </tr>
+                                <tr>
+                                    <td>型号</td>
+                                    <td>MZ-75E120B/CN</td>
+                                </tr>
+                                <tr>
+                                    <td>类别</td>
+                                    <td>2.5英寸SSD固态硬盘</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">规格</th>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td>接口类型</td>
+                                    <td>接口 SATA 6Gb/s(与SATA 3Gb/s 和 SATA 1.5Gb/s兼容)</td>
+                                </tr>
+                                <tr>
+                                    <td>容量</td>
+                                    <td>120GB</td>
+                                </tr>
+                                <tr>
+                                    <td>缓存</td>
+                                    <td>256MB</td>
+                                </tr>
+                                <tr>
+                                    <td>读写速度</td>
+                                    <td>连续读取不超过540MB/秒，连续写入不超过520MB/秒</td>
+                                </tr>
+                                <tr>
+                                    <td>主控</td>
+                                    <td>三星 MGX 控制器</td>
+                                </tr>
+                                <tr>
+                                    <td>颗粒</td>
+                                    <td>三星32 层3D V-NAND</td>
+                                </tr>
+                                <tr>
+                                    <td>闪存类型</td>
+                                    <td>NAND 闪存</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">特性</th>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td>特性</td>
+                                    <td>3D V-NAND 技术，性能出众，持久耐用，安全可靠</td>
+                                </tr>
+                                <tr>
+                                    <td>尺寸</td>
+                                    <td>100x69.85x 6.8(mm)</td>
+                                </tr>
+                                <tr>
+                                    <td>工作温度</td>
+                                    <td>0°C to 70°C</td>
+                                </tr>
+                                <tr>
+                                    <td>保存温度</td>
+                                    <td>-40°C to 85°C</td>
+                                </tr>
+                                <tr>
+                                    <td>TRIM</td>
+                                    <td>支持</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </li>
             </ul>
             <ul>
                 <div class="c_btn55_box">

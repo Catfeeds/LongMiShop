@@ -41,7 +41,7 @@
 	float: left;
 	color: #666;
 	text-align: center;
-	width: 50%;
+	width: 33.3333%;
 	line-height: 45px;
 	padding-top: 10px;
 }
@@ -58,8 +58,13 @@
 	border-bottom-style: solid;
 	border-bottom-color: #B02F4B;
 }
+.tabBox .bd ul li {
+	background-color: #FFF;
+	overflow: hidden;
+}
 .tabBox .bd ul {
 	background-color: #FFF;
+	overflow: hidden;
 }
 .merchandise_box {
 	border-top-width: 1px;
@@ -299,4 +304,20 @@
 }
 .feedback_box{
 	margin: 10px;
+}
+.tab_cp{
+	line-height: 28px;
+	font-size: 14px;
+}
+.tab_cp td{
+	margin-bottom: 0px;
+	background-color: #FFF;
+	border-bottom-width: 0px;
+	border-bottom-style: solid;
+	border-bottom-color: #F5F5F5;
+	padding: 5px;
+}
+.tab_cp tr{
+	padding: 5px !important;
+	border: 1px solid #EFEFF4;
 }
