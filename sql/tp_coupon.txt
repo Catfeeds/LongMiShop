@@ -240,3 +240,6 @@ PRIMARY KEY (`id`)
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 ;
+
+//商品表增加 规格参数字段
+ALTER TABLE  `lm_goods` ADD  `my_parameter` TEXT NOT NULL COMMENT  '规格参数' AFTER  `sku`;

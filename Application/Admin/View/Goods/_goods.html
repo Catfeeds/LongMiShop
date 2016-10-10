@@ -98,7 +98,8 @@
 <!--                        <li><a href="#tab_goods_desc" data-toggle="tab">描述信息</a></li>-->
                         <li><a href="#tab_goods_images" data-toggle="tab">商品相册</a></li>
                         <li><a href="#tab_goods_spec" data-toggle="tab">商品规格</a></li>                        
-                        <li><a href="#tab_goods_attr" data-toggle="tab">商品属性</a></li>                        
+                        <li><a href="#tab_goods_attr" data-toggle="tab">商品属性</a></li>
+                        <li><a href="#tab_goods_parameter" data-toggle="tab">规格参数</a></li>
                     </ul>
                     <!--表单数据-->
                     <form method="post" id="addEditGoodsForm">
@@ -428,9 +429,55 @@
                                 </tr>                                
                             </table>
                         </div>
-                        <!-- 商品属性-->                                
+                        <!-- 商品属性-->
+
+                        <!-- 规格参数-->
+                        <div class="tab-pane" id="tab_goods_parameter">
+                            <table class="table table-bordered" id="goods_parameter_table">
+                                <tr >
+                                    <td>规格参数:</td>
+                                    <td>
+                                        <button   onclick="funType()" type="button">添加类型</button>
+                                    </td>
+                                </tr>
+                                <if condition="!empty($goodsInfo['my_parameter'])">
+                                    <foreach name="goodsInfo['my_parameter']" item="item" key="key">
+                                        <tr>
+                                        <td>请填写类型</td>
+                                        <td ><input name='mainPart[]'  value="{$key}"> <button class='Parameter' type='button' data-my-key="{$parI}" >添加规格参数</button>
+                                        <a href='javascript:void(0);' onclick='delPar(this)'>移除父类</a>
+                                        <foreach name="item" ITEM="p_time" key="p_key" varStatus="status">
+                                            {$status}
+                                            <p>规格:<input name='norms_{$parI}[]' value="{$p_key}"> <br/>
+                                            参数:<input name='parameters_{$parI}[]' value="{$p_time}"><a href='javascript:void(0);' onclick='delSon(this)'>删除</a>
+                                            </p>
+                                        </foreach>
+<php>$parI++;</php>
+                                        </td>
+                                        </tr>
+                                    </foreach>
+                                </if>
+                                <!--<tr>-->
+                                    <!--<td>请填写类型</td>-->
+                                    <!--<td ><input name='mainPart[]'  > <button class='Parameter' type='button' onclick='funSon()'>添加规格参数</button>-->
+                                        <!--<a href="javascript:void(0);" onclick='delPar(this)'>移除父类</a>-->
+                                        <!--<p>规格:<input name='norms[]'> <br/>-->
+                                            <!--参数:<input name='parameters[]'> <a href='javascript:void(0);' onclick='delSon(this)'>删除</a>-->
+                                        <!--</p>-->
+                                        <!--<p>规格:<input name='norms[]'> <br/>-->
+                                            <!--参数:<input name='parameters[]'>-->
+                                        <!--</p>-->
+                                    <!--</td>-->
+
+
+                                <!--</tr>-->
+
+                            </table>
+                        </div>
+                        <!-- 规格参数-->
                     </div>              
                     <div class="pull-right">
+                        <!--<input type="button"  value="trrtt" onclick="test222()">-->
                         <input type="hidden" name="goods_id" value="{$goodsInfo.goods_id}">
                         <button class="btn btn-primary" onclick="ajax_submit_form('addEditGoodsForm','{:U('Goods/addEditGoods?is_ajax=1')}');" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
                     </div>
@@ -565,7 +612,44 @@ $(document).ready(function(){
 	</if>
 
 });
+    var i = {: !empty($goodsInfo['my_parameter']) ? $paRcount  : 0};
+    function funType(){
+        var area_table = $('#goods_parameter_table');
+        area_table.append("<tr><td>请填写类型</td><td ><input name='mainPart[]'  > <button class='Parameter' type='button' data-my-key='"+i+"' >添加规格参数</button><a href='javascript:void(0);' onclick='delPar(this)'>移除父类</a></td></tr>");
 
+        $(".Parameter:last").click(function(){
+            var par = $(this).parent();
+            var j = $(this).data("my-key");
+            par.append("<p>规格:<input data-pid='' name='norms_"+j +"[]'> <br/>参数:<input name='parameters_"+j +"[]'><a href='javascript:void(0);' onclick='delSon(this)'>删除</a></p>");
+        });
+        i++;
+    }
+
+    $(function(){
+        $('#goods_parameter_table tr').find(".Parameter:last").click(function(){
+
+            var par = $(this).parent();
+            var k = $(this).data("my-key");
+            par.append("<p>规格:<input data-pid='' name='norms_"+k +"[]'> <br/>参数:<input name='parameters_"+k +"[]'><a href='javascript:void(0);' onclick='delSon(this)'>删除</a></p>");
+
+        });
+
+
+
+
+    });
+    function delSon( obj ){
+        $(obj).parent().remove();
+    }
+
+    function delPar(obj){
+        $(obj).parent().parent().remove();
+    }
 </script>
 </body>
 </html>
+<style>
+    .Parameter{
+        margin-left:10px;
+    }
+</style>

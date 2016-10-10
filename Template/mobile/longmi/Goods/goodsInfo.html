@@ -142,82 +142,94 @@
                         <div class="tab_cp">
                             <table width="100%" border="0" cellpadding="3" cellspacing="0">
                                 <tbody>
-                                <tr>
-                                    <th colspan="2">主体</th>
-                                </tr>
-                                <tr></tr>
-                                <tr>
-                                    <td>品牌</td>
-                                    <td>三星</td>
-                                </tr>
-                                <tr>
-                                    <td>系列</td>
-                                    <td>850 EVO系列</td>
-                                </tr>
-                                <tr>
-                                    <td>型号</td>
-                                    <td>MZ-75E120B/CN</td>
-                                </tr>
-                                <tr>
-                                    <td>类别</td>
-                                    <td>2.5英寸SSD固态硬盘</td>
-                                </tr>
-                                <tr>
-                                    <th colspan="2">规格</th>
-                                </tr>
-                                <tr></tr>
-                                <tr>
-                                    <td>接口类型</td>
-                                    <td>接口 SATA 6Gb/s(与SATA 3Gb/s 和 SATA 1.5Gb/s兼容)</td>
-                                </tr>
-                                <tr>
-                                    <td>容量</td>
-                                    <td>120GB</td>
-                                </tr>
-                                <tr>
-                                    <td>缓存</td>
-                                    <td>256MB</td>
-                                </tr>
-                                <tr>
-                                    <td>读写速度</td>
-                                    <td>连续读取不超过540MB/秒，连续写入不超过520MB/秒</td>
-                                </tr>
-                                <tr>
-                                    <td>主控</td>
-                                    <td>三星 MGX 控制器</td>
-                                </tr>
-                                <tr>
-                                    <td>颗粒</td>
-                                    <td>三星32 层3D V-NAND</td>
-                                </tr>
-                                <tr>
-                                    <td>闪存类型</td>
-                                    <td>NAND 闪存</td>
-                                </tr>
-                                <tr>
-                                    <th colspan="2">特性</th>
-                                </tr>
-                                <tr></tr>
-                                <tr>
-                                    <td>特性</td>
-                                    <td>3D V-NAND 技术，性能出众，持久耐用，安全可靠</td>
-                                </tr>
-                                <tr>
-                                    <td>尺寸</td>
-                                    <td>100x69.85x 6.8(mm)</td>
-                                </tr>
-                                <tr>
-                                    <td>工作温度</td>
-                                    <td>0°C to 70°C</td>
-                                </tr>
-                                <tr>
-                                    <td>保存温度</td>
-                                    <td>-40°C to 85°C</td>
-                                </tr>
-                                <tr>
-                                    <td>TRIM</td>
-                                    <td>支持</td>
-                                </tr>
+                                <foreach name="goods['my_parameter']" item="item" key="key">
+                                    <tr>
+                                    <th colspan="2">{$key}</th>
+                                    </tr>
+                                    <tr></tr>
+                                    <foreach name="item" ITEM="p_time" key="p_key" >
+                                        <tr>
+                                            <td>{$p_key}</td>
+                                            <td>{$p_time}</td>
+                                        </tr>
+                                    </foreach>
+                                </foreach>
+                                <!--<tr>-->
+                                    <!--<th colspan="2">主体</th>-->
+                                <!--</tr>-->
+                                <!--<tr></tr>-->
+                                <!--<tr>-->
+                                    <!--<td>品牌</td>-->
+                                    <!--<td>三星</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>系列</td>-->
+                                    <!--<td>850 EVO系列</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>型号</td>-->
+                                    <!--<td>MZ-75E120B/CN</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>类别</td>-->
+                                    <!--<td>2.5英寸SSD固态硬盘</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th colspan="2">规格</th>-->
+                                <!--</tr>-->
+                                <!--<tr></tr>-->
+                                <!--<tr>-->
+                                    <!--<td>接口类型</td>-->
+                                    <!--<td>接口 SATA 6Gb/s(与SATA 3Gb/s 和 SATA 1.5Gb/s兼容)</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>容量</td>-->
+                                    <!--<td>120GB</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>缓存</td>-->
+                                    <!--<td>256MB</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>读写速度</td>-->
+                                    <!--<td>连续读取不超过540MB/秒，连续写入不超过520MB/秒</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>主控</td>-->
+                                    <!--<td>三星 MGX 控制器</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>颗粒</td>-->
+                                    <!--<td>三星32 层3D V-NAND</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>闪存类型</td>-->
+                                    <!--<td>NAND 闪存</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<th colspan="2">特性</th>-->
+                                <!--</tr>-->
+                                <!--<tr></tr>-->
+                                <!--<tr>-->
+                                    <!--<td>特性</td>-->
+                                    <!--<td>3D V-NAND 技术，性能出众，持久耐用，安全可靠</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>尺寸</td>-->
+                                    <!--<td>100x69.85x 6.8(mm)</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>工作温度</td>-->
+                                    <!--<td>0°C to 70°C</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>保存温度</td>-->
+                                    <!--<td>-40°C to 85°C</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>TRIM</td>-->
+                                    <!--<td>支持</td>-->
+                                <!--</tr>-->
                                 </tbody>
                             </table>
                         </div>
