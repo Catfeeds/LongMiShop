@@ -9,6 +9,7 @@
                 <div class="to">
                     <div class="to1">{$vo.goods_name}</div>
                     <div class="to2">￥{$vo.shop_price}</div>
+                    <div class="to1 salesVolume">累计销售: <b>{: !empty($vo['virtual_sales']) ? $vo['virtual_sales'] : $vo['sales_sum'] }</b></div>
                 </div>
             </a>
         </li>
