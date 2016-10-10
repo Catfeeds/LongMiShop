@@ -34,10 +34,14 @@
             return false;
         before_request = 0;
 
+        var ajaxData=  $('#cart_form').serialize();
+        var html = '<div class="mui-loading"><div class="mui-spinner"></div></div>';
+        $("#cart_form").html(html);
+
         $.ajax({
             type : "POST",
             url:"{:U('Mobile/Cart/ajaxCartList')}",//+tab,
-            data : $('#cart_form').serialize(),// 你的formid
+            data : ajaxData,// 你的formid
             success: function(data){
                 $("#cart_form").html('');
                 $("#cart_form").append(data);
