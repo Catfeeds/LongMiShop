@@ -33,8 +33,15 @@
 		  </div>
 
   		</foreach>
+	<if condition="$count gt $limit and count($list) eq $limit">
+		<div class="Load—more" id="getmore">
+			<a  href="javascript:void(0)" onClick="ajaxComment(1,{:++$p},0);">点击加载更多</a>
+		</div>
+	</if>
 <else/>
-	<div class="myEmpty" >
-		暂时还没有任何用户评论
-	</div>
+	<if condition="$p == 1">
+		<div class="myEmpty" >
+			暂时还没有任何用户评论
+		</div>
+	</if>
 </notempty>
