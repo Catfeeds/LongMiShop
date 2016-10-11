@@ -286,12 +286,12 @@ function sendWeChatMessageUseUserId( $userId , $type , $data ){
 
 function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	error_reporting(E_ALL);
-	if( empty($openids) ){
-		return 'openid不能为空';
-	}
-	if($amounts < 100){
-		return '提现金额不能少于100';
-	}
+	// if( empty($openids) ){
+	// 	return 'openid不能为空';
+	// }
+	// if($amounts < 100){
+	// 	return '提现金额不能少于100';
+	// }
 	$weChatConfig = M('wx_user')->find();
     if( empty( $weChatConfig ) ){
         return false;
@@ -351,8 +351,10 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
     curl_setopt($ch,CURLOPT_HEADER,FALSE);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 
-	$zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
-	$zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
+	// $zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
+	// $zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
+	$zs1="./Application/Common/Common/Function/apiclient_cert.pem";
+	$zs2="./Application/Common/Common/Function/apiclient_key.pem";
 	
 	curl_setopt($ch,CURLOPT_SSLCERT,$zs1);
 	curl_setopt($ch,CURLOPT_SSLKEY,$zs2);
