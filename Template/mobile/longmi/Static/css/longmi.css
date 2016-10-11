@@ -325,3 +325,7 @@ Load—more a{
 	padding-left:  10px;
 
 }
+.safeguard ul li{
+	margin-top:5px;
+	z-index:999;
+}
