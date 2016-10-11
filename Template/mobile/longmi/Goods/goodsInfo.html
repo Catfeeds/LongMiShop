@@ -113,13 +113,13 @@
         });
     </script>
     <div class="safeguard">
-            <ul class="myUl myUl2 ">
-                <li>龙米认证产品</li>
-                <li>48小时快速发货</li>
-                <li>7天退货承诺</li>
-                <li>如实描述</li>
-                <li>包邮非偏远地区</li>
-            </ul>
+        <ul class="myUl myUl2 ">
+            <li>龙米认证产品</li>
+            <li>48小时快速发货</li>
+            <li>7天退货承诺</li>
+            <li>如实描述</li>
+            <li>包邮非偏远地区</li>
+        </ul>
     </div>
     <div style="clear:both"></div>
     <div id="leftTabBox" class="tabBox">
@@ -130,82 +130,102 @@
                 <li><a>评论</a></li>
             </ul>
         </div>
-        <div class="bd">
-            <ul>
-                <div class="price_main">
-                    {$goods.goods_content|htmlspecialchars_decode}
-                </div>
-            </ul>
-            <ul>
-                <li>
-                    <div class="price_main" style="padding:20px">
-                        <div class="tab_cp">
-                            <table width="100%" border="0" cellpadding="3" cellspacing="0">
-                                <tbody>
-                                <foreach name="goods['my_parameter']" item="item" key="key">
-                                    <tr>
-                                    <th colspan="2">{$key}</th>
-                                    </tr>
-                                    <tr></tr>
-                                    <foreach name="item" ITEM="p_time" key="p_key" >
+        <div class="bd" id="tabBox1-bd">
+            <div class="con">
+                <ul>
+                    <li>
+                        <div class="price_main">
+                            {$goods.goods_content|htmlspecialchars_decode}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="con">
+                <ul>
+                    <li>
+                        <div class="price_main" style="padding:20px">
+                            <div class="tab_cp">
+                                <table width="100%" border="0" cellpadding="3" cellspacing="0">
+                                    <tbody>
+                                    <foreach name="goods['my_parameter']" item="item" key="key">
                                         <tr>
-                                            <td>{$p_key}</td>
-                                            <td>{$p_time}</td>
+                                            <th colspan="2">{$key}</th>
                                         </tr>
+                                        <tr></tr>
+                                        <foreach name="item" ITEM="p_time" key="p_key" >
+                                            <tr>
+                                                <td>{$p_key}</td>
+                                                <td>{$p_time}</td>
+                                            </tr>
+                                        </foreach>
                                     </foreach>
-                                </foreach>
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <ul>
-                <div class="c_btn55_box">
-                    <div class="c_btn55">
-                        <a href="javascript:;">我要评论</a>
-                    </div>
-                    <div class="c_btn66">
-                        <a href="javascript:;" id="CommentListButton">只看买家</a>
-                    </div>
-                </div>
-                <div class="me1_box">
-                    <if condition = " !$isComment">
-                        <textarea class="me1_text" id="commentContent" cols="" rows="" placeholder="请发表您的评论！"></textarea>
-                        <if condition = "$isBought">
-                            <div id="demo1" class="demo" style="float:left; padding-left:10px">
-                                <span>评分：</span>
-                                <span class="ratyli"  id="commentLevel"></span>
-                            </div>
-                        </if>
-                        <div class="c_btn555_box" style="float:right">
-                            <div class="c_btn555">
-                                <a href="javascript:;" id="setCommentButton">确定</a>
-                            </div>
-                            <div class="c_btn666">
-                                <a href="javascript:;">取消</a>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <else/>
-                        <textarea class="me1_text"  cols="" rows="" readonly>您已评论</textarea>
-
-                        <div class="c_btn555_box" style="float:right">
-                            <div class="c_btn666">
-                                <a href="javascript:;">取消</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="con">
+                <ul>
+                    <li>
+                        <div class="c_btn55_box">
+                            <div class="c_btn55">
+                                <a href="javascript:;">我要评论</a>
+                            </div>
+                            <div class="c_btn66">
+                                <a href="javascript:;" id="CommentListButton">只看买家</a>
                             </div>
                         </div>
-                    </if>
+                        <div class="me1_box">
+                            <if condition = " !$isComment">
+                                <textarea class="me1_text" id="commentContent" cols="" rows="" placeholder="请发表您的评论！"></textarea>
+                                <if condition = "$isBought">
+                                    <div id="demo1" class="demo" style="float:left; padding-left:10px">
+                                        <span>评分：</span>
+                                        <span class="ratyli"  id="commentLevel"></span>
+                                    </div>
+                                </if>
+                                <div class="c_btn555_box" style="float:right">
+                                    <div class="c_btn555">
+                                        <a href="javascript:;" id="setCommentButton">确定</a>
+                                    </div>
+                                    <div class="c_btn666">
+                                        <a href="javascript:;">取消</a>
+                                    </div>
+                                </div>
+                                <else/>
+                                <textarea class="me1_text"  cols="" rows="" readonly>您已评论</textarea>
 
-                    <div style="clear:both"></div>
-                </div>
-                <div class="evaluate_box" id="my_comment_list">
-                </div>
-            </ul>
+                                <div class="c_btn555_box" style="float:right">
+                                    <div class="c_btn666">
+                                        <a href="javascript:;">取消</a>
+                                    </div>
+                                </div>
+                            </if>
+
+                            <div style="clear:both"></div>
+                        </div>
+                        <div class="evaluate_box" id="my_comment_list">
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <script type="text/javascript">TouchSlide({ slideCell:"#leftTabBox" });</script>
+    <script type="text/javascript">
+        TouchSlide( { slideCell:"#leftTabBox",
+
+            endFun:function(i){ //高度自适应
+                var bd = document.getElementById("tabBox1-bd");
+                bd.parentNode.style.height = bd.children[i].children[0].offsetHeight+"px";
+                if(i>0)bd.parentNode.style.transition="200ms";//添加动画效果
+            }
+
+        } );
+    </script>
 
     <div style="height:55px"></div>
     <div class="com_d">
@@ -256,7 +276,7 @@
             <if condition =" $goods['is_on_sale'] == 1">
                 <div class="m33_btn" id="next1"><a href="javascript:void(0);"  onclick="newSubmit();">下一步</a></div>
                 <!--<div class="m33_btn" id="next2"><a href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a></div>-->
-            <else/>
+                <else/>
                 <div class="m33_btn " >
                     <a style="background: #c2c2c2; border-color: #c0c0c0;" href="javascript:void(0);">商品已下架</a>
                 </div>
@@ -360,7 +380,7 @@
                 get_goods_price();
             });
             get_goods_price();
-/*           <php>if($number==1){</php>*/
+            /*           <php>if($number==1){</php>*/
 
             var loadingClick = 0 ;
             $(".optionsDiv li").each(function(){
@@ -373,7 +393,7 @@
 
             });
 
-/*           <php>}</php>*/
+            /*           <php>}</php>*/
             ajaxComment(1,1,0);// ajax 加载评价列表
         });
         function newSubmit(){
@@ -504,7 +524,7 @@
         }
 
 
-//        setInterval("get_goods_price();console.log('123')",500);
+        //        setInterval("get_goods_price();console.log('123')",500);
 
 
 

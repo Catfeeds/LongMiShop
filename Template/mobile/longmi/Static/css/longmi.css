@@ -307,3 +307,21 @@ Load—more a{
 	float: right !important;
 	padding-right:15px !important;
 }
+
+.price_left {
+	float: left;
+	width: 60%;
+	font-weight: bold;
+}
+
+.cp1_r span {
+	color: #b02f4b;
+	line-height: 32px;
+	font-size: 14px;
+	float: left;
+	display: block;
+}
+.price_right {
+	padding-left:  10px;
+
+}

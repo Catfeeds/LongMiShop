@@ -1,8 +1,7 @@
 .ratyli .rate {
 	color: #ccc;
 	font-size: 18px;
-		letter-spacing: 4px;
-
+	letter-spacing: 4px;
 }
 /* empty sign style */
 .ratyli .rate-empty {
@@ -16,7 +15,8 @@
 .ratyli .rate-active {
 	color: #fe5845;
 }
-.tabBox{
+.tabBox {
+	background-color: #FFF;
 	margin-top: 10px;
 }
 .tabBox .hd {
@@ -49,22 +49,28 @@
 	color: #999;
 	padding-bottom: 8px;
 }
-.tabBox .hd ul .on {
-	background: #fff;
-}
-.tabBox .hd ul .on a {
-	color: #000000;
+.tabBox .hd ul li.on a {
+	color: #000;
+	padding-bottom: 8px;
 	border-bottom-width: 2px;
 	border-bottom-style: solid;
 	border-bottom-color: #B02F4B;
 }
-.tabBox .bd ul li {
-	background-color: #FFF;
-	overflow: hidden;
-}
 .tabBox .bd ul {
-	background-color: #FFF;
-	overflow: hidden;
+	padding-bottom: 20px;
+}
+.tabBox .bd ul li {
+}
+.tabBox .bd li a {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}  /* 去掉链接触摸高亮 */
+.readMore {
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	margin: 10px auto 20px auto;
+	text-align: center;
+	text-decoration: underline;
 }
 .merchandise_box {
 	border-top-width: 1px;
@@ -72,7 +78,6 @@
 	border-top-color: #EFEFF4;
 	line-height: 40px;
 	height: 40px;
-
 }
 .merchandise_box span {
 	color: #B02F4B;
@@ -116,12 +121,6 @@
 	background-image: -ms-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
 	border: 1px solid #e5e5e5;
 }
-
-	
-	
-	
-	
-	
 .c_btn66 a {
 	border-radius: 4px;
 	color: #666666;
@@ -170,8 +169,7 @@
 	background-image: -webkit-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
 	background-image: -ms-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
 	border: 1px solid #e5e5e5;
-		color: #666666;
-
+	color: #666666;
 }
 .c_btn666 a {
 	border-radius: 4px;
@@ -187,13 +185,9 @@
 	background-image: -webkit-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
 	background-image: -ms-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
 	border: 1px solid #e5e5e5;
-		color: #666666;
-
+	color: #666666;
 }
-
-
-
-.safeguard{
+.safeguard {
 	line-height: 40px;
 	background-color: #FFF;
 	border-top-width: 1px;
@@ -205,10 +199,10 @@
 	overflow: hidden;
 	font-size: 12px;
 }
-.safeguard ul{
+.safeguard ul {
 	padding-left: 10px;
 }
-.safeguard li{
+.safeguard li {
 	background-image: url(../SVG/safeguard.svg);
 	background-repeat: no-repeat;
 	background-position: left center;
@@ -218,14 +212,12 @@
 	padding-right: 5px;
 	font-size: 12px;
 }
-
-
-.feedback1{
+.feedback1 {
 	position: relative;
 	line-height: 50px;
 	height: 50px;
 }
-.input{
+.input {
 	font-size: 16px;
 	height: 45px;
 	border: 1px solid #E2E2EB !important;
@@ -233,7 +225,7 @@
 	background-repeat: no-repeat;
 	background-position: 98% center;
 }
-.input_l{
+.input_l {
 	position: absolute;
 	left: 20px;
 	top: 0px;
@@ -244,13 +236,13 @@
 	height: 100px;
 	border: 1px solid #E2E2EB;
 }
-.remark_box{
+.remark_box {
 	padding: 10px;
 	background-color: #FAFAFC;
 	margin-bottom: 8px;
 	font-size: 12px;
 }
-.remark_top{
+.remark_top {
 	overflow: hidden;
 	line-height: 48px;
 	height: 54px;
@@ -258,15 +250,15 @@
 	border-bottom-style: solid;
 	border-bottom-color: #F4F4F4;
 }
-.remark_top_l{
+.remark_top_l {
 	float: left;
 }
-.remark_top_c{
+.remark_top_c {
 	color: #333;
 	padding-left: 5px;
 	float: left;
 }
-.remark_top_c span{
+.remark_top_c span {
 	background-color: #F60;
 	color: #FFF;
 	margin-left: 5px;
@@ -274,42 +266,43 @@
 	padding-right: 2px;
 	padding-left: 2px;
 }
-.remark_top_r{
+.remark_top_r {
 	color: #999;
 	float: right;
 	font-size: 12px;
 }
-.remark_x{
+.remark_x {
 	color: #F60;
 	letter-spacing: 3px;
 	font-size: 12px;
 	line-height: 24px;
 }
-.remark_x span{
+.remark_x span {
 	color: #999;
 }
-.remark_txt{}
-.feedback-titel{
+.remark_txt {
+}
+.feedback-titel {
 	background-color: #EFEFF4;
 	line-height: 40px;
 	padding-left: 10px;
 }
-.feedback-titel span{
+.feedback-titel span {
 	color: #B02F4B;
 	font-size: 18px;
 }
-.feedback-txt{
+.feedback-txt {
 	padding: 10px;
 	line-height: 24px;
 }
-.feedback_box{
+.feedback_box {
 	margin: 10px;
 }
-.tab_cp{
+.tab_cp {
 	line-height: 28px;
 	font-size: 14px;
 }
-.tab_cp td{
+.tab_cp td {
 	margin-bottom: 0px;
 	background-color: #FFF;
 	border-bottom-width: 0px;
@@ -317,7 +310,7 @@
 	border-bottom-color: #F5F5F5;
 	padding: 5px;
 }
-.tab_cp tr{
+.tab_cp tr {
 	padding: 5px !important;
 	border: 1px solid #EFEFF4;
 }
