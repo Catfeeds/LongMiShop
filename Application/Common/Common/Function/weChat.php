@@ -359,14 +359,14 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt($ch,CURLOPT_SSLKEY,$zs2);
 	// curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01;
 	// Windows NT 5.0)');
-	curl_setopt( $ch, CURLOPT_FOLLOWLOCATION,1);
-	curl_setopt( $ch, CURLOPT_AUTOREFERER,1);
-	curl_setopt( $ch, CURLOPT_POSTFIELDS,$data );
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
+	curl_setopt($ch, CURLOPT_AUTOREFERER,1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS,$data );
 	
-	$info = curl_exec ( $ch );
+	$info = curl_exec($ch);
 
 	
-	if ($info === false) {
+	if (empty($info) ) {
 		return curl_error($ch);
 	}
 	$curl_info= curl_getinfo($ch);
