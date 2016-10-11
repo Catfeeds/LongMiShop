@@ -414,7 +414,7 @@ function getSign($Obj)
 	$String = formatBizQueryParaMap($Parameters, false);
 	//echo '【string1】'.$String.'</br>';
 	//签名步骤二：在string后加入KEY
-	$String = $String."&key=6cd1c9cab639cb399cb371cbd893e15e";
+	$String = $String."&key=LongMi20161011LongMi20161011Long";
 	//echo "【string2】".$String."</br>";
 	//签名步骤三：MD5加密
 	$String = md5($String);
