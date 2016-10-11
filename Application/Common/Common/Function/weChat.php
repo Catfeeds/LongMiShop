@@ -304,9 +304,9 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	$nonce_str = 'qyzf'.rand(100000, 999999); //随机数
 	$partner_trade_no = 'HW'.time().rand(10000, 99999); //商户订单号
 	$check_name = 'NO_CHECK';//校验用户姓名选项，NO_CHECK：不校验真实姓名 FORCE_CHECK：强校验真实姓名（未实名认证的用户会校验失败，无法转账）OPTION_CHECK：针对已实名认证的用户才校验真实姓名（未实名认证用户不校验，可以转账成功）
-	$re_user_name = $nickname;//收款用户姓名
+	$re_user_name = 'test';//收款用户姓名
 	$amount = $amounts;//金额（以分为单位，必须大于100）
-	$desc = '提现测试';//描述
+	$desc = 'test_desc';//描述
 	$spbill_create_ip = $_SERVER["REMOTE_ADDR"];//请求ip
 
 	//封装成数据 
