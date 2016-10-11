@@ -338,7 +338,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	<sign>".$sign."</sign>
 	</xml>";
 	
-
+	print_r($data);exit;
 	$ch = curl_init ();
 	
 	$MENU_URL="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
@@ -359,7 +359,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $data );
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 	$info = curl_exec ( $ch );
-	return $data;
+
 	return $info;
 	if (curl_errno ( $ch )) {
 		return curl_error ( $ch );
