@@ -347,8 +347,8 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, FALSE );
 	curl_setopt ( $ch, CURLOPT_SSL_VERIFYHOST, FALSE );
 
-	$zs1="/Application/Common/Common/Function/apiclient_cert.pem";
-	$zs2="/Application/Common/Common/Function/apiclient_key.pem";
+	$zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
+	$zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
 	
 	curl_setopt($ch,CURLOPT_SSLCERT,$zs1);
 	curl_setopt($ch,CURLOPT_SSLKEY,$zs2);
@@ -373,9 +373,9 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 
 }
 
-/**
- * 	作用：格式化参数，签名过程需要使用
- */
+// /**
+//  * 	作用：格式化参数，签名过程需要使用
+//  */
 function formatBizQueryParaMap($paraMap, $urlencode)
 {
 	// var_dump($paraMap);//die;
@@ -399,9 +399,9 @@ function formatBizQueryParaMap($paraMap, $urlencode)
 	return $reqPar;
 }
 
-/**
- * 	作用：生成签名
- */
+// /**
+//  * 	作用：生成签名
+//  */
 function getSign($Obj)
 {
 	// print_r($Obj);die;
@@ -424,3 +424,5 @@ function getSign($Obj)
 	//echo "【result】 ".$result_."</br>";
 	return $result_;
 }
+
+
