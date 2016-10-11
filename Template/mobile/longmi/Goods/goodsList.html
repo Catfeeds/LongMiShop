@@ -16,7 +16,7 @@
 			<a class="mui-control-item" href="#item1mobile"> 新品 </a>
 			<a class="mui-control-item" href="#item2mobile"> 销量 </a>
 			<a class="mui-control-item" href="#item3mobile"> 推荐 </a>
-			<a class="mui-control-item" id="item4mobiless" href="#item4mobile"> 价格 <span id="mobile_symbol"></span> <span id="mobile_spans" style="display:none">1</span></a>
+			<a class="mui-control-item" id="item4mobiless" href="#item4mobile"> 价格 <span id="mobile_symbol">↑</span> <span id="mobile_spans" style="display:none">1</span></a>
 		</div>
 		<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4">
 		</div>
@@ -86,14 +86,14 @@
 					document.getElementById('mobile_spans').innerHTML = '2';
 					document.getElementById('mobile_symbol').innerHTML = '↓';
 					rank = 2;
-					ajax_sourch_submit( 3 , "item4mobile" , true);
 					kong = false;
+					ajax_sourch_submit( 3 , "item4mobile" , true);
 				}else{
+					kong = false;
 					document.getElementById('mobile_spans').innerHTML = '1';
 					document.getElementById('mobile_symbol').innerHTML = '↑';
 					rank = 1;
 					ajax_sourch_submit( 4 , "item4mobile" , true);
-					kong = false;
 				}
 			}
 
@@ -120,8 +120,7 @@
 			}
 			if (e.detail.slideNumber === 3) {
 				if (item4.querySelector('.mui-loading')) {
-//
-
+					ajax_sourch_submit( 4 , "item4mobile" , true);
 				}
 			}
 		});
