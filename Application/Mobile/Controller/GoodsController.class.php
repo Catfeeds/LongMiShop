@@ -276,7 +276,7 @@ class GoodsController extends MobileBaseController {
     public function ajaxComment(){
         $goods_id = I("goods_id",'0');
         $is_buyer = I("is_buyer","0");
-        $page_limit = 100;
+        $page_limit = 10;
         $where = "goods_id = '$goods_id' and is_show = 1 and is_delete = 0";
         if(!empty($is_buyer)){
             $where .= " and is_buyer = 1";
@@ -290,6 +290,7 @@ class GoodsController extends MobileBaseController {
         $this->assign('limit',$page_limit);// 赋值分页输出
         $this->assign('count',$count);// 赋值分页输出
         $this->assign('page',$show);// 赋值分页输出
+        $this->assign('p',I('p'));// 赋值分页输出page
 
 //        $commentType = I('commentType','1'); // 1 全部 2好评 3 中评 4差评
 //        $page_limit = 3;
