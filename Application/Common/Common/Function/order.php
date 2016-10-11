@@ -319,7 +319,7 @@ function update_pay_status($order_sn,$pay_status = 1)
 
     giveInviteGift( $order['user_id'] );
 
-    $orderLogic = new \Common\Logic\OrderLogic();
+    $orderLogic = new \Admin\Logic\OrderLogic();
 
     $orderLogic -> orderProcessHandle( $order['order_id'] , "confirm" );
 
