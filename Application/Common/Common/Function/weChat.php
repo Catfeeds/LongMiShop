@@ -336,7 +336,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	<spbill_create_ip>".$spbill_create_ip."</spbill_create_ip>
 	<sign>".$sign."</sign>
 	</xml>";
-	return $data;
+	
 
 	$ch = curl_init ();
 	$MENU_URL="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
