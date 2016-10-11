@@ -342,10 +342,14 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	$ch = curl_init ();
 	
 	$MENU_URL="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
-	curl_setopt($ch, CURLOPT_URL, $MENU_URL );
-	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST" );
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE );
-	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE );
+	curl_setopt ( $ch, CURLOPT_URL, $MENU_URL );
+	// curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
+	curl_setopt($ch,CURLOPT_POST, true);
+	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
+	curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
+	//设置header
+    curl_setopt($ch,CURLOPT_HEADER,1);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 
 	// $zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
 	// $zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
@@ -353,10 +357,11 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	$zs2= $_SERVER['DOCUMENT_ROOT']."/Application/Common/Common/Function/apiclient_key.pem";
 	curl_setopt($ch,CURLOPT_SSLCERT,$zs1);
 	curl_setopt($ch,CURLOPT_SSLKEY,$zs2);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1 );
-	curl_setopt($ch, CURLOPT_AUTOREFERER, 1 );
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $data );
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+	// curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01;
+	// Windows NT 5.0)');
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
+	curl_setopt($ch, CURLOPT_AUTOREFERER,1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS,$data );
 	
 	$info = curl_exec($ch);
 
