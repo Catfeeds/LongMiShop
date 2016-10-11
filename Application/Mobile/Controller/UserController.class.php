@@ -1238,4 +1238,14 @@ class UserController extends MobileBaseController {
         }
     }
 
+    //用户提现
+    public function withdrawDeposit(){
+        $user = $this->user;
+        if(empty($user['openid']) ){
+            $this->error('请在微信端提现');
+        }
+        $res = userWechatWithdrawDeposit($user['openid'],100,$user['nickname']);
+        dd($res);
+    }
+
 }
