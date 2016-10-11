@@ -348,8 +348,8 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
 	curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
 	//设置header
-    curl_setopt($ch,CURLOPT_HEADER,FALSE);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+    curl_setopt($ch,CURLOPT_HEADER,TRUE);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,FALSE);
 
 	// $zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
 	// $zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
@@ -359,8 +359,8 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt($ch,CURLOPT_SSLKEY,$zs2);
 	// curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01;
 	// Windows NT 5.0)');
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
-	curl_setopt($ch, CURLOPT_AUTOREFERER,1);
+	// curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
+	// curl_setopt($ch, CURLOPT_AUTOREFERER,1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS,$data );
 	
 	$info = curl_exec($ch);
