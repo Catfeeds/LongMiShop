@@ -285,6 +285,7 @@ function sendWeChatMessageUseUserId( $userId , $type , $data ){
  */
 
 function userWechatWithdrawDeposit($openids,$amounts,$nickname){
+	error_reporting(E_ALL);
 	if( empty($openids) ){
 		return 'openid不能为空';
 	}
@@ -339,6 +340,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	
 
 	$ch = curl_init ();
+	
 	$MENU_URL="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
 	curl_setopt ( $ch, CURLOPT_URL, $MENU_URL );
 	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
@@ -357,6 +359,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $data );
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 	$info = curl_exec ( $ch );
+	return $data;
 	return $info;
 	if (curl_errno ( $ch )) {
 		return curl_error ( $ch );
