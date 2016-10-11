@@ -292,6 +292,7 @@ class GoodsController extends MobileBaseController {
         $this->assign('page',$show);// 赋值分页输出
         $this->assign('p',I('p'));// 赋值分页输出page
 
+
 //        $commentType = I('commentType','1'); // 1 全部 2好评 3 中评 4差评
 //        $page_limit = 3;
 //        if($commentType==$page_limit){
