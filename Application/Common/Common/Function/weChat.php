@@ -343,9 +343,13 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	
 	$MENU_URL="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
 	curl_setopt ( $ch, CURLOPT_URL, $MENU_URL );
-	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
+	// curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
+	curl_setopt($ch,CURLOPT_POST, true);
 	curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, FALSE );
 	curl_setopt ( $ch, CURLOPT_SSL_VERIFYHOST, FALSE );
+	//设置header
+    curl_setopt($ch,CURLOPT_HEADER,FALSE);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 
 	$zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
 	$zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
@@ -357,16 +361,16 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt ( $ch, CURLOPT_FOLLOWLOCATION, 1 );
 	curl_setopt ( $ch, CURLOPT_AUTOREFERER, 1 );
 	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $data );
-	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+	
 	$info = curl_exec ( $ch );
 
-	return $info;
+	
 	if (curl_errno ( $ch )) {
 		return curl_error ( $ch );
 	}
-
+	
 	curl_close ( $ch );
-
+	return $info;
 	
 
 
