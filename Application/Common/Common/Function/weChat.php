@@ -345,8 +345,8 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt ( $ch, CURLOPT_URL, $MENU_URL );
 	// curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
 	curl_setopt($ch,CURLOPT_POST, true);
-	curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, FALSE );
-	curl_setopt ( $ch, CURLOPT_SSL_VERIFYHOST, FALSE );
+	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
+	curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
 	//设置header
     curl_setopt($ch,CURLOPT_HEADER,FALSE);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
@@ -358,19 +358,19 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt($ch,CURLOPT_SSLKEY,$zs2);
 	// curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01;
 	// Windows NT 5.0)');
-	curl_setopt ( $ch, CURLOPT_FOLLOWLOCATION, 1 );
-	curl_setopt ( $ch, CURLOPT_AUTOREFERER, 1 );
-	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $data );
+	curl_setopt( $ch, CURLOPT_FOLLOWLOCATION,1);
+	curl_setopt( $ch, CURLOPT_AUTOREFERER,1);
+	curl_setopt( $ch, CURLOPT_POSTFIELDS,$data );
 	
 	$info = curl_exec ( $ch );
 
 	
-	if (curl_errno ( $ch )) {
-		return curl_error ( $ch );
+	if ($info === false) {
+		return curl_error($ch);
 	}
-	
-	curl_close ( $ch );
-	return $info;
+	$curl_info= curl_getinfo($ch);
+	curl_close($ch);
+	return $curl_info;
 	
 
 
