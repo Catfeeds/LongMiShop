@@ -348,10 +348,9 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
 	curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
 	//设置header
-    curl_setopt($ch,CURLOPT_HEADER,0);
+    curl_setopt($ch,CURLOPT_HEADER,FALSE);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
     curl_setopt($ch, CURLOPT_TIMEOUT,60); 
-
 	// $zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
 	// $zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
 	$zs1= $_SERVER['DOCUMENT_ROOT']."/Application/Common/Common/Function/apiclient_cert.pem";
