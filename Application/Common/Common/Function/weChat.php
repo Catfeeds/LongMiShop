@@ -338,7 +338,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	<sign>".$sign."</sign>
 	</xml>";
 	
-	print_r($data);exit;
+	
 	$ch = curl_init ();
 	
 	$MENU_URL="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
@@ -414,7 +414,7 @@ function getSign($Obj)
 	$String = formatBizQueryParaMap($Parameters, false);
 	//echo '【string1】'.$String.'</br>';
 	//签名步骤二：在string后加入KEY
-	$String = $String."&key=07OQtOhgnUDxWiQsx4shY90GI4sVWYrMWGHcMpmoJMN";
+	$String = $String."&key=6cd1c9cab639cb399cb371cbd893e15e";
 	//echo "【string2】".$String."</br>";
 	//签名步骤三：MD5加密
 	$String = md5($String);
