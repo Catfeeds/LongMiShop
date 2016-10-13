@@ -373,7 +373,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	// $curl_info= curl_getinfo($ch);
 	// $error = curl_error($ch);
 	curl_close($ch);
-	return $postData;
+	return array('postData'=>$postData,'data'=>$data);
 	
 
 
