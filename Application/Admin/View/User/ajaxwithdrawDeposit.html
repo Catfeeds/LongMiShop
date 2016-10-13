@@ -1,0 +1,86 @@
+
+                    <form method="post" enctype="multipart/form-data" target="_blank" id="form-order" action="{: U('Admin/User/obtainFans')}">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" ></td>
+    
+                                    <td class="text-right">
+                                        <a href="javascript:sort('user_id');">ID</a>
+                                    </td>
+                                    <td class="text-left">
+                                        <a href="javascript:sort('username');">会员昵称</a>
+                                    </td>
+                                    <td class="text-left">
+                                        <a href="javascript:sort('money');">提现金额</a>
+                                    </td>
+                                    <td class="text-left">
+                                        <a href="javascript:sort('application_time');">申请时间</a>
+                                    </td>
+                                    <td class="text-left">
+                                        <a href="javascript:sort('money');">状态</a>
+                                    </td>
+
+                            
+                                    
+                                    <td class="text-right">操作</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <volist name="userList" id="list">
+                                    <tr>
+                                        <td class="text-center">
+                                            <input type="checkbox" name="selected[]" value="{$list.user_id}">
+                                            <input type="hidden" name="shipping_code[]" value="flat.flat">
+                                        </td>
+                                        <td class="text-right">{$list.user_id}</td>
+                                        <td class="text-left">{$list.nickname}</td>
+                                        <td class="text-left">{$list.money}</td>
+                                        <td class="text-left">{$list.application_time|date='Y-m-d H:i',###}</td>
+                                        <td class="text-left">
+                                            <if condition="$list['status'] eq 1">
+                                                未审核
+                                            </if>
+                                            <if condition="$list['status'] eq 2">
+                                                审核不通过
+                                            </if>
+                                            <if condition="$list['status'] eq 3">
+                                                审核通过
+                                            </if>
+                                        </td>
+                                        <td class="text-right">
+                                            <a href="{:U('Admin/user/checkDeposit',array('id'=>$list['id'],'status'=>3))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="通过审核" onclick="if(confirm('是否通过')==false)return false;">通过</a>
+                                            <a href="{:U('Admin/user/checkDeposit',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="不通过" onclick="if(confirm('是否不通过')==false)return false;">不通过</a>
+                                            <!-- <a href="{:U('Admin/user/delete',array('id'=>$list['user_id']))}" onClick="return confirm('确定删除?');" id="button-delete6" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a> -->
+                                        </td>
+                                    </tr>
+                                </volist>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-sm-6 text-left"></div>
+                        <div class="col-sm-6 text-right">{$page}</div>
+                    </div>
+                    <div >
+                        <table>
+                            <input type="hidden"  name="id">
+                            <input type="hidden"  name="status">
+                            <tr>
+                                <td>请填写不通过理由</td>
+                                <td><input name="reason" type="text"></td>
+                            </tr>
+                        </table>
+                    </div>
+<script>
+    $(".pagination  a").click(function(){
+        var page = $(this).data('p');
+        ajax_get_table('search-form2',page);
+    });
+    //填写审核理由
+    function refuse(){
+        
+    }
+</script>

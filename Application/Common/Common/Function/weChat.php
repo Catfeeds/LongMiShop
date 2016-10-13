@@ -285,19 +285,21 @@ function sendWeChatMessageUseUserId( $userId , $type , $data ){
  */
 
 function userWechatWithdrawDeposit($openids,$amounts,$nickname){
-	error_reporting(E_ALL);
-	// if( empty($openids) ){
-	// 	return 'openid不能为空';
-	// }
-	// if($amounts < 100){
-	// 	return '提现金额不能少于100';
-	// }
+	if( empty($openids) ){
+		return 'openid不能为空';
+	}
+	if($amounts*100 < 100){
+		return '提现金额不能少于100';
+	}
 	$weChatConfig = M('wx_user')->find();
     if( empty( $weChatConfig ) ){
         return false;
     }
 
 	$appid = $weChatConfig['appid']; 
+    $pluginRes  = M('plugin')->where(array('code'=>'weixin','name'=>'微信支付'))->find();
+    $key = unserialize($pluginRes['config_value']);
+    $keyRes = $key['key'];
 	$mch_appid = $appid;
 	$openid = $openids; //用户唯一标识
 	$mchid = '1394154902'; //商户号
@@ -305,7 +307,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	$partner_trade_no = 'HW'.time().rand(10000, 99999); //商户订单号
 	$check_name = 'NO_CHECK';//校验用户姓名选项，NO_CHECK：不校验真实姓名 FORCE_CHECK：强校验真实姓名（未实名认证的用户会校验失败，无法转账）OPTION_CHECK：针对已实名认证的用户才校验真实姓名（未实名认证用户不校验，可以转账成功）
 	$re_user_name = 'test';//收款用户姓名
-	$amount = $amounts;//金额（以分为单位，必须大于100）
+	$amount = $amounts*100;//金额（以分为单位，必须大于100）
 	$desc = 'test_desc';//描述
 	$spbill_create_ip = $_SERVER["REMOTE_ADDR"];//请求ip
 
@@ -322,7 +324,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	$dataArr['re_user_name']=$re_user_name;
 	$dataArr['spbill_create_ip']=$spbill_create_ip;
 
-	$sign = getSign($dataArr);
+	$sign = getSign($dataArr,$keyRes);
 
 	$data="<xml>
 	<mch_appid>".$mch_appid."</mch_appid>
@@ -346,8 +348,6 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
 	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
 	curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
-	//设置header
-    // curl_setopt($ch,CURLOPT_HEADER,1);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
     curl_setopt($ch, CURLOPT_TIMEOUT,60); 
 	// $zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
@@ -380,9 +380,9 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 
 }
 
-// /**
-//  * 	作用：格式化参数，签名过程需要使用
-//  */
+/**
+ * 	作用：格式化参数，签名过程需要使用
+ */
 function formatBizQueryParaMap($paraMap, $urlencode)
 {
 	// var_dump($paraMap);//die;
@@ -416,19 +416,11 @@ function getSign($Obj,$key)
 	{
 		$Parameters[$k] = $v;
 	}
-	//签名步骤一：按字典序排序参数
 	ksort($Parameters);
 	$String = formatBizQueryParaMap($Parameters, false);
-	//echo '【string1】'.$String.'</br>';
-	//签名步骤二：在string后加入KEY
-	$String = $String."&key=LongMi20161011LongMi20161011Long";
-	//echo "【string2】".$String."</br>";
-	//签名步骤三：MD5加密
+	$String = $String."&key=".$key."";
 	$String = md5($String);
-	//echo "【string3】 ".$String."</br>";
-	//签名步骤四：所有字符转为大写
 	$result_ = strtoupper($String);
-	//echo "【result】 ".$result_."</br>";
 	return $result_;
 }
 

@@ -336,4 +336,57 @@ class UserController extends BaseController {
         $this->display();
     }
 
+
+    //提现审核
+    public function withdrawDeposit(){
+
+        $this->display();
+    }
+
+    public function ajaxwithdrawDeposit(){
+        // 搜索条件
+        $condition = array();
+        I('nickname') ? $condition['nickname'] = I('nickname') : false;
+        I('user_id') ? $condition['user_id'] = I('user_id') : false;
+        $sort_order = I('order_by','user_id').' '.I('sort','desc');
+
+        $model = M('withdraw_deposit');
+        $count = $model->where($condition)->count();
+        $Page  = new AjaxPage($count,10);
+        //  搜索条件下 分页赋值
+        foreach($condition as $key=>$val) {
+            $Page->parameter[$key]   =   urlencode($val);
+        }
+
+        $userList = $model->where($condition)->order($sort_order)->limit($Page->firstRow.','.$Page->listRows)->select();
+
+        $show = $Page->show();
+        $this->assign('userList',$userList);
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display();
+    }
+
+    //审核通过
+    public function checkDeposit(){
+        $id = I('id','','int');
+        $status = I('status','','int');
+        $reason = I('reason');
+        if(empty($id) && empty($status) ){
+            $this->error('参数不正确');
+        }
+        if( $status == 2 && empty($reason) ){
+            $this->error('请填写不通过理由');
+        }
+        $data['id'] = $id;
+        $data['status'] = $status;
+        $res = M('withdraw_deposit')->save($data);
+
+        if($res){
+            $this->success('操作成功',U('Admin/User/withdrawDeposit'));exit;
+        }
+        $this->error('操作失败');
+    }
+
+
+
 }
