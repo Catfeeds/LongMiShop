@@ -243,3 +243,17 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 
 //商品表增加 规格参数字段
 ALTER TABLE  `lm_goods` ADD  `my_parameter` TEXT NOT NULL COMMENT  '规格参数' AFTER  `sku`;
+
+//用户提现表
+DROP TABLE IF EXISTS `lm_withdraw_deposit`;
+CREATE TABLE `lm_withdraw_deposit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL COMMENT '用户id',
+  `openid` varchar(255) DEFAULT NULL,
+  `nickname` varchar(255) DEFAULT NULL COMMENT '用户昵称',
+  `money` int(11) DEFAULT NULL COMMENT '提现金额',
+  `status` int(11) DEFAULT NULL COMMENT '审核状态  1未审核  2审核不通过  3审核通过',
+  `application_time` int(11) DEFAULT NULL COMMENT '申请时间',
+  `check_time` int(11) DEFAULT NULL COMMENT '审核时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
