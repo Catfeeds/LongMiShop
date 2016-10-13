@@ -1,0 +1,12 @@
+<include file="Public/header"/>
+<body>
+
+<if condition = "$isFile == true" >
+    <img src="__PUBLIC__/poster/poster_{$user.user_id}.png" style="width: 100%;">
+    <else/>
+    海报生成中
+</if>
+
+</body>
+<include file="Public/footer"/>
+</html>

@@ -1237,16 +1237,16 @@ class UserController extends MobileBaseController {
 
 
 
-    public function myPoster(){
-        $url = 'http://'.$_SERVER['HTTP_HOST'];
-        $url .= U('Mobile/Recommend/share',array('inviteUserId' => $this -> user_id ));
-        $qrCodeUrl= setQrCode( $url , $this -> user_id ) ;
-        getMyPoster();
+    public function myPoster()
+    {
+
+//        $url = 'http://' . $_SERVER['HTTP_HOST'] . U('Mobile/Recommend/share', array('inviteUserId' => $this->user_id));
+        $url = 'http://' . $_SERVER['HTTP_HOST'] . U('Mobile/Goods/goodsInfo', array('id' => 1 ,'inviteUserId' => $this->user_id ));
+        createMyPoster($this->user , $url);
         //查找是否存在海报
-        $isFile = file_exists('Public/poster/poster_'.$this -> user_id.'.png');
-        $this->assign('data',$qrCodeUrl->get_data());
-        $this->assign('isFile',$isFile);
-        $this->display();
+        $isFile = file_exists('Public/poster/poster_' . $this->user_id . '.png');
+        $this -> assign('isFile', $isFile);
+        $this -> display();
     }
 
 }

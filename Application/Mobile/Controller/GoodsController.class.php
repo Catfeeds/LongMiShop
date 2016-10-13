@@ -164,6 +164,14 @@ class GoodsController extends MobileBaseController {
      */
     public function goodsInfo(){
         C('TOKEN_ON',true);
+
+        $inviteUserId = I('inviteUserId');
+
+
+        createInviteRelationship($this ->user_id,$inviteUserId,$this ->user['nickname'],$this -> shopConfig);
+
+
+
         $goodsLogic = new \Common\Logic\GoodsLogic();
         $goods_id = I("get.id");
         $goods = M('Goods')->where("goods_id = $goods_id")->find();

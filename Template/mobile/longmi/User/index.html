@@ -9,17 +9,17 @@
 <div class="er">
 	<ul>
 		<li>
-			<a href="{:U('Mobile/User/coupon')}">
+			<a href="{:U('Mobile/User/coupon')}" style="display: block;">
 				<p>优惠券</p><span>{$couponCount}</span>
 			</a>
 		</li>
 		<li>
-			<a href="{:U('Mobile/User/account')}">
+			<a href="{:U('Mobile/User/account')}" style="display: block;">
 				<p>余额</p><span>{$user['user_money']}</span>
 			</a>
 		</li>
 		<li class="none">
-            <a href="{:U('Mobile/Recommend/recommendList')}">
+            <a href="{:U('Mobile/Recommend/recommendList')}" style="display: block;">
                 <p>邀请数</p><span>{$number}</span>
             </a>
 		</li>
@@ -58,6 +58,7 @@
 		<li><a href="{:U('Mobile/Exchange/exchange')}" style="background-image:url('__STATIC__/SVG/c3.svg');">兑换码</a></li>
 		<li><a href="{:U('Mobile/Recommend/index')}" style="background-image:url('__STATIC__/SVG/c4.svg');">推荐有奖</a></li>
 		<li><a href="{:U('Mobile/User/userinfo')}" style="background-image:url('__STATIC__/SVG/c5.svg');">账户设置</a></li>
+		<li><a href="{:U('Mobile/User/myPoster')}" style="background-image:url('__STATIC__/SVG/c6.svg');">二维码</a></li>
 		<!-- <if condition = " !isWeChatBrowser() " >
 			<li><a href="{:U('Mobile/User/logout')}">注销</a></li>
 		</if> -->

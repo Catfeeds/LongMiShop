@@ -114,7 +114,40 @@ class SystemController extends BaseController{
     	$this->assign('tree',$this->tree());
     	$this->display();
     }
-    
+
+
+    public function poster()
+    {
+        if (IS_POST) {
+            $id = I("id");
+            $setting = array(
+                "qrCode"       => I('qrCode'),
+                "avatar"       => I('avatar'),
+                "original_img" => I('bgImg'),
+            );
+            $save = array(
+                "name" => I('name'),
+                "setting" => serialize($setting),
+                "update_time" => time(),
+                "is_use"=>1,
+            );
+            if( empty($id) ){
+                $save["create_time"] = time();
+                M('poster') -> add($save);
+            }else{
+                M('poster') -> where( array( 'id' => $id ) ) -> save($save);
+            }
+            delFile('./Public/poster');
+            delFile('./Public/avatar');
+            delFile('./Public/middleAvatar');
+            delFile('./Public/qrCode');
+            $this->success("操作成功!!!",U('Admin/System/poster'));
+            exit;
+        }
+        $this->assign('posterInfo', getPosterInfo());
+        $this->display();
+    }
+
 	public function create_menu(){
 		$this->assign('tree',$this->tree());
 		$action = I('get.action','add');

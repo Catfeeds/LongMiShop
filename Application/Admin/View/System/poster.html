@@ -1,0 +1,72 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+    <section class="content">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i>海报设置</h3>
+                </div>
+                <div class="panel-body">
+                    <!--表单数据-->
+                    <form method="post" id="addEditGoodsTypeForm" >
+                        <!--通用信息-->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_tongyong">
+
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td>海报名称:</td>
+                                        <td>
+                                            <input type="text" value="{$posterInfo.name}" name="name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>二维码参数:</td>
+                                        <td>
+                                            <input type="text" value="{$posterInfo.qrCode}" name="qrCode"/>格式:t|l|w|h ,其中t,l是相对背景左上角顶点距离,t是与顶部的距离,l是与左边的距离,w是宽度,h是高度.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>头像参数:</td>
+                                        <td>
+                                            <input type="text" value="{$posterInfo.avatar}" name="avatar"/>格式:t|l|w|h ,其中t,l是相对背景左上角顶点距离,t是与顶部的距离,l是与左边的距离,w是宽度,h是高度.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>背景图片:</td>
+                                        <td>
+                                            <input type="button" value="上传图片"  onclick="GetUploadify(1,'','goods','call_back');"/>
+                                            <input type="text" class="input-sm"  name="bgImg" id="original_img" value="{$posterInfo.original_img}"/>
+                                            <img src="{$posterInfo.original_img}" id="original_img2" style="width: 200px; height: 200px;">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <input type="hidden" name="id" value="{$posterInfo.id}">
+                            <button class="btn btn-primary" title="" data-toggle="tooltip" type="submit" data-original-title="保存"><i class="fa fa-save"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    // 上传商品图片成功回调函数
+    function call_back(fileurl_tmp){
+        $("#original_img").val(fileurl_tmp);
+        $("#original_img2").attr("src",fileurl_tmp);
+    }
+</script>
+
+</body>
+</html>

@@ -302,12 +302,13 @@ function getInvitedUserId( $userId ){
 }
 
 
-
-
-
-
-
-function setQrCode( $url , $userId){
+/**
+ * 创建二维码
+ * @param $url
+ * @param $userId
+ * @return string
+ */
+function createQrCode( $url , $userId){
     vendor("Poster.phpqrcode");
     // 纠错级别：L、M、Q、H
     $level = 'L';
@@ -323,31 +324,90 @@ function setQrCode( $url , $userId){
 }
 
 
+/**
+ * 创建海报
+ * @param $userInfo
+ */
+function createMyPoster( $userInfo , $url )
+{
+    delFile('./Public/avatar');
+    delFile('./Public/middleAvatar');
+    delFile('./Public/qrCode');
+    $logPath = './Public/avatar';
+    if (! file_exists ( $logPath )) {
+        mkdir ( $logPath, 0777, true );
+    }
+    $logPath = './Public/middleAvatar';
+    if (! file_exists ( $logPath )) {
+        mkdir ( $logPath, 0777, true );
+    }
+    $logPath = './Public/qrCode';
+    if (! file_exists ( $logPath )) {
+        mkdir ( $logPath, 0777, true );
+    }
+    $logPath = './Public/poster';
+    if (! file_exists ( $logPath )) {
+        mkdir ( $logPath, 0777, true );
+    }
 
-function getMyPoster(){
+    createQrCode( $url, $userInfo["user_id"] );
+
     vendor("Poster.poster");
-    //统计邀请个数
-//    $user_model = D('user');
-//
-//    $count = $user_model->count_parent($_SESSION['user_info']['id']);
-
-    $poster_data=array(
-        'user_id' => $_SESSION['user_info']['id'],
-        'user_name' => $_SESSION['user_info']['user_name'],
-        'headimg' => $_SESSION['user_info']['user_headimg'],
-        'url'    => U('invitation',array('invitation_id'=>$_SESSION['user_info']['id'])),
-        'base_url'=>dirname(dirname(dirname(dirname(dirname(__FILE__))))),
-        'file_url'=>'/Public/poster/',
-        'file_name'=>'poster_'.$_SESSION['user_info']['id'].'.png',
-        'qrcode_url'=>'/Public/qrcode/',
-        'qrcode_name'=>'invitation_'.$_SESSION['user_info']['id'].'.png',
-        'img_url'=>'/Public/images/',
-        'avatar_url'=>'/Public/avatar/'.$_SESSION['user_info']['id'].'.png',
-        'uid'=>$_SESSION['user_info']['id']
+    $posterData = array(
+        'user_id'     => $userInfo['user_id'],
+        'user_name'   => $userInfo['nickname'],
+        'headimg'     => $userInfo['head_pic'],
+        'url'         => U('invitation', array('invitation_id' =>$userInfo['user_id'])),
+        'base_url'    => dirname(dirname(dirname(dirname(dirname(__FILE__))))),
+        'file_url'    => '/Public/poster/',
+        'file_name'   => 'poster_' . $userInfo['user_id'] . '.png',
+        'qrcode_url'  => '/Public/qrCode/',
+        'qrcode_name' => 'invitation_' . $userInfo['user_id'] . '.png',
+        'img_url'     => '/Public/images/',
+        'avatar_url'  => '/Public/avatar/' . $userInfo['user_id'] . '.png',
+        'uid'         => $userInfo['user_id']
     );
-    $msg = Poster::run($poster_data);
-
+    Poster::run( $posterData );
 }
 
+
+/**
+ * 生成推荐关系
+ * @param $userID
+ * @param $inviteUserId
+ * @param $nickname
+ * @param null $shopConfig
+ */
+function createInviteRelationship( $userID , $inviteUserId , $nickname , $shopConfig = null ){
+    if(
+        !empty( $userID ) &&
+        !empty( $inviteUserId ) &&
+        $userID != $inviteUserId &&
+        isExistenceDataWithCondition("users",array("user_id"=>$inviteUserId)) &&
+        !isExistenceDataWithCondition("invite_list",array( "user_id" =>$userID)) &&
+        !isExistenceDataWithCondition('order',array("user_id" => $userID,"pay_status" => 1))
+    ){
+        if( is_null( $shopConfig ) ){
+            $shopConfig = getShopConfig();
+        }
+        $addData = array(
+            "user_id"           => $userID,
+            "parent_user_id"    => $inviteUserId,
+            "create_time"       => time(),
+            "update_time"       => time(),
+        );
+        if(isSuccessToAddData( "invite_list" , $addData )){
+            giveBeInviteGift( $userID );
+        }
+        if(  $shopConfig['prize_invited_to'] == 1 ){
+            sendWeChatMessageUseUserId( $userID , "送券" , array("couponId" => $shopConfig['prize_invited_to_value']) );
+        }
+        if(  $shopConfig['prize_invite'] == 2 ){
+            sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array( "userName" => $nickname ,"money" => $shopConfig['prize_invite_value'] ) );
+        }
+        return true;
+    }
+    return false;
+}
 
 

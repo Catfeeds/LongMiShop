@@ -31,25 +31,27 @@ class Poster {
     /**
      * 执行生成海报
      * @param $fans 粉丝数组
-     * @return bool|int 0成功,>0失败
+     * @return array
      */
     public static function run($fans)
     {
         if(!$fans)return array('ret'=>1001,'msg'=>'not exist fans');
-        $s=time();
         $self = new self();
         $self->_fans = $fans;
         $self->_filename = $fans['file_name'];
         $self->_imgFile =  $fans['base_url'].$fans['file_url'].$fans['file_name'];
-        $self->_imgFile_copy=  $fans['avatar_url'].$fans['file_url']."123.png";
         $self->_uid =$fans['uid'];
         if(file_exists($self->_imgFile))
         {
             return array('ret'=>0,'msg'=>'success','data'=>$self->_imgFile);
         }
 
+        $posterSetting = getPosterInfo();
+        if( !file_exists( $fans['base_url'].$posterSetting['original_img'] )){
+            return array('ret'=>1007,'msg'=>'base failed');
+        }
         //复制原图
-        copy($fans['base_url'].$fans['img_url']."one.jpg",$fans['base_url'].$fans['file_url'].$fans['file_name']);
+        copy($fans['base_url'].$posterSetting['original_img'],$fans['base_url'].$fans['file_url'].$fans['file_name']);
 
 //        $self->_tempFile    =   $fans['base_url'].$fans['img_url']."one.jpg";
         $self->_tempFile =  $fans['base_url'].$fans['file_url'].$fans['file_name'] ;
@@ -58,14 +60,13 @@ class Poster {
         $self->_avatarFile  =   $fans['headimg'];
         $self->_logoFile    =   $fans['base_url'].$fans['img_url']."J6.png";
 
-
         $self->_setting = array(
             'qrcode'=>array(
                 'flag'=>1,
-                'left'=>161,
-                'top'=>358,
-                'width'=>500,
-                'height'=>500
+                'left'=>$posterSetting["qrCode_l"],
+                'top'=>$posterSetting["qrCode_t"],
+                'width'=>$posterSetting["qrCode_w"],
+                'height'=>$posterSetting["qrCode_h"]
             ),
 //            'logo'=>array(
 //                'flag'=>1,
@@ -74,80 +75,39 @@ class Poster {
 //            ),
             'avatar'=>array(
                 'flag'=>1,
-                'left'=>32,
-                'top'=>19,
-                'width'=>120,
-                'height'=>100
+                'left'=>$posterSetting["avatar_l"],
+                'top'=>$posterSetting["avatar_t"],
+                'width'=>$posterSetting["avatar_w"],
+                'height'=>$posterSetting["avatar_h"]
             ),
-            'name'=>array(
-                'flag'=>1,
-                'length'=>200,
-                'left'=>271,
-                'top'=>31,
-                'color'=>'#0190c3',
-                'font-size'=>30
-            ),
-            'number'=>array(
-                'color'=>'#0190c3',
-                'font-size'=>45
-            ),
-            'number1'=>array(
-                'flag'=>1,
-                'left'=>134,
-                'top'=>845,
-            ),
-            'number2'=>array(
-                'flag'=>1,
-                'left'=>221,
-                'top'=>845,
-            ),
-            'number3'=>array(
-                'flag'=>1,
-                'left'=>307,
-                'top'=>845,
-            ),
-            'number4'=>array(
-                'flag'=>1,
-                'left'=>389,
-                'top'=>845,
-            ),
-            'number5'=>array(
-                'flag'=>1,
-                'left'=>476,
-                'top'=>845,
-            ),
+//            'name'=>array(
+//                'flag'=>1,
+//                'length'=>200,
+//                'left'=>271,
+//                'top'=>31,
+//                'color'=>'#0190c3',
+//                'font-size'=>30
+//            )
 
         );
-
-        vendor("Qrcode.watermask");
+        vendor("Poster.watermask");
         $self->_waterMask = new WaterMask('');
         $self->_waterMask->setting = $self->_setting;
 
 
         //二维码
         if(!$self->qrcode())return array('ret'=>1007,'msg'=>'qrcode failed');
-        $self->_waterMask->getImg($self->_tempFile,$self->_imgFile);
 
-//
         //头像
         if(!$self->avatar())return array('ret'=>1008,'msg'=>'avatar failed');
 
-        //品牌LOGO
-        if(!$self->logo())return array('ret'=>1009,'msg'=>'logo failed');
-
-        //昵称
-        if(!$self->name())return array('ret'=>1010,'msg'=>'name failed');
-
-        //累计总裁数量 万位数
-        if(!$self->number1())return array('ret'=>1020,'msg'=>'name failed');
-        //累计总裁数量 千位数
-        if(!$self->number2())return array('ret'=>1020,'msg'=>'name failed');
-        //累计总裁数量 百位数
-        if(!$self->number3())return array('ret'=>1020,'msg'=>'name failed');
-        //累计总裁数量 十位数
-        if(!$self->number4())return array('ret'=>1020,'msg'=>'name failed');
-        //累计总裁数量 个位数
-        if(!$self->number5())return array('ret'=>1020,'msg'=>'name failed');
+//
+//
+//        //品牌LOGO
+//        if(!$self->logo())return array('ret'=>1009,'msg'=>'logo failed');
+//
+//        //昵称
+//        if(!$self->name())return array('ret'=>1010,'msg'=>'name failed');
 
 
 //
@@ -158,10 +118,10 @@ class Poster {
 //        if(!$self->phone())return array('ret'=>1012,'msg'=>'phone failed');
 
 
-        //主要的东西
+//        主要的东西
 //        $self->_waterMask->getImg($self->_tempFile,$self->_imgFile);
-
-
+//
+//
 //        if(file_exists($self->_imgFile))
 //        {
 //            $media_id = $self->getMediaId();
@@ -173,6 +133,7 @@ class Poster {
 //                return array('ret'=>0,'msg'=>'success','data'=>$media_id);
 //            }
 //        }
+//        return array('ret'=>0,'msg'=>'success','data'=>$media_id);
         return array('ret'=>1012,'msg'=>'Poster end failed');
     }
 
@@ -216,9 +177,13 @@ class Poster {
 //*/
         $this->_waterMask->srcImg = $this->_tempFile;
         $this->_waterMask->waterImg = $this->_qrcodeFile;
-       // $this->_waterMask->waterImg = $this->_waterMask->resize($this->_waterMask->waterImg, $this->_qrcodeFile, 256, 256);
+//        $this->_waterMask->waterImg = $this->_waterMask->resize($this->_waterMask->waterImg, $this->_qrcodeFile, 256, 256);
 
-        //$this->_waterMask->waterImg = $this->_waterMask->resize( $this->_waterMask->waterImg,$this->_qrcodeFile, 400,400);
+//        $this->_waterMask->waterImg = $this->_waterMask->resize( $this->_waterMask->waterImg,$this->_qrcodeFile, $posterSetting["qrCode_w"],$posterSetting["qrCode_h"]);
+        $posterSetting = getPosterInfo();
+        $rootUrl = $this -> _fans -> base_url ;
+        $this->_waterMask->img2thumb( $this->_waterMask->waterImg,  $rootUrl .'Public/middleAvatar/'.$this->_uid.'qrcode.png', $posterSetting["qrCode_w"],$posterSetting["qrCode_h"], $cut = 0, $proportion = 0);
+        $this->_waterMask->waterImg = $rootUrl .'Public/middleAvatar/'.$this->_uid.'qrcode.png';
 
         if(empty($this->_waterMask->waterImg) || !file_exists($this->_waterMask->waterImg)){
             return false;
@@ -257,22 +222,21 @@ class Poster {
 //        }
 
         $src_img = $this->_avatarFile;
-        $dst_img = $this->_imgFile_copy;
-
         $img = file_get_contents($src_img);
         if($img == ""){
             $img = file_get_contents("http://".$_SERVER['HTTP_HOST']."/".$src_img);
         }
-        file_put_contents('Public/avatar/'.$this->_uid.'.png',$img);
+        $rootUrl = $this -> _fans -> base_url ;
+        file_put_contents( $rootUrl .'Public/avatar/'.$this->_uid.'.png',$img);
 
+        $posterSetting = getPosterInfo();
 
+        $this->_waterMask->img2thumb( $rootUrl .'Public/avatar/'.$this->_uid.'.png',  $rootUrl .'Public/middleAvatar/'.$this->_uid.'.png', $posterSetting["avatar_w"],$posterSetting["avatar_h"], $cut = 0, $proportion = 0);
 
-        $stat =  $this->_waterMask->img2thumb('Public/avatar/'.$this->_uid.'.png', 'Public/avatar/middle/'.$this->_uid.'.png', $width = 132, $height = 124, $cut = 0, $proportion = 0);
-        $this->_waterMask->waterImg = 'Public/avatar/middle/'.$this->_uid.'.png';
+        $this->_waterMask->waterImg = $rootUrl .'Public/middleAvatar/'.$this->_uid.'.png';
 
         $this->_waterMask->pos = 10;
         $msg = $this->_waterMask->output(); //输出水印图片文件覆盖到输入的图片文件
-        //print_r($msg);
         if($msg){
             return false;
         }
@@ -336,107 +300,6 @@ class Poster {
 
 
     /**
-     * 添加会员数量 万
-     */
-    public function number1()
-    {
-        if(!$this->_setting['number1']['flag'])return true;
-        //姓名
-        $this->_waterMask->waterType = 0; //类型：0为文字水印、1为图片水印
-        $this->_waterMask->pos = 15;
-        $this->_waterMask->waterStr = cutstr($this->_fans['number1'],empty($this->_setting['number']['length'])?10:$this->_setting['number']['length']); //水印文字
-        $this->_waterMask->fontSize = $this->_setting['number']['font-size']?$this->_setting['number']['font-size']:20; //文字字体大小
-        if(!empty($this->_setting['number']['color']))
-            $this->_waterMask->fontColor = $this->html2rgb($this->_setting['number']['color']);
-        $msg = $this->_waterMask->output(); //输出水印图片文件覆盖到输入的图片文件
-        if($msg){
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 添加会员数量 千
-     */
-    public function number2()
-    {
-        if(!$this->_setting['number2']['flag'])return true;
-        //姓名
-        $this->_waterMask->waterType = 0; //类型：0为文字水印、1为图片水印
-        $this->_waterMask->pos = 16;
-        $this->_waterMask->waterStr = cutstr($this->_fans['number2'],empty($this->_setting['number']['length'])?10:$this->_setting['number']['length']); //水印文字
-        $this->_waterMask->fontSize = $this->_setting['number']['font-size']?$this->_setting['number']['font-size']:20; //文字字体大小
-        if(!empty($this->_setting['number']['color']))
-            $this->_waterMask->fontColor = $this->html2rgb($this->_setting['number']['color']);
-        $msg = $this->_waterMask->output(); //输出水印图片文件覆盖到输入的图片文件
-        if($msg){
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 添加会员数量 百
-     */
-    public function number3()
-    {
-        if(!$this->_setting['number3']['flag'])return true;
-        //姓名
-        $this->_waterMask->waterType = 0; //类型：0为文字水印、1为图片水印
-        $this->_waterMask->pos = 17;
-        $this->_waterMask->waterStr = cutstr($this->_fans['number3'],empty($this->_setting['number']['length'])?10:$this->_setting['number']['length']); //水印文字
-        $this->_waterMask->fontSize = $this->_setting['number']['font-size']?$this->_setting['number']['font-size']:20; //文字字体大小
-        if(!empty($this->_setting['number']['color']))
-            $this->_waterMask->fontColor = $this->html2rgb($this->_setting['number']['color']);
-        $msg = $this->_waterMask->output(); //输出水印图片文件覆盖到输入的图片文件
-        if($msg){
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 添加会员数量 十
-     */
-    public function number4()
-    {
-        if(!$this->_setting['number4']['flag'])return true;
-        //姓名
-        $this->_waterMask->waterType = 0; //类型：0为文字水印、1为图片水印
-        $this->_waterMask->pos = 18;
-        $this->_waterMask->waterStr = cutstr($this->_fans['number4'],empty($this->_setting['number']['length'])?10:$this->_setting['number']['length']); //水印文字
-        $this->_waterMask->fontSize = $this->_setting['number']['font-size']?$this->_setting['number']['font-size']:20; //文字字体大小
-        if(!empty($this->_setting['number']['color']))
-            $this->_waterMask->fontColor = $this->html2rgb($this->_setting['number']['color']);
-        $msg = $this->_waterMask->output(); //输出水印图片文件覆盖到输入的图片文件
-        if($msg){
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 添加会员数量 万
-     */
-    public function number5()
-    {
-        if(!$this->_setting['number5']['flag'])return true;
-        //姓名
-        $this->_waterMask->waterType = 0; //类型：0为文字水印、1为图片水印
-        $this->_waterMask->pos = 19;
-        $this->_waterMask->waterStr = cutstr($this->_fans['number5'],empty($this->_setting['number']['length'])?10:$this->_setting['number']['length']); //水印文字
-        $this->_waterMask->fontSize = $this->_setting['number']['font-size']?$this->_setting['number']['font-size']:20; //文字字体大小
-        if(!empty($this->_setting['number']['color']))
-            $this->_waterMask->fontColor = $this->html2rgb($this->_setting['number']['color']);
-        $msg = $this->_waterMask->output(); //输出水印图片文件覆盖到输入的图片文件
-        if($msg){
-            return false;
-        }
-        return true;
-    }
-
-
-    /**
      * 添加手机号
      */
     public function phone()
@@ -484,7 +347,6 @@ class Poster {
 
 	public function delImg($id)
 	{
-		pdo_delete('core_wechats_attachment',array('id'=>$id));
 
 //		if(file_exists($this->_logoFile))
 //			@unlink($this->_logoFile);
