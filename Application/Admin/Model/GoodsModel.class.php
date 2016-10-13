@@ -16,6 +16,8 @@ class GoodsModel extends Model {
      */
     protected $_validate = array(
         array('goods_name','require','商品名称必须填写！',1 ,'',3),
+
+        array('goods_name','0,30','商品名字请小于30个字符！',3,'length'),
         //array('cat_id','require','商品分类必须填写！',1 ,'',3),
         array('cat_id','0','商品分类必须填写。',1,'notequal',3),
         array('goods_sn','','商品货号重复！',2,'unique',1),
