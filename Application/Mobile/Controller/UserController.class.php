@@ -1227,37 +1227,11 @@ class UserController extends MobileBaseController {
     //用户提现
     public function withdrawDeposit(){
         $user = $this->user;
-        // if(empty($user['openid']) ){
-        //     $this->error('请在微信端提现');
-        // }
+        if(empty($user['openid']) ){
+            $this->error('请在微信端提现');
+        }
         
-        /*微信支付*/
-        $weChatConfig = M('wx_user')->find();
-        $apiclient_cert = $_SERVER['DOCUMENT_ROOT']."/Application/Common/Common/Function/apiclient_cert.pem";
-        $apiclient_key = $_SERVER['DOCUMENT_ROOT']."/Application/Common/Common/Function/apiclient_key.pem";
-
-        //  $dataArr['openid']= $user['openid'];
-        //  $dataArr['partner_trade_no']= 'lm'.time().rand(10000, 99999);
-        //  $dataArr['check_name']= 'NO_CHECK';
-        //  $dataArr['amount']= 100;
-        //  $dataArr['desc']='test';
-        //  $
-         
-        //  // $dataArr['mch_appid']=$mch_appid;
-        //  // $dataArr['mchid']=$mchid;
-        //  // $dataArr['nonce_str']=$nonce_str;
-        //  // $dataArr['re_user_name']=$re_user_name;
-        //  // $dataArr['spbill_create_ip']=$spbill_create_ip;
-        // $data = array(
-        //     'appid'                 => $weChatConfig['appid'],
-        //     'appsecret'             => $weChatConfig['appsecret'],
-        //     'mchid'                 => '1394154902',                                                //商户号
-        //     'key'                   => 'LongMi20161011LongMi20161011Long',                          //商户支付秘钥
-        //     'apiclient_cert'        => $apiclient_cert,                                             //商户证书apiclient_cert.pem
-        //     'apiclient_key'         => $apiclient_key,                                              //商户证书apiclient_key.pem
-        // )
-        // $res = payToUser();
-        $res = userWechatWithdrawDeposit($user['openid'],100,$user['nickname']);
+        $res = userWechatWithdrawDeposit($user['openid'],1,$user['nickname']);
         dd($res);
     }
 
