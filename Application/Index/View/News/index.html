@@ -1,0 +1,69 @@
+<include file="Public/header"/>
+<div class="BreadcrumbNavigation">
+    <span class="hover"><a href="{:U('Index/News/index')}">龙米动态</a></span>
+    <!--<span><a href="#">龙米视频</a></span>-->
+    <!--<span><a href="#">龙米图片</a></span>-->
+</div>
+<div class="fn-clear" style="min-height: 459px; margin-top:10px">
+    <div class="content fn-clear">
+        <div class="account-wrapper account-min-wrapper">
+            <div class="account-content" style="margin-left:0px; width:800px">
+                <div class="support-list-wrapper">
+                    <div class="gray-box fn-clear">
+                        <div class="title columns-title pre-title">
+                            <h2>新闻动态</h2>
+                            <!--<div class="gray-btn-menu sort-type-menu  sort-time-menu2">-->
+                                <!--<span class="label">-->
+                                    <!--<a href="#">-->
+                                        <!--<img src="img/i(1).gif?1471933951822" class="arrow">-->
+                                    <!--</a> 所有年份 -->
+                                <!--</span>-->
+                                <!--<ul class="menu-list menu-list2">-->
+                                    <!--<li class="selected"> <a href="#">所有年份</a> </li>-->
+                                    <!--<li class=""> <a href="#">2016年</a> </li>-->
+                                    <!--<li class=""> <a href="#">2015年</a> </li>-->
+                                    <!--<li class=""> <a href="#">2014年</a> </li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                        </div>
+                        <volist name="list" id="item">
+                            <div class="news_box">
+                                <div class="news_t1">
+                                    <div class="news_t1_l">
+                                        <a href="{:U('Index/News/newsDetail',array('id' => $item['article_id']))}">{$item['title']}</a>
+                                    </div>
+                                    <div class="news_t1_r">{:date('Y-m-d' ,$item['publish_time'] )} 发表</div>
+                                </div>
+                                <notempty name="item.thumb">
+                                    <img src="{$item.thumb}" width="800" height="320">
+                                </notempty>
+                                <div class="news_t2">
+                                    {$item['content']|htmlspecialchars_decode|strip_tags|subtext=256}
+                                    <a href="{:U('Index/News/newsDetail',array('id' => $item['article_id']))}" target="_blank">查看全文&gt;</a>
+                                </div>
+                            </div>
+                        </volist>
+                    </div>
+                    {$page}
+                </div>
+
+            </div>
+            <div class="news_right">
+                <adv pid ="2" limit="5" item="v">
+                    <a href="{$v.ad_link}"><img src="{$v.ad_code}" width="300" height="146"></a>
+                </adv>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<include file="Public/footer"/>
+
+
+
+
+
+</body>
+</html>
