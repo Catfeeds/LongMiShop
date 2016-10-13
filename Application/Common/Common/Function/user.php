@@ -379,25 +379,35 @@ function createMyPoster( $userInfo , $url )
  * @param null $shopConfig
  */
 function createInviteRelationship( $userID , $inviteUserId , $nickname , $shopConfig = null ){
-    if( is_null( $shopConfig ) ){
-        $shopConfig = getShopConfig();
+    if(
+        !empty( $userID ) &&
+        !empty( $inviteUserId ) &&
+        $userID != $inviteUserId &&
+        isExistenceDataWithCondition("users",array("user_id"=>$inviteUserId)) &&
+        !isExistenceDataWithCondition("invite_list",array( "user_id" =>$userID)) &&
+        !isExistenceDataWithCondition('order',array("user_id" => $userID,"pay_status" => 1))
+    ){
+        if( is_null( $shopConfig ) ){
+            $shopConfig = getShopConfig();
+        }
+        $addData = array(
+            "user_id"           => $userID,
+            "parent_user_id"    => $inviteUserId,
+            "create_time"       => time(),
+            "update_time"       => time(),
+        );
+        if(isSuccessToAddData( "invite_list" , $addData )){
+            giveBeInviteGift( $userID );
+        }
+        if(  $shopConfig['prize_invited_to'] == 1 ){
+            sendWeChatMessageUseUserId( $userID , "送券" , array("couponId" => $shopConfig['prize_invited_to_value']) );
+        }
+        if(  $shopConfig['prize_invite'] == 2 ){
+            sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array( "userName" => $nickname ,"money" => $shopConfig['prize_invite_value'] ) );
+        }
+        return true;
     }
-    $addData = array(
-        "user_id"           => $userID,
-        "parent_user_id"    => $inviteUserId,
-        "create_time"       => time(),
-        "update_time"       => time(),
-    );
-    if(isSuccessToAddData( "invite_list" , $addData )){
-        giveBeInviteGift( $userID );
-    }
-    if(  $shopConfig['prize_invited_to'] == 1 ){
-        sendWeChatMessageUseUserId( $userID , "送券" , array("couponId" => $shopConfig['prize_invited_to_value']) );
-    }
-    if(  $shopConfig['prize_invite'] == 2 ){
-        sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array( "userName" => $nickname ,"money" => $shopConfig['prize_invite_value'] ) );
-    }
-
+    return false;
 }
 
 
