@@ -1241,6 +1241,23 @@ class UserController extends MobileBaseController {
         delFile('./Public/avatar');
         delFile('./Public/middleAvatar');
         delFile('./Public/qrCode');
+        $logPath = './Public/avatar';
+        if (! file_exists ( $logPath )) {
+            mkdir ( $logPath, 0777, true );
+        }
+        $logPath = './Public/middleAvatar';
+        if (! file_exists ( $logPath )) {
+            mkdir ( $logPath, 0777, true );
+        }
+        $logPath = './Public/qrCode';
+        if (! file_exists ( $logPath )) {
+            mkdir ( $logPath, 0777, true );
+        }
+        $logPath = './Public/poster';
+        if (! file_exists ( $logPath )) {
+            mkdir ( $logPath, 0777, true );
+        }
+
 //        $url = 'http://' . $_SERVER['HTTP_HOST'] . U('Mobile/Recommend/share', array('inviteUserId' => $this->user_id));
         $url = 'http://' . $_SERVER['HTTP_HOST'] . U('Mobile/Goods/goodsInfo', array('id' => 1 ,'inviteUserId' => $this->user_id ));
         setQrCode($url, $this->user_id);
