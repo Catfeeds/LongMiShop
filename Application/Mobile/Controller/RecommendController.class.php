@@ -104,18 +104,13 @@ class RecommendController extends MobileBaseController {
             exit;
         }
         $isNewUser = false;
-        if(
-            !empty($this ->user) &&
-            $this ->user_id != $inviteUserId &&
-            isExistenceDataWithCondition("users",array("user_id"=>$inviteUserId)) &&
-            !isExistenceDataWithCondition("invite_list",array( "user_id" =>$this ->user_id)) &&
-            !isExistenceDataWithCondition('order',array("user_id" => $this ->user_id,"pay_status" => 1))
-        ){
-            createInviteRelationship($this ->user_id,$inviteUserId,$this ->user['nickname'],$this -> shopConfig);
+
+        if( createInviteRelationship($this ->user_id,$inviteUserId,$this ->user['nickname'],$this -> shopConfig) == true ){
             $inviteUserInfo = findDataWithCondition( "users",array("user_id"=>$inviteUserId) , " nickname" );
             $this -> assign('inviteUserInfo',$inviteUserInfo);
             $isNewUser = true;
         }
+
 
         $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
         $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );

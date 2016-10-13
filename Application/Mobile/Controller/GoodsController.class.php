@@ -166,17 +166,10 @@ class GoodsController extends MobileBaseController {
         C('TOKEN_ON',true);
 
         $inviteUserId = I('inviteUserId');
-        
-        if(
-            !empty($this ->user) &&
-            !empty($inviteUserId) &&
-            $this ->user_id != $inviteUserId &&
-            isExistenceDataWithCondition("users",array("user_id"=>$inviteUserId)) &&
-            !isExistenceDataWithCondition("invite_list",array( "user_id" =>$this ->user_id)) &&
-            !isExistenceDataWithCondition('order',array("user_id" => $this ->user_id,"pay_status" => 1))
-        ){
-            createInviteRelationship($this ->user_id,$inviteUserId,$this ->user['nickname'],$this -> shopConfig);
-        }
+
+
+        createInviteRelationship($this ->user_id,$inviteUserId,$this ->user['nickname'],$this -> shopConfig);
+
 
 
         $goodsLogic = new \Common\Logic\GoodsLogic();
