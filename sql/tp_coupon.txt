@@ -243,3 +243,14 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 
 //商品表增加 规格参数字段
 ALTER TABLE  `lm_goods` ADD  `my_parameter` TEXT NOT NULL COMMENT  '规格参数' AFTER  `sku`;
+
+CREATE TABLE `lm_poster` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL COMMENT '海报名称',
+  `setting` text COMMENT '设置内容',
+  `is_use` int(1) NOT NULL DEFAULT '1' COMMENT '是否可使用',
+  `create_time` int(10) DEFAULT NULL,
+  `update_time` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

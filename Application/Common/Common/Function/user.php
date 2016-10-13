@@ -324,29 +324,24 @@ function setQrCode( $url , $userId){
 
 
 
-function getMyPoster(){
+function getMyPoster( $userInfo )
+{
     vendor("Poster.poster");
-    //统计邀请个数
-//    $user_model = D('user');
-//
-//    $count = $user_model->count_parent($_SESSION['user_info']['id']);
-
-    $poster_data=array(
-        'user_id' => $_SESSION['user_info']['id'],
-        'user_name' => $_SESSION['user_info']['user_name'],
-        'headimg' => $_SESSION['user_info']['user_headimg'],
-        'url'    => U('invitation',array('invitation_id'=>$_SESSION['user_info']['id'])),
-        'base_url'=>dirname(dirname(dirname(dirname(dirname(__FILE__))))),
-        'file_url'=>'/Public/poster/',
-        'file_name'=>'poster_'.$_SESSION['user_info']['id'].'.png',
-        'qrcode_url'=>'/Public/qrcode/',
-        'qrcode_name'=>'invitation_'.$_SESSION['user_info']['id'].'.png',
-        'img_url'=>'/Public/images/',
-        'avatar_url'=>'/Public/avatar/'.$_SESSION['user_info']['id'].'.png',
-        'uid'=>$_SESSION['user_info']['id']
+    $posterData = array(
+        'user_id'     => $userInfo['user_id'],
+        'user_name'   => $userInfo['nickname'],
+        'headimg'     => $userInfo['head_pic'],
+        'url'         => U('invitation', array('invitation_id' =>$userInfo['user_id'])),
+        'base_url'    => dirname(dirname(dirname(dirname(dirname(__FILE__))))),
+        'file_url'    => '/Public/poster/',
+        'file_name'   => 'poster_' . $userInfo['user_id'] . '.png',
+        'qrcode_url'  => '/Public/qrCode/',
+        'qrcode_name' => 'invitation_' . $userInfo['user_id'] . '.png',
+        'img_url'     => '/Public/images/',
+        'avatar_url'  => '/Public/avatar/' . $userInfo['user_id'] . '.png',
+        'uid'         => $userInfo['user_id']
     );
-    $msg = Poster::run($poster_data);
-
+    Poster::run( $posterData );
 }
 
 

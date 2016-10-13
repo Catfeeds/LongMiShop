@@ -873,3 +873,35 @@ function getOS()
         return 'Platform:iPad OS_Version:'.str_replace('_', '.', $version[0]);
     }
 }
+
+
+function getPosterInfo(){
+    $posterInfo = M('poster') -> find();
+    if( empty($posterInfo) ){
+        return array();
+    }
+    $setting = unserialize($posterInfo['setting']);
+    if( !empty($setting['qrCode']) ){
+        $posterInfo['qrCode'] = $setting['qrCode'];
+        $tempArray = explode("|",$setting['qrCode']);
+        $posterInfo['qrCode_t'] = $tempArray[0];
+        $posterInfo['qrCode_l'] = $tempArray[1];
+        $posterInfo['qrCode_w'] = $tempArray[2];
+        $posterInfo['qrCode_h'] = $tempArray[3];
+    }
+    if( !empty($setting['avatar']) ){
+        $posterInfo['avatar'] = $setting['avatar'];
+        $tempArray = explode("|",$setting['avatar']);
+        $posterInfo['avatar_t'] = $tempArray[0];
+        $posterInfo['avatar_l'] = $tempArray[1];
+        $posterInfo['avatar_w'] = $tempArray[2];
+        $posterInfo['avatar_h'] = $tempArray[3];
+    }
+    if( !empty($setting['original_img']) ){
+        $posterInfo['original_img'] = $setting['original_img'];
+    }
+    return $posterInfo;
+}
+
+
+
