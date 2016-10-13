@@ -298,6 +298,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
     }
 
 	$appid = $weChatConfig['appid']; 
+	return $weChatConfig;
 	$mch_appid = $appid;
 	$openid = $openids; //用户唯一标识
 	$mchid = '1394154902'; //商户号
@@ -343,13 +344,12 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	
 	$MENU_URL="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
 	curl_setopt ( $ch, CURLOPT_URL, $MENU_URL );
-	// curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
-	curl_setopt($ch,CURLOPT_POST, true);
+	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
 	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
 	curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
 	//设置header
-    curl_setopt($ch,CURLOPT_HEADER,1);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+    // curl_setopt($ch,CURLOPT_HEADER,1);
+    // curl_setopt($ch,CURLOPT_RETURNTRANSFER,false);
     curl_setopt($ch, CURLOPT_TIMEOUT,60); 
 	// $zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
 	// $zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
