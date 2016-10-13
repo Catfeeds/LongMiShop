@@ -1,0 +1,68 @@
+<include file="Public/header"/>
+<div class="BreadcrumbNavigation">
+    <span class="hover"><a href="{:U('Index/News/index')}">龙米动态</a></span>
+    <!--<span><a href="#">龙米视频</a></span>-->
+    <!--<span><a href="#">龙米图片</a></span>-->
+</div>
+<div class="fn-clear" style="min-height: 459px; margin-top:10px">
+    <div class="content fn-clear">
+        <div class="account-wrapper account-min-wrapper">
+            <div class="account-content" style="margin-left:0px; width:800px;">
+                <div class="support-list-wrapper">
+                    <div class="gray-box fn-clear" style="border: 1px solid #E5E5E5;">
+                        <div style="margin:25px">
+                            <div class="news_t1">
+                                <div class="news_t1_l">{$info['title']}</div>
+                                <div class="news_t1_r">{:date('Y-m-d' ,$info['publish_time'] )} 发表</div>
+                            </div>
+                            <div class="news_txt">
+                                <notempty name="info.thumb">
+                                    <img src="{$info.thumb}"  style="width: 100%;">
+                                </notempty>
+
+                                {$info['content']|htmlspecialchars_decode}
+                            </div>
+                            <!-- JiaThis Button BEGIN -->
+                            <div class="jiathis_style_32x32" style="padding-top:20px; padding-bottom:20px">
+                                <a class="jiathis_button_weixin"></a>
+                                <a class="jiathis_button_cqq"></a>
+                                <a class="jiathis_button_tsina"></a>
+                                <a class="jiathis_button_qzone"></a>
+                                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+                                <a class="jiathis_counter_style"></a>
+                            </div>
+                            <script type="text/javascript" >
+                                var jiathis_config={
+                                    summary:"",
+                                    shortUrl:false,
+                                    hideMore:false
+                                }
+                            </script>
+                            <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+                            <!-- JiaThis Button END -->
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="news_right">
+                <adv pid ="2" limit="5" item="v">
+                    <a href="{$v.ad_link}"><img src="{$v.ad_code}" width="300" height="146"></a>
+                </adv>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<include file="Public/footer"/>
+
+
+
+
+
+</body>
+</html>
