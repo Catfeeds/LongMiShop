@@ -348,7 +348,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
 	//设置header
     // curl_setopt($ch,CURLOPT_HEADER,1);
-    // curl_setopt($ch,CURLOPT_RETURNTRANSFER,false);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
     curl_setopt($ch, CURLOPT_TIMEOUT,60); 
 	// $zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
 	// $zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
@@ -361,17 +361,19 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
 	curl_setopt($ch, CURLOPT_AUTOREFERER,1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS,$data );
-	
 	$info = curl_exec($ch);
-
-	
-	if (empty($info) ) {
+	libxml_disable_entity_loader(true);
+    // $postObj = simplexml_load_string($info, 'SimpleXMLElement', LIBXML_NOCDATA);
+    // dd($postData);
+    // dd($postObj->return_code);
+    $postData = xmlToArray($info);
+	if (empty($postData) ) {
 		return curl_error($ch);
 	}
-	$curl_info= curl_getinfo($ch);
-	$error = curl_error($ch);
+	// $curl_info= curl_getinfo($ch);
+	// $error = curl_error($ch);
 	curl_close($ch);
-	return array('info'=>$info,'curl_info'=>$curl_info,'error'=>$error);
+	return $postData;
 	
 
 
@@ -404,10 +406,10 @@ function formatBizQueryParaMap($paraMap, $urlencode)
 	return $reqPar;
 }
 
-// /**
-//  * 	作用：生成签名
-//  */
-function getSign($Obj)
+/**
+ * 	作用：生成签名
+ */
+function getSign($Obj,$key)
 {
 	// print_r($Obj);die;
 	foreach ($Obj as $k => $v)
@@ -430,13 +432,23 @@ function getSign($Obj)
 	return $result_;
 }
 
+//将XML转为array
+function xmlToArray($xml)
+{    
+    //禁止引用外部xml实体
+    libxml_disable_entity_loader(true);
+    $values = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);        
+    return $values;
+}
+    
 
 
 
 
-// /**
-//  *  array转xml
-//  */
+
+/**
+ *  array转xml
+ */
 // function arrayToXml($arr)
 // {
 //     $xml = "<xml>";
@@ -454,14 +466,14 @@ function getSign($Obj)
 //     return $xml; 
 // }
 
-// /**
-// *   作用：使用证书，以post方式提交xml到对应的接口url
-// */
+/**
+*   作用：使用证书，以post方式提交xml到对应的接口url
+*/
 // function postXmlSSLCurl($xml, $url, $second, $cert, $key)
 // {
 //     $ch = curl_init();
 //     //超时时间
-//     curl_setopt($ch,CURLOPT_TIMEOUT,$second ? $second : $this->timeout);
+//     curl_setopt($ch,CURLOPT_TIMEOUT,$second ? $second : 60);
     
 //     //这里设置代理，如果有的话
 //     //curl_setopt($ch,CURLOPT_PROXY, '8.8.8.8');
@@ -499,8 +511,8 @@ function getSign($Obj)
 //     }
 // }
 
-// //企业向个人付款
-// public function payToUser($params, $key, $apicent_cert, $apiclient_key) {
+//企业向个人付款
+// function payToUser($params, $key, $apicent_cert, $apiclient_key , $appid , $mchid) {
 //     $url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
     
 //     //检测必填参数
@@ -518,14 +530,14 @@ function getSign($Obj)
 //         exit("退款申请接口中，缺少必填参数desc！"."<br>");
 //     }
     
-//     $params["mch_appid"] = $this->appid;//公众账号ID
-//     $params["mchid"] = $this->mchid;//商户号
-//     $params["nonce_str"] = $this->createNoncestr();//随机字符串
+//     $params["mch_appid"] = $appid;//公众账号ID
+//     $params["mchid"] = $mchid;//商户号
+//     $params["nonce_str"] = 'lm'.rand(100000, 999999);//随机字符串
 //     $params['spbill_create_ip'] = $_SERVER['REMOTE_ADDR'] == '::1' ? '192.127.1.1' : $_SERVER['REMOTE_ADDR'];//获取IP
-//     $params["sign"] = $this->getSign($params, $key);//签名
-//     $xml = $this->arrayToXml($params);
+//     $params["sign"] = getSign($params, $key);//签名
+//     $xml = arrayToXml($params);
     
-//     return $this->postXmlSSLCurl($xml, $url, false, $apicent_cert, $apiclient_key);
+//     return postXmlSSLCurl($xml, $url, false, $apicent_cert, $apiclient_key);
 // }
 
 
