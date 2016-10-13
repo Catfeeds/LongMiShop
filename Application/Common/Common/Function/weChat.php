@@ -298,7 +298,6 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
     }
 
 	$appid = $weChatConfig['appid']; 
-	return $weChatConfig;
 	$mch_appid = $appid;
 	$openid = $openids; //用户唯一标识
 	$mchid = '1394154902'; //商户号
