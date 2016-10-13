@@ -35,7 +35,7 @@ class ReportController extends BaseController{
 		$today['sign'] = round($today['today_amount']/$today['today_order'],2);
 		$this->assign('today',$today);
 		$sql = "SELECT COUNT(*) as tnum,sum(order_amount) as amount, FROM_UNIXTIME(add_time,'%Y-%m-%d') as gap from  __PREFIX__order ";
-		$sql .= " where add_time>$this->begin and add_time<$this->end AND pay_status=1 or pay_code='cod' and order_status in(1,2,4) group by gap";
+		$sql .= " where add_time>$this->begin and add_time<$this->end AND pay_status=1 or pay_code='cod' and order_status in(1,2,4) group by gap ";
 		$res = M()->query($sql);//订单数,交易额
 		
 		foreach ($res as $val){
@@ -45,7 +45,7 @@ class ReportController extends BaseController{
 			$tamount += $val['amount'];
 		}
 
-		for($i=$this->begin;$i<=$this->end;$i=$i+24*3600){
+		for($i=$this->end;$i>$this->begin;$i=$i-24*3600){
 			$tmp_num = empty($arr[date('Y-m-d',$i)]) ? 0 : $arr[date('Y-m-d',$i)];
 			$tmp_amount = empty($brr[date('Y-m-d',$i)]) ? 0 : $brr[date('Y-m-d',$i)];
 			$tmp_sign = empty($tmp_num) ? 0 : round($tmp_amount/$tmp_num,2);						
@@ -56,7 +56,7 @@ class ReportController extends BaseController{
 			$list[] = array('day'=>$date,'order_num'=>$tmp_num,'amount'=>$tmp_amount,'sign'=>$tmp_sign,'end'=>date('Y-m-d',$i+24*60*60));
 			$day[] = $date;
 		}
-		
+		// dd($list);
 		$this->assign('list',$list);
 		$result = array('order'=>$order_arr,'amount'=>$amount_arr,'sign'=>$sign_arr,'time'=>$day);
 		$this->assign('result',json_encode($result));
@@ -111,7 +111,7 @@ class ReportController extends BaseController{
 		}
 		$sql = "select a.*,b.order_sn,b.shipping_name,b.pay_name,b.add_time from __PREFIX__order_goods as a left join __PREFIX__order as b on a.order_id=b.order_id ";
 		$sql .= " left join __PREFIX__goods as g on a.goods_id = g.goods_id $where ";
-		$sql .= "  order by add_time limit $start,20";
+		$sql .= "  order by add_time desc limit $start,20";
 		$res = M()->query($sql);
 		$this->assign('list',$res);
 		
@@ -169,7 +169,7 @@ class ReportController extends BaseController{
 			$crr[$val['gap']] = $val['shipping_amount'];
 		}
 			
-		for($i=$this->begin;$i<=$this->end;$i=$i+24*3600){
+		for($i=$this->end;$i>$this->begin;$i=$i-24*3600){
 			$tmp_goods_amount = empty($arr[date('Y-m-d',$i)]) ? 0 : $arr[date('Y-m-d',$i)];
 			$tmp_amount = empty($brr[date('Y-m-d',$i)]) ? 0 : $brr[date('Y-m-d',$i)];
 			$tmp_shipping_amount =  empty($crr[date('Y-m-d',$i)]) ? 0 : $crr[date('Y-m-d',$i)];
