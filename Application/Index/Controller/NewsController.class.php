@@ -17,7 +17,7 @@ class NewsController extends IndexBaseController {
 
     public function index(){
         $where = "is_open = 1 AND  device_type != 2 ";
-        $where = "is_open = 1 AND  device_type != 1 ";
+//        $where = "is_open = 1 AND  device_type != 1 ";
         $count = M('article')->where($where)->count();
         $limit = 10;
         $Page = new \Common\Common\Page($count,$limit);
