@@ -301,3 +301,53 @@ function getInvitedUserId( $userId ){
     return $invitedUserInfo['parent_user_id'];
 }
 
+
+
+
+
+
+
+function setQrCode( $url , $userId){
+    vendor("Poster.phpqrcode");
+    // 纠错级别：L、M、Q、H
+    $level = 'L';
+    // 点的大小：1到10,用于手机端4就可以了
+    $size = 8;
+    // 下面注释了把二维码图片保存到本地的代码,如果要保存图片,用$fileName替换第二个参数false
+    //$path = "images/";
+    // 生成的文件名
+    $returnName='/Public/qrCode/invitation_' . $userId . '.png';
+    $fileName = dirname(dirname(dirname(dirname(dirname(__FILE__))))).$returnName;
+    QRcode::png($url, $fileName, $level, $size);
+    return $returnName ;
+}
+
+
+
+function getMyPoster(){
+    vendor("Poster.poster");
+    //统计邀请个数
+//    $user_model = D('user');
+//
+//    $count = $user_model->count_parent($_SESSION['user_info']['id']);
+
+    $poster_data=array(
+        'user_id' => $_SESSION['user_info']['id'],
+        'user_name' => $_SESSION['user_info']['user_name'],
+        'headimg' => $_SESSION['user_info']['user_headimg'],
+        'url'    => U('invitation',array('invitation_id'=>$_SESSION['user_info']['id'])),
+        'base_url'=>dirname(dirname(dirname(dirname(dirname(__FILE__))))),
+        'file_url'=>'/Public/poster/',
+        'file_name'=>'poster_'.$_SESSION['user_info']['id'].'.png',
+        'qrcode_url'=>'/Public/qrcode/',
+        'qrcode_name'=>'invitation_'.$_SESSION['user_info']['id'].'.png',
+        'img_url'=>'/Public/images/',
+        'avatar_url'=>'/Public/avatar/'.$_SESSION['user_info']['id'].'.png',
+        'uid'=>$_SESSION['user_info']['id']
+    );
+    $msg = Poster::run($poster_data);
+
+}
+
+
+
