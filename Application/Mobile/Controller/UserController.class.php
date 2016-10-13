@@ -1230,6 +1230,16 @@ class UserController extends MobileBaseController {
         // if(empty($user['openid']) ){
         //     $this->error('请在微信端提现');
         // }
+        // $weChatConfig = M('wx_user')->find();
+        /*微信支付*/
+        // $data = array(
+        //     'appid'                 => $weChatConfig[''],
+        //     'appsecret'             => 'XXXXXXX',
+        //     'mchid'                 => '1283301801',                                                //商户号
+        //     'key'                   => 'zhudianbaodiandodozhudianbao0527',                          //商户支付秘钥
+        //     'apiclient_cert'        => 'Conf/cert/apiclient_cert.pem',                              //商户证书apiclient_cert.pem
+        //     'apiclient_key'         => 'Conf/cert/apiclient_key.pem',                               //商户证书apiclient_key.pem
+        // )
         $res = userWechatWithdrawDeposit($user['openid'],100,$user['nickname']);
         dd($res);
     }
