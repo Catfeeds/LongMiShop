@@ -302,12 +302,13 @@ function getInvitedUserId( $userId ){
 }
 
 
-
-
-
-
-
-function setQrCode( $url , $userId){
+/**
+ * 创建二维码
+ * @param $url
+ * @param $userId
+ * @return string
+ */
+function createQrCode( $url , $userId){
     vendor("Poster.phpqrcode");
     // 纠错级别：L、M、Q、H
     $level = 'L';
@@ -323,9 +324,34 @@ function setQrCode( $url , $userId){
 }
 
 
-
-function getMyPoster( $userInfo )
+/**
+ * 创建海报
+ * @param $userInfo
+ */
+function createMyPoster( $userInfo , $url )
 {
+    delFile('./Public/avatar');
+    delFile('./Public/middleAvatar');
+    delFile('./Public/qrCode');
+    $logPath = './Public/avatar';
+    if (! file_exists ( $logPath )) {
+        mkdir ( $logPath, 0777, true );
+    }
+    $logPath = './Public/middleAvatar';
+    if (! file_exists ( $logPath )) {
+        mkdir ( $logPath, 0777, true );
+    }
+    $logPath = './Public/qrCode';
+    if (! file_exists ( $logPath )) {
+        mkdir ( $logPath, 0777, true );
+    }
+    $logPath = './Public/poster';
+    if (! file_exists ( $logPath )) {
+        mkdir ( $logPath, 0777, true );
+    }
+
+    createQrCode( $url, $userInfo["user_id"] );
+
     vendor("Poster.poster");
     $posterData = array(
         'user_id'     => $userInfo['user_id'],
@@ -344,5 +370,34 @@ function getMyPoster( $userInfo )
     Poster::run( $posterData );
 }
 
+
+/**
+ * 生成推荐关系
+ * @param $userID
+ * @param $inviteUserId
+ * @param $nickname
+ * @param null $shopConfig
+ */
+function createInviteRelationship( $userID , $inviteUserId , $nickname , $shopConfig = null ){
+    if( is_null( $shopConfig ) ){
+        $shopConfig = getShopConfig();
+    }
+    $addData = array(
+        "user_id"           => $userID,
+        "parent_user_id"    => $inviteUserId,
+        "create_time"       => time(),
+        "update_time"       => time(),
+    );
+    if(isSuccessToAddData( "invite_list" , $addData )){
+        giveBeInviteGift( $userID );
+    }
+    if(  $shopConfig['prize_invited_to'] == 1 ){
+        sendWeChatMessageUseUserId( $userID , "送券" , array("couponId" => $shopConfig['prize_invited_to_value']) );
+    }
+    if(  $shopConfig['prize_invite'] == 2 ){
+        sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array( "userName" => $nickname ,"money" => $shopConfig['prize_invite_value'] ) );
+    }
+
+}
 
 
