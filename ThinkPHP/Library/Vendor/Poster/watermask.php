@@ -177,62 +177,6 @@ class WaterMask {
                 else
                     $this->y = 60;
                 break 1;
-            case 15: //万位
-                $this->fontFile = dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/font/MSYHBD.TTF'; //字体文件
-                if($this->setting['number1']['left'])
-                    $this->x = $this->setting['number1']['left'];
-                else
-                    $this->x = 134;
-                if($this->setting['number1']['top'])
-                    $this->y = $this->setting['number1']['top'];
-                else
-                    $this->y = 965;
-                break 1;
-            case 16: //千位
-                $this->fontFile = dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/font/MSYHBD.TTF'; //字体文件
-                if($this->setting['number2']['left'])
-                    $this->x = $this->setting['number2']['left'];
-                else
-                    $this->x = 221;
-                if($this->setting['number2']['top'])
-                    $this->y = $this->setting['number2']['top'];
-                else
-                    $this->y = 965;
-                break 1;
-            case 17: //百位
-                $this->fontFile = dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/font/MSYHBD.TTF'; //字体文件
-                if($this->setting['number3']['left'])
-                    $this->x = $this->setting['number3']['left'];
-                else
-                    $this->x = 307;
-                if($this->setting['number3']['top'])
-                    $this->y = $this->setting['number3']['top'];
-                else
-                    $this->y = 965;
-                break 1;
-
-            case 18: //十位
-                $this->fontFile = dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/font/MSYHBD.TTF'; //字体文件
-                if($this->setting['number4']['left'])
-                    $this->x = $this->setting['number4']['left'];
-                else
-                    $this->x = 389;
-                if($this->setting['number4']['top'])
-                    $this->y = $this->setting['number4']['top'];
-                else
-                    $this->y = 965;
-                break 1;
-            case 19: //个位
-                $this->fontFile = dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/Public/font/MSYHBD.TTF'; //字体文件
-                if($this->setting['number5']['left'])
-                    $this->x = $this->setting['number5']['left'];
-                else
-                    $this->x = 476;
-                if($this->setting['number5']['top'])
-                    $this->y = $this->setting['number5']['top'];
-                else
-                    $this->y = 965;
-                break 1;
             default: //下右
                 $this->x = $this->srcImg_info[0] - $this->waterImg_info[0];
                 $this->y = $this->srcImg_info[1] - $this->waterImg_info[1];

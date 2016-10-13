@@ -9,4 +9,7 @@
 /TOP_SDK_WORK_DIR
 /data/log
 /public/qrCode
+/public/avatar
+/public/middleAvatar
+/public/poster
 /Application/Common/Conf/region.php
