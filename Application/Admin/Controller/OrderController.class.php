@@ -673,14 +673,14 @@ class OrderController extends BaseController {
 		$where = 'where 1=1 ';
 		$consignee = I('consignee');
 		if($consignee){
-			$where .= "AND consignee like '%$consignee%' ";
+			$where .= " AND consignee like '%$consignee%' ";
 		}
 		$order_sn =  I('order_sn');
 		if($order_sn){
-			$where .= "AND order_sn = '$order_sn' ";
+			$where .= " AND order_sn = '$order_sn' ";
 		}
 		if(I('order_status')){
-			$where .= "AND order_status = ".I('order_status');
+			$where .= " AND order_status = ".I('order_status');
 		}
 		
 		$timegap = I('timegap');
@@ -688,7 +688,7 @@ class OrderController extends BaseController {
 			$gap = explode('-', $timegap);
 			$begin = strtotime($gap[0]);
 			$end = strtotime($gap[1]);
-			$where .= "AND add_time>$begin and add_time<$end";
+			$where .= " AND add_time>'$begin' and add_time<'$end' ";
 		}
 	$region	= M('region')->getField('id,name');
                 

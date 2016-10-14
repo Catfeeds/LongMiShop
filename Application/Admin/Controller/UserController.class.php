@@ -343,7 +343,7 @@ class UserController extends BaseController {
         $this->display();
     }
 
-    public function ajaxwithdrawDeposit(){
+    public function ajaxWithdrawDeposit(){
         // 搜索条件
         $condition = array();
         I('nickname') ? $condition['nickname'] = I('nickname') : false;
@@ -386,6 +386,12 @@ class UserController extends BaseController {
         }
         $this->error('操作失败');
     }
+
+
+
+
+
+
 
 
 

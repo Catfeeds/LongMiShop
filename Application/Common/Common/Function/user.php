@@ -377,6 +377,8 @@ function createMyPoster( $userInfo , $url )
  * @param $inviteUserId
  * @param $nickname
  * @param null $shopConfig
+ * @return bool
+ *
  */
 function createInviteRelationship( $userID , $inviteUserId , $nickname , $shopConfig = null ){
     if(
@@ -411,3 +413,52 @@ function createInviteRelationship( $userID , $inviteUserId , $nickname , $shopCo
 }
 
 
+/**
+ * 创建提现申请
+ * @param $money
+ * @param $userInfo
+ * @return array
+ */
+function createWithdrawDepositApply( $money , $userInfo )
+{
+    $model = new \Think\Model();
+
+    try {
+        $model->startTrans();
+        $shopConfig = getShopConfig();
+        if (
+            (!empty($shopConfig['basic_withdraw_storage']) && $money < $shopConfig['basic_withdraw_storage']) ||
+            ($money <= 1 || $money > $userInfo['user_money'])
+        ) {
+            throw new \Exception('提现金额有误！');
+        }
+
+        $applyData = array(
+            "user_id"          => $userInfo['user_id'],
+            "openid"           => $userInfo['openid'],
+            "nickname"         => $userInfo['nickname'],
+            "money"            => $money,
+            "status"           => 1,
+            "application_time" => time(),
+        );
+        $id = M('withdraw_deposit')->add($applyData);
+        if (empty($id)) {
+            throw new \Exception('创建提现申请单失败！');
+        }
+
+        if (!accountLog($userInfo['user_id'], -$money, 0, "提现扣除")) {
+            throw new \Exception('余额扣除失败！');
+        }
+
+        $model->commit();
+
+        return callback(true);
+
+    } catch (\Exception $e) {
+
+        $model->rollback();
+
+        return callback(false, $e->getMessage());
+    }
+
+}

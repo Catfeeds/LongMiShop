@@ -1232,13 +1232,22 @@ class UserController extends MobileBaseController {
 
     //用户提现
     public function withdrawDeposit(){
-        $user = $this->user;
-        if(empty($user['openid']) ){
-            $this->error('请在微信端提现');
+//        if(empty($this->user['openid']) ){
+//            $this->error('请在微信端提现');
+//        }
+        if( IS_POST ){
+            $money = I('money');
+            $money= floatval($money);
+            $result = createWithdrawDepositApply( $money , $this -> user  );
+            if( !callbackIsTrue( $result ) ){
+                $this->success( getCallbackMessage($result) , U('Mobile/User/account') );
+            }
+            $this->success('申请提现成功',U('Mobile/User/account'));
+            exit;
         }
-        
-        $res = userWechatWithdrawDeposit($user['openid'],1,$user['nickname']);
-        dd($res);
+
+        $this -> display();
+//        $res = userWechatWithdrawDeposit($user['openid'],1,$user['nickname']);
     }
 
 

@@ -64,23 +64,9 @@
                         <div class="col-sm-6 text-left"></div>
                         <div class="col-sm-6 text-right">{$page}</div>
                     </div>
-                    <div >
-                        <table>
-                            <input type="hidden"  name="id">
-                            <input type="hidden"  name="status">
-                            <tr>
-                                <td>请填写不通过理由</td>
-                                <td><input name="reason" type="text"></td>
-                            </tr>
-                        </table>
-                    </div>
 <script>
     $(".pagination  a").click(function(){
         var page = $(this).data('p');
         ajax_get_table('search-form2',page);
     });
-    //填写审核理由
-    function refuse(){
-        
-    }
 </script>

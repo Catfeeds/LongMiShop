@@ -261,9 +261,10 @@ CREATE TABLE `lm_withdraw_deposit` (
   `user_id` int(11) DEFAULT NULL COMMENT '用户id',
   `openid` varchar(255) DEFAULT NULL,
   `nickname` varchar(255) DEFAULT NULL COMMENT '用户昵称',
-  `money` int(11) DEFAULT NULL COMMENT '提现金额',
+  `money` float(11,2) DEFAULT NULL COMMENT '提现金额',
   `status` int(11) DEFAULT NULL COMMENT '审核状态  1未审核  2审核不通过  3审核通过',
   `application_time` int(11) DEFAULT NULL COMMENT '申请时间',
   `check_time` int(11) DEFAULT NULL COMMENT '审核时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

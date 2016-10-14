@@ -1,0 +1,61 @@
+<include file="Public/header"/>
+<link href="__STATIC__/css/htmleaf-demo.css" rel="stylesheet" />
+<body>
+<form class="mui-input-group" style=" margin-top:10px" method="post" id="myForm">
+    <div class="mui-input-row">
+        <label style="padding-left:5px">金额（元）</label>
+        <input type="text" id="text"  name="money" onKeyUp="clearNoNum(this)" placeholder="可提现{$user['user_money']}元，赶紧邀请好友买米吧">
+    </div>
+</form>
+<div class="feedback_box">
+    <input id="login_btn_on" class="login_btn_on" name="" value="确认提现" type="button" disabled>
+</div>
+<div class="tip_b">
+    <ul>
+        <notempty name = "shopConfig.basic_withdraw_storage">
+            <li>最小提现金额为 {$shopConfig.basic_withdraw_storage} 元；</li>
+        </notempty>
+        <li>成功提交提现申请后，我们会在一个工作日内为您审核；</li>
+        <li>活动充值，返现等活动产生的余额将不会通过审核；</li>
+        <li>审核通过后，现金会直接存入您的微信零钱并伴有短信和微信提醒。</li>
+    </ul>
+</div>
+</body>
+<script language="JavaScript" type="text/javascript">
+    function clearNoNum(obj)
+    {
+        obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+        obj.value = obj.value.replace(/^\./g,"");  //验证第一个字符是数字而不是.
+        obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的.
+        obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+    }
+    $(document).ready(function(){
+        $("#text").focusout(function(){
+            if( $(this).val() == "" )
+            {
+                $(".login_btn_on").attr("disabled","disabled")
+            }
+            else
+            {
+                $(".login_btn_on").removeAttr("disabled");
+            }
+        });
+        $("#login_btn_on").click(function(){
+            var money = $('#text').val();
+            if(
+                    <notempty name = "shopConfig.basic_withdraw_storage">
+                        money < {$shopConfig.basic_withdraw_storage} ||
+                    </notempty>
+                    ( money <= 1 || money > {$user.user_money} )
+            ){
+                alert("提现金额有误");
+                return;
+            }
+            $('#myForm').submit();
+        });
+    });
+
+</script>
+<include file="Public/footer"/>
+</html>
