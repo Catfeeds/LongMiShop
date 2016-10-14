@@ -441,6 +441,28 @@ class OrderController extends BaseController {
         $this->display("Plugin/shipping/{$code}_print");
     }
 
+
+    public function fastShipping(){
+        $id =  I("id");
+        $invoice_no =  I("invoice_no");
+        $list = M("order_goods") -> where(array('order_id' => $id , 'is_send' => 0 )) -> field("rec_id") -> select();
+        $goods = array();
+        if(!empty($list)){
+            foreach ( $list as $item ){
+                $goods[] = $item['rec_id'];
+            }
+        }
+        $data = array(
+            "order_id" => $id,
+            "invoice_no" => $invoice_no,
+            "goods"=>$goods,
+            "note"=>" ",
+        );
+        $orderLogic = new OrderLogic();
+        $result = $orderLogic->deliveryHandle($data);
+        exit(json_encode($result));
+    }
+
     /**
      * 生成发货单
      */

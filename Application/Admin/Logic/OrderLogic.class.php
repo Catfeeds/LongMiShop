@@ -281,14 +281,16 @@ class OrderLogic extends RelationModel
                 new \Exception('保存失败！');
             }
 //            throw new \Exception('我是断点！');
-            $model  -> commit();
 
             $mobileMessages = array(
                 "kuaidiname" => $order['shipping_name'],
                 "kuaidisn" => $data['invoice_no'],
             );
-            sendMobileMessages( $order['mobile'] , $mobileMessages  );
-            
+            if( !sendMobileMessages( $order['mobile'] , $mobileMessages  ) ){
+                throw new \Exception('短信发送失败！');
+            }
+
+            $model  -> commit();
             return callback(true,'');
         }catch (\Exception $e){
             $model  -> rollback();
