@@ -206,7 +206,14 @@ Load—more a{
 .postage .virtualAddress{
 	float:right;
 }
-
+.c_btn55_box {
+	overflow: hidden;
+	width: 210px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
 /*cart2 优惠券*/
 .site_txt1 a:hover{
 	color:#b02f4b;
