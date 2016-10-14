@@ -47,7 +47,14 @@
         ajax_get_table('search-form2',cur_page);
     }
 
-    
+
+    function setRemark( id ){
+        layer.prompt({title: '请输入拒绝原因'},function(value, index, elem){
+            var remark = value;
+            layer.close(index);
+            window.location.href  = "{:U('Admin/user/checkDeposit',array('status'=>2))}/id/"+id+"/reason/"+remark;
+        });
+    }
 </script>
 </body>
 </html>

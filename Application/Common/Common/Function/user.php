@@ -462,3 +462,76 @@ function createWithdrawDepositApply( $money , $userInfo )
     }
 
 }
+
+
+function checkWithdrawDeposit( $id , $status , $reason ){
+
+    $model = new \Think\Model();
+
+    try {
+        $model->startTrans();
+
+        if( empty($id) || empty($status) || !in_array( $status , array( 2 , 3)) ){
+            throw new \Exception('参数不正确！');
+        }
+
+        $condition = array(
+            'id' => $id
+        );
+
+        $withdrawDepositInfo = findDataWithCondition( "withdraw_deposit" , $condition , "user_id,money" );
+        $userId = $withdrawDepositInfo["user_id"];
+        $userInfo = findDataWithCondition( "users" , array('user_id' => $userId ) );
+
+        $data = array(
+            "status" =>$status,
+        );
+
+        if( $status == 2 ){
+            if( empty($reason) ){
+                throw new \Exception('请填写不通过理由！');
+            }
+            $data["remark"] = $reason;
+            if (!accountLog( $userId ,$withdrawDepositInfo['money'] , 0, "提现拒绝退回")) {
+                throw new \Exception('余额退回失败！');
+            }
+        }
+        $res = M('withdraw_deposit')-> where($condition) -> save($data);
+
+        if( $res == false ){
+            throw new \Exception('修改状态失败！');
+        }
+
+
+
+        if( $status == 3 ){
+            $result = userWechatWithdrawDeposit( $userInfo['openid'] , $withdrawDepositInfo['money'] , $userInfo['nickname']);
+            if(  !callbackIsTrue( $result ) ){
+                throw new \Exception( getCallbackMessage( $result ) );
+            }
+            $weChatData = getCallbackData( $result );
+            if( $weChatData["postData"]['result_code'] == "FAIL" ){
+                throw new \Exception( "微信:" . $weChatData["postData"]['err_code_des'] );
+            }
+        }
+
+//        throw new \Exception('我是断点！');
+
+        if( $status== 2 ){
+            sendWeChatMessageUseUserId( $userId , "拒绝提现" ,array("money" => $withdrawDepositInfo['money'] ) );
+        }
+        if( $status== 3 ){
+            sendWeChatMessageUseUserId( $userId , "成功提现" ,array("money" => $withdrawDepositInfo['money'] ) );
+        }
+        $model->commit();
+
+        return callback(true);
+
+    } catch (\Exception $e) {
+
+        $model->rollback();
+
+        return callback(false, $e->getMessage());
+    }
+
+}

@@ -35,7 +35,11 @@
                                             <input type="hidden" name="shipping_code[]" value="flat.flat">
                                         </td>
                                         <td class="text-right">{$list.user_id}</td>
-                                        <td class="text-left">{$list.nickname}</td>
+                                        <td class="text-left">
+                                            <a href="{:U('Admin/User/account_log',array('id' => $list['user_id']))}">
+                                                {$list.nickname}
+                                            </a>
+                                        </td>
                                         <td class="text-left">{$list.money}</td>
                                         <td class="text-left">{$list.application_time|date='Y-m-d H:i',###}</td>
                                         <td class="text-left">
@@ -50,9 +54,13 @@
                                             </if>
                                         </td>
                                         <td class="text-right">
-                                            <a href="{:U('Admin/user/checkDeposit',array('id'=>$list['id'],'status'=>3))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="通过审核" onclick="if(confirm('是否通过')==false)return false;">通过</a>
-                                            <a href="{:U('Admin/user/checkDeposit',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="不通过" onclick="if(confirm('是否不通过')==false)return false;">不通过</a>
+
+                                            <if condition="$list['status'] eq 1">
+                                                <a href="{:U('Admin/user/checkDeposit',array('id'=>$list['id'],'status'=>3))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="通过审核" onclick="if(confirm('是否通过')==false)return false;">通过</a>
+                                                <a  data-toggle="tooltip" title="" class="btn btn-info" data-original-title="不通过" onclick="setRemark('{$list.id}')">不通过</a>
                                             <!-- <a href="{:U('Admin/user/delete',array('id'=>$list['user_id']))}" onClick="return confirm('确定删除?');" id="button-delete6" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a> -->
+
+                                            </if>
                                         </td>
                                     </tr>
                                 </volist>

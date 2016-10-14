@@ -339,7 +339,6 @@ class UserController extends BaseController {
 
     //提现审核
     public function withdrawDeposit(){
-
         $this->display();
     }
 
@@ -371,20 +370,11 @@ class UserController extends BaseController {
         $id = I('id','','int');
         $status = I('status','','int');
         $reason = I('reason');
-        if(empty($id) && empty($status) ){
-            $this->error('参数不正确');
-        }
-        if( $status == 2 && empty($reason) ){
-            $this->error('请填写不通过理由');
-        }
-        $data['id'] = $id;
-        $data['status'] = $status;
-        $res = M('withdraw_deposit')->save($data);
-
-        if($res){
+        $result = checkWithdrawDeposit( $id , $status , $reason );
+        if( callbackIsTrue( $result ) ){
             $this->success('操作成功',U('Admin/User/withdrawDeposit'));exit;
         }
-        $this->error('操作失败');
+        $this->error( getCallbackMessage( $result ) );
     }
 
 
