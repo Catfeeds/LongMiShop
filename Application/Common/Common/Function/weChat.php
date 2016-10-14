@@ -280,14 +280,15 @@ function sendWeChatMessageUseUserId( $userId , $type , $data ){
     return sendWeChatMessageUseUserInfo( $userInfo , $type , $data );
 }
 
-/*
+/**
  * 企业向个人付款
- * @param  access_token
- * @param  openids 
- * 
+ * @param $openids
+ * @param $amounts
+ * @param $nickname
+ * @param string $title
+ * @return array
  */
-
-function userWechatWithdrawDeposit($openids,$amounts,$nickname){
+function userWechatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户提现" ){
 	if( empty($openids) ){
 		return callback( false , 'openid不能为空' );
 	}
@@ -311,7 +312,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	$check_name = 'NO_CHECK';//校验用户姓名选项，NO_CHECK：不校验真实姓名 FORCE_CHECK：强校验真实姓名（未实名认证的用户会校验失败，无法转账）OPTION_CHECK：针对已实名认证的用户才校验真实姓名（未实名认证用户不校验，可以转账成功）
 	$re_user_name = 'test';//收款用户姓名
 	$amount = $amounts*100;//金额（以分为单位，必须大于100）
-	$desc = 'test_desc';//描述
+	$desc = $title;//描述
 	$spbill_create_ip = $_SERVER["REMOTE_ADDR"];//请求ip
 
 	//封装成数据 
