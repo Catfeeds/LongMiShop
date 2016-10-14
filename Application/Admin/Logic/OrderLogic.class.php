@@ -87,6 +87,9 @@ class OrderLogic extends RelationModel
      */
     public function orderActionLog($order_id,$action,$note=''){    	
         $order = M('order')->where(array('order_id'=>$order_id))->find();
+        if( empty($order) ){
+            return false;
+        }
         $data['order_id'] = $order_id;
         $data['action_user'] = session('admin_id');
         $data['action_note'] = $note;
