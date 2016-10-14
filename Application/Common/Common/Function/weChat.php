@@ -227,7 +227,7 @@ function sendWeChatMessage( $openid , $type , $data ){
         "送券"            =>  "【系统消息】：我们向您送出了一张【{$data['couponName']}】，【<a href = '{$data['url']}'>点此查看</a>】，客服热线：4000787725。",
         "成功邀请"         =>  "【系统消息】：成功邀请的好友{$data['userName']}，他首次成功购买后，您将获得奖励【{$data['money']}元】",
         "邀请奖励"         =>  "【系统消息】：您邀请的{$data['userName']}完成了首购，您获得奖励【{$data['money']}元】，请在个人中心-钱包里查收",
-        "拒绝提现"         =>  "【系统消息】:您有一笔{$data['money']}元的提现申请被拒绝！",
+        "拒绝提现"         =>  "【系统消息】:您有一笔{$data['money']}元的提现申请被拒绝！原因：{$data['reason']}",
         "成功提现"         =>  "【系统消息】:您有一笔{$data['money']}元的提现申请成功！",
     );
     $weChatConfig = M('wx_user')->find();
