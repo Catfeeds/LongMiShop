@@ -515,14 +515,14 @@ function checkWithdrawDeposit( $id , $status , $reason ){
             }
         }
 
-//        throw new \Exception('我是断点！');
 
         if( $status== 2 ){
-            sendWeChatMessageUseUserId( $userId , "拒绝提现" ,array("money" => $withdrawDepositInfo['money'] ,"reason" => $reason ) );
+            sendWeChatMessage( $userInfo['openid'] , "拒绝提现" ,array("money" => $withdrawDepositInfo['money'] ,"reason" => $reason ) );
         }
         if( $status== 3 ){
-            sendWeChatMessageUseUserId( $userId , "成功提现" ,array("money" => $withdrawDepositInfo['money'] ) );
+            sendWeChatMessage( $userInfo['openid'] , "成功提现" ,array("money" => $withdrawDepositInfo['money'] ) );
         }
+        throw new \Exception('我是断点！');
         $model->commit();
 
         return callback(true);
