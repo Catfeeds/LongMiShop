@@ -51,11 +51,17 @@
                                     <td><input type="number"  pattern="^\d{1,}$" title="只能输入数字"  class="input-sm" name="default_storage" value="{$config.default_storage}" ></td>
                                 	<td></td>
                                 </tr>
-                                
+
                                 <tr>
                                     <td>库存预警数：</td>
                                     <td><input type="number"  pattern="^\d{1,}$" title="只能输入数字"  class="input-sm" name="warning_storage" value="{$config.warning_storage}" ></td>
-                                	<td>当商品数量少于X件时，会在系统后台首页<库存预警>显示</td>
+                                    <td>当商品数量少于X件时，会在系统后台首页<库存预警>显示</td>
+                                </tr>
+
+                                <tr>
+                                    <td>最小提现金额：</td>
+                                    <td><input type="number"  pattern="^\d{1,}$" title="只能输入数字"  class="input-sm" name="withdraw_storage" value="{$config.withdraw_storage}" ></td>
+
                                 </tr>
                                 <tr>
                                 	<td>发票税率：</td>
