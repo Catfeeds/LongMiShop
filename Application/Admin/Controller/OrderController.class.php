@@ -541,7 +541,10 @@ class OrderController extends BaseController {
     public function return_info()
     {
         $id = I('id');
-        $return_goods = M('return_goods')->where("id= $id")->find();
+        $return_goods = M('return_goods')->where("id= '$id'")->find();
+        if( empty($return_goods) ){
+            $this->error('访问错误!');
+        }
         if($return_goods['imgs'])            
              $return_goods['imgs'] = explode(',', $return_goods['imgs']);
         $user = M('users')->where("user_id = {$return_goods[user_id]}")->find();
@@ -561,8 +564,8 @@ class OrderController extends BaseController {
             	$where = " order_id = ".$return_goods['order_id']." and goods_id=".$return_goods['goods_id'];
             	M('order_goods')->where($where)->save(array('is_send'=>$type));//更改商品状态        
                 $orderLogic = new OrderLogic();
-                $log = $orderLogic->orderActionLog($return_goods[order_id],'refund',$note);
-                $this->success('修改成功!');            
+                $log = $orderLogic->orderActionLog($return_goods['order_id'],'refund',$note);
+                $this->success('修改成功!' , U('Admin/Order/return_info',array('id' => $id)));
                 exit;
             }  
         }        
