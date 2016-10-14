@@ -81,21 +81,28 @@ Load—more a{
 	line-height: 45px;
 }
 
-.f_index{
+.goods_info_btn {
+	right: 0px;
+	bottom: 0px;
+	z-index: 998;
+	position: fixed;
+	margin-right: 10px;
+	height: 48px;
 	left: 5px;
-	width:120px;
+	width: 120px;
+	margin-bottom: 5px;
 }
-.f_index img{
+.goods_info_btn img{
 	height: 20px;
 	line-height: 20px;
 }
-.f_index li {
+.goods_info_btn li {
 	float: left;
 	text-align: center;
 	height: 50px;
 	margin-left:12px;
 }
-.f_index li a {
+.goods_info_btn li a {
 	display: block;
 	margin: 10px 0;
 	text-decoration: none;
@@ -103,7 +110,7 @@ Load—more a{
 
 }
 
-.f_index li a span{
+.goods_info_btn li a span{
 	margin-top: -4px;
 	font-size:12px;
 	transform:scale(0.7);
@@ -114,14 +121,14 @@ Load—more a{
 	text-align: center;
 	color: #b2b2b2;
 }
-.f_index .f_index_cart{
+.goods_info_btn .f_index_cart{
 	margin-left: 17px;
 }
-.f_index .f_index_cart a{
+.goods_info_btn .f_index_cart a{
 	padding-left: 17px;
 	border-left:1px solid #b2b2b2;
 }
-.f_index .f_index_cart a span{
+.goods_info_btn .f_index_cart a span{
 	width: 41px;
 	display: block;
 }
@@ -146,7 +153,7 @@ Load—more a{
 	margin-left:13px;
 }
 .copyright p{
-	width:340px;
+	width:100%;
 	padding-top:20px;
 	margin:0 auto;
 	border-top:1px solid #e7e7e7;
@@ -158,34 +165,7 @@ Load—more a{
 
 }
 
-/*导航小图标*/
-/*.my_nav ul li a span{*/
-/*line-height:23px;*/
-/*width:23px;*/
-/*height:23px;*/
-/*display:inline-block;*/
-/**/
-/*}*/
-/*.my_nav ul li:nth-child(1) a span{*/
-/*background:url('../images/uc_icon.png') no-repeat 0px -41px;*/
-/*background-size: 20px 222px;*/
-/*}*/
-/*.my_nav ul li:nth-child(2) a span{*/
-/*background:url('../images/uc_icon.png') no-repeat 0px -133px;*/
-/*background-size: 20px 222px;*/
-/*}*/
-/*.my_nav ul li:nth-child(3) a span{*/
-/*background:url('../images/uc_icon.png') no-repeat 0px -154px;*/
-/*background-size: 20px 222px;*/
-/*}*/
-/*.my_nav ul li:nth-child(4) a span{*/
-/*background:url('../images/uc_icon.png') no-repeat 0px -109px;*/
-/*background-size: 20px 222px;*/
-/*}*/
-/*.my_nav ul li:nth-child(5) a span{*/
-/*background:url('../images/uc_icon.png') no-repeat 0px -201px;*/
-/*background-size: 20px 222px;*/
-/*}*/
+
 .my_nav a {
 	display: block;
 	line-height: 45px;
@@ -328,4 +308,47 @@ Load—more a{
 .safeguard ul li{
 	margin-top:3px;
 	z-index:999;
+}
+
+
+.f_index {
+	right: 0px;
+	bottom: 0px;
+	z-index: 3;
+	position: fixed;
+	_position: absolute;
+	left: 40px;
+	_left: 40px;
+	_margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop);
+	margin-right: 10px;
+	height: 48px;
+	width: 48px;
+	margin-bottom: 5px;
+}
+.advance_a {
+	width: 100px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.advance_a a {
+	border-radius: 4px;
+	color: #666666;
+	font-size: 16px;
+	display: block;
+	line-height: 35px;
+	text-align: center;
+	background-image: -moz-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
+	background-image: -webkit-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
+	background-image: -ms-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
+	border: 1px solid #e5e5e5;
+	margin-bottom: 10px;
+}
+.invoice a {
+	color: #FFF;
+	text-decoration: underline;
+	margin-left: 10px;
+}
+.tip_b li {
+	list-style-type: disc;
+	margin-left: 20px;
 }
