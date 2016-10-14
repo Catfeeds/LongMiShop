@@ -208,6 +208,8 @@ function sendWeChatMessage( $openid , $type , $data ){
         "送券",
         "成功邀请",
         "邀请奖励",
+        "拒绝提现",
+        "成功提现",
     );
     if( ! in_array( $type , $typeArray )){
         return false;
@@ -225,7 +227,8 @@ function sendWeChatMessage( $openid , $type , $data ){
         "送券"            =>  "【系统消息】：我们向您送出了一张【{$data['couponName']}】，【<a href = '{$data['url']}'>点此查看</a>】，客服热线：4000787725。",
         "成功邀请"         =>  "【系统消息】：成功邀请的好友{$data['userName']}，他首次成功购买后，您将获得奖励【{$data['money']}元】",
         "邀请奖励"         =>  "【系统消息】：您邀请的{$data['userName']}完成了首购，您获得奖励【{$data['money']}元】，请在个人中心-钱包里查收",
-
+        "拒绝提现"         =>  "【系统消息】:您有一笔{$data['money']}元的提现申请被拒绝！",
+        "成功提现"         =>  "【系统消息】:您有一笔{$data['money']}元的提现申请成功！",
     );
     $weChatConfig = M('wx_user')->find();
     if( empty( $weChatConfig ) ){
@@ -286,14 +289,14 @@ function sendWeChatMessageUseUserId( $userId , $type , $data ){
 
 function userWechatWithdrawDeposit($openids,$amounts,$nickname){
 	if( empty($openids) ){
-		return 'openid不能为空';
+		return callback( false , 'openid不能为空' );
 	}
 	if($amounts*100 < 100){
-		return '提现金额不能少于100';
+        return callback( false , '提现金额不能少于100' );
 	}
 	$weChatConfig = M('wx_user')->find();
     if( empty( $weChatConfig ) ){
-        return false;
+        return callback( false , '微信未配置' );
     }
 
 	$appid = $weChatConfig['appid']; 
@@ -368,12 +371,13 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname){
     // dd($postObj->return_code);
     $postData = xmlToArray($info);
 	if (empty($postData) ) {
-		return curl_error($ch);
+        return callback( false , curl_error($ch));
 	}
 	// $curl_info= curl_getinfo($ch);
 	// $error = curl_error($ch);
 	curl_close($ch);
-	return array('postData'=>$postData,'data'=>$data);
+    return callback( true , "" , array('postData'=>$postData,'data'=>$data) );
+//	return array('postData'=>$postData,'data'=>$data);
 	
 
 

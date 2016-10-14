@@ -1245,9 +1245,7 @@ class UserController extends MobileBaseController {
             $this->success('申请提现成功',U('Mobile/User/account'));
             exit;
         }
-
         $this -> display();
-//        $res = userWechatWithdrawDeposit($user['openid'],1,$user['nickname']);
     }
 
 
