@@ -956,6 +956,12 @@ class UserController extends MobileBaseController {
         $order = M('order')->where("order_id = '".$orderId."'")->find();
         $orderSn = $order['order_sn'];
         if(IS_POST){
+            $return_goods = M('return_goods')->where("order_id = '{$orderId}' and goods_id = '{$goodsId}' and status in(0,1)")->find();
+            if(!empty($return_goods))
+            {
+                $this->success('已经提交过退货申请!',U('Mobile/Order/order_list'));
+                exit;
+            }
             $data['order_id'] = $orderId; 
             $data['order_sn'] = $orderSn; 
             $data['goods_id'] = $goodsId; 
@@ -963,8 +969,8 @@ class UserController extends MobileBaseController {
             $data['user_id'] = $this->user_id;
             $data['reason'] = I('reason'); // 问题描述
             M('return_goods')->add($data);   
-            $this->redirect('Mobile/Order/order_list',0);         
-            // $this->success('申请成功,客服第一时间会帮你处理',U('Mobile/Order/order_list'));
+//            $this->redirect('Mobile/Order/order_list',0);
+             $this->success('申请成功,客服第一时间会帮你处理',U('Mobile/Order/order_list'));
             exit;
 
         }
