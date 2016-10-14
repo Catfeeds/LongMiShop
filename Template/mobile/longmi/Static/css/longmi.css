@@ -84,7 +84,7 @@ Load—more a{
 .goods_info_btn {
 	right: 0px;
 	bottom: 0px;
-	z-index: 998;
+	z-index: 3;
 	position: fixed;
 	margin-right: 10px;
 	height: 48px;
