@@ -193,7 +193,7 @@ class OrderLogic extends RelationModel
     			$this->delOrder($order_id);
     			break;
     		case 'delivery_confirm'://确认收货
-    			confirm_order($order_id); // 调用确认收货按钮
+//    			confirm_order($order_id); // 调用确认收货按钮
     			return true;
     		default:
     			return true;
@@ -285,15 +285,14 @@ class OrderLogic extends RelationModel
             }
 //            throw new \Exception('我是断点！');
 
+
+
+            $model  -> commit();
             $mobileMessages = array(
                 "kuaidiname" => $order['shipping_name'],
                 "kuaidisn" => $data['invoice_no'],
             );
-            if( !sendMobileMessages( $order['mobile'] , $mobileMessages  ) ){
-                throw new \Exception('短信发送失败！');
-            }
-
-            $model  -> commit();
+            sendMobileMessages( $order['mobile'] , $mobileMessages  );
             return callback(true,'');
         }catch (\Exception $e){
             $model  -> rollback();

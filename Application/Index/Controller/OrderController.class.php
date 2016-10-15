@@ -124,6 +124,7 @@ class OrderController extends IndexBaseController {
     //确认订单
     public function orderConfirm(){
         $id = I('get.id',0);
+        $this->error("暂时不提供此功能，请在微信端操作");exit;
         $orderLogic = new \Common\Logic\OrderLogic();
         $data = $orderLogic -> confirmOrder($id);
         if( !callbackIsTrue($data) ){

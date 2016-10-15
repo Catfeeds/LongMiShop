@@ -605,10 +605,17 @@ function get_user_default_address($user_id){
      * @param $id   订单id
      */
     function confirm_order($id){
-        $order = M('order')->where(array('order_id'=>$id))->find();
-        if($order['order_status'] != 1)
+        $id = intval($id);
+        $order = M('order')->where('order_id="'.$id.'"')->find();
+        if( empty($order) || $order['order_id'] != $id ){
+            return array('status'=>-1,'msg'=>'没有找到该订单');
+        }
+        if($order['order_status'] != 1){
             return array('status'=>-1,'msg'=>'该订单不能收货确认');
-        
+        }
+        setLogResult($order,"收货","test");
+        setLogResult($_SESSION,"收货ip","test");
+        setLogResult($_SERVER,"收货sERVER","test");
         $data['order_status'] = 2; // 已收货        
         $data['pay_status'] = 1; // 已付款        
         $data['confirm_time'] = time(); //  收货确认时间
@@ -617,10 +624,7 @@ function get_user_default_address($user_id){
             return array('status'=>-3,'msg'=>'操作失败');
 
         sendWeChatMessageUseUserId( $order['user_id'] , "完成" , array("orderId" => $id) );
-//        order_give($order);// 调用送礼物方法, 给下单这个人赠送相应的礼物
-        
-        //分销设置
-        M('rebate_log')->where("order_id = $id")->save(array('status'=>2));
+
                
         return array('status'=>1,'msg'=>'操作成功');
     }
