@@ -623,7 +623,7 @@ function get_user_default_address($user_id){
         if(!$row)        
             return array('status'=>-3,'msg'=>'操作失败');
 
-        sendWeChatMessageUseUserId( $order['user_id'] , "完成" , array("orderId" => $id) );
+//        sendWeChatMessageUseUserId( $order['user_id'] , "完成" , array("orderId" => $id) );
 
                
         return array('status'=>1,'msg'=>'操作成功');
