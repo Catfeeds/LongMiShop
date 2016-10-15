@@ -110,7 +110,10 @@ class OrderLogic extends BaseLogic
     }
 
     public function confirmOrder($id){
-        $order = M('order')->where(array('order_id'=>$id))->find();
+        $order = M('order')->where('order_id="'.$id.'"')->find();
+        if( empty($order) ){
+            return callback(false,'没有找到该订单','');
+        }
         if($order['order_status'] != 1){
             return callback(false,'该订单不能收货确认','');
         }
