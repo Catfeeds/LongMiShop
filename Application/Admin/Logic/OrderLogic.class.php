@@ -231,6 +231,10 @@ class OrderLogic extends RelationModel
             $data['shipping_name'] = $order['shipping_name'];
             $data['shipping_price'] = $order['shipping_price'];
             $data['create_time'] = time();
+            if( !empty($data['myShippingName']) ){
+                $data['shipping_name'] = $data['myShippingName'] ;
+                unset($data['myShippingName']);
+            }
             $did = M('delivery_doc')->add($data);
             if( empty($did) ){
                 throw new \Exception('生成发货单失败！');

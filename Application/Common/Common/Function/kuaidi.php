@@ -5,8 +5,8 @@
  * 快递查询
  * @param $invoice_no
  * @param $shipping_name
+ * @return bool|mixed
  */
-
 function kuaidi($invoice_no, $shipping_name) {
     switch ($shipping_name) {
         case '中国邮政':$logi_type = 'ems';
@@ -25,6 +25,9 @@ function kuaidi($invoice_no, $shipping_name) {
             break;
         case '增益速递':$logi_type = 'zengyisudi';
             break;
+    }
+    if(empty($logi_type)){
+        return false;
     }
     $kurl = 'http://www.kuaidi100.com/query?type=' . $logi_type . '&postid=' . $invoice_no;
     $get_content = file_get_contents($kurl);

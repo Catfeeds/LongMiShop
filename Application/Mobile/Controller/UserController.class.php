@@ -229,6 +229,13 @@ class UserController extends MobileBaseController {
         }
         $result = kuaidi($delivery['invoice_no'],$delivery['shipping_name']);
 //        dd($result);
+        if( $result == false ){
+            $this->assign('invoice_no', $delivery['invoice_no']);
+            $this->assign('shipping_name', $delivery['shipping_name']);
+            $this->assign('isNoFindApi',true);
+            $this->display();
+            exit;
+        }
         if( $result['status'] == 200  ){
 //            dd($result['data']);
                 //支付时间

@@ -134,23 +134,34 @@
         ajax_get_table('search-form2',cur_page);
     }
 
+    var isLock = 0;
     function fastShipping( id ){
+        if( isLock == 1){
+            return;
+        }
+        isLock = 1;
         layer.prompt({title: '请输入快递单号'},function(value, index, elem){
            var invoice_no = value;
             layer.close(index);
-            $.ajax({
-                type : "POST",
-                url:"{:U('Admin/Order/fastShipping')}",
-                data : {invoice_no:invoice_no,id:id},
-                dataType : 'json',
-                success: function(data){
-                    if( data.state == 1 ){
-                        alert("发货成功！");
-                        window.location.reload();
-                        return;
+            layer.prompt({title: '请输入快递名称'},function(value, index, elem) {
+                var shipping_name = value;
+                layer.close(index);
+
+                $.ajax({
+                    type : "POST",
+                    url:"{:U('Admin/Order/fastShipping')}",
+                    data : {invoice_no:invoice_no,id:id,shipping_name:shipping_name},
+                    dataType : 'json',
+                    success: function(data){
+                        isLock = 0;
+                        if( data.state == 1 ){
+                            alert("发货成功！");
+                            window.location.reload();
+                            return;
+                        }
+                        alert(data.msg);
                     }
-                    alert(data.msg);
-                }
+                });
             });
         });
     }
