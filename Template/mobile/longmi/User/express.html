@@ -15,24 +15,7 @@
 	<div class="express_box">
 		<div class="express_txt" >
 			<div class="now1">
-				<p style="margin-top:20px;">快递100暂不支持此物流公司单号的查询</p>
-			</div>
-		</div>
-		<div class="express_txt" >
-			<div class="now1">
-				<p style="margin-top:20px;">物流公司：
-					<if condition = "$shipping_name eq '安能小包' ">
-						<a href="http://www.ane66.com/">{$shipping_name}</a>
-						<else/>
-						{$shipping_name}
-					</if>
-
-				</p>
-			</div>
-		</div>
-		<div class="express_txt" >
-			<div class="now1">
-				<p style="margin-top:20px;">快递单号：{$invoice_no}</p>
+				<p style="margin-top:20px;">该包裹请登陆安能官网查询进度，<a href="http://www.ane66.com/">http://www.ane66.com/</a>，快递单号：{$invoice_no}</p>
 			</div>
 		</div>
 	</div>
