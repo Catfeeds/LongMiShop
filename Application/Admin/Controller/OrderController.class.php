@@ -445,7 +445,8 @@ class OrderController extends BaseController {
     public function fastShipping(){
         $id =  I("id");
         $invoice_no =  I("invoice_no");
-        $list = M("order_goods") -> where(array('order_id' => $id , 'is_send' => 0 )) -> field("rec_id") -> select();
+        $shipping_name =  I("shipping_name");
+        $list = M("order_goods") -> where(array('order_id' => $id   )) -> field("rec_id") -> select();
         $goods = array();
         if(!empty($list)){
             foreach ( $list as $item ){
@@ -455,6 +456,7 @@ class OrderController extends BaseController {
         $data = array(
             "order_id" => $id,
             "invoice_no" => $invoice_no,
+            "myShippingName" => $shipping_name,
             "goods"=>$goods,
             "note"=>" ",
         );

@@ -401,21 +401,21 @@ class SystemController extends BaseController{
         M("Cart")->where("user_id = 0 and  add_time < $time")->delete();            
         $today_time = time();
         
-        // 发货后满多少天自动收货确认
-        $auto_confirm_date = tpCache('shopping.auto_confirm_date');
-        $auto_confirm_date = $auto_confirm_date * (60 * 60 * 24); // 7天的时间戳        
-        $order_id_arr = M('order')->where("order_status = 1 and shipping_status = 1 and ($today_time - shipping_time) >  $auto_confirm_date")->getField('order_id',true);       
-        foreach($order_id_arr as $k => $v)
-        {
-            confirm_order($v);
-        }      
-        
-        // 多少天后自动分销记录自动分成
-         $switch = tpCache('distribut.switch');		 
-         if($switch == 1 && file_exists(APP_PATH.'Common/Logic/DistributLogic.class.php')){
-            $distributLogic = new \Common\Logic\DistributLogic();
-            $distributLogic->auto_confirm(); // 自动确认分成
-         }         
+//        // 发货后满多少天自动收货确认
+//        $auto_confirm_date = tpCache('shopping.auto_confirm_date');
+//        $auto_confirm_date = $auto_confirm_date * (60 * 60 * 24); // 7天的时间戳
+//        $order_id_arr = M('order')->where("order_status = 1 and shipping_status = 1 and ($today_time - shipping_time) >  $auto_confirm_date")->getField('order_id',true);
+//        foreach($order_id_arr as $k => $v)
+//        {
+//            confirm_order($v);
+//        }
+//
+//        // 多少天后自动分销记录自动分成
+//         $switch = tpCache('distribut.switch');
+//         if($switch == 1 && file_exists(APP_PATH.'Common/Logic/DistributLogic.class.php')){
+//            $distributLogic = new \Common\Logic\DistributLogic();
+//            $distributLogic->auto_confirm(); // 自动确认分成
+//         }
      }
 
 

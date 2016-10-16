@@ -110,27 +110,11 @@ class OrderLogic extends BaseLogic
     }
 
     public function confirmOrder($id){
-        $order = M('order')->where(array('order_id'=>$id))->find();
-        if($order['order_status'] != 1){
-            return callback(false,'该订单不能收货确认','');
-        }
-
-        $data['order_status'] = 2; // 已收货
-        $data['pay_status'] = 1; // 已付款
-        $data['confirm_time'] = time(); //  收货确认时间
-        $row = M('order')->where(array('order_id'=>$id))->save($data);
-        if(!$row){
-            return callback(false,'操作失败','');
-        }
-
-        sendWeChatMessageUseUserId( $order['user_id'] , "完成" , array("orderId" => $id) );
-
-
-//        order_give($order);// 调用送礼物方法, 给下单这个人赠送相应的礼物
-
-        //分销设置
-        M('rebate_log')->where("order_id = $id")->save(array('status'=>2));
-        return callback(true,'操作成功','');
+        $data = confirm_order($id);
+        if( !$data['status'])
+            return callback(false,$data['msg']);
+        else
+            return callback(true,'操作成功','');
     }
 
 
