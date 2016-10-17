@@ -1,0 +1,60 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i>提现列表</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="ajax_return">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    $(document).ready(function(){
+        ajax_get_table('search-form2',1);
+
+    });
+
+    // ajax 抓取页面
+    function ajax_get_table(tab,page){
+        cur_page = page; //当前页面 保存为全局变量
+            $.ajax({
+                type : "POST",
+                url:"/index.php/Admin/user/ajaxWithdrawDeposit/p/"+page,//+tab,
+                data : $('#'+tab).serialize(),// 你的formid
+                success: function(data){
+                    $("#ajax_return").html('');
+                    $("#ajax_return").append(data);
+                }
+            });
+    }
+
+    
+
+    // 点击排序
+    function sort(field)
+    {
+        $("input[name='order_by']").val(field);
+        var v = $("input[name='sort']").val() == 'desc' ? 'asc' : 'desc';
+        $("input[name='sort']").val(v);
+        ajax_get_table('search-form2',cur_page);
+    }
+
+
+    function setRemark( id ){
+        layer.prompt({title: '请输入拒绝原因'},function(value, index, elem){
+            var remark = value;
+            layer.close(index);
+            window.location.href  = "{:U('Admin/user/checkDeposit',array('status'=>2))}/id/"+id+"/reason/"+remark;
+        });
+    }
+</script>
+</body>
+</html>
