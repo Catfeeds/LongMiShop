@@ -1,16 +1,16 @@
 <nav>
     <ul class="menu">
         <li  class="<if condition = 'CONTROLLER_NAME eq "Index"'>active</if>">
-            <a href="{:U('Index/index')}">首页</a>
+            <a href="{:U('Index/Index/index')}">首页</a>
         </li>
-        <li >
-            <a href="">龙米宴午</a>
+        <li  class="<if condition = 'CONTROLLER_NAME eq "News"'>active</if>">
+            <a href="{:U('Index/News/index')}">龙米动态</a>
         </li>
         <li  class="<if condition = 'CONTROLLER_NAME eq "Shop"'>active</if>">
-            <a href="{:U('Shop/index')}">在线购买</a>
+            <a href="{:U('Index/Shop/index')}">在线购买</a>
         </li>
-        <li >
-            <a href="">龙米社区</a>
-        </li>
+        <!--<li >-->
+            <!--<a href="">龙米社区</a>-->
+        <!--</li>-->
     </ul>
 </nav>
