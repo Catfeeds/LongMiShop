@@ -3,8 +3,8 @@
 <body>
 <form class="mui-input-group" style=" margin-top:10px" method="post" id="myForm">
     <div class="mui-input-row">
-        <label style="padding-left:5px">金额（元）</label>
-        <input type="text" id="text"  name="money" onKeyUp="clearNoNum(this)" placeholder="可提现{$user['user_money']}元，赶紧邀请好友买米吧">
+        <label style="padding-left:5px; width: 30%;">金额（元）</label>
+        <input style=" width: 70%;" type="text" id="text"  name="money" onKeyUp="clearNoNum(this)" placeholder="可提现{$user['user_money']}元">
     </div>
 </form>
 <div class="feedback_box">
@@ -29,6 +29,14 @@
         obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的.
         obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
         obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+        if( $("#text").val() == "" )
+        {
+            $(".login_btn_on").attr("disabled","disabled")
+        }
+        else
+        {
+            $(".login_btn_on").removeAttr("disabled");
+        }
     }
     $(document).ready(function(){
         $("#text").focusout(function(){
