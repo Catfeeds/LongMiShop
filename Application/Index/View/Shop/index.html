@@ -69,7 +69,20 @@
     var specNumber = -1;
     $(document).ready(function(){
         ajax_trolley(); //
+
+
         get_goods_price();
+                var loadingClick = 0 ;
+        $(".optionsDiv li").each(function(){
+            if( loadingClick == 0){
+                if( !$(this).hasClass("gray") ){
+                    loadingClick = 1;
+                    switch_spec($(this));
+                }
+            }
+
+        });
+
     });
 
     /*购物车*/
