@@ -9,7 +9,7 @@ $(function () {
 jQuery(".slideTxtBox").slide({trigger:"click"});
 jQuery(".slideTxtBox1").slide({trigger:"click"});
 
-        //
+
         // $(function () {
 			// var currYear = (new Date()).getFullYear();
 			// var opt={};
@@ -34,5 +34,9 @@ jQuery(".slideTxtBox1").slide({trigger:"click"});
 		 //    $("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime);
 		 //    $("#appTime").mobiscroll(optTime).time(optTime);
         // });
-        //
-        //
+
+
+                $(".hi").height($(document).height() - 190);
+
+
+
