@@ -360,7 +360,6 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户�
 	// $zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
 	$zs1= $_SERVER['DOCUMENT_ROOT'].$merchantConf['apiclient_cert'];
 	$zs2= $_SERVER['DOCUMENT_ROOT'].$merchantConf['apiclient_key'];
-    dd($zs1);
 	curl_setopt($ch,CURLOPT_SSLCERT,$zs1);
 	curl_setopt($ch,CURLOPT_SSLKEY,$zs2);
 	// curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01;
@@ -374,9 +373,10 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户�
     // dd($postData);
     // dd($postObj->return_code);
     $postData = xmlToArray($info);
-	if (empty($postData) ) {
+	if ( empty($postData) ) {
         return callback( false , curl_error($ch));
 	}
+    
 	// $curl_info= curl_getinfo($ch);
 	// $error = curl_error($ch);
 	curl_close($ch);
