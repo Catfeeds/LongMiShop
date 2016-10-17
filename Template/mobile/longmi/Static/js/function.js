@@ -6,17 +6,17 @@ $(document).ready(function(){
 
 
 
-$(function(){
+// $(function(){
 
-	$('.m33').find('li').each(function(i){
-		$(this).click(function(){
-			$('.m33').find('li').removeClass('m33_hover');
-			$(this).addClass('m33_hover');
-			
-			})
-		})
-	
-	})
+	// $('.m33').find('li').each(function(i){
+	// 	$(this).click(function(){
+	// 		$('.m33').find('li').removeClass('m33_hover');
+	// 		$(this).addClass('m33_hover');
+	//
+	// 		})
+	// 	})
+	//
+	// })
 	
 	
 	// JavaScript Document

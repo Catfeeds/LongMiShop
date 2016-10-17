@@ -92,6 +92,7 @@ class IndexController extends BaseController {
     	$modules = $roleMenu = array();
     	$rs = M('system_module')->where('level>1 AND visible=1')->order('mod_id ASC')->select();
 
+        $pmenu = array();
     	if($act_list=='all'){
     		foreach($rs as $row){
     			if($row['level'] == 3){
@@ -121,7 +122,8 @@ class IndexController extends BaseController {
     			$roleMenu[] = $val;
     		}
     	}
-
+//
+//    	dd($roleMenu);
     	return $roleMenu;
     }
     
