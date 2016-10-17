@@ -661,7 +661,6 @@ class WechatController extends BaseController {
             $uploadConfig = array(
                 "savePath" =>"merchant/",
                 "exts"     => array('pem'),
-                "saveName" => mt_rand(),
                 "replace"  => True,
                 "maxSize"  => 1024*1024,
             );
