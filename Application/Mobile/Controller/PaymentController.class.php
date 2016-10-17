@@ -51,11 +51,19 @@ class PaymentController extends MobileBaseController {
         header("Content-type:text/html;charset=utf-8");
 
         $order_id = I('order_id'); // 订单id
+
+        $order = M('order')->where("order_id = $order_id")->find();
+        if($order['pay_status'] == 1){
+            $url = U("Mobile/Order/order_detail",array("order_id"=>$order['order_id']));
+            header("Location: ".$url);
+            exit;
+        }
+
         // 修改订单的支付方式
         $payment_arr = M('Plugin')->where("`type` = 'payment'")->getField("code,name");
         M('order')->where("order_id = $order_id")->save(array('pay_code'=>$this->pay_code,'pay_name'=>$payment_arr[$this->pay_code]));
 
-        $order = M('order')->where("order_id = $order_id")->find();
+
 
         //应付金额为零
         if(intval($order['order_amount']) < 0 ){
