@@ -273,7 +273,7 @@ function isWeChatUser( $key = null ){
  * @return mixed
  */
 function getInviteList( $userId ){
-    $list = M('invite_list') -> where(array("parent_user_id" => $userId)) -> select();
+    $list = M('invite_list') -> where(array("parent_user_id" => $userId)) -> order('create_time desc') -> select();
     if( !empty( $list ) ){
         foreach ( $list as $key => $item){
             $list[$key]['userInfo'] = findDataWithCondition( "users" , array( "user_id" => $item['user_id'] ) );
