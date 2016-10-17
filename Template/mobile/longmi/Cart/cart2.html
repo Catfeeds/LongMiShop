@@ -161,27 +161,31 @@
     // 提交订单
     function submit_order( key )
     {
-        $.ajax({
-            type : "POST",
-            url:"{:U('Mobile/Cart/cart3')}",
-            data : $('#cart2_form').serialize(),
-            dataType: "json",
-            success: function(data){
-                if(data.state != 1)
-                {
-                    alert(data.msg);
-                    return false;
+        kong  = false;
+        if(kong){
+            $.ajax({
+                type : "POST",
+                url:"{:U('Mobile/Cart/cart3')}",
+                data : $('#cart2_form').serialize(),
+                dataType: "json",
+                success: function(data){
+                    if(data.state != 1)
+                    {
+                        alert(data.msg);
+                        return false;
+                    }
+                    if( key == "weChat"){
+                        location.href = "/index.php?m=Mobile&c=Order&a=toWeChatPay&id="+data.data;
+                        return false;
+                    }
+                    if( key == "balance"){
+                        toBalancePay(data.data);
+                        return false;
+                    }
                 }
-                if( key == "weChat"){
-                    location.href = "/index.php?m=Mobile&c=Order&a=toWeChatPay&id="+data.data;
-                    return false;
-                }
-                if( key == "balance"){
-                    toBalancePay(data.data);
-                    return false;
-                }
-            }
-        });
+            });
+        }
+
     }
 
     //mui初始化
