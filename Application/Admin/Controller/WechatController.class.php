@@ -635,7 +635,7 @@ class WechatController extends BaseController {
 
 
             if(empty($id)){
-                $data['add_time'] = time();
+                $data['create_time'] = time();
                 $Res = M('merchant_conf')->add($data);
                 if($Res){
                     $this->success('添加成功',U('Admin/Wechat/merchantConf'));exit;
@@ -643,7 +643,7 @@ class WechatController extends BaseController {
                 $this->error('添加失败');exit;
             }else{
                 
-                $data['edit_time'] = time();
+                $data['update_time'] = time();
                 $Res = M('merchant_conf')->save($data);
                 if($Res){
                     $this->success('修改成功',U('Admin/Wechat/merchantConf'));exit;
