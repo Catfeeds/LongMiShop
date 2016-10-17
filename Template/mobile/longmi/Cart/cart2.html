@@ -161,8 +161,9 @@
     // 提交订单
     function submit_order( key )
     {
-        kong  = false;
+        var kong  = true;
         if(kong){
+            kong  = false;
             $.ajax({
                 type : "POST",
                 url:"{:U('Mobile/Cart/cart3')}",
