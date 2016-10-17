@@ -208,7 +208,7 @@ class Upload {
             /* 保存文件 并记录保存成功的文件 */
             if ($this->uploader->save($file,$this->replace)) {
                 unset($file['error'], $file['tmp_name']);
-                $file['urlpath'] = __ROOT__ . '/' . UPLOAD_PATH . $file['savepath'] . $file['savename'];
+                $file['urlpath'] = __ROOT__ . '/' . $this->rootPath  . $file['savepath'] . $file['savename'];
                 $info[$key] = $file;
             } else {
                 $this->error = $this->uploader->getError();

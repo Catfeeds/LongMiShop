@@ -268,3 +268,16 @@ CREATE TABLE `lm_withdraw_deposit` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+//商户号配置表
+DROP TABLE IF EXISTS `lm_merchant_conf`;
+CREATE TABLE `lm_merchant_conf` (
+  `conf_id` int(11) NOT NULL AUTO_INCREMENT,
+  `wx_uid` int(11) DEFAULT NULL,
+  `merchant` varchar(255) DEFAULT NULL,
+  `apiclient_cert` varchar(255) DEFAULT NULL,
+  `apiclient_key` varchar(255) DEFAULT NULL,
+  `add_time` int(11) DEFAULT NULL,
+  `edit_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`conf_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
