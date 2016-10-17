@@ -611,6 +611,70 @@ class WechatController extends BaseController {
 
     }
 
+    // 商户号配置
+    public function merchantConf(){
+        $list = M('merchant_conf')->find();
+        $this->assign('list',$list);
+        $this->display();
+    }
+
+    public function editMerchantConf(){
+        if(IS_POST){
+            $id = I('post.conf_id');
+            $data = I('post.');
+            
+            if( $_FILES['apiclient_cert']['size'] != 0 ){
+                $resCert =  $this->uploadConf($_FILES['apiclient_cert']);
+                $data['apiclient_cert'] = $resCert['urlpath'];
+            }
+
+            if( $_FILES['apiclient_key']['size'] != 0 ){
+                $resKey =  $this->uploadConf($_FILES['apiclient_key']);
+                $data['apiclient_key'] = $resKey['urlpath'];
+            }
+
+
+            if(empty($id)){
+                $data['create_time'] = time();
+                $Res = M('merchant_conf')->add($data);
+                if($Res){
+                    $this->success('添加成功',U('Admin/Wechat/merchantConf'));exit;
+                }
+                $this->error('添加失败');exit;
+            }else{
+                
+                $data['update_time'] = time();
+                $Res = M('merchant_conf')->save($data);
+                if($Res){
+                    $this->success('修改成功',U('Admin/Wechat/merchantConf'));exit;
+                }
+                $this->error('修改失败');exit;  
+            }
+            
+
+            
+        }
+    }
+
+    //上传证书 
+    public function uploadConf($file){
+            $uploadConfig = array(
+                'rootPath' => 'data/',
+                "exts"     => array('pem'),
+                "replace"  => True,
+                "maxSize"  => 1024*1024,
+                'subName'  => false,
+            );
+            // dd($uploadConfig);
+            $upload = new \Think\Upload($uploadConfig);//实例化上传类
+            $info = $upload->uploadOne($file);
+            if($info){
+                return $info;
+            }
+            $this->error($upload->getError());exit;
+
+    }
+
 
 
 }
