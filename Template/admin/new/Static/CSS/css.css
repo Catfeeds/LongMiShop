@@ -153,7 +153,7 @@ a:hover {
 	line-height: 45px;
 	background-size: 20px 20px;
 	background-repeat: no-repeat;
-	background-position: 15px center;
+	background-position: 8px center;
 	padding-left: 15px;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
@@ -679,4 +679,9 @@ a:hover {
 }
 .w{
 	margin-left: 10px;
+}
+.hi{
+	overflow-y: scroll;
+	overflow-x: hidden;
+	width: 120px;
 }

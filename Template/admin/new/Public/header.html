@@ -12,21 +12,26 @@
         <div class="hd">
             <ul>
 
-                <foreach name="menu_list" item="vo" key="k" >
-                    <li style="background-image:url(__STATIC__/SVG/a-2.svg);    padding-left: 30px;">{$vo.title}</li>
-                </foreach>
-                <!--<li style="background-image:url(__STATIC__/SVG/a-5.svg)"><a href="page-1.html" target="RightMain">统计</a></li>-->
-                <!--<li style="background-image:url(__STATIC__/SVG/a-2.svg)">店铺</li>-->
-                <!--<li style="background-image:url(__STATIC__/SVG/a-3.svg)">商品</li>-->
-                <!--<li style="background-image:url(__STATIC__/SVG/a-4.svg)">订单</li>-->
-                <!--<li style="background-image:url(__STATIC__/SVG/a-6.svg)">营销</li>-->
-                <!--<li style="background-image:url(__STATIC__/SVG/a-7.svg)">微信</li>-->
-                <!--<li style="background-image:url(__STATIC__/SVG/a-8.svg)">B站</li>-->
+                <div class="hi">
+
+                    <foreach name="menu_list" item="vo" key="k" >
+                        <li style="background-image:url(__STATIC__/SVG/a-2.svg); ">{$vo.title}</li>
+                    </foreach>
+                    <!--<li style="background-image:url(__STATIC__/SVG/a-5.svg)"><a href="page-1.html" target="RightMain">统计</a></li>-->
+                    <!--<li style="background-image:url(__STATIC__/SVG/a-2.svg)">店铺</li>-->
+                    <!--<li style="background-image:url(__STATIC__/SVG/a-3.svg)">商品</li>-->
+                    <!--<li style="background-image:url(__STATIC__/SVG/a-4.svg)">订单</li>-->
+                    <!--<li style="background-image:url(__STATIC__/SVG/a-6.svg)">营销</li>-->
+                    <!--<li style="background-image:url(__STATIC__/SVG/a-7.svg)">微信</li>-->
+                    <!--<li style="background-image:url(__STATIC__/SVG/a-8.svg)">B站</li>-->
+
+                </div>
+
                 <li>
                     <div class="bottom-nav">
                         <ul>
                             <!--<a href="{:U('Admin/Admin/admin_info');}"  target="RightMain">-->
-                                <!--<li style="background-image:url(__STATIC__/SVG/a-9.svg)">财务</li>-->
+                            <!--<li style="background-image:url(__STATIC__/SVG/a-9.svg)">财务</li>-->
                             <!--</a>-->
                             <a href="{:U('Admin/Admin/admin_info');}"  target="RightMain">
                                 <li style="background-image:url(__STATIC__/SVG/a-10.svg)">设置</li>
@@ -37,7 +42,7 @@
                             <a href="{:U('Admin/System/cleanCache');}"  target="RightMain">
                                 <li style="background-image:url(__STATIC__/SVG/a-8.svg)">清理</li>
                             </a>
-                            <a href="{:U('Admin/Admin/logout');}"  target="RightMain">
+                            <a href="{:U('Admin/Admin/logout');}">
                                 <li style="background-image:url(__STATIC__/SVG/a-11.svg)">登出</li>
                             </a>
                         </ul>
