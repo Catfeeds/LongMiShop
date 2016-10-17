@@ -180,8 +180,8 @@
 <body>
 <div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
 <div class="commodity_top">
-    <div class="commodity_top_l"><a href="javascript:history.back(-1);"><img src="__STATIC__/SVG/b1.svg"></a></div>
-    <div class="commodity_top_r"><a href=" {: isWeChatBrowser() ? 'javascript:share();' : 'http://www.jiathis.com/share' }"><img src="__STATIC__/SVG/b2.svg"></a></div>
+    <div class="commodity_top_l"><a href="javascript:void(0);" onclick="history.back(-1);"><img src="__STATIC__/SVG/b1.svg"></a></div>
+    <div class="commodity_top_r"><a href="javascript:void(0);" onclick="{: isWeChatBrowser() ? 'javascript:share();' : 'http://www.jiathis.com/share' }"><img src="__STATIC__/SVG/b2.svg"></a></div>
 </div>
 <form name="buy_goods_form" method="post" id="buy_goods_form" >
     <div id="slider" class="mui-slider" >
