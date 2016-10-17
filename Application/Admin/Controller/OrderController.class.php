@@ -471,6 +471,10 @@ class OrderController extends BaseController {
     public function deliveryHandle(){
         $orderLogic = new OrderLogic();
 		$data = I('post.');
+        if( !empty( $data['shipping_name'] ) ){
+            $data["myShippingName"] = $data['shipping_name'] ;
+            unset($data['shipping_name']);
+        }
 		$result = $orderLogic->deliveryHandle($data);
 		if( callbackIsTrue($result) ){
 			$this->success('操作成功',U('Admin/Order/delivery_info',array('order_id'=>$data['order_id'])));
@@ -492,6 +496,8 @@ class OrderController extends BaseController {
             $condition .= " and admin_id = '".session('admin_id')."'";
         }
 		$delivery_record = M('delivery_doc')->where($condition)->select();
+        $expressList = include_once 'Application/Common/Conf/express.php'; //快递名称
+        $this->assign('expressList',$expressList);
 		$this->assign('delivery_record',$delivery_record);//发货记录
     	$this->display();
     }
