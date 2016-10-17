@@ -303,10 +303,11 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户�
 	$appid = $weChatConfig['appid']; 
     $pluginRes  = M('plugin')->where(array('code'=>'weixin','name'=>'微信支付'))->find();
     $key = unserialize($pluginRes['config_value']);
+    $merchantConf = M('merchant_conf')->where(array('wx_uid'=>$weChatConfig['id']))->find();
     $keyRes = $key['key'];
 	$mch_appid = $appid;
 	$openid = $openids; //用户唯一标识
-	$mchid = '1394154902'; //商户号
+	$mchid = $merchantConf['merchant']; //商户号
 	$nonce_str = 'qyzf'.rand(100000, 999999); //随机数
 	$partner_trade_no = 'HW'.time().rand(10000, 99999); //商户订单号
 	$check_name = 'NO_CHECK';//校验用户姓名选项，NO_CHECK：不校验真实姓名 FORCE_CHECK：强校验真实姓名（未实名认证的用户会校验失败，无法转账）OPTION_CHECK：针对已实名认证的用户才校验真实姓名（未实名认证用户不校验，可以转账成功）
@@ -356,8 +357,8 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户�
     curl_setopt($ch, CURLOPT_TIMEOUT,60); 
 	// $zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
 	// $zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
-	$zs1= $_SERVER['DOCUMENT_ROOT']."/Application/Common/Common/Function/apiclient_cert.pem";
-	$zs2= $_SERVER['DOCUMENT_ROOT']."/Application/Common/Common/Function/apiclient_key.pem";
+	$zs1= $_SERVER['DOCUMENT_ROOT'].$merchantConf['apiclient_cert'];
+	$zs2= $_SERVER['DOCUMENT_ROOT'].$merchantConf['apiclient_key'];
 	curl_setopt($ch,CURLOPT_SSLCERT,$zs1);
 	curl_setopt($ch,CURLOPT_SSLKEY,$zs2);
 	// curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01;
