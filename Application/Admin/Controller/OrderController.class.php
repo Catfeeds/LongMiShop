@@ -14,6 +14,9 @@ class OrderController extends BaseController {
         parent::_initialize();
         C('TOKEN_ON',false); // 关闭表单令牌验证
         // 订单 支付 发货状态
+       $this -> order_status =C('ORDER_STATUS');
+        $this -> shipping_status =C('SHIPPING_STATUS');
+        $this -> pay_status =C('PAY_STATUS');
         $this->assign('order_status',C('ORDER_STATUS'));
         $this->assign('pay_status',C('PAY_STATUS'));
         $this->assign('shipping_status',C('SHIPPING_STATUS'));
@@ -708,7 +711,7 @@ class OrderController extends BaseController {
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="100">日期</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">收货人</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">收货地址</td>';
-    	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">电话</td>';
+    	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">手机</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">订单金额</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">实际支付</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付方式</td>';
@@ -721,18 +724,18 @@ class OrderController extends BaseController {
     		$strTable .= '<tr>';
     		$strTable .= '<td style="text-align:center;font-size:12px;">&nbsp;'.$val['order_sn'].'</td>';
     		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['create_time'].' </td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'."{$region[$val['province']]},{$region[$val['city']]},{$region[$val['district']]},{$region[$val['twon']]}{$val['consignee']}".' </td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['address'].'</td>';
+    		$strTable .= '<td style="text-align:left;font-size:12px;">'."{$val['consignee']}".' </td>';
+    		$strTable .= '<td style="text-align:left;font-size:12px;">'."{$region[$val['province']]},{$region[$val['city']]},{$region[$val['district']]},{$region[$val['twon']]}".$val['address'].'</td>';
     		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['mobile'].'</td>';
     		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['goods_price'].'</td>';
     		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['order_amount'].'</td>';
     		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['pay_name'].'</td>';
     		$strTable .= '<td style="text-align:left;font-size:12px;">'.$this->pay_status[$val['pay_status']].'</td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$this->shipping_status[$val['shipping_status']].'</td>';    
+    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$this->shipping_status[$val['shipping_status']].'</td>';
     		$orderGoods = D('order_goods')->where('order_id='.$val['order_id'])->select();
     		$strGoods="";
     		foreach($orderGoods as $goods){
-    			$strGoods .= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name'];
+    			$strGoods .= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name']." 数量:".$goods['goods_num'];
     			if ($goods['spec_key_name'] != '') $strGoods .= " 规格：".$goods['spec_key_name'];
     			$strGoods .= "<br />";
     		}
