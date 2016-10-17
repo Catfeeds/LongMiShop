@@ -659,7 +659,7 @@ class WechatController extends BaseController {
     //上传证书 
     public function uploadConf($file){
             $uploadConfig = array(
-                'rootPath' => './data/',
+                'rootPath' => 'data/',
                 "exts"     => array('pem'),
                 "replace"  => True,
                 "maxSize"  => 1024*1024,
