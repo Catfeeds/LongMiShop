@@ -304,6 +304,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户�
     $pluginRes  = M('plugin')->where(array('code'=>'weixin','name'=>'微信支付'))->find();
     $key = unserialize($pluginRes['config_value']);
     $merchantConf = M('merchant_conf')->where(array('wx_uid'=>$weChatConfig['id']))->find();
+    
     $keyRes = $key['key'];
 	$mch_appid = $appid;
 	$openid = $openids; //用户唯一标识
@@ -359,6 +360,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户�
 	// $zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
 	$zs1= $_SERVER['DOCUMENT_ROOT'].$merchantConf['apiclient_cert'];
 	$zs2= $_SERVER['DOCUMENT_ROOT'].$merchantConf['apiclient_key'];
+    dd($zs1);
 	curl_setopt($ch,CURLOPT_SSLCERT,$zs1);
 	curl_setopt($ch,CURLOPT_SSLKEY,$zs2);
 	// curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01;

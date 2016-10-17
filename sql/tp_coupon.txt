@@ -273,11 +273,11 @@ CREATE TABLE `lm_withdraw_deposit` (
 DROP TABLE IF EXISTS `lm_merchant_conf`;
 CREATE TABLE `lm_merchant_conf` (
   `conf_id` int(11) NOT NULL AUTO_INCREMENT,
-  `wx_uid` int(11) DEFAULT NULL,
-  `merchant` varchar(255) DEFAULT NULL,
-  `apiclient_cert` varchar(255) DEFAULT NULL,
-  `apiclient_key` varchar(255) DEFAULT NULL,
-  `add_time` int(11) DEFAULT NULL,
-  `edit_time` int(11) DEFAULT NULL,
+  `wx_uid` int(11) DEFAULT NULL COMMENT '对应微信表id',
+  `merchant` varchar(255) DEFAULT NULL COMMENT '商户号',
+  `apiclient_cert` varchar(255) DEFAULT NULL COMMENT '证书cert',
+  `apiclient_key` varchar(255) DEFAULT NULL COMMENT '证书key',
+  `create_time` int(11) DEFAULT NULL COMMENT '添加时间',
+  `update_time` int(11) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`conf_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
