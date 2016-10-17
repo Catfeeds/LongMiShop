@@ -304,6 +304,7 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户�
     $pluginRes  = M('plugin')->where(array('code'=>'weixin','name'=>'微信支付'))->find();
     $key = unserialize($pluginRes['config_value']);
     $merchantConf = M('merchant_conf')->where(array('wx_uid'=>$weChatConfig['id']))->find();
+    
     $keyRes = $key['key'];
 	$mch_appid = $appid;
 	$openid = $openids; //用户唯一标识
@@ -372,9 +373,10 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户�
     // dd($postData);
     // dd($postObj->return_code);
     $postData = xmlToArray($info);
-	if (empty($postData) ) {
+	if ( empty($postData) ) {
         return callback( false , curl_error($ch));
 	}
+    
 	// $curl_info= curl_getinfo($ch);
 	// $error = curl_error($ch);
 	curl_close($ch);
