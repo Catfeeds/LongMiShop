@@ -232,14 +232,14 @@ class OrderLogic extends RelationModel
             $data['shipping_price'] = $order['shipping_price'];
             $data['create_time'] = time();
             if( !empty($data['myShippingName']) ){
-                $data['shipping_name'] = $data['myShippingName'] ;
+                $data['shipping_name'] = $order['shipping_name'] = $data['myShippingName'] ;
                 unset($data['myShippingName']);
             }
             $did = M('delivery_doc')->add($data);
             if( empty($did) ){
                 throw new \Exception('生成发货单失败！');
             }
-            $shippingId = null;
+//            $shippingId = null;
             $is_delivery = 0;
             foreach ($orderGoods as $k=>$v){
                 if($v['is_send'] == 1){
@@ -248,13 +248,13 @@ class OrderLogic extends RelationModel
                 if($v['is_send'] == 0 && in_array($v['rec_id'],$selectGoods)){
                     $res['is_send'] = 1;
                     $res['delivery_id'] = $did;
-                    if( ! is_null($shippingId) ){
-                        if( $shippingId != $v['delivery_way'] ){
-                            throw new \Exception('不同物流的商品不能同时发货！');
-                        }
-                    }else{
-                        $shippingId = $v['delivery_way'];
-                    }
+//                    if( ! is_null($shippingId) ){
+//                        if( $shippingId != $v['delivery_way'] ){
+//                            throw new \Exception('不同物流的商品不能同时发货！');
+//                        }
+//                    }else{
+//                        $shippingId = $v['delivery_way'];
+//                    }
                     $r = M('order_goods')->where("rec_id=".$v['rec_id'])->save($res);//改变订单商品发货状态
                     if( $r >0 || $r ===0 ){
                         $is_delivery++;
@@ -271,7 +271,7 @@ class OrderLogic extends RelationModel
 //            $logisticsInfo = findDataWithCondition("logistics",array('log_id' => $shippingId));
 
 
-
+            $update = array();
             $update['shipping_time'] = time();
             if($is_delivery == count($orderGoods)){
                 $update['shipping_status'] = 1;
@@ -293,7 +293,7 @@ class OrderLogic extends RelationModel
 
             $model  -> commit();
             $mobileMessages = array(
-                "kuaidiname" => $order['shipping_name'],
+                "kuaidiname" => $data['shipping_name'],
                 "kuaidisn" => $data['invoice_no'],
             );
             sendMobileMessages( $order['mobile'] , $mobileMessages  );

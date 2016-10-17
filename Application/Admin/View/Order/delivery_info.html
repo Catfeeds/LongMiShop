@@ -32,17 +32,8 @@
                         <td class="text-center">{$order.add_time|date='Y-m-d H:i',###}</td>
                     </tr>
                     <tr>
-                        <td class="text-right">配送方式:</td>
-                        <td class="text-center">{$order.shipping_name}
-                        </td>
                         <td class="text-right">配送费用:</td>
                         <td class="text-center">{$order.shipping_price}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-right">配送单号:</td>
-                        <td class="text-center">
-                            <input class="input-sm" name="invoice_no" id="invoice_no" value="{$order.invoice_no}">
-                        </td>
                     </tr>
                     </tbody></table>
 
@@ -59,20 +50,22 @@
                     <tr>
                         <td class="text-right">收货人:</td>
                         <td class="text-center">{$order.consignee}</td>
-                        <td class="text-right">电子邮件:</td>
-                        <td class="text-center">{$order.email}</td>
+                        <td class="text-right">电话:</td>
+                        <td class="text-center">{$order.mobile}</td>
+                        <!--<td class="text-right">电子邮件:</td>-->
+                        <!--<td class="text-center">{$order.email}</td>-->
                     </tr>
                     <tr>
                         <td class="text-right">地址:</td>
-                        <td class="text-center">{$order.address}</td>
-                        <td class="text-right">邮编:</td>
-                        <td class="text-center">{$order.zipcode}</td>
+                        <td class="text-center">{$order.address2}</td>
+                        <!--<td class="text-right">邮编:</td>-->
+                        <!--<td class="text-center">{$order.zipcode}</td>-->
                     </tr>
-                    <tr>
-                        <td class="text-right">电话:</td>
-                        <td class="text-center">{$order.mobile}</td>
-                        <td colspan="2"></td>
-                    </tr>
+                    <!--<tr>-->
+                        <!--<td class="text-right">电话:</td>-->
+                        <!--<td class="text-center">{$order.mobile}</td>-->
+                        <!--<td colspan="2"></td>-->
+                    <!--</tr>-->
                     </tbody></table>
 
             </div>
@@ -125,6 +118,23 @@
                 <div class="panel-body">
                     <table class="table table-bordered">
                         <tbody>
+                        <tr>
+                            <td class="text-right">配送方式:</td>
+                            <td class="text-center">
+                                <select  name="shipping_name" id="expressList">
+                                    <option value="0">请选择配送方式</option>
+                                    <volist name="expressList" id="item">
+                                        <option value="{: $item}" {: $order['shipping_name'] == $item ? 'selected' : ''}>{: $item}</option>
+                                    </volist>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">配送单号:</td>
+                            <td class="text-center">
+                                <input class="input-sm" name="invoice_no" id="invoice_no" value="{$order.invoice_no}">
+                            </td>
+                        </tr>
                         <tr>
                             <td class="text-right col-sm-2 margin">发货单备注：</td>
                             <td colspan="3">
@@ -184,10 +194,14 @@
 </div>
 <script>
 function dosubmit(){
-	if($('#invoice_no').val() ==''){
-		 layer.alert('请输入配送单号', {icon: 2});  // alert('请输入配送单号');
-		return;
-	}
+    if($('#expressList').val() =='0'){
+        layer.alert('请选择配送方式', {icon: 2});
+        return;
+    }
+    if($('#invoice_no').val() ==''){
+        layer.alert('请输入配送单号', {icon: 2});
+        return;
+    }
 	var a = [];
 	$('input[name*=goods]').each(function(i,o){
 		if($(o).is(':checked')){
