@@ -8,6 +8,7 @@ return array(
     'FUNCTION_PLUGIN_PATH' => PLUGIN_PATH.'function',
 	'SHOW_PAGE_TRACE' => false,
 	'CFG_SQL_FILESIZE'=>5242880,
+     'LOAD_EXT_CONFIG' => 'html',	// 加载其他自定义配置文件 html.php
     //'URL_MODEL'=>1, // 
     //默认错误跳转对应的模板文件
     'TMPL_ACTION_ERROR' => 'Public:dispatch_jump',

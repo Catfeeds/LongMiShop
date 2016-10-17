@@ -1,0 +1,139 @@
+<include file="Public/min-header"/>
+
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+    <section class="content" style="padding:0px 15px;">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body ">
+                    <ul class="nav nav-tabs">
+                        <foreach name="group_list" item="vo" key="k">
+                            <li <if condition="$k eq 'prize'">class="active"</if>><a href="javascript:void(0)" data-url="{:U('System/index',array('inc_type'=>$k))}" data-toggle="tab" onclick="goset(this)">{$vo}</a></li>
+                        </foreach>
+                    </ul>
+                    <!--表单数据-->
+                    <form method="post" id="handlepost" action="{:U('System/handle')}">
+                        <!--通用信息-->
+                        <div class="tab-content" style="padding:20px 0px;">
+                            <div class="tab-pane active" id="tab_tongyong">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td>邀请人奖品：</td>
+                                        <td>
+                                            <select name="invite" id="invite">
+                                                <option value="1" <if condition="$config['invite'] eq 1">selected="selected"</if>>卡券</option>
+                                                <option value="2"<if condition="$config['invite'] eq 2">selected="selected"</if>>余额</option>
+                                                <option value="3"<if condition="$config['invite'] eq 3">selected="selected"</if>>积分</option>
+                                            </select>
+                                            
+                                                <select name="invite_value_select" id="invite_select" >
+                                                    <option value="0">请选择</option>
+                                                    <volist name="coupon_list" id="coupon_item">
+                                                        <option value="{$coupon_item.id}" {$config['invite_value'] ==  $coupon_item['id'] ? 'selected' : ''}>{$coupon_item.name}</option>
+                                                    </volist>
+                                                </select>
+                                            
+                                            
+                                                <input type="text" name="invite_value_input" id="invite_input" style="display:none" value="{$config['invite_value']}">
+                                            
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>被邀请人奖品：</td>
+                                        <td>
+                                            <select name="invited_to" id="invited_to">
+                                                <option value="1" <if condition="$config['invited_to'] eq 1">selected="selected"</if>>卡券</option>
+                                                <option value="2"<if condition="$config['invited_to'] eq 2">selected="selected"</if>>余额</option>
+                                                <option value="3"<if condition="$config['invited_to'] eq 3">selected="selected"</if>>积分</option>
+                                            </select>
+                                            
+                                            <select name="invited_to_value_select" id="invited_to_select" >
+                                                <option value="0">请选择</option>
+                                                <volist name="coupon_list" id="coupon_item">
+                                                    <option value="{$coupon_item.id}" {$config['invited_to_value'] ==  $coupon_item['id'] ? 'selected' : ''}>{$coupon_item.name}</option>
+                                                </volist>
+                                            </select>  
+                                            
+                                            
+                                            
+                                            <input type="text" name="invited_to_value_input" id="invite_to_input" style="display:none" value="{$config['invited_to_value']}">  
+                                            
+                                            
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td><input type="hidden" name="inc_type" value="{$inc_type}"></td>
+                                        <td class="text-right"><input class="btn btn-primary" type="button" onclick="adsubmit()" value="保存"></td></tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </form><!--表单数据-->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    function adsubmit(){
+        $('#handlepost').submit();
+    }
+
+    $(document).ready(function(){
+        get_province();
+    });
+
+    function goset(obj){
+        window.location.href = $(obj).attr('data-url');
+    }
+
+    $(document).ready(function(){
+        invite('invite');
+        invited_to('invited_to');
+      });
+    $('#invite').change(['Data'],function(){
+        invite('invite');
+    });
+
+    $('#invited_to').change(['Data'],function(){
+        invited_to('invited_to');
+    });
+
+    function invite(obj){
+       var  inviteVlaue = $("#"+obj).val();
+        if(inviteVlaue == 1){
+            $('#invite_select').show();
+            $('#invite_input').hide();
+
+        }else if(inviteVlaue == 2 || inviteVlaue == 3){
+            $('#invite_select').hide();
+            $('#invite_input').show();
+        } 
+    }
+
+    function invited_to(obj){
+        var  inviteVlaue = $("#"+obj).val();
+        if(inviteVlaue == 1){
+            $('#invited_to_select').show();
+            $('#invite_to_input').hide();
+
+        }else if(inviteVlaue == 2 || inviteVlaue == 3){
+            $('#invited_to_select').hide();
+            $('#invite_to_input').show();
+        }
+    }
+</script>
+</body>
+</html>
