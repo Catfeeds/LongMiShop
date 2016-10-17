@@ -206,8 +206,8 @@ class PluginController extends BaseController {
         $condition['code'] = I('get.code');
 
         $model = M('plugin');
-        $row = $model->where($condition)->fetchsql(true)->find();
-//        dd($row);
+        $row = $model->where($condition) ->find();
+
         if(!$row){
             exit($this->error("不存在该插件"));
         }
@@ -227,7 +227,6 @@ class PluginController extends BaseController {
             }
             exit($this->error("操作失败"));
         }
-
         $this->assign('plugin',$row);
         $this->assign('config_value',unserialize($row['config_value']));
 
