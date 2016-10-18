@@ -30,6 +30,12 @@
 			<p>{$good.goods_name}{$good.spec_key_name}</p>
 			<span>￥{$good['member_goods_price']}</span><span style="float:right; color:#666">X{$good['goods_num']}</span>
 		</div>
+		<if condition="!empty($good['user_message'])">
+			<div class="site_txt" style="word-break:break-all;overflow-y:visible;line-height: 22px;" >
+				<p></p>
+				<p>留言：{$good['user_message']}</p>
+			</div>
+		</if>
 	</div>
 </volist>
 <div class="site_txt">运费<span>￥{$order_info.shipping_price}</span></div>
