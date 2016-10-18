@@ -113,6 +113,15 @@ return array(
         'CANCEL'=> '已取消',
         'FINISH'=> '已完成',
     ),
+    'ORDER_STATUS_DESC_MOBILE' => array(
+        'WAITPAY' => '待支付',
+        'WAITSEND'=>'待发货',
+        'PARTIALSEND'=>'部分发货',
+        'WAITRECEIVE'=>'待收货',
+        'WAITCCOMMENT'=> '已完成',
+        'CANCEL'=> '已取消',
+        'FINISH'=> '已完成',
+    ),
 
     /**
      *  订单用户端显示按钮     

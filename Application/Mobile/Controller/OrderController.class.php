@@ -110,7 +110,7 @@ class OrderController extends MobileBaseController {
 //        $model = new UsersLogic();
         foreach($order_list as $k=>$v)
         {
-            $order_list[$k] = set_btn_order_status($v);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
+            $order_list[$k] = setBtnOrderStatus($v ,"MOBILE");  // 添加属性  包括按钮显示属性 和 订单状态显示属性
             //$order_list[$k]['total_fee'] = $v['goods_amount'] + $v['shipping_fee'] - $v['integral_money'] -$v['bonus'] - $v['discount']; //订单总额
             $data = $model -> getOrderGoods($v['order_id']);
             $order_list[$k]['goods_list'] = $data['data'];
@@ -156,7 +156,7 @@ class OrderController extends MobileBaseController {
             $this->error('没有获取到订单信息');
             exit;
         }
-        $order_info = set_btn_order_status($order_info);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
+        $order_info = setBtnOrderStatus($order_info ,"MOBILE"); // 添加属性  包括按钮显示属性 和 订单状态显示属性
         
         //setLogResult
         //获取订单商品
