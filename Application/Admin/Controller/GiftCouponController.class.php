@@ -141,6 +141,77 @@ class GiftCouponController extends BaseController {
         exit(json_encode(callback(false,'兑换码生成失败')));
     }
 
+
+    //导入excel
+    public function excelCreate(){
+        $data['gift_coupon_id'] = I('id');
+        $saveName = mt_rand(1,9999999);
+        $uploadConfig = array(
+            "savePath" =>"execl/",
+            "exts"     => array('xls'),
+            "saveName" => ''.$saveName.'',
+            "replace"  => True,
+            "maxSize"  => 1024*1024,
+            'autoSub'  => false,
+        );
+        $upload = new \Think\Upload($uploadConfig);//实例化上传类
+        $info = $upload->upload();
+        if(!$info) {// 上传错误提示错误信息
+            $this->error($upload->getError());
+        }
+        $path = $_SERVER['DOCUMENT_ROOT'].$info['create']['urlpath'];
+
+        $resDate = $this->excel_import($path);
+        if(empty($resDate)){
+            exit(json_encode(callback(false,'兑换码生成失败')));
+        }
+        foreach($resDate as $item){
+            $data['state'] = 0;
+            $data['create_time'] = time();
+            $data['code'] = $item['A'];
+            M('coupon_code')->add($data);
+        }
+        M('gift_coupon')->save(array('id'=>$data['gift_coupon_id'],'is_create_code'=>1));
+        exit(json_encode(callback(true,'兑换码生成成功')));
+
+    }
+
+
+
+    public function excel_import($inputFileName){
+        //設置內存使用量與腳本過期時間
+        ini_set('memory_limit', '1024M');
+        set_time_limit(600);
+        if (!file_exists($inputFileName)) {
+            return '文件不存在';
+        }
+        $file_ext = end(explode(".", $inputFileName));
+
+        switch ($file_ext){
+            case 'xls' :
+                $inputFileType = 'Excel5';
+                break;
+            case 'xlsx' :
+                $inputFileType = 'Excel2007';
+                break;
+            case 'csv' :
+                $inputFileType = 'CSV';
+                break;
+            default :
+                $inputFileType = 'Excel5';
+                break;
+        }
+//        return $inputFileName;
+//        require_once '\ThinkPHP/Library/Vendor/PHPExcel/PHPExcel/IOFactory.php';
+        Vendor('PHPExcel.PHPExcel.IOFactory');
+        $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
+        $objPHPExcel = $objReader -> load($inputFileName);
+
+        $temp = $objPHPExcel -> getActiveSheet() -> toArray(null, true, true, true);
+        unset($objPHPExcel, $objReader);
+        return $temp;
+    }
+
     /**
      * 选择搜索商品
      */

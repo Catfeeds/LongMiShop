@@ -732,6 +732,7 @@ class OrderController extends BaseController {
     	$strTable .= '</tr>';
     	
     	foreach($orderList as $k=>$val){
+
     		$strTable .= '<tr>';
     		$strTable .= '<td style="text-align:center;font-size:12px;">&nbsp;'.$val['order_sn'].'</td>';
     		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['create_time'].' </td>';
@@ -744,12 +745,15 @@ class OrderController extends BaseController {
     		$strTable .= '<td style="text-align:left;font-size:12px;">'.$this->pay_status[$val['pay_status']].'</td>';
     		$strTable .= '<td style="text-align:left;font-size:12px;">'.$this->shipping_status[$val['shipping_status']].'</td>';
     		$orderGoods = D('order_goods')->where('order_id='.$val['order_id'])->select();
+
     		$strGoods="";
     		foreach($orderGoods as $goods){
+                }
     			$strGoods .= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name']." 数量:".$goods['goods_num'];
+                !empty($goods['user_message']) ? $strGoods .= " 用户留言：".$goods['user_message'] : '';
     			if ($goods['spec_key_name'] != '') $strGoods .= " 规格：".$goods['spec_key_name'];
     			$strGoods .= "<br />";
-    		}
+
     		unset($orderGoods);
     		$strTable .= '<td style="text-align:left;font-size:12px;">'.$strGoods.' </td>';
     		$strTable .= '</tr>';
