@@ -367,7 +367,7 @@ Load—more a{
 	height: auto;
 }
 .site_txtS a {
-	background-image: url(__STATUS__/SVG/move.svg);
+	background-image: url(../SVG/move.svg);
 	background-repeat: no-repeat;
 	background-position: right center;
 	display: block;
