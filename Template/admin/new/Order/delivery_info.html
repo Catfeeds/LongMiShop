@@ -80,7 +80,7 @@
                     <thead>
                     <tr>
                         <td class="text-left">商品</td>
-                        <td class="text-left">属性</td>
+                        <td class="text-left">规格</td>
                         <td class="text-left">购买数量</td>
                         <td class="text-left">商品单价</td>
 						<td class="text-left">选择发货</td>
@@ -89,7 +89,8 @@
                     <tbody>
                     <volist name="orderGoods" id="good">
                         <tr>
-                            <td class="text-left"><a href="good.php">{$good.goods_name}</a>
+                            <td class="text-left">
+                                <a href="{:U('/Admin/Goods/addEditGoods',array('id'=>$good['goods_id']))}">{$good.goods_name}</a>
                             </td>
                             <td class="text-left">{$good.spec_key_name}</td>
                             <td class="text-left">{$good.goods_num}</td>
