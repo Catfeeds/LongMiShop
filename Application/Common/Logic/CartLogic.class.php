@@ -153,7 +153,7 @@ class CartLogic extends BaseLogic
             $user['user_id'] = 0;
         }
 
-        $cartData = M('Cart')->where($where)->select();  // 获取购物车商品
+        $cartData = M('Cart')->where($where)->order(' goods_id asc')->select();  // 获取购物车商品
         $num = $total_price =  $cut_fee = 0;
         $cartList = array();
         if(!empty($cartData)){

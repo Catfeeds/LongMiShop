@@ -500,6 +500,8 @@ class BuyLogic extends BaseLogic
             $data2['give_integral']      = $goods['give_integral']; // 购买商品赠送积分
             $data2['prom_type']          = $val['prom_type']; // 0 普通订单,1 限时抢购, 2 团购 , 3 促销优惠
             $data2['prom_id']            = $val['prom_id']; // 活动id
+            $data2['user_message']       = $this -> _post_data['message_'.$val['id']];; // 备注信息
+
             if( !isSuccessToAddData("order_goods" , $data2) ){
                 throw new \Exception('添加商品失败！');
             }
