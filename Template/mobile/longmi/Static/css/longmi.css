@@ -359,3 +359,17 @@ Load—more a{
 	list-style-type: disc;
 	margin-left: 20px;
 }
+.site_txtS {
+	background-color: #FFF;
+	margin-bottom: 1px;
+	padding-right: 10px;
+	padding-left: 10px;
+	height: auto;
+}
+.site_txtS a {
+	background-image: url(__STATUS__/SVG/move.svg);
+	background-repeat: no-repeat;
+	background-position: right center;
+	display: block;
+	line-height: 45px;
+}

@@ -68,7 +68,6 @@ class CartController extends MobileBaseController {
         $where = " session_id = '$unique_id' "; // 默认按照 $unique_id 查询
         $user_id && $where = " user_id = ".$user_id; // 如果这个用户已经等了则按照用户id查询
         $cartList = M('Cart')->where($where)->getField("id,goods_num,selected");
-
         if($cart_form_data)
         {
             // 修改购物车数量 和勾选状态
@@ -85,6 +84,14 @@ class CartController extends MobileBaseController {
 
         $result = $this->cartLogic->cartList($this->user, $unique_id,0);
         exit(json_encode($result));
+    }
+
+    public function FetchRepeatMemberInArray($array) {
+        // 获取去掉重复数据的数组
+        $unique_arr = array_unique ( $array );
+        // 获取重复数据的数组
+        $repeat_arr = array_diff_assoc ( $array, $unique_arr );
+        return $repeat_arr;
     }
 
     /**
@@ -107,6 +114,24 @@ class CartController extends MobileBaseController {
 
         $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1); // 获取购物车商品
         $cartList = $result['cartList'];
+
+
+        foreach($cartList as $key=>$val){
+            $jian = '';
+            foreach($cartList as $k=>$v){
+                if($key != $k){
+                    if($val['goods_id'] == $v['goods_id']){
+                        $jian = $k;
+                    }
+                }
+            }
+            if($jian && $jian > $key){
+                $cartList[$jian]['mes'] = 1;
+            }else{
+                $cartList[$key]['mes'] = 1;
+            }
+        }
+
         $totalPrice = $result['total_price'];
         //计算邮费
         foreach($result['cartList'] as $key => $item){
