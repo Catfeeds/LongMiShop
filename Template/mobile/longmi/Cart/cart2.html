@@ -32,25 +32,23 @@
         <if condition = "$v['selected'] == 1" >
             <div class="cp6">
                 <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}"></a></div>
-                <div class="cp1_l"><img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
+                <div class="cp1_l">
+                    <img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92">
+                </div>
                 <div class="cp1_r">
                     <p>{$v.goods_name}{: $v['spec_key_name'] ? "[".$v['spec_key_name']."]" : ""}</p>
                     <span>￥{$v.member_goods_price}</span><span style="float:right; color:#666">X{$v.goods_num}</span>
-
                 </div>
 
             </div>
-            <if condition="$v['mes'] == 1">
-                <div class="site_txtS" data->
-                    <a href="javascript:void(0);" onclick="">给商家留言 <span  class="coupon_span">点击填写</span></a>
+            <if condition="$v['mes'] == 1 and 1==2">
+                <div class="site_txtS">
+                    <a href="javascript:void(0);">给商家留言 <span  class="coupon_span">点击填写</span></a>
                     <div class="site_txt" style="height:150px;  display: none;">
                         <textarea class="c1" name="message_{$v.id}" cols="" rows="" placeholder="点击给店家留言"></textarea>
                     </div>
                 </div>
             </if>
-
-
-
         </if>
     </foreach>
     <div class="site_txt" style="height:150px;  display: none;">

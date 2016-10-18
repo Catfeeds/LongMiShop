@@ -30,33 +30,27 @@
 			<p>{$good.goods_name}{$good.spec_key_name}</p>
 			<span>￥{$good['member_goods_price']}</span><span style="float:right; color:#666">X{$good['goods_num']}</span>
 		</div>
-		<if condition="!empty($good['user_message'])">
-			<div class="site_txt" style="word-break:break-all;overflow-y:visible;line-height: 22px;" >
-				<p></p>
-				<p>留言：{$good['user_message']}</p>
-			</div>
-		</if>
+
 	</div>
+	<if condition="!empty($good['user_message'])">
+		<div class="site_txt">留言：{$good['user_message']}</div>
+	</if>
 </volist>
 <div class="site_txt">运费<span>￥{$order_info.shipping_price}</span></div>
-<!--<div class="site_txt">留言：请发顺丰</div>-->
-<if condition="$order_info['coupon_price'] neq null">
+<if condition="$order_info['coupon_price'] neq null and $order_info['coupon_price'] neq 0">
 	<div class="site_txt">优惠金额<span>￥{$order_info['coupon_price']}</span></div>
 </if>
 <div class="site_txt">合计<span>￥{$order_info['order_amount']}</span></div>
-<div class="l">
-	<div class="l_r">
+<!--<div class="l">-->
+	<!--<div class="l_r">-->
 		<!--<div class="l_btn1"><a href="tel:4000787725" style="width:120px">拨打客服电话</a></div>-->
 		<!--<div class="l_btn1"><a href="#" style="width:120px">留言给客服</a></div>-->
 
-	</div>
-</div>
+	<!--</div>-->
+<!--</div>-->
 <div style="height:60px"></div>
 <div class="com_d" >
-	<div class="com_d_l">
-        <!--<div class="collect {: $collectRes == 1 ? 'collect_click' : ''}"  onclick="collects_goods({$goods.goods_id})" id="favorite_add"></div>-->
-    </div>
-	<div class="com_d_r ">
+	<div class="com_d_r " >
 		<if condition="$order_info.cancel_btn eq 1">
 			<div class="l_btn1">
 				<a href="#" onClick="cancel_order({$order_info.order_id})">取消订单</a>
