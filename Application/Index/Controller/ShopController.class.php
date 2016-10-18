@@ -90,7 +90,24 @@ class ShopController extends IndexBaseController {
         foreach($result['cartList'] as $item){ //计算总额
             $sum += $item['goods_price'] * $item['goods_num'];
         }
-        $this->assign('cartList', $result['cartList']); // 购物车的商品
+        $cartList = $result['cartList'];
+        foreach($cartList as $key=>$val){
+            $jian = '';
+            foreach($cartList as $k=>$v){
+                if($key != $k){
+                    if($val['goods_id'] == $v['goods_id']){
+                        $jian = $k;
+                    }
+                }
+            }
+            if($jian && $jian > $key){
+                $cartList[$jian]['mes'] = 1;
+            }else{
+                $cartList[$key]['mes'] = 1;
+            }
+        }
+//        dd($cartList);
+        $this->assign('cartList', $cartList); // 购物车的商品
         $usersLogic = new \Common\Logic\UsersLogic();
         $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum);
         $this->assign('couponList',$result['data']['result']);

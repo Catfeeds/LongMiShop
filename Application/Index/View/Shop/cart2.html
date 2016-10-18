@@ -63,6 +63,25 @@
                   <td align="center">{: $item['goods_num']}</td>
                   <td align="center">￥{: $item['goods_price'] * $item['goods_num']}</td>
                 </tr>
+                <if condition="$item['mes'] == 1">
+
+                    <tr >
+                      <td colspan="6">
+                        <div class="site_txt" style="width:100%;"  >
+                          <textarea class="c1" name="message_{$item.id}" style="width:100%;height:auto;" cols="" rows="" placeholder="点击给店家留言"></textarea>
+                        </div>
+                      </td>
+                    </tr>
+
+                </if>
+                <!--<if condition="$item['mes'] == 1">-->
+                  <!--<div class="site_txtS" >-->
+
+                    <!--<div class="site_txt" style="height:150px;  >-->
+                      <!--<textarea class="c1" name="message_{$item.id}" cols="" rows="" placeholder="点击给店家留言"></textarea>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</if>-->
               </if>
             </volist>
 
