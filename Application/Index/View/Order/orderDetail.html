@@ -88,8 +88,8 @@
                             <div class="gray-sub-title cart-title"> <span class="name">商品名称</span> <span class="subtotal">小计</span> <span class="num">数量</span> <span class="price">单价</span> </div>
                             <div class="cart">
                                 <volist name="order_info.goods_list" id="good">
-                                    <div class="cart-items fn-clear" data-id="{$good.goods_id}">
-                                        <div class="prod-info">
+                                    <div class="cart-items fn-clear" data-id="{$good.goods_id}"  style="border-bottom: 0px;">
+                                        <div class="prod-info" >
                                             <div class="items-thumb">
                                                 <a href="#" target="_blank" title="{$good.goods_name}">
                                                     <img src="{$good.goods_id|goods_thum_images=80,80}">
@@ -107,7 +107,17 @@
                                             <div class="num">{$good.goods_num}</div>
                                             <div class="price">¥ {$good.goods_price}</div>
                                         </div>
+
                                     </div>
+                                    <if condition="!empty($good['user_message'])">
+                                        <div class="site_txt"    style="border-bottom: 1px solid #b2b2b2;width:100%;word-wrap:break-word;word-break:break-all;  ">
+
+                                            留言：{$good['user_message']}
+                                        </div>
+                                        <else/>
+                                        <div  style="border-bottom: 1px solid #b2b2b2;">
+                                        </div>
+                                    </if>
                                 </volist>
                             </div>
                             <div class="order-discount-line">
