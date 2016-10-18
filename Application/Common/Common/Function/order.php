@@ -151,7 +151,7 @@ function setBtnOrderStatus($order,$engName = null)
     }else{
         $order_status_arr = C('ORDER_STATUS_DESC_'.$engName);
     }
-    $order['order_status_code'] = $order_status_code = orderStatusDesc(0, $order); // 订单状态显示给用户看的
+    $order['order_status_code'] = $order_status_code = orderStatusDesc(0, $order , $engName); // 订单状态显示给用户看的
     $order['order_status_desc'] = $order_status_arr[$order_status_code];
     $orderBtnArr = orderBtn(0, $order);
     return array_merge($order,$orderBtnArr); // 订单该显示的按钮
@@ -175,9 +175,10 @@ function set_btn_order_status($order)
  * 获取订单状态的 中文描述名称
  * @param int $order_id
  * @param array $order 订单数组
+ * @param null $engName
  * @return string
  */
-function orderStatusDesc($order_id = 0, $order = array())
+function orderStatusDesc($order_id = 0, $order = array() ,$engName = null)
 {
     if(empty($order)){
         $order = M('Order')->where("order_id = '$order_id'")->find();
@@ -192,8 +193,12 @@ function orderStatusDesc($order_id = 0, $order = array())
     {
         if($order['pay_status'] == 0 && $order['order_status'] == 0)
             return 'WAITPAY'; //'待支付',
-        if($order['pay_status'] == 1 &&  in_array($order['order_status'],array(0,1)) && $order['shipping_status'] != 1)
-            return 'WAITSEND'; //'待发货',
+        if($order['pay_status'] == 1 &&  in_array($order['order_status'],array(0,1)) ){
+            if( $order['shipping_status'] == 0 )
+                return 'WAITSEND'; //'待发货',
+            if(($order['shipping_status'] == 2) && ($engName == "MOBILE"))
+                return 'PARTIALSEND'; //'部分发货',
+        }
     }
     if(($order['shipping_status'] == 1) && ($order['order_status'] == 1))
         return 'WAITRECEIVE'; //'待收货',
