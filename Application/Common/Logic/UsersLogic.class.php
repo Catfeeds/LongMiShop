@@ -240,7 +240,7 @@ class UsersLogic extends BaseLogic
      * 获取订单商品
      */
     public function getOrderGoods($order_id){
-        $sql = "SELECT og.*,g.original_img FROM __PREFIX__order_goods og LEFT JOIN __PREFIX__goods g ON g.goods_id = og.goods_id WHERE order_id = ".$order_id;
+        $sql = "SELECT og.*,g.original_img FROM __PREFIX__order_goods og LEFT JOIN __PREFIX__goods g ON g.goods_id = og.goods_id WHERE order_id =  ".$order_id." ORDER BY og.goods_id ASC";
         $goodsList = $this->query($sql);
         return callback(true,"",$goodsList);
     }

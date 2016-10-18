@@ -129,6 +129,16 @@
                             <td class="text-right">{$good.member_goods_price}</td>
                             <td class="text-right">{$good.goods_total}</td>
                         </tr>
+                        <if condition="!empty($good['user_message'])">
+                            <tr>
+                                <td colspan="6">
+                                    <div style="word-break:break-all;overflow-y:visible;line-height: 22px;" >
+                                        用户留言:{$good['user_message']}
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </if>
                     </volist>
 
                     <tr>
