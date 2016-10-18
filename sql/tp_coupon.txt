@@ -283,4 +283,4 @@ CREATE TABLE `lm_merchant_conf` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 //增加字段
-ALTER TABLE  `lm_order_goods` ADD  `user_message` VARCHAR( 255 ) NOT NULL COMMENT  '留言备注' AFTER  `sku`
+ALTER TABLE  `lm_order_goods` ADD  `user_message` VARCHAR( 255 )  NULL COMMENT  '留言备注' AFTER  `sku`
