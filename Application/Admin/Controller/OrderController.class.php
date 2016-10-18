@@ -27,7 +27,9 @@ class OrderController extends BaseController {
      */
     public function index(){
     	$begin = date('Y/m/d',(time()-30*60*60*24));//30天前
-    	$end = date('Y/m/d',strtotime('+1 days')); 	
+    	$end = date('Y/m/d',strtotime('+1 days'));
+        $expressList = include_once 'Application/Common/Conf/express.php'; //快递名称
+        $this->assign('expressList',$expressList);
     	$this->assign('timegap',$begin.'-'.$end);
         $this->display();
     }
