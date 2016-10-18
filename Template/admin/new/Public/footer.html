@@ -3,12 +3,17 @@
 <script src="__STATIC__/js/function.js"></script>
 <script>
     $(function(){
-        var windowWeight = $(window).width();
-        console.log(windowWeight);
-        var mainWeight = windowWeight - 190;
-        console.log(mainWeight);
-        $("#RightMain").attr("width",mainWeight+"px");
+        function myResize(){
+            var windowWeight = $(window).width();
+            var mainWeight = windowWeight - 190;
+            $("#RightMain").attr("width",mainWeight+"px");
+        }
+        $(window).resize(function () {
+            myResize();
+        });
+        myResize();
     });
+
 </script>
 </body>
 </html>

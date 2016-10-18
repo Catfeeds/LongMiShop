@@ -143,6 +143,7 @@ a:hover {
 .slideTxtBox .hd a {
 	color: #b7b7b7;
 	text-decoration: none;
+	display: block;
 }
 .slideTxtBox .hd ul li {
 	cursor: pointer;
@@ -151,13 +152,14 @@ a:hover {
 	font-size: 14px;
 	text-align: center;
 	line-height: 45px;
-	background-size: 20px 20px;
+	background-size: 18px 18px;
 	background-repeat: no-repeat;
 	background-position: 8px center;
 	padding-left: 15px;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
 	border-bottom-color: #373a47;
+	width: 85px;
 }
 .slideTxtBox .hd ul li.on {
 	background-color: #373a47;
@@ -183,6 +185,7 @@ a:hover {
 }
 .slideTxtBox .bd a {
 	color: #FFF;
+	display: block;
 }
 .titel {
 	line-height: 18px;
@@ -440,7 +443,6 @@ a:hover {
 	border-width: 1px;
 	border-color: rgb( 228, 228, 228 );
 	border-radius: 4px;
-	background-image: -moz-linear-gradient( 90deg, rgb(234,234,234) 0%, rgb(251,251,251) 100%);
 	height: 60px;
 	display: block;
 	font-size: 14px;
@@ -464,7 +466,6 @@ a:hover {
 	border-width: 1px;
 	border-color: rgb( 228, 228, 228 );
 	border-radius: 4px;
-	background-image: -moz-linear-gradient( 90deg, rgb(234,234,234) 0%, rgb(251,251,251) 100%);
 	font-size: 14px;
 	background-repeat: no-repeat;
 	background-position: center 20px;
@@ -491,7 +492,9 @@ a:hover {
 	background-image: url(../SVG/move1.svg);
 	background-repeat: no-repeat;
 	background-position: 96% center;
+	appearance:none;
 	-webkit-appearance: none;
+	-moz-appearance:none;
 	background-image: url(../SVG/below.svg);
 	padding-right: 30px;
 	text-align: center;
@@ -531,9 +534,9 @@ a:hover {
 	background-image: -webkit-linear-gradient( 90deg, rgb(1,106,194) 0%, rgb(0,119,221) 100%);
 	background-image: -ms-linear-gradient( 90deg, rgb(1,106,194) 0%, rgb(0,119,221) 100%);
 	color: #FFF;
-	padding-top: 2px;
+	padding-top: 4px;
 	padding-right: 10px;
-	padding-bottom: 2px;
+	padding-bottom: 4px;
 	padding-left: 10px;
 	line-height: 30px;
 	transition: all .3s ease-out;
@@ -569,9 +572,9 @@ a:hover {
 	background-image: -webkit-linear-gradient( 90deg, rgb(248,248,248) 0%, rgb(253,253,253) 100%);
 	background-image: -ms-linear-gradient( 90deg, rgb(248,248,248) 0%, rgb(253,253,253) 100%);
 	color: #000;
-	padding-top: 2px;
+	padding-top: 4px;
 	padding-right: 10px;
-	padding-bottom: 2px;
+	padding-bottom: 4px;
 	padding-left: 10px;
 	line-height: 30px;
 }
@@ -677,11 +680,26 @@ a:hover {
 .tip li {
 	list-style-type: disc;
 }
-.w{
+.w {
 	margin-left: 10px;
 }
-.hi{
-	overflow-y: scroll;
-	overflow-x: hidden;
-	width: 120px;
+#roll {
+	overflow: hidden;
+	width: 100px;
+}
+.zUIpanelScrollBox, .zUIpanelScrollBar {
+	width: 5px;
+	top: 4px;
+	right: 0px;
+	border-radius: 5px;
+}
+.zUIpanelScrollBox {
+	background: #293038;
+	filter: alpha(opacity=10);
+	
+}
+.zUIpanelScrollBar {
+	background: #7f7f7f;
+	opacity: 1;
+	filter: alpha(opacity=80);
 }

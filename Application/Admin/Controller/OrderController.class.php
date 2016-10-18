@@ -690,9 +690,18 @@ class OrderController extends BaseController {
 		if($order_sn){
 			$where .= " AND order_sn = '$order_sn' ";
 		}
-		if(I('order_status')){
-			$where .= " AND order_status = ".I('order_status');
-		}
+        if(I('pay_status')!=""){
+            $where .= " AND pay_status = ".I('pay_status');
+        }
+        if(I('order_status')!=""){
+            $where .= " AND order_status = ".I('order_status');
+        }
+        if(I('shipping_status')!=""){
+            $where .= " AND shipping_status = ".I('shipping_status');
+        }
+        if(I('pay_code')!=""){
+            $where .= " AND pay_code = ".I('pay_code');
+        }
 		
 		$timegap = I('timegap');
 		if($timegap){

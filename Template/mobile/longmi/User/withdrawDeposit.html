@@ -4,11 +4,15 @@
 <form class="mui-input-group" style=" margin-top:10px" method="post" id="myForm">
     <div class="mui-input-row">
         <label style="padding-left:5px; width: 30%;">金额（元）</label>
-        <input style=" width: 70%;" type="text" id="text"  name="money" onKeyUp="clearNoNum(this)" placeholder="可提现{$user['user_money']}元">
+        <input style=" width: 70%;" type="text" id="text"  name="money" onKeyUp="clearNoNum(this)" placeholder="余额{$user['user_money']}元">
     </div>
 </form>
 <div class="feedback_box">
-    <input id="login_btn_on" class="login_btn_on" name="" value="确认提现" type="button" disabled>
+    <if condition = "$shopConfig['basic_withdraw_storage'] elt  $user['user_money'] ">
+        <input id="login_btn_on" class="login_btn_on" name="" value="确认提现" type="button" disabled>
+        <else/>
+        <input  class="login_btn_on" name="" value="不满足提现门槛" type="button" disabled>
+    </if>
 </div>
 <div class="tip_b">
     <ul>
@@ -55,7 +59,7 @@
                     <notempty name = "shopConfig.basic_withdraw_storage">
                         money < {$shopConfig.basic_withdraw_storage} ||
                     </notempty>
-                    ( money <= 1 || money > {$user.user_money} )
+                    ( money < 1 || money > {$user.user_money} )
             ){
                 alert("提现金额有误");
                 return;
