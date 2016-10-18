@@ -60,9 +60,15 @@
                                             	<!--<a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-default disabled" data-original-title="查看"><i class="fa fa-send-o"></i></a>-->
                                             <!--</if>-->
                                             <if condition="$list['is_create_code'] eq 0">
-                                            <a href="javascript:void(0)" class="btn btn-info"  title="生成兑换码"  data-url="{:U('Admin/GiftCoupon/convert',array('id'=>$list[id]))}" onclick="converts(this)"><i class="fa fa-send-o"></i></a>
+                                                <a href="javascript:void(0)" class="btn btn-info"  title="生成兑换码"  data-url="{:U('Admin/GiftCoupon/convert',array('id'=>$list[id]))}" onclick="converts(this)">系统生成兑换码</a>
+                                                <a href="javascript:void(0)" class="btn btn-info"  title="生成兑换码"   onclick="create()">导入excel表格</a>
                                             </if>
-                                            <a href="{:U('Admin/GiftCoupon/coupon_list',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
+                                            <form id="myuploads" action="{:U('Admin/GiftCoupon/excelCreate')}" method="post" enctype="multipart/form-data" style="display: none">
+                                                <input type="file" name="create" style="display:none" class="fileCreate" >
+                                                <input type="text" name="id" value="{$list[id]}">
+                                            </form>
+
+                                            <!--<a href="{:U('Admin/GiftCoupon/coupon_list',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>-->
                                             <a href="{:U('Admin/GiftCoupon/coupon_info',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
                                            <!--  <a data-url="{:U('Admin/GiftCoupon/del_coupon',array('id'=>$list['id']))}" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a> -->
                                            </td>
@@ -83,6 +89,7 @@
     </section>
     <!-- /.content -->
 </div>
+<script type="text/javascript" src="__PUBLIC__/index/js/jquery-form.js"></script>
 <script>
 $('.send_user').click(function(){
     var url = $(this).attr('data-url');
@@ -131,6 +138,37 @@ function converts(obj){
   }
   return false;
 }
+
+function create(){
+    $('.fileCreate').trigger('click');
+};
+
+$('.fileCreate').change(function(){
+
+
+    var val = $(this).val();
+    console.log(val.length);
+    if(val.length == 0){
+        alert('请上传execl文件');
+        return false;
+    }
+
+    $("#myuploads").ajaxSubmit({
+        dataType:  'json',
+        success: function(res) {
+            window.location.href = window.location.href;
+            alert(res['msg']);
+
+
+        },
+        error:function(res){
+            alert(res['msg']);
+        }
+
+    });
+});
+
+
 </script>
 </body>
 </html>
