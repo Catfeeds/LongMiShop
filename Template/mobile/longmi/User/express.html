@@ -15,7 +15,14 @@
 	<div class="express_box">
 		<div class="express_txt" >
 			<div class="now1">
-				<p style="margin-top:20px;">该包裹请登陆安能官网查询进度，<a href="http://www.ane66.com/">http://www.ane66.com/</a>，快递单号：{$invoice_no}</p>
+				<if condition="$notFind eq true">
+					<p style="margin-top:20px;">未能查询到 {$shipping_name} 的包裹消息，快递单号：{$invoice_no}</p>
+				<else/>
+					<p style="margin-top:20px;">该包裹请登陆{$shipping_name}官网查询进度，<a href="http://www.ane66.com/" target="_blank">http://www.ane66.com/</a>，快递单号：{$invoice_no}</p>
+				</if>
+
+
+
 			</div>
 		</div>
 	</div>
