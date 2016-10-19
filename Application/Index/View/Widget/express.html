@@ -1,4 +1,19 @@
-<if condition="$expressData['status'] eq 200">
+<if condition = "$isNoFindApi eq true">
+
+    
+        <div class="express_txt" >
+            <div class="now1">
+                <if condition="$notFind eq true">
+                    <p style="margin-top:20px;">未能查询到 {$shipping_name} 的包裹消息，快递单号：{$invoice_no}</p>
+                    <else/>
+                    <p style="margin-top:20px;">该包裹请登陆{$shipping_name}官网查询进度，<a href="http://www.ane66.com/" target="_blank">http://www.ane66.com/</a>，快递单号：{$invoice_no}</p>
+                </if>
+
+            </div>
+        </div>
+
+<else/>
+    <if condition="$expressData['status'] eq 200">
     <div class="express_txt">
         <p>
             <span>快递编号：</span>{: $odd_numbers}
@@ -22,10 +37,12 @@
         </div>
     </div>
 
-<else />
-    <div class="course_box">
-        <div class="now1">
-            <p>{$expressMessage}</p>
+    <else />
+        <div class="course_box">
+            <div class="now1">
+                <p>{$expressMessage}</p>
+            </div>
         </div>
-    </div>
+    </if>
+
 </if>
