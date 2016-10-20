@@ -47,10 +47,14 @@ class OrderController extends BaseController {
         }
         // 搜索条件
         $condition = array();
-        if(is_supplier()){
-            $condition['admin_id'] = session('admin_id');
-        }
         I('consignee') ? $condition['consignee'] = trim(I('consignee')) : false;
+        if($begin && $end){
+            $condition['add_time'] = array('between',"$begin,$end");
+//            if(is_supplier()){
+//                $condition['begin'] =  $begin;
+//                $condition['end'] =  $end;
+//            }
+        }
         I('order_sn') ? $condition['order_sn'] = trim(I('order_sn')) : false;
         I('order_status') != '' ? $condition['order_status'] = I('order_status') : false;
         I('pay_status') != '' ? $condition['pay_status'] = I('pay_status') : false;
@@ -58,12 +62,25 @@ class OrderController extends BaseController {
         I('shipping_status') != '' ? $condition['shipping_status'] = I('shipping_status') : false;
         I('user_id') ? $condition['user_id'] = trim(I('user_id')) : false;
         $sort_order = I('order_by','DESC').' '.I('sort');
+        if(is_supplier()){
+            $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('order_id') -> select();
+            $temp_string = "";
+            if(!empty($id_lists)){
+                foreach ($id_lists as $id_list){
+                    $temp_string .= $id_list['order_id'].",";
+                }
+            }
+            $temp_string .= "0";
+            $condition['order_id'] = array('in',$temp_string);
+        }
+
         $count = M('order')->where($condition)->count();
         $Page  = new AjaxPage($count,20);
         //  搜索条件下 分页赋值
         foreach($condition as $key=>$val) {
             $Page->parameter[$key]   =  urlencode($val);
         }
+//        DD($condition['add_time'] );
         $show = $Page->show();
         //获取订单列表
         $orderList = $orderLogic->getOrderList($condition,$sort_order,$Page->firstRow,$Page->listRows);
@@ -527,10 +544,22 @@ class OrderController extends BaseController {
 
         
         $where = " 1 = 1 ";
+        if(is_supplier()){
+            $id_lists = M('goods')->where(array('admin_id' => session('admin_id'))) -> field('goods_id') -> select();
+            $temp_string = "";
+            if(!empty($id_lists)){
+                foreach ($id_lists as $id_list){
+                    $temp_string .= $id_list['goods_id'].",";
+                }
+            }
+            $temp_string .= "0";
+            $where .= " AND goods_id in (".$temp_string.")";
+        }
 
         $order_sn && $where.= " and order_sn like '%$order_sn%' ";
         empty($order_sn) && $where.= " and status = '$status' ";
         $count = M('return_goods')->where($where)->count();
+//        dd($count);
         $Page  = new AjaxPage($count,13);
         $show = $Page->show();
         $list = M('return_goods')->where($where)->order("$order_by $sort_order")->limit("{$Page->firstRow},{$Page->listRows}")->select();
