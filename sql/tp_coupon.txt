@@ -284,3 +284,10 @@ CREATE TABLE `lm_merchant_conf` (
 
 //增加字段
 ALTER TABLE  `lm_order_goods` ADD  `user_message` VARCHAR( 255 )  NULL COMMENT  '留言备注' AFTER  `sku`
+
+
+ALTER TABLE `lm_spec`
+ADD COLUMN `goods_id`  int(11) NOT NULL DEFAULT 0 COMMENT '商品id' AFTER `search_index`;
+ALTER TABLE `lm_spec_goods_price`
+ADD COLUMN `weight`  int(11) NULL DEFAULT 0 COMMENT '重量' AFTER `price`;
+
