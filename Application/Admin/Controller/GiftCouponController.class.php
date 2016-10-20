@@ -172,6 +172,7 @@ class GiftCouponController extends BaseController {
             M('coupon_code')->add($data);
         }
         M('gift_coupon')->save(array('id'=>$data['gift_coupon_id'],'is_create_code'=>1));
+        delFile('./Public/upload/execl');
         exit(json_encode(callback(true,'兑换码生成成功')));
 
     }
