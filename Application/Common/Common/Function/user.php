@@ -430,7 +430,7 @@ function createWithdrawDepositApply( $money , $userInfo )
             (!empty($shopConfig['basic_withdraw_storage']) && $money < $shopConfig['basic_withdraw_storage']) ||
             ($money <= 1 || $money > $userInfo['user_money'])
         ) {
-            throw new \Exception('提现金额有误！');
+            throw new \Exception('最小数额为100元');
         }
 
         $applyData = array(
