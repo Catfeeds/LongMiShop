@@ -531,7 +531,7 @@ class OrderController extends BaseController {
         $count = M('return_goods')->where($where)->count();
         $Page  = new AjaxPage($count,13);
         $show = $Page->show();
-        $list = M('return_goods')->where($where)->order("$order_by $sort_order")->limit("{$Page->firstRow},{$Page->listRows}")->select();        
+        $list = M('return_goods')->where($where)->order("$order_by $sort_order")->limit("{$Page->firstRow},{$Page->listRows}")->select();
         $goods_id_arr = get_arr_column($list, 'goods_id');
         if(!empty($goods_id_arr))
             $goods_list = M('goods')->where("goods_id in (".implode(',', $goods_id_arr).")")->getField('goods_id,goods_name');
