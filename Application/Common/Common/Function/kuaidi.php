@@ -172,6 +172,8 @@ function kuaidi($invoice_no, $shipping_name) {
             break;
         case '增益速递':$logi_type = 'zengyisudi';
             break;
+        case '百世快递':$logi_type = 'huitongkuaidi';
+            break;
     }
     if(empty($logi_type)){
         return false;
