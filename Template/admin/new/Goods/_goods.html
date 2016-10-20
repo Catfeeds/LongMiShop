@@ -98,7 +98,7 @@
 <!--                        <li><a href="#tab_goods_desc" data-toggle="tab">描述信息</a></li>-->
                         <li><a href="#tab_goods_images" data-toggle="tab">商品相册</a></li>
                         <li><a href="#tab_goods_spec" data-toggle="tab">商品规格</a></li>                        
-                        <li><a href="#tab_goods_attr" data-toggle="tab">商品属性</a></li>
+                        <!--<li><a href="#tab_goods_attr" data-toggle="tab">商品属性</a></li>-->
                         <li><a href="#tab_goods_parameter" data-toggle="tab">规格参数</a></li>
                     </ul>
                     <!--表单数据-->
@@ -395,40 +395,40 @@
    
                         <!-- 商品规格-->
                         <div class="tab-pane" id="tab_goods_spec">
-                            <table class="table table-bordered" id="goods_spec_table">                                
-                                <tr>
-                                    <td>商品类型:</td>
-                                    <td>                                        
-                                      <select name="spec_type" id="spec_type" class="form-control" style="width:250px;">
-                                        <option value="0">选择商品类型</option>
-                                        <foreach name="goodsType" item="vo" key="k" >
-                                            <option value="{$vo.id}"<if condition="$goodsInfo[spec_type] eq $vo[id]"> selected="selected" </if> >{$vo.name}</option>
-                                        </foreach>                                        
-                                      </select>
-                                    </td>
-                                </tr>     
-                                                           
-                            </table>
+                            <!--<table class="table table-bordered" id="goods_spec_table">-->
+                                <!--<tr>-->
+                                    <!--<td>商品类型:</td>-->
+                                    <!--<td>-->
+                                      <!--<select name="spec_type" id="spec_type" class="form-control" style="width:250px;">-->
+                                        <!--<option value="0">选择商品类型</option>-->
+                                        <!--<foreach name="goodsType" item="vo" key="k" >-->
+                                            <!--<option value="{$vo.id}"<if condition="$goodsInfo[spec_type] eq $vo[id]"> selected="selected" </if> >{$vo.name}</option>-->
+                                        <!--</foreach>-->
+                                      <!--</select>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+
+                            <!--</table>-->
                             <div id="ajax_spec_data"><!-- ajax 返回规格--></div>
                         </div>
                         <!-- 商品规格-->
 
                         <!-- 商品属性-->
-                        <div class="tab-pane" id="tab_goods_attr">
-                            <table class="table table-bordered" id="goods_attr_table">                                
-                                <tr>
-                                    <td>商品属性:</td>
-                                    <td>                                        
-                                      <select name="goods_type" id="goods_type" class="form-control" style="width:250px;">
-                                        <option value="0">选择商品属性</option>
-                                        <foreach name="goodsType" item="vo" key="k" >
-                                            <option value="{$vo.id}"<if condition="$goodsInfo[goods_type] eq $vo[id]"> selected="selected" </if> >{$vo.name}</option>
-                                        </foreach>                                        
-                                      </select>
-                                    </td>
-                                </tr>                                
-                            </table>
-                        </div>
+                        <!--<div class="tab-pane" id="tab_goods_attr">-->
+                            <!--<table class="table table-bordered" id="goods_attr_table">                                -->
+                                <!--<tr>-->
+                                    <!--<td>商品属性:</td>-->
+                                    <!--<td>                                        -->
+                                      <!--<select name="goods_type" id="goods_type" class="form-control" style="width:250px;">-->
+                                        <!--<option value="0">选择商品属性</option>-->
+                                        <!--<foreach name="goodsType" item="vo" key="k" >-->
+                                            <!--<option value="{$vo.id}"<if condition="$goodsInfo[goods_type] eq $vo[id]"> selected="selected" </if> >{$vo.name}</option>-->
+                                        <!--</foreach>                                        -->
+                                      <!--</select>-->
+                                    <!--</td>-->
+                                <!--</tr>                                -->
+                            <!--</table>-->
+                        <!--</div>-->
                         <!-- 商品属性-->
 
                         <!-- 规格参数-->
@@ -479,7 +479,7 @@
                     <div class="pull-right">
                         <!--<input type="button"  value="trrtt" onclick="test222()">-->
                         <input type="hidden" name="goods_id" value="{$goodsInfo.goods_id}">
-                        <button class="btn btn-primary" onclick="ajax_submit_form('addEditGoodsForm','{:U('Goods/addEditGoods?is_ajax=1')}');" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
+                        <button class="btn btn-primary" onclick="ajaxSubmitForm();" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
                     </div>
 			    </form><!--表单数据-->
                 </div>
@@ -488,6 +488,32 @@
     </section>
 </div>
 <script>
+
+
+    function ajaxSubmitForm(){
+        if( $("input.spec_title").val() == ""){
+            alert("规格名不能为空！");
+            return;
+        }
+        if( $("input.spec_item_title").val() == ""){
+            alert("规格项名不能为空！");
+            return;
+        }
+        if( $("input.option_store_count").val() == ""){
+            alert("库存不能为空！");
+            return;
+        }
+        if( $("input.option_price").val() == ""){
+            alert("价格不能为空！");
+            return;
+        }
+        if( $("input.option_weight").val() == ""){
+            alert("重量不能为空！");
+            return;
+        }
+        ajax_submit_form('addEditGoodsForm',"{:U('Goods/addEditGoods?is_ajax=1')}");
+    }
+
     /*
      * 以下是图片上传方法
      */
@@ -504,7 +530,7 @@
         for (i=0;i<paths.length ;i++ )
         {                    
             $(".goods_xc:eq(0)").before(last_div);	// 插入一个 新图片
-                $(".goods_xc:eq(0)").find('a:eq(0)').attr('href',paths[i]).attr('onclick','').attr('target', "_blank");// 修改他的链接地址
+            $(".goods_xc:eq(0)").find('a:eq(0)').attr('href',paths[i]).attr('onclick','').attr('target', "_blank");// 修改他的链接地址
             $(".goods_xc:eq(0)").find('img').attr('src',paths[i]);// 修改他的图片路径
             $(".goods_xc:eq(0)").find('input:last').show();
             $(".goods_xc:eq(0)").find('a:eq(1)').attr('onclick',"ClearPicArr2(this,'"+paths[i]+"')").text('删除');
@@ -530,63 +556,41 @@
  
 
 
-/** 以下 商品属性相关 js*/
-$(document).ready(function(){
-	
-    // 商品类型切换时 ajax 调用  返回不同的属性输入框
-    $("#goods_type").change(function(){        
-        var goods_id = $("input[name='goods_id']").val();
-        var type_id = $(this).val();
-            $.ajax({
-                    type:'GET',
-                    data:{goods_id:goods_id,type_id:type_id}, 
-                    url:"/index.php/admin/Goods/ajaxGetAttrInput",
-                    success:function(data){                            
-                            $("#goods_attr_table tr:gt(0)").remove()
-                            $("#goods_attr_table").append(data);
-                    }        
-            });			                
-    });
-	// 触发商品类型
-	$("#goods_type").trigger('change');
-});
- 
-
-// 属性输入框的加减事件
-function addAttr(a)
-{
-	var attr = $(a).parent().parent().prop("outerHTML");	
-	attr = attr.replace('addAttr','delAttr').replace('+','-');	
-	$(a).parent().parent().after(attr);
-}
-// 属性输入框的加减事件
-function delAttr(a)
-{
-   $(a).parent().parent().remove();
-}
  
 
 /** 以下 商品规格相关 js*/
 $(document).ready(function(){
 	
-    // 商品类型切换时 ajax 调用  返回不同的属性输入框
-    $("#spec_type").change(function(){        
-        var goods_id = '{$goodsInfo.goods_id}';
-        var spec_type = $(this).val();
-            $.ajax({
-                    type:'GET',
-                    data:{goods_id:goods_id,spec_type:spec_type}, 
-                    url:"{:U('admin/Goods/ajaxGetSpecSelect')}",
-                    success:function(data){                            
-                           $("#ajax_spec_data").html('')
-                           $("#ajax_spec_data").append(data);
-						   //alert('132');
-						   ajaxGetSpecInput();	// 触发完  马上处罚 规格输入框
-                    }
-            });			                
+//    // 商品类型切换时 ajax 调用  返回不同的属性输入框
+//    $("#spec_type").change(function(){
+//        var goods_id = '{$goodsInfo.goods_id}';
+//        var spec_type = $(this).val();
+//            $.ajax({
+//                    type:'GET',
+//                    data:{goods_id:goods_id,spec_type:spec_type},
+//                    url:"{:U('admin/Goods/ajaxGetSpecSelect')}",
+//                    success:function(data){
+//                           $("#ajax_spec_data").html('')
+//                           $("#ajax_spec_data").append(data);
+//						   //alert('132');
+//						   ajaxGetSpecInput();	// 触发完  马上处罚 规格输入框
+//                    }
+//            });
+//    });
+//	// 触发商品规格
+//	$("#spec_type").trigger('change');
+
+    //加载
+    $.ajax({
+        type:'GET',
+        data:{goods_id:'{$goodsInfo.goods_id}'},
+        url:"{:U('admin/Goods/ajaxGetOptionHtml')}",
+        success:function(data){
+            $("#ajax_spec_data").html(data);
+//            ajaxGetSpecInput();	// 触发完  马上处罚 规格输入框
+        }
     });
-	// 触发商品规格
-	$("#spec_type").trigger('change'); 
+
 });
 
 /** 以下是编辑时默认选中某个商品分类*/
@@ -645,6 +649,8 @@ $(document).ready(function(){
     function delPar(obj){
         $(obj).parent().parent().remove();
     }
+
+
 </script>
 </body>
 </html>
