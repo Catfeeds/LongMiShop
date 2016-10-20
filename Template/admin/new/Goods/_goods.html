@@ -479,7 +479,7 @@
                     <div class="pull-right">
                         <!--<input type="button"  value="trrtt" onclick="test222()">-->
                         <input type="hidden" name="goods_id" value="{$goodsInfo.goods_id}">
-                        <button class="btn btn-primary" onclick="ajax_submit_form('addEditGoodsForm','{:U('Goods/addEditGoods?is_ajax=1')}');" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
+                        <button class="btn btn-primary" onclick="ajaxSubmitForm();" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
                     </div>
 			    </form><!--表单数据-->
                 </div>
@@ -488,6 +488,32 @@
     </section>
 </div>
 <script>
+
+
+    function ajaxSubmitForm(){
+        if( $("input.spec_title").val() == ""){
+            alert("规格名不能为空！");
+            return;
+        }
+        if( $("input.spec_item_title").val() == ""){
+            alert("规格项名不能为空！");
+            return;
+        }
+        if( $("input.option_store_count").val() == ""){
+            alert("库存不能为空！");
+            return;
+        }
+        if( $("input.option_price").val() == ""){
+            alert("价格不能为空！");
+            return;
+        }
+        if( $("input.option_weight").val() == ""){
+            alert("重量不能为空！");
+            return;
+        }
+        ajax_submit_form('addEditGoodsForm',"{:U('Goods/addEditGoods?is_ajax=1')}");
+    }
+
     /*
      * 以下是图片上传方法
      */
@@ -623,6 +649,8 @@ $(document).ready(function(){
     function delPar(obj){
         $(obj).parent().parent().remove();
     }
+
+
 </script>
 </body>
 </html>
