@@ -268,7 +268,7 @@ class GoodsController extends BaseController {
                 else
                 {
                     $goods_id = $insert_id = $Goods->add(); // 写入数据到数据库
-//                        $Goods->adminSave($goods_id);
+                        $Goods->adminSave($goods_id);
                     $Goods->afterSave($goods_id);
                 }
 
@@ -288,9 +288,9 @@ class GoodsController extends BaseController {
         $paRcount = count($goodsInfo['my_parameter']);
 
 
-            if(is_supplier() && $goodsInfo['admin_id'] != session('admin_id') ){
-                $this->error('这不是你的商品');
-            }
+        if(is_supplier() && $goodsInfo['admin_id'] != session('admin_id') && $type==2 ){
+            $this->error('这不是你的商品');
+        }
         //$cat_list = $GoodsLogic->goods_cat_list(); // 已经改成联动菜单
         $level_cat = $GoodsLogic->find_parent_cat($goodsInfo['cat_id']); // 获取分类默认选中的下拉框
         $level_cat2 = $GoodsLogic->find_parent_cat($goodsInfo['extend_cat_id']); // 获取分类默认选中的下拉框

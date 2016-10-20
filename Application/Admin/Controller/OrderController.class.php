@@ -47,10 +47,10 @@ class OrderController extends BaseController {
         }
         // 搜索条件
         $condition = array();
-        I('consignee') ? $condition['consignee'] = trim(I('consignee')) : false;
-        if($begin && $end){
-        	$condition['add_time'] = array('between',"$begin,$end");
+        if(is_supplier()){
+            $condition['admin_id'] = session('admin_id');
         }
+        I('consignee') ? $condition['consignee'] = trim(I('consignee')) : false;
         I('order_sn') ? $condition['order_sn'] = trim(I('order_sn')) : false;
         I('order_status') != '' ? $condition['order_status'] = I('order_status') : false;
         I('pay_status') != '' ? $condition['pay_status'] = I('pay_status') : false;
@@ -524,8 +524,10 @@ class OrderController extends BaseController {
         $order_by = I('order_by') ? I('order_by') : 'id';
         $sort_order = I('sort_order') ? I('sort_order') : 'desc';
         $status =  I('status');
+
         
         $where = " 1 = 1 ";
+
         $order_sn && $where.= " and order_sn like '%$order_sn%' ";
         empty($order_sn) && $where.= " and status = '$status' ";
         $count = M('return_goods')->where($where)->count();

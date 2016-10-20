@@ -15,8 +15,10 @@ class OrderLogic extends RelationModel
      * @param int $page_size  获取数量
      */
     public function getOrderList($condition,$order='',$start=0,$page_size=20){
+
         $res = M('order')->where($condition)->limit("$start,$page_size")->order($order)->select();
         return $res;
+
     }
     /*
      * 获取订单商品详情

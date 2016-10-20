@@ -73,7 +73,7 @@
     }
     function addSpecItem(specid){
         $("#add-specitem-" + specid).html("正在处理...").attr("disabled", "true");
-        var url = "{:U('Admin/Widget/specItem')}" + "&specid=" + specid;
+        var url = "{:U('Admin/Widget/specItem')}" + "?specid=" + specid;
         $.ajax({
             "url": url,
             success:function(data){
