@@ -124,7 +124,7 @@ a:hover {
 }
 .s3 .left li:nth-child(3) {
 	-webkit-transform: translateX(-5500px);
-transform: translateX(-5500px) transition-delay: 1.2s
+	transform: translateX(-5500px) transition-delay: 1.2s
 }
 .s3.active .left li {
 	-webkit-transform: translateX(0);
@@ -258,71 +258,71 @@ transform: translateX(-5500px) transition-delay: 1.2s
 	border-bottom-color: #F60;
 	height: 58px;
 }
- @-webkit-keyframes move1 {
- 0% {
--webkit-transform: translate(330px, -1000px);
-transform: translate(330px, -1000px)
+@-webkit-keyframes move1 {
+	0% {
+		-webkit-transform: translate(330px, -1000px);
+		transform: translate(330px, -1000px)
+	}
+	20% {
+		-webkit-transform: translate(330px, 0);
+		transform: translate(330px, 0)
+	}
+	40% {
+		-webkit-transform: translate(330px, -50px);
+		transform: translate(330px, -50px)
+	}
+	60% {
+		-webkit-transform: translate(330px, 0px);
+		transform: translate(330px, 0px)
+	}
+	100% {
+		-webkit-transform: translate(0, 0);
+		transform: translate(0, 0)
+	}
 }
- 20% {
--webkit-transform: translate(330px, 0);
-transform: translate(330px, 0)
+@-webkit-keyframes move2 {
+	0% {
+		-webkit-transform: translate(0, -1000px);
+		transform: translate(0, -1000px)
+	}
+	20% {
+		-webkit-transform: translate(0, 0);
+		transform: translate(0, 0)
+	}
+	40% {
+		-webkit-transform: translate(0, -50px);
+		transform: translate(0, -50px)
+	}
+	60% {
+		-webkit-transform: translate(0, 0px);
+		transform: translate(0, 0px)
+	}
+	100% {
+		-webkit-transform: translate(0, 0);
+		transform: translate(0, 0)
+	}
 }
- 40% {
--webkit-transform: translate(330px, -50px);
-transform: translate(330px, -50px)
-}
- 60% {
--webkit-transform: translate(330px, 0px);
-transform: translate(330px, 0px)
-}
- 100% {
--webkit-transform: translate(0, 0);
-transform: translate(0, 0)
-}
-}
- @-webkit-keyframes move2 {
- 0% {
--webkit-transform: translate(0, -1000px);
-transform: translate(0, -1000px)
-}
- 20% {
--webkit-transform: translate(0, 0);
-transform: translate(0, 0)
-}
- 40% {
--webkit-transform: translate(0, -50px);
-transform: translate(0, -50px)
-}
- 60% {
--webkit-transform: translate(0, 0px);
-transform: translate(0, 0px)
-}
- 100% {
--webkit-transform: translate(0, 0);
-transform: translate(0, 0)
-}
-}
- @-webkit-keyframes move3 {
- 0% {
--webkit-transform: translate(-330px, -1000px);
-transform: translate(-330px, -1000px)
-}
- 20% {
--webkit-transform: translate(-330px, 0);
-transform: translate(-330px, 0)
-}
- 40% {
--webkit-transform: translate(-330px, -50px);
-transform: translate(-330px, -50px)
-}
- 60% {
--webkit-transform: translate(-330px, 0px);
-transform: translate(-330px, 0px)
-}
- 100% {
--webkit-transform: translate(0, 0);
-transform: translate(0, 0)
-}
+@-webkit-keyframes move3 {
+	0% {
+		-webkit-transform: translate(-330px, -1000px);
+		transform: translate(-330px, -1000px)
+	}
+	20% {
+		-webkit-transform: translate(-330px, 0);
+		transform: translate(-330px, 0)
+	}
+	40% {
+		-webkit-transform: translate(-330px, -50px);
+		transform: translate(-330px, -50px)
+	}
+	60% {
+		-webkit-transform: translate(-330px, 0px);
+		transform: translate(-330px, 0px)
+	}
+	100% {
+		-webkit-transform: translate(0, 0);
+		transform: translate(0, 0)
+	}
 }
 .seek {
 	border-radius: 50px;
@@ -871,7 +871,7 @@ transform: translate(0, 0)
 	margin-top: 0px;
 	position: fixed!important;/* FF IE7*/
 	position: absolute;/*IE6*/
- _top:       expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
+	_top:       expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
  document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);
 	width: 710px;
 	top: 100px;
@@ -891,7 +891,7 @@ transform: translate(0, 0)
 	z-index: 1;
 	position: fixed!important;/*FF IE7*/
 	position: absolute;/*IE6*/
- _top:       expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
+	_top:       expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
  document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);/* www.codefans.net IE5 IE5.5*/
 }
 .popIframe {
@@ -944,18 +944,11 @@ transform: translate(0, 0)
 	-o-transition: all .3s ease-out;
 }
 .user {
-	text-align: center;
-	margin-right: auto;
-	margin-left: auto;
-	background-image: url(../images/top_bg.jpg);
-	background-repeat: no-repeat;
-	background-position: center top;
-	padding-top: 60px;
-	padding-bottom: 50px;
+	float: right;
+	height: 60px;
+	line-height: 60px;
 	position: relative;
-	background-size: 100% 100%
 }
-
 .user a {
 	display: block;
 	color: #CCCCCC;
@@ -1383,8 +1376,8 @@ transform: translate(0, 0)
 	border-radius: 4px;
 	overflow: hidden;
 	display: inline-block;
- *display: inline;
- *zoom: 1
+	*display: inline;
+	*zoom: 1
 }
 .a-upload input {
 	position: absolute;
@@ -1647,7 +1640,7 @@ transform: translate(0, 0)
 	_position: absolute;
 	bottom: 0px;
 	_bottom: 0px;
- _margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop);
+	_margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop);
 	background-color: #FFF;
 	width: 100%;
 	padding-top: 15px;
@@ -1712,7 +1705,7 @@ transform: translate(0, 0)
 	background-image: -webkit-linear-gradient( 90deg, rgb(231,231,231) 0%, rgb(234,234,234) 100%) !important;
 	background-image: -ms-linear-gradient( 90deg, rgb(231,231,231) 0%, rgb(234,234,234) 100%);
 	width: 100%;
- !important;
+!important;
 	cursor: default !important;
 }
 .btn_reg1 {
@@ -2024,8 +2017,8 @@ transform: translate(0, 0)
 	color: #CCC !important;
 	filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);-webkit-filter: grayscale(100%);
 }
-	
-	.gray1 a{	color: #CCC !important;
+
+.gray1 a{	color: #CCC !important;
 }
 .gray2{
 	color: #CCC !important;
