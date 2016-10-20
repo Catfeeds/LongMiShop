@@ -90,7 +90,6 @@ class OrderController extends MobileBaseController {
         $where = ' user_id='.$this->user_id;
         $_GET['type'] = $type = I('type','WAITPAY');
         $type = $type =="WAITCCOMMENT" ?"FINISHED":$type;
-        
         //条件搜索
 //        if(in_array(strtoupper($type), array('WAITCCOMMENT','COMMENTED')))
 //        {
@@ -117,6 +116,11 @@ class OrderController extends MobileBaseController {
             $order_list[$k] = setOrderReturnState( $order_list[$k] , $this ->user_id );
 
         }
+        foreach($order_list as $keys=>$items){
+            $countGood = M('order_goods')->where(array('order_id'=>$items['order_id']))->group('delivery_id')->select();
+            $order_list[$keys]['countGood'] = count($countGood);
+        }
+//        dd($order_list);
         $this->assign('order_status',C('ORDER_STATUS'));
         $this->assign('shipping_status',C('SHIPPING_STATUS'));
         $this->assign('pay_status',C('PAY_STATUS'));
@@ -127,6 +131,7 @@ class OrderController extends MobileBaseController {
         $this->assign('p',I('p'));
         $this->assign('number',I('number'));
         $this->assign('count',$count);
+        $this->assign('type',$type);
         $this->assign('limit',$limit);
         if($_GET['is_ajax'])
         {
@@ -175,12 +180,25 @@ class OrderController extends MobileBaseController {
         // $coupon_list = M('coupon_list')->where(array('order_id'=>$order_info['order_id']))->find();
         // $coupon_res = empty($coupon_list) ? '' : M('coupon')->where(array('id'=>$coupon_list['cid']))->find();
         // $this->assign('coupon_res',$coupon_res);
+
+
+        foreach($order_info['goods_list'] as $keys=>$items){
+            if($items['is_send'] == 1){
+                $deliveryRres = M('delivery_doc')->where(array('id'=>$items['delivery_id']))->find();
+                $order_info['goods_list'][$keys]['shipping_name'] =   $deliveryRres['shipping_name'];
+                $order_info['goods_list'][$keys]['invoice_no'] =   $deliveryRres['invoice_no'];
+            }
+        }
+        //统计订单条数
+        $countGood = M('order_goods')->where(array('order_id'=>$order_info['order_id']))->group('delivery_id')->select();
+
         $this->assign('order_status',C('ORDER_STATUS'));
         $this->assign('shipping_status',C('SHIPPING_STATUS'));
         $this->assign('pay_status',C('PAY_STATUS'));
         $this->assign('region_list',$region_list);
         $this->assign('order_info',$order_info);
         $this->assign('order_action',$order_action);
+        $this->assign('countGood',count($countGood));
         $this->display();
     }
 

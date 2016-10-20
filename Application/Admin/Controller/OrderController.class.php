@@ -122,6 +122,7 @@ class OrderController extends BaseController {
         $order = $orderLogic->getOrderInfo($order_id);
         $orderGoods = $orderLogic->getOrderGoods($order_id);
         $button = $orderLogic->getOrderButton($order);
+//        dd($button);
         // 获取操作记录
         $action_log = M('order_action')->where(array('order_id'=>$order_id))->order('log_time desc')->select();
         $this->assign('order',$order);
