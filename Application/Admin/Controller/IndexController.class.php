@@ -35,7 +35,7 @@ class IndexController extends BaseController {
         $this->assign('count',$count);
         $this->display();
     }
-    
+
     public function map(){
     	$all_menu = $this->getRoleMenu('all');
     	$this->assign('all_menu',$all_menu);
