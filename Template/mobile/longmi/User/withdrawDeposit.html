@@ -55,15 +55,30 @@
         });
         $("#login_btn_on").click(function(){
             var money = $('#text').val();
-            if(
-                    <notempty name = "shopConfig.basic_withdraw_storage">
-                        money < {$shopConfig.basic_withdraw_storage} ||
-                    </notempty>
-                    ( money < 1 || money > {$user.user_money} )
-            ){
-                alert("提现金额有误");
-                return;
+//            if(
+//                    <notempty name = "shopConfig.basic_withdraw_storage">
+//                        money < {$shopConfig.basic_withdraw_storage} ||
+//                    </notempty>
+//                    ( money < 1 || money > {$user.user_money} )
+//            ){
+//                alert("提现金额有误");
+//                return;
+//            }
+            if(money > {$user.user_money}){
+                alert('余额不足以提现');
+                return false;
             }
+            <notempty name = "shopConfig.basic_withdraw_storage">
+                if( money < {$shopConfig.basic_withdraw_storage} ){
+                    alert('最小数额为{$shopConfig.basic_withdraw_storage}元');
+                    return false;
+                }
+            <else/>
+                if( money < 1 ){
+                    alert('最小数额为1元');
+                    return false;
+                }
+            </notempty>
             $('#myForm').submit();
         });
     });
