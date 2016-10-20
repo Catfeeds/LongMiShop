@@ -52,7 +52,7 @@ class WeChatController extends Controller {
         $keyword = trim($postObj->Content);
         $time = time();
 
-//        setLogResult(json_encode($postObj),"微信进来","test");
+        setLogResult(json_encode($postObj),"微信进来","test");
         //点击菜单拉取消息时的事件推送
         /*
          * 1、click：点击推事件
