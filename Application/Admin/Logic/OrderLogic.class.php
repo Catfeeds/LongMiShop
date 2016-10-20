@@ -28,7 +28,7 @@ class OrderLogic extends RelationModel
         if(is_supplier() ){
             $sql .= " and o.admin_id='".session('admin_id')."'";
         }else{
-            $sql .= " and o.admin_id=0";
+            $sql .= " and o.admin_id = 0";
         }
 
         $res = $this->query($sql);
