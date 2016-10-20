@@ -5,9 +5,9 @@
                 <div class="listbox">
                     <ul>
                         <li class="listbox_titel">订单服务</li>
-                        <li><a href="#">如何购买</a></li>
-                        <li><a href="#">如何支付</a></li>
-                        <li><a href="#">邮费政策</a></li>
+                        <li><a href="{:U('Index/Help/buy')}">如何购买</a></li>
+                        <li><a href="{:U('Index/Help/pay')}">如何支付</a></li>
+                        <li><a href="{:U('Index/Help/postage')}">邮费政策</a></li>
                     </ul>
                 </div>
                 <div class="listbox">
@@ -46,6 +46,13 @@
             <p>Longmi Agro Co., Ltd All Rights Reserved <a  target="_blank" href="http://www.miitbeian.gov.cn">粤ICP备15051254号-1</a> | 法律条款|隐私条款</p>
         </div>
     </div>
+
+
+    <if condition = " CONTROLLER_NAME eq 'Index' and ACTION_NAME eq 'index' ">
+        </div>
+        </div>
+    </if>
+
 <div class="pop_co">
     <div class="pop_co_close"><a href="javascritp:;"><img src="__PUBLIC__/img/close.png" width="22" height="21"></a></div>
     <div class="pop_co_box">
