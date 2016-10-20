@@ -31,7 +31,7 @@ class OrderLogic extends BaseLogic
         if( is_null($order_id) ){
             return callback(false,'',array());
         }
-        $sql = "SELECT og.*,g.original_img FROM __PREFIX__order_goods og LEFT JOIN __PREFIX__goods g ON g.goods_id = og.goods_id WHERE order_id = '".$order_id."'";
+        $sql = "SELECT og.*,g.original_img FROM __PREFIX__order_goods og LEFT JOIN __PREFIX__goods g ON g.goods_id = og.goods_id WHERE order_id = '".$order_id."' ORDER BY delivery_id DESC ";
         $goods_list = $this->query($sql);
         return callback(true,'',$goods_list);
     }

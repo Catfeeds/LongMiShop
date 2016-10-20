@@ -2,6 +2,7 @@
     <if condition = " $p == 1 ">
         <div class="ajax_return">
     </if>
+
     <volist name="lists" id="list">
     <div class="titel_box">
         <div class="titel_box_l">订单号：{$list.order_sn}</div>
@@ -58,10 +59,18 @@
                     </a>
                 </div>
             </if>
-            <if condition="$list.shipping_btn eq 1">
+            <if condition="$list.shipping_btn eq 1 and $type neq 'WAITSEND'  ">
+
                 <div class="l_btn1">
-                    <a href="{:U('User/express',array('order_id'=>$list['order_id']))}">查看物流</a>
+                    <if condition="$list['countGood'] eq 1">
+                        <a href="{:U('User/express',array('order_id'=>$list['order_id']))}">查看物流</a>
+                    <else/>
+                        <a href="{:U('Mobile/Order/order_detail',array('order_id' => $list['order_id']))}">查看物流</a>
+                    </if>
                 </div>
+
+
+
             </if>
         </div>
     </div>

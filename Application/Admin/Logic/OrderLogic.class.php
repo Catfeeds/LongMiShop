@@ -128,6 +128,7 @@ class OrderLogic extends RelationModel
          *  操作按钮汇总 ：付款、设为未付款、确认、取消确认、无效、去发货、确认收货、申请退货
          * 
          */
+
     	$os = $order['order_status'];//订单状态
     	$ss = $order['shipping_status'];//发货状态
     	$ps = $order['pay_status'];//支付状态
@@ -165,6 +166,10 @@ class OrderLogic extends RelationModel
         }
         if($os != 5){
         	$btn['invalid'] = '无效';
+        }
+
+        if($ss == 2){
+            $btn['delivery'] = '去发货';
         }
         return $btn;
     }

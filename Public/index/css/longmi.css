@@ -1,0 +1,8 @@
+.pack-ups {
+    line-height: 50px;
+    text-align: center;
+    display: none;
+}
+.pack-up a {
+    color: #666;
+}

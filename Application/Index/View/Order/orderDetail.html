@@ -71,12 +71,14 @@
 
                             </div>
                         </div>
-                        <if condition="$order_info.shipping_btn eq 1">
+                        <if condition="$order_info.shipping_btn eq 1 and $countGood eq 1">
+
                             <div class="express_list">
+
                                 <a href="javascript:;">查看物流</a>
                             </div>
                             <div class="express_box" id="ajax_logistics">
-                                
+
                             </div>
                             <div class="pack-up">
                                 <a href="javascript:;">收起物流详情</a>
@@ -88,6 +90,27 @@
                             <div class="gray-sub-title cart-title"> <span class="name">商品名称</span> <span class="subtotal">小计</span> <span class="num">数量</span> <span class="price">单价</span> </div>
                             <div class="cart">
                                 <volist name="order_info.goods_list" id="good">
+                                    <php>$myi =0;</php>
+                                    <if condition="$countGood neq 1">
+                                        <if condition="$good['is_send'] eq 1 and $myi neq $good['delivery_id'] " >
+                                            <div>
+                                                <div style="margin-top:15px;">
+                                                    {$good['shipping_name']}:{$good['invoice_no']}
+                                                    <a href="javascript:;" onclick="partClick(this,{$good['delivery_id']});" class="parcel" style="float:right;">查看物流</a>
+                                                </div>
+                                                <div class="express_box ajax_trolley_part">
+
+                                                </div>
+                                                <div class="pack-ups">
+                                                    <a href="javascript:;" onclick="partPackup(this);">收起物流详情</a>
+                                                </div>
+                                            </div>
+                                            <elseif condition="$myi === $good['delivery_id']" />
+                                            <else />
+                                            未发货
+                                        </if>
+
+                                    </if>
                                     <div class="cart-items fn-clear" data-id="{$good.goods_id}"  style="border-bottom: 0px;">
                                         <div class="prod-info" >
                                             <div class="items-thumb">
@@ -109,15 +132,16 @@
                                         </div>
 
                                     </div>
-                                    <if condition="!empty($good['user_message'])">
-                                        <div class="site_txt"    style="border-bottom: 1px solid #b2b2b2;width:100%;word-wrap:break-word;word-break:break-all;  ">
 
-                                            留言：{$good['user_message']}
-                                        </div>
-                                        <else/>
-                                        <div  style="border-bottom: 1px solid #b2b2b2;">
-                                        </div>
-                                    </if>
+                                    <!--<if condition="!empty($good['user_message'])">-->
+                                        <!--<div class="site_txt"    style="border-bottom: 1px solid #b2b2b2;width:100%;word-wrap:break-word;word-break:break-all;  ">-->
+
+                                            <!--留言：{$good['user_message']}-->
+                                        <!--</div>-->
+                                        <!--<else/>-->
+                                        <!--<div  style="border-bottom: 1px solid #b2b2b2;">-->
+                                        <!--</div>-->
+                                    <!--</if>-->
                                 </volist>
                             </div>
                             <div class="order-discount-line">
@@ -196,7 +220,7 @@
     function ajax_trolley(){
 
       $.ajax({
-        url:"{: U('Index/Widget/express',array('id'=>$order_info['order_id']))}",
+        url:"{: U('Index/Widget/express',array('order_id'=>$order_info['order_id']))}",
         success:function(res){
             // console.log(res)
           if(res.state == 1){
@@ -209,4 +233,36 @@
         }
       });
     }
+
+
+
+
+    function partClick(obj,id){
+            $.ajax({
+                url:"/index.php?m=Index&c=Widget&a=express&id="+id+"",
+                success:function(res){
+                    // console.log(res)
+                    if(res.state == 1){
+                        $(obj).parent().parent().find(".ajax_trolley_part").html('');
+                        $(obj).parent().parent().find('.ajax_trolley_part').append(res);
+                    }else{
+                        $(obj).parent().parent().find(".ajax_trolley_part").html('');
+                        $(obj).parent().parent().find(".ajax_trolley_part").append(res);
+                    }
+                }
+            });
+            $(obj).parent().parent().find(".express_box").fadeIn(200);
+            $(obj).parent().parent().find(".pack-ups").fadeIn(200);
+    }
+    function partPackup(obj){
+        $(obj).parent().parent().find(".express_box").fadeOut(200);
+        $(obj).parent().fadeOut(200);
+    }
+
+    $(function () {
+        $('.parcel').trigger('click');
+        $('.pack-ups a').trigger('click');
+    })
+
+
 </script>
