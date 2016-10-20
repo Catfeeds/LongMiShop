@@ -944,11 +944,18 @@ transform: translate(0, 0)
 	-o-transition: all .3s ease-out;
 }
 .user {
-	float: right;
-	height: 60px;
-	line-height: 60px;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+	background-image: url(../images/top_bg.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	padding-top: 60px;
+	padding-bottom: 50px;
 	position: relative;
+	background-size: 100% 100%
 }
+
 .user a {
 	display: block;
 	color: #CCCCCC;
