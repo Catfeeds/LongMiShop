@@ -18,6 +18,7 @@ class IndexController extends BaseController {
    
     public function welcome(){
 
+        $count['moneySum'] = 0;
         $count['not']  = M('order')->where(" `order_status` = 1 AND `pay_status` = 1 AND `shipping_status` <> 1 ")->count(); //待发货
         $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'    ")->count(); //退货
         $yesterdayTime = strtotime("-1 day");
