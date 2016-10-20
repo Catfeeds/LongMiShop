@@ -16,8 +16,9 @@ class WidgetController extends IndexBaseController {
 
     //物流信息
     public function express(){
-        $id = I('get.id',null);
-
+//        $id = I('get.id',null);
+        $orderId = I('get.order_id','','int'); //订单id
+        $id = I('get.id','','int'); //物流表id
 //         $result = getExpress($id);
 //         if( callbackIsTrue($result) ){
 //            if($result['data']['status'] == 1){
@@ -31,7 +32,8 @@ class WidgetController extends IndexBaseController {
 //         }else{
 //             $this->assign('expressMessage', $result['msg'] );
 //         }
-        $delivery = M('delivery_doc')->where("order_id='$id'")->limit(1)->find();
+        !empty($id) ? $where['id'] = $id : $where['order_id'] =  $orderId;
+        $delivery = M('delivery_doc')->where($where)->limit(1)->find();
         if(empty($delivery)){
             $this->assign('expressMessage', '查询物流失败' );
         }
@@ -69,7 +71,7 @@ class WidgetController extends IndexBaseController {
         if( $result['status'] == 200  ){
 //            dd($result['data']);
             //支付时间
-            $pay_time = M('order')->field('pay_time')->where("order_id = '".$id."'")->find();
+            $pay_time = M('order')->field('pay_time')->where($where)->find();
             $this->assign('pay_time',$pay_time['pay_time']);
             $this->assign('expressData', $result);
             $this->assign('odd_numbers',$delivery['invoice_no']);

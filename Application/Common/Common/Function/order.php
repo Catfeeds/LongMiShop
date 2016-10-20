@@ -276,9 +276,13 @@ function orderBtn($order_id = 0, $order = array())
         $btn_arr['comment_btn'] = 1;  // 评价按钮
         $btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
     }
-    if($order['shipping_status'] != 0)
+    if($order['shipping_status'] == 1)
     {
         $btn_arr['shipping_btn'] = 1; // 查看物流
+    }
+    if($order['shipping_status'] == 2)
+    {
+        $btn_arr['shipping_btn'] = 2; // 部分发货
     }
     if($order['shipping_status'] == 2 && $order['order_status'] == 1) // 部分发货
     {

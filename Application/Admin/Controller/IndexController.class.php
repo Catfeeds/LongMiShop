@@ -17,17 +17,22 @@ class IndexController extends BaseController {
     }
    
     public function welcome(){
-    	$this->assign('sys_info',$this->get_sys_info());
-    	$today = strtotime("-1 day");
-    	$count['handle_order'] = M('order')->where("order_status=0 and (pay_status=1 or pay_code='cod')")->count();//待处理订单
-    	$count['new_order'] = M('order')->where("add_time>$today")->count();//今天新增订单
-    	$count['goods'] =  M('goods')->where("1=1")->count();//商品总数
-    	$count['article'] =  M('article')->where("1=1")->count();//文章总数
-    	$count['users'] = M('users')->where("1=1")->count();//会员总数
-    	$count['today_login'] = M('users')->where("last_login>$today")->count();//今日访问
-    	$count['new_users'] = M('users')->where("reg_time>$today")->count();//新增会员
-    	$count['comment'] = M('comment')->where("is_show=0")->count();//最新评论
-    	$this->assign('count',$count);
+
+
+        $count['not']  = M('order')->where(" `order_status` = 1 AND `pay_status` = 1 AND `shipping_status` <> 1 ")->count(); //待发货
+        $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'    ")->count(); //退货
+        $yesterdayTime = strtotime("-1 day");
+        $today = date('Y-m-d ')."00:00:00";
+        $todayTime = strtotime($today);
+        $where = "add_time > ".$yesterdayTime." AND add_time < ".$todayTime."";
+        $count['yesterday'] = M('order')->where($where)->count(); //昨天订单
+        $money = M('order')->field("SUM(order_amount) as money")->where($where)->find(); //昨天金额
+        $count['moneySum'] = !empty($money['money']) ? $money['money'] : 0 ;
+        $logName = M('admin')->field('user_name')->where(array('admin_id'=>session('admin_id')))->find();
+        $role_name = M('admin_role')->field('role_name')->where(array('role_id'=>session('admin_role_id')))->find();
+        $logName['role_name'] = $role_name['role_name'];
+        $this->assign('logName',$logName);
+        $this->assign('count',$count);
         $this->display();
     }
 

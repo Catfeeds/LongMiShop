@@ -98,15 +98,25 @@ class OrderController extends IndexBaseController {
         }
         $data = $orderLogic -> getOrderGoods($orderInfo['order_id']);
         $orderInfo['goods_list'] = $data['data'];
+        foreach($orderInfo['goods_list'] as $keys=>$items){
+            if($items['is_send'] == 1){
+                $deliveryRres = M('delivery_doc')->where(array('id'=>$items['delivery_id']))->find();
+                $orderInfo['goods_list'][$keys]['shipping_name'] =   $deliveryRres['shipping_name'];
+                $orderInfo['goods_list'][$keys]['invoice_no'] =   $deliveryRres['invoice_no'];
+            }
+        }
         $orderInfo   = setBtnOrderStatus($orderInfo,'INDEX');
         $progressBar = getOrderProgressBar($orderInfo);
         $region_list = get_region_list();
+        //统计订单条数
+        $countGood = M('order_goods')->where(array('order_id'=>$orderInfo['order_id']))->group('delivery_id')->select();
         $this->assign('order_status',C('ORDER_STATUS'));
         $this->assign('shipping_status',C('SHIPPING_STATUS'));
         $this->assign('pay_status',C('PAY_STATUS'));
         $this->assign('region_list',$region_list);
         $this->assign('order_info',$orderInfo);
         $this->assign('progressBar',$progressBar);
+        $this->assign('countGood',count($countGood));
         $this->display();
     }
 

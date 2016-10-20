@@ -1,151 +1,72 @@
-<include file="Public/min-header" />
-<div class="wrapper">
-    <include file="Public/breadcrumb"/>
-    <section class="content">
-        <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="fa fa-bell"></i></span>
-                    <div class="info-box-content">
-                        <a href="{: U('Admin/Order/index')}">
-                            <span class="info-box-text">待处理订单</span>
-                            <span class="info-box-number">{$count.handle_order}</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
-                    <div class="info-box-content">
-                        <a href="{: U('Admin/Goods/goodsList')}">
-                            <span class="info-box-text">商品数量</span>
-                            <span class="info-box-number">{$count.goods}</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
-                    <div class="info-box-content">
-                        <a href="{: U('Admin/Article/articleList')}">
-                            <span class="info-box-text">文章数量</span>
-                            <span class="info-box-number">{$count.article}</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-red"><i class="fa fa-user-plus"></i></span>
-                    <div class="info-box-content">
-                        <a href="{: U('Admin/User/index')}">
-                            <span class="info-box-text">会员总数</span>
-                            <span class="info-box-number">{$count.users}</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>龙米</title>
+    <link href="__STATIC__/CSS/css.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/CSS/longmi.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box box-info">
-                    <div class="box-header">
-                        <h3 class="box-title">今日统计</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-sm-3 col-xs-6">
-                                新增订单：{$count.new_order}
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                今日访问：{$count.today_login}
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                新增会员：{$count.new_users}
-                            </div>
-                            <div class="col-sm-3 col-xs-6">
-                                待审评论：{$count.comment}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="g-mn1">
+    <div class="g-mn1c">
+        <div class="right_titel">
+            <div class="user">{$logName['user_name']}</div>
+            <div class="user-label">{$logName['role_name']}</div>
+            <div class="user-label">龙米科技</div>
+        </div>
+        <div class="data-box">
+            <div class="data">
+                <div class="click"><a href="{: U('Admin/Order/delivery_list')}"></a></div>
+                <p class="data-t1">{$count['not']}</p>
+                <p class="data-t2">待发货订单</p>
+            </div>
+            <div class="data">
+                <div class="click"><a href="{: U('Admin/Order/return_list')}"></a></div>
+                <p class="data-t1">{$count['return']}</p>
+                <p class="data-t2">维权订单</p>
+            </div>
+            <div class="data">
+                <div class="click"><a href="{: U('Admin/Order/index')}"></a></div>
+                <p class="data-t1">{$count['yesterday']}</p>
+                <p class="data-t2">昨日订单</p>
+            </div>
+            <div class="data">
+                <div class="click"><a href="{: U('Admin/Order/index')}"></a></div>
+                <p class="data-t1"><span>￥</span>{$count['moneySum']}.<span>00</span></p>
+                <p class="data-t2">昨日交易额</p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box  box-primary">
-                    <div class="box-body">
-                        <div class="info-box">
-                            <table class="table table-bordered">
-                                <tbody>
-                                <tr>
-                                    <td>服务器操作系统：</td>
-                                    <td>{$sys_info.os}</td>
-                                    <td>服务器域名/IP：</td>
-                                    <td>{$sys_info.domain} [ {$sys_info.ip} ]</td>
-                                    <td>服务器环境：</td>
-                                    <td>{$sys_info.web_server}</td>
-                                </tr>
-                                <tr>
-                                    <td>PHP 版本：</td>
-                                    <td>{$sys_info.phpv}</td>
-                                    <td>Mysql 版本：</td>
-                                    <td>{$sys_info.mysql_version}</td>
-                                    <td>GD 版本</td>
-                                    <td>{$sys_info.gdinfo}</td>
-                                </tr>
-                                <tr>
-                                    <td>文件上传限制：</td>
-                                    <td>{$sys_info.fileupload}</td>
-                                    <td>最大占用内存：</td>
-                                    <td>{$sys_info.memory_limit}</td>
-                                    <td>最大执行时间：</td>
-                                    <td>{$sys_info.max_ex_time}</td>
-                                </tr>
-                                <tr>
-                                    <td>安全模式：</td>
-                                    <td>{$sys_info.safe_mode}</td>
-                                    <td>Zlib支持：</td>
-                                    <td>{$sys_info.zlib}</td>
-                                    <td>Curl支持：</td>
-                                    <td>{$sys_info.curl}</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="more-box">
+            <div class="more-box-l">快捷方式</div>
         </div>
-
-        <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-        <!--<div class="box  box-success">-->
-        <!--<div class="box-body">-->
-        <!--<div class="info-box">-->
-        <!--<table class="table table-bordered">-->
-        <!--<tr>-->
-        <!--<td>程序版本：</td><td>{$sys_info.version}</td>-->
-        <!--&lt;!&ndash;<td>更新时间：</td><td></td>&ndash;&gt;-->
-        <!--&lt;!&ndash;<td>程序开发：</td><td>龙米</td>&ndash;&gt;-->
-        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
-        <!--&lt;!&ndash;<td>版权所有：</td><td>龙米</td>&ndash;&gt;-->
-        <!--&lt;!&ndash;<td>官方授权：</td><td></td>&ndash;&gt;-->
-        <!--&lt;!&ndash;<td>官方论坛：</td><td></td>&ndash;&gt;-->
-        <!--</tr>-->
-        <!--</table>-->
+        <div class="url-box">
+            <div class="url"><a href="{: U('Admin/Wechat/text')}" style="background-image:url(__STATIC__/SVG/b-1.svg)">微信关键字</a></div>
+            <div class="url"><a href="{: U('Admin/Article/articleList')}" style="background-image:url(__STATIC__/SVG/b-2.svg)">软文管理</a></div>
+            <div class="url"><a href="{: U('Admin/Goods/goodsList')}" style="background-image:url(__STATIC__/SVG/b-3.svg)">发布商品</a></div>
+            <div class="url"><a href="{: U('Admin/Coupon/index')}" style="background-image:url(__STATIC__/SVG/b-4.svg)">优惠券</a></div>
+            <div class="url"><a href="{: U('Admin/Order/delivery_list')}" style="background-image:url(__STATIC__/SVG/b-5.svg)">订单发货</a></div>
+            <!--<div class="url"><a href="#" style="background-image:url(__STATIC__/SVG/b-6.svg)">官网CMS</a></div>-->
+            <!--<div class="url"><a href="#" style="background-image:url(__STATIC__/SVG/b-7.svg)">交易分析</a></div>-->
+            <!--<div class="url"><a href="#" style="background-image:url(__STATIC__/SVG/b-8.svg)">操作帮助</a></div>-->
+        </div>
+        <!--<div class="more-box">-->
+        <!--<div class="more-box-l">常用营销活动</div>-->
+        <!--<div class="more-box-r"><a href="#">更多</a></div>-->
         <!--</div>-->
+        <!--<div class="sales-box">-->
+        <!--<div class="sales"><a href="#">优惠券</a></div>-->
+        <!--<div class="sales"><a href="#">满减/送</a></div>-->
+        <!--<div class="sales"><a href="#">签到</a></div>-->
+        <!--<div class="sales"><a href="#">推送图文</a></div>-->
+        <!--<div class="sales"><a href="#">限时折扣</a></div>-->
+        <!--<div class="sales"><a href="#">抽奖</a></div>-->
+        <!--<div class="sales"><a href="#">签到</a></div>-->
+        <!--<div class="sales"><a href="#">签到</a></div>-->
+        <!--<div class="sales"><a href="#">微信关键字</a></div>-->
+        <!--<div class="sales"><a href="#">微信关键字</a></div>-->
         <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="callout callout-success">-->
-        <!--<p> <b></b></p>-->
-        <!--</div>-->
-    </section>
+    </div>
 </div>
 </body>
 </html>
