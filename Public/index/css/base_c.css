@@ -4892,7 +4892,7 @@ div.address-form select.city {
 	top: 3px
 }
 .account-wrapper {
-	position: relative
+	position: relative;
 }
 .account-sidebar {
 	position: fixed;
