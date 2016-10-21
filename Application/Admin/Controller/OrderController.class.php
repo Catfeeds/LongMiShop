@@ -111,7 +111,7 @@ class OrderController extends BaseController {
     	$condition['shipping_status'] = empty($shipping_status) ? array('neq',1) : $shipping_status;
 
         if(is_supplier()){
-            $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('order_id') -> select();
+            $id_lists = M('order_goods')->where(array("is_send"=>array("neq","1"),'admin_id' => session('admin_id'))) -> field('order_id') -> select();
             $temp_string = "";
             if(!empty($id_lists)){
                 foreach ($id_lists as $id_list){
@@ -131,6 +131,7 @@ class OrderController extends BaseController {
     	}
     	$show = $Page->show();
     	$orderList = M('order')->where($condition)->limit($Page->firstRow.','.$Page->listRows)->order('add_time DESC')->select();
+
         $this->assign('orderList',$orderList);
     	$this->assign('page',$show);// 赋值分页输出
     	$this->display();

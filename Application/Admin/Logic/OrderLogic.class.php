@@ -39,17 +39,21 @@ class OrderLogic extends RelationModel
 //        }
 
     }
-    /*
+    /**
      * 获取订单商品详情
+     * @param $order_id
+     * @param null $type
+     * @return mixed
+     *
      */
-    public function getOrderGoods($order_id){
+    public function getOrderGoods($order_id ,$type = null ){
         $sql = "SELECT g.*,o.*,(o.goods_num * o.member_goods_price) AS goods_total FROM __PREFIX__order_goods o ".
             "LEFT JOIN __PREFIX__goods g ON o.goods_id = g.goods_id WHERE o.order_id = $order_id";
 
-        if(is_supplier() ){
-            $sql .= " and o.admin_id='".session('admin_id')."'";
-        }else{
-            $sql .= " and o.admin_id = 0";
+        if( $type != "all" ){
+            if(is_supplier() ){
+                $sql .= " and o.admin_id='".session('admin_id')."'";
+            }
         }
 
         $res = $this->query($sql);
@@ -237,7 +241,7 @@ class OrderLogic extends RelationModel
         try{
             $model  -> startTrans();
             $order = $this->getOrderInfo($data['order_id']);
-            $orderGoods = $this->getOrderGoods($data['order_id']);
+            $orderGoods = $this->getOrderGoods($data['order_id'],"all");
             $selectGoods = $data['goods'];
 
 

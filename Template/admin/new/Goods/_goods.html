@@ -244,7 +244,7 @@
                                 <tr>
                                     <td>本店售价:</td>
                                     <td>
-                                        <input type="text" value="{$goodsInfo.shop_price}" name="shop_price" class="form-control" style="width:150px;" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
+                                        <input type="text" value="{$goodsInfo.shop_price}" name="shop_price" class="form-control option_price" style="width:150px;" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
                                         <span id="err_shop_price" style="color:#F00; display:none;"></span>					                                        
                                     </td>
                                 </tr>  
@@ -292,17 +292,17 @@
                                         <span id="err_weight" style="color:#F00; display:none;"></span>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>是否包邮:</td>
-                                    <td>
-                                        是:<input type="radio" <if condition="$goodsInfo[is_free_shipping] eq 1">checked="checked"</if> value="1" name="is_free_shipping" /> 
-                                        否:<input type="radio" <if condition="$goodsInfo[is_free_shipping] eq 0">checked="checked"</if> value="0" name="is_free_shipping" /> 
-                                    </td>
-                                </tr>     
+                                <!--<tr>-->
+                                    <!--<td>是否包邮:</td>-->
+                                    <!--<td>-->
+                                        <!--是:<input type="radio" <if condition="$goodsInfo[is_free_shipping] eq 1">checked="checked"</if> value="1" name="is_free_shipping" /> -->
+                                        <!--否:<input type="radio" <if condition="$goodsInfo[is_free_shipping] eq 0">checked="checked"</if> value="0" name="is_free_shipping" /> -->
+                                    <!--</td>-->
+                                <!--</tr>     -->
                                 <tr>
                                   <td>选择配送方式</td>
                                   <td>
-                                    <select name="delivery_way" >
+                                    <select name="delivery_way"  class="delivery_way">
                                       <option value="0">请选择</option>
                                       <volist name="logistics_list" id="item">
                                         <option value="{: $item['log_id']}" {: $goodsInfo['delivery_way']==$item['log_id']? 'selected' :''}>{: $item['log_template']}</option>
@@ -503,7 +503,7 @@
             alert("库存不能为空！");
             return;
         }
-        if( $("input.option_price").val() == ""){
+        if( $(".option_price").val() == ""){
             alert("价格不能为空！");
             return;
         }
@@ -511,6 +511,11 @@
             alert("重量不能为空！");
             return;
         }
+        if($(".delivery_way").val() == "0"){
+            alert("请选择配送方式");
+            return false;
+        }
+
         ajax_submit_form('addEditGoodsForm',"{:U('Goods/addEditGoods?is_ajax=1')}");
     }
 

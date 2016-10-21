@@ -98,9 +98,13 @@
                             <td class="text-right">
                             	<if condition="$good['is_send'] eq 1">
                             		已发货
-                            	<else />
-                            		<input type="checkbox" name="goods[]" value="{$good.rec_id}" checked="checked">
-                            	</if>
+                                    <else />
+                                    <if condition=" !is_supplier() and $good['admin_id'] neq 0">
+                                        供应商商品
+                                        <else />
+                                        <input type="checkbox" name="goods[]" value="{$good.rec_id}" checked="checked" >
+                                    </if>
+                                </if>
                             </td>
                         </tr>
                     </volist>
