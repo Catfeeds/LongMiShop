@@ -50,10 +50,6 @@ class OrderController extends BaseController {
         I('consignee') ? $condition['consignee'] = trim(I('consignee')) : false;
         if($begin && $end){
             $condition['add_time'] = array('between',"$begin,$end");
-//            if(is_supplier()){
-//                $condition['begin'] =  $begin;
-//                $condition['end'] =  $end;
-//            }
         }
         I('order_sn') ? $condition['order_sn'] = trim(I('order_sn')) : false;
         I('order_status') != '' ? $condition['order_status'] = I('order_status') : false;
@@ -84,6 +80,16 @@ class OrderController extends BaseController {
         $show = $Page->show();
         //获取订单列表
         $orderList = $orderLogic->getOrderList($condition,$sort_order,$Page->firstRow,$Page->listRows);
+
+        if(!empty($orderList)){
+            foreach($orderList as $keys=>$items){
+                $returnRes = M('return_goods')->field('order_sn')->where(array('order_id'=>$items['order_id']))->find();
+                if(!empty($returnRes)){
+                    $orderList[$keys]['sendBack'] = $returnRes['order_sn'];
+                }
+            }
+        }
+//        dd($orderList);
         $this->assign('orderList',$orderList);
         $this->assign('page',$show);// 赋值分页输出
         $this->display();
@@ -598,21 +604,43 @@ class OrderController extends BaseController {
         $status_msg = array('未处理','处理中','已完成');
         if(IS_POST)
         {
-            $data['type'] = I('type');
-            $data['status'] = I('status');
-            $data['remark'] = I('remark');                                    
-            $note ="退换货:{$type_msg[$data['type']]}, 状态:{$status_msg[$data['status']]},处理备注：{$data['remark']}";
-            $result = M('return_goods')->where("id= $id")->save($data);    
-            if($result)
-            {        
-            	$type = empty($data['type']) ? 2 : 3;
-            	$where = " order_id = ".$return_goods['order_id']." and goods_id=".$return_goods['goods_id'];
-            	M('order_goods')->where($where)->save(array('is_send'=>$type));//更改商品状态        
-                $orderLogic = new OrderLogic();
-                $log = $orderLogic->orderActionLog($return_goods['order_id'],'refund',$note);
-                $this->success('修改成功!' , U('Admin/Order/return_info',array('id' => $id)));
-                exit;
-            }  
+            $data['refund_money'] = trim(I('money'));
+            $data['id'] = $id;
+            $data['remark'] = I('remark');
+            if(!empty($data['refund_money'])){ //退款
+                $desc = '退款';
+                $user_id = $return_goods['user_id'];
+                $moneyRes = accountLog($user_id,$data['refund_money'],0,$desc);
+                if($moneyRes){
+                    $data['status'] = 2;
+                    M('return_goods')->save($data);
+                    exit(json_encode(callback(true,'')));
+                }
+                exit(json_encode(callback(false,'退款失败')));
+            }
+
+            if(!empty($data['remark'])){ //拒绝退款
+                $data['status'] = 2;
+                M('return_goods')->save($data);
+                exit(json_encode(callback(true,'')));
+            }
+            exit(json_encode(callback(false,'操作失败')));
+
+//            $data['type'] = I('type');
+//            $data['status'] = I('status');
+//            $data['remark'] = I('remark');
+//            $note ="退换货:{$type_msg[$data['type']]}, 状态:{$status_msg[$data['status']]},处理备注：{$data['remark']}";
+//            $result = M('return_goods')->where("id= $id")->save($data);
+//            if($result)
+//            {
+//            	$type = empty($data['type']) ? 2 : 3;
+//            	$where = " order_id = ".$return_goods['order_id']." and goods_id=".$return_goods['goods_id'];
+//            	M('order_goods')->where($where)->save(array('is_send'=>$type));//更改商品状态
+//                $orderLogic = new OrderLogic();
+//                $log = $orderLogic->orderActionLog($return_goods['order_id'],'refund',$note);
+//                $this->success('修改成功!' , U('Admin/Order/return_info',array('id' => $id)));
+//                exit;
+//            }
         }        
         
         $this->assign('id',$id); // 用户
@@ -800,6 +828,10 @@ class OrderController extends BaseController {
      * 退货单列表
      */
     public function return_list(){
+        $order_sn = trim(I('order_sn'));
+        if(!empty($order_sn)){
+            $this->assign('order_sn',$order_sn);
+        }
         $this->display();
     }
     

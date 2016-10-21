@@ -291,3 +291,6 @@ ADD COLUMN `goods_id`  int(11) NOT NULL DEFAULT 0 COMMENT '商品id' AFTER `search
 ALTER TABLE `lm_spec_goods_price`
 ADD COLUMN `weight`  int(11) NULL DEFAULT 0 COMMENT '重量' AFTER `price`;
 
+
+//退货
+ALTER TABLE  `lm_return_goods` ADD  `refund_money` float(11,2) NOT NULL COMMENT  '退款金额' AFTER  `remark`

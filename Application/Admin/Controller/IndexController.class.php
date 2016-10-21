@@ -29,11 +29,23 @@ class IndexController extends BaseController {
             }
             $temp_string .= "0";
             $where .=  "  order_id in(".$temp_string.")";
+
+            //查询退货表
+            $returnList = M('return_goods')->field('order_id')->select();
+            if(!empty($returnList)){
+                foreach ($returnList as $item){
+                    $returnString .= $item['order_id'].",";
+                }
+                $returnString .= "0";
+                $whereOrder .=  " order_id not in(".$returnString.") AND";
+            }
+
+
         }
 
-        $count['not']  = M('order')->where("  `order_status` = 1 AND `pay_status` = 1 AND `shipping_status` <> 1 AND ".$where)->count(); //待发货
+        $whereOrder .= "  `order_status` = 1 AND `pay_status` = 1 AND `shipping_status` <> 1 AND ".$where;
+        $count['not']  = M('order')->where($whereOrder)->count(); //待发货
         $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'  AND  ".$where)->count(); //退货
-//        dd($count);
         $yesterdayTime = strtotime("-1 day");
         $today = date('Y-m-d ')."00:00:00";
         $todayTime = strtotime($today);

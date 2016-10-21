@@ -44,8 +44,11 @@
 <!-- /.content-wrapper -->
 <script>
     $(document).ready(function(){
+        var order_sn = "{$order_sn}";
+        if(order_sn.length != 0){
+            $('#input-order-id').val(order_sn);
+        }
         ajax_get_table('search-form2',1);
-
     });
     // ajax 抓取页面
     function ajax_get_table(tab,page){

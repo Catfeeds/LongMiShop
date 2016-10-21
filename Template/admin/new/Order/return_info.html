@@ -44,60 +44,80 @@
                          				<a href="{:U('Home/Goods/goodsInfo',array('id'=>$return_goods[goods_id]))}" target="_blank">{$goods[goods_name]}</a>                      
                                     </td>
                                 </tr>  
-                                <tr>
-                                    <td>退换货：</td>
-                                    <td>
-                                     <div class="form-group col-xs-3">
-										<select  name="type"  class="form-control">
-                                             <option value="0" <if condition="$return_goods['type'] eq 0">selected="selected"</if>>退货</option>
-                                             <option value="1" <if condition="$return_goods['type'] eq 1">selected="selected"</if>>换货</option>
-                                        </select>
-                                      </div>
-                                          <a href="{:U('Admin/user/account_edit',array('id'=>$return_goods[user_id],'user_money'=>$goods[shop_price],'desc'=>'退货退款到余额'))}">                                          
-                                          <input class="btn btn-primary" type="button"  value="退款到用户余额">
-                                          </a>
-                                      
-                                    </td>
-                                </tr>  
+                                <!--<tr>-->
+                                    <!--<td>退换货：</td>-->
+                                    <!--<td>-->
+                                     <!--<div class="form-group col-xs-3">-->
+										<!--<select  name="type"  class="form-control">-->
+                                             <!--<option value="0" <if condition="$return_goods['type'] eq 0">selected="selected"</if>>退货</option>-->
+                                             <!--<option value="1" <if condition="$return_goods['type'] eq 1">selected="selected"</if>>换货</option>-->
+                                        <!--</select>-->
+                                      <!--</div>-->
+                                          <!--<a href="{:U('Admin/user/account_edit',array('id'=>$return_goods[user_id],'user_money'=>$goods[shop_price],'desc'=>'退货退款到余额'))}">                                          -->
+                                          <!--<input class="btn btn-primary" type="button"  value="退款到用户余额">-->
+                                          <!--</a>-->
+                                      <!---->
+                                    <!--</td>-->
+                                <!--</tr>  -->
                                 <tr>
                                     <td>退货描述：</td>
                                     <td>                    
 					                    <textarea name="reason" id="reason" cols="" rows="" readonly="readonly" class="area" style="width:400px; height:120px;">{$return_goods['reason']}</textarea>                                        
                                     </td>
                                 </tr>  
-                                <tr>
-                                    <td>用户上传照片：</td>
-                                    <td>
-                                         <volist name="return_goods[imgs]" id="item">  
-                                             <a href="{$item}" target="_blank"><img src="{$item}" width="85" height="85" /></a>&nbsp;&nbsp;&nbsp;                            
-                                         </volist>                      					
-                                    </td>
-                                </tr>                                    
+                                <!--<tr>-->
+                                    <!--<td>用户上传照片：</td>-->
+                                    <!--<td>-->
+                                         <!--<volist name="return_goods[imgs]" id="item">  -->
+                                             <!--<a href="{$item}" target="_blank"><img src="{$item}" width="85" height="85" /></a>&nbsp;&nbsp;&nbsp;                            -->
+                                         <!--</volist>                      					-->
+                                    <!--</td>-->
+                                <!--</tr>                                    -->
+
                                 <tr>
                                     <td>状态：</td>
                                     <td>
                                     <div class="form-group  col-xs-3">
-										<select class="form-control" name="status">
+										<select class="form-control" name="status" disabled>
                                              <option value="0" <if condition="$return_goods['status'] eq 0">selected="selected"</if>>未处理</option>
                                              <option value="1" <if condition="$return_goods['status'] eq 1">selected="selected"</if>>处理中</option>
-                                             <option value="2" <if condition="$return_goods['status'] eq 2">selected="selected"</if>>已完成</option>                                             
+                                             <option value="2" <if condition="$return_goods['status'] eq 2">selected="selected"</if>>已完成</option>
                                         </select>
                                          </div>
 
                                     </td>
-                                </tr>     
-                                <tr>
-                                    <td>处理备注：</td>
-                                    <td>                    
-					                    <textarea name="remark" id="remark" cols="" rows=""  class="area" style="width:400px; height:120px;">{$return_goods['remark']}</textarea>                                        
-                                    </td>
-                                </tr>                                                                                                                                                          
+                                </tr>
+                                <if condition="$return_goods['status'] eq 2 and !empty($return_goods['remark'])">
+                                    <tr>
+                                        <td>拒绝原因：</td>
+                                        <td>
+                                            <textarea name="remark" id="remark" cols="" rows=""  class="area" style="width:400px; height:120px;" readonly>{$return_goods['remark']}</textarea>
+                                        </td>
+                                    </tr>
+                                </if>
+                                <if condition="$return_goods['status'] eq 2 and !empty($return_goods['refund_money'])">
+                                    <tr>
+                                        <td>退款金额：</td>
+                                        <td>
+                                            {$return_goods['refund_money']}
+                                        </td>
+                                    </tr>
+                                </if>
                                 </tbody> 
                                 <tfoot>
-                                	<tr>
-                                	<td><input type="hidden" name="id" value="{$id}">
-                                	</td>
-                                	<td class="text-right"><input class="btn btn-primary" type="submit"  value="保存"></td></tr>
+                                	<tr >
+                                        <!--<td><input type="hidden" name="id" value="{$id}">-->
+                                        <!--</td>-->
+                                        <!--<input type="hidden" name="id" value="{$id}" id="return_id">-->
+                                        <td class="text-right" colspan="2" style="margin:0 auto;">
+                                            <if condition="$return_goods['status'] eq 0">
+                                                <button class="btn btn-primary" type="button" onclick="fastShipping('#fastShippingDiv');">同意</button>
+                                                <button class="btn btn-danger"  type="button" onclick="fastShipping('#fastShippingDivs');">拒绝</button>
+                                            </if>
+                                            <!--<input class="btn btn-primary" type="submit"  value="保存">-->
+                                            <!--<input class="btn btn-primary" type="submit"  value="保存">-->
+                                        </td>
+                                    </tr>
                                 </tfoot>                               
                                 </table>
                         </div>                           
@@ -108,9 +128,112 @@
         </div>
     </section>
 </div>
+<div id="fastShippingDiv" style=" display: none;">
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <td class="text-right">退款金额:</td>
+            <td class="text-center">
+                <input class="input-sm my_invoice_no" name="moneys" type="number"  >
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="form-group text-center">
+                    <button onclick="doSubmit(this)" class="btn btn-primary" type="button">确认退款</button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="fastShippingDivs" style=" display: none;">
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <td class="text-right">拒绝原因:</td>
+            <td class="text-center">
+                <input class="input-sm my_invoice_no" name="remark" type="text"  >
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="form-group text-center">
+                    <button onclick="doSubmitss(this)" class="btn btn-primary" type="button">拒绝退货</button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <script>
 function adsubmit(){
 	$('#handleposition').submit();
+}
+var isLock = 0;
+var returnId = "{$id}";
+function fastShipping( objId ){
+    layer.open({
+        type: 1,
+        skin: 'layui-layer-rim', //加上边框
+        area: ['420px', '240px'], //宽高
+        content: $(objId).html()
+    });
+}
+function doSubmit(obj) {
+    if( isLock != 0 ){
+        return ;
+    }
+    var contentDiv = $(obj).parent().parent().parent().parent().parent();
+    var money = contentDiv.find(".my_invoice_no").val();
+    if(money == ''){
+        layer.alert('请填写退款金额', {icon: 2});
+        return;
+    }
+    $.ajax({
+        type : "POST",
+        url:"{:U('Admin/Order/return_info')}",
+        data : {money:money,id:returnId},
+        dataType : 'json',
+        success: function(data){
+            isLock = 0;
+            if( data.state == 1 ){
+                alert("退款成功！");
+                window.location.reload();
+                return;
+            }
+            alert(data.msg);
+        }
+    });
+}
+
+function doSubmitss(obj) {
+    if( isLock != 0 ){
+        return ;
+    }
+    var contentDiv = $(obj).parent().parent().parent().parent().parent();
+    var remark = contentDiv.find(".my_invoice_no").val();
+
+    if(remark == ''){
+        layer.alert('请填写拒绝原因', {icon: 2});
+        return;
+    }
+    $.ajax({
+        type : "POST",
+        url:"{:U('Admin/Order/return_info')}",
+        data : {remark:remark,id:returnId},
+        dataType : 'json',
+        success: function(data){
+            isLock = 0;
+            if( data.state == 1 ){
+                alert("处理成功！");
+                window.location.reload();
+                return;
+            }
+            alert(data.msg);
+        }
+    });
 }
 </script>
 </body>
