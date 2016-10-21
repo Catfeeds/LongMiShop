@@ -6,7 +6,7 @@
         	<div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-list"></i> 优惠券列表</h3>
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 礼品券列表</h3>
                 </div>
                 <div class="panel-body">
 	                <div class="navbar navbar-default">
@@ -68,7 +68,7 @@
                                                 <input type="text" name="id" value="{$list[id]}">
                                             </form>
 
-                                            <!--<a href="{:U('Admin/GiftCoupon/coupon_list',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>-->
+                                            <a href="{:U('Admin/GiftCoupon/coupon_list',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
                                             <a href="{:U('Admin/GiftCoupon/coupon_info',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
                                            <!--  <a data-url="{:U('Admin/GiftCoupon/del_coupon',array('id'=>$list['id']))}" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a> -->
                                            </td>

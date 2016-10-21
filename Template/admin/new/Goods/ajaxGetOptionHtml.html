@@ -94,9 +94,11 @@
             return;
         }
         window.optionchanged = false;
+        var spec_item_number = 0;
         var html = '<table class="table table-bordered table-condensed"><thead><tr class="active">';
         var specs = [];
         $(".spec_item").each(function(i){
+            spec_item_number++;
             var _this = $(this);
 
             var spec = {
@@ -213,8 +215,11 @@
         }
         html+=hh;
         html+="</table>";
-        $("#isChangeOption").val(1);
+        if(spec_item_number == 0 ){
+            html= "";
+        }
         $("#options").html(html);
+        $("#isChangeOption").val(1);
     }
     function setCol(cls){
         $("."+cls).val( $("."+cls+"_all").val());

@@ -187,7 +187,7 @@ class BuyLogic extends BaseLogic
         if( !callbackIsTrue($result)){
             throw new \Exception( getCallbackMessage($result) );
         }
-        $result = changeCodeState( $this -> _post_data['code'] ,$this->userId );
+        $result = changeCodeState( $this -> _post_data['code'] , $this->userId , $this -> _post_data['orderData']['order_id'] );
         if( !callbackIsTrue($result)){
             throw new \Exception( getCallbackMessage($result) );
         }

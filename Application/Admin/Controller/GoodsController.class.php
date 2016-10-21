@@ -775,6 +775,8 @@ class GoodsController extends BaseController {
             $this->assign('specList',$new_arr);
 //        }
 
+        $specGoodsPriceList = M( "spec_goods_price" ) -> where( array("goods_id" => $goods_id) ) -> select();
+
         $html = '';
         $html .= '<table class="table table-bordered table-condensed">';
         $html .= '<thead>';
@@ -835,7 +837,6 @@ class GoodsController extends BaseController {
                 }
             }
         }
-        $specGoodsPriceList = M( "spec_goods_price" ) -> where( array("goods_id" => $goods_id) ) -> select();
 
         $hh = "";
         for ($i = 0; $i < $newlen; $i++) {
@@ -874,6 +875,10 @@ class GoodsController extends BaseController {
         }
         $html .= $hh;
         $html .= "</table>";
+
+        if( empty($specGoodsPriceList) ){
+            $html = '';
+        }
         $this->assign('html',$html);
         $this->assign('goods_id',$goods_id);
         $this->display();

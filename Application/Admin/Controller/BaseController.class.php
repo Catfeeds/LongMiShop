@@ -22,8 +22,8 @@ class BaseController extends Controller {
 
 //        dd(session());
 
-
-//        delFile('./Application/Runtime');//调试使用
+//
+        delFile('./Application/Runtime');//调试使用
    }    
     
     /*
@@ -37,7 +37,7 @@ class BaseController extends Controller {
         	//return;
         }else{
         	if(session('admin_id') > 0 ){
-        		$this->check_priv();//检查管理员菜单操作权限
+//        		$this->check_priv();//检查管理员菜单操作权限
         	}else{
         		$this->error('请先登陆',U('Admin/Admin/login'),1);
         	}
