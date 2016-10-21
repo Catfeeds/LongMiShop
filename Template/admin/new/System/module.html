@@ -21,7 +21,7 @@ ul.group-list li {
 						<div class="navbar-form">
 			               	<label><a href="javascript:void(0)" class="btn btn-block btn-primary" data-url="{:U('System/ctl_detail')}" id="add_ctl">添加控制模块</a></label>			        
 			        		<a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn pull-right btn-default" data-original-title=""><i class="fa fa-reply"></i></a>
-				            <a href="javascript:;" class="btn pull-right btn-default" data-url="http://www.tp-shop.cn/Doc/Index/article/id/259/developer/phper.html" onclick="get_help(this)"><i class="fa fa-question-circle"></i> 在线帮助</a>
+				            <!--<a href="javascript:;" class="btn pull-right btn-default" data-url="http://www.tp-shop.cn/Doc/Index/article/id/259/developer/phper.html" onclick="get_help(this)"><i class="fa fa-question-circle"></i> 在线帮助</a>-->
 			        	</div>
 			        </nav>
 					</div>
@@ -47,7 +47,7 @@ ul.group-list li {
 											<li style="color:#FF3300;">未添加模型</li>
 										<else/>
 											<foreach name="vv.menu" item="vo">
-												<li>{$vo.title}[<if condition="$vo.visible eq 0"><b class="bg-red">显示</b><else/>隐藏</if>]</li>
+												<li>{$vo.title}[<if condition="$vo.visible eq 1"><b class="bg-red">显示</b><else/>隐藏</if>]</li>
 											</foreach>
 										</empty>
 										</ul>

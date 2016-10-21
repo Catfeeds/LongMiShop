@@ -27,6 +27,7 @@ class IndexController extends IndexBaseController {
     }
 
     public function test5(){
+
         exit;
         $send = sendSMS("13611462022","123");
     }

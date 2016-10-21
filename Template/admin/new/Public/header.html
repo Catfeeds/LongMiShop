@@ -7,7 +7,11 @@
 </head>
 <body>
 <div class="g-sd1">
-    <div class="logo"><img src="__STATIC__/SVG/LOGO.svg"></div>
+    <div class="logo">
+        <a href="{:U('Admin/Index/index')}">
+            <img src="__STATIC__/SVG/LOGO.svg">
+        </a>
+    </div>
     <div class="slideTxtBox">
         <div class="hd">
 
@@ -53,8 +57,8 @@
             <foreach name="menu_list" item="vo" key="k" >
                 <ul class="m33">
                     <div class="titel">{$vo.title}</div>
-                    <foreach name="vo.submenu" item="vv" key="kk">
-                        <a href="{$vv.url}" target="RightMain"><li>{$vv.title}</li></a>
+                    <foreach name="vo.subMenu" item="vv" key="kk">
+                        <a href="{:U('Admin/'.$vv['ctl'].'/'.$vv['act'])}" target="RightMain"><li>{$vv.title}</li></a>
                     </foreach>
                 </ul>
             </foreach>

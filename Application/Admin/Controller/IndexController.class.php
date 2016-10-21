@@ -97,6 +97,7 @@ class IndexController extends BaseController {
     	$modules = $roleMenu = array();
     	$rs = M('system_module')->where('level>1 AND visible=1')->order('mod_id ASC')->select();
 
+
         $pmenu = array();
     	if($act_list=='all'){
     		foreach($rs as $row){
@@ -123,12 +124,15 @@ class IndexController extends BaseController {
     	$keys = array_keys($modules);//导航菜单
     	foreach ($pmenu as $k=>$val){
     		if(in_array($k, $keys)){
-    			$val['submenu'] = $modules[$k];//子菜单
+    			$val['subMenu'] = $modules[$k];//子菜单
     			$roleMenu[] = $val;
     		}
     	}
 //
 //    	dd($roleMenu);
+
+//        $roleMenu = include_once 'Application/Admin/Conf/adminMenu.php';
+//        $roleMenu = $roleMenu['admin'];
     	return $roleMenu;
     }
     
