@@ -25,9 +25,10 @@ function checkCode( $code  ){
  * 修改礼品券兑换码使用状态
  * @param $code
  * @param $userId
+ * @param null $orderId
  * @return array
  */
-function changeCodeState( $code , $userId )
+function changeCodeState( $code , $userId , $orderId = null )
 {
     $where = array();
     $couponCodeData = array();
@@ -36,6 +37,9 @@ function changeCodeState( $code , $userId )
     $couponCodeData['use_time'] = time();
     $couponCodeData['user_id'] = $userId;
     $couponCodeData['receive_time'] = time();
+    if( !is_null($orderId) ){
+        $couponCodeData['g_code_order_id'] = $orderId;
+    }
     $result = M('coupon_code')->where($where)->save($couponCodeData);
     if ($result > 0 || $result === 0) {
        return callback( true );

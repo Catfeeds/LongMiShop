@@ -117,9 +117,8 @@ class IndexController extends BaseController {
     public function getRoleMenu($act_list)
     {
     	$modules = $roleMenu = array();
-    	$rs = M('system_module')->where('level>1 AND visible=1')->order('mod_id ASC')->select();
-
-
+    	$rs = M('system_module')->where('level>1 AND visible=1')->order('mod_id ASC') ->select();
+//dd($rs);
         $pmenu = array();
     	if($act_list=='all'){
     		foreach($rs as $row){

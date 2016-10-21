@@ -291,3 +291,9 @@ ADD COLUMN `goods_id`  int(11) NOT NULL DEFAULT 0 COMMENT '商品id' AFTER `search
 ALTER TABLE `lm_spec_goods_price`
 ADD COLUMN `weight`  int(11) NULL DEFAULT 0 COMMENT '重量' AFTER `price`;
 
+
+ALTER TABLE `lm_coupon_code`
+ADD COLUMN `g_code_order_id`  int(11) NULL DEFAULT 0 COMMENT 'G码支付订单id' AFTER `update_time`;
+
+
+

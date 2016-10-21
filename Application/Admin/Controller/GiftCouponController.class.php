@@ -393,18 +393,17 @@ class GiftCouponController extends BaseController {
      * 优惠券详细查看
      */
     public function coupon_list(){
-        //获取优惠券ID
         $cid = I('get.id');
-        //查询是否存在优惠券
-        $check_coupon = M('coupon')->field('id,type')->where(array('id'=>$cid))->find();
-        if(!$check_coupon['id'] > 0)
-            $this->error('不存在该类型优惠券');
+        $check_coupon = M('gift_coupon')->field('id')->where(array('id'=>$cid))->find();
+        if(!$check_coupon['id'] > 0){
+            $this->error('不存在该礼品券');
+        }
 
         //查询该优惠券的列表的数量
-        $sql = "SELECT count(1) as c FROM __PREFIX__coupon_list  l ".
-            "LEFT JOIN __PREFIX__coupon c ON c.id = l.cid ". //联合优惠券表查询名称
-            "LEFT JOIN __PREFIX__order o ON o.order_id = l.order_id ".     //联合订单表查询订单编号
-            "LEFT JOIN __PREFIX__users u ON u.user_id = l.uid WHERE l.cid = ".$cid;    //联合用户表去查询用户名
+        $sql = "SELECT count(1) as c FROM __PREFIX__coupon_code  l ".
+            "LEFT JOIN __PREFIX__gift_coupon c ON c.id = l.gift_coupon_id ". //联合优惠券表查询名称
+            "LEFT JOIN __PREFIX__order o ON o.order_id = l.g_code_order_id ".     //联合订单表查询订单编号
+            "LEFT JOIN __PREFIX__users u ON u.user_id = l.user_id WHERE c.id = ".$cid;    //联合用户表去查询用户名
 
         $count = M()->query($sql);
         $count = $count[0]['c'];
@@ -412,10 +411,11 @@ class GiftCouponController extends BaseController {
         $show = $Page->show();
 
         //查询该优惠券的列表
-        $sql = "SELECT l.*,c.name,o.order_sn,u.nickname FROM __PREFIX__coupon_list  l ".
-            "LEFT JOIN __PREFIX__coupon c ON c.id = l.cid ". //联合优惠券表查询名称
-            "LEFT JOIN __PREFIX__order o ON o.order_id = l.order_id ".     //联合订单表查询订单编号
-            "LEFT JOIN __PREFIX__users u ON u.user_id = l.uid WHERE l.cid = ".$cid.    //联合用户表去查询用户名
+        $sql = "SELECT l.*,c.gift_coupon_name,o.order_sn,u.nickname FROM __PREFIX__coupon_code  l ".
+            "LEFT JOIN __PREFIX__gift_coupon c ON c.id = l.gift_coupon_id ". //联合优惠券表查询名称
+            "LEFT JOIN __PREFIX__order o ON o.order_id = l.g_code_order_id ".     //联合订单表查询订单编号
+            "LEFT JOIN __PREFIX__users u ON u.user_id = l.user_id WHERE c.id = ".$cid .    //联合用户表去查询用户名
+            " order by l.use_time desc ".
             " limit {$Page->firstRow} , {$Page->listRows}";
         $coupon_list = M()->query($sql);
         $this->assign('coupon_type',C('COUPON_TYPE'));
