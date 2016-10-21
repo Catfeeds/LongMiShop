@@ -37,7 +37,7 @@ class BaseController extends Controller {
         	//return;
         }else{
         	if(session('admin_id') > 0 ){
-//        		$this->check_priv();//检查管理员菜单操作权限
+        		$this->check_priv();//检查管理员菜单操作权限
         	}else{
         		$this->error('请先登陆',U('Admin/Admin/login'),1);
         	}
@@ -74,12 +74,14 @@ class BaseController extends Controller {
     		$act_list = explode(',', $act_list);
     		if($mod_id){
     			if(!in_array($mod_id, $act_list)){
+                    echo "您的账号没有此菜单操作权限,超级管理员可分配权限 【".$ctl."】/【".$act."】";exit;
     				$this->error('您的账号没有此菜单操作权限,超级管理员可分配权限',U('Admin/Index/index'));
     				exit;
     			}else{
     				return true;
     			}
     		}else{
+    		    echo "请系统管理员先在菜单管理页添加该菜单【".$ctl."】/【".$act."】";exit;
     			$this->error('请系统管理员先在菜单管理页添加该菜单',U('Admin/System/menu'));
     			exit;
     		}
