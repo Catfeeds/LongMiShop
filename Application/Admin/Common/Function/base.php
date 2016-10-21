@@ -20,8 +20,7 @@ function adminLog($log_info){
  * @return bool
  */
 function is_supplier(){
-    return true;
-    if(session('admin_role_id') == 2){
+    if(session('admin_role_id') == 3){
         return true;
     }
     return false;
