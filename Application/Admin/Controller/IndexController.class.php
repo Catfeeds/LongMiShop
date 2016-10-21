@@ -18,21 +18,43 @@ class IndexController extends BaseController {
    
     public function welcome(){
 
+//        $where = "1 = 1";
+        if(is_supplier()){
+            $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('order_id') -> select();
+            $temp_string = "";
+            if(!empty($id_lists)){
+                foreach ($id_lists as $id_list){
+                    $temp_string .= $id_list['order_id'].",";
+                }
+            }
+            $temp_string .= "0";
+            $where .=  "  order_id in(".$temp_string.")";
+        }
 
-        $count['not']  = M('order')->where(" `order_status` = 1 AND `pay_status` = 1 AND `shipping_status` <> 1 ")->count(); //待发货
-        $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'    ")->count(); //退货
+        $count['not']  = M('order')->where("  `order_status` = 1 AND `pay_status` = 1 AND `shipping_status` <> 1 AND ".$where)->count(); //待发货
+        $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'  AND  ".$where)->count(); //退货
+//        dd($count);
         $yesterdayTime = strtotime("-1 day");
         $today = date('Y-m-d ')."00:00:00";
         $todayTime = strtotime($today);
-        $where = "add_time > ".$yesterdayTime." AND add_time < ".$todayTime."";
+        $where .= " AND add_time > ".$yesterdayTime." AND add_time < ".$todayTime."";
         $count['yesterday'] = M('order')->where($where)->count(); //昨天订单
         $money = M('order')->field("SUM(order_amount) as money")->where($where)->find(); //昨天金额
-        $count['moneySum'] = !empty($money['money']) ? $money['money'] : 0 ;
+        if(!empty($money['money'])){
+            $money = explode(".", $money['money']);
+            $count['moneySum'] = $money;
+        }else{
+            $count['moneySum'][0] = 0;
+            $count['moneySum'][1] = 0;
+        }
+
+
         $logName = M('admin')->field('user_name')->where(array('admin_id'=>session('admin_id')))->find();
         $role_name = M('admin_role')->field('role_name')->where(array('role_id'=>session('admin_role_id')))->find();
         $logName['role_name'] = $role_name['role_name'];
         $this->assign('logName',$logName);
         $this->assign('count',$count);
+//        dd($count);
         $this->display();
     }
 

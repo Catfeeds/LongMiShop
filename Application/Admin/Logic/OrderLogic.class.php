@@ -15,9 +15,28 @@ class OrderLogic extends RelationModel
      * @param int $page_size  获取数量
      */
     public function getOrderList($condition,$order='',$start=0,$page_size=20){
-
         $res = M('order')->where($condition)->limit("$start,$page_size")->order($order)->select();
+
         return $res;
+
+//        if(is_supplier()){
+//            $where .= "1=1";
+//            !empty($condition['order_sn']) ? $where .= " o.order_sn = '".$condition['order_sn']."'" : false;
+//            !empty($condition['order_status'])  ? $where .= " AND o.order_status = '".$condition['order_status']."'" : false;
+//            !empty($condition['pay_status']) ? $where .= " AND o.pay_status = '".$condition['pay_status']."'" : false;
+//            !empty($condition['pay_code']) ? $where .= " AND o.pay_code = '".$condition['pay_code']."'" : false;
+//            !empty($condition['shipping_status']) ? $where .= " AND o.shipping_status = '".$condition['shipping_status']."'" : false;
+//            !empty($condition['user_id']) ? $where .= " AND o.shipping_status = '".$condition['shipping_status']."'" : false;
+//            !empty($condition['add_time']) ? $where .= " AND o.add_time > '".$condition['begin']."' AND o.add_time < '".$condition['end']."'" : false  ;
+//            $where .= " AND g.admin_id = '".session('admin_id')."'";
+//            $sql = "SELECT g.*,o.* FROM __PREFIX__order_goods as g LEFT JOIN __PREFIX__order as o ON o.order_id = g.order_id WHERE ".$where." ORDER BY '".$order."'  LIMIT ".$start.",".$page_size."";
+//            $res = $this->query($sql);
+//            return $res;
+//
+//        }else{
+//            $res = M('order')->where($condition)->limit("$start,$page_size")->order($order)->select();
+//            return $res;
+//        }
 
     }
     /*
