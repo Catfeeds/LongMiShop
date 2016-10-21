@@ -80,6 +80,7 @@ class BaseController extends Controller {
     				return true;
     			}
     		}else{
+    		    echo "请系统管理员先在菜单管理页添加该菜单【".$ctl."】/【".$act."】";exit;
     			$this->error('请系统管理员先在菜单管理页添加该菜单',U('Admin/System/menu'));
     			exit;
     		}
