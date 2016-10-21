@@ -36,15 +36,18 @@
                             <!--<a href="{:U('Admin/Admin/admin_info');}"  target="RightMain">-->
                             <!--<li style="background-image:url(__STATIC__/SVG/a-9.svg)">财务</li>-->
                             <!--</a>-->
+
                             <a href="{:U('Admin/Admin/admin_info');}"  target="RightMain">
                                 <li style="background-image:url(__STATIC__/SVG/a-10.svg)">设置</li>
                             </a>
                             <!--<a href="{:U('Admin/Admin/logout');}"  target="RightMain">-->
                             <!--<li style="background-image:url(__STATIC__/SVG/a-11.svg)">账号</li>-->
                             <!--</a>-->
+                            <if condition="!is_supplier()">
                             <a href="{:U('Admin/System/cleanCache');}"  target="RightMain">
                                 <li style="background-image:url(__STATIC__/SVG/a-8.svg)">清理</li>
                             </a>
+                             </if>
                             <a href="{:U('Admin/Admin/logout');}">
                                 <li style="background-image:url(__STATIC__/SVG/a-11.svg)">登出</li>
                             </a>
