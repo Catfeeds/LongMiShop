@@ -74,6 +74,7 @@ class BaseController extends Controller {
     		$act_list = explode(',', $act_list);
     		if($mod_id){
     			if(!in_array($mod_id, $act_list)){
+                    echo "您的账号没有此菜单操作权限,超级管理员可分配权限 【".$ctl."】/【".$act."】";exit;
     				$this->error('您的账号没有此菜单操作权限,超级管理员可分配权限',U('Admin/Index/index'));
     				exit;
     			}else{
