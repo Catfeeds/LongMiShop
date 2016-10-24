@@ -15,17 +15,6 @@ function adminLog($log_info){
 }
 
 
-/**
- * 是否为供应商
- * @return bool
- */
-function is_supplier(){
-    if(session('admin_role_id') == 3){
-        return true;
-    }
-    return false;
-}
-
 
 function getAdminInfo($admin_id){
     return D('admin')->where("admin_id=$admin_id")->find();

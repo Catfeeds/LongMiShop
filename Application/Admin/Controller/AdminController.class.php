@@ -239,8 +239,11 @@ class AdminController extends BaseController {
 //            $this -> error("此功能只对供应商开放");
         }
 
+        $accountMoney = getSupplierAccountMoney();
+        $this->assign('accountMoney',$accountMoney);
         $this->display();
     }
+
 
 
     /**
