@@ -76,7 +76,6 @@ class OrderController extends BaseController {
         foreach($condition as $key=>$val) {
             $Page->parameter[$key]   =  urlencode($val);
         }
-//        DD($condition['add_time'] );
         $show = $Page->show();
         //获取订单列表
         $orderList = $orderLogic->getOrderList($condition,$sort_order,$Page->firstRow,$Page->listRows);
@@ -97,7 +96,9 @@ class OrderController extends BaseController {
                         $orderList[$keys]['isFast'] = 0;
                         break;
                     }
-
+                }
+                if( $orderList[$keys]['isFast'] == 1 && $tempAdminID != session("admin_id") ){
+                    $orderList[$keys]['isFast'] = 0;
                 }
 //                dd(session('admin_id'));
             }
