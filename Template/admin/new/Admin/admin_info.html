@@ -14,7 +14,7 @@
                 </div>
                 <div class="panel-body ">   
                     <!--表单数据-->
-                    <form method="post" id="adminHandle" action="{:U('Admin/adminHandle')}">                    
+                    <form method="post" id="adminHandle" action="{:U('Admin/adminHandle')}" enctype='multipart/form-data' >
                         <!--通用信息-->
                     <div class="tab-content col-md-10">                 	  
                         <div class="tab-pane active" id="tab_tongyong">                           
@@ -28,9 +28,9 @@
                                     </td>
                                 </tr>  
                                 <tr>
-                                    <td>Email地址：</td>
+                                    <td>手机号码：</td>
                                     <td >
-                         				<input type="text" class="form-control" name="email" value="{$info.email}" >
+                         				<input type="text" class="form-control" name="phone" value="{$info.phone}" >
                                                                      
                                     </td>
                                 </tr>  
@@ -38,6 +38,12 @@
                                     <td>登陆密码：</td>
                                     <td>
                                			<input type="password" class="form-control" name="password" value="{$info.password}" >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>上传头像</td>
+                                    <td>
+                                        <input type="file" name="headerpic" class="form-control">
                                     </td>
                                 </tr>
                                 <if condition=" ($act eq 'add') OR ($info['admin_id'] gt 1)">
@@ -74,8 +80,8 @@ function adsubmit(){
 		layer.msg('用户名不能为空！', {icon: 2,time: 1000});   //alert('少年，用户名不能为空！');
 		return false;
 	}
-	if($('input[name=email]').val() == ''){
-		layer.msg('邮箱不能为空！', {icon: 2,time: 1000});//alert('少年，邮箱不能为空！');
+	if($('input[name=phone]').val() == ''){
+		layer.msg('手机号码不能为空！', {icon: 2,time: 1000});//alert('少年，邮箱不能为空！');
 		return false;
 	}
 	if($('input[name=password]').val() == '' && '{$act}' == 'add'){
