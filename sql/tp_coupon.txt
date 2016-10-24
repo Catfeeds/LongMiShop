@@ -303,9 +303,9 @@ CREATE TABLE `lm_goods_check` (
   `goods_id` int(11) DEFAULT NULL COMMENT '商品id',
   `admin_id` int(11) DEFAULT NULL COMMENT '供应商id',
   `check` int(2) DEFAULT NULL COMMENT '审核状态 0未审核 1已审核 2已下架',
-  `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  `create_time` int(11) DEFAULT NULL COMMENT '创建时间',
   `update_time` int(11) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 

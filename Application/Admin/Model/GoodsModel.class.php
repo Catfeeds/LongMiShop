@@ -42,7 +42,7 @@ class GoodsModel extends Model
                'goods_id'=> $goods_id,
                'admin_id'=>$admin_id,
                'check'=>0,
-                'time'=>time(),
+                'create_time'=>time(),
             );
             M('goods_check')->add($data);
         }
