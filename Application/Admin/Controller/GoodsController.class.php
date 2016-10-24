@@ -884,5 +884,85 @@ class GoodsController extends BaseController {
         $this->display();
     }
 
+    public function goodsCheck(){
+        if(IS_POST){
+            $id = I('goods_id');
+            $type = I('type');
+            $uptatetime = time();
+            if($type == 'getOn'){
+                $is_on_sale = 1;
+                $check = 1;
+                $mes = '上';
+            }else{
+                $is_on_sale = 0;
+                $check = 2;
+                $mes = '下';
+            }
+            $goodData = array(
+
+            );
+            $goodsRes = M('goods')->save(array('goods_id'=>$id,'is_on_sale'=>$is_on_sale));
+            $checkRes = M('goods_check')->where(array('goods_id'=>$id))->save(array('check'=>$check,'uptatetime'=>$uptatetime));
+            if($goodsRes && $checkRes){
+                $mes = $mes."架成功";
+                exit(json_encode(callback(true,$mes)));
+//                $this->success($mes.'架成功',U('Admin/Goods/goodsCheck'));
+            }else{
+                $mes = $mes."架失败";
+                exit(json_encode(callback(false,$mes)));
+            }
+            exit;
+
+        }
+        $this->display();
+    }
+
+    public function ajaxGoodsCheck(){
+//        $where = ' 1 = 1 '; // 搜索条件
+//        I('intro')    && $where = "$where and ".I('intro')." = 1" ;
+//        I('brand_id') && $where = "$where and brand_id = ".I('brand_id') ;
+//        (I('is_on_sale') !== '') && $where = "$where and is_on_sale = ".I('is_on_sale') ;
+//        $cat_id = I('cat_id');
+//        // 关键词搜索
+//        $key_word = I('key_word') ? trim(I('key_word')) : '';
+//        if($key_word)
+//        {
+//            $where = "$where and (goods_name like '%$key_word%' or goods_sn like '%$key_word%')" ;
+//        }
+//
+//        if($cat_id > 0)
+//        {
+//            $grandson_ids = getCatGrandson($cat_id);
+//            $where .= " and cat_id in(".  implode(',', $grandson_ids).") "; // 初始化搜索条件
+//        }
+//        if(is_supplier()){
+//            $where .= " and admin_id ='".session('admin_id')."'";
+//        }
+
+
+
+        $model = M('goods_check');
+        $count = $model->where($where)->count();
+        $Page  = new AjaxPage($count,10);
+        /**  搜索条件下 分页赋值
+        foreach($condition as $key=>$val) {
+        $Page->parameter[$key]   =   urlencode($val);
+        }
+         */
+        $show = $Page->show();
+        $prefix = C('DB_PREFIX');
+//        $order_str = "`{$_POST['orderby1']}` {$_POST['orderby2']}";
+        $goodsList = $model->join("LEFT JOIN `".$prefix."goods`   ON ".$prefix."goods_check.goods_id = ".$prefix."goods.goods_id  ")->where($where)->order($order_str)->limit($Page->firstRow.','.$Page->listRows)->select();
+//        dd($goodsList);
+//        $catList = D('goods_category')->select();
+//        $catList = convert_arr_key($catList, 'id');
+//        $this->assign('catList',$catList);
+        $this->assign('goodsList',$goodsList);
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display();
+    }
+
+
+
 
 }

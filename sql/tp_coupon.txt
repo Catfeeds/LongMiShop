@@ -298,3 +298,14 @@ ADD COLUMN `g_code_order_id`  int(11) NULL DEFAULT 0 COMMENT 'G码支付订单id' AFT
 ALTER TABLE  `lm_return_goods` ADD  `refund_money` float(11,2) NOT NULL COMMENT  '退款金额' AFTER  `remark`
 
 
+CREATE TABLE `lm_goods_check` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(11) DEFAULT NULL COMMENT '商品id',
+  `admin_id` int(11) DEFAULT NULL COMMENT '供应商id',
+  `check` int(2) DEFAULT NULL COMMENT '审核状态 0未审核 1已审核 2已下架',
+  `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  `update_time` int(11) DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+

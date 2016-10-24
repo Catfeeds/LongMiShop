@@ -1,0 +1,122 @@
+<form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <td style="width: 1px;" class="text-center">
+                <!--
+                    <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                -->    
+                </td>                
+                <td class="text-right">
+                    <a href="javascript:sort('goods_id');">ID</a>
+                </td>
+                <td class="text-left">
+                    <a href="javascript:sort('goods_name');">商品名称</a>
+                </td>
+                <td class="text-left">
+                    <a href="javascript:sort('goods_name');">商品id</a>
+                </td>
+                <td class="text-left">
+                    <a href="javascript:sort('goods_sn');">供应商id</a>
+                </td>                                
+                <td class="text-left">
+                    <a href="javascript:sort('cat_id');">状态</a>
+                </td>                
+                <td class="text-left">
+                    <a href="javascript:sort('shop_price');">添加时间</a>
+                </td>
+
+
+
+                <td class="text-right">操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="goodsList" id="list">
+                <tr>
+                    <td class="text-center">
+                       <!-- <input type="checkbox" name="selected[]" value="6">-->
+                        <input type="hidden" name="shipping_code[]" value="flat.flat">
+                    </td>
+                    <td class="text-right">{$list.id}</td>
+                    <td class="text-left"><a href="{: U('Admin/Goods/addEditGoods',array('id'=>$list['goods_id']))}" target="_blank">{$list.goods_name}</a></td>
+                    <td class="text-left">{$list.goods_id}</td>
+                    <td class="text-left">{$list.admin_id}</td>
+                    <td class="text-left">
+                        <if condition="$list['check'] == 0">
+                            未审核
+                        </if>
+                        <if condition="$list['check'] ==1">
+                            已审核
+                        </if>
+                        <if condition="$list['check'] == 2">
+                            已下架
+                        </if>
+                    </td>
+                    <td class="text-left">{$list.createtime|date='Y-m-d H:i:s',###}</td>
+
+
+
+                    <td class="text-right">
+                        <if condition="$list['check'] neq 1">
+                            <a href="javascript:void(0);" onclick="putaway({$list['goods_id']},'getOn')"  class="btn btn-primary" title="编辑">上架</a>
+                        <else/>
+                            <a href="javascript:void(0);" onclick="putaway({$list['goods_id']},'next')" class="btn btn-primary" title="编辑">下架</a>
+                        </if>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+</form>
+<div class="row">
+    <div class="col-sm-3 text-left"></div>
+    <div class="col-sm-9 text-right">{$page}</div>
+</div>
+<script>
+    // 点击分页触发的事件
+    $(".pagination  a").click(function(){
+        cur_page = $(this).data('p');
+        ajax_get_table('search-form2',cur_page);
+    });
+	
+    /*
+     * 清除静态页面缓存
+     */
+    function ClearGoodsHtml(goods_id)
+    {
+    	$.ajax({
+				type:'GET',
+				url:"{:U('Admin/System/ClearGoodsHtml')}",
+				data:{goods_id:goods_id},
+				dataType:'json',
+				success:function(data){
+					layer.alert(data.msg, {icon: 2});								 
+				}
+		});
+    }
+    /*
+     * 清除商品缩列图缓存
+     */
+    function putaway(goods_id,type)
+    {
+    	$.ajax({
+				type:'POST',
+				url:"{:U('Admin/Goods/goodsCheck')}",
+				data:{goods_id:goods_id,type:type},
+				dataType:'json',
+				success:function(data){
+//					layer.alert(data.msg, {icon: 2});
+                    console.log(data);
+                    if(data.state ==1 ){
+                        alert(data.msg);
+                        window.location.href=window.location.href;
+                    }else{
+                        alert(data.msg);
+                    }
+				}
+		});
+    }		
+</script>
