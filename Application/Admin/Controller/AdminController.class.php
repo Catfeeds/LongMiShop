@@ -248,4 +248,43 @@ class AdminController extends BaseController {
     	$this->assign('page',$show); 	
     	$this->display();
     }
+
+    /**
+     * 商户提现申请
+     */
+    public function createWithdrawDeposit()
+    {
+        if( !is_supplier() ){
+//            $this -> error("此功能只对供应商开放");
+        }
+
+        $this->display();
+    }
+
+
+    /**
+     * 商户提现列表
+     */
+    public function withdrawDeposit()
+    {
+        $this->display();
+    }
+
+
+    /**
+     * ajax商户提现列表
+     */
+    public function ajaxWithdrawDeposit()
+    {
+        $this->display();
+    }
+
+
+    /**
+     * 商户提现操作
+     */
+    public function checkWithdrawDeposit()
+    {
+        $this->success("操作成功");
+    }
 }

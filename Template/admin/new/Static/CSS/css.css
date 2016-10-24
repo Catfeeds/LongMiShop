@@ -1,5 +1,5 @@
 /* reset */
-html, body, h1, h2, h3, h4, h5, h6, div, dl, dt, dd, ul, ol, li, p, blockquote, pre, hr, figure, table, caption, form, fieldset, legend, input, button, textarea, menu {
+html, body, h1, h2, h3, h4, h5, h6, div,  ul, ol, li, p, blockquote, pre, hr, figure, table, caption, form, fieldset, legend, input, button, textarea, menu {
 	margin: 0;
 	padding: 0;
 }
@@ -578,6 +578,49 @@ a:hover {
 	padding-left: 10px;
 	line-height: 30px;
 }
+.btn_c {
+	float: right;
+	margin-left: 5px;
+
+}
+.btn_c a {
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb( 0, 103, 193 );
+	border-radius: 2px;
+	background-image: -moz-linear-gradient( 90deg, rgb(0,119,221) 0%, rgb(1,106,194) 100%);
+	background-image: -webkit-linear-gradient( 90deg, rgb(0,119,221) 0%, rgb(1,106,194) 100%);
+	background-image: -ms-linear-gradient( 90deg, rgb(0,119,221) 0%, rgb(1,106,194) 100%);
+	color: #F8F8F8;
+	padding-top: 2px;
+	padding-right: 10px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	line-height: 30px;
+	transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-webkit-transition: all .3s ease;
+	-o-transition: all .3s ease;
+}
+.btn_c a:hover {
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb( 0, 103, 193 );
+	border-radius: 2px;
+	background-image: -moz-linear-gradient( 90deg, rgb(1,106,194) 0%, rgb(0,119,221) 100%);
+	background-image: -webkit-linear-gradient( 90deg, rgb(1,106,194) 0%, rgb(0,119,221) 100%);
+	background-image: -ms-linear-gradient( 90deg, rgb(1,106,194) 0%, rgb(0,119,221) 100%);
+	color: #FFF;
+	padding-top: 4px;
+	padding-right: 10px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+	line-height: 30px;
+	transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-webkit-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out
+}
 /* 本例子css */
 .slideTxtBox1 {
 	border-style: solid;
@@ -607,6 +650,7 @@ a:hover {
 	left: 20px;
 	top: -1px;
 	height: 32px;
+	width: 638px;
 }
 .slideTxtBox1 .hd ul li {
 	float: left;
@@ -622,6 +666,8 @@ a:hover {
 .slideTxtBox1 .bd ul {
 	padding: 15px;
 	zoom: 1;
+	overflow: hidden;
+	display: block;
 }
 .slideTxtBox1 .bd li {
 	height: 24px;
@@ -702,4 +748,49 @@ a:hover {
 	background: #7f7f7f;
 	opacity: 1;
 	filter: alpha(opacity=80);
+}
+.bank-account{
+	overflow: hidden;
+	border-radius: 3px;
+	background-color: rgb( 255, 255, 255 );
+	box-shadow: 0.5px 0.866px 1px 0px rgb( 222, 222, 222 );
+	margin-right: 10px;
+	border: 1px solid #F6F6F6;
+	float: left;
+	margin-bottom: 10px;
+}
+.bank-account_left{
+	text-align: center;
+	float: left;
+	z-index: 1;
+	padding: 10px;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #F6F6F6;
+	width: 240px;
+}
+.bank-account_left img{
+	height: 60px;
+	width: 60px;
+}
+.bank-account_right{
+	float: left;
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+.label{
+	background-color: #F90;
+	color: #FFF;
+	padding: 2px;
+	border-radius:2px
+}
+.la{
+	font-size: 18px;
+	color: #333;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.color_a{
+	color: #F00;
+	padding-right: 15px;
 }

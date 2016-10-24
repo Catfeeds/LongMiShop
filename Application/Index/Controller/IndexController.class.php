@@ -413,7 +413,7 @@ class IndexController extends IndexBaseController {
                 "ctl" => $datas['controller'],
                 "act" => $datas['action'],
             );
-            if( !isExistenceDataWithCondition( "system_module_copy" , $condition ) ){
+            if( !isExistenceDataWithCondition( "system_module" , $condition ) ){
                 $add = array(
                     "module" => "module",
                     "level" => "3",
@@ -424,7 +424,7 @@ class IndexController extends IndexBaseController {
 
                 );
 
-                M('system_module_copy') -> add($add);
+                M('system_module') -> add($add);
             }
         }
     }
