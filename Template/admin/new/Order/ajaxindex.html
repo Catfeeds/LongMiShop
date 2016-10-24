@@ -11,12 +11,14 @@
                 <td class="text-center">
                     <a href="javascript:sort('consignee');">收货人</a>
                 </td>
-                <td class="text-center">
-                    <a href="">总金额</a>
-                </td>
-                <td class="text-center">
-                    <a href="">应付金额</a>
-                </td>
+                <if condition=" !is_supplier() ">
+                    <td class="text-center">
+                        <a href="">总金额</a>
+                    </td>
+                    <td class="text-center">
+                        <a href="">应付金额</a>
+                    </td>
+                </if>
                 <td class="text-center">
                     <a href="javascript:sort('order_status');">订单状态</a>
                 </td>
@@ -39,8 +41,10 @@
                     </td>
                     <td class="text-center">{$list.order_sn}</td>
                     <td class="text-center">{$list.consignee}:{$list.mobile}</td>
-                    <td class="text-center">{$list.total_price}</td>
-                    <td class="text-center">{$list.order_amount}</td>
+                    <if condition=" !is_supplier() ">
+                        <td class="text-center">{$list.total_amount}</td>
+                        <td class="text-center">{$list.order_amount}</td>
+                    </if>
                     <td class="text-center">{$order_status[$list[order_status]]}<if condition="$list['is_cod'] eq '1'"><span style="color: red">(货到付款)</span></if></td>
                     <td class="text-center">{$pay_status[$list[pay_status]]}</td>
                     <td class="text-center">{$shipping_status[$list[shipping_status]]}</td>
@@ -48,12 +52,12 @@
                     <td class="text-center">{$list.shipping_name}</td>
                     <td class="text-center">{$list.add_time|date='Y-m-d H:i',###}</td>
                     <td class="text-center">
-                        <if condition = " $list['order_status'] eq 1 and $list['pay_status'] eq 1 and $list['shipping_status'] neq 1 and empty($list['sendBack'])   ">
+                        <if condition = " $list['order_status'] eq 1 and $list['pay_status'] eq 1 and $list['shipping_status'] neq 1 and empty($list['sendBack']) and !empty($list['isFast'])  ">
                             <a href="javascript:fastShipping('{$list.order_id}')" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="快速发货">快速发货</a>
                         </if>
 
                         <if condition="!empty($list['sendBack'])">
-                            <a href="{:U('Admin/order/return_list',array('order_sn'=>$list['sendBack']))}" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="快速发货">售后</a>
+                            <a href="{:U('Admin/order/return_list',array('order_sn'=>$list['sendBack']))}" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="售后">售后</a>
                         </if>
 
                         <a href="{:U('Admin/order/detail',array('order_id'=>$list['order_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>

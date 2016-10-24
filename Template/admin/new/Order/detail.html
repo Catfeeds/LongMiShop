@@ -33,7 +33,9 @@
                         <td>会员:</td>
                         <td>E-Mail:</td>
                         <td>电话:</td>
-                        <td>应付:</td>
+                        <if condition=" !is_supplier() ">
+                            <td>应付:</td>
+                        </if>
                         <td>订单 状态:</td>
                         <td>下单时间:</td>
                         <td>支付时间:</td>
@@ -45,7 +47,9 @@
                         <td><a href="#" target="_blank">{$order.consignee}</a></td>
                         <td><a href="#">{$order.email}</a></td>
                         <td>{$order.mobile}</td>
-                        <td>{$order.order_amount}</td>
+                        <if condition=" !is_supplier() ">
+                            <td>{$order.order_amount}</td>
+                        </if>
                         <td id="order-status">{$order_status[$order[order_status]]} / {$pay_status[$order[pay_status]]}<if condition="$order['pay_code'] eq 'cod'"><span style="color: red">(货到付款)</span></if> / {$shipping_status[$order[shipping_status]]}</td>
                     	<td>{$order.add_time|date='Y-m-d H:i',###}</td>
                     	<td><if condition="$order.pay_time neq 0">

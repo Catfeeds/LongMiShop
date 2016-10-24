@@ -26,9 +26,13 @@
                                     <td class="text-center">
                                         <a href="#">支付时间</a>
                                     </td>
-                                    <td class="text-center">
-                                        <a href="javascript:sort('total_amount');">订单总价</a>
-                                    </td>
+
+                                    <if condition=" !is_supplier() ">
+                                        <td class="text-center">
+                                            <a href="javascript:sort('total_amount');">订单总价</a>
+                                        </td>
+                                    </if>
+
                                     <td class="text-center">操作</td>
                                 </tr>
                                 </thead>
@@ -44,7 +48,11 @@
                                         <!--<td class="text-center">{$list.shipping_name}</td>-->
                                         <td class="text-center">{$list.shipping_price}</td>
 										<td class="text-center">{$list.pay_time|date='Y-m-d H:i',###}</td>
-                                        <td class="text-center">{$list.total_amount}</td>
+
+                                        <if condition=" !is_supplier() ">
+                                            <td class="text-center">{$list.total_amount}</td>
+                                        </if>
+
                                         <td class="text-center">
                                         	<if condition="$list['shipping_status'] neq 1">
                                             <a href="{:U('Admin/order/delivery_info',array('order_id'=>$list['order_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情">去发货</a>

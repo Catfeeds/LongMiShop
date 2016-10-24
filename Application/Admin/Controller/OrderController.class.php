@@ -80,13 +80,25 @@ class OrderController extends BaseController {
         $show = $Page->show();
         //获取订单列表
         $orderList = $orderLogic->getOrderList($condition,$sort_order,$Page->firstRow,$Page->listRows);
-
+//        dd($condition);
         if(!empty($orderList)){
             foreach($orderList as $keys=>$items){
+                //是否售后
                 $returnRes = M('return_goods')->field('order_sn')->where(array('order_id'=>$items['order_id']))->find();
                 if(!empty($returnRes)){
                     $orderList[$keys]['sendBack'] = $returnRes['order_sn'];
                 }
+                //快速发货
+                $goodsList = M('order_goods')->where(array('order_id'=>$items['order_id']))->select();
+                $orderList[$keys]['isFast'] = 1;
+                foreach($goodsList as $goodItem){
+                    if($goodItem['admin_id'] != session('admin_id') ){
+                        $orderList[$keys]['isFast'] = 0;
+                        break;
+                    }
+
+                }
+//                dd(session('admin_id'));
             }
         }
 //        dd($orderList);
@@ -132,6 +144,27 @@ class OrderController extends BaseController {
     	$show = $Page->show();
     	$orderList = M('order')->where($condition)->limit($Page->firstRow.','.$Page->listRows)->order('add_time DESC')->select();
 
+        if(is_supplier()){
+            //计算邮费
+            $region_list = get_region_list();
+            foreach($orderList as $key=>$item){
+                $goods_data = '';
+                $ordeList = M('order_goods')->where(array('order_id'=>$item['order_id'],'admin_id'=>session('admin_id')))->select();
+                foreach($ordeList as $keys=>$items){
+                    $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$items['goods_id']."'")->find();
+                    $goods_data[$keys]['goods_id'] = $items['goods_id']; //商品id
+                    $goods_data[$keys]['goods_num'] = $items['goods_num']; //件数  重量
+                    $goods_data[$keys]['goods_name'] = $items['goods_name']; //商品名称
+                    $goods_data[$keys]['goods_price'] = $items['goods_price']; //商品价格
+                    $goods_data[$keys]['weight'] = $goods_res['weight'];  //商品重量
+                    $goods_data[$keys]['shipping_code'] = $goods_res['delivery_way']; //配送方式
+                    $goods_data[$keys]['site'] = $region_list[$item[$key]['province']]['name']; //收获地址
+                }
+                $count_postage = count_postage($goods_data); //计算运费
+                $orderList[$key]['shipping_price'] = $count_postage['data']['count'];
+            }
+        }
+
         $this->assign('orderList',$orderList);
     	$this->assign('page',$show);// 赋值分页输出
     	$this->display();
@@ -146,7 +179,35 @@ class OrderController extends BaseController {
         $order = $orderLogic->getOrderInfo($order_id);
         $orderGoods = $orderLogic->getOrderGoods($order_id);
         $button = $orderLogic->getOrderButton($order);
-//        dd($button);
+
+
+
+        if(!empty($order) && is_supplier()){
+            $ordeList = M('order_goods')->where(array('order_id'=>$order_id,'admin_id'=>session('admin_id')))->select();
+            $region_list = get_region_list();
+            foreach($ordeList as $key=>$item){
+                $goods_num = $item['goods_num'];
+                $goods_price = $item['goods_price'];
+                $sum .= $goods_num * $goods_price;
+
+                $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
+                $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
+                $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
+                $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称
+                $goods_data[$key]['goods_price'] = $item['goods_price']; //商品价格
+                $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
+                $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
+                $goods_data[$key]['site'] = $region_list[$order['province']]['name']; //收获地址
+
+
+            }
+            $count_postage = count_postage($goods_data); //计算运费
+            $order['goods_price'] = $sum; //商品总价
+            $order['shipping_price'] = $count_postage['data']['count']; //运费
+            $order['order_amount'] =  $sum + $count_postage['data']['count']; //应付
+
+        }
+//        dd($order);
         // 获取操作记录
         $action_log = M('order_action')->where(array('order_id'=>$order_id))->order('log_time desc')->select();
         $this->assign('order',$order);
@@ -519,16 +580,33 @@ class OrderController extends BaseController {
     	$orderLogic = new OrderLogic();
     	$order = $orderLogic->getOrderInfo($order_id);
     	$orderGoods = $orderLogic->getOrderGoods($order_id);
-    	$this->assign('order',$order);
+
     	$this->assign('orderGoods',$orderGoods);
         $condition = 'order_id='.$order_id;
         if(is_supplier()){
             $condition .= " and admin_id = '".session('admin_id')."'";
+            //计算邮费
+            $region_list = get_region_list();
+            $ordeList = M('order_goods')->where(array('order_id'=>$order['order_id'],'admin_id'=>session('admin_id')))->select();
+            foreach($ordeList as $keys=>$items){
+                $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$items['goods_id']."'")->find();
+                $goods_data[$keys]['goods_id'] = $items['goods_id']; //商品id
+                $goods_data[$keys]['goods_num'] = $items['goods_num']; //件数  重量
+                $goods_data[$keys]['goods_name'] = $items['goods_name']; //商品名称
+                $goods_data[$keys]['goods_price'] = $items['goods_price']; //商品价格
+                $goods_data[$keys]['weight'] = $goods_res['weight'];  //商品重量
+                $goods_data[$keys]['shipping_code'] = $goods_res['delivery_way']; //配送方式
+                $goods_data[$keys]['site'] = $region_list[$order['province']]['name']; //收获地址
+            }
+            $count_postage = count_postage($goods_data); //计算运费
+            $order['shipping_price'] = $count_postage['data']['count'];
         }
+
 		$delivery_record = M('delivery_doc')->where($condition)->select();
         $expressList = include_once 'Application/Common/Conf/express.php'; //快递名称
         $this->assign('expressList',$expressList);
 		$this->assign('delivery_record',$delivery_record);//发货记录
+        $this->assign('order',$order);
     	$this->display();
     }
     
