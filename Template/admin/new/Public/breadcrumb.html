@@ -1,5 +1,8 @@
 <div class="right_titel">
-	<div class="user">{$logName['user_name']}</div>
+	<div class="user" style="<if condition = '$logName["headerpic"]'> background-image: url('{$logName.headerpic}'); </if>"  >
+		{$logName['user_name']}
+	</div>
 	<div class="user-label">{$logName['role_name']}</div>
 	<div class="user-label">龙米科技</div>
 </div>
+
