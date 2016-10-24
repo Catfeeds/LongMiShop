@@ -25,13 +25,20 @@ class IndexController extends IndexBaseController {
     public function index(){
     	$this->display();
     }
-
-    public function test5(){
-
-        exit;
-        $send = sendSMS("13611462022","123");
-    }
     public function test4(){
+        exit;
+        $list = M("system_module") -> where("ctl = ''") -> select();
+//        dd($list)/;
+        foreach ($list as $item ){
+            $data = array(
+                "module" => $item["module"],
+                "level" => $item["level"],
+                "title" => $item["title"],
+                "visible" => 1,
+                "parent_id" => 0,
+            );
+            M("system_module_copy") -> add($data);
+        }
         exit;
         $weChatConfig = M('wx_user')->find();
         if( empty( $weChatConfig ) ){
@@ -378,5 +385,116 @@ class IndexController extends IndexBaseController {
     }
 
 
+    /**
+     * @note 获取控制器和action存放数据库
+     */
+    public function test5(){
+        $modules = array('Admin');  //模块名称
+        $i = 0;
+        foreach ($modules as $module) {
+            $all_controller = $this->getController($module);
+            foreach ($all_controller as $controller) {
+                $controller_name = $controller;
+                $all_action = $this->getAction($module, $controller_name);
+                foreach ($all_action as $action) {
+                    $data[$i] = array(
+                        'controller' => $controller,
+                        'action' => $action,
+//                        'desc'=>$this->get_cc_desc($module,$controller,$action)
+                    );
+                    $i++;
+                }
+            }
+        }
+        foreach ($data as $datas){
+            $condition = array(
+                "module" => "module",
+                "level" => "3",
+                "ctl" => $datas['controller'],
+                "act" => $datas['action'],
+            );
+            if( !isExistenceDataWithCondition( "system_module_copy" , $condition ) ){
+                $add = array(
+                    "module" => "module",
+                    "level" => "3",
+                    "ctl" => $datas['controller'],
+                    "act" => $datas['action'],
+                    "title" => "",
+                    "visible"=>1,
 
+                );
+
+                M('system_module_copy') -> add($add);
+            }
+        }
+    }
+
+    /**
+     * @note 获取控制器
+     * @param $module
+     * @return array|null
+     */
+    protected function getController($module){
+        if(empty($module)) return null;
+        $module_path = APP_PATH . '/' . $module . '/Controller/';  //控制器路径
+        if(!is_dir($module_path)) return null;
+        $module_path .= '/*.class.php';
+        $ary_files = glob($module_path);
+        foreach ($ary_files as $file) {
+            if (is_dir($file)) {
+                continue;
+            }else {
+                $files[] = basename($file, C('DEFAULT_C_LAYER').'.class.php');
+            }
+        }
+        return $files;
+    }
+
+    /**
+     * @note 获取方法
+     *
+     * @param $module
+     * @param $controller
+     *
+     * @return array|null
+     */
+    protected function getAction($module, $controller){
+        if(empty($controller)) return null;
+        $content = file_get_contents(APP_PATH . '/'.$module.'/Controller/'.$controller.'Controller.class.php');
+
+        preg_match_all("/.*?public.*?function(.*?)\(.*?\)/i", $content, $matches);
+        $functions = $matches[1];
+
+        //排除部分方法
+        $inherents_functions = array('login','logout','uppassword','_initialize');//如有排除方法添加此数组
+        $inherents_functions = array('_initialize',"__construct","public_assign","check_priv");//如有排除方法添加此数组
+        foreach ($functions as $func){
+            $func = trim($func);
+            if(!in_array($func, $inherents_functions)){
+                if (strlen($func)>0)   $customer_functions[] = $func;
+            }
+        }
+        return $customer_functions;
+    }
+
+    /**
+     * @note 获取函数的注释
+     *
+     * @param $module Admin
+     * @param $controller Auth
+     * @param $action index
+     *
+     * @return string 注释
+     *
+     */
+    protected function get_cc_desc($module,$controller,$action){
+        $desc=$module.'\Controller\\'.$controller.'Controller';
+
+        $func  = new \ReflectionMethod(new $desc(),$action);
+        $tmp   = $func->getDocComment();
+        $flag  = preg_match_all('/@note(.*?)\n/',$tmp,$tmp);
+        $tmp   = trim($tmp[1][0]);
+        $tmp   = $tmp !='' ? $tmp:'无';
+        return $tmp;
+    }
 }

@@ -47,7 +47,7 @@ ul.group-list li {
 											<li style="color:#FF3300;">未添加模型</li>
 										<else/>
 											<foreach name="vv.menu" item="vo">
-												<li>{$vo.title}[<if condition="$vo.visible eq 1"><b class="bg-red">显示</b><else/>隐藏</if>]</li>
+												<li>[<if condition="$vo.visible eq 1"><b class="bg-red">显示</b><else/>隐藏</if>]{$vo.title}</li>
 											</foreach>
 										</empty>
 										</ul>
@@ -115,6 +115,10 @@ function call_back(msg){
 	}
 }
 </script>
-
+<style>
+	ul.group-list li {
+		width: 500px;
+	}
+</style>
 </body>
 </html>
