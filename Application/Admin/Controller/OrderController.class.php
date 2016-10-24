@@ -97,7 +97,12 @@ class OrderController extends BaseController {
                         break;
                     }
                 }
-                if( $orderList[$keys]['isFast'] == 1 && $tempAdminID != session("admin_id") ){
+                if( $orderList[$keys]['isFast'] == 1 &&
+                    (
+                        ( is_supplier() && $tempAdminID != session("admin_id") ) ||
+                        ( !is_supplier() &&  $tempAdminID == 0  )
+                    )
+                ){
                     $orderList[$keys]['isFast'] = 0;
                 }
 //                dd(session('admin_id'));
