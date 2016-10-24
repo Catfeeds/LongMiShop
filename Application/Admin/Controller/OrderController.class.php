@@ -100,7 +100,7 @@ class OrderController extends BaseController {
                 if( $orderList[$keys]['isFast'] == 1 &&
                     (
                         ( is_supplier() && $tempAdminID != session("admin_id") ) ||
-                        ( !is_supplier() &&  $tempAdminID == 0  )
+                        ( !is_supplier() &&  $tempAdminID != 0  )
                     )
                 ){
                     $orderList[$keys]['isFast'] = 0;
