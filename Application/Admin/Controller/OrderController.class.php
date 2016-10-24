@@ -91,8 +91,9 @@ class OrderController extends BaseController {
                 //快速发货
                 $goodsList = M('order_goods')->where(array('order_id'=>$items['order_id']))->select();
                 $orderList[$keys]['isFast'] = 1;
+                $tempAdminID = $goodsList[0]['admin_id'];
                 foreach($goodsList as $goodItem){
-                    if($goodItem['admin_id'] != session('admin_id') ){
+                    if(  $goodItem['admin_id'] != $tempAdminID ){
                         $orderList[$keys]['isFast'] = 0;
                         break;
                     }
