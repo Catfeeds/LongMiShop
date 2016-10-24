@@ -62,10 +62,7 @@ class IndexController extends BaseController {
         }
 
 
-        $logName = M('admin')->field('user_name')->where(array('admin_id'=>session('admin_id')))->find();
-        $role_name = M('admin_role')->field('role_name')->where(array('role_id'=>session('admin_role_id')))->find();
-        $logName['role_name'] = $role_name['role_name'];
-        $this->assign('logName',$logName);
+
         $this->assign('count',$count);
 //        dd($count);
         $this->display();

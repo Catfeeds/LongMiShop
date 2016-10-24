@@ -2,3 +2,36 @@
 .g-mn1c{
 	margin-left: 0px;
 }
+
+.right_titel {
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb( 228, 228, 228 );
+	background-image: -moz-linear-gradient( 90deg, rgb(234,234,234) 0%, rgb(251,251,251) 100%);
+	background-image: -webkit-linear-gradient( 90deg, rgb(234,234,234) 0%, rgb(251,251,251) 100%);
+	background-image: -ms-linear-gradient( 90deg, rgb(234,234,234) 0%, rgb(251,251,251) 100%);
+	height: 52px;
+}
+.right_titel .user {
+	line-height: 52px;
+	float: left;
+	font-size: 14px;
+	background-image: url(../SVG/user.svg);
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 40px;
+	margin-left: 10px;
+	background-size: 32px 32px;
+	font-weight: bold;
+	padding-right: 20px;
+}
+.right_titel .user-label {
+	 border-radius: 4px;
+	 background-color: #34a6df;
+	 padding: 5px;
+	 float: left;
+	 font-size: 14px;
+	 color: #FFF;
+	 margin-left: 5px;
+	 margin-top: 12px;
+ }

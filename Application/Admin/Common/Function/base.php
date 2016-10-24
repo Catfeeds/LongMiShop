@@ -61,14 +61,20 @@ function getAdminInfo($admin_id){
  */
 function navigate_admin()
 {
-    $navigate = include APP_PATH.'Common/Conf/navigate.php';
-    $location = strtolower('Admin/'.CONTROLLER_NAME);
-    $arr = array(
-        '后台首页'=>'javascript:void();',
-        $navigate[$location]['name']=>'javascript:void();',
-        $navigate[$location]['action'][ACTION_NAME]=>'javascript:void();',
-    );
-    return $arr;
+
+    $logName = M('admin')->field('user_name')->where(array('admin_id'=>session('admin_id')))->find();
+    $role_name = M('admin_role')->field('role_name')->where(array('role_id'=>session('admin_role_id')))->find();
+    $logName['role_name'] = $role_name['role_name'];
+    return $logName;
+
+//    $navigate = include APP_PATH.'Common/Conf/navigate.php';
+//    $location = strtolower('Admin/'.CONTROLLER_NAME);
+//    $arr = array(
+//        '后台首页'=>'javascript:void();',
+//        $navigate[$location]['name']=>'javascript:void();',
+//        $navigate[$location]['action'][ACTION_NAME]=>'javascript:void();',
+//    );
+//    return $arr;
 }
 
 /**

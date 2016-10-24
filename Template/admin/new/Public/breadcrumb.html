@@ -1,11 +1,5 @@
-<div class="breadcrumbs" id="breadcrumbs">
-	<ol class="breadcrumb">
-	<foreach name="navigate_admin" key="k" item="v">
-	    <if condition="$k eq '后台首页'">  
-	        <li><a href="{$v}"><i class="fa fa-home"></i>&nbsp;&nbsp;{$k}</a></li>
-	    <else/>    
-	        <li><a href="{$v}">{$k}</a></li>
-	    </if>                  
-	</foreach>          
-	</ol>
+<div class="right_titel">
+	<div class="user">{$logName['user_name']}</div>
+	<div class="user-label">{$logName['role_name']}</div>
+	<div class="user-label">龙米科技</div>
 </div>

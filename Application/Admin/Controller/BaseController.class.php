@@ -17,7 +17,8 @@ class BaseController extends Controller {
         $this->assign('upgradeMsg',$upgradeMsg);    
         //用户中心面包屑导航
         $navigate_admin = navigate_admin();
-        $this->assign('navigate_admin',$navigate_admin);
+        $this->assign('logName',$navigate_admin);
+//        $this->assign('navigate_admin',$navigate_admin);
 //        tpversion();
 
 //        dd(session());
