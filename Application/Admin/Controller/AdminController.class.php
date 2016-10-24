@@ -46,6 +46,25 @@ class AdminController extends BaseController {
     	}else{
     		$data['password'] = encrypt($data['password']);
     	}
+
+    	if($_FILES['headerpic']['size'] != 0){
+            $uploadConfig = array(
+                "savePath" =>"adminAccount/",
+                "exts"     => array('jpg','gif','png','jpeg'),
+                "saveName" => session('admin_id').'_'.mt_rand(),
+                "replace"  => True,
+                "maxSize"  => 1024*1024,
+            );
+            $upload = new \Think\Upload($uploadConfig);//实例化上传类
+            $info = $upload->upload();
+//            dd($info);
+            if($info){
+                $data['headerpic'] = $info['headerpic']['urlpath'];
+            }else{
+                $this->error('头像上传失败');
+                exit;
+            }
+        }
     	if($data['act'] == 'add'){
     		unset($data['admin_id']);    		
     		$data['add_time'] = time();

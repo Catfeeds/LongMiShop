@@ -308,4 +308,6 @@ CREATE TABLE `lm_goods_check` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
+ALTER TABLE  `lm_admin` ADD  `phone` VARCHAR( 20 ) NOT NULL COMMENT  '手机号码' AFTER  `email`
+ALTER TABLE  `lm_admin` ADD  `headerpic` VARCHAR( 255 ) NOT NULL COMMENT  '用户头像' AFTER  `phone`
 
