@@ -255,7 +255,7 @@ class AdminController extends BaseController {
     public function createWithdrawDeposit()
     {
         if( !is_supplier() ){
-//            $this -> error("此功能只对供应商开放");
+            $this -> error("此功能只对供应商开放");
         }
         if(IS_POST){
             $data = I('post.');

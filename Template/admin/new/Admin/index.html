@@ -44,9 +44,9 @@
 		                     <td>{$vo.add_time}</td>
 		                     <td>
 		                      <a class="btn btn-primary" href="{:U('Admin/admin_info',array('admin_id'=>$vo['admin_id']))}"><i class="fa fa-pencil"></i></a>
-		                      <if condition="$vo['admin_id'] gt 1">
-		                      <a class="btn btn-danger" href="javascript:void(0)" data-url="{:U('Admin/adminHandle')}" data-id="{$vo.admin_id}" onclick="delfun(this)"><i class="fa fa-trash-o"></i></a>
-							  </if>
+		                      <!--<if condition="$vo['admin_id'] gt 1">-->
+		                      <!--<a class="btn btn-danger" href="javascript:void(0)" data-url="{:U('Admin/adminHandle')}" data-id="{$vo.admin_id}" onclick="delfun(this)"><i class="fa fa-trash-o"></i></a>-->
+							  <!--</if>-->
 							</td>
 		                   </tr>
 		                  </foreach>
