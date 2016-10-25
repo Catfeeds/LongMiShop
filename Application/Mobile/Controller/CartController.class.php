@@ -133,8 +133,10 @@ class CartController extends MobileBaseController {
         }
 
         $totalPrice = $result['total_price'];
+        $sum = 0;
         //计算邮费
         foreach($result['cartList'] as $key => $item){
+
             if($item['selected'] == 1){ 
               $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
               $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
@@ -145,7 +147,16 @@ class CartController extends MobileBaseController {
               $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
               $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址  
             }
+
+            if($item['admin_id'] == 0){
+                $sum += $item['member_goods_price'];
+            }
+
+
         }
+
+
+
         $count_postage = count_postage($goods_data); //运费
         $totalPrice['goods_fee'] = $totalPrice['total_fee'];
         $totalPrice['total_fee'] = $totalPrice['total_fee'] + $count_postage['data']['count'];
@@ -153,7 +164,7 @@ class CartController extends MobileBaseController {
          $shippingList = M('Plugin')->where("`type` = 'shipping' and status = 1")->select();// 物流公司
 
         $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCanUseCoupon( $this->user_id , $totalPrice['goods_fee'] );
+        $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum );
         $this->assign('couponList',$result['data']['result']);
         $this->assign('shippingList', $shippingList); // 物流公司
         $this->assign('cartList', $cartList); // 购物车的商品
