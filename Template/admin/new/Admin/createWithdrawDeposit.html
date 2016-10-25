@@ -13,7 +13,7 @@
         <div class="function_box">
             <div class="data-box">
                 <div class="data" style="width:230px">
-                    <p class="data-t1"><span>￥</span>{$accountMoney}.<span>00</span></p>
+                    <p class="data-t1"><span>￥</span>{$moneySum.0}.<span>{$moneySum.1}</span></p>
                     <p class="data-t2">账户余额</p>
                 </div>
                 <div style="clear:both"></div>
@@ -22,7 +22,7 @@
                         <tr>
                             <td nowrap><label for="select"></label>
                                 <span class="gray">填写提现金额：</span>
-                                <input type="text" name="money" id="appDate1" onKeyUp="clearNoNum(this)"  style="width:287px" class="text" placeholder="最多可提现{$accountMoney}.00元"></td>
+                                <input type="text" name="money" id="appDate1" onKeyUp="clearNoNum(this)"  style="width:287px" class="text" placeholder="最多可提现{$accountMoney}元"></td>
                         </tr>
                         <tr>
                             <td nowrap><span class="gray">可提现方式（必填）：</span>
@@ -95,7 +95,7 @@
         if(money.length == 0){
             alert('请填写提现金额');
             return false;
-        }else if(money > moneyMax){
+        }else if( parseFloat(money) > parseFloat(moneyMax) ){
             alert('提现余额大于账户余额');
             return false;
         }else if(bank == 0){
