@@ -257,10 +257,45 @@ class AdminController extends BaseController {
         if( !is_supplier() ){
 //            $this -> error("此功能只对供应商开放");
         }
-
+        if(IS_POST){
+            $data = I('post.');
+            $userLogic = new \Common\Logic\UsersLogic();
+            $info = $userLogic->sms_code_verify($data['mobile'],$data['verify'],session('admin_id'));
+            if($info['status'] != 1){
+                $this->error($info['msg']);exit;
+            }
+            $data['admin_id'] = session('admin_id');
+            $data['state'] = 0;
+            $data['create_time'] = time();
+            $res = M('admin_withdrawals')->add($data);
+            if($res){
+                $this->success('申请成功');
+            }else{
+                $this->error('申请失败');
+            }
+            exit;
+        }
         $accountMoney = getSupplierAccountMoney();
+        $accountMoney = 100;
+        $phone = M('admin')->field('phone')->where("admin_id = '".session('admin_id')."'")->find();
         $this->assign('accountMoney',$accountMoney);
+        $this->assign('phone',$phone['phone']);
+        $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
         $this->display();
+    }
+
+    //手机修改验证码发送
+    public function send_sms_reg(){
+        $mobile = I('send');
+        if(!check_mobile($mobile)){
+            exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
+        }
+        $userLogic = new \Common\Logic\UsersLogic();
+        $code =  rand(1000,9999);
+        $send = $userLogic->sms_log($mobile,$code,session('admin_id'));
+        if($send['status'] != 1)
+            exit(json_encode(array('status'=>-1,'msg'=>$send['msg'])));
+        exit(json_encode(array('status'=>1,'msg'=>'验证码已发送，请注意查收')));
     }
 
 
@@ -279,6 +314,19 @@ class AdminController extends BaseController {
      */
     public function ajaxWithdrawDeposit()
     {
+        $type = I('type');
+        switch($type){
+            case 'untreated':$where['state'] = 0; //未处理
+                break;
+            case 'processed':$where['state'] = 1; //以处理
+                break;
+            case 'reject':$where['state'] = 2; //驳回
+                break;
+        }
+        $prefix = C('DB_PREFIX');
+        $list = M('admin_withdrawals')->join("LEFT JOIN ".$prefix."admin ON ".$prefix."admin.admin_id = ".$prefix."admin_withdrawals.admin_id")->where($where)->select(); //->limit($Page->firstRow,$Page->listRows)
+
+        $this->assign('list',$list);
         $this->display();
     }
 
@@ -288,6 +336,33 @@ class AdminController extends BaseController {
      */
     public function checkWithdrawDeposit()
     {
+        if(IS_POST){
+            $id = I('id');
+            $state = I('state');
+            $stateRes = M('admin_withdrawals')->field('state')->where(array('id'=>$id))->find();
+            if($stateRes['state'] != 0){
+                exit(json_encode(callback(false,"该申请已处理")));
+            }
+            switch($state){
+                case 'processed':$data['state'] = 1; //以处理
+                    break;
+                case 'reject':$data['state'] = 2; //驳回
+                    break;
+            }
+            $data['id'] = $id;
+            $data['update_time'] = time();
+            $manageRes = M('admin_withdrawals')->save($data);
+
+            if($manageRes){
+                exit(json_encode(callback(true,"处理成功")));
+            }else{
+                exit(json_encode(callback(false,"处理失败")));
+            }
+
+
+
+        }
+
         $this->success("操作成功");
     }
 }

@@ -25,18 +25,20 @@
                 </ul>
             </div>
             <div class="bd">
-                <ul>
+                <ul id="ajax_return_all">
 
-                </ul>
-                <ul>
-
-
-                </ul>
-                <ul>
 
 
                 </ul>
-                <ul>
+                <ul id="ajax_return_untreated">
+
+
+                </ul>
+                <ul id="ajax_return_processed">
+
+
+                </ul>
+                <ul id="ajax_return_reject">
 
 
                 </ul>
@@ -55,3 +57,41 @@
 <script src="__STATIC__/date/mobiscroll_005.js" type="text/javascript"></script>
 </body>
 </html>
+<script>
+    $(document).ready(function(){
+        ajax_get_table('all','ajax_return_all');
+        ajax_get_table('untreated','ajax_return_untreated');
+        ajax_get_table('processed','ajax_return_processed');
+        ajax_get_table('reject','ajax_return_reject');
+    });
+    // ajax 抓取页面
+    function ajax_get_table(type,id){
+        $.ajax({
+            type : "GET",
+            url:"/index.php/Admin/Admin/ajaxWithdrawDeposit/type/"+type,//+tab,
+            success: function(data){
+                $("#"+id+"").html('');
+                $("#"+id+"").append(data);
+            }
+        });
+    }
+
+    function ajaxOperate(id,state){
+        $.ajax({
+            type : "POST",
+            url:"/index.php/Admin/Admin/checkWithdrawDeposit/",
+            data:{id:id,state:state},
+            dataType:'json',
+            success: function(data){
+                if(data.state == 1){
+                    alert(data.msg);
+//                    window.location.href = window.location.href;
+                    window.location.reload();
+                }else{
+
+                    alert(data.msg);
+                }
+            }
+        });
+    }
+</script>

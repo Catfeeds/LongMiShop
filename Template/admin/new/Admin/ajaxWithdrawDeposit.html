@@ -1,36 +1,63 @@
-<div class="bank-account">
-    <div class="bank-account_left"><img src="__STATIC__/img/default.svg">
-        <p>龙米商城龙米商城 </p>
+<volist name="list" id="item">
+    <div class="bank-account">
+        <div class="bank-account_left">
+            <if condition="!empty($item['headerpic'])">
+                <img src="{$item['headerpic']}">
+            <else />
+                <img src="__STATIC__/img/default.svg">
+            </if>
+
+            <p>{$item.user_name} </p>
+        </div>
+        <div class="bank-account_right">
+            <table width="100%" border="0" cellspacing="0" cellpadding="10">
+                <tr>
+                    <td nowrap>
+                        <span class="label">
+                            <if condition="$item['mode'] eq 1">
+                                对私账户
+                            <else />
+                                对公账户
+                            </if>
+                        </span>
+                    </td>
+                    <td nowrap>{$item.bank}<span class="la">{$item.card_number}</span></td>
+                    <td colspan="2" align="right" nowrap>{$item.bank_name}&nbsp;{$item.phone}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" nowrap>提现金额：<span class="color_a">{$item.money}</span>提交时间：{$item.create_time|date='Y/m/d H:i:s',###}</td>
+
+                    <td align="left" nowrap>
+                        <if condition="$item['state'] eq 0">
+                            <span class="btn_c">
+                                <a href="javascript:ajaxOperate({$item['id']},'processed');">已处理</a>
+                            </span>
+                            <span class="btn_c">
+                                <a href="javascript:ajaxOperate({$item['id']},'reject');">驳回</a>
+                            </span>
+                        </if>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div class="bank-account_right">
-        <table width="100%" border="0" cellspacing="0" cellpadding="10">
-            <tr>
-                <td nowrap><span class="label">对私账户</span></td>
-                <td nowrap>中国银行 <span class="la">6055 4498 4440 368</span></td>
-                <td colspan="2" align="right" nowrap>李小明&nbsp;18665093655</td>
-            </tr>
-            <tr>
-                <td colspan="3" nowrap>提现金额：<span class="color_a">998.00</span>提交时间：2016/11/16 18:45:10</td>
-                <td align="left" nowrap><span class="btn_c"><a href="#">已处理</a></span> <span class="btn_c"><a href="#">驳回</a></span></td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class="bank-account">
-    <div class="bank-account_left"><img src="__STATIC__/img/default.svg">
-        <p>龙米商城龙米商城 </p>
-    </div>
-    <div class="bank-account_right">
-        <table width="100%" border="0" cellspacing="0" cellpadding="10">
-            <tr>
-                <td nowrap><span class="label">对私账户</span></td>
-                <td nowrap>中国银行 <span class="la">6055 4498 4440 368</span></td>
-                <td colspan="2" align="right" nowrap>李小明&nbsp;18665093655</td>
-            </tr>
-            <tr>
-                <td colspan="3" nowrap>提现金额：<span class="color_a">998.00</span>提交时间：2016/11/16 18:45:10</td>
-                <td align="left" nowrap><span class="btn_c"><a href="#">已处理</a></span> <span class="btn_c"><a href="#">驳回</a></span></td>
-            </tr>
-        </table>
-    </div>
-</div>
+</volist>
+
+<!--<div class="bank-account">-->
+    <!--<div class="bank-account_left"><img src="__STATIC__/img/default.svg">-->
+        <!--<p>龙米商城龙米商城 </p>-->
+    <!--</div>-->
+    <!--<div class="bank-account_right">-->
+        <!--<table width="100%" border="0" cellspacing="0" cellpadding="10">-->
+            <!--<tr>-->
+                <!--<td nowrap><span class="label">对私账户</span></td>-->
+                <!--<td nowrap>中国银行 <span class="la">6055 4498 4440 368</span></td>-->
+                <!--<td colspan="2" align="right" nowrap>李小明&nbsp;18665093655</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td colspan="3" nowrap>提现金额：<span class="color_a">998.00</span>提交时间：2016/11/16 18:45:10</td>-->
+                <!--<td align="left" nowrap><span class="btn_c"><a href="#">已处理</a></span> <span class="btn_c"><a href="#">驳回</a></span></td>-->
+            <!--</tr>-->
+        <!--</table>-->
+    <!--</div>-->
+<!--</div>-->

@@ -13,69 +13,107 @@
         <div class="function_box">
             <div class="data-box">
                 <div class="data" style="width:230px">
-                    <p class="data-t1"><span>￥</span>10020.<span>00</span></p>
+                    <p class="data-t1"><span>￥</span>{$accountMoney}.<span>00</span></p>
                     <p class="data-t2">账户余额</p>
                 </div>
                 <div style="clear:both"></div>
-                <table width="100%" border="0" cellpadding="6">
-                    <tr>
-                        <td nowrap><label for="select"></label>
-                            <span class="gray">填写提现金额：</span>
-                            <input type="text" name="input2" id="appDate1" onKeyUp="clearNoNum(this)"  style="width:287px" class="text" placeholder="最多可提现10020.00元"></td>
-                    </tr>
-                    <tr>
-                        <td nowrap><span class="gray">可提现方式（必填）：</span>
-                            <label>
-                                <input name="RadioGroup1" type="radio" id="RadioGroup1_0" value="单选" checked>
-                                对私账户(支持提现至个人银行借记卡)</label>
-                            <label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="radio" name="RadioGroup1" value="单选" id="RadioGroup1_1">
-                                对公账户(支持提现到公司银行卡)</label>
-                            <p>
+                <form method="post" id="createFrom" action="">
+                    <table width="100%" border="0" cellpadding="6">
+                        <tr>
+                            <td nowrap><label for="select"></label>
+                                <span class="gray">填写提现金额：</span>
+                                <input type="text" name="money" id="appDate1" onKeyUp="clearNoNum(this)"  style="width:287px" class="text" placeholder="最多可提现{$accountMoney}.00元"></td>
+                        </tr>
+                        <tr>
+                            <td nowrap><span class="gray">可提现方式（必填）：</span>
+                                <label>
+                                    <input name="mode" type="radio" id="RadioGroup1_0" value="1" checked >
+                                    对私账户(支持提现至个人银行借记卡)</label>
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="mode" value="2" id="RadioGroup1_1">
+                                    对公账户(支持提现到公司银行卡)</label>
+                                <p>
 
-                            <ul class="tip">
-                                <li>1.请仔细填写账户信息，如果填写错误导致资金流失，龙米网概不负责；</li>
-                                <li>2.只支持提现到银行借记卡，不支持信用卡和存折。提现 审核周期为1~3个工作日；</li>
-                            </ul>
-                            </p></td>
-                    </tr>
-                    <tr>
-                        <td nowrap><span class="gray">开户银行：</span>
-                            <select name="select5" class="select">
-                                <option>中国工商银行</option>
-                            </select></td>
-                    </tr>
-                    <tr>
-                        <td nowrap><label for="select"></label>
-                            <span class="gray">银行卡卡号：</span>
-                            <input type="text" name="input2" id="appDate1"  style="width:300px" class="text" placeholder="只支持提现到银行借记卡，不支付信用卡"></td>
-                    </tr>
-                    <tr>
-                        <td nowrap><label for="select"></label>
-                            <span class="gray">开卡人姓名：</span>
-                            <input type="text" name="input2" id="appDate1"  style="width:300px" class="text" placeholder="准确填写银行卡开卡人姓名，否则无法提现"></td>
-                    </tr>
-                    <tr>
-                        <td nowrap><label for="select"></label>
-                            <span class="gray">短信验证码：</span>
-                            <input type="text" name="input2" id="appDate1"  style="width:150px" class="text" placeholder="请输入短信验证码">
-                            <span class="btn_b" style="float:none"><a href="#">获取</a></span>
-                            <p>
-                            <ul class="tip">
-                                <li>短信验证码将发送到您的手机:<span class="gray">18099999999</span>,请注意查收</li>
-                            </ul>
-                            </p></td>
-                    </tr>
-                    <tr>
-                        <td nowrap><div class="btn_a"><a href="#">确认并提交</a></div></td>
-                    </tr>
-                </table>
+                                <ul class="tip">
+                                    <li>1.请仔细填写账户信息，如果填写错误导致资金流失，龙米网概不负责；</li>
+                                    <li>2.只支持提现到银行借记卡，不支持信用卡和存折。提现 审核周期为1~3个工作日；</li>
+                                </ul>
+                                </p></td>
+                        </tr>
+                        <tr>
+                            <td nowrap><span class="gray">开户银行：</span>
+                                <select name="bank" class="select">
+                                    <option value="0">请选择</option>
+                                    <option value="中国工商银行">中国工商银行</option>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td nowrap><label for="select"></label>
+                                <span class="gray">银行卡卡号：</span>
+                                <input type="text" name="card_number" id="appDate1"  style="width:300px" class="text" placeholder="只支持提现到银行借记卡，不支付信用卡"></td>
+                        </tr>
+                        <tr>
+                            <td nowrap><label for="select"></label>
+                                <span class="gray">开卡人姓名：</span>
+                                <input type="text" name="bank_name" id="appDate1"  style="width:300px" class="text" placeholder="准确填写银行卡开卡人姓名，否则无法提现"></td>
+                        </tr>
+                        <tr>
+                            <td nowrap><label for="select"></label>
+                                <span class="gray">短信验证码：</span>
+                                <input type="text" name="verify" id="appDate1"  style="width:150px" class="text" placeholder="请输入短信验证码">
+                                <span class="btn_b" style="float:none">
+                                    <!--<a href="#">获取</a>-->
+                                    <a href="javascript:void(0);" onClick="sendCode(this,'new_mobile')" id="cide" intervaltime="{$sms_time_out}">获取</a>
+                                </span>
+                                <p>
+                                <ul class="tip">
+                                    <input type="hidden"  id="new_mobile" value="{$phone}" name="mobile">
+                                    <li>短信验证码将发送到您的手机:<span class="gray">{$phone}</span>,请注意查收</li>
+                                </ul>
+                                </p></td>
+                        </tr>
+                        <tr>
+                            <td nowrap><div class="btn_a"><a href="javascript:void(0);" onclick="fromSubmiut()">确认并提交</a></div></td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         </div>
     </div>
 </div>
 </div>
+<script src="__PUBLIC__/js/jquery-1.8.2.min.js"></script>
 <script>
+
+    function fromSubmiut(){
+        var money = $("input[name='money']").val();
+        var moneyMax =  "{$accountMoney}";
+        var bank = $("select[name='bank']").val();
+        var card_number = $("input[name='card_number']").val();
+        var bank_name = $("input[name='bank_name']").val();
+        var verify = $("input[name='verify']").val();
+        if(money.length == 0){
+            alert('请填写提现金额');
+            return false;
+        }else if(money > moneyMax){
+            alert('提现余额大于账户余额');
+            return false;
+        }else if(bank == 0){
+            alert('请选择开户银行');
+            return false;
+        }else if(card_number.length == 0){
+            alert('银行卡号不能为空');
+            return false;
+        }else if(bank_name.length == 0){
+            alert('请填写开卡人姓名');
+            return false;
+        }else if(verify.length == 0){
+            alert('验证码不能为空');
+            return  false;
+        }else{
+            $("#createFrom").submit();
+        }
+    }
     function clearNoNum(obj)
     {
         obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
@@ -84,6 +122,59 @@
         obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
         obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
     }
+
+    var kong = true;
+
+    function sendCode(obj,input_id){
+        var id = $(obj).attr('id');
+        var input = $('#'+input_id).val();
+
+        //发送验证码
+        if(kong){
+            $.ajax({
+                type : "get",
+                url  : "/index.php?m=Admin&c=Admin&a=send_sms_reg&send="+input,
+                dataType : 'json',
+                error: function(request) {
+                    console.log(request);
+                    alert('服务器繁忙, 请联系管理员!');//alert("服务器繁忙, 请联系管理员!");
+                    return;
+                },
+                success: function(res) {
+                    if(res.status == 1){
+                        jsInnerTimeout(id);
+                        kong = false;
+                    }else{
+                        alert(res.msg);//alert('发送失败');
+                    }
+                }
+            });
+        }
+
+    }
+
+    //倒计时函数
+    function jsInnerTimeout(id)
+    {
+        var codeObj=$("#"+id);
+        var intAs=parseInt(codeObj.attr("intervaltime"));
+
+        intAs--;
+        codeObj.attr("disabled","disabled");
+        if(intAs<=-1)
+        {
+            codeObj.removeAttr("disabled");
+            codeObj.attr("intervaltime","{$sms_time_out}");
+            codeObj.text("获取验证码");
+            kong = true;
+            return true;
+        }
+
+        codeObj.text(intAs+'s后再次获取');
+        codeObj.attr("intervaltime",intAs);
+
+        setTimeout("jsInnerTimeout('"+id+"')",1000);
+    };
 
 </script>
 </body>

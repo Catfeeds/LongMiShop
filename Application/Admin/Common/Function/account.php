@@ -22,6 +22,6 @@ function getSupplierAccountMoney(){
     );
     $orderList = M("order") -> select();
     $orderGoodsList = M('order_goods') -> where($condition) -> select();
-    dd($orderGoodsList);
+//    dd($orderGoodsList);
     return $money;
 }

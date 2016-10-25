@@ -309,5 +309,22 @@ CREATE TABLE `lm_goods_check` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 ALTER TABLE  `lm_admin` ADD  `phone` VARCHAR( 20 ) NOT NULL COMMENT  '手机号码' AFTER  `email`
-ALTER TABLE  `lm_admin` ADD  `headerpic` VARCHAR( 255 ) NOT NULL COMMENT  '用户头像' AFTER  `phone`
+ALTER TABLE  `lm_admin` ADD  `headerpic` VARCHAR( 255 )  NULL COMMENT  '用户头像' AFTER  `phone`
+
+
+CREATE TABLE `lm_admin_withdrawals` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `money` float(11,2) DEFAULT NULL COMMENT '提现金额',
+  `admin_id` int(11) DEFAULT NULL,
+  `mode` int(2) DEFAULT NULL COMMENT '提现类型 1对私账户 2对公账户',
+  `bank` varchar(100) DEFAULT NULL COMMENT '开户行',
+  `card_number` varchar(50) DEFAULT NULL COMMENT '银行帐号',
+  `bank_name` varchar(50) DEFAULT NULL COMMENT '开卡人',
+  `state` int(2) DEFAULT NULL COMMENT '状态 0未处理 1已处理 2驳回',
+  `create_time` int(11) DEFAULT NULL COMMENT '创建时间',
+  `update_time` int(11) DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
 
