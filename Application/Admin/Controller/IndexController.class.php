@@ -47,7 +47,7 @@ class IndexController extends BaseController {
         $count['not']  = M('order')->where($whereOrder)->count(); //待发货
 //        dd($count);
         $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'  AND  ".$where)->count(); //退货
-        $yesterdayTime = strtotime("-1 day");
+        $yesterdayTime = strtotime(date('Y-m-d ',strtotime("-1 day")));
         $today = date('Y-m-d ')."00:00:00";
         $todayTime = strtotime($today);
         $where .= " AND add_time > ".$yesterdayTime." AND add_time < ".$todayTime."";
