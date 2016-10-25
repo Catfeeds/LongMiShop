@@ -263,7 +263,7 @@ function sendSMS($mobile, $code)
     $c = new \TopClient;
     $config = F('sms','',TEMP_PATH);
     //短信内容：公司名/名牌名/产品名
-    $product = $config['sms_product'];
+//    $product = $config['sms_product'];
     //App Key的值 这个在开发者控制台的应用管理点击你添加过的应用就有了
     $c->appkey = $config['sms_appkey'];
     //App Secret的值也是在哪里一起的 你点击查看就有了
@@ -277,7 +277,9 @@ function sendSMS($mobile, $code)
     //短信签名 必须
     $req->setSmsFreeSignName("龙米科技");
     //短信模板 必须
-    $req->setSmsParam("{\"code\":\"$code\",\"product\":\"$product\"}");
+//    $req->setSmsParam("{\"code\":\"$code\",\"product\":\"$product\"}");
+    $time = "120分钟";
+    $req->setSmsParam("{\"code\":\"$code\",\"time\":\"$time\"}");
     //短信接收号码 支持单个或多个手机号码，传入号码为11位手机号码，不能加0或+86。群发短信需传入多个号码，以英文逗号分隔，
     $req->setRecNum("$mobile");
     //短信模板ID，传入的模板必须是在阿里大鱼“管理中心-短信模板管理”中的可用模板。

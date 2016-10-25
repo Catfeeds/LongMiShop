@@ -456,3 +456,61 @@ function setOrderPayCode( $orderId , $code , $name ){
     }
     return callback( false , "修改失败" );
 }
+
+/**
+ * 退款退货处理
+ * @param $returnOrderInfo
+ * @param $postData
+ * @return array
+ */
+function returnOrderHandle( $returnOrderInfo , $postData ){
+    $id = $returnOrderInfo['id'] ;
+    $data['refund_money'] = $postData['refund_money'];
+    $data['remark'] = $postData['remark'];
+    $condition = array("id" => $id);
+//    $typeMsg = array('退换','换货');
+    $statusMsg = array('未处理','处理中','已完成');
+
+    $model  = new \Think\Model();
+    try {
+        $model  -> startTrans();
+
+        if(!empty($data['refund_money'])){ //退款
+            $desc = '售后退款';
+            $userId = $returnOrderInfo['user_id'];
+            $moneyRes = accountLog($userId,$data['refund_money'],0,$desc);
+            if( !$moneyRes ){
+                throw new \Exception('退款失败！');
+            }
+        }
+
+        $data['status'] = 2;
+        if( M('return_goods') -> where( $condition ) -> save($data) == false ){
+            throw new \Exception('操作失败！');
+        }
+
+        $type = 3;
+        $where = array(
+            "order_id" => $returnOrderInfo['order_id'],
+            "goods_id" => $returnOrderInfo['goods_id'],
+            "spec_key" => $returnOrderInfo['spec_key']
+        );
+        if( M('order_goods')->where($where)->save(array('is_send'=>$type)) == false ){
+            throw new \Exception('订单商品状态修改失败！');
+        }
+        $orderLogic = new \Admin\Logic\OrderLogic();
+        $note ="处理退换货, 状态:{$statusMsg[$data['status']]},处理备注：{$data['remark']}";
+        if( !$orderLogic -> orderActionLog($returnOrderInfo['order_id'],'refund',$note) ){
+            throw new \Exception('插入日志失败！');
+        }
+//            throw new \Exception('我是断点！');
+        $model  -> commit();
+
+        return callback(true,'处理成功');
+
+    } catch (\Exception $e){
+        $model  -> rollback();
+
+        return callback( false, $e->getMessage() );
+    }
+}

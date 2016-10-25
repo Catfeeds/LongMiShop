@@ -130,7 +130,7 @@ class OrderController extends BaseController {
     	$condition['shipping_status'] = empty($shipping_status) ? array('neq',1) : $shipping_status;
 
         if(is_supplier()){
-            $id_lists = M('order_goods')->where(array("is_send"=>array("neq","1"),'admin_id' => session('admin_id'))) -> field('order_id') -> select();
+            $id_lists = M('order_goods')->where(array("is_send"=>array("eq","0"),'admin_id' => session('admin_id'))) -> field('order_id') -> select();
             $temp_string = "";
             if(!empty($id_lists)){
                 foreach ($id_lists as $id_list){
@@ -678,56 +678,21 @@ class OrderController extends BaseController {
     public function return_info()
     {
         $id = I('id');
-        $return_goods = M('return_goods')->where("id= '$id'")->find();
-        if( empty($return_goods) ){
-            $this->error('访问错误!');
-        }
-        if($return_goods['imgs'])            
-             $return_goods['imgs'] = explode(',', $return_goods['imgs']);
-        $user = M('users')->where("user_id = {$return_goods[user_id]}")->find();
-        $goods = M('goods')->where("goods_id = {$return_goods[goods_id]}")->find();
-        $type_msg = array('退换','换货');
-        $status_msg = array('未处理','处理中','已完成');
+        $return_goods = findDataWithCondition('return_goods',array('id' => $id));
         if(IS_POST)
         {
             $data['refund_money'] = trim(I('money'));
-            $data['id'] = $id;
             $data['remark'] = I('remark');
-            if(!empty($data['refund_money'])){ //退款
-                $desc = '退款';
-                $user_id = $return_goods['user_id'];
-                $moneyRes = accountLog($user_id,$data['refund_money'],0,$desc);
-                if($moneyRes){
-                    $data['status'] = 2;
-                    M('return_goods')->save($data);
-                    exit(json_encode(callback(true,'')));
-                }
-                exit(json_encode(callback(false,'退款失败')));
-            }
-
-            if(!empty($data['remark'])){ //拒绝退款
-                $data['status'] = 2;
-                M('return_goods')->save($data);
-                exit(json_encode(callback(true,'')));
-            }
-            exit(json_encode(callback(false,'操作失败')));
-
-//            $data['type'] = I('type');
-//            $data['status'] = I('status');
-//            $data['remark'] = I('remark');
-//            $note ="退换货:{$type_msg[$data['type']]}, 状态:{$status_msg[$data['status']]},处理备注：{$data['remark']}";
-//            $result = M('return_goods')->where("id= $id")->save($data);
-//            if($result)
-//            {
-//            	$type = empty($data['type']) ? 2 : 3;
-//            	$where = " order_id = ".$return_goods['order_id']." and goods_id=".$return_goods['goods_id'];
-//            	M('order_goods')->where($where)->save(array('is_send'=>$type));//更改商品状态
-//                $orderLogic = new OrderLogic();
-//                $log = $orderLogic->orderActionLog($return_goods['order_id'],'refund',$note);
-//                $this->success('修改成功!' , U('Admin/Order/return_info',array('id' => $id)));
-//                exit;
-//            }
-        }        
+            $result = returnOrderHandle( $return_goods , $data );
+            exit( json_encode( $result ) );
+        }
+        if( empty($return_goods) ){
+            $this->error('访问错误!');
+        }
+//        if($return_goods['imgs'])
+//             $return_goods['imgs'] = explode(',', $return_goods['imgs']);
+        $user = M('users')->where("user_id = {$return_goods['user_id']}")->find();
+        $goods = M('goods')->where("goods_id = {$return_goods['goods_id']}")->find();
         
         $this->assign('id',$id); // 用户
         $this->assign('user',$user); // 用户
