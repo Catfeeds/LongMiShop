@@ -20,7 +20,9 @@ function getSupplierAccountMoney(){
     $condition = array(
         "admin_id" => session("admin_id"),
     );
-    $orderList = M("order") -> select();
+//    $goods->field('th_goods.*,th__user.provinceId')->join('left join th_user on th_goods.userId = th_user.userId')->where($whereCondition)->select();
+
+    $orderList = M("order") -> where( $condition ) -> select();
     $orderGoodsList = M('order_goods') -> where($condition) -> select();
     dd($orderGoodsList);
     return $money;

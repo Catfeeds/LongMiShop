@@ -38,27 +38,45 @@
     <option value="电信3G">电信3G</option>
     <option value="电信4G">电信4G</option>
   </select>
-<textarea class="me2_text" cols="" rows="" placeholder="有什么想说的，尽管吐槽吧~" name="user_proposal"></textarea>
-<input id="login_btn_on" class="login_btn_on" name="" value="提交" type="button" onclick="feedback_form()">
+<textarea class="me2_text" cols="" rows="" id="text" name="user_proposal">有什么想说的，尽管吐槽吧~</textarea>
+<input id="login_btn_on" class="login_btn_on" name="" value="提交" type="button" >
   </form>
   </div> 
 </body>
 </html>
 <script>
-  function feedback_form(){
-    var proposal = $('.me2_text').val();
-    var network = $('.input').val();
-    if(network == 0){
-      alert('请选择网络信号');
-      return false;
-    }else if(proposal.length == 0){
-      alert('反馈意见不能为空');
-      return false;
-    }else if(proposal.length< 15 ){
-      alert('反馈意见请大于十五个字');
-      return false;
-    }
 
-    $('#feedback_form').submit();
-  }
+
+  $(function(){
+      var text = $("#text").val();
+      $("#text").focus(function(){
+          if( $(this).val() == text){
+              $(this).val("");
+          }
+      });
+      $("#text").blur(function(){
+          if( $(this).val() ==""){
+              $(this).val( text );
+          }
+      });
+
+      $("#login_btn_on").click(function(){
+          var proposal = $('.me2_text').val();
+          var network = $('.input').val();
+          if(network == 0){
+              alert('请选择网络信号');
+              return false;
+          }else if(proposal.length == 0){
+              alert('反馈意见不能为空');
+              return false;
+          }else if(proposal == text){
+              alert('反馈意见不能为空');
+              return false;
+          }else if(proposal.length< 15 ){
+              alert('反馈意见请大于十五个字');
+              return false;
+          }
+          $('#feedback_form').submit();
+      });
+  });
 </script>
