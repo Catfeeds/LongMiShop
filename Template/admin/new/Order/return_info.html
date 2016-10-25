@@ -43,7 +43,21 @@
                                     <td >
                          				<a href="{:U('Home/Goods/goodsInfo',array('id'=>$return_goods[goods_id]))}" target="_blank">{$goods[goods_name]}</a>                      
                                     </td>
-                                </tr>  
+                                </tr>
+
+                                <tr>
+                                    <td>状态：</td>
+                                    <td>
+                                        <div class="form-group  col-xs-3">
+                                            <select class="form-control" name="status" disabled>
+                                                <option value="0" <if condition="$return_goods['status'] eq 0">selected="selected"</if>>未处理</option>
+                                                <option value="1" <if condition="$return_goods['status'] eq 1">selected="selected"</if>>处理中</option>
+                                                <option value="2" <if condition="$return_goods['status'] eq 2">selected="selected"</if>>已完成</option>
+                                            </select>
+                                        </div>
+
+                                    </td>
+                                </tr>
                                 <!--<tr>-->
                                     <!--<td>退换货：</td>-->
                                     <!--<td>-->
@@ -64,32 +78,11 @@
                                     <td>                    
 					                    <textarea name="reason" id="reason" cols="" rows="" readonly="readonly" class="area" style="width:400px; height:120px;">{$return_goods['reason']}</textarea>                                        
                                     </td>
-                                </tr>  
-                                <!--<tr>-->
-                                    <!--<td>用户上传照片：</td>-->
-                                    <!--<td>-->
-                                         <!--<volist name="return_goods[imgs]" id="item">  -->
-                                             <!--<a href="{$item}" target="_blank"><img src="{$item}" width="85" height="85" /></a>&nbsp;&nbsp;&nbsp;                            -->
-                                         <!--</volist>                      					-->
-                                    <!--</td>-->
-                                <!--</tr>                                    -->
-
-                                <tr>
-                                    <td>状态：</td>
-                                    <td>
-                                    <div class="form-group  col-xs-3">
-										<select class="form-control" name="status" disabled>
-                                             <option value="0" <if condition="$return_goods['status'] eq 0">selected="selected"</if>>未处理</option>
-                                             <option value="1" <if condition="$return_goods['status'] eq 1">selected="selected"</if>>处理中</option>
-                                             <option value="2" <if condition="$return_goods['status'] eq 2">selected="selected"</if>>已完成</option>
-                                        </select>
-                                         </div>
-
-                                    </td>
                                 </tr>
+
                                 <if condition="$return_goods['status'] eq 2 and !empty($return_goods['remark'])">
                                     <tr>
-                                        <td>拒绝原因：</td>
+                                        <td>备注：</td>
                                         <td>
                                             <textarea name="remark" id="remark" cols="" rows=""  class="area" style="width:400px; height:120px;" readonly>{$return_goods['remark']}</textarea>
                                         </td>

@@ -1,82 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-<meta name="format-detection" content="telephone=no" />
-<title>用户反馈</title>
-<script src="__STATIC__/js/mui.min.js"></script>
-<script src="__STATIC__/js/jquery.min.js"></script>
-<script src="__STATIC__/js/function.js"></script>
-<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
-<link href="__STATIC__/css/css.css" rel="stylesheet" />
-<link href="__STATIC__/css/htmleaf-demo.css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>用户反馈</title>
+    <script src="__STATIC__/js/mui.min.js"></script>
+    <script src="__STATIC__/js/jquery.min.js"></script>
+    <script src="__STATIC__/js/function.js"></script>
+    <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
+    <link href="__STATIC__/css/css.css" rel="stylesheet" />
+    <link href="__STATIC__/css/htmleaf-demo.css" rel="stylesheet" />
 </head>
 <body style="background-color:#FFF">
 <div class="tip_b" style="border:none; margin-top:0px">
-  <div>
-    <div>为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位用户的宝贵意见，期待您的参与！现在我们开始吧！<br>
-</div>
-<div>
-</div>
+    <div>
+        <div>为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位用户的宝贵意见，期待您的参与！现在我们开始吧！<br>
+        </div>
+        <div>
+        </div>
 
-</div>
+    </div>
 </div>
 <p class="feedback-titel">网络接入方式<span>*</span></p>
 <div class="feedback_box">
-<form method="post" id="feedback_form" action="{: U('Mobile/User/feedback')}">
-<select name="phone_network" class="input">
-    <option value="0">请选择</option>
-    <option value="wifi">wifi</option>
-    <option value="联通2G">联通2G</option>
-    <option value="联通3G">联通3G</option>
-    <option value="联通4G">联通4G</option>
-    <option value="移动2G">移动2G</option>
-    <option value="移动3G">移动3G</option>
-    <option value="移动4G">移动4G</option>
-    <option value="电信2G">电信2G</option>
-    <option value="电信3G">电信3G</option>
-    <option value="电信4G">电信4G</option>
-  </select>
-<textarea class="me2_text" cols="" rows="" id="text" name="user_proposal">有什么想说的，尽管吐槽吧~</textarea>
-<input id="login_btn_on" class="login_btn_on" name="" value="提交" type="button" >
-  </form>
-  </div> 
-</body>
-</html>
+    <form method="post" id="feedback_form" action="{: U('Mobile/User/feedback')}">
+        <select name="phone_network" class="input">
+            <option value="0">请选择</option>
+            <option value="wifi">wifi</option>
+            <option value="联通2G">联通2G</option>
+            <option value="联通3G">联通3G</option>
+            <option value="联通4G">联通4G</option>
+            <option value="移动2G">移动2G</option>
+            <option value="移动3G">移动3G</option>
+            <option value="移动4G">移动4G</option>
+            <option value="电信2G">电信2G</option>
+            <option value="电信3G">电信3G</option>
+            <option value="电信4G">电信4G</option>
+        </select>
+        <textarea class="me2_text" cols="" rows="" id="text" name="user_proposal">有什么想说的，尽管吐槽吧~</textarea>
+        <input id="login_btn_on" class="login_btn_on" name="" value="提交" type="button" >
+    </form>
+</div>
+
 <script>
 
 
-  $(function(){
-      var text = $("#text").val();
-      $("#text").focus(function(){
-          if( $(this).val() == text){
-              $(this).val("");
-          }
-      });
-      $("#text").blur(function(){
-          if( $(this).val() ==""){
-              $(this).val( text );
-          }
-      });
+    $(function(){
+        var text = $("#text").val();
+        $("#text").focus(function(){
+            if( $(this).val() == text){
+                $(this).val("");
+            }
+        });
+        $("#text").blur(function(){
+            if( $(this).val() ==""){
+                $(this).val( text );
+            }
+        });
 
-      $("#login_btn_on").click(function(){
-          var proposal = $('.me2_text').val();
-          var network = $('.input').val();
-          if(network == 0){
-              alert('请选择网络信号');
-              return false;
-          }else if(proposal.length == 0){
-              alert('反馈意见不能为空');
-              return false;
-          }else if(proposal == text){
-              alert('反馈意见不能为空');
-              return false;
-          }else if(proposal.length< 15 ){
-              alert('反馈意见请大于十五个字');
-              return false;
-          }
-          $('#feedback_form').submit();
-      });
-  });
+        $("#login_btn_on").click(function(){
+            var proposal = $('.me2_text').val();
+            var network = $('.input').val();
+            if(network == 0){
+                alert('请选择网络信号');
+                return false;
+            }else if(proposal.length == 0){
+                alert('反馈意见不能为空');
+                return false;
+            }else if(proposal == text){
+                alert('反馈意见不能为空');
+                return false;
+            }else if(proposal.length< 15 ){
+                alert('反馈意见请大于十五个字');
+                return false;
+            }
+            $('#feedback_form').submit();
+        });
+    });
 </script>
+</body>
+<include file="Public/footer"/>
+</html>
