@@ -63,7 +63,7 @@
                         <if condition="($list['order_status'] eq 3) or ($list['order_status'] eq 5)">
                             <a href="{:U('Admin/order/delete_order',array('order_id'=>$list['order_id']))}"  data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a>
                             <else/>
-                            <a href="javascript:void(0)" onclick="alert('该订单不得删除')" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="删除"><i class="fa fa-trash-o"></i></a>
+                            <!--<a href="javascript:void(0)" onclick="alert('该订单不得删除')" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="删除"><i class="fa fa-trash-o"></i></a>-->
                         </if>
                     </td>
                 </tr>
