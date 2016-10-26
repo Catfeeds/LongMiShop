@@ -1,7 +1,6 @@
 <?php
 namespace Admin\Controller;
 
-
 class IndexController extends BaseController {
 
     public function index(){
@@ -17,8 +16,8 @@ class IndexController extends BaseController {
     }
    
     public function welcome(){
-
         $where = "1 = 1";
+        $whereOrder = "";
         if(is_supplier()){
             $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('order_id') -> select();
             $temp_string = "";
@@ -33,6 +32,7 @@ class IndexController extends BaseController {
             //查询退货表
             $returnList = M('return_goods')->field('order_id')->select();
             if(!empty($returnList)){
+                $returnString = "";
                 foreach ($returnList as $item){
                     $returnString .= $item['order_id'].",";
                 }
@@ -43,17 +43,18 @@ class IndexController extends BaseController {
 
         }
 
+
         $whereOrder .= "  `order_status` = 1 AND `pay_status` = 1 AND `shipping_status` <> 1 AND ".$where;
         $count['not']  = M('order')->where($whereOrder)->count(); //待发货
-//        dd($count);
         $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'  AND  ".$where)->count(); //退货
-        $yesterdayTime = strtotime(date('Y-m-d ',strtotime("-1 day")));
+        $yesterdayTime = strtotime(date('Y-m-d',strtotime("-1 day")));
         $today = date('Y-m-d ')."00:00:00";
         $todayTime = strtotime($today);
         $where .= " AND add_time > ".$yesterdayTime." AND add_time < ".$todayTime."";
         $count['yesterday'] = M('order')->where($where)->count(); //昨天订单
         $money = M('order')->field("SUM(order_amount) as money")->where($where)->find(); //昨天金额
-        if(!empty(intval($money['money']))){
+        $money['money'] = intval($money['money']);
+        if(!empty( $money['money'] )){
             $money = explode(".", $money['money']);
             $count['moneySum'] = $money;
         }else{
@@ -64,7 +65,6 @@ class IndexController extends BaseController {
 
 
         $this->assign('count',$count);
-//        dd($count);
         $this->display();
     }
 

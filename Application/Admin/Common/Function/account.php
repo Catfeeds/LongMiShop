@@ -20,6 +20,8 @@ function getAccountInfo(){
         "admin_id" => session("admin_id"),
     );
     return findDataWithCondition("admin",$condition);
+}
+
 function refreshAccountMoney( $adminId ){
 
     $cumulativeTransactionAmount = 0;
@@ -33,5 +35,4 @@ function refreshAccountMoney( $adminId ){
 //    M("order_goods") ->join() -> where($condition)
 
 
-}
 }
