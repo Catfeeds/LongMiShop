@@ -152,14 +152,14 @@ a:hover {
 	font-size: 14px;
 	text-align: center;
 	line-height: 45px;
-	background-size: 18px 18px;
+	background-size: 20px 20px;
 	background-repeat: no-repeat;
 	background-position: 8px center;
-	padding-left: 15px;
+	padding-left: 20px;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
 	border-bottom-color: #373a47;
-	width: 85px;
+	width: 80px;
 }
 .slideTxtBox .hd ul li.on {
 	background-color: #373a47;
@@ -477,7 +477,7 @@ a:hover {
 	margin-left: 8px;
 }
 .text {
-	border: 1px solid #ededed;
+	border: 1px solid #DBDBDB;
 	line-height: 28px;
 	height: 28px;
 	text-indent: 5px;
@@ -486,15 +486,15 @@ a:hover {
 }
 .select {
 	font-size: 12px;
-	border: 1px solid #ededed;
+	border: 1px solid #DBDBDB;
 	line-height: 28px;
 	height: 28px;
 	background-image: url(../SVG/move1.svg);
 	background-repeat: no-repeat;
 	background-position: 96% center;
-	appearance:none;
+	appearance: none;
 	-webkit-appearance: none;
-	-moz-appearance:none;
+	-moz-appearance: none;
 	background-image: url(../SVG/below.svg);
 	padding-right: 30px;
 	text-align: center;
@@ -621,6 +621,41 @@ a:hover {
 	-webkit-transition: all .3s ease-out;
 	-o-transition: all .3s ease-out
 }
+
+.btn_d {
+
+}
+.btn_d a {
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb( 238, 238, 238 );
+	border-radius: 2px;
+	background-image: -moz-linear-gradient( 90deg, rgb(248,248,248) 0%, rgb(245,245,245) 100%);
+	background-image: -webkit-linear-gradient( 90deg, rgb(248,248,248) 0%, rgb(245,245,245) 100%);
+	background-image: -ms-linear-gradient( 90deg, rgb(248,248,248) 0%, rgb(245,245,245) 100%);
+	color: #666;
+	padding-top: 2px;
+	padding-right: 10px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	line-height: 30px;
+}
+.btn_d a:hover {
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb( 238, 238, 238 );
+	border-radius: 2px;
+	background-image: -moz-linear-gradient( 90deg, rgb(248,248,248) 0%, rgb(253,253,253) 100%);
+	background-image: -webkit-linear-gradient( 90deg, rgb(248,248,248) 0%, rgb(253,253,253) 100%);
+	background-image: -ms-linear-gradient( 90deg, rgb(248,248,248) 0%, rgb(253,253,253) 100%);
+	color: #000;
+	padding-top: 4px;
+	padding-right: 10px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+	line-height: 30px;
+}
+
 /* 本例子css */
 .slideTxtBox1 {
 	border-style: solid;
@@ -637,8 +672,8 @@ a:hover {
 	margin-left: 8px;
 }
 .slideTxtBox1 .hd {
-	height: 30px;
-	line-height: 30px;
+	height: 35px;
+	line-height: 35px;
 	background: #f4f4f4;
 	padding: 0 10px 0 20px;
 	border-bottom: 1px solid #ddd;
@@ -649,7 +684,7 @@ a:hover {
 	position: absolute;
 	left: 20px;
 	top: -1px;
-	height: 32px;
+	height: 37px;
 	width: 638px;
 }
 .slideTxtBox1 .hd ul li {
@@ -658,7 +693,7 @@ a:hover {
 	cursor: pointer;
 }
 .slideTxtBox1 .hd ul li.on {
-	height: 30px;
+	height: 35px;
 	background: #fff;
 	border: 1px solid #ddd;
 	border-bottom: 2px solid #fff;
@@ -793,4 +828,47 @@ a:hover {
 .color_a{
 	color: #F00;
 	padding-right: 15px;
+}
+
+table.gridtable {
+	font-family: verdana, arial, sans-serif;
+	font-size: 14px;
+	color: #333333;
+	border-collapse: collapse;
+	line-height: 22px;
+}
+table.gridtable th {
+	padding: 8px;
+	background-color: #dedede;
+}
+table.gridtable td {
+	padding: 8px;
+	background-color: #ffffff;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #F8F8F8;
+}
+table.gridtable tr:hover{
+	background-color: #F6F6F6 !important;
+}
+.tabtop td{
+	background-color: #F6F6F6 !important;
+	font-weight: bold;
+}
+.color-b{
+	color: #090;
+}
+.color-c{
+	color: #F60;
+}
+.color-d{
+	color: #999;
+}
+.tip1{
+	line-height: 35px;
+	font-size: 14px;
+	color: #999;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 5px;
 }

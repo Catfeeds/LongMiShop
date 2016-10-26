@@ -11,6 +11,13 @@ $condition = array(
  $adminList = M('admin') -> where( $condition ) -> select();
  if ( !empty( $adminList ) ){
      foreach ( $adminList as $adminItem ) {
+
+         $condition2 = array(
+             "is" => 3,
+
+         );
+         M("order_goods") -> where($condition2) -> field(" ") -> select();
+
 //         findDataWithCondition( "admin"  , array() );
 
 

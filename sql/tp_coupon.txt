@@ -221,7 +221,7 @@ CREATE TABLE `lm_user_feedback` (
   `user_proposal` text COMMENT '反馈内容',
   `time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 CREATE TABLE `lm_goods_comment` (
 `id`  int(11) NOT NULL AUTO_INCREMENT ,
 `user_id`  int(11) NOT NULL ,
@@ -240,6 +240,21 @@ PRIMARY KEY (`id`)
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 ;
+
+
+//对账单
+CREATE TABLE `lm_account_statement` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `admin_id` int(11) NOT NULL COMMENT '供应商id',
+  `create_time` int(11) DEFAULT NULL COMMENT '生成时间',
+  `balance` float(11,2) DEFAULT '0.00' COMMENT '余额',
+  `type` int(1) NOT NULL DEFAULT '1' COMMENT '对账单类型 1 日对账单 2 月对账单',
+  `income` float(11,2) DEFAULT '0.00' COMMENT '收入',
+  `expend` float(11,2) DEFAULT '0.00' COMMENT '支出',
+  `income_count` int(11) DEFAULT '0' COMMENT '收入笔数',
+  `expend_count` int(11) DEFAULT '0' COMMENT '支出笔数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 //商品表增加 规格参数字段
 ALTER TABLE  `lm_goods` ADD  `my_parameter` TEXT NOT NULL COMMENT  '规格参数' AFTER  `sku`;
