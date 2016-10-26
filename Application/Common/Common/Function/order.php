@@ -495,9 +495,9 @@ function returnOrderHandle( $returnOrderInfo , $postData ){
             "goods_id" => $returnOrderInfo['goods_id'],
             "spec_key" => $returnOrderInfo['spec_key'],
         );
-        $orderGoods = M('order_goods')->where($where)->save(array('is_send'=>$type));
+        $orderGoods = M('order_goods')->where($where)->fetchsql(true)->save(array('is_send'=>$type));
 //        dd($orderGoods);
-//        throw new \Exception($orderGoods);
+        throw new \Exception($orderGoods);
         if( $orderGoods == false ){
             throw new \Exception('订单商品状态修改失败！');
         }
