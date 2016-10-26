@@ -328,3 +328,10 @@ CREATE TABLE `lm_admin_withdrawals` (
 
 
 
+ALTER TABLE `lm_admin`
+ADD COLUMN `suppliers_level`  int(1) NOT NULL DEFAULT 0 COMMENT '供应商等级' AFTER `role_id`,
+ADD COLUMN `amount`  float(11,2) NULL DEFAULT 0 COMMENT '余额' AFTER `suppliers_level`,
+ADD COLUMN `transaction_amount`  float(11,2) NULL DEFAULT 0 COMMENT '累计销量' AFTER `amount`,
+ADD COLUMN `withdrawals_amount`  float(11,2) NULL DEFAULT 0 COMMENT '提现金额' AFTER `transaction_amount`,
+ADD COLUMN `amount_refresh_time`  int(11) NULL COMMENT '余额刷新时间' AFTER `withdrawals_amount`;
+
