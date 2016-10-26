@@ -689,15 +689,28 @@ class OrderController extends BaseController {
         if( empty($return_goods) ){
             $this->error('访问错误!');
         }
-//        if($return_goods['imgs'])
-//             $return_goods['imgs'] = explode(',', $return_goods['imgs']);
+
+
         $user = M('users')->where("user_id = {$return_goods['user_id']}")->find();
         $goods = M('goods')->where("goods_id = {$return_goods['goods_id']}")->find();
-        
+        $orderGoods = M('order_goods')->where(array('order_id'=>$return_goods['order_id'],'goods_id'=>$return_goods['goods_id']))->find();
+        $OrderRes = M('order')->field('province')->where(array('order_id'=>$return_goods['order_id']))->find();
+        //计算邮费
+        $region_list = get_region_list();
+        $goods_data[0]['goods_id'] = $orderGoods['goods_id']; //商品id
+        $goods_data[0]['goods_num'] = $orderGoods['goods_num']; //件数  重量
+        $goods_data[0]['goods_name'] = $orderGoods['goods_name']; //商品名称
+        $goods_data[0]['goods_price'] = $orderGoods['member_goods_price']; //商品价格
+        $goods_data[0]['weight'] = $goods['weight'];  //商品重量
+        $goods_data[0]['shipping_code'] = $goods['delivery_way']; //配送方式
+        $goods_data[0]['site'] = $region_list[$OrderRes['province']]['name']; //收获地址
+        $count_postage = count_postage($goods_data); //运费
+        $return_goods['count_postage'] =$count_postage['data']['count'];
+        $return_goods['GoodsMoney'] = $orderGoods['member_goods_price'] * $orderGoods['goods_num'];
         $this->assign('id',$id); // 用户
         $this->assign('user',$user); // 用户
         $this->assign('goods',$goods);// 商品
-        $this->assign('return_goods',$return_goods);// 退换货               
+        $this->assign('return_goods',$return_goods);// 退换货
         $this->display();
     }
     

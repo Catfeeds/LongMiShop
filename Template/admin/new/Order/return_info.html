@@ -96,6 +96,19 @@
                                         </td>
                                     </tr>
                                 </if>
+                                <tr>
+                                    <td>商品金额：</td>
+                                    <td>
+                                        {$return_goods['GoodsMoney']}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>运费：</td>
+                                    <td>
+                                        {$return_goods['count_postage']}
+                                    </td>
+                                </tr>
+
                                 </tbody> 
                                 <tfoot>
                                 	<tr >
@@ -180,8 +193,14 @@ function doSubmit(obj) {
     }
     var contentDiv = $(obj).parent().parent().parent().parent().parent();
     var money = contentDiv.find(".my_invoice_no").val();
+    var GoodsMoney = "{$return_goods['GoodsMoney']}";
+    var count_postage = "{$return_goods['count_postage']}";
+    var Resmoney = parseFloat(GoodsMoney) +  parseFloat(count_postage);
     if(money == ''){
         layer.alert('请填写退款金额', {icon: 2});
+        return;
+    }else if(  money > Resmoney  ){
+        layer.alert('退款金额不能大于原订单金额', {icon: 2});
         return;
     }
     $.ajax({
