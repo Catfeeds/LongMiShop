@@ -1,0 +1,26 @@
+<notempty name = "list" >
+    <table width="100%" border="0" cellspacing="0" cellpadding="4" class="gridtable">
+        <tr  class="tabtop">
+            <td width="14%">日期</td>
+            <td width="11%" align="right">收入（元）</td>
+            <td width="15%" align="right">支出（元）</td>
+            <td width="48%" align="center">余额（元）</td>
+            <!--<td width="12%" align="center">操作</td>-->
+        </tr>
+        <tbody>
+        <volist name="list" id="item">
+            <tr>
+                <td>{$item.create_time|date="Y-m-d",###}</td>
+                <td align="right"><p class="color-b">+{$item.income}</p>
+                    <p class="color-d">{$item.income_count}笔</p></td>
+                <td align="right"><p class="color-c">-{$item.expend}</p>
+                    <p class="color-d">{$item.expend_count}笔</p></td>
+                <td align="center">{$item.balance}</td>
+                <!--<td align="center"><span class="btn_d"><a href="#">详情</a></span></td>-->
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+    <else/>
+    <div class="none">还没有相关数据</div>
+</notempty>
