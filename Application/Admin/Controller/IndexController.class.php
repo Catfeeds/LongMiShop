@@ -53,11 +53,8 @@ class IndexController extends BaseController {
         $where .= " AND add_time > ".$yesterdayTime." AND add_time < ".$todayTime."";
         $count['yesterday'] = M('order')->where($where)->count(); //昨天订单
         $money = M('order')->field("SUM(order_amount) as money")->where($where)->find(); //昨天金额
-        $money['money'] = intval($money['money']);
-        if(!empty( $money['money'] )){
-            $money = explode(".", $money['money']);
-            $count['moneySum'] = $money;
-        }else{
+        $count['moneySum'] = explode(".", $money['money']);
+        if( empty( $count['moneySum'][0] ) && empty( $count['moneySum'][1] ) ){
             $count['moneySum'][0] = 0;
             $count['moneySum'][1] = 0;
         }
