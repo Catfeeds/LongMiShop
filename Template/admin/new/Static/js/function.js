@@ -254,39 +254,61 @@ jQuery(".slideTxtBox1").slide({ trigger: "click" });
 
 
 //日期
-//
-// $(function() {
-//     var currYear = (new Date()).getFullYear();
-//     var opt = {};
-//     opt.date = {
-//         preset: 'date'
-//     };
-//     opt.datetime = {
-//         preset: 'datetime'
-//     };
-//     opt.time = {
-//         preset: 'time'
-//     };
-//     opt.
-// default = {
-//         theme: 'android-ics light',
-//         //皮肤样式
-//         display: 'modal',
-//         //显示方式
-//         mode: 'scroller',
-//         //日期选择模式
-//         dateFormat: 'yyyy-mm-dd',
-//         lang: 'zh',
-//         showNow: true,
-//         nowText: "今天",
-//         startYear: currYear - 10,
-//         //开始年份
-//         endYear: currYear + 10 //结束年份
-//     };
-//
-//     $("#appDate,#appDate1").mobiscroll($.extend(opt['date'], opt['default']));
-//     var optDateTime = $.extend(opt['datetime'], opt['default']);
-//     var optTime = $.extend(opt['time'], opt['default']);
-//     $("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime);
-//     $("#appTime").mobiscroll(optTime).time(optTime);
-// });
+
+$(function() {
+    var currYear = (new Date()).getFullYear();
+    var opt = {};
+    opt.date = {
+        preset: 'date'
+    };
+    opt.datetime = {
+        preset: 'datetime'
+    };
+    opt.time = {
+        preset: 'time'
+    };
+    opt.
+default = {
+        theme: 'android-ics light',
+        //皮肤样式
+        display: 'modal',
+        //显示方式 
+        mode: 'scroller',
+        //日期选择模式
+        dateFormat: 'yyyy-mm-dd',
+        lang: 'zh',
+        showNow: true,
+        nowText: "今天",
+        startYear: currYear - 10,
+        //开始年份
+        endYear: currYear + 10 //结束年份
+    };
+
+    // $("#appDate,#appDate1").mobiscroll($.extend(opt['date'], opt['default']));
+    // var optDateTime = $.extend(opt['datetime'], opt['default']);
+    // var optTime = $.extend(opt['time'], opt['default']);
+    // $("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime);
+    // $("#appTime").mobiscroll(optTime).time(optTime);
+});
+
+
+
+
+
+
+/** 
+* 鼠标移到的颜色 
+*/ 
+$(".gridtable tr").mouseover(function(){ 
+$(this).find("td").addClass("mouse_color"); 
+}); 
+
+/** 
+* 鼠标移出的颜色 
+*/ 
+$(".gridtable tr").mouseout(function(){ 
+$(this).find("td").removeClass("mouse_color"); 
+}); 
+
+
+

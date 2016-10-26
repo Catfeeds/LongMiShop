@@ -1,13 +1,14 @@
 <volist name="list" id="item">
     <div class="bank-account">
         <div class="bank-account_left">
-            <if condition="!empty($item['headerpic'])">
-                <img src="{$item['headerpic']}">
-            <else />
-                <img src="__STATIC__/img/default.svg">
-            </if>
-
-            <p>{$item.user_name} </p>
+            <a href="{:U('Admin/Bill/accountStatement',array('adminId' => $item['admin_id']));}">
+                <if condition="!empty($item['headerpic'])">
+                    <img src="{$item['headerpic']}">
+                <else />
+                    <img src="__STATIC__/img/default.svg">
+                </if>
+                <p>{$item.user_name}</p>
+            </a>
         </div>
         <div class="bank-account_right">
             <table width="100%" border="0" cellspacing="0" cellpadding="10">

@@ -41,6 +41,7 @@ function count_postage($array){
     }
     $postage = 0; //邮费总价
 
+    
     foreach($array as $item){
         $log_res = M('logistics')->where("log_id = ".$item['shipping_code'])->find();
 

@@ -1,5 +1,5 @@
 /* reset */
-html, body, h1, h2, h3, h4, h5, h6, div,  ul, ol, li, p, blockquote, pre, hr, figure, table, caption, form, fieldset, legend, input, button, textarea, menu {
+html, body, h1, h2, h3, h4, h5, h6, div, ul, ol, li, p, blockquote, pre, hr, figure, table, caption, form, fieldset, legend, input, button, textarea, menu {
 	margin: 0;
 	padding: 0;
 }
@@ -581,7 +581,6 @@ a:hover {
 .btn_c {
 	float: right;
 	margin-left: 5px;
-
 }
 .btn_c a {
 	border-style: solid;
@@ -621,9 +620,8 @@ a:hover {
 	-webkit-transition: all .3s ease-out;
 	-o-transition: all .3s ease-out
 }
-
 .btn_d {
-
+	margin-right: 5px;
 }
 .btn_d a {
 	border-style: solid;
@@ -655,7 +653,6 @@ a:hover {
 	padding-left: 10px;
 	line-height: 30px;
 }
-
 /* 本例子css */
 .slideTxtBox1 {
 	border-style: solid;
@@ -777,14 +774,13 @@ a:hover {
 .zUIpanelScrollBox {
 	background: #293038;
 	filter: alpha(opacity=10);
-	
 }
 .zUIpanelScrollBar {
 	background: #7f7f7f;
 	opacity: 1;
 	filter: alpha(opacity=80);
 }
-.bank-account{
+.bank-account {
 	overflow: hidden;
 	border-radius: 3px;
 	background-color: rgb( 255, 255, 255 );
@@ -794,7 +790,7 @@ a:hover {
 	float: left;
 	margin-bottom: 10px;
 }
-.bank-account_left{
+.bank-account_left {
 	text-align: center;
 	float: left;
 	z-index: 1;
@@ -804,32 +800,31 @@ a:hover {
 	border-right-color: #F6F6F6;
 	width: 240px;
 }
-.bank-account_left img{
+.bank-account_left img {
 	height: 60px;
 	width: 60px;
 }
-.bank-account_right{
+.bank-account_right {
 	float: left;
 	padding-top: 10px;
 	padding-right: 10px;
 	padding-left: 10px;
 }
-.label{
+.label {
 	background-color: #F90;
 	color: #FFF;
 	padding: 2px;
-	border-radius:2px
+	border-radius: 2px
 }
-.la{
+.la {
 	font-size: 18px;
 	color: #333;
 	font-family: Arial, Helvetica, sans-serif;
 }
-.color_a{
+.color_a {
 	color: #F00;
 	padding-right: 15px;
 }
-
 table.gridtable {
 	font-family: verdana, arial, sans-serif;
 	font-size: 14px;
@@ -839,36 +834,79 @@ table.gridtable {
 }
 table.gridtable th {
 	padding: 8px;
-	background-color: #dedede;
+	background-color: #FAFAFA;
 }
 table.gridtable td {
 	padding: 8px;
-	background-color: #ffffff;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
 	border-bottom-color: #F8F8F8;
 }
-table.gridtable tr:hover{
+table.gridtable tr:hover {
 	background-color: #F6F6F6 !important;
 }
-.tabtop td{
+.tabtop td {
 	background-color: #F6F6F6 !important;
 	font-weight: bold;
 }
-.color-b{
+.color-b {
 	color: #090;
 }
-.color-c{
+.color-c {
 	color: #F60;
 }
-.color-d{
+.color-d {
 	color: #999;
 }
-.tip1{
+.tip1 {
 	line-height: 35px;
 	font-size: 14px;
 	color: #999;
 	text-align: center;
 	padding-top: 10px;
 	padding-bottom: 5px;
+}
+.remark_x {
+	color: #F60;
+	letter-spacing: 3px;
+	font-size: 12px;
+	line-height: 24px;
+	float: left;
+}
+.remark_x span {
+	color: #999;
+}
+.re {
+	line-height: 32px;
+}
+.user_name {
+	line-height: 28px;
+	overflow: hidden;
+	padding-top: 10px;
+}
+.user_name_l {
+	float: left;
+}
+.user_name_r {
+	float: left;
+	padding-left: 10px;
+}
+.user_name img {
+	height: 28px;
+	width: 28px;
+}
+.mouse_color {
+	background-color: #FAFAFA;
+}
+.chart {
+	height: 200px;
+	margin: 0px;
+	padding: 0px;
+}
+h5 {
+	margin-top: 30px;
+	font-weight: bold;
+}
+h5:first-child {
+	margin-top: 15px;
 }

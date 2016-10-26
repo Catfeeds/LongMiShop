@@ -382,6 +382,9 @@ class UserController extends BaseController {
 
 
 
+    public function commentList(){
+        $this->display();
+    }
 
 
 

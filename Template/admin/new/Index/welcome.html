@@ -33,6 +33,159 @@
                 <p class="data-t2">昨日交易额</p>
             </div>
         </div>
+
+        <div class="more-box">
+            <div class="more-box-l">订单数</div>
+        </div>
+        <div class="mui-content-padded">
+            <div class="chart" id="lineChart"></div>
+            <div class="more-box">
+                <div class="more-box-l">销售额</div>
+            </div>
+            <div class="chart" id="lineChart1"></div>
+        </div>
+        <script src="__STATIC__/js/echarts-all.js"></script>
+        <script>
+            var getOption = function(chartType) {
+                var chartOption = chartType == 'pie' ? {
+                    calculable: false,
+                }: {
+                    legend: {
+                        data: ['数据1', '数据2', '数据3']
+                    },
+                    grid: {
+                        x: 35,
+                        x2: 10,
+                        y: 30,
+                        y2: 25
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {
+                                show: true
+                            },
+                            dataView: {
+                                show: true,
+                                readOnly: false
+                            },
+                            magicType: {
+                                show: true,
+                                type: ['line', 'bar']
+                            },
+                            restore: {
+                                show: true
+                            },
+                            saveAsImage: {
+                                show: true
+                            }
+                        }
+                    },
+                    calculable: false,
+                    xAxis: [{
+                        type: 'category',
+                        data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+                    }],
+                    yAxis: [{
+                        type: 'value',
+                        splitArea: {
+                            show: true
+                        }
+                    }],
+                    series: [{
+                        name: '数据1',
+                        type: chartType,
+                        data: [8.0, 14.9, 17.0, 123.2, 125.6, 176.7, 105.6, 262.2, 132.6, 120.0, 16.4, 13.3]
+                    },
+                        {
+                            name: '数据2',
+                            type: chartType,
+                            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 80.3]
+                        },
+                        {
+                            name: '数据3',
+                            type: chartType,
+                            data: [6.6, 8.9, 5.0, 88.4, 90.7, 100.7, 125.6, 142.2, 148.7, 180.8, 60.0, 10.3]
+                        }]
+                };
+                return chartOption;
+            };
+            var byId = function(id) {
+                return document.getElementById(id);
+            };
+            var lineChart = echarts.init(byId('lineChart'));
+            lineChart.setOption(getOption('line'));
+        </script>
+        <script>
+            var getOption = function(chartType) {
+                var chartOption = chartType == 'pie' ? {
+                    calculable: false,
+                }: {
+                    legend: {
+                        data: ['数据1', '数据2', '数据3']
+                    },
+                    grid: {
+                        x: 35,
+                        x2: 10,
+                        y: 30,
+                        y2: 25
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {
+                                show: true
+                            },
+                            dataView: {
+                                show: true,
+                                readOnly: false
+                            },
+                            magicType: {
+                                show: true,
+                                type: ['line', 'bar']
+                            },
+                            restore: {
+                                show: true
+                            },
+                            saveAsImage: {
+                                show: true
+                            }
+                        }
+                    },
+                    calculable: false,
+                    xAxis: [{
+                        type: 'category',
+                        data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+                    }],
+                    yAxis: [{
+                        type: 'value',
+                        splitArea: {
+                            show: true
+                        }
+                    }],
+                    series: [{
+                        name: '数据1',
+                        type: chartType,
+                        data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+                    },
+                        {
+                            name: '数据2',
+                            type: chartType,
+                            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 80.3]
+                        },
+                        {
+                            name: '数据3',
+                            type: chartType,
+                            data: [6.6, 8.9, 5.0, 88.4, 90.7, 100.7, 125.6, 142.2, 148.7, 180.8, 60.0, 10.3]
+                        }]
+                };
+                return chartOption;
+            };
+            var byId = function(id) {
+                return document.getElementById(id);};
+            var lineChart = echarts.init(byId('lineChart1'));
+            lineChart.setOption(getOption('line'));
+        </script>
         <if condition="!is_supplier()">
             <div class="more-box">
                 <div class="more-box-l">快捷方式</div>
