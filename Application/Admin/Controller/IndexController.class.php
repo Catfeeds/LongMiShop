@@ -47,13 +47,13 @@ class IndexController extends BaseController {
         $count['not']  = M('order')->where($whereOrder)->count(); //待发货
 //        dd($count);
         $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'  AND  ".$where)->count(); //退货
-        $yesterdayTime = strtotime("-1 day");
+        $yesterdayTime = strtotime(date('Y-m-d ',strtotime("-1 day")));
         $today = date('Y-m-d ')."00:00:00";
         $todayTime = strtotime($today);
         $where .= " AND add_time > ".$yesterdayTime." AND add_time < ".$todayTime."";
         $count['yesterday'] = M('order')->where($where)->count(); //昨天订单
         $money = M('order')->field("SUM(order_amount) as money")->where($where)->find(); //昨天金额
-        if(!empty($money['money'])){
+        if(!empty(intval($money['money']))){
             $money = explode(".", $money['money']);
             $count['moneySum'] = $money;
         }else{

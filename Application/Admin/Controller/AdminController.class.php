@@ -257,6 +257,7 @@ class AdminController extends BaseController {
         if( !is_supplier() ){
             $this -> error("此功能只对供应商开放");
         }
+        $accountInfo = getAccountInfo();
         if(IS_POST){
             $data = I('post.');
             $userLogic = new \Common\Logic\UsersLogic();
@@ -267,6 +268,9 @@ class AdminController extends BaseController {
             $data['admin_id'] = session('admin_id');
             $data['state'] = 0;
             $data['create_time'] = time();
+
+            M('admin')->where(array('admin_id'=>$data['admin_id']))->setDec('amount',$data['money']);
+            M('admin')->where(array('admin_id'=>$data['admin_id']))->setInc('withdrawals_amount',$data['money']);
             $res = M('admin_withdrawals')->add($data);
             if($res){
                 $this->success('申请成功');
@@ -275,10 +279,19 @@ class AdminController extends BaseController {
             }
             exit;
         }
-        $accountMoney = getSupplierAccountMoney();
-        $accountMoney = 100;
+
+        if(!empty($accountInfo['amount'])){
+            $moneySum = explode(".",$accountInfo['amount']);
+        }else{
+            $moneySum[0] = 0;
+            $moneySum[1] = 0;
+        }
+
+
+
         $phone = M('admin')->field('phone')->where("admin_id = '".session('admin_id')."'")->find();
-        $this->assign('accountMoney',$accountMoney);
+        $this->assign('accountMoney',$accountInfo['amount']);
+        $this->assign('moneySum',$moneySum);
         $this->assign('phone',$phone['phone']);
         $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
         $this->display();
@@ -339,7 +352,7 @@ class AdminController extends BaseController {
         if(IS_POST){
             $id = I('id');
             $state = I('state');
-            $stateRes = M('admin_withdrawals')->field('state')->where(array('id'=>$id))->find();
+            $stateRes = M('admin_withdrawals')->field('state,admin_id,money')->where(array('id'=>$id))->find();
             if($stateRes['state'] != 0){
                 exit(json_encode(callback(false,"该申请已处理")));
             }
@@ -352,7 +365,10 @@ class AdminController extends BaseController {
             $data['id'] = $id;
             $data['update_time'] = time();
             $manageRes = M('admin_withdrawals')->save($data);
-
+            if($data['state'] == 2){ //驳回请求
+                M('admin')->where("admin_id = '".$stateRes['admin_id']."'")->setInc('amount',$stateRes['money']);
+                M('admin')->where("admin_id = '".$stateRes['admin_id']."'")->setDec('withdrawals_amount',$stateRes['money']);
+            }
             if($manageRes){
                 exit(json_encode(callback(true,"处理成功")));
             }else{
