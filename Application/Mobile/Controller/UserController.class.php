@@ -995,11 +995,13 @@ class UserController extends MobileBaseController {
                 $this->success('已经提交过退货申请!',U('Mobile/Order/order_list'));
                 exit;
             }
+            $OrderGoods = M('order_goods')->where(array('goods_id'=>$goodsId,'order_id'=>$orderId))->find();
             $data['order_id'] = $orderId; 
             $data['order_sn'] = $orderSn; 
             $data['goods_id'] = $goodsId; 
             $data['addtime'] = time(); 
             $data['user_id'] = $this->user_id;
+            $data['spec_key'] = $OrderGoods['spec_key'];
             $data['reason'] = I('reason'); // 问题描述
             M('return_goods')->add($data);   
 //            $this->redirect('Mobile/Order/order_list',0);
