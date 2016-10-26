@@ -289,6 +289,9 @@ function orderBtn($order_id = 0, $order = array())
         $btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
     }
 
+    if( ( $order['order_status'] == 2 || $order['order_status'] == 4 ) && $order['confirm_time'] + (60*60*24*7) < time() ){
+        $btn_arr['return_btn'] = 0; // 退货按钮 (联系客服)
+    }
     return $btn_arr;
 }
 
