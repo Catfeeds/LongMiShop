@@ -211,7 +211,11 @@ class BuyLogic extends BaseLogic
         $this -> _post_data["type"]         = I('type') == "REFUND0" ? 0 : 1;
         $this -> _post_data["refundWay"]    = I('returnWay') != "YUAN_LU" ? 1 : 0;
         $this -> _post_data["refundMoney"]  = I('refundMoney')  ? I('refundMoney') : 0;
-
+        $goodsInfo = findDataWithCondition("goods".array("goods_id"=>$goods_id),"admin_id");
+        if( empty($goodsInfo) ){
+            throw new \Exception("商品不存在！");
+        }
+        $this -> _post_data["adminId"]     = $goodsInfo["admin_id"];
         if( $this -> _post_data["type"] != 1  && $this -> _post_data["refundMoney"] == 0 ){
             throw new \Exception("退款金额有误！");
         }
@@ -259,6 +263,7 @@ class BuyLogic extends BaseLogic
             "refund_code"   => $this -> _post_data["refundCode"],
             "refund_way"    => $this -> _post_data["refundWay"],
             "refund_money"  => $this -> _post_data["refundMoney"],
+            "admin_id"      => $this -> _post_data["adminId"],
         );
         if( !isSuccessToAddData( "return_goods",$data) ){
             throw new \Exception('提交失败！');
@@ -373,6 +378,7 @@ class BuyLogic extends BaseLogic
         $addRess = $this -> _post_data['address'];
         foreach($order_goods as $key => $item){
                 $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
+                $goods_data[$key]['spec_key'] = $item['spec_key']; //商品规格
                 $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
                 $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
                 $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称
@@ -382,6 +388,7 @@ class BuyLogic extends BaseLogic
                 $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址
         }
         $count_postage = count_postage($goods_data);
+        $this -> _post_data['count_postage']  = $count_postage['data']['result'];
         $shipping_price = $count_postage['data']['count'];//运费
 
         $order_amount = $goods_price + $shipping_price - $coupon_price; // 应付金额 = 商品价格 + 物流费 - 优惠券
@@ -481,8 +488,11 @@ class BuyLogic extends BaseLogic
         $order = M('Order')->where("order_id = $order_id")->find();
 
         $cartList = $this -> _post_data['orderGoods'];
+
+        $adminListArray = array();
         foreach($cartList as $key => $val)
         {
+            $adminListArray[$val['admin_id']] = $val['admin_id'];
             $goods = M('goods')->where("goods_id = {$val['goods_id']} ")->find();
             $data2['order_id']           = $order_id; // 订单id
             $data2['admin_id']           = $val['admin_id']; // 供应商id
@@ -490,6 +500,7 @@ class BuyLogic extends BaseLogic
             $data2['goods_name']         = $val['goods_name']; // 商品名称
             $data2['goods_sn']           = $val['goods_sn']; // 商品货号
             $data2['goods_num']          = $val['goods_num']; // 购买数量
+            $data2['goods_postage']      =  $this -> _post_data['count_postage'][$val['goods_id'].'_LM_'.$val['spec_key']]; // 商品邮费
             $data2['market_price']       = $val['market_price']; // 市场价
             $data2['goods_price']        = $val['goods_price']; // 商品价
             $data2['spec_key']           = $val['spec_key']; // 商品规格
@@ -501,13 +512,15 @@ class BuyLogic extends BaseLogic
             $data2['prom_type']          = $val['prom_type']; // 0 普通订单,1 限时抢购, 2 团购 , 3 促销优惠
             $data2['prom_id']            = $val['prom_id']; // 活动id
             $data2['user_message']       = $this -> _post_data['message_'.$val['id']];; // 备注信息
-
             if( !isSuccessToAddData("order_goods" , $data2) ){
                 throw new \Exception('添加商品失败！');
             }
         }
-
-        M('Cart')->where("user_id = $user_id and selected = 1")->delete();
+        $adminListString = implode("][" ,$adminListArray );
+        $adminListString = "[".$adminListString."]";
+        //订单供应商
+        M('order')->where(array("order_id" =>$order_id )) -> save(array("admin_list" => $adminListString));
+        M('Cart')->where("user_id = '$user_id' and selected = 1")->delete();
 
         $data4['user_id'] = $user_id;
         $data4['user_money'] = -$car_price['balance'];

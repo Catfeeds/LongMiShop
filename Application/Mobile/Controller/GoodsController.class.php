@@ -211,6 +211,7 @@ class GoodsController extends MobileBaseController {
         $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$goods['goods_id']."'")->find();
         $count_data = array(
             0=>array(
+                'spec_key'=>'', //商品规格
                 'goods_id'=>$goods['goods_id'], //商品id
                 'goods_name'=>$goods['goods_name'], //商品名称
                 'shop_price'=> $goods['shop_price'], //商品价格

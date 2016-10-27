@@ -9,7 +9,6 @@
  */
 function count_postage($array){
     // error_reporting(E_ALL);
-
     // $array = array(
     //     0=>array(
     //         'goods_id' =>143, //商品id
@@ -56,7 +55,7 @@ function count_postage($array){
 
         if($log_res['log_is_free'] == 1){ //是否包邮
             $postage += 0;
-            $goods_postage[$item['goods_id']] = 0; //商品单个邮费
+            $goods_postage[$item['goods_id'].'_LM_'.$item['spec_key']] = 0; //商品单个邮费
             continue;
         }
 
@@ -75,11 +74,11 @@ function count_postage($array){
                 //pinkage_mode  1价钱  2重量
                 if($items['pinkage_area'] == $item['site']['province'] && $items['pinkage_mode'] == 1 && $items['pinkage_bound'] >= $item['goods_price']) {
                     $postage += 0;
-                    $goods_postage[$item['goods_id']] = 0; //商品单个邮费
+                    $goods_postage[$item['goods_id'].'_LM_'.$item['spec_key']] = 0; //商品单个邮费
                     break;
                 }else if($items['pinkage_area'] == $item['site']['province'] && $items['pinkage_mode'] == 2 && $items['pinkage_bound'] >= $baseValue){
                     $postage += 0;
-                    $goods_postage[$item['goods_id']] = 0; //商品单个邮费
+                    $goods_postage[$item['goods_id'].'_LM_'.$item['spec_key']] = 0; //商品单个邮费
                     break;
                 }
             }
@@ -105,7 +104,7 @@ function count_postage($array){
         if($baseValue <= $base){
 
             $postage += $money;
-            $goods_postage[$item['goods_id']] = $money;
+            $goods_postage[$item['goods_id'].'_LM_'.$item['spec_key']] = $money;
             continue;
         }else{
             $exceed = $baseValue - $base; //超出件数
@@ -118,7 +117,7 @@ function count_postage($array){
 
 
             $postage += $end_money;
-            $goods_postage[$item['goods_id']] = $end_money; //商品邮费 
+            $goods_postage[$item['goods_id'].'_LM_'.$item['spec_key']] = $end_money; //商品邮费
         }
 
         // $goods_postage[$item['goods_id']] = 0;
