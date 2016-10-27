@@ -19,16 +19,17 @@ class IndexController extends BaseController {
         $where = "1 = 1";
         $whereOrder = "";
         if(is_supplier()){
-            $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('order_id') -> select();
-            $temp_string = "";
-            if(!empty($id_lists)){
-                foreach ($id_lists as $id_list){
-                    $temp_string .= $id_list['order_id'].",";
-                }
-            }
-            $temp_string .= "0";
-            $where .=  " AND order_id in(".$temp_string.")";
-
+//            $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('order_id') -> select();
+//            $temp_string = "";
+//            if(!empty($id_lists)){
+//                foreach ($id_lists as $id_list){
+//                    $temp_string .= $id_list['order_id'].",";
+//                }
+//            }
+//            $temp_string .= "0";
+//            $where .=  " AND order_id in(".$temp_string.")";
+            $where .=  " AND admin_list like '%[".session("admin_id")."]%'";
+            $returnWhere = "AND admin_id = ".session("admin_id")."";
             //查询退货表
             $returnList = M('return_goods')->field('order_id')->select();
             if(!empty($returnList)){
@@ -46,7 +47,7 @@ class IndexController extends BaseController {
 
         $whereOrder .= "  `order_status` = 1 AND `pay_status` = 1 AND `shipping_status` <> 1 AND ".$where;
         $count['not']  = M('order')->where($whereOrder)->count(); //待发货
-        $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'  AND  ".$where)->count(); //退货
+        $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'  ".$returnWhere)->count(); //退货
         $yesterdayTime = strtotime(date('Y-m-d',strtotime("-1 day")));
         $today = date('Y-m-d ')."00:00:00";
         $todayTime = strtotime($today);
@@ -92,7 +93,7 @@ class IndexController extends BaseController {
         $count['amount'] = '["'.$count['amount'].'"]';
         $count['tnum'] = implode('","' , $count['tnum']);
         $count['tnum'] = '["'.$count['tnum'].'"]';
-//        dd($count);
+
         $this->assign('count',$count);
         $this->display();
     }

@@ -139,6 +139,7 @@ class CartController extends MobileBaseController {
 
             if($item['selected'] == 1){ 
               $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
+              $goods_data[$key]['spec_key'] = $item['spec_key']; //商品规格
               $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
               $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
               $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称

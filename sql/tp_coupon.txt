@@ -350,3 +350,13 @@ ADD COLUMN `transaction_amount`  float(11,2) NULL DEFAULT 0 COMMENT '累计销量' A
 ADD COLUMN `withdrawals_amount`  float(11,2) NULL DEFAULT 0 COMMENT '提现金额' AFTER `transaction_amount`,
 ADD COLUMN `amount_refresh_time`  int(11) NULL COMMENT '余额刷新时间' AFTER `withdrawals_amount`;
 
+
+
+ALTER TABLE `lm_order_goods`
+ADD COLUMN `goods_postage`  float(11,2) NOT NULL COMMENT '订单邮费' AFTER `goods_num`;
+
+ALTER TABLE `lm_order`
+ADD COLUMN `admin_list`  varchar(255) NOT NULL DEFAULT "[0]" COMMENT '供应商列表' AFTER `is_distribut`;
+
+ALTER TABLE `lm_return_goods`
+ADD COLUMN `admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT '供应商id' AFTER `order_id`;

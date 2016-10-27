@@ -31,15 +31,7 @@ class VerifyController extends IndexBaseController {
         $Verify->entry();
     }
 
-    public function postage(){
-        $res = count_postage();
-        dd($res);
-
-
-
-
-
-    }
+  
 
 
 }

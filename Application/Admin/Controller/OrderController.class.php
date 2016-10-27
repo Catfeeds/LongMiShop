@@ -130,15 +130,16 @@ class OrderController extends BaseController {
     	$condition['shipping_status'] = empty($shipping_status) ? array('neq',1) : $shipping_status;
 
         if(is_supplier()){
-            $id_lists = M('order_goods')->where(array("is_send"=>array("eq","0"),'admin_id' => session('admin_id'))) -> field('order_id') -> select();
-            $temp_string = "";
-            if(!empty($id_lists)){
-                foreach ($id_lists as $id_list){
-                    $temp_string .= $id_list['order_id'].",";
-                }
-            }
-            $temp_string .= "0";
-            $condition['order_id'] = array('in',$temp_string);
+//            $id_lists = M('order_goods')->where(array("is_send"=>array("eq","0"),'admin_id' => session('admin_id'))) -> field('order_id') -> select();
+//            $temp_string = "";
+//            if(!empty($id_lists)){
+//                foreach ($id_lists as $id_list){
+//                    $temp_string .= $id_list['order_id'].",";
+//                }
+//            }
+//            $temp_string .= "0";
+//            $condition['order_id'] = array('in',$temp_string);
+            $condition['order_id'] = array('like',"%[".session("admin_id")."]%");
         }
 
 
@@ -153,22 +154,8 @@ class OrderController extends BaseController {
 
         if(is_supplier()){
             //计算邮费
-            $region_list = get_region_list();
             foreach($orderList as $key=>$item){
-                $goods_data = '';
-                $ordeList = M('order_goods')->where(array('order_id'=>$item['order_id'],'admin_id'=>session('admin_id')))->select();
-                foreach($ordeList as $keys=>$items){
-                    $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$items['goods_id']."'")->find();
-                    $goods_data[$keys]['goods_id'] = $items['goods_id']; //商品id
-                    $goods_data[$keys]['goods_num'] = $items['goods_num']; //件数  重量
-                    $goods_data[$keys]['goods_name'] = $items['goods_name']; //商品名称
-                    $goods_data[$keys]['goods_price'] = $items['goods_price']; //商品价格
-                    $goods_data[$keys]['weight'] = $goods_res['weight'];  //商品重量
-                    $goods_data[$keys]['shipping_code'] = $goods_res['delivery_way']; //配送方式
-                    $goods_data[$keys]['site'] = $region_list[$item[$key]['province']]['name']; //收获地址
-                }
-                $count_postage = count_postage($goods_data); //计算运费
-                $orderList[$key]['shipping_price'] = $count_postage['data']['count'];
+                $orderList[$key]['shipping_price'] = M('order_goods')->where(array('order_id'=>$item['order_id'],'admin_id'=>session('admin_id')))->sum("goods_postage");
             }
         }
 
@@ -191,27 +178,15 @@ class OrderController extends BaseController {
 
         if(!empty($order) && is_supplier()){
             $ordeList = M('order_goods')->where(array('order_id'=>$order_id,'admin_id'=>session('admin_id')))->select();
-            $region_list = get_region_list();
             foreach($ordeList as $key=>$item){
                 $goods_num = $item['goods_num'];
                 $goods_price = $item['goods_price'];
                 $sum .= $goods_num * $goods_price;
-
-                $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
-                $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
-                $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
-                $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称
-                $goods_data[$key]['goods_price'] = $item['goods_price']; //商品价格
-                $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
-                $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
-                $goods_data[$key]['site'] = $region_list[$order['province']]['name']; //收获地址
-
-
+                $count_postage += $item['goods_postage'];
             }
-            $count_postage = count_postage($goods_data); //计算运费
             $order['goods_price'] = $sum; //商品总价
-            $order['shipping_price'] = $count_postage['data']['count']; //运费
-            $order['order_amount'] =  $sum + $count_postage['data']['count']; //应付
+            $order['shipping_price'] = $count_postage; //运费
+            $order['order_amount'] =  $sum + $count_postage; //应付
 
         }
 //        dd($order);
@@ -592,21 +567,8 @@ class OrderController extends BaseController {
         $condition = 'order_id='.$order_id;
         if(is_supplier()){
             $condition .= " and admin_id = '".session('admin_id')."'";
-            //计算邮费
-            $region_list = get_region_list();
-            $ordeList = M('order_goods')->where(array('order_id'=>$order['order_id'],'admin_id'=>session('admin_id')))->select();
-            foreach($ordeList as $keys=>$items){
-                $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$items['goods_id']."'")->find();
-                $goods_data[$keys]['goods_id'] = $items['goods_id']; //商品id
-                $goods_data[$keys]['goods_num'] = $items['goods_num']; //件数  重量
-                $goods_data[$keys]['goods_name'] = $items['goods_name']; //商品名称
-                $goods_data[$keys]['goods_price'] = $items['goods_price']; //商品价格
-                $goods_data[$keys]['weight'] = $goods_res['weight'];  //商品重量
-                $goods_data[$keys]['shipping_code'] = $goods_res['delivery_way']; //配送方式
-                $goods_data[$keys]['site'] = $region_list[$order['province']]['name']; //收获地址
-            }
-            $count_postage = count_postage($goods_data); //计算运费
-            $order['shipping_price'] = $count_postage['data']['count'];
+            $order['shipping_price'] =  M('order_goods')->field('goods_postage')->where(array('order_id'=>$order['order_id'],'admin_id'=>session('admin_id'))) -> sum("goods_postage");
+
         }
 
 		$delivery_record = M('delivery_doc')->where($condition)->select();
@@ -694,18 +656,8 @@ class OrderController extends BaseController {
         $user = M('users')->where("user_id = {$return_goods['user_id']}")->find();
         $goods = M('goods')->where("goods_id = {$return_goods['goods_id']}")->find();
         $orderGoods = M('order_goods')->where(array('order_id'=>$return_goods['order_id'],'goods_id'=>$return_goods['goods_id']))->find();
-        $OrderRes = M('order')->field('province')->where(array('order_id'=>$return_goods['order_id']))->find();
-        //计算邮费
-        $region_list = get_region_list();
-        $goods_data[0]['goods_id'] = $orderGoods['goods_id']; //商品id
-        $goods_data[0]['goods_num'] = $orderGoods['goods_num']; //件数  重量
-        $goods_data[0]['goods_name'] = $orderGoods['goods_name']; //商品名称
-        $goods_data[0]['goods_price'] = $orderGoods['member_goods_price']; //商品价格
-        $goods_data[0]['weight'] = $goods['weight'];  //商品重量
-        $goods_data[0]['shipping_code'] = $goods['delivery_way']; //配送方式
-        $goods_data[0]['site'] = $region_list[$OrderRes['province']]['name']; //收获地址
-        $count_postage = count_postage($goods_data); //运费
-        $return_goods['count_postage'] =$count_postage['data']['count'];
+
+        $return_goods['goods_postage'] =$orderGoods['goods_postage'];//运费
         $return_goods['GoodsMoney'] = $orderGoods['member_goods_price'] * $orderGoods['goods_num'];
         $this->assign('id',$id); // 用户
         $this->assign('user',$user); // 用户
