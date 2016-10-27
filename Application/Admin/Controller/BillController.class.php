@@ -5,7 +5,7 @@ namespace Admin\Controller;
 class BillController extends BaseController {
 
 
-    function accountStatement(){
+    public function accountStatement(){
         $month = date('m');
         $year = date('Y');
         $this->assign('month',$month);
