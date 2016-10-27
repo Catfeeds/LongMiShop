@@ -31,7 +31,7 @@ class VerifyController extends IndexBaseController {
         $Verify->entry();
     }
 
-  
+
 
 
 }

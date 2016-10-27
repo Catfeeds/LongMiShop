@@ -383,7 +383,35 @@ class UserController extends BaseController {
 
 
     public function commentList(){
+        if(is_supplier()){
+            $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('goods_id') -> select();
+            $temp_string = "";
+            if(!empty($id_lists)){
+                foreach ($id_lists as $id_list){
+                    $temp_string .= $id_list['goods_id'].",";
+                }
+            }
+            $temp_string .= "0";
+            $where .=  " AND goods_id in(".$temp_string.")";
+        }
+        $this->goodsComment = M('goods_comment');
+        $list['allList'] = $this->goodsComment->order('create_time DESC')->select(); //全部
+        $list['well'] = $this->goodsComment->where("level in('4','5') AND  is_buyer = 1".$where)->order('create_time DESC')->select(); //4-5星
+        $list['middle'] = $this->goodsComment->where("level in('2','3')  AND is_buyer = 1 ".$where)->order('create_time DESC')->select(); //2-3星
+        $list['bad'] = $this->goodsComment->where("level in('0','1')  AND is_buyer = 1 ".$where)->order('create_time DESC')->select(); //0-1星
+        $list['visitors'] = $this->goodsComment->where("is_buyer = 0".$where)->order('create_time DESC')->select(); //游客
+        $this->assign('list',$list);
         $this->display();
+    }
+
+    public function ajaxDleCommen(){
+        $id = I('id');
+        $res = M('goods_comment')->where(array('id'=>$id))->save(array('is_delete'=>1));
+        if($res){
+            exit(json_encode(callback(true,'删除成功')));
+        }
+        exit(json_encode(callback(false,'删除失败')));
+
     }
 
 

@@ -19,15 +19,7 @@ class IndexController extends BaseController {
         $where = "1 = 1";
         $whereOrder = "";
         if(is_supplier()){
-//            $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('order_id') -> select();
-//            $temp_string = "";
-//            if(!empty($id_lists)){
-//                foreach ($id_lists as $id_list){
-//                    $temp_string .= $id_list['order_id'].",";
-//                }
-//            }
-//            $temp_string .= "0";
-//            $where .=  " AND order_id in(".$temp_string.")";
+
             $where .=  " AND admin_list like '%[".session("admin_id")."]%'";
             $returnWhere = "AND admin_id = ".session("admin_id")."";
             //查询退货表
