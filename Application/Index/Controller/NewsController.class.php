@@ -8,6 +8,7 @@ class NewsController extends IndexBaseController {
         return array(
             "index",
             "newsDetail",
+            "imagesList",
         );
     }
 
@@ -40,6 +41,11 @@ class NewsController extends IndexBaseController {
             $this -> error("找不到此文章！");
         }
         $this->assign('info',$info);
+        $this->display();
+    }
+
+
+    public function imagesList(){
         $this->display();
     }
 }
