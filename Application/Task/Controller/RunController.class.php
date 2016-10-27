@@ -25,10 +25,7 @@ class RunController extends BaseTaskController {
 
 
     public function index(){
-
-
         @include_once  CRON_PATH . "Order.cron.php";
-
-
+        @include_once  CRON_PATH . "Supplier.cron.php";
     }
 }

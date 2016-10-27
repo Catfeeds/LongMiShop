@@ -4,15 +4,25 @@
  */
 
 
-define('ORDER_OVERDUE_TIME', 24*60*60); //设置过期时间
+class OrderCronClass
+{
 
+    private $startTime = null;
 
-$orderList = getOverdueOrder();
-if(!empty($orderList)){
-    $orderLogic = new \Common\Logic\OrderLogic();
-    foreach ($orderList as $orderItem){
-        if( $this -> startTime - $orderItem['add_time'] >= ORDER_OVERDUE_TIME){
-            $orderLogic -> cancelOrder($orderItem['user_id'],$orderItem['order_id']);
+    public function init()
+    {
+        define('ORDER_OVERDUE_TIME', 24*60*60); //设置过期时间
+        $this -> startTime = time();
+        $orderList = getOverdueOrder();
+        if(!empty($orderList)){
+            $orderLogic = new \Common\Logic\OrderLogic();
+            foreach ($orderList as $orderItem){
+                if( $this -> startTime - $orderItem['add_time'] >= ORDER_OVERDUE_TIME){
+                    $orderLogic -> cancelOrder($orderItem['user_id'],$orderItem['order_id']);
+                }
+            }
         }
     }
 }
+
+OrderCronClass::init();

@@ -619,6 +619,17 @@ function findDataWithCondition( $tableName , $condition = array() , $field = " *
 }
 
 /**
+ * 根据条件查表 返回数据，多条
+ * @param $tableName
+ * @param array $condition
+ * @param string $field
+ * @return mixed
+ */
+function selectDataWithCondition( $tableName , $condition = array() , $field = " * "){
+    return M($tableName) -> where($condition) ->field($field) -> select();
+}
+
+/**
  * 插入表 返回成不成功
  * @param $tableName
  * @param array $data
