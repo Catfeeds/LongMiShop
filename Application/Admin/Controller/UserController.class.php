@@ -383,6 +383,7 @@ class UserController extends BaseController {
 
 
     public function commentList(){
+        $where = '';
         if(is_supplier()){
             $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('goods_id') -> select();
             $temp_string = "";
