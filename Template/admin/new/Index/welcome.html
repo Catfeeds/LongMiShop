@@ -34,6 +34,8 @@
             </div>
         </div>
 
+
+        <if condition="!is_supplier()">
         <div class="more-box">
             <div class="more-box-l">订单数</div>
         </div>
@@ -46,6 +48,7 @@
         <div class="mui-content-padded"  >
             <div class="chart" id="lineChart1"></div>
         </div>
+
         <script src="__STATIC__/js/echarts-all.js"></script>
         <script>
             var getOption = function(chartType) {
@@ -172,7 +175,7 @@
             var lineChart = echarts.init(byId('lineChart1'));
             lineChart.setOption(getOption('line'));
         </script>
-        <if condition="!is_supplier()">
+
             <div class="more-box">
                 <div class="more-box-l">快捷方式</div>
             </div>
