@@ -60,7 +60,39 @@ class IndexController extends BaseController {
         }
 
 
+        $end =  date('Y-m-d H:i:s');
+        $this->begin = strtotime("$end -1 year");
+        $this->end = strtotime($end);
 
+
+        //统计订单
+        $sql = "SELECT COUNT(*) as tnum,sum(order_amount) as amount, FROM_UNIXTIME(add_time,'%Y-%m') as gap from  __PREFIX__order ";
+        $sql .= " where add_time >= $this->begin and add_time <= $this->end AND pay_status=1  and order_status in(1,2,4)  ";
+        $sql .= "group by gap ORDER BY add_time";
+        $res = M()->query($sql); //订单数
+        $variate = date('Y-m-d',$this->begin);
+        for($i=1;$i<=12;$i++){
+            $timestamp = strtotime("$variate +$i month");
+            $time = date('Y-m',$timestamp);
+            $listArray[$i] = $time;
+        }
+        foreach($listArray as $key=>$item ){
+            $count['amount'][$key] = 0;
+            $count['tnum'][$key] = 0;
+            foreach($res as $items){
+                if($items['gap'] == $item){
+                    $count['amount'][$key] = $items['amount'];
+                    $count['tnum'][$key] = $items['tnum'];
+                }
+            }
+        }
+        $count['year'] = implode('","' , $listArray);
+        $count['year'] = '["'.$count['year'].'"]';
+        $count['amount'] = implode('","' , $count['amount']);
+        $count['amount'] = '["'.$count['amount'].'"]';
+        $count['tnum'] = implode('","' , $count['tnum']);
+        $count['tnum'] = '["'.$count['tnum'].'"]';
+//        dd($count);
         $this->assign('count',$count);
         $this->display();
     }

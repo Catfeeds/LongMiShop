@@ -51,7 +51,7 @@
                     calculable: false,
                 }: {
                     legend: {
-                        data: ['数据1', '数据2', '数据3']
+                        data: ['订单数'] //, '数据2', '数据3'
                     },
                     grid: {
                         x: 35,
@@ -84,7 +84,7 @@
                     calculable: false,
                     xAxis: [{
                         type: 'category',
-                        data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+                        data: {$count['year']}
                     }],
                     yAxis: [{
                         type: 'value',
@@ -93,20 +93,12 @@
                         }
                     }],
                     series: [{
-                        name: '数据1',
+                        name: '订单数',
                         type: chartType,
-                        data: [8.0, 14.9, 17.0, 123.2, 125.6, 176.7, 105.6, 262.2, 132.6, 120.0, 16.4, 13.3]
+                        data: {$count['tnum']}
                     },
-                        {
-                            name: '数据2',
-                            type: chartType,
-                            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 80.3]
-                        },
-                        {
-                            name: '数据3',
-                            type: chartType,
-                            data: [6.6, 8.9, 5.0, 88.4, 90.7, 100.7, 125.6, 142.2, 148.7, 180.8, 60.0, 10.3]
-                        }]
+
+                        ]
                 };
                 return chartOption;
             };
@@ -122,7 +114,7 @@
                     calculable: false,
                 }: {
                     legend: {
-                        data: ['数据1', '数据2', '数据3']
+                        data: ['销售额']
                     },
                     grid: {
                         x: 35,
@@ -155,7 +147,7 @@
                     calculable: false,
                     xAxis: [{
                         type: 'category',
-                        data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+                        data: {$count['year']}
                     }],
                     yAxis: [{
                         type: 'value',
@@ -164,20 +156,12 @@
                         }
                     }],
                     series: [{
-                        name: '数据1',
+                        name: '销售额',
                         type: chartType,
-                        data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+                        data: {$count['amount']}
                     },
-                        {
-                            name: '数据2',
-                            type: chartType,
-                            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 80.3]
-                        },
-                        {
-                            name: '数据3',
-                            type: chartType,
-                            data: [6.6, 8.9, 5.0, 88.4, 90.7, 100.7, 125.6, 142.2, 148.7, 180.8, 60.0, 10.3]
-                        }]
+
+                        ]
                 };
                 return chartOption;
             };
