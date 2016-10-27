@@ -23,8 +23,6 @@ class ReportController extends BaseController{
 		$this->end = strtotime($end);
 		
 		$this->assign('timegap',date('Y-m-d',$this->begin).' - '.date('Y-m-d',$this->end));
-		$this->begin = strtotime($begin);
-		$this->end = strtotime($end);
 	}
 	
 	public function index(){
@@ -36,7 +34,8 @@ class ReportController extends BaseController{
 		$this->assign('today',$today);
 		$sql = "SELECT COUNT(*) as tnum,sum(order_amount) as amount, FROM_UNIXTIME(add_time,'%Y-%m-%d') as gap from  __PREFIX__order ";
 		$sql .= " where add_time>$this->begin and add_time<$this->end AND pay_status=1 or pay_code='cod' and order_status in(1,2,4) group by gap ";
-		$res = M()->query($sql);//订单数,交易额
+//		dd($sql);
+        $res = M()->query($sql);//订单数,交易额
 		
 		foreach ($res as $val){
 			$arr[$val['gap']] = $val['tnum'];
