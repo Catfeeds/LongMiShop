@@ -22,6 +22,10 @@ class OrderController extends BaseController {
         $this->assign('shipping_status',C('SHIPPING_STATUS'));
     }
 
+    public function indexbak(){
+        $this->display();
+    }
+
     /*
      *订单首页
      */
