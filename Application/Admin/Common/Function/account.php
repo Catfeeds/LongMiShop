@@ -14,25 +14,56 @@ function is_supplier(){
 }
 
 
-
+/**
+ * @return mixed
+ */
 function getAccountInfo(){
+    refreshAccountMoney( session("admin_id") );
     $condition = array(
         "admin_id" => session("admin_id"),
     );
     return findDataWithCondition("admin",$condition);
 }
 
-function refreshAccountMoney( $adminId ){
-
+/**
+ * @param null $adminId
+ */
+function refreshAccountMoney( $adminId = null ){
+    if( is_null($adminId) ){
+        return;
+    }
     $cumulativeTransactionAmount = 0;
-    $condition = array(
-        "admin_id" => $adminId,
-        "is_send" => array( "in" , "0,1" )
+    $where = array();
+    $where["_string"] = " ( order_status = 2 or  order_status = 4 ) ";
+    $where["confirm_time"] = array( "lt" , time() - ( 60 * 60 * 24 * 7 ) );
+    $where["pay_status"] = 1;
+    $where["admin_list"] = array("like","%[".$adminId."]%");
+    $orderList = selectDataWithCondition( "order" , $where , "order_id" );
+    if( !empty( $orderList ) ){
+        foreach ( $orderList as $orderItem ){
+            $condition = array(
+                "order_id" =>  $orderItem['order_id'],
+                "is_send" => 1,
+            );
+            $orderGoodsInfo = selectDataWithCondition( "order_goods" , $condition , " member_goods_price , goods_num , goods_postage");
+            if( !empty( $orderGoodsInfo ) ){
+                foreach ( $orderGoodsInfo as $orderGoodsItem){
+                    $cumulativeTransactionAmount += $orderGoodsItem["goods_num"] * $orderGoodsItem["member_goods_price"] ;
+                    $cumulativeTransactionAmount += $orderGoodsItem["goods_postage"] ;
+                }
+            }
+        }
+    }
+
+    $adminInfo = findDataWithCondition( "admin" , array( "admin_id" => $adminId ) , "withdrawals_amount" );
+    $amount = $cumulativeTransactionAmount - $adminInfo['withdrawals_amount'];
+    $save = array(
+        "amount_refresh_time"   =>  time(),
+        "amount"                =>  $amount,
+        "transaction_amount"    =>  $cumulativeTransactionAmount
     );
-//    $sql = "SELECT og.*,g.original_img FROM __PREFIX__order_goods og LEFT JOIN __PREFIX__order o ON g.goods_id = og.goods_id WHERE order_id = ".$order_id;
-//
-//    M( ) ->join( array("__PREFIX__order_goods ") ) -> where($condition)
-//    M("order_goods") ->join() -> where($condition)
+
+    M("admin") -> where( array( "admin_id" => $adminId ) ) -> save($save);
 
 
 }
