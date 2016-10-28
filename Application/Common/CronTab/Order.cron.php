@@ -25,4 +25,5 @@ class OrderCronClass
     }
 }
 
-OrderCronClass::init();
+$orderCronClassObj = new OrderCronClass();
+$orderCronClassObj -> init();
