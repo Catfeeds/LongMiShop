@@ -42,6 +42,7 @@ class SupplierCronClass
                     $addData["expend"] = $countData["expend"];
                     $addData["income_count"] = $countData["income_count"];
                     $addData["expend_count"] = $countData["expend_count"];
+                    isSuccessToAddData( "account_statement" , $addData );
                     $condition2 = array(
                         "create_time" => array("egt", $this->thisMonthTime),
                         "admin_id"    => $adminItem['admin_id'],
@@ -59,6 +60,7 @@ class SupplierCronClass
                         $addData["expend"] = $countData["expend"];
                         $addData["income_count"] = $countData["income_count"];
                         $addData["expend_count"] = $countData["expend_count"];
+                        isSuccessToAddData( "account_statement" , $addData );
                     }
                 }
             }
