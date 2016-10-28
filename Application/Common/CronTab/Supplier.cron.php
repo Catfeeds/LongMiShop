@@ -30,7 +30,7 @@ class SupplierCronClass
                     "type"        => 1
                 );
                 if ( !isExistenceDataWithCondition( "account_statement" , $condition1 ) ) {
-                    refreshAccountMoney( $adminId );
+                    $this -> refreshAccountMoney( $adminId );
                     $addData = array(
                         "admin_id"    => $adminId,
                         "create_time" => $this->thisTime,
@@ -122,6 +122,11 @@ class SupplierCronClass
 
 
         return $returnArray;
+    }
+
+    private function refreshAccountMoney( $adminId = null ){
+        @require_once "Application/Admin/Common/Function/account.php";
+        @refreshAccountMoney( $adminId );
     }
 }
 
