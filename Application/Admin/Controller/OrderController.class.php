@@ -80,7 +80,7 @@ class OrderController extends BaseController {
 
                 $orderList[$keys]["goods"] = $orderLogic -> getOrderGoods( $items["order_id"] );
                 //是否售后
-                if( isSuccessToAddData( 'return_goods' , array( 'order_id' => $items["order_id"] )  ) ){
+                if( isExistenceDataWithCondition( 'return_goods' , array( 'order_id' => $items["order_id"] )  ) ){
                     $orderList[$keys]['sendBack'] = $items['order_sn'];
                 }
                 //是否快速发货按钮
