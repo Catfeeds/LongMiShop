@@ -14,7 +14,7 @@ class OrderController extends BaseController {
         parent::_initialize();
         C('TOKEN_ON',false); // 关闭表单令牌验证
         // 订单 支付 发货状态
-       $this -> order_status =C('ORDER_STATUS');
+        $this -> order_status =C('ORDER_STATUS');
         $this -> shipping_status =C('SHIPPING_STATUS');
         $this -> pay_status =C('PAY_STATUS');
         $this->assign('order_status',C('ORDER_STATUS'));
@@ -42,7 +42,7 @@ class OrderController extends BaseController {
      *Ajax首页
      */
     public function ajaxindex(){
-        $orderLogic = new OrderLogic();
+        $orderLogic = new OrderLogic();       
         $timegap = I('timegap');
         if($timegap){
         	$gap = explode('-', $timegap);
@@ -61,17 +61,9 @@ class OrderController extends BaseController {
         I('pay_code') != '' ? $condition['pay_code'] = I('pay_code') : false;
         I('shipping_status') != '' ? $condition['shipping_status'] = I('shipping_status') : false;
         I('user_id') ? $condition['user_id'] = trim(I('user_id')) : false;
-        $sort_order = I('order_by','order_id DESC').' '.I('sort');
+        $sort_order = I('order_by','DESC').' '.I('sort');
         if(is_supplier()){
-            $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('order_id') -> select();
-            $temp_string = "";
-            if(!empty($id_lists)){
-                foreach ($id_lists as $id_list){
-                    $temp_string .= $id_list['order_id'].",";
-                }
-            }
-            $temp_string .= "0";
-            $condition['order_id'] = array('in',$temp_string);
+            $condition['admin_list'] = array('like',"%[".session("admin_id")."]%");
         }
 
         $count = M('order')->where($condition)->count();
@@ -83,42 +75,25 @@ class OrderController extends BaseController {
         $show = $Page->show();
         //获取订单列表
         $orderList = $orderLogic->getOrderList($condition,$sort_order,$Page->firstRow,$Page->listRows);
-//        dd($condition);
         if(!empty($orderList)){
-            foreach($orderList as $keys=>$items){
+            foreach($orderList as $keys => $items){
+
+                $orderList[$keys]["goods"] = $orderLogic -> getOrderGoods( $items["order_id"] );
                 //是否售后
-                $returnRes = M('return_goods')->field('order_sn')->where(array('order_id'=>$items['order_id']))->find();
-                if(!empty($returnRes)){
-                    $orderList[$keys]['sendBack'] = $returnRes['order_sn'];
+                if( isSuccessToAddData( 'return_goods' , array( 'order_id' => $items["order_id"] )  ) ){
+                    $orderList[$keys]['sendBack'] = $items['order_sn'];
                 }
-                //快速发货
-                $goodsList = M('order_goods')->where(array('order_id'=>$items['order_id']))->select();
-                $orderList[$keys]['isFast'] = 1;
-                $tempAdminID = $goodsList[0]['admin_id'];
-                foreach($goodsList as $goodItem){
-                    if(  $goodItem['admin_id'] != $tempAdminID ){
-                        $orderList[$keys]['isFast'] = 0;
-                        break;
-                    }
-                }
-                if( $orderList[$keys]['isFast'] == 1 &&
-                    (
-                        ( is_supplier() && $tempAdminID != session("admin_id") ) ||
-                        ( !is_supplier() &&  $tempAdminID != 0  )
-                    )
-                ){
-                    $orderList[$keys]['isFast'] = 0;
-                }
-//                dd(session('admin_id'));
+                //是否快速发货按钮
+                $orderList[$keys]['isFast'] = getFastDeliveryBool( $items["admin_list"] , session("admin_id") );
+
             }
         }
-//        dd($orderList);
         $this->assign('orderList',$orderList);
         $this->assign('page',$show);// 赋值分页输出
         $this->display();
     }
 
-
+    
     /*
      * ajax 发货订单列表
     */
@@ -134,16 +109,7 @@ class OrderController extends BaseController {
     	$condition['shipping_status'] = empty($shipping_status) ? array('neq',1) : $shipping_status;
 
         if(is_supplier()){
-//            $id_lists = M('order_goods')->where(array("is_send"=>array("eq","0"),'admin_id' => session('admin_id'))) -> field('order_id') -> select();
-//            $temp_string = "";
-//            if(!empty($id_lists)){
-//                foreach ($id_lists as $id_list){
-//                    $temp_string .= $id_list['order_id'].",";
-//                }
-//            }
-//            $temp_string .= "0";
-//            $condition['order_id'] = array('in',$temp_string);
-            $condition['order_id'] = array('like',"%[".session("admin_id")."]%");
+            $condition['admin_list'] = array('like',"%[".session("admin_id")."]%");
         }
 
 
