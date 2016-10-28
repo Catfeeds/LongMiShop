@@ -14,7 +14,7 @@ class OrderController extends BaseController {
         parent::_initialize();
         C('TOKEN_ON',false); // 关闭表单令牌验证
         // 订单 支付 发货状态
-       $this -> order_status =C('ORDER_STATUS');
+        $this -> order_status =C('ORDER_STATUS');
         $this -> shipping_status =C('SHIPPING_STATUS');
         $this -> pay_status =C('PAY_STATUS');
         $this->assign('order_status',C('ORDER_STATUS'));
@@ -63,15 +63,7 @@ class OrderController extends BaseController {
         I('user_id') ? $condition['user_id'] = trim(I('user_id')) : false;
         $sort_order = I('order_by','DESC').' '.I('sort');
         if(is_supplier()){
-            $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('order_id') -> select();
-            $temp_string = "";
-            if(!empty($id_lists)){
-                foreach ($id_lists as $id_list){
-                    $temp_string .= $id_list['order_id'].",";
-                }
-            }
-            $temp_string .= "0";
-            $condition['order_id'] = array('in',$temp_string);
+            $condition['admin_list'] = array('like',"%[".session("admin_id")."]%");
         }
 
         $count = M('order')->where($condition)->count();
@@ -86,6 +78,8 @@ class OrderController extends BaseController {
 //        dd($condition);
         if(!empty($orderList)){
             foreach($orderList as $keys=>$items){
+
+                $orderList[$keys]["goods"] = $orderLogic -> getOrderGoods( $items["order_id"] );
                 //是否售后
                 $returnRes = M('return_goods')->field('order_sn')->where(array('order_id'=>$items['order_id']))->find();
                 if(!empty($returnRes)){
@@ -134,16 +128,7 @@ class OrderController extends BaseController {
     	$condition['shipping_status'] = empty($shipping_status) ? array('neq',1) : $shipping_status;
 
         if(is_supplier()){
-//            $id_lists = M('order_goods')->where(array("is_send"=>array("eq","0"),'admin_id' => session('admin_id'))) -> field('order_id') -> select();
-//            $temp_string = "";
-//            if(!empty($id_lists)){
-//                foreach ($id_lists as $id_list){
-//                    $temp_string .= $id_list['order_id'].",";
-//                }
-//            }
-//            $temp_string .= "0";
-//            $condition['order_id'] = array('in',$temp_string);
-            $condition['order_id'] = array('like',"%[".session("admin_id")."]%");
+            $condition['admin_list'] = array('like',"%[".session("admin_id")."]%");
         }
 
 
