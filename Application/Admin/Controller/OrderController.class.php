@@ -61,7 +61,7 @@ class OrderController extends BaseController {
         I('pay_code') != '' ? $condition['pay_code'] = I('pay_code') : false;
         I('shipping_status') != '' ? $condition['shipping_status'] = I('shipping_status') : false;
         I('user_id') ? $condition['user_id'] = trim(I('user_id')) : false;
-        $sort_order = I('order_by','DESC').' '.I('sort');
+        $sort_order = I('order_by','order_id DESC').' '.I('sort');
         if(is_supplier()){
             $condition['admin_list'] = array('like',"%[".session("admin_id")."]%");
         }
@@ -88,6 +88,7 @@ class OrderController extends BaseController {
 
             }
         }
+//        dd($orderList);
         $this->assign('orderList',$orderList);
         $this->assign('page',$show);// 赋值分页输出
         $this->display();
