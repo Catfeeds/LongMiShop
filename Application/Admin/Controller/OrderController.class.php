@@ -75,38 +75,19 @@ class OrderController extends BaseController {
         $show = $Page->show();
         //获取订单列表
         $orderList = $orderLogic->getOrderList($condition,$sort_order,$Page->firstRow,$Page->listRows);
-//        dd($condition);
         if(!empty($orderList)){
-            foreach($orderList as $keys=>$items){
+            foreach($orderList as $keys => $items){
 
                 $orderList[$keys]["goods"] = $orderLogic -> getOrderGoods( $items["order_id"] );
                 //是否售后
-                $returnRes = M('return_goods')->field('order_sn')->where(array('order_id'=>$items['order_id']))->find();
-                if(!empty($returnRes)){
-                    $orderList[$keys]['sendBack'] = $returnRes['order_sn'];
+                if( isSuccessToAddData( 'return_goods' , array( 'order_id' => $items["order_id"] )  ) ){
+                    $orderList[$keys]['sendBack'] = $items['order_sn'];
                 }
-                //快速发货
-                $goodsList = M('order_goods')->where(array('order_id'=>$items['order_id']))->select();
-                $orderList[$keys]['isFast'] = 1;
-                $tempAdminID = $goodsList[0]['admin_id'];
-                foreach($goodsList as $goodItem){
-                    if(  $goodItem['admin_id'] != $tempAdminID ){
-                        $orderList[$keys]['isFast'] = 0;
-                        break;
-                    }
-                }
-                if( $orderList[$keys]['isFast'] == 1 &&
-                    (
-                        ( is_supplier() && $tempAdminID != session("admin_id") ) ||
-                        ( !is_supplier() &&  $tempAdminID != 0  )
-                    )
-                ){
-                    $orderList[$keys]['isFast'] = 0;
-                }
-//                dd(session('admin_id'));
+                //是否快速发货按钮
+                $orderList[$keys]['isFast'] = getFastDeliveryBool( $items["admin_list"] , session("admin_id") );
+
             }
         }
-//        dd($orderList);
         $this->assign('orderList',$orderList);
         $this->assign('page',$show);// 赋值分页输出
         $this->display();

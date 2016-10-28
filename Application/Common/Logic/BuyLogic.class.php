@@ -462,7 +462,7 @@ class BuyLogic extends BaseLogic
             'zipcode'          =>$address['zipcode'],//'邮编',
             'email'            =>$address['email'],//'邮箱',
 //            'shipping_code'    =>$shipping_code,//'物流编号',
-           'shipping_name'    =>$logistics['log_delivery'], //'物流名称',
+            'shipping_name'    =>$logistics['log_delivery'], //'物流名称',
             'invoice_title'    =>$invoice_title, //'发票抬头',
             'goods_price'      =>$car_price['goodsFee'],//'商品价格',
             'shipping_price'   =>$car_price['postFee'],//'物流价格',

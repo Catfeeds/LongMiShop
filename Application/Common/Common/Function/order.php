@@ -520,3 +520,35 @@ function returnOrderHandle( $returnOrderInfo , $postData ){
         return callback( false, $e->getMessage() );
     }
 }
+
+
+/**
+ * 拆分admin-list 字段
+ * @param string $adminListString
+ * @return array
+ */
+function explodeAdminList( $adminListString = "[0]" ){
+    $orderAdminListArray = explode( "][" , $adminListString );
+    $orderAdminListString = implode( "%" , $orderAdminListArray );
+    $orderAdminListString = preg_replace( '/\[|\]/' , '' , $orderAdminListString );
+    return explode( "%" , $orderAdminListString );
+}
+
+/**
+ * 是否拥有快速发货按钮
+ * @param $adminList
+ * @param $adminId
+ * @return bool
+ */
+function getFastDeliveryBool( $adminList , $adminId ){
+    $adminArray = explodeAdminList( $adminList );
+    if(
+        count( $adminArray ) > 1 &&
+        ( is_supplier() && $adminArray[0] == $adminId ) ||
+        ( !is_supplier() &&  $adminArray[0] == 0  )
+    ){
+        return true;
+    }
+    return false;
+
+}
