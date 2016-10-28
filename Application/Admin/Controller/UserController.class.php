@@ -397,7 +397,7 @@ class UserController extends BaseController {
             $where .=  " AND goods_id in(".$temp_string.")";
         }
         $this->goodsComment = M('goods_comment');
-        $list['allList'] = $this->goodsComment->order('create_time DESC')->select(); //全部
+        $list['allList'] = $this->goodsComment->where($where)->order('create_time DESC')->select(); //全部
         $list['well'] = $this->goodsComment->where("level in('4','5') AND  is_buyer = 1".$where)->order('create_time DESC')->select(); //4-5星
         $list['middle'] = $this->goodsComment->where("level in('2','3')  AND is_buyer = 1 ".$where)->order('create_time DESC')->select(); //2-3星
         $list['bad'] = $this->goodsComment->where("level in('0','1')  AND is_buyer = 1 ".$where)->order('create_time DESC')->select(); //0-1星
