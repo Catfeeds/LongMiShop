@@ -8,6 +8,8 @@ class BillController extends BaseController {
     public function accountStatement(){
         $month = date('m');
         $year = date('Y');
+        $adminId = I('adminId');
+        $this->assign('adminId',$adminId);
         $this->assign('month',$month);
         $this->assign('year',$year);
         $this->display();
@@ -16,9 +18,9 @@ class BillController extends BaseController {
     public function ajaxAccountStatement(){
         $adminId = I('adminId');
         $type = I('type');
-        $adminId = !empty($adminId) ? $adminId : session('admin_id');
         $year = I('year');
         $month = I('month') ;
+        $adminId = !empty($adminId) ? $adminId : session('admin_id');
         $tempTime = date('Y-m-d',strtotime($year.'-'.$month));
         $timeRes = strtotime($tempTime);
         $nextMonth =strtotime("$tempTime +1 month ");
