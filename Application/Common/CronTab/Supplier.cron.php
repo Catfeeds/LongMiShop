@@ -30,7 +30,7 @@ class SupplierCronClass
                     "type"        => 1
                 );
                 if ( !isExistenceDataWithCondition( "account_statement" , $condition1 ) ) {
-                    refreshAccountMoney( $adminId );
+                    $this -> refreshAccountMoney( $adminId );
                     $addData = array(
                         "admin_id"    => $adminId,
                         "create_time" => $this->thisTime,
@@ -42,6 +42,7 @@ class SupplierCronClass
                     $addData["expend"] = $countData["expend"];
                     $addData["income_count"] = $countData["income_count"];
                     $addData["expend_count"] = $countData["expend_count"];
+                    isSuccessToAddData( "account_statement" , $addData );
                     $condition2 = array(
                         "create_time" => array("egt", $this->thisMonthTime),
                         "admin_id"    => $adminItem['admin_id'],
@@ -59,6 +60,7 @@ class SupplierCronClass
                         $addData["expend"] = $countData["expend"];
                         $addData["income_count"] = $countData["income_count"];
                         $addData["expend_count"] = $countData["expend_count"];
+                        isSuccessToAddData( "account_statement" , $addData );
                     }
                 }
             }
@@ -122,6 +124,11 @@ class SupplierCronClass
 
 
         return $returnArray;
+    }
+
+    private function refreshAccountMoney( $adminId = null ){
+        @require_once "Application/Admin/Common/Function/account.php";
+        @refreshAccountMoney( $adminId );
     }
 }
 
