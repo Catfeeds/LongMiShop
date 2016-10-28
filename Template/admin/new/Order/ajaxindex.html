@@ -8,18 +8,25 @@
         <dd>订单状态</dd>
         <dd>实付金额</dd>
     </dl>
+
     <volist name="orderList" id="list">
     <dl class="dl_box1">
         <dt>订单号：{$list.order_sn}</dt>
-        <dd><span class="btn_d"><a href="{:U('Admin/order/detail',array('order_id'=>$list['order_id']))}">查看详情</a></span><span class="btn_d"><a href="javascript:showDiv()">备注</a></span></dd>
+        <dd>
+            <if condition = " $list['order_status'] eq 1 and $list['pay_status'] eq 1 and $list['shipping_status'] neq 1 and empty($list['sendBack']) and !empty($list['isFast'])  ">
+                <span class="btn_d"> <a href="javascript:fastShipping('{$list.order_id}')" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="快速发货">快速发货</a></span>
+            </if>
+            <span class="btn_d"><a href="{:U('Admin/order/detail',array('order_id'=>$list['order_id']))}">查看详情</a></span>
+            <!--<span class="btn_d"><a href="javascript:showDiv()">备注</a></span>-->
+        </dd>
     </dl>
     <dl class="dl_box2">
         <foreach name="list['goods']" item="goods">
             <dt>
             <div class="sp">
-                <div class="sp_l"><img src="__STATIC__/img/default.svg"></div>
+                <div class="sp_l"><img src="{: !empty($goods['original_img']) ? $goods['original_img'] : '__STATIC__/img/default.svg' }"></div>
                 <div class="sp_r">
-                    <a href="#">龙米稻花香 精装大米 黑龙江五常大米精选（有赞定制版）</a>
+                    <span >{$goods.goods_name}</span>
                 </div>
             </div>
             </dt>
@@ -29,7 +36,11 @@
             </dd>
         </foreach>
 
-        <dd>&nbsp;</dd>
+        <dd>
+            <if condition="!empty($list['sendBack'])">
+                <a href="{:U('Admin/order/return_list',array('order_sn'=>$list['sendBack']))}" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="售后">售后</a>
+            </if>
+        </dd>
         <dd>
             <!--<p>视察</p>-->
             <p>{$list.consignee}</p>
@@ -39,9 +50,9 @@
             <p>{$list.add_time|date='Y-m-d',###}</p>
             <p>{$list.add_time|date='H:i:s',###}</p>
         </dd>
-        <dd>交易完成</dd>
-        <dd>7.20</dd>
-        <div class="ve">卖家备注：已关闭</div>
+        <dd>{$list.order_status_desc}</dd>
+        <dd>{$list.total_amount}</dd>
+        <!--<div class="ve">卖家备注：已关闭</div>-->
     </dl>
     </volist>
     <else />

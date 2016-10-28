@@ -30,11 +30,14 @@ class OrderController extends BaseController {
      *订单首页
      */
     public function index(){
-    	$begin = date('Y/m/d',(time()-30*60*60*24));//30天前
+    	$thirtyDays= date('Y/m/d',(time()-30*60*60*24));//30天前
     	$end = date('Y/m/d',strtotime('+1 days'));
+        $sevenDays = date('Y/m/d',(time()-7*60*60*24));//7天前
         $expressList = include_once 'Application/Common/Conf/express.php'; //快递名称
         $this->assign('expressList',$expressList);
-    	$this->assign('timegap',$begin.'-'.$end);
+        $this->assign('thirtyDays',$thirtyDays);
+        $this->assign('end',$end);
+        $this->assign('sevenDays',$sevenDays);
         $this->display();
     }
 
@@ -42,19 +45,21 @@ class OrderController extends BaseController {
      *Ajax首页
      */
     public function ajaxindex(){
-        $orderLogic = new OrderLogic();       
-        $timegap = I('timegap');
-        if($timegap){
-        	$gap = explode('-', $timegap);
-        	$begin = strtotime($gap[0]);
-        	$end = strtotime($gap[1]);
-        }
+        $orderLogic = new OrderLogic();
+        $begin = strtotime(I('begin'));
+        $end = strtotime(I('end'));
+//        if($timegap){
+//        	$gap = explode('-', $timegap);
+//        	$begin = strtotime($gap[0]);
+//        	$end = strtotime($gap[1]);
+//        }
         // 搜索条件
         $condition = array();
         I('consignee') ? $condition['consignee'] = trim(I('consignee')) : false;
         if($begin && $end){
             $condition['add_time'] = array('between',"$begin,$end");
         }
+//        dd($condition);
         I('order_sn') ? $condition['order_sn'] = trim(I('order_sn')) : false;
         I('order_status') != '' ? $condition['order_status'] = I('order_status') : false;
         I('pay_status') != '' ? $condition['pay_status'] = I('pay_status') : false;
@@ -65,7 +70,31 @@ class OrderController extends BaseController {
         if(is_supplier()){
             $condition['admin_list'] = array('like',"%[".session("admin_id")."]%");
         }
+        $search_type = I('search_type');//条件
+        $search_name = I('search_name');//值
+        !empty($search_name) ? $condition[$search_type] = $search_name : '';
 
+        $type =   I('type');
+        switch ($type) {
+            case 'notPayment': //订单查询状态 待支付
+                $condition['order_status'] = 0;
+                $condition['shipping_status'] = 0;
+              break;
+            case 'nonDeliverGoods': //订单查询状态 待发货
+                $condition['order_status'] = 1;
+                $condition['shipping_status'] = 0;
+              break;
+            case 'delivered': //订单查询状态 待收货
+                $condition['shipping_status'] = 1;
+                $condition['order_status'] = 1;
+              break;
+            case 'Completed': // 已完成
+                $condition['order_status'] = array('in','2,4');
+              break;
+            case 'close':  // 已取消
+                $condition['order_status'] = 3;
+              break;
+        }
         $count = M('order')->where($condition)->count();
         $Page  = new AjaxPage($count,20);
         //  搜索条件下 分页赋值
@@ -77,7 +106,7 @@ class OrderController extends BaseController {
         $orderList = $orderLogic->getOrderList($condition,$sort_order,$Page->firstRow,$Page->listRows);
         if(!empty($orderList)){
             foreach($orderList as $keys => $items){
-
+                $orderList[$keys] = setBtnOrderStatus( $items );
                 $orderList[$keys]["goods"] = $orderLogic -> getOrderGoods( $items["order_id"] );
                 //是否售后
                 if( isExistenceDataWithCondition( 'return_goods' , array( 'order_id' => $items["order_id"] )  ) ){
@@ -115,6 +144,7 @@ class OrderController extends BaseController {
 
 
     	$count = M('order')->where($condition)->count();
+
     	$Page  = new AjaxPage($count,10);
     	//搜索条件下 分页赋值
     	foreach($condition as $key=>$val) {
