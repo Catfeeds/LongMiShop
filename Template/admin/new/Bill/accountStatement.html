@@ -71,8 +71,9 @@
     $(document).ready(function(){
         var year = $("#year  option:selected").val();
         var month = $("#month  option:selected").val();
-        ajax_table(year,month,1);
-        ajax_table(year,month,2);
+        var adminId = "{$adminId}";
+        ajax_table(year,month,1,adminId);
+        ajax_table(year,month,2,adminId);
         console.log(year);
         console.log(month);
     });
@@ -80,26 +81,28 @@
     $("#year").change('Data',function(){
         var year = $(this).val();
         var month = $("#month  option:selected").val();
-        ajax_table(year,month,1);
-        ajax_table(year,month,2);
+        var adminId = "{$adminId}";
+        ajax_table(year,month,1,adminId);
+        ajax_table(year,month,2,adminId);
 
     });
 
     $("#month").change('Data',function(){
         var month = $(this).val();
         var year = $("#year  option:selected").val();
-        ajax_table(year,month,1);
-        ajax_table(year,month,2);
+        var adminId = "{$adminId}";
+        ajax_table(year,month,1,adminId);
+        ajax_table(year,month,2,adminId);
     });
 
 
     // ajax 抓取页面
-    function ajax_table(year,month,type){
+    function ajax_table(year,month,type,adminId){
 //        cur_page = page; //当前页面 保存为全局变量
         $.ajax({
             type : "POST",
             url:"/index.php/Admin/Bill/ajaxAccountStatement/",
-            data : {year:year,month:month,type:type},
+            data : {year:year,month:month,type:type,adminId:adminId},
             success: function(data){
                 if( type == 1 ){
                     $("#ajax_return_day").html(data);
