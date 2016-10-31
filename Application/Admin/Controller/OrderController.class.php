@@ -61,7 +61,7 @@ class OrderController extends BaseController {
         }
 //        dd($condition);
         I('order_sn') ? $condition['order_sn'] = trim(I('order_sn')) : false;
-        I('order_status') != '' ? $condition['order_status'] = I('order_status') : false;
+//        I('order_status') != '' ? $condition['order_status'] = I('order_status') : false;
         I('pay_status') != '' ? $condition['pay_status'] = I('pay_status') : false;
         I('pay_code') != '' ? $condition['pay_code'] = I('pay_code') : false;
         I('shipping_status') != '' ? $condition['shipping_status'] = I('shipping_status') : false;
@@ -93,7 +93,7 @@ class OrderController extends BaseController {
               break;
         }
         $count = M('order')->where($condition)->count();
-        $Page  = new AjaxPage($count,20);
+        $Page  = new \Admin\Common\AjaxPage($count,1);
         //  搜索条件下 分页赋值
         foreach($condition as $key=>$val) {
             $Page->parameter[$key]   =  urlencode($val);
