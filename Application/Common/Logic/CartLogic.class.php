@@ -162,7 +162,9 @@ class CartLogic extends BaseLogic
                 $cartList[$k] = $val;
                 $cartList[$k]['goods_fee'] = $val['goods_num'] * $val['member_goods_price'];
                 $cartList[$k]['store_count']  = getGoodNum($val['goods_id'],$val['spec_key']); // 最多可购买的库存数量
-                if( $cartList[$k]['store_count'] == 0 || empty( $cartList[$k]['store_count'] )){
+
+                $goodsInfo = findDataWithCondition( "goods" , array( "goods_id" => $val['goods_id'] ) , "is_on_sale" );
+                if( $cartList[$k]['store_count'] == 0 || empty( $cartList[$k]['store_count'] ) || $goodsInfo["is_on_sale"] == 0 ){
                     $cartList[$k]['store_count'] = 0;
                     $cartList[$k]['selected'] = 0;
                     $val['selected'] = 0;
