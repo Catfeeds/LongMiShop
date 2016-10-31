@@ -94,13 +94,13 @@ class AjaxPage{
         //上一页
         $up_row  = $this->nowPage - 1;
 //        $up_page .= $up_row > 0 ? '<li id="example1_previous" class="paginate_button previous disabled"><a class="prev" data-p="'.$up_row.'" href="javascript:void(0)">' . $this->config['prev'] . '</a></li>' : '';
-        $up_page .= $up_row > 0 ? '<a data-p="'.$up_row.'" href="javascript:void(0)" class="prev1" ><i></i>' . $this->config['prev'] . '</a>' : '<a data-p="'.$this->totalPages.'" href="javascript:void(0)" class="prev1" ><i></i>' . $this->config['prev'] . '</a>';
+        $up_page .= $up_row > 0 ? '<a data-p="'.$up_row.'" href="javascript:void(0)" class="prev1" ><i></i>' . $this->config['prev'] . '</a>' : '<a data-p="1" href="javascript:void(0)" class="prev1" ><i></i>' . $this->config['prev'] . '</a>';
 
 
         //下一页
         $down_row  = $this->nowPage + 1;
 //        $down_page = ($down_row <= $this->totalPages) ? '<li id="example1_next" class="paginate_button next"><a class="next" data-p="'.$down_row.'" href="javascript:void(0)">' . $this->config['next'] . '</a></li>' : '';
-        $up_page .= ($down_row <= $this->totalPages) ? '<a class="next1" data-p="'.$down_row.'" href="javascript:void(0)">' . $this->config['next'] . '<i></i></a>' : '<a class="next1" data-p="" href="javascript:void(0)">' . $this->config['next'] . '<i></i></a>';
+        $up_page .= ($down_row <= $this->totalPages) ? '<a class="next1" data-p="'.$down_row.'" href="javascript:void(0)">' . $this->config['next'] . '<i></i></a>' : '<a class="next1" data-p="'.$this->totalPages.'" href="javascript:void(0)">' . $this->config['next'] . '<i></i></a>';
 
         $up_page .= '</span>';
 
