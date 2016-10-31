@@ -111,7 +111,7 @@ class OrderController extends BaseController {
                     foreach($ordeList as $key=>$item){
                         $goods_num = $item['goods_num'];
                         $goods_price = $item['goods_price'];
-                        $sum .= $goods_num * $goods_price;
+                        $sum += $goods_num * $goods_price;
                         $count_postage += $item['goods_postage'];
                     }
 
