@@ -196,8 +196,14 @@ function orderStatusDesc($order_id = 0, $order = array() ,$engName = null)
         if($order['pay_status'] == 1 &&  in_array($order['order_status'],array(0,1)) ){
             if( $order['shipping_status'] == 0 )
                 return 'WAITSEND'; //'待发货',
-            if(($order['shipping_status'] == 2) && ($engName == "MOBILE"))
-                return 'PARTIALSEND'; //'部分发货',
+            if(($order['shipping_status'] == 2)){
+                if($engName == "MOBILE"){
+                    return 'PARTIALSEND'; //'部分发货',
+                }else{
+                    return 'PARTIALSEND'; //'部分发货',
+                }
+            }
+
         }
     }
     if(($order['shipping_status'] == 1) && ($order['order_status'] == 1))

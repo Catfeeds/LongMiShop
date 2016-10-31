@@ -103,6 +103,7 @@ return array(
         'WAITRECEIVE'=>'待收货',
         'WAITCCOMMENT'=> '待评价',
         'CANCEL'=> '已取消',
+        'PARTIALSEND' => '部分发货',
         'FINISH'=> '已完成', // 
     ),
     'ORDER_STATUS_DESC_INDEX' => array(
