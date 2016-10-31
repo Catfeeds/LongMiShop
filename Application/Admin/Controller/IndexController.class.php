@@ -16,6 +16,7 @@ class IndexController extends BaseController {
     }
    
     public function welcome(){
+
         $where = "1 = 1";
         $whereOrder = "";
         if(is_supplier()){
@@ -65,11 +66,13 @@ class IndexController extends BaseController {
             $sql .= "group by gap ORDER BY add_time";
             $res = M()->query($sql); //订单数
             $variate = date('Y-m-d',$this->begin);
-            for($i=1;$i<=12;$i++){
-                $timestamp = strtotime("$variate +$i month");
-                $time = date('Y-m',$timestamp);
+
+            for($i=12;$i>=0;$i--){
+                $timestamp =  date('Y M', strtotime('midnight first day of -'.$i.' month'));
+                $time = date('Y-m',strtotime($timestamp));
                 $listArray[$i] = $time;
             }
+
             foreach($listArray as $key=>$item ){
                 $count['amount'][$key] = 0;
                 $count['tnum'][$key] = 0;
