@@ -77,22 +77,19 @@ class OrderController extends BaseController {
         $type =   I('type');
         switch ($type) {
             case 'notPayment': //订单查询状态 待支付
-                $condition['order_status'] = 0;
-                $condition['shipping_status'] = 0;
+                $condition["_string"] = " 1=1 " . C('WAITPAY');
               break;
             case 'nonDeliverGoods': //订单查询状态 待发货
-                $condition['order_status'] = 1;
-                $condition['shipping_status'] = 0;
+                $condition["_string"] = " 1=1 " .C('WAITSEND');
               break;
             case 'delivered': //订单查询状态 待收货
-                $condition['shipping_status'] = 1;
-                $condition['order_status'] = 1;
+                $condition["_string"] = " 1=1 " .C('WAITRECEIVE');
               break;
             case 'Completed': // 已完成
-                $condition['order_status'] = array('in','2,4');
+                $condition["_string"] = " 1=1 " .C('FINISHED');
               break;
             case 'close':  // 已取消
-                $condition['order_status'] = 3;
+                $condition["_string"] = " 1=1 " .C('CANCEL');
               break;
         }
         $count = M('order')->where($condition)->count();
@@ -773,7 +770,24 @@ class OrderController extends BaseController {
             $where .= " AND pay_status = ".I('pay_status');
         }
         if(I('order_status')!=""){
-            $where .= " AND order_status = ".I('order_status');
+
+            switch (I('order_status')) {
+                case 'notPayment': //订单查询状态 待支付
+                    $where .=  C('WAITPAY');
+                    break;
+                case 'nonDeliverGoods': //订单查询状态 待发货
+                    $where .= C('WAITSEND');
+                    break;
+                case 'delivered': //订单查询状态 待收货
+                    $where .= C('WAITRECEIVE');
+                    break;
+                case 'Completed': // 已完成
+                    $where .= C('FINISHED');
+                    break;
+                case 'close':  // 已取消
+                    $where .= C('CANCEL');
+                    break;
+            }
         }
         if(I('shipping_status')!=""){
             $where .= " AND shipping_status = ".I('shipping_status');
