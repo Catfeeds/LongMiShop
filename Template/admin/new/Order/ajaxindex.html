@@ -35,7 +35,6 @@
                 <p>（{$goods.goods_num}件）</p>
             </dd>
         </foreach>
-
         <dd>
             <if condition="!empty($list['sendBack'])">
                 <a href="{:U('Admin/order/return_list',array('order_sn'=>$list['sendBack']))}" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="售后">售后</a>
