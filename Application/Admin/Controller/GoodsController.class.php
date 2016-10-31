@@ -189,8 +189,6 @@ class GoodsController extends BaseController {
             $where .= " and admin_id ='".session('admin_id')."'";
         }
 
-
-
         $model = M('Goods');
         $count = $model->where($where)->count();
         $Page  = new AjaxPage($count,10);
@@ -200,9 +198,10 @@ class GoodsController extends BaseController {
         }
          */
         $show = $Page->show();
-        $order_str = "`{$_POST['orderby1']}` {$_POST['orderby2']}";
-        $goodsList = $model->where($where)->order($order_str)->limit($Page->firstRow.','.$Page->listRows)->select();
-
+        $orderby1 = I("orderby1","goods_id");
+        $orderby2 = I("orderby2","desc");
+        $order_str = "`{$orderby1}` {$orderby2}";
+        $goodsList = $model->where($where)->order($order_str)->limit($Page->firstRow.','.$Page->listRows) ->select();
         $catList = D('goods_category')->select();
         $catList = convert_arr_key($catList, 'id');
         $this->assign('catList',$catList);
