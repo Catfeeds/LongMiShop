@@ -44,11 +44,6 @@ class OrderController extends BaseController {
         $orderLogic = new OrderLogic();
         $begin = strtotime(I('begin'));
         $end = strtotime(I('end'));
-//        if($timegap){
-//        	$gap = explode('-', $timegap);
-//        	$begin = strtotime($gap[0]);
-//        	$end = strtotime($gap[1]);
-//        }
         // 搜索条件
         $condition = array();
         I('consignee') ? $condition['consignee'] = trim(I('consignee')) : false;
@@ -108,7 +103,21 @@ class OrderController extends BaseController {
                 }
                 //是否快速发货按钮
                 $orderList[$keys]['isFast'] = getFastDeliveryBool( $items["admin_list"] , session("admin_id") );
+                //供应商 计算订单总价
+                if(!empty($items) && is_supplier()){
+                    $ordeList = M('order_goods')->where(array('order_id'=>$items['order_id'],'admin_id'=>session('admin_id')))->select();
+                    $sum = 0;
+                    $count_postage = 0;
+                    foreach($ordeList as $key=>$item){
+                        $goods_num = $item['goods_num'];
+                        $goods_price = $item['goods_price'];
+                        $sum .= $goods_num * $goods_price;
+                        $count_postage += $item['goods_postage'];
+                    }
 
+                    $orderList[$keys]['total_amount'] =  $sum + $count_postage; //实付金额
+
+                }
             }
         }
 //        dd($orderList);
