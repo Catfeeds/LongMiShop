@@ -35,19 +35,21 @@
                                         <div class="user_name_l"><img src="{: !empty($allList['user_img']) ? $allList['user_img'] : '/Public/images/default/user.png'  }"></div>
                                         <div class="user_name_r">{$allList['user_name']}</div>
                                     </div></td>
-                                    <td width="8%" align="center" nowrap>
-                                        <div class="remark_x">
-                                            <php>
-                                                for($i=1;$i<=5;$i++){
-                                                if( $i <= $allList['level'] ){
-                                                echo "★";
-                                                }else{
-                                                echo "<span>★</span>";
-                                                }
-                                                }
-                                            </php>
-                                        </div>
-                                    </td>
+                                    <if condition="$allList['is_buyer'] eq 1">
+                                        <td width="8%" align="center" nowrap>
+                                            <div class="remark_x">
+                                                <php>
+                                                    for($i=1;$i<=5;$i++){
+                                                    if( $i <= $allList['level'] ){
+                                                    echo "★";
+                                                    }else{
+                                                    echo "<span>★</span>";
+                                                    }
+                                                    }
+                                                </php>
+                                            </div>
+                                        </td>
+                                    </if>
                                     <td width="46%" align="left">{$allList['content']}</td>
                                     <td width="22%" align="right" nowrap>
                                         <if condition="$allList['is_delete'] eq 0">
