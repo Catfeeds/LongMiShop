@@ -39,13 +39,13 @@
                             <!--<option>全部</option>-->
                         <!--</select>-->
                         <span class="w">订单状态：</span>
-                        <select name="orderStatus" class="select">
-                            <option value="0">全部</option>
-                            <option value="1">待付款</option>
-                            <option value="2">待发货</option>
-                            <option value="3">已发货</option>
-                            <option value="4">已完成</option>
-                            <option value="5">已关闭</option>
+                        <select name="order_status" class="select">
+                            <option value="listAll">全部</option>
+                            <option value="notPayment">待付款</option>
+                            <option value="nonDeliverGoods">待发货</option>
+                            <option value="delivered">已发货</option>
+                            <option value="Completed">已完成</option>
+                            <option value="close">已关闭</option>
 
                         </select>
                         <!--<span class="w">物流方式：</span>-->
@@ -220,10 +220,25 @@
     });
     function formclick(){
         var orderStatus = $("select[name='orderStatus']").val();
+        var subscript = 0;
+        if(orderStatus == 'listAll'){
+            subscript = 0;
+        }else if(orderStatus == 'notPayment'){
+            subscript = 1;
+        }else if(orderStatus == 'nonDeliverGoods'){
+            subscript = 2;
+        }else if(orderStatus == 'delivered'){
+            subscript = 3;
+        }else if(orderStatus == 'Completed'){
+            subscript = 4;
+        }else if(orderStatus == 'close'){
+            subscript = 5;
+        }
+
         $("#shouUl li").removeClass('on');
-        $("#shouUl").find("li").eq(orderStatus).addClass('on');
+        $("#shouUl").find("li").eq(subscript).addClass('on');
         $("#showView ul").hide();
-        $("#showView").find("ul").eq(orderStatus).show();
+        $("#showView").find("ul").eq(subscript).show();
         var formId = 'search-form2';
         var page = 1;
         ajax_get_table(formId,page,'listAll');
