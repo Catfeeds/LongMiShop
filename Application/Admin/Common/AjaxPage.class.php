@@ -93,64 +93,22 @@ class AjaxPage{
         $up_page = '<span class="pagination">';
         //上一页
         $up_row  = $this->nowPage - 1;
-//        $up_page .= $up_row > 0 ? '<li id="example1_previous" class="paginate_button previous disabled"><a class="prev" data-p="'.$up_row.'" href="javascript:void(0)">' . $this->config['prev'] . '</a></li>' : '';
-        $up_page .= $up_row > 0 ? '<a data-p="'.$up_row.'" href="javascript:void(0)" class="prev1" ><i></i>' . $this->config['prev'] . '</a>' : '';
+        $up_page .= $up_row > 0 ? '<a data-p="'.$up_row.'" href="javascript:void(0)" class="prev1" ><i></i>' . $this->config['prev'] . '</a>' : '<a data-p="1" href="javascript:void(0)" class="prev1" ><i></i>' . $this->config['prev'] . '</a>';
 
 
         //下一页
         $down_row  = $this->nowPage + 1;
-//        $down_page = ($down_row <= $this->totalPages) ? '<li id="example1_next" class="paginate_button next"><a class="next" data-p="'.$down_row.'" href="javascript:void(0)">' . $this->config['next'] . '</a></li>' : '';
-        $up_page .= ($down_row <= $this->totalPages) ? '<a class="next1" data-p="'.$down_row.'" href="javascript:void(0)">' . $this->config['next'] . '<i></i></a>' : '';
+       $up_page .= ($down_row <= $this->totalPages) ? '<a class="next1" data-p="'.$down_row.'" href="javascript:void(0)">' . $this->config['next'] . '<i></i></a>' : '<a class="next1" data-p="'.$this->totalPages.'" href="javascript:void(0)">' . $this->config['next'] . '<i></i></a>';
 
         $up_page .= '</span>';
 
         $link_page = '<span class="searchPage">';
-        $link_page .= '<span class="page-sum">共<strong class="allPage"><span class="color-c">1</span>/5</strong>页 每页20条</span>';
-        
-//        //第一页
-//        $the_first = '';
-//        if($this->totalPages > $this->rollPage && ($this->nowPage - $now_cool_page) >= 1){
-//            $the_first = '<li id="example1_previous" class="paginate_button previous disabled"><a class="first" data-p="1" href="javascript:void(0)">' . $this->config['first'] . '</a></li>';
-//        }
-//
-//        //最后一页
-//        $the_end = '';
-//        if($this->totalPages > $this->rollPage && ($this->nowPage + $now_cool_page) < $this->totalPages){
-//            $the_end = '<li id="example1_previous" class="paginate_button previous disabled"><a class="end" data-p="'.$this->totalPages.'" href="javascript:void(0)">' . $this->config['last'] . '</a></li>';
-//        }
+        $link_page .= '<span class="page-sum">共<strong class="allPage"><span class="color-c">'.$this->nowPage.'</span>/'.$this->totalPages.'</strong>页 每页'.$this->listRows.'条</span>';
+        $link_page .= '<span class="page-go">跳转<input type="text" name="page">页</span><a href="javascript:void(0);" onclick="skipPage(this);" class="page-btn">GO</a>';
+        $link_page .= '</span>';
 
-        //数字连接
-        $link_page = "";
-        for($i = 1; $i <= $this->rollPage; $i++){
-			if(($this->nowPage - $now_cool_page) <= 0 ){
-				$page = $i;
-			}elseif(($this->nowPage + $now_cool_page - 1) >= $this->totalPages){
-				$page = $this->totalPages - $this->rollPage + $i;
-			}else{
-				$page = $this->nowPage - $now_cool_page_ceil + $i;
-			}
-            if($page > 0 && $page != $this->nowPage){
 
-                if($page <= $this->totalPages){
-                    $link_page .= '<li class="paginate_button"><a class="num" data-p="'.$page.'" href="javascript:void(0)">' . $page . '</a></li>';
-                }else{
-                    break;
-                }
-            }else{
-                if($page > 0 && $this->totalPages != 1){
-//                    $link_page .= '<span class="current">' . $page . '</span>';
-                    $link_page .= '<li class="paginate_button active"><a tabindex="0" data-dt-idx="1" aria-controls="example1" data-p="'.$page.'" href="javascript:void(0)">' . $page . '</a></li>';
-
-                }
-            }
-        }
-
-        //替换分页内容
-        $page_str = str_replace(
-            array('%HEADER%', '%NOW_PAGE%', '%UP_PAGE%', '%DOWN_PAGE%', '%FIRST%', '%LINK_PAGE%', '%END%', '%TOTAL_ROW%', '%TOTAL_PAGE%'),
-            array($this->config['header'], $this->nowPage, $up_page, $down_page, $the_first, $link_page, $the_end, $this->totalRows, $this->totalPages),
-            $this->config['theme']);
-//        return "<div class='dataTables_paginate paging_simple_numbers'><ul class='pagination'>{$page_str}</ul></div>";
-        return "<div class='p5'><div class='pages'><div class='Pagination'>{$page_str}</div></div></div>";
+        $page_strs = $up_page.$link_page;
+        return "<div class='p5'><div class='pages'><div class='Pagination'>{$page_strs}</div></div></div>";
     }
 }
