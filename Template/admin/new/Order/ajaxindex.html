@@ -55,45 +55,37 @@
     </dl>
     </volist>
     {: $page}
-    <div class="p5">
-        <div class="pages">
-            <div class="Pagination">
-				<span class="pagination">
-					  <a href="#" class="prev1">
-						<i></i>上一页
-					  </a>
-					  <a class="next1">
-						下一页 <i></i>
-					  </a>
-				</span>
-                <span class="searchPage">
-					<span class="page-sum">共
-					  <strong class="allPage">
-						<span class="color-c">1</span>/5
-					  </strong>页 每页20条
-					</span>
-					<span class="page-go">
-					跳转
-					<input type="text">
-					页
-					</span>
-					<a href="javascript:;" class="page-btn">GO</a>
-				</span>
-            </div>
-        </div>
-    </div>
+    <!--<div class="p5">-->
+        <!--<div class="pages">-->
+            <!--<div class="Pagination">-->
+				<!--<span class="pagination">-->
+					  <!--<a href="#" class="prev1">-->
+						<!--<i></i>上一页-->
+					  <!--</a>-->
+					  <!--<a class="next1">-->
+						<!--下一页 <i></i>-->
+					  <!--</a>-->
+				<!--</span>-->
+                <!--<span class="searchPage">-->
+					<!--<span class="page-sum">共-->
+					  <!--<strong class="allPage">-->
+						<!--<span class="color-c">1</span>/5-->
+					  <!--</strong>页 每页20条-->
+					<!--</span>-->
+					<!--<span class="page-go">-->
+					<!--跳转-->
+					<!--<input type="text" name="page">-->
+					<!--页-->
+					<!--</span>-->
+					<!--<a href="javascript:;" class="page-btn">GO</a>-->
+				<!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 
     <else />
 
 
 </notempty>
 
-<script>
-    $(".pagination li a").click(function(){
-        $().parent().parent().attr('id');
-        var page = $(this).data('p');
-        console.log(page);
-//        ajax_get_table('search-form2',page);
-    });
-</script>
 

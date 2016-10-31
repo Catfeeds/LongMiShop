@@ -262,6 +262,7 @@
             success: function(data){
                 $("#"+ulId).html('');
                 $("#"+ulId).append(data);
+                clickNext();
             }
         });
     }
@@ -318,6 +319,36 @@
     function thirtyDays(){
         $("input[name='begin']").val("{$thirtyDays}");
         $("input[name='end']").val("{$end}");
+    }
+
+    function clickNext(){
+        $(".next1").each(function(){
+            $(this).off("click");
+            $(this).click(function(){
+                var id = $(this).parent().parent().parent().parent().parent().attr('id');
+                var page = $(this).data('p');
+                ajax_get_table('search-form2',page,id);
+            });
+        });
+        $(".prev1").each(function(){
+            $(this).off("click");
+            $(this).click(function(){
+                var id = $(this).parent().parent().parent().parent().parent().attr('id');
+                var page = $(this).data('p');
+                ajax_get_table('search-form2',page,id);
+            });
+        });
+    }
+
+    function skipPage(obj){
+        var id = $(obj).parent().parent().parent().parent().parent().attr('id');
+        var page = $(obj).parent().find(".page-go input").val();
+
+        if(page == ''){
+            $(obj).parent().find(".page-go input").focus();
+            return false;
+        }
+        ajax_get_table('search-form2',page,id);
     }
 
 </script>
