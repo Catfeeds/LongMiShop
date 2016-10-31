@@ -266,6 +266,7 @@ class GoodsController extends BaseController {
                     $Goods->save(); // 写入数据到数据库
                     $Goods->afterSave($goods_id);
                 }
+                
                 else
                 {
                     $goods_id = $insert_id = $Goods->add(); // 写入数据到数据库
