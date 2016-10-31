@@ -37,7 +37,7 @@ class GoodsModel extends Model
     {
         $admin_id = session('admin_id');
         if (is_supplier()) {
-            M('goods')->where("goods_id = $goods_id ")->save(array("admin_id" => $admin_id,'is_on_sale'=>'0')); // 根据条件更新记录
+            M('goods')->where("goods_id = $goods_id ")->save(array("admin_id" => $admin_id)); // 根据条件更新记录
             $data = array(
                'goods_id'=> $goods_id,
                'admin_id'=>$admin_id,
@@ -55,6 +55,9 @@ class GoodsModel extends Model
      */
     public function afterSave($goods_id)
     {
+        if (is_supplier()) {
+            M('goods')->where("goods_id = $goods_id ")->save(array('is_on_sale'=>'0'));
+        }
         // 商品货号
         $goods_sn = "LM" . str_pad($goods_id, 7, "0", STR_PAD_LEFT);
         // 商品图片相册  图册

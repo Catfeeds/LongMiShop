@@ -261,6 +261,7 @@ class GoodsController extends BaseController {
 
                 if ($type == 2)
                 {
+
                     $goods_id = $_POST['goods_id'];
                     $Goods->save(); // 写入数据到数据库
                     $Goods->afterSave($goods_id);
