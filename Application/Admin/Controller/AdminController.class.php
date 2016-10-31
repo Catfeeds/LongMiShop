@@ -103,7 +103,7 @@ class AdminController extends BaseController {
         if(IS_POST){
             $verify = new Verify();
             if (!$verify->check(I('post.vertify'), "Admin/Login")) {
-//            	exit(json_encode(array('status'=>0,'msg'=>'验证码错误')));
+            	exit(json_encode(array('status'=>0,'msg'=>'验证码错误')));
             }
             $condition['user_name'] = I('post.username');
             $condition['password'] = I('post.password');
