@@ -65,8 +65,8 @@ $(document).ready(function(){
 });
 $(document).ready(function(){
   $(".c_btn555").click(function(){
-  $(".c_btn55_box").fadeIn(300);
-  $(".me1_box").fadeToggle(300);
+  // $(".c_btn55_box").fadeIn(300);
+  // $(".me1_box").fadeToggle(300);
   });
 });
 $(document).ready(function(){
