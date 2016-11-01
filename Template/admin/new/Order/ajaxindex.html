@@ -13,9 +13,9 @@
     <dl class="dl_box1">
         <dt>订单号：{$list.order_sn}</dt>
         <dd>
-            <if condition = " $list['order_status'] eq 1 and $list['pay_status'] eq 1 and $list['shipping_status'] neq 1 and empty($list['sendBack']) and !empty($list['isFast'])  ">
+            <notempty name = "list.isFast" >
                 <span class="btn_d"> <a href="javascript:fastShipping('{$list.order_id}')" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="快速发货">快速发货</a></span>
-            </if>
+            </notempty>
             <span class="btn_d"><a href="{:U('Admin/order/detail',array('order_id'=>$list['order_id']))}">查看详情</a></span>
             <!--<span class="btn_d"><a href="javascript:showDiv()">备注</a></span>-->
         </dd>
@@ -24,7 +24,9 @@
         <foreach name="list['goods']" item="goods">
             <dt>
             <div class="sp">
-                <div class="sp_l"><img src="{: !empty($goods['original_img']) ? $goods['original_img'] : '__STATIC__/img/default.svg' }"></div>
+                <div class="sp_l">
+                    <img src="{: !empty($goods['original_img']) ? $goods['original_img'] : '__STATIC__/img/default.svg' }">
+                </div>
                 <div class="sp_r">
                     <span >{$goods.goods_name}</span>
                 </div>
@@ -49,12 +51,16 @@
             <p>{$list.add_time|date='Y-m-d',###}</p>
             <p>{$list.add_time|date='H:i:s',###}</p>
         </dd>
-        <dd>{$list.order_status_desc}</dd>
+        <dd>{$list.order_status_desc}
+            <div class="btn_e">
+                <a onclick="shipping('{$list.order_id}')">发货</a>
+            </div>
+        </dd>
         <dd>{$list.total_amount}</dd>
         <!--<div class="ve">卖家备注：已关闭</div>-->
     </dl>
     </volist>
-    {: $page}
+    {$page}
 
 
     <else />

@@ -98,17 +98,18 @@ class OrderController extends BaseController {
                 $orderList[$keys] = setBtnOrderStatus( $items );
                 $orderList[$keys]["goods"] = $orderLogic -> getOrderGoods( $items["order_id"] );
                 //是否售后
-                if( isExistenceDataWithCondition( 'return_goods' , array( 'order_id' => $items["order_id"] )  ) ){
+                if( isExistenceDataWithCondition( 'return_goods' , array( 'order_id' => $items["order_id"] )  ) ) {
                     $orderList[$keys]['sendBack'] = $items['order_sn'];
                 }
-                //是否快速发货按钮
-                $orderList[$keys]['isFast'] = getFastDeliveryBool( $items["admin_list"] , session("admin_id") );
+                if( $items['order_status'] == 1 && $items['pay_status'] == 1 && $items['shipping_status'] != 1 && empty( $orderList[$keys]['sendBack'] )){
+                    //是否快速发货按钮
+                    $orderList[$keys]['isFast'] = getFastDeliveryBool( $items["admin_list"] , session("admin_id") );
+                }
                 //供应商 计算订单总价
-                if(!empty($items) && is_supplier()){
-                    $ordeList = M('order_goods')->where(array('order_id'=>$items['order_id'],'admin_id'=>session('admin_id')))->select();
+                if( is_supplier() ){
                     $sum = 0;
                     $count_postage = 0;
-                    foreach($ordeList as $key=>$item){
+                    foreach($orderList[$keys]["goods"] as $key=>$item){
                         $goods_num = $item['goods_num'];
                         $goods_price = $item['goods_price'];
                         $sum += $goods_num * $goods_price;
