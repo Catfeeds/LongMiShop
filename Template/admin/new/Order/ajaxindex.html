@@ -51,10 +51,13 @@
             <p>{$list.add_time|date='Y-m-d',###}</p>
             <p>{$list.add_time|date='H:i:s',###}</p>
         </dd>
-        <dd>{$list.order_status_desc}
-            <div class="btn_e">
-                <!--<a onclick="shipping('{$list.order_id}')">发货</a>-->
-            </div>
+        <dd>
+            <p>{$list.order_status_desc}</p>
+            <p>
+                <if condition="$list['no_send'] eq true">
+                    <a onclick="shipping('{$list.order_id}')">发货</a>
+                </if>
+            </p>
         </dd>
         <dd>{$list.total_amount}</dd>
         <!--<div class="ve">卖家备注：已关闭</div>-->
