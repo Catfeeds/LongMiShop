@@ -45,6 +45,7 @@ class AjaxPage{
         $this->nowPage    = empty($_GET[$this->p]) ? 1 : intval($_GET[$this->p]);
         $this->nowPage    = $this->nowPage>0 ? $this->nowPage : 1;
         $this->firstRow   = $this->listRows * ($this->nowPage - 1);
+
     }
 
     /**
@@ -109,6 +110,9 @@ class AjaxPage{
 
 
         $page_strs = $up_page.$link_page;
+        if($this->totalRows < $this->listRows ){
+            return false;
+        }
         return "<div class='p5'><div class='pages'><div class='Pagination'>{$page_strs}</div></div></div>";
     }
 }

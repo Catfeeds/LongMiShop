@@ -5,7 +5,7 @@
         <dl class="dl_box4">
             <dt>
             <div class="sp_l" style="padding-top:2px; padding-left:5px; padding-right:5px">
-                <input type="checkbox" name="checkbox">
+                <input type="checkbox"  value="" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
             </div>
             商品</dt>
             <dd>分类</dd>
@@ -13,13 +13,14 @@
             <dd>总销售</dd>
             <dd>创建时间</dd>
             <dd>序号</dd>
+            <dd>状态</dd>
         </dl>
         <volist name="goodsList" id="list">
             <dl class="dl_box3">
                 <dt>
                 <div class="sp">
                     <div class="sp_l">
-                        <input type="checkbox" name="checkbox">
+                        <input type="checkbox" name="selected[]" value="{$list.goods_id}">
                     </div>
                     <div class="sp_l">
                         <img src="{$list.original_img}">
@@ -48,14 +49,18 @@
                     </empty>
                 </dd>
                 <dd>{$list.sort}</dd>
+
+                <dd>{$list['is_on_sale'] == 1 ? '已上架' : '已下架' }</dd>
+
             </dl>
         </volist>
         <div class="p5">
-            <div class="btn_b"><a href="#">下架</a></div>
+            <div class="btn_b"><a href="javascript:void(0);" onclick="soldOut();">下架</a></div>
             <!--<div class="btn_b"><a href="#">删除</a></div>-->
             <div class="pages" style="float:right">
                 {$page}
             </div>
+
         </div>
         <else/>
         <div class="none">还没有相关数据</div>
@@ -209,6 +214,47 @@
                 }
             });
         }
+
+
     </script>
 
 </if>
+
+<script>
+    // 点击分页触发的事件
+    $(".pagination  a").click(function(){
+        cur_page = $(this).data('p');
+        ajax_get_table('search-form2',cur_page);
+    });
+
+    function soldOut(){
+        var length = $("input[type='checkbox']:checked").length;
+        if(length == 0){
+            alert('请选择下架商品');
+            return false;
+        }
+        var array = [];
+        $("input:checkbox:checked").each(function(){
+            if($(this).val() != ''){
+                array += $(this).val()+',';
+            }
+        });
+        array = array.split(',');
+        $.ajax({
+            type : "POST",
+            url:"/index.php/Admin/Goods/soldOutAll/",//+tab,
+            data : {data:array},
+            dataType:'json',
+            success: function(data){
+                if(data.state == 1){
+                    alert(data.msg);
+                    window.location.reload();
+                }else{
+                    alert(data.msg);
+                }
+            }
+        });
+    }
+
+
+</script>
