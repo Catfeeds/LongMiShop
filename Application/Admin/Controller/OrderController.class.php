@@ -114,6 +114,10 @@ class OrderController extends BaseController {
                         $goods_price = $item['goods_price'];
                         $sum += $goods_num * $goods_price;
                         $count_postage += $item['goods_postage'];
+                        $is_send[] = $item['is_send'];
+                    }
+                    if(in_array('0',$is_send)){
+                        $orderList[$keys]['no_send'] = true;
                     }
 
                     $orderList[$keys]['total_amount'] =  $sum + $count_postage; //实付金额
@@ -1043,7 +1047,16 @@ class OrderController extends BaseController {
     public function ajaxSend(){
         if(IS_POST){
             $data = I('post.');
-            dd($data);
+            $data = array(
+                "order_id" => $data['id'],
+                "invoice_no" => $data['invoice_no'],
+                "myShippingName" => $data['shipping_name'],
+                "goods"=>$data['rec_id_list'],
+                "note"=>" ",
+            );
+            $orderLogic = new OrderLogic();
+            $result = $orderLogic->deliveryHandle($data);
+            exit(json_encode($result));
         }
     }
 
