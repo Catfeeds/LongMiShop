@@ -169,18 +169,19 @@
         <div class="pop_box_b">
             <div>
                 <div>
-                    <p class="p2">待发货 1	,已选 0 </p>
+                    <p class="p2">待发货 <span class="noShipments"></span>	,已选 <span class="SeleCted">0</span> </p>
                     <div class="cp_tab">
                         <table class="tab1" width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr class="cp_tab_top">
                                 <td><div class="sp_l" style="padding-top:2px; padding-left:5px; padding-right:5px">
-                                    <input type="checkbox" name="checkbox">
+                                    <input type="checkbox" name="" value=""  class="allCheck">
                                 </div>
                                     商品</td>
                                 <td>数量</td>
                                 <td>物流丨单号</td>
                                 <td>状态</td>
                             </tr>
+
                             <!--<tr>-->
                                 <!--<td><div class="sp">-->
                                     <!--<div class="sp_l">-->
@@ -199,24 +200,10 @@
                     </div>
                     <div class="tab2">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                            <!--<tr>-->
-                                <!--<td width="9%">发货方式：</td>-->
-                                <!--<td width="35%" align="left"><p>-->
-                                    <!--<label>-->
-                                        <!--<input type="radio" name="RadioGroup1" value="单选" id="RadioGroup1_0">-->
-                                        <!--需要物流</label>-->
-                                    <!--<label>-->
-                                        <!--<input type="radio" name="RadioGroup1" value="单选" id="RadioGroup1_1">-->
-                                        <!--无需要物流</label>-->
-                                    <!--<br>-->
-                                <!--</p></td>-->
-                                <!--<td width="9%">&nbsp;</td>-->
-                                <!--<td width="47%">&nbsp;</td>-->
-                            <!--</tr>-->
                             <tr>
                                 <td>物流公司：</td>
                                 <td>
-                                    <select name="select7" class="select">
+                                    <select name="shipping_name" class="select">
                                         <option value="0">请选择配送方式</option>
                                         <volist name="expressList" id="item">
                                             <option value="{: $item}" {: $order['shipping_name'] == $item ? 'selected' : ''}>{: $item}</option>
@@ -224,13 +211,10 @@
                                     </select>
                                 </td>
                                 <td>快递单号：</td>
-                                <td><input type="text" name="input3" class="text"></td>
+                                <td><input type="text" name="invoice_no" class="text" ></td>
                             </tr>
-                            <!--<tr>-->
-                                <!--<td colspan="4"><p class="p3">*请仔细填写物流公司及快递单号，发货后24小时内仅支持做一次更正，逾期不可修改</p></td>-->
-                            <!--</tr>-->
                             <tr>
-                                <td colspan="4">收货地址：广东省 广州市 罗湖区 禾茂田超市有限公司 ，王大炜 ，15988540064</td>
+                                <td colspan="4" class="siTe"></td>
                             </tr>
                         </table>
                     </div>
@@ -238,7 +222,7 @@
             </div>
             <div class="pop_btn_b">
                 <span class="btn_e">
-                    <a href="#">保存</a>
+                    <a href="javascript:void(0);" class="shippingSubmit">保存</a>
                 </span>
             </div>
     </div>
@@ -359,12 +343,70 @@
         });
     }
     function shipping( id ){
+
         layer.open({
             type: 1,
             skin: 'layui-layer-rim', //加上边框
             area: ['840px', '450px'], //宽高
-            content: $("#shippingDiv").html()
+            content: "<div id = 'newShippingDiv"+id+"'>" + $("#shippingDiv").html() + "</div>"
         });
+        $('#newShippingDiv'+id+' .allCheck').click(function(){
+            $('#newShippingDiv'+id+' input[name*=\'selected\']').prop('checked', this.checked);
+            var length = $("input[type='checkbox']:checked").length;
+            if(length >= 1){
+                length--;
+            }
+            $('#newShippingDiv'+id+' .SeleCted').html(length);
+        });
+        $('#newShippingDiv'+id+' .shippingSubmit').click(function(){
+            consignment('#newShippingDiv'+id);
+        });
+        $.ajax({
+            type:'post',
+            url:'/index.php/Admin/order/ajaxShippingList',
+            data:{id:id},
+            dataType:'json',
+            success:function(res){
+                if(res.state == 1){
+                    $('#newShippingDiv' + id +' .tab1').append(res.data.html);
+                    $('#newShippingDiv' + id +' .siTe').html(res.data.site);
+                    $('#newShippingDiv' + id +' .noShipments').html(res.data.noShipments);
+
+                }else{
+                    alert(res.msg);
+                }
+            }
+        });
+
+    }
+
+    function consignment(formid){
+        var shipping_name = $(formid).find("option:selected").val();
+        var invoice_no = $(formid).find("input[name='invoice_no']").val();
+        var array = [];
+        $(""+formid+" input:checkbox:checked").each(function(){
+            if($(this).val() != ''){
+                array += $(this).val()+',';
+            }
+        });
+        array = array.split(',');
+        $.ajax({
+            type : "POST",
+            url:"/index.php/Admin/Goods/ajaxSend/",
+            data : {data:array},
+            dataType:'json',
+            success: function(data){
+                if(data.state == 1){
+                    alert(data.msg);
+                    window.location.reload();
+                }else{
+                    alert(data.msg);
+                }
+            }
+        });
+        console.log(shipping_name);
+        console.log(invoice_no);
+        console.log(array);
     }
 
     function doSubmit(obj) {
