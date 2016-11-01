@@ -988,4 +988,63 @@ class OrderController extends BaseController {
         $order_amount = M('order')->where("order_status=0 and (pay_status=1 or pay_code='cod')")->count();
         echo $order_amount;
     }
+
+    /**
+     * ajax请求发货商品
+     *
+     **/
+    public function ajaxShippingList(){
+        if(IS_POST){
+            $orderId = I('id');
+            $region_list = get_region_list();
+            $order = M('order')->where(array('order_id'=>$orderId))->find();
+            //收货人
+            $site = $region_list[$order['province']]['name'].' '.$region_list[$order['city']]['name'].' '.$region_list[$order['district']]['name'].' '.$order['address'].', '.$order['consignee'].' '.$order['mobile'];
+            $goodsList = M('order_goods')->where(array('order_id'=>$orderId,'admin_id'=>session('admin_id')))->select();
+            if(empty($goodsList)){
+                exit(json_encode(callback(true,'没有订单数据')));
+            }
+            foreach($goodsList as $item){
+                $html = '';
+                $invoice_no = '';
+                if( $item['is_send'] == 1 && !empty($item['delivery_id']) ){
+                    $invoice_no = M('delivery_doc')->where(array('id'=>$item['delivery_id']))->find();
+                    $invoice_no = $invoice_no['invoice_no'];
+                }
+                switch ($item['is_send']){
+                    case 0:
+                        $send = '未发货';
+                        break;
+                    case 1:
+                        $send = '已发货';
+                        break;
+                    case 2:
+                        $send = '已换货';
+                        break;
+                    case 3:
+                        $send = '已退货';
+                        break;
+
+                }
+                $html = '<tr><td><div class="sp"><div class="sp_l">';
+                if($item['is_send'] == 0 && empty($item['delivery_id'])){
+                    $html .= '<input type="checkbox" name="selected[]" value="'.$item['rec_id'].'">';
+                }
+                $html .= '<label for="checkbox"></label></div> <div class="sp_r"><a href="#">'.$item['goods_name'].'</a><p class="p1">'.$item['spec_key_name'].'</p></div></div></td><td>'.$item['goods_num'].'</td><td>'.$invoice_no.'</td><td>'.$send.'</td></tr>';
+            }
+            exit(json_encode(callback(true,'获取成功',array('html'=>$html,'site'=>$site,'noShipments'=>count($goodsList)))));
+
+        }
+    }
+    /**
+     * ajax发货商品
+     *
+     **/
+    public function ajaxSend(){
+        if(IS_POST){
+            $data = I('post.');
+            dd($data);
+        }
+    }
+
 }
