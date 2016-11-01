@@ -278,7 +278,7 @@ function sendSMS($mobile, $code)
     $req->setSmsFreeSignName("龙米科技");
     //短信模板 必须
 //    $req->setSmsParam("{\"code\":\"$code\",\"product\":\"$product\"}");
-    $time = "120分钟";
+    $time = "120秒";
     $req->setSmsParam("{\"code\":\"$code\",\"time\":\"$time\"}");
     //短信接收号码 支持单个或多个手机号码，传入号码为11位手机号码，不能加0或+86。群发短信需传入多个号码，以英文逗号分隔，
     $req->setRecNum("$mobile");
