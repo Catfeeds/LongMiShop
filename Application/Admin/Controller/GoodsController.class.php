@@ -191,7 +191,7 @@ class GoodsController extends BaseController {
 
         $model = M('Goods');
         $count = $model->where($where)->count();
-        $Page  = new AjaxPage($count,10);
+        $Page  = new \Admin\Common\AjaxPage($count,10);
         /**  搜索条件下 分页赋值
         foreach($condition as $key=>$val) {
         $Page->parameter[$key]   =   urlencode($val);
@@ -208,6 +208,26 @@ class GoodsController extends BaseController {
         $this->assign('goodsList',$goodsList);
         $this->assign('page',$show);// 赋值分页输出
         $this->display();
+    }
+
+    /**
+     * 下架商品
+     *
+     */
+    public function soldOutAll(){
+        $data = I('post.');
+        $res = array();
+        foreach($data['data'] as $item){
+            if(!empty($item)){
+                $res[] = M('goods')->where(array('admin_id'=>session('admin_id'),'goods_id'=>$item))->save(array('is_on_sale'=>0));
+            }
+        }
+        if(in_array('1',$res)){
+            exit(json_encode(callback(true,'下架成功')));
+        }else{
+            exit(json_encode(callback(true,'操作失败')));
+        }
+
     }
 
 
