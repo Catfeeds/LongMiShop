@@ -31,10 +31,12 @@
                         <notempty name="list['allList']">
                             <volist name="list['allList']" id="allList">
                                 <tr>
-                                    <td width="24%" align="left" nowrap><div class="user_name">
-                                        <div class="user_name_l"><img src="{: !empty($allList['user_img']) ? $allList['user_img'] : '/Public/images/default/user.png'  }"></div>
-                                        <div class="user_name_r">{$allList['user_name']}</div>
-                                    </div></td>
+                                    <td width="24%" align="left" nowrap>
+                                        <div class="user_name">
+                                            <div class="user_name_l"><img src="{: !empty($allList['user_img']) ? $allList['user_img'] : '/Public/images/default/user.png'  }"></div>
+                                            <div class="user_name_r">{$allList['user_name']}</div>
+                                        </div>
+                                    </td>
 
                                     <td width="8%" align="center" nowrap>
                                         <if condition="$allList['is_buyer'] eq 1">
@@ -230,7 +232,7 @@
     function ajax_del(id){
         $.ajax({
             type : "POST",
-            url:"/index.php/Admin/user/ajaxDleCommen/",
+            url:"/index.php/Admin/user/ajaxDleComment/",
             data :{id:id},
             dataType:'json',
             success: function(data){
