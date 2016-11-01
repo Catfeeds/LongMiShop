@@ -15,65 +15,65 @@
         <include file="Public/breadcrumb" />
         <div class="function_box">
             <form id="search-form2" action="{:U('Admin/order/export_order')}" method="post">
-            <table width="100%" border="0" cellspacing="4" cellpadding="4">
-                <tr>
-                    <td nowrap><label for="select"></label>
-                        <select  class="select" name="search_type">
-                            <option value="order_sn">订单号</option>
-                            <option value="consignee">收货人</option>
-                            <option value="mobile">手机号</option>
-                        </select>
-                        <label for="textfield"></label>
-                        <input type="text" name="search_name" class="text">
-                        <span class="w">下单时间：</span>
-                        <input type="text" name="begin" id="appDate" class="text" value="{$thirtyDays}">
-                        至
-                        <input type="text" name="end" id="appDate1" class="text" value="{$end}">
-                        <a href="javascript:sevenDays();">近7天</a>&nbsp;&nbsp;<a href="javascript:thirtyDays();">近30天</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td nowrap>
-                        <!--订单类型：-->
-                        <!--<select name="select2" class="select">-->
+                <table width="100%" border="0" cellspacing="4" cellpadding="4">
+                    <tr>
+                        <td nowrap><label for="select"></label>
+                            <select  class="select" name="search_type">
+                                <option value="order_sn">订单号</option>
+                                <option value="consignee">收货人</option>
+                                <option value="mobile">手机号</option>
+                            </select>
+                            <label for="textfield"></label>
+                            <input type="text" name="search_name" class="text">
+                            <span class="w">下单时间：</span>
+                            <input type="text" name="begin" id="appDate" class="text" value="{$thirtyDays}">
+                            至
+                            <input type="text" name="end" id="appDate1" class="text" value="{$end}">
+                            <a href="javascript:sevenDays();">近7天</a>&nbsp;&nbsp;<a href="javascript:thirtyDays();">近30天</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap>
+                            <!--订单类型：-->
+                            <!--<select name="select2" class="select">-->
                             <!--<option>全部</option>-->
-                        <!--</select>-->
-                        <span class="w">订单状态：</span>
-                        <select name="order_status" class="select">
-                            <option value="listAll">全部</option>
-                            <option value="notPayment">待付款</option>
-                            <option value="nonDeliverGoods">待发货</option>
-                            <option value="delivered">已发货</option>
-                            <option value="Completed">已完成</option>
-                            <option value="close">已关闭</option>
+                            <!--</select>-->
+                            <span class="w">订单状态：</span>
+                            <select name="order_status" class="select">
+                                <option value="listAll">全部</option>
+                                <option value="notPayment">待付款</option>
+                                <option value="nonDeliverGoods">待发货</option>
+                                <option value="delivered">已发货</option>
+                                <option value="Completed">已完成</option>
+                                <option value="close">已关闭</option>
 
-                        </select>
-                        <!--<span class="w">物流方式：</span>-->
-                        <!--<select name="select4" class="select">-->
+                            </select>
+                            <!--<span class="w">物流方式：</span>-->
+                            <!--<select name="select4" class="select">-->
                             <!--<volist name="expressList" id="v" >-->
-                                <!--<option value="{$v}" >{$v}</option>-->
+                            <!--<option value="{$v}" >{$v}</option>-->
                             <!--</volist>-->
-                        <!--</select>-->
-                    </td>
-                </tr>
-                <!--<tr>-->
+                            <!--</select>-->
+                        </td>
+                    </tr>
+                    <!--<tr>-->
                     <!--<td nowrap>维权状态：-->
-                        <!--<select name="select5" class="select">-->
-                            <!--<option>全部</option>-->
-                        <!--</select>-->
-                        <!--<span class="w">付款方式：</span>-->
-                        <!--<select name="select6" class="select">-->
-                            <!--<option>全部</option>-->
-                        <!--</select></td>-->
-                <!--</tr>-->
-                <tr>
-                    <td nowrap><div class="btn_a"><a href="javascript:void(0)" onclick="formclick()">筛选</a></div>
-                        <div class="btn_b">
-                            <a href="javascript:form_submit();">批量导出</a>
-                        </div>
-                        <!--<div class="btn_b"><a href="#">查看已生成报表</a></div></td>-->
-                </tr>
-            </table>
+                    <!--<select name="select5" class="select">-->
+                    <!--<option>全部</option>-->
+                    <!--</select>-->
+                    <!--<span class="w">付款方式：</span>-->
+                    <!--<select name="select6" class="select">-->
+                    <!--<option>全部</option>-->
+                    <!--</select></td>-->
+                    <!--</tr>-->
+                    <tr>
+                        <td nowrap><div class="btn_a"><a href="javascript:void(0)" onclick="formclick()">筛选</a></div>
+                            <div class="btn_b">
+                                <a href="javascript:form_submit();">批量导出</a>
+                            </div>
+                            <!--<div class="btn_b"><a href="#">查看已生成报表</a></div></td>-->
+                    </tr>
+                </table>
             </form>
         </div>
         <div class="slideTxtBox1">
@@ -87,7 +87,6 @@
                     <li>已发货</li>
                     <li>已完成</li>
                     <li>已关闭</li>
-                    <!--<li>退款中</li>-->
                 </ul>
             </div>
             <div class="bd"  id="showView">
@@ -109,61 +108,142 @@
                 <ul id="close">
                     <div class="none">还没有相关数据</div>
                 </ul>
-                <!--<ul id="refund">-->
-                    <!--<div class="none">还没有相关数据</div>-->
-                <!--</ul>-->
-            </div>
-        </div>
-        <div id="popDiv" class="mydiv" style="display:none; height:auto">
-            <div class="pop_box">
-                <div class="pop_top">
-                    <div class="pop_top_l">卖家备注</div>
-                    <div class="pop_top_r"><a href="javascript:closeDiv()">&times;</a></div>
-                </div>
-                <div>
-                    <textarea name="" cols="" rows="" class="pop_text" placeholder="最多可输入256个字符"></textarea>
-                </div>
-                <div class="pop_btn"><span class="btn_e"><a href="#">提交</a></span></div>
             </div>
         </div>
     </div>
-    <div id="bg" class="bg" style="display:none;"></div>
-    <iframe id='popIframe' class='popIframe' frameborder='0' ></iframe>
-</div>
 </div>
 
 <div id="fastShippingDiv" style=" display: none;">
-    <table class="table table-bordered">
-        <tbody>
-        <tr>
-            <td class="text-right">配送方式:</td>
-            <td class="text-center">
-                <select name="shipping_name" class="my_shipping_name">
-                    <option value="0">请选择配送方式</option>
-                    <volist name="expressList" id="item">
-                        <option value="{: $item}" {: $order['shipping_name'] == $item ? 'selected' : ''}>{: $item}</option>
-                    </volist>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-right">配送单号:</td>
-            <td class="text-center">
-                <input class="input-sm my_invoice_no" name="invoice_no" type="number"  value="">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div class="form-group text-center">
-                    <button onclick="doSubmit(this)" class="btn btn-primary" type="button">确认发货</button>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="tab2">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>&nbsp;&nbsp;物流公司：</td>
+                <td>
+                    <select name="shipping_name" class= " my_shipping_name select">
+                        <option value="0">请选择配送方式</option>
+                        <volist name="expressList" id="item">
+                            <option value="{: $item}" {: $order['shipping_name'] == $item ? 'selected' : ''}>{: $item}</option>
+                        </volist>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;</td>
+                <td>&nbsp;&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;快递单号：</td>
+                <td><input type="number" name="invoice_no" class="text my_invoice_no"></td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;</td>
+                <td>&nbsp;&nbsp;</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <span class="btn_e">
+                        <a  onclick="doSubmit(this)">确认发货</a>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 
+<div id="popDiv" class="mydiv" style="display:none; height:auto">
+    <div class="pop_box">
+        <div class="pop_top">
+            <div class="pop_top_l">卖家备注</div>
+            <div class="pop_top_r"><a href="javascript:closeDiv()">&times;</a></div>
+        </div>
+        <div>
+            <textarea name="" cols="" rows="" class="pop_text" placeholder="最多可输入256个字符"></textarea>
+        </div>
+        <div class="pop_btn"><span class="btn_e"><a href="#">提交</a></span></div>
+    </div>
 </div>
+
+<!--弹出框B-->
+<div id="shippingDiv" style=" display: none;">
+        <div class="pop_box_b">
+            <div>
+                <div>
+                    <p class="p2">待发货 1	,已选 0 </p>
+                    <div class="cp_tab">
+                        <table class="tab1" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr class="cp_tab_top">
+                                <td><div class="sp_l" style="padding-top:2px; padding-left:5px; padding-right:5px">
+                                    <input type="checkbox" name="checkbox">
+                                </div>
+                                    商品</td>
+                                <td>数量</td>
+                                <td>物流丨单号</td>
+                                <td>状态</td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<td><div class="sp">-->
+                                    <!--<div class="sp_l">-->
+                                        <!--<input type="checkbox" name="checkbox" id="checkbox">-->
+                                        <!--<label for="checkbox"></label>-->
+                                    <!--</div>-->
+                                    <!--<div class="sp_r"><a href="#">龙米稻花香 精装大米 黑龙江五常大米精选（有赞定制版）</a>-->
+                                        <!--<p class="p1">箱 2.48kg</p>-->
+                                    <!--</div>-->
+                                <!--</div></td>-->
+                                <!--<td>&nbsp;</td>-->
+                                <!--<td>&nbsp;</td>-->
+                                <!--<td>&nbsp;</td>-->
+                            <!--</tr>-->
+                        </table>
+                    </div>
+                    <div class="tab2">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <!--<tr>-->
+                                <!--<td width="9%">发货方式：</td>-->
+                                <!--<td width="35%" align="left"><p>-->
+                                    <!--<label>-->
+                                        <!--<input type="radio" name="RadioGroup1" value="单选" id="RadioGroup1_0">-->
+                                        <!--需要物流</label>-->
+                                    <!--<label>-->
+                                        <!--<input type="radio" name="RadioGroup1" value="单选" id="RadioGroup1_1">-->
+                                        <!--无需要物流</label>-->
+                                    <!--<br>-->
+                                <!--</p></td>-->
+                                <!--<td width="9%">&nbsp;</td>-->
+                                <!--<td width="47%">&nbsp;</td>-->
+                            <!--</tr>-->
+                            <tr>
+                                <td>物流公司：</td>
+                                <td>
+                                    <select name="select7" class="select">
+                                        <option value="0">请选择配送方式</option>
+                                        <volist name="expressList" id="item">
+                                            <option value="{: $item}" {: $order['shipping_name'] == $item ? 'selected' : ''}>{: $item}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                                <td>快递单号：</td>
+                                <td><input type="text" name="input3" class="text"></td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<td colspan="4"><p class="p3">*请仔细填写物流公司及快递单号，发货后24小时内仅支持做一次更正，逾期不可修改</p></td>-->
+                            <!--</tr>-->
+                            <tr>
+                                <td colspan="4">收货地址：广东省 广州市 罗湖区 禾茂田超市有限公司 ，王大炜 ，15988540064</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="pop_btn_b">
+                <span class="btn_e">
+                    <a href="#">保存</a>
+                </span>
+            </div>
+    </div>
+</div>
+
 <script src="__STATIC__/js/jquery.min.js"></script>
 <script src="__STATIC__/js/SuperSlide.js"></script>
 <script src="__STATIC__/js/function.js"></script>
@@ -172,7 +252,7 @@
 <script src="__STATIC__/date/mobiscroll.js" type="text/javascript"></script>
 <script src="__STATIC__/date/mobiscroll_003.js" type="text/javascript"></script>
 <script src="__STATIC__/date/mobiscroll_005.js" type="text/javascript"></script>
-<script src="__PUBLIC__/js/layer/layer-min.js"></script><!-- 弹窗js 参考文档 http://layer.layui.com/-->
+<script src="__PUBLIC__/js/layer/layer-min.js"></script>
 <script>
     function form_submit(){
         $('#search-form2').submit();
@@ -207,11 +287,11 @@
             endYear: currYear + 10 //结束年份
         };
 
-         $("#appDate,#appDate1").mobiscroll($.extend(opt['date'], opt['default']));
-         var optDateTime = $.extend(opt['datetime'], opt['default']);
-         var optTime = $.extend(opt['time'], opt['default']);
-         $("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime);
-         $("#appTime").mobiscroll(optTime).time(optTime);
+        $("#appDate,#appDate1").mobiscroll($.extend(opt['date'], opt['default']));
+        var optDateTime = $.extend(opt['datetime'], opt['default']);
+        var optTime = $.extend(opt['time'], opt['default']);
+        $("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime);
+        $("#appTime").mobiscroll(optTime).time(optTime);
     });
 
     $(document).ready(function(){
@@ -274,8 +354,16 @@
         layer.open({
             type: 1,
             skin: 'layui-layer-rim', //加上边框
-            area: ['420px', '240px'], //宽高
+            area: ['400px', '250px'], //宽高
             content: $("#fastShippingDiv").html()
+        });
+    }
+    function shipping( id ){
+        layer.open({
+            type: 1,
+            skin: 'layui-layer-rim', //加上边框
+            area: ['840px', '450px'], //宽高
+            content: $("#shippingDiv").html()
         });
     }
 
