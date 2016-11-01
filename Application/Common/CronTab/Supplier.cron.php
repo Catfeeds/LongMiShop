@@ -110,6 +110,22 @@ class SupplierCronClass
         }
         $returnArray["income_count"] = count( $orderList );
 
+        $lastTime = $lastTime + (60*60*24*7);
+        $endTime  = $endTime + (60*60*24*7);
+
+        $where = array();
+        $where["update_time"] = array( "between" , array( $lastTime , $endTime ) );
+        $where["state"] = 2;
+        $where["admin_id"] = $admin;
+        $withdrawalsList = selectDataWithCondition( "admin_withdrawals" , $where , "money" );
+        if( !empty( $withdrawalsList ) ){
+            foreach ( $withdrawalsList as $withdrawalsItem ){
+                $returnArray["income"] += $withdrawalsItem["money"] ;
+            }
+        }
+        $returnArray["income_count"] += count( $withdrawalsList );
+
+
         $where = array();
         $where["update_time"] = array( "between" , array( $lastTime , $endTime ) );
         $where["state"] = 1;

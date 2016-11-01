@@ -101,7 +101,7 @@ class OrderController extends BaseController {
                 if( isExistenceDataWithCondition( 'return_goods' , array( 'order_id' => $items["order_id"] )  ) ) {
                     $orderList[$keys]['sendBack'] = $items['order_sn'];
                 }
-                if( $items['order_status'] == 1 && $items['pay_status'] == 1 && $items['shipping_status'] != 1 && empty( $orderList[$keys]['sendBack'] )){
+                if( $items['order_status'] == 1 && $items['pay_status'] == 1 && $items['shipping_status'] == 0 && empty( $orderList[$keys]['sendBack'] )){
                     //是否快速发货按钮
                     $orderList[$keys]['isFast'] = getFastDeliveryBool( $items["admin_list"] , session("admin_id") );
                 }
@@ -149,7 +149,7 @@ class OrderController extends BaseController {
 
     	$count = M('order')->where($condition)->count();
 
-    	$Page  = new AjaxPage($count,10);
+    	$Page  = new  \Admin\Common\AjaxPage($count,10);
     	//搜索条件下 分页赋值
     	foreach($condition as $key=>$val) {
     		$Page->parameter[$key]   =   urlencode($val);
@@ -618,8 +618,7 @@ class OrderController extends BaseController {
         $order_sn && $where.= " and order_sn like '%$order_sn%' ";
         empty($order_sn) && $where.= " and status = '$status' ";
         $count = M('return_goods')->where($where)->count();
-//        dd($count);
-        $Page  = new AjaxPage($count,13);
+        $Page  = new  \Admin\Common\AjaxPage($count,13);
         $show = $Page->show();
         $list = M('return_goods')->where($where)->order("$order_by $sort_order")->limit("{$Page->firstRow},{$Page->listRows}")->select();
         $goods_id_arr = get_arr_column($list, 'goods_id');
