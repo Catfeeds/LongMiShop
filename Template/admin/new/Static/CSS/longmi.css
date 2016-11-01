@@ -86,3 +86,9 @@
 	border-image: none;
 	cursor: default;
 }
+.dl_box4 dt{
+	width: 50%;
+}
+.dl_box3 dt{
+	width: 50%;
+}

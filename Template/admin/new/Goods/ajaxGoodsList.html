@@ -13,6 +13,7 @@
             <dd>总销售</dd>
             <dd>创建时间</dd>
             <dd>序号</dd>
+            <dd>状态</dd>
         </dl>
         <volist name="goodsList" id="list">
             <dl class="dl_box3">
@@ -48,6 +49,9 @@
                     </empty>
                 </dd>
                 <dd>{$list.sort}</dd>
+
+                <dd>{$list['is_on_sale'] == 1 ? '已上架' : '已下架' }</dd>
+
             </dl>
         </volist>
         <div class="p5">
