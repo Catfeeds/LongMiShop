@@ -384,29 +384,30 @@ class UserController extends BaseController {
 
 
     public function commentList(){
-        $where = '';
-        if(is_supplier()){
-            $id_lists = M('order_goods')->where(array('admin_id' => session('admin_id'))) -> field('goods_id') -> select();
-            $temp_string = "";
-            if(!empty($id_lists)){
-                foreach ($id_lists as $id_list){
-                    $temp_string .= $id_list['goods_id'].",";
-                }
-            }
-            $temp_string .= "0";
-            $where .=  " AND goods_id in(".$temp_string.")";
+        $goodId = I( "goodsId" , null);
+        if( is_null( $goodId ) ){
+            $where = '';
+        }else{
+            $where = ' AND  goods_id = "'.$goodId.'" ';
         }
-        $this->goodsComment = M('goods_comment');
-        $list['allList'] = $this->goodsComment->where(' 1=1 '.$where)->order('create_time DESC')->select(); //全部
-        $list['well'] = $this->goodsComment->where("level in('4','5') AND  is_buyer = 1  ".$where)->order('create_time DESC')->select(); //4-5星
-        $list['middle'] = $this->goodsComment->where("level in('2','3')  AND is_buyer = 1 ".$where)->order('create_time DESC')->select(); //2-3星
-        $list['bad'] = $this->goodsComment->where("level in('0','1')  AND is_buyer = 1 ".$where)->order('create_time DESC')->select(); //0-1星
-        $list['visitors'] = $this->goodsComment->where("is_buyer = 0".$where)->order('create_time DESC')->select(); //游客
+        if( is_supplier() ){
+            $id_lists = M('goods') -> where( array( 'admin_id' => session('admin_id') ) ) -> getField('goods_id',true);
+            if( !empty($id_lists) ){
+                $where .=  " AND goods_id in (" . implode( "," , $id_lists ) . ") ";
+            }
+        }
+        $goodsComment = M('goods_comment');
+        $list['allList']    = $goodsComment -> where('1 = 1 ' . $where) -> order('create_time DESC') -> select(); //全部
+        $list['well']       = $goodsComment -> where("level in('4','5') AND is_buyer = 1 " . $where) -> order('create_time DESC') -> select(); //4-5星
+        $list['middle']     = $goodsComment -> where("level in('2','3') AND is_buyer = 1 " . $where) -> order('create_time DESC') -> select(); //2-3星
+        $list['bad']        = $goodsComment -> where("level in('0','1') AND is_buyer = 1 " . $where) -> order('create_time DESC') -> select(); //0-1星
+        $list['visitors']   = $goodsComment -> where("is_buyer = 0 " . $where) -> order('create_time DESC') -> select(); //游客
+
         $this->assign('list',$list);
         $this->display();
     }
 
-    public function ajaxDleCommen(){
+    public function ajaxDleComment(){
         $id = I('id');
         $res = M('goods_comment')->where(array('id'=>$id))->save(array('is_delete'=>1));
         if($res){
