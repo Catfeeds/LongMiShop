@@ -1,81 +1,95 @@
-<include file="Public/min-header"/>
-<div class="wrapper">
-  <include file="Public/breadcrumb"/>
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-list"></i> 发货单列表</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="navbar navbar-default">
-                            <form action="{:U('Order/ajax_delivery_list')}" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
-                                <div class="form-group">
-                                    <label class="control-label" for="input-order-id">收货人</label>
-                                    <div class="input-group">
-                                        <input type="text" name="consignee" value="" placeholder="收货人" id="input-member-id" class="form-control">
-                                        <!--<span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>-->
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label" for="input-order-id">订单编号</label>
-                                    <div class="input-group">
-                                        <input type="text" name="order_sn" value="" placeholder="订单 编号" id="input-order-id" class="form-control">
-                                        <!--<span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>-->
-                                    </div>
-                                </div>
-                        		<div class="form-group">
-                                    <select name="shipping_status" class="input-sm">
-                                            <option value="0">待发货</option>
-                                            <option value="1">已发货</option>
-                  							<option value="2">部分发货</option>
-                                    </select>
-                                </div>
-                                <button type="submit" onclick="ajax_get_table('search-form2',1)" id="button-filter search-order" class="btn btn-primary "><i class="fa fa-search"></i> 筛选</button>
-                            </form>
-                    </div>
-                    <div id="ajax_return">
-
-                    </div>
-
-
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>龙米</title>
+    <link href="__STATIC__/CSS/css.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/CSS/longmi.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/date/mobiscroll_002.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/date/mobiscroll.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/date/mobiscroll_003.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="g-mn1">
+    <div class="g-mn1c">
+        <include file="Public/breadcrumb" />
+        <div class="function_box">
+            <form id="search-form2" action="{:U('Admin/Order/ajax_delivery_list')}" method="post">
+                <table width="100%" border="0" cellspacing="4" cellpadding="4">
+                    <!--<tr>-->
+                        <!--<td nowrap><label for="select"></label>-->
+                            <!--<select  class="select" name="search_type">-->
+                                <!--<option value="order_sn">订单号</option>-->
+                                <!--<option value="consignee">收货人</option>-->
+                                <!--<option value="mobile">手机号</option>-->
+                            <!--</select>-->
+                            <!--<label for="textfield"></label>-->
+                            <!--<input type="text" name="search_name" class="text">-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <tr>
+                        <td nowrap>
+                            <span class="w">订单状态：</span>
+                            <select name="shipping_status" class="select">
+                                <option value="0">待发货</option>
+                                <option value="1">已发货</option>
+                                <option value="2">部分发货</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap>
+                            <div class="btn_a">
+                                <a href="javascript:void(0)" onclick="ajax_get_table('search-form2',1)">筛选</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="slideTxtBox1">
+            <div class="bd">
+                <ul id="ajax_return">
+                </ul>
             </div>
-        </div>        <!-- /.row -->
-    </section>
-    <!-- /.content -->
+        </div>
+    </div>
 </div>
-<!-- /.content-wrapper -->
+
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__STATIC__/js/SuperSlide.js"></script>
+<script src="__STATIC__/js/function.js"></script>
+<script src="__STATIC__/date/mobiscroll_002.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_004.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_003.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_005.js" type="text/javascript"></script>
+<script src="__PUBLIC__/js/layer/layer-min.js"></script>
 <script>
 
     $(document).ready(function(){
         ajax_get_table('search-form2',1);
     });
 
+    var cur_page = 0;
 
     // ajax 抓取页面
     function ajax_get_table(tab,page){
         cur_page = page; //当前页面 保存为全局变量
             $.ajax({
                 type : "POST",
-                url:"/index.php/Admin/order/ajaxdelivery/p/"+page,//+tab,
+                url:"/index.php/Admin/Order/ajaxdelivery/p/"+page,//+tab,
                 data : $('#'+tab).serialize(),// 你的formid
                 success: function(data){
-                    $("#ajax_return").html('');
-                    $("#ajax_return").append(data);
+                    $("#ajax_return").html(data);
                 }
             });
     }
-
-    // 点击排序
-    function sort(field)
-    {
-        $("input[name='order_by']").val(field);
-        var v = $("input[name='sort']").val() == 'desc' ? 'asc' : 'desc';
-        $("input[name='sort']").val(v);
-        ajax_get_table('search-form2',cur_page);
-    }
 </script>
+<style>
+    .dl_box dd,.dl_box2 dd{
+        width: 16.6%;
+    }
+</style>
 </body>
 </html>

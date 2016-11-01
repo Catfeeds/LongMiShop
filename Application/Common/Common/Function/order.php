@@ -549,7 +549,7 @@ function explodeAdminList( $adminListString = "[0]" ){
 function getFastDeliveryBool( $adminList , $adminId ){
     $adminArray = explodeAdminList( $adminList );
     if(
-        count( $adminArray ) > 1 &&
+        count( $adminArray ) == 1 &&
         ( is_supplier() && $adminArray[0] == $adminId ) ||
         ( !is_supplier() &&  $adminArray[0] == 0  )
     ){
