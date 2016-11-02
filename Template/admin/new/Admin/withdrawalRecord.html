@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>龙米</title>
+<link href="__STATIC__/CSS/css.css" rel="stylesheet" type="text/css" />
+<link href="__STATIC__/CSS/longmi.css" rel="stylesheet" type="text/css" />
+<link href="__STATIC__/date/mobiscroll_002.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/date/mobiscroll.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/date/mobiscroll_003.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="g-mn1">
+  <div class="g-mn1c">
+    <div class="right_titel">
+      <div class="user">陈大猷</div>
+      <div class="user-label">超级管理员</div>
+      <div class="user-label">龙米科技</div>
+    </div>
+    <div class="function_box">
+      <form id="search-form2">
+        <table width="100%" border="0" cellspacing="4" cellpadding="4">
+          <tr>
+            <td colspan="2" nowrap><label for="select"></label>
+              <span class="w">起止时间：</span>
+              <input type="text" name="begin" id="appDate" class="text" value="{$thirtyDays}">
+              至
+              <input type="text" name="end" id="appDate1" class="text" value="{$end}">
+              <a href="javascript:sevenDays();">近7天</a>&nbsp;&nbsp;<a href="javascript:thirtyDays();">近30天</a></td>
+            <td width="24%" rowspan="2" align="right" nowrap class="color-d"><p>提现咨询专线：400-555 555</p>
+              <p>服务时间：10:00-18:00</p>
+              <!--<span class="btn_d" style="float:right;"><a href="#">在线客服咨询</a></span>-->
+            </td>
+          </tr>
+          <tr>
+            <td width="8%" align="left"><span class="w">提现状态：</span>
+              <select name="state" class="select">
+                <option value="">全部</option>
+                <option value="0">未处理</option>
+                <option value="1">已处理</option>
+                <option value="2">驳回</option>
+              </select>
+            </td>
+            <td width="68%" align="left" nowrap><div class="btn_a"><a href="javascript:void(0);" onclick="ajax_get_table('search-form2',1);">查询</a></div></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div class="k" style="padding:10px; margin-top:10px" id="list">
+
+
+    </div>
+  </div>
+</div>
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__STATIC__/js/SuperSlide.js"></script>
+<script src="__STATIC__/js/function.js"></script>
+<script src="__STATIC__/date/mobiscroll_002.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_004.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_003.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_005.js" type="text/javascript"></script>
+</body>
+</html>
+
+<script>
+  //7天
+  function sevenDays(){
+    $("input[name='begin']").val("{$sevenDays}");
+    $("input[name='end']").val("{$end}");
+  }
+  // 30天
+  function thirtyDays(){
+    $("input[name='begin']").val("{$thirtyDays}");
+    $("input[name='end']").val("{$end}");
+  }
+  //日期
+  $(function() {
+    var currYear = (new Date()).getFullYear();
+    var opt = {};
+    opt.date = {
+      preset: 'date'
+    };
+    opt.datetime = {
+      preset: 'datetime'
+    };
+    opt.time = {
+      preset: 'time'
+    };
+    opt.
+            default = {
+      theme: 'android-ics light',
+      //皮肤样式
+      display: 'modal',
+      //显示方式
+      mode: 'scroller',
+      //日期选择模式
+      dateFormat: 'yyyy-mm-dd',
+      lang: 'zh',
+      showNow: true,
+      nowText: "今天",
+      startYear: currYear - 10,
+      //开始年份
+      endYear: currYear + 10 //结束年份
+    };
+
+    $("#appDate,#appDate1").mobiscroll($.extend(opt['date'], opt['default']));
+    var optDateTime = $.extend(opt['datetime'], opt['default']);
+    var optTime = $.extend(opt['time'], opt['default']);
+    $("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime);
+    $("#appTime").mobiscroll(optTime).time(optTime);
+  });
+
+  $(document).ready(function(){
+    ajax_get_table('search-form2',1);
+  });
+
+  // ajax 抓取页面
+  function ajax_get_table(tab,page){
+    cur_page = page; //当前页面 保存为全局变量
+    var obj = $('#'+tab).serialize();
+    obj += "&p="+page;
+    $.ajax({
+      type : "GET",
+      url:"/index.php/Admin/Admin/ajaxwithdrawalRecord",
+      data :obj,
+      success: function(data){
+        $("#list").html('');
+        $("#list").append(data);
+      }
+    });
+  }
+
+
+
+  //跳转
+  function skipPage(obj){
+    var page = $(obj).parent().find(".page-go input").val();
+    if(page == ''){
+      $(obj).parent().find(".page-go input").focus();
+      return false;
+    }
+    ajax_get_table('search-form2',page);
+  }
+</script>
