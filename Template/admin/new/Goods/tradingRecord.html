@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>龙米</title>
+  <link href="__STATIC__/CSS/css.css" rel="stylesheet" type="text/css" />
+  <link href="__STATIC__/CSS/longmi.css" rel="stylesheet" type="text/css" />
+<link href="__STATIC__/date/mobiscroll_002.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/date/mobiscroll.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/date/mobiscroll_003.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="g-mn1">
+  <div class="g-mn1c">
+    <include file="Public/breadcrumb" />
+    <div class="function_box">
+      <form id="search-form2">
+        <table width="100%" border="0" cellspacing="4" cellpadding="4">
+          <tr>
+            <td nowrap><label for="select"></label>
+              <select name="select" class="select">
+                <option>创建时间</option>
+              </select>
+              <label for="textfield"></label>
+              <span class="w">下单时间：</span>
+              <input type="text" name="begin" id="appDate" class="text" value="{$thirtyDays}">
+              至
+              <input type="text" name="end" id="appDate1" class="text" value="{$end}">
+              <a href="javascript:sevenDays();">近7天</a>&nbsp;&nbsp;<a href="javascript:thirtyDays();">近30天</a></td>
+          </tr>
+          <tr>
+            <td nowrap>单号：
+              <input type="text" name="order_sn" class="text">
+              <span class="w">交易状态：</span>
+              <select name="order_status" class="select">
+                <option value="listAll">全部</option>
+                <option value="dealing">进行中</option>
+                <option value="refund">退款</option>
+                <option value="succeed">成功</option>
+                <option value="cancel">失败</option>
+              </select></td>
+          </tr>
+          <tr>
+            <td nowrap><div class="btn_a"><a href="javascript:void(0)" onclick="formclick()">筛选</a></div>
+              <!--<div class="btn_b"><a href="#">批量导出</a></div>-->
+              <!--<div class="btn_b"><a href="#">查看已生成报表</a></div></td>-->
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div class="slideTxtBox1">
+      <div class="hd"> 
+        <!-- 下面是前/后按钮代码，如果不需要删除即可 --> 
+        <span class="arrow"><a class="next"></a><a class="prev"></a></span>
+        <ul id="shouUl">
+          <li>全部</li>
+          <li>进行中</li>
+          <li>退款</li>
+          <li>成功</li>
+          <li>失败</li>
+        </ul>
+      </div>
+      <div class="bd" id="showView">
+        <ul id="listAll">
+          <div class="none">还没有相关数据</div>
+        </ul>
+
+        <ul id="dealing">
+          <div class="none">还没有相关数据</div>
+        </ul>
+
+        <ul id="refund">
+          <div class="none">还没有相关数据</div>
+        </ul>
+
+        <ul id="succeed">
+          <div class="none">还没有相关数据</div>
+        </ul>
+
+        <ul id="cancel">
+          <div class="none">还没有相关数据</div>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__STATIC__/js/SuperSlide.js"></script>
+<script src="__STATIC__/js/function.js"></script>
+<script src="__STATIC__/date/mobiscroll_002.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_004.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_003.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_005.js" type="text/javascript"></script>
+</body>
+</html>
+
+<script>
+
+  //7天
+  function sevenDays(){
+    $("input[name='begin']").val("{$sevenDays}");
+    $("input[name='end']").val("{$end}");
+  }
+  // 30天
+  function thirtyDays(){
+    $("input[name='begin']").val("{$thirtyDays}");
+    $("input[name='end']").val("{$end}");
+  }
+  //日期
+  $(function() {
+    var currYear = (new Date()).getFullYear();
+    var opt = {};
+    opt.date = {
+      preset: 'date'
+    };
+    opt.datetime = {
+      preset: 'datetime'
+    };
+    opt.time = {
+      preset: 'time'
+    };
+    opt.
+            default = {
+      theme: 'android-ics light',
+      //皮肤样式
+      display: 'modal',
+      //显示方式
+      mode: 'scroller',
+      //日期选择模式
+      dateFormat: 'yyyy-mm-dd',
+      lang: 'zh',
+      showNow: true,
+      nowText: "今天",
+      startYear: currYear - 10,
+      //开始年份
+      endYear: currYear + 10 //结束年份
+    };
+
+    $("#appDate,#appDate1").mobiscroll($.extend(opt['date'], opt['default']));
+    var optDateTime = $.extend(opt['datetime'], opt['default']);
+    var optTime = $.extend(opt['time'], opt['default']);
+    $("#appDateTime").mobiscroll(optDateTime).datetime(optDateTime);
+    $("#appTime").mobiscroll(optTime).time(optTime);
+  });
+
+
+  $(document).ready(function(){
+    formclick();
+  });
+
+  function formclick(){
+    var orderStatus = $("select[name='order_status']").val();
+    var subscript = 0;
+    if(orderStatus == 'listAll'){
+      subscript = 0;
+    }else if(orderStatus == 'dealing'){
+      subscript = 1;
+    }else if(orderStatus == 'refund'){
+      subscript = 2;
+    }else if(orderStatus == 'succeed'){
+      subscript = 3;
+    }else if(orderStatus == 'cancel'){
+      subscript = 4;
+    }
+
+    $("#shouUl li").removeClass('on');
+    $("#shouUl").find("li").eq(subscript).addClass('on');
+    $("#showView ul").hide();
+    $("#"+orderStatus).show();
+    var formId = 'search-form2';
+    var page = 1;
+    ajax_get_table(formId,page,'listAll');
+    ajax_get_table(formId,page,'dealing'); //dealing
+    ajax_get_table(formId,page,'refund');
+    ajax_get_table(formId,page,'succeed');
+    ajax_get_table(formId,page,'cancel');
+  }
+  // ajax 抓取页面
+  function ajax_get_table(tab,page,ulId){
+    cur_page = page; //当前页面 保存为全局变量
+    var obj = $('#'+tab).serialize();
+    obj += "&p="+page;
+    obj += "&type="+ulId;
+    console.log(obj);
+    $.ajax({
+      type : "GET",
+      url:"/index.php/Admin/Goods/ajaxtradingRecord",
+      data :obj,// 你的formid
+      success: function(data){
+        $("#"+ulId).html('');
+        $("#"+ulId).append(data);
+        clickNext();
+      }
+    });
+  }
+  function clickNext(){
+    $(".next1").each(function(){
+      $(this).off("click");
+      $(this).click(function(){
+        var id = $(this).parent().parent().parent().parent().parent().attr('id');
+        var page = $(this).data('p');
+        ajax_get_table('search-form2',page,id);
+      });
+    });
+    $(".prev1").each(function(){
+      $(this).off("click");
+      $(this).click(function(){
+        var id = $(this).parent().parent().parent().parent().parent().attr('id');
+        var page = $(this).data('p');
+        ajax_get_table('search-form2',page,id);
+      });
+    });
+  }
+
+  function skipPage(obj){
+    var id = $(obj).parent().parent().parent().parent().parent().attr('id');
+    var page = $(obj).parent().find(".page-go input").val();
+
+    if(page == ''){
+      $(obj).parent().find(".page-go input").focus();
+      return false;
+    }
+    ajax_get_table('search-form2',page,id);
+  }
+</script>
