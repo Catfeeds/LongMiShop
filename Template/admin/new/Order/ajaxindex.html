@@ -14,9 +14,6 @@
     <dl class="dl_box1">
         <dt>订单号：{$list.order_sn}</dt>
         <dd>
-            <notempty name = "list.isFast" >
-                <span class="btn_d"> <a href="javascript:fastShipping('{$list.order_id}')" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="快速发货">快速发货</a></span>
-            </notempty>
             <span class="btn_d"><a href="{:U('Admin/order/detail',array('order_id'=>$list['order_id']))}">查看详情</a></span>
             <!--<span class="btn_d"><a href="javascript:showDiv()">备注</a></span>-->
         </dd>
@@ -59,9 +56,9 @@
                 <dd>
                     <p>{$list.order_status_desc}</p>
                     <p>
-                        <if condition="$list['no_send'] eq true">
+                        <notempty name = "list.isFast" >
                             <a onclick="shipping('{$list.order_id}')">发货</a>
-                        </if>
+                        </notempty>
                     </p>
                 </dd>
                 <dd>{$list.total_amount}</dd>
