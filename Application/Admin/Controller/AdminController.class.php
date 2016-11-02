@@ -427,6 +427,12 @@ class AdminController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 龙币（积分）
+     */
+    public function dragonCoin(){
+        $this->display();
+    }
 
 
 }

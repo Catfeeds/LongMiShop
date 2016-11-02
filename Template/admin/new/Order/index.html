@@ -68,9 +68,11 @@
                     <!--</tr>-->
                     <tr>
                         <td nowrap><div class="btn_a"><a href="javascript:void(0)" onclick="formclick()">筛选</a></div>
-                            <div class="btn_b">
-                                <a href="javascript:form_submit();">批量导出</a>
-                            </div>
+                            <if condition="!is_supplier()">
+                                <div class="btn_b">
+                                    <a href="javascript:form_submit();">批量导出</a>
+                                </div>
+                            </if>
                             <!--<div class="btn_b"><a href="#">查看已生成报表</a></div></td>-->
                     </tr>
                 </table>

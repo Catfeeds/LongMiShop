@@ -136,26 +136,37 @@ class OrderController extends BaseController {
     	I('consignee') ? $condition['consignee'] = trim(I('consignee')) : false;
     	I('order_sn') != '' ? $condition['order_sn'] = trim(I('order_sn')) : false;
         // $condition['order_status'] = array('egt',1);
-    	$condition['order_status'] = array('eq',1);
-        $condition['pay_status'] = 1; //支付状态
-    	$shipping_status = I('shipping_status');
-    	$condition['shipping_status'] = empty($shipping_status) ? array('neq',1) : $shipping_status;
+//    	$condition['order_status'] = array('eq',1);
+//        $condition['pay_status'] = 1; //支付状态
+//    	$shipping_status = I('shipping_status');
+//    	$condition['shipping_status'] = empty($shipping_status) ? array('neq',1) : $shipping_status;
 
         if(is_supplier()){
             $condition['admin_list'] = array('like',"%[".session("admin_id")."]%");
+        }
+        $type =   I('type');
+        switch ($type) {
+            case 'unfilledOrders': //待发货
+                $condition["_string"] = " 1=1 " . C('WAITSEND');
+                break;
+            case 'delivered': //已发货
+                $condition["_string"] = " 1=1 " .C('WAITRECEIVE');
+                break;
+            case 'partDelivered': //部分发货
+                $condition["_string"] = " shipping_status=2 AND order_status = 1 ";
+                break;
         }
 
 
     	$count = M('order')->where($condition)->count();
 
-    	$Page  = new  \Admin\Common\AjaxPage($count,10);
+    	$Page  = new  \Admin\Common\AjaxPage($count,5);
     	//搜索条件下 分页赋值
     	foreach($condition as $key=>$val) {
     		$Page->parameter[$key]   =   urlencode($val);
     	}
     	$show = $Page->show();
     	$orderList = M('order')->where($condition)->limit($Page->firstRow.','.$Page->listRows)->order('add_time DESC')->select();
-
         if(is_supplier()){
             //计算邮费
             foreach($orderList as $key=>$item){
@@ -595,13 +606,26 @@ class OrderController extends BaseController {
      */
     public function ajax_return_list(){
         // 搜索条件        
-        $order_sn =  trim(I('order_sn'));
+//        $order_sn =  trim(I('order_sn'));
+//        $status =  I('status');
         $order_by = I('order_by') ? I('order_by') : 'id';
         $sort_order = I('sort_order') ? I('sort_order') : 'desc';
-        $status =  I('status');
 
-        
+
         $where = " 1 = 1 ";
+        $type =   I('type');
+        switch ($type) {
+            case 'untreated': //待处理
+                $where .= "  AND status = 0 ";
+                break;
+            case 'processed': //已退款
+                $where .= "AND status = 2 ";
+                break;
+            case 'decline': //已驳回
+                $where .= "  AND remark != '' ";
+                break;
+        }
+
         if(is_supplier()){
             $id_lists = M('goods')->where(array('admin_id' => session('admin_id'))) -> field('goods_id') -> select();
             $temp_string = "";
@@ -614,8 +638,8 @@ class OrderController extends BaseController {
             $where .= " AND goods_id in (".$temp_string.")";
         }
 
-        $order_sn && $where.= " and order_sn like '%$order_sn%' ";
-        empty($order_sn) && $where.= " and status = '$status' ";
+//        $order_sn && $where.= " and order_sn like '%$order_sn%' ";
+//        empty($order_sn) && $where.= " and status = '$status' ";
         $count = M('return_goods')->where($where)->count();
         $Page  = new  \Admin\Common\AjaxPage($count,13);
         $show = $Page->show();
@@ -800,14 +824,13 @@ class OrderController extends BaseController {
         if(I('pay_code')!=""){
             $where .= " AND pay_code = ".I('pay_code');
         }
-		
-		$timegap = I('timegap');
-		if($timegap){
-			$gap = explode('-', $timegap);
-			$begin = strtotime($gap[0]);
-			$end = strtotime($gap[1]);
+
+        $begin = strtotime(I('begin'));
+        $end = strtotime(I('end'));
+		if($begin && $end){
 			$where .= " AND add_time>'$begin' and add_time<'$end' ";
 		}
+
 	$region	= M('region')->getField('id,name');
                 
 	$sql = "select *,FROM_UNIXTIME(add_time,'%Y-%m-%d') as create_time from __PREFIX__order $where order by order_id";

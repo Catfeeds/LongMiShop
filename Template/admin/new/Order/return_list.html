@@ -13,35 +13,59 @@
 <div class="g-mn1">
     <div class="g-mn1c">
         <include file="Public/breadcrumb" />
-        <div class="function_box">
-            <form id="search-form2" method="post">
-                <table width="100%" border="0" cellspacing="4" cellpadding="4">
-                    <tr>
-                        <td>
-                            <span class="w">订单状态：</span>
-                            <select name="status" class="select">
-                                <option value="0">未处理</option>
-                                <option value="1">处理中</option>
-                                <option value="2">已完成</option>
-                            </select>
-                            <input type="hidden" name="order_by" value="id" />
-                            <input type="hidden" name="sort"  value="asc"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td nowrap>
-                            <div class="btn_a">
-                                <a href="javascript:void(0)" onclick="ajax_get_table('search-form2',1)">筛选</a>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
+        <!--<div class="function_box">-->
+            <!--<form id="search-form2" method="post">-->
+                <!--<table width="100%" border="0" cellspacing="4" cellpadding="4">-->
+                    <!--<tr>-->
+                        <!--<td>-->
+                            <!--<span class="w">订单状态：</span>-->
+                            <!--<select name="status" class="select">-->
+                                <!--<option value="0">未处理</option>-->
+                                <!--<option value="1">处理中</option>-->
+                                <!--<option value="2">已完成</option>-->
+                            <!--</select>-->
+                            <!--<input type="hidden" name="order_by" value="id" />-->
+                            <!--<input type="hidden" name="sort"  value="asc"/>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td nowrap>-->
+                            <!--<div class="btn_a">-->
+                                <!--<a href="javascript:void(0)" onclick="ajax_get_table('search-form2',1)">筛选</a>-->
+                            <!--</div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            <!--</form>-->
+        <!--</div>-->
         <div class="slideTxtBox1">
-            <div class="bd">
-                <ul id="ajax_return">
+            <div class="hd">
+                <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
+                <span class="arrow"><a class="next"></a><a class="prev"></a></span>
+                <ul id="shouUl">
+                    <li>全部</li>
+                    <li>待处理</li>
+                    <li>已退款</li>
+                    <li>已驳回</li>
                 </ul>
+            </div>
+            <div class="bd">
+                <ul id="listAll">
+
+                </ul>
+
+                <ul id="untreated">
+                    <div class="none">还没有相关数据</div>
+                </ul>
+
+                <ul id="processed">
+                    <div class="none">还没有相关数据</div>
+                </ul>
+
+                <ul id="decline">
+                    <div class="none">还没有相关数据</div>
+                </ul>
+
             </div>
         </div>
     </div>
@@ -59,22 +83,67 @@
 <script>
 
     $(document).ready(function(){
-        ajax_get_table('search-form2',1);
+        formclick();
     });
 
     var cur_page = 0;
 
+    function formclick(){
+        var formId = 'search-form2';
+        var page = 1;
+        ajax_get_table(formId,page,'listAll');
+        ajax_get_table(formId,page,'untreated');
+        ajax_get_table(formId,page,'processed');
+        ajax_get_table(formId,page,'decline');
+    }
+
     // ajax 抓取页面
-    function ajax_get_table(tab,page){
+    function ajax_get_table(tab,page,ulId){
         cur_page = page; //当前页面 保存为全局变量
+        var obj = $('#'+tab).serialize();
+        obj += "&p="+page;
+        obj += "&type="+ulId;
         $.ajax({
-            type : "POST",
-            url:"/index.php/Admin/order/ajax_return_list/p/"+page,//+tab,
-            data : $('#'+tab).serialize(),// 你的formid
+            type : "GET",
+            url:"/index.php/Admin/Order/ajax_return_list",
+            data :obj,// 你的formid
             success: function(data){
-                $("#ajax_return").html(data);
+                $("#"+ulId).html('');
+                $("#"+ulId).append(data);
+                clickNext();
             }
         });
+    }
+
+
+
+    function clickNext(){
+        $(".next1").each(function(){
+            $(this).off("click");
+            $(this).click(function(){
+                var id = $(this).parent().parent().parent().parent().parent().attr('id');
+                var page = $(this).data('p');
+                ajax_get_table('search-form2',page,id);
+            });
+        });
+        $(".prev1").each(function(){
+            $(this).off("click");
+            $(this).click(function(){
+                var id = $(this).parent().parent().parent().parent().parent().attr('id');
+                var page = $(this).data('p');
+                ajax_get_table('search-form2',page,id);
+            });
+        });
+    }
+    function skipPage(obj){
+        var id = $(obj).parent().parent().parent().parent().parent().attr('id');
+        var page = $(obj).parent().find(".page-go input").val();
+
+        if(page == ''){
+            $(obj).parent().find(".page-go input").focus();
+            return false;
+        }
+        ajax_get_table('search-form2',page,id);
     }
 </script>
 <style>
