@@ -32,6 +32,11 @@
                 <p class="data-t1"><span>￥</span>{$count['moneySum'][0]}<span>.{$count['moneySum'][1]}</span></p>
                 <p class="data-t2">昨日交易额</p>
             </div>
+            <div class="data">
+                <div class="click"><a ></a></div>
+                <p class="data-t1">{$count['member']}</p>
+                <p class="data-t2">粉丝数量</p>
+            </div>
         </div>
 
 
@@ -50,131 +55,104 @@
         </div>
 
         <script src="__STATIC__/js/echarts-all.js"></script>
-        <script>
-            var getOption = function(chartType) {
-                var chartOption = chartType == 'pie' ? {
-                    calculable: false,
-                }: {
+            <script type="text/javascript">
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('lineChart'));
+
+                // 指定图表的配置项和数据
+
+                option = {
+                    title: {
+                        text: ''
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
                     legend: {
-                        data: ['订单数'] //, '数据2', '数据3'
+                        data:['订单数']
                     },
                     grid: {
-                        x: 35,
-                        x2: 10,
-                        y: 30,
-                        y2: 25
+                        left: '0%',
+                        right: '0%',
+                        bottom: '0%',
+                        containLabel: true
                     },
                     toolbox: {
-                        show: false,
                         feature: {
-                            mark: {
-                                show: true
-                            },
-                            dataView: {
-                                show: true,
-                                readOnly: false
-                            },
-                            magicType: {
-                                show: true,
-                                type: ['line', 'bar']
-                            },
-                            restore: {
-                                show: true
-                            },
-                            saveAsImage: {
-                                show: true
-                            }
+                            saveAsImage: {}
                         }
                     },
-                    calculable: false,
-                    xAxis: [{
+                    xAxis: {
                         type: 'category',
+                        boundaryGap: false,
                         data: {$count['year']}
-                    }],
-                    yAxis: [{
-                        type: 'value',
-                        splitArea: {
-                            show: true
-                        }
-                    }],
-                    series: [{
-                        name: '订单数',
-                        type: chartType,
-                        data: {$count['tnum']}
                     },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name:'订单数',
+                            type:'line',
+                            stack: '总量',
+                            data:{$count['tnum']}
+                        }
 
-                        ]
+                    ]
                 };
-                return chartOption;
-            };
-            var byId = function(id) {
-                return document.getElementById(id);
-            };
-            var lineChart = echarts.init(byId('lineChart'));
-            lineChart.setOption(getOption('line'));
-        </script>
-        <script>
-            var getOption = function(chartType) {
-                var chartOption = chartType == 'pie' ? {
-                    calculable: false,
-                }: {
+
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            </script>
+            <script type="text/javascript">
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('lineChart1'));
+                // 指定图表的配置项和数据
+                option = {
+                    title: {
+                        text: ''
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
                     legend: {
-                        data: ['销售额']
+                        data:['销售额']
                     },
                     grid: {
-                        x: 50,
-                        x2: 10,
-                        y: 30,
-                        y2: 25
+                        left: '0%',
+                        right: '0%',
+                        bottom: '0%',
+                        containLabel: true
                     },
                     toolbox: {
-                        show: false,
                         feature: {
-                            mark: {
-                                show: true
-                            },
-                            dataView: {
-                                show: true,
-                                readOnly: false
-                            },
-                            magicType: {
-                                show: true,
-                                type: ['line', 'bar']
-                            },
-                            restore: {
-                                show: true
-                            },
-                            saveAsImage: {
-                                show: true
-                            }
+                            saveAsImage: {}
                         }
                     },
-                    calculable: false,
-                    xAxis: [{
+                    xAxis: {
                         type: 'category',
+                        boundaryGap: false,
                         data: {$count['year']}
-                    }],
-                    yAxis: [{
-                        type: 'value',
-                        splitArea: {
-                            show: true
-                        }
-                    }],
-                    series: [{
-                        name: '销售额',
-                        type: chartType,
-                        data: {$count['amount']}
                     },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name:'销售额',
+                            type:'line',
+                            stack: '总量',
+                            data:{$count['amount']}
+                        }
 
-                        ]
+                    ]
                 };
-                return chartOption;
-            };
-            var byId = function(id) {
-                return document.getElementById(id);};
-            var lineChart = echarts.init(byId('lineChart1'));
-            lineChart.setOption(getOption('line'));
-        </script>
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            </script>
+
 
             <div class="more-box">
                 <div class="more-box-l">快捷方式</div>

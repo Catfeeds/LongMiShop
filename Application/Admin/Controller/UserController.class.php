@@ -394,6 +394,8 @@ class UserController extends BaseController {
             $id_lists = M('goods') -> where( array( 'admin_id' => session('admin_id') ) ) -> getField('goods_id',true);
             if( !empty($id_lists) ){
                 $where .=  " AND goods_id in (" . implode( "," , $id_lists ) . ") ";
+            }else{
+                $where .=  " AND goods_id = 0  ";
             }
         }
         $goodsComment = M('goods_comment');
