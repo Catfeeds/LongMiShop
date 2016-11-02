@@ -17,8 +17,11 @@
                 <table width="100%" border="0" cellspacing="4" cellpadding="4">
                     <tr>
                         <td align="left" nowrap>
-                            <div class="btn_e" style="padding:0px">
+                            <div class="btn_e" style="padding:0px; float: left;">
                                 <a href="{:U('Admin/goods/addEditGoods')}">发布商品</a>
+                            </div>
+                            <div class="tip_c">
+                                <a href="#">发布商品需知</a>
                             </div>
                         </td>
                         <td align="right" nowrap>
@@ -35,6 +38,37 @@
                         </td>
                     </tr>
                 </table>
+
+
+                <div class="tip_main">
+                    <strong>注意：</strong><br>
+                    所有发布成功的商品，会有龙米家工作人员进行标准化审核上架，用以确保消费者购物体验。<span style="color: #f00">审核会在1天内完成</span> 。<br><br>
+                    <strong>产品类别</strong><br>
+                    必须对应品类发布，如果没有该品类需要联系龙米客服添加新分类。<br><br>
+                    <strong>主图：</strong><br>
+                    上传主图，不能为空，主图分辨率为<span style="color: #f00">240*240</span> <br>
+                    大小控制在<span style="color: #f00">5~10k</span> <br>
+                    背景为<span style="color: #f00">纯白色</span> <br>
+                    不得盗用他人产品图片 <br>
+                    不允许在主图上添加文字说明 <br>
+                    需要标注商品logo的，需要置于主图<span style="color: #f00">左上角</span> <br>
+                    不得出现水印，包邮促销等字或其他营销的文字 <br><br>
+                    <strong>标题：</strong><br>
+                    正确标题，<span style="color: #f00">开头需要用“【】”标注产品名称</span>，标题30字以内，单不能少于15字<br>
+                    标题与主图一致，不可乱用星级，最高级，明星，类别，属性堆砌或者夸大效果的描述<br><br>
+                    <strong>参数属性：</strong><br>
+                    必须按照规格参数，实际情况填写完整。<span style="color: #f00">不得小于5项参数</span><br><br>
+                    <strong>定价：</strong><br>
+                    设置真实符合市场规律的价格<br>
+                    建议根据真实情况写库存，库存为0时会自动下架<br><br>
+                    <strong>物流：</strong><br>
+                    配送方式需要在发布商品之前<span style="color: #f00">提前设定</span>，跟淘宝等平台的配置方式类似，配送方式无需审核。<br>
+                    配送方式配置用来计算消费者所支付的邮费。<br>
+                    物流信息则按照实际发货为准。消费者也只会看到实际发货的物流信息。<br><br>
+                    <strong>其他：</strong><br>
+                    需填写正规售后保障信息<br><br>
+                </div>
+
             </div>
             <div class="k"  id="ajax_return">
             </div>
@@ -46,7 +80,9 @@
         $(document).ready(function(){
             // ajax 加载商品列表
             ajax_get_table('search-form2',1);
-
+            $(".tip_c").click(function(){
+                $(".tip_main").toggle(300)
+            });
         });
 
         // ajax 抓取页面 form 为表单id  page 为当前第几页

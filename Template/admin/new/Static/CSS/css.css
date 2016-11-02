@@ -1509,3 +1509,17 @@ h5:first-child {
 .k dl:hover {
 	background-color: #F6F6F6;
 }
+.tip_c{
+	float: left;
+	line-height: 32px;
+	padding-left: 10px;
+}
+.tip_c a{
+	color: #00F;
+	text-decoration: underline;
+}
+.tip_main{
+	line-height: 20px;
+	padding: 10px;
+	display: none;
+}
