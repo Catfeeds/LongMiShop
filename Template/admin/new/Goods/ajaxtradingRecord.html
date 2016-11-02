@@ -1,0 +1,35 @@
+<notempty name="orderList" >
+<div class="k" style="padding:0px">
+    <dl class="dl_box4">
+        <dd style="width:15%">时间</dd>
+        <dt style="width:30%">名称</dt>
+        <dd style="width:25%; text-align:left">订单号丨支付单号</dd>
+        <dd style="width:8%">对方</dd>
+        <dd style="width:9%">金额丨明细</dd>
+        <dd style="width:5%">状态</dd>
+        <dd style="width:8%">操作</dd>
+    </dl>
+    <volist name="orderList" id="item">
+        <dl class="dl_box3">
+            <dd style="width:15%">{$item.add_time|date='Y-m-d H:i:s',###}</dd>
+            <dt style="width:30%"> <a href="#">{$item.goods_name}</a> <br/>{$item.spec_key_name}</dt>
+            <dd style="width:25%; text-align:left">
+                <p>{$item.order_sn}</p>
+                <p class="color-d">&nbsp;</p>
+            </dd>
+            <dd style="width:8%">{$item.mobile}</dd>
+            <dd class='color-<if condition="$item['order_status'] eq 3 || $item['is_send'] eq 3">c<else />b</if> ' style="width:9%">
+                <if condition="$item['order_status'] eq 3 || $item['is_send'] eq 3">-<else />+</if>
+                {$item.total_amount}
+            </dd>
+            <dd style="width:5%"> {$item['is_send'] == 3 ? '已退款' : $item.order_status_desc} </dd>
+            <dd style="width:8%"> <span class="btn_d"><a href="{: U('Admin/order/detail',array('order_id'=>$item['order_id']))}">查看</a></span> </dd>
+        </dl>
+    </volist>
+
+</div>
+    {$page}
+
+<else />
+    <div class="none">还没有相关数据</div>
+</notempty>

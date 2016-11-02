@@ -984,6 +984,70 @@ class GoodsController extends BaseController {
     }
 
 
+    /**
+     * 供应商交易记录
+     *
+     **/
+    public function tradingRecord(){
+        $thirtyDays= date('Y/m/d',(time()-30*60*60*24));//30天前
+        $end = date('Y/m/d',strtotime('+1 days'));
+        $sevenDays = date('Y/m/d',(time()-7*60*60*24));//7天前
+        $this->assign('thirtyDays',$thirtyDays);
+        $this->assign('end',$end);
+        $this->assign('sevenDays',$sevenDays);
+        $this->display();
+    }
+
+    public function ajaxtradingRecord(){
+        $begin = strtotime(I('begin')); //开始时间
+        $end = strtotime(I('end')); // 结束时间
+        $type =   I('type'); //订单类型
+        $prefix = C('DB_PREFIX');
+        $order = $prefix.'order.add_time DESC';
+        // 搜索条件
+        $condition = array();
+        if($begin && $end){
+            $condition[$prefix.'order.add_time'] = array('between',"$begin,$end");
+        }
+        $condition[$prefix.'order_goods.admin_id'] = is_supplier() ? session('admin_id') : '0';
+        switch ($type) {
+            case 'dealing': //进行中
+                $condition[$prefix.'order.order_status'] = array('in','0,1');
+                break;
+            case 'refund': //退款
+                $condition[$prefix.'order_goods.is_send'] = "3";
+                break;
+            case 'succeed': // 已完成
+                $condition[$prefix.'order.order_status'] = array('in','2,4');
+                break;
+            case 'cancel':  // 已取消
+                $condition[$prefix.'order.order_status'] = '3';
+                break;
+        }
+        $count = M('order_goods')->join("LEFT JOIN ".$prefix."order ON ".$prefix."order_goods.order_id = ".$prefix."order.order_id ")->where($condition)->count();
+        $limit = 10;
+        $Page  = new \Admin\Common\AjaxPage($count,$limit);
+        //  搜索条件下 分页赋值
+        foreach($condition as $key=>$val) {
+            $Page->parameter[$key]   =  urlencode($val);
+        }
+        $show = $Page->show();
+        // ->field("".$prefix."order_goods.*,".$prefix."order.order_sn,".$prefix."order.add_time,".$prefix."order.mobile")
+        $orderList = M('order_goods')->join("LEFT JOIN ".$prefix."order ON ".$prefix."order_goods.order_id = ".$prefix."order.order_id ")->limit($Page->firstRow.','.$Page->listRows)->where($condition)->order($order)->select();
+        // $orderList[$keys] = setBtnOrderStatus( $items );
+        foreach($orderList as $key=>$item){
+            $orderList[$key] = setBtnOrderStatus( $item );
+            $orderList[$key]['total_amount'] = ($item['goods_num'] * $item['member_goods_price']) + $item['goods_postage'];
+        }
+//        dd($orderList);
+
+        $this->assign('orderList',$orderList);
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display();
+    }
+
+
+
 
 
 }
