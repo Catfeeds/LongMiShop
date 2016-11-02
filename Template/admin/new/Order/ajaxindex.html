@@ -4,6 +4,7 @@
         <dd>单价/数量</dd>
         <dd>售后</dd>
         <dd>买家</dd>
+        <dd>支付方式</dd>
         <dd>下单时间</dd>
         <dd>订单状态</dd>
         <dd>实付金额</dd>
@@ -21,7 +22,7 @@
         </dd>
     </dl>
     <dl class="dl_box2">
-        <foreach name="list['goods']" item="goods">
+        <foreach name="list['goods']" key="key" item="goods">
             <dt>
             <div class="sp">
                 <div class="sp_l">
@@ -36,30 +37,43 @@
                 <p>{$goods.member_goods_price}</p>
                 <p>（{$goods.goods_num}件）</p>
             </dd>
-        </foreach>
-        <dd>
-            <if condition="!empty($list['sendBack'])">
-                <a href="{:U('Admin/order/return_list',array('order_sn'=>$list['sendBack']))}" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="售后">售后</a>
+            <if condition = "$key == 0">
+                <dd>
+                    <if condition="!empty($list['sendBack'])">
+                        <a href="{:U('Admin/order/return_list',array('order_sn'=>$list['sendBack']))}" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="售后">售后</a>
+                    </if>
+                </dd>
+                <dd>
+                    <!--<p>视察</p>-->
+                    <p>{$list.consignee}</p>
+                    <p>{$list.mobile}</p>
+                </dd>
+                <dd>
+                    <p>{$list.pay_name}</p>
+                </dd>
+                <dd>
+                    <p>{$list.add_time|date='Y-m-d',###}</p>
+                    <p>{$list.add_time|date='H:i:s',###}</p>
+                </dd>
+                <dd>
+                    <p>{$list.order_status_desc}</p>
+                    <p>
+                        <if condition="$list['no_send'] eq true">
+                            <!--<a onclick="shipping('{$list.order_id}')">发货</a>-->
+                        </if>
+                    </p>
+                </dd>
+                <dd>{$list.total_amount}</dd>
+            <else/>
+                <dd></dd>
+                <dd></dd>
+                <dd></dd>
+                <dd></dd>
+                <dd></dd>
+                <dd></dd>
             </if>
-        </dd>
-        <dd>
-            <!--<p>视察</p>-->
-            <p>{$list.consignee}</p>
-            <p>{$list.mobile}</p>
-        </dd>
-        <dd>
-            <p>{$list.add_time|date='Y-m-d',###}</p>
-            <p>{$list.add_time|date='H:i:s',###}</p>
-        </dd>
-        <dd>
-            <p>{$list.order_status_desc}</p>
-            <p>
-                <if condition="$list['no_send'] eq true">
-                    <a onclick="shipping('{$list.order_id}')">发货</a>
-                </if>
-            </p>
-        </dd>
-        <dd>{$list.total_amount}</dd>
+        </foreach>
+
         <!--<div class="ve">卖家备注：已关闭</div>-->
     </dl>
     </volist>
