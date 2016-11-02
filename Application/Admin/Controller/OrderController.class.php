@@ -101,7 +101,7 @@ class OrderController extends BaseController {
                 if( isExistenceDataWithCondition( 'return_goods' , array( 'order_id' => $items["order_id"] )  ) ) {
                     $orderList[$keys]['sendBack'] = $items['order_sn'];
                 }
-                if( $items['order_status'] == 1 && $items['pay_status'] == 1 && $items['shipping_status'] == 0 && empty( $orderList[$keys]['sendBack'] )){
+                if( $items['order_status'] == 1 && $items['pay_status'] == 1 && $items['shipping_status'] != 1 && empty( $orderList[$keys]['sendBack'] )){
                     //是否快速发货按钮
                     $orderList[$keys]['isFast'] = getFastDeliveryBool( $items["admin_list"] , session("admin_id") );
                 }
@@ -114,27 +114,13 @@ class OrderController extends BaseController {
                         $goods_price = $item['goods_price'];
                         $sum += $goods_num * $goods_price;
                         $count_postage += $item['goods_postage'];
-                        $is_send[] = $item['is_send'];
-                    }
-                    if(in_array('0',$is_send)){
-                        $orderList[$keys]['no_send'] = true;
                     }
 
                     $orderList[$keys]['total_amount'] =  $sum + $count_postage; //实付金额
-                }else{
-                    foreach($orderList[$keys]["goods"] as $key=>$item){
-                        if($item['admin_id'] == '0' ){
-                            $is_send[] = $item['is_send'];
-                        }
-                    }
-                    if(in_array('0',$is_send)){
-                        $orderList[$keys]['no_send'] = true;
-                    }
                 }
 
             }
         }
-//        dd($orderList);
         $this->assign('orderList',$orderList);
         $this->assign('page',$show);// 赋值分页输出
         $this->display();

@@ -360,3 +360,7 @@ ADD COLUMN `admin_list`  varchar(255) NOT NULL DEFAULT "[0]" COMMENT '供应商列表
 
 ALTER TABLE `lm_return_goods`
 ADD COLUMN `admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT '供应商id' AFTER `order_id`;
+
+ALTER TABLE `lm_logistics`
+ADD COLUMN `admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT '供应商id' AFTER `log_time`;
+

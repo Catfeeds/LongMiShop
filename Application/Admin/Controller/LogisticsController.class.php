@@ -14,8 +14,12 @@ class LogisticsController extends BaseController {
 	}
 
     //物流配送方式
-    public function index(){ 
-        $list = $this->logi->order('log_rank DESC ')->select();
+    public function index(){
+        $where = array();
+        if( is_supplier() ) {
+            $where['admin_id'] = session("admin_id");
+        }
+        $list = $this->logi -> where($where)->order('log_rank DESC ')->select();
         $this->assign('list',$list);
         $this->display();
     }
@@ -26,6 +30,9 @@ class LogisticsController extends BaseController {
         $region_list = include_once 'Application/Common/Conf/express.php'; //快递名称
         if(!empty($id)){
             $where['log_id'] = $id;
+            if( is_supplier() ) {
+                $where['admin_id'] = session("admin_id");
+            }
             $edit_list = $this->logi->where($where)->find();
             $wheres['name'] = $edit_list['log_province'];
             $pro = $this->region->where($wheres)->find();
@@ -82,6 +89,9 @@ class LogisticsController extends BaseController {
             }
             if($id==0){ //新增
                 $data['log_time'] = time();
+                if( is_supplier() ) {
+                    $data['admin_id'] = session("admin_id");
+                }
                 $res = $this->logi->add($data);
                 $res ? $this->success('新增成功',U('Admin/Logistics/index')) : $this->error('新增失败');exit;
             }else{
@@ -94,7 +104,18 @@ class LogisticsController extends BaseController {
     //删除
     public function del(){
         $id = rtrim(I('log_id'),",");
-        $result = $this->logi->where(array('log_id'=>array('in',$id)))->delete();
+        $where = array();
+        $where['delivery_way'] = array('in',$id);
+        if( is_supplier() ) {
+            $data['admin_id'] = session("admin_id");
+        }
+        $isUse = M('goods_id') -> where( $where ) ->count();
+        if( $isUse ){
+            echo 2;exit;
+        }
+        unset($where['delivery_way']);
+        $where['log_id'] = array('in',$id);
+        $result = $this->logi->where($where)->delete();
         if($result){
             echo 1;exit;
         }else{
