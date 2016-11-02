@@ -33,7 +33,7 @@
             </dd>
             <if condition=" !is_supplier() ">
                 <dd>
-                    <p>{$list.shipping_price}</p>
+                    <p>{$list['goods_price'] + $list['shipping_price']}</p>
                 </dd>
             </if>
             <dd>
