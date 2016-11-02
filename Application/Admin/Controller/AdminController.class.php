@@ -258,6 +258,7 @@ class AdminController extends BaseController {
             $this -> error("此功能只对供应商开放");
         }
         $accountInfo = getAccountInfo();
+
         if(IS_POST){
             $data = I('post.');
             $userLogic = new \Common\Logic\UsersLogic();
@@ -381,4 +382,51 @@ class AdminController extends BaseController {
 
         $this->success("操作成功");
     }
+
+    /**
+     * 商户提现记录
+     */
+
+    public function withdrawalRecord(){
+        $thirtyDays= date('Y/m/d',(time()-30*60*60*24));//30天前
+        $end = date('Y/m/d',strtotime('+1 days'));
+        $sevenDays = date('Y/m/d',(time()-7*60*60*24));//7天前
+        $this->assign('thirtyDays',$thirtyDays);
+        $this->assign('end',$end);
+        $this->assign('sevenDays',$sevenDays);
+        $this->display();
+    }
+
+    public function ajaxwithdrawalRecord(){
+        if( !is_supplier() ){
+            $this -> error("此功能只对供应商开放");
+        }
+        $begin = strtotime(I('begin')); //开始时间
+        $end = strtotime(I('end')); // 结束时间
+
+        // 搜索条件
+        $condition = array();
+        $state = I('state','','int');
+        if($state !== ''){
+            $condition['state'] = $state;
+        }
+        if($begin && $end){
+            $condition['create_time'] = array('between',"$begin,$end");
+        }
+        $condition['admin_id'] = session('admin_id');
+        $count = M('admin_withdrawals')->where($condition)->count();
+        $Page  = new \Admin\Common\AjaxPage($count,10);
+        //  搜索条件下 分页赋值
+        foreach($condition as $key=>$val) {
+            $Page->parameter[$key]   =  urlencode($val);
+        }
+        $show = $Page->show();
+        $list = M('admin_withdrawals')->where($condition)->limit($Page->firstRow.','.$Page->listRows)->order('create_time DESC')->select();
+        $this->assign('list',$list);
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display();
+    }
+
+
+
 }
