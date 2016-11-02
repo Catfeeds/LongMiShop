@@ -114,11 +114,24 @@ class OrderController extends BaseController {
                         $goods_price = $item['goods_price'];
                         $sum += $goods_num * $goods_price;
                         $count_postage += $item['goods_postage'];
+                        $is_send[] = $item['is_send'];
+                    }
+                    if(in_array('0',$is_send)){
+                        $orderList[$keys]['no_send'] = true;
                     }
 
                     $orderList[$keys]['total_amount'] =  $sum + $count_postage; //实付金额
-
+                }else{
+                    foreach($orderList[$keys]["goods"] as $key=>$item){
+                        if($item['admin_id'] == '0' ){
+                            $is_send[] = $item['is_send'];
+                        }
+                    }
+                    if(in_array('0',$is_send)){
+                        $orderList[$keys]['no_send'] = true;
+                    }
                 }
+
             }
         }
 //        dd($orderList);
@@ -1000,7 +1013,9 @@ class OrderController extends BaseController {
             $order = M('order')->where(array('order_id'=>$orderId))->find();
             //收货人
             $site = $region_list[$order['province']]['name'].' '.$region_list[$order['city']]['name'].' '.$region_list[$order['district']]['name'].' '.$order['address'].', '.$order['consignee'].' '.$order['mobile'];
-            $goodsList = M('order_goods')->where(array('order_id'=>$orderId,'admin_id'=>session('admin_id')))->select();
+            $where['order_id'] = $orderId;
+            $where['admin_id'] =  is_supplier() ? session('admin_id') : '0';
+            $goodsList = M('order_goods')->where($where)->select();
             if(empty($goodsList)){
                 exit(json_encode(callback(true,'没有订单数据')));
             }
@@ -1043,7 +1058,16 @@ class OrderController extends BaseController {
     public function ajaxSend(){
         if(IS_POST){
             $data = I('post.');
-            dd($data);
+            $data = array(
+                "order_id" => $data['id'],
+                "invoice_no" => $data['invoice_no'],
+                "myShippingName" => $data['shipping_name'],
+                "goods"=>$data['rec_id_list'],
+                "note"=>" ",
+            );
+            $orderLogic = new OrderLogic();
+            $result = $orderLogic->deliveryHandle($data);
+            exit(json_encode($result));
         }
     }
 

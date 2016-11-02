@@ -359,7 +359,7 @@
             $('#newShippingDiv'+id+' .SeleCted').html(length);
         });
         $('#newShippingDiv'+id+' .shippingSubmit').click(function(){
-            consignment('#newShippingDiv'+id);
+            consignment('#newShippingDiv'+id,id);
         });
         $.ajax({
             type:'post',
@@ -380,7 +380,7 @@
 
     }
 
-    function consignment(formid){
+    function consignment(formid,id){
         var shipping_name = $(formid).find("option:selected").val();
         var invoice_no = $(formid).find("input[name='invoice_no']").val();
         var array = [];
@@ -389,24 +389,32 @@
                 array += $(this).val()+',';
             }
         });
+        if(shipping_name == 0){
+            alert('请选择物流公司');
+            return false;
+        }else if(invoice_no == ''){
+            alert('请填写快递单号');
+            return false;
+        }else if(array == ''){
+            alert('请选择发货商品');
+            return false;
+        }
+
         array = array.split(',');
         $.ajax({
             type : "POST",
-            url:"/index.php/Admin/Goods/ajaxSend/",
-            data : {data:array},
+            url:"/index.php/Admin/Order/ajaxSend/",
+            data : {rec_id_list:array,shipping_name:shipping_name,invoice_no:invoice_no,id:id},
             dataType:'json',
             success: function(data){
                 if(data.state == 1){
-                    alert(data.msg);
+                    alert('发货成功');
                     window.location.reload();
                 }else{
                     alert(data.msg);
                 }
             }
         });
-        console.log(shipping_name);
-        console.log(invoice_no);
-        console.log(array);
     }
 
     function doSubmit(obj) {
