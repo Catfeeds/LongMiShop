@@ -535,7 +535,7 @@ function returnOrderHandle( $returnOrderInfo , $postData ){
  * @return array
  */
 function explodeAdminList( $adminListString = "[0]" ){
-    $orderAdminListArray = explode( "][" , $adminListString );
+    $orderAdminListArray  = explode( "][" , $adminListString );
     $orderAdminListString = implode( "%" , $orderAdminListArray );
     $orderAdminListString = preg_replace( '/\[|\]/' , '' , $orderAdminListString );
     return explode( "%" , $orderAdminListString );
@@ -550,9 +550,12 @@ function explodeAdminList( $adminListString = "[0]" ){
 function getFastDeliveryBool( $adminList , $adminId ){
     $adminArray = explodeAdminList( $adminList );
     if(
-        count( $adminArray ) == 1 &&
-        ( is_supplier() && $adminArray[0] == $adminId ) ||
-        ( !is_supplier() &&  $adminArray[0] == 0  )
+//        count( $adminArray ) == 1 &&
+//        ( is_supplier() && $adminArray[0] == $adminId ) ||
+//        ( !is_supplier() &&  $adminArray[0] == 0  )
+        ( is_supplier() && in_array( $adminId , $adminArray ) ) ||
+        ( !is_supplier() && in_array( 0 , $adminArray )  )
+
     ){
         return true;
     }

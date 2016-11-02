@@ -316,7 +316,16 @@ class GoodsController extends BaseController {
         $level_cat = $GoodsLogic->find_parent_cat($goodsInfo['cat_id']); // 获取分类默认选中的下拉框
         $level_cat2 = $GoodsLogic->find_parent_cat($goodsInfo['extend_cat_id']); // 获取分类默认选中的下拉框
         $cat_list = M('goods_category')->where("parent_id = 0")->select(); // 已经改成联动菜单
-        $logistics_list = M('logistics')->field('log_id,log_template')->select(); //获取所有配送方式
+
+        $logisticsWhere = array();
+        if( is_supplier() ) {
+            $logisticsWhere['admin_id'] = session("admin_id");
+        }
+        $logistics_list = M('logistics') -> where($logisticsWhere)->field('log_id,log_template')->select(); //获取所有配送方式
+        if( empty($logistics_list) ){
+            $this->error("请先添加配送方式!!!",U('Admin/Logistics/add'));
+            exit;
+        }
         $brandList = $GoodsLogic->getSortBrands();
         $goodsType = M("GoodsType")->select();
         $this->assign('level_cat',$level_cat);
