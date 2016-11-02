@@ -46,12 +46,12 @@ class OrderController extends BaseController {
         $end = strtotime(I('end'));
         // 搜索条件
         $condition = array();
-        I('consignee') ? $condition['consignee'] = trim(I('consignee')) : false;
+//        I('consignee') ? $condition['consignee'] = trim(I('consignee')) : false;
         if($begin && $end){
             $condition['add_time'] = array('between',"$begin,$end");
         }
 //        dd($condition);
-        I('order_sn') ? $condition['order_sn'] = trim(I('order_sn')) : false;
+//        I('order_sn') ? $condition['order_sn'] = trim(I('order_sn')) : false;
 //        I('order_status') != '' ? $condition['order_status'] = I('order_status') : false;
         I('pay_status') != '' ? $condition['pay_status'] = I('pay_status') : false;
         I('pay_code') != '' ? $condition['pay_code'] = I('pay_code') : false;
@@ -1051,6 +1051,7 @@ class OrderController extends BaseController {
 
         }
     }
+
     /**
      * ajax发货商品
      *
@@ -1070,5 +1071,7 @@ class OrderController extends BaseController {
             exit(json_encode($result));
         }
     }
+
+
 
 }
