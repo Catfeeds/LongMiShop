@@ -52,13 +52,13 @@
                 <ul id="listAll">
 
                 </ul>
-                <ul id="notPayment">
+                <ul id="unfilledOrders">
                     <div class="none">还没有相关数据</div>
                 </ul>
-                <ul id="notPayment">
+                <ul id="delivered">
                     <div class="none">还没有相关数据</div>
                 </ul>
-                <ul id="notPayment">
+                <ul id="partDelivered">
                     <div class="none">还没有相关数据</div>
                 </ul>
             </div>
@@ -78,22 +78,65 @@
 <script>
 
     $(document).ready(function(){
-        ajax_get_table('search-form2',1);
+        formclick();
     });
+
+    function formclick(){
+        var formId = 'search-form2';
+        var page = 1;
+        ajax_get_table(formId,page,'listAll');
+        ajax_get_table(formId,page,'unfilledOrders');
+        ajax_get_table(formId,page,'delivered');
+        ajax_get_table(formId,page,'partDelivered');
+    }
 
     var cur_page = 0;
 
     // ajax 抓取页面
-    function ajax_get_table(tab,page){
+    function ajax_get_table(tab,page,ulId){
         cur_page = page; //当前页面 保存为全局变量
-            $.ajax({
-                type : "POST",
-                url:"/index.php/Admin/Order/ajaxdelivery/p/"+page,//+tab,
-                data : $('#'+tab).serialize(),// 你的formid
-                success: function(data){
-                    $("#ajax_return").html(data);
-                }
+        var obj = $('#'+tab).serialize();
+        obj += "&p="+page;
+        obj += "&type="+ulId;
+        $.ajax({
+            type : "GET",
+            url:"/index.php/Admin/Order/ajaxdelivery",
+            data :obj,// 你的formid
+            success: function(data){
+                $("#"+ulId).html('');
+                $("#"+ulId).append(data);
+                clickNext();
+            }
+        });
+    }
+
+    function clickNext(){
+        $(".next1").each(function(){
+            $(this).off("click");
+            $(this).click(function(){
+                var id = $(this).parent().parent().parent().parent().parent().attr('id');
+                var page = $(this).data('p');
+                ajax_get_table('search-form2',page,id);
             });
+        });
+        $(".prev1").each(function(){
+            $(this).off("click");
+            $(this).click(function(){
+                var id = $(this).parent().parent().parent().parent().parent().attr('id');
+                var page = $(this).data('p');
+                ajax_get_table('search-form2',page,id);
+            });
+        });
+    }
+    function skipPage(obj){
+        var id = $(obj).parent().parent().parent().parent().parent().attr('id');
+        var page = $(obj).parent().find(".page-go input").val();
+
+        if(page == ''){
+            $(obj).parent().find(".page-go input").focus();
+            return false;
+        }
+        ajax_get_table('search-form2',page,id);
     }
 </script>
 <style>
