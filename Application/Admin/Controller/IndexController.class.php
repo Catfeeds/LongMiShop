@@ -41,6 +41,8 @@ class IndexController extends BaseController {
         $whereOrder .= "  `order_status` = 1 AND `pay_status` = 1 AND `shipping_status` <> 1 AND ".$where;
         $count['not']  = M('order')->where($whereOrder)->count(); //待发货
         $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'  ".$returnWhere)->count(); //退货
+        $count['member']  = M('users')->count();
+
         $yesterdayTime = strtotime(date('Y-m-d',strtotime("-1 day")));
         $today = date('Y-m-d ')."00:00:00";
         $todayTime = strtotime($today);

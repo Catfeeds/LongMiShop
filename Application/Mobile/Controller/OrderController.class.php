@@ -114,11 +114,8 @@ class OrderController extends MobileBaseController {
             $data = $model -> getOrderGoods($v['order_id']);
             $order_list[$k]['goods_list'] = $data['data'];
             $order_list[$k] = setOrderReturnState( $order_list[$k] , $this ->user_id );
-
-        }
-        foreach($order_list as $keys=>$items){
-            $countGood = M('order_goods')->where(array('order_id'=>$items['order_id']))->group('delivery_id')->select();
-            $order_list[$keys]['countGood'] = count($countGood);
+            $countGood = M('order_goods')->where(array('order_id'=>$v['order_id']))->group('delivery_id')->select();
+            $order_list[$k]['countGood'] = count($countGood);
         }
 //        dd($order_list);
         $this->assign('order_status',C('ORDER_STATUS'));
