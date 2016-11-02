@@ -814,14 +814,13 @@ class OrderController extends BaseController {
         if(I('pay_code')!=""){
             $where .= " AND pay_code = ".I('pay_code');
         }
-		
-		$timegap = I('timegap');
-		if($timegap){
-			$gap = explode('-', $timegap);
-			$begin = strtotime($gap[0]);
-			$end = strtotime($gap[1]);
+
+        $begin = strtotime(I('begin'));
+        $end = strtotime(I('end'));
+		if($begin && $end){
 			$where .= " AND add_time>'$begin' and add_time<'$end' ";
 		}
+
 	$region	= M('region')->getField('id,name');
                 
 	$sql = "select *,FROM_UNIXTIME(add_time,'%Y-%m-%d') as create_time from __PREFIX__order $where order by order_id";
