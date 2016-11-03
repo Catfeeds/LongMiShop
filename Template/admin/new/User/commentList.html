@@ -31,7 +31,7 @@
                         <notempty name="list['allList']">
                             <volist name="list['allList']" id="allList">
                                 <tr>
-                                    <td width="24%" align="left" nowrap>
+                                    <td width="16%" align="left" nowrap>
                                         <div class="user_name">
                                             <div class="user_name_l"><img src="{: !empty($allList['user_img']) ? $allList['user_img'] : '/Public/images/default/user.png'  }"></div>
                                             <div class="user_name_r">{$allList['user_name']}</div>
@@ -40,21 +40,23 @@
 
                                     <td width="8%" align="center" nowrap>
                                         <if condition="$allList['is_buyer'] eq 1">
-                                        <div class="remark_x">
-                                            <php>
-                                                for($i=1;$i<=5;$i++){
-                                                if( $i <= $allList['level'] ){
-                                                echo "★";
-                                                }else{
-                                                echo "<span>★</span>";
-                                                }
-                                                }
-                                            </php>
-                                        </div>
+                                            <div class="remark_x">
+                                                <php>
+                                                    for($i=1;$i<=5;$i++){
+                                                    if( $i <= $allList['level'] ){
+                                                    echo "★";
+                                                    }else{
+                                                    echo "<span>★</span>";
+                                                    }
+                                                    }
+                                                </php>
+                                            </div>
                                         </if>
                                     </td>
-
-                                    <td width="46%" align="left">{$allList['content']}</td>
+                                    <td width="16%" align="center" nowrap>
+                                        {$goodsList[$allList['goods_id']]}
+                                    </td>
+                                    <td width="38%" align="left">{$allList['content']}</td>
                                     <td width="22%" align="right" nowrap>
                                         <if condition="$allList['is_delete'] eq 0">
                                             <span class="btn_d"><a href="javascript:ajax_del({$allList['id']});">删除</a></span>
@@ -76,7 +78,7 @@
                         <notempty name="list['well']">
                             <volist name="list['well']" id="allList">
                                 <tr>
-                                    <td width="24%" align="left" nowrap><div class="user_name">
+                                    <td width="16%" align="left" nowrap><div class="user_name">
                                         <div class="user_name_l"><img src="{: !empty($allList['user_img']) ? $allList['user_img'] : '/Public/images/default/user.png'  }"></div>
                                         <div class="user_name_r">{$allList['user_name']}</div>
                                     </div></td>
@@ -93,7 +95,10 @@
                                             </php>
                                         </div>
                                     </td>
-                                    <td width="46%" align="left">{$allList['content']}</td>
+                                    <td width="16%" align="center" nowrap>
+                                        {$goodsList[$allList['goods_id']]}
+                                    </td>
+                                    <td width="38%" align="left">{$allList['content']}</td>
                                     <td width="22%" align="right" nowrap>
                                         <if condition="$allList['is_delete'] eq 0">
                                             <span class="btn_d"><a href="javascript:ajax_del({$allList['id']});">删除</a></span>
@@ -114,7 +119,7 @@
                         <notempty name="list['middle']">
                             <volist name="list['middle']" id="allList">
                                 <tr>
-                                    <td width="24%" align="left" nowrap><div class="user_name">
+                                    <td width="16%" align="left" nowrap><div class="user_name">
                                         <div class="user_name_l"><img src="{: !empty($allList['user_img']) ? $allList['user_img'] : '/Public/images/default/user.png'  }"></div>
                                         <div class="user_name_r">{$allList['user_name']}</div>
                                     </div></td>
@@ -131,7 +136,10 @@
                                             </php>
                                         </div>
                                     </td>
-                                    <td width="46%" align="left">{$allList['content']}</td>
+                                    <td width="16%" align="center" nowrap>
+                                        {$goodsList[$allList['goods_id']]}
+                                    </td>
+                                    <td width="38%" align="left">{$allList['content']}</td>
                                     <td width="22%" align="right" nowrap>
                                         <if condition="$allList['is_delete'] eq 0">
                                             <span class="btn_d"><a href="javascript:ajax_del({$allList['id']});">删除</a></span>
@@ -152,7 +160,7 @@
                         <notempty name="list['bad']">
                             <volist name="list['bad']" id="allList">
                                 <tr>
-                                    <td width="24%" align="left" nowrap><div class="user_name">
+                                    <td width="16%" align="left" nowrap><div class="user_name">
                                         <div class="user_name_l"><img src="{: !empty($allList['user_img']) ? $allList['user_img'] : '/Public/images/default/user.png'  }"></div>
                                         <div class="user_name_r">{$allList['user_name']}</div>
                                     </div></td>
@@ -169,7 +177,10 @@
                                             </php>
                                         </div>
                                     </td>
-                                    <td width="46%" align="left">{$allList['content']}</td>
+                                    <td width="16%" align="center" nowrap>
+                                        {$goodsList[$allList['goods_id']]}
+                                    </td>
+                                    <td width="38%" align="left">{$allList['content']}</td>
                                     <td width="22%" align="right" nowrap>
                                         <if condition="$allList['is_delete'] eq 0">
                                             <span class="btn_d"><a href="javascript:ajax_del({$allList['id']});">删除</a></span>
@@ -190,12 +201,17 @@
                         <notempty  name="list['visitors']">
                             <volist name="list['visitors']" id="allList">
                                 <tr>
-                                    <td width="24%" align="left" nowrap><div class="user_name">
+                                    <td width="16%" align="left" nowrap><div class="user_name">
                                         <div class="user_name_l"><img src="{: !empty($allList['user_img']) ? $allList['user_img'] : '/Public/images/default/user.png'  }"></div>
                                         <div class="user_name_r">{$allList['user_name']}</div>
                                     </div></td>
 
-                                    <td width="46%" align="left">{$allList['content']}</td>
+                                    <td width="8%" align="center" nowrap>
+                                    </td>
+                                    <td width="16%" align="center" nowrap>
+                                        {$goodsList[$allList['goods_id']]}
+                                    </td>
+                                    <td width="38%" align="left">{$allList['content']}</td>
                                     <td width="22%" align="right" nowrap>
                                         <if condition="$allList['is_delete'] eq 0">
                                             <span class="btn_d"><a href="javascript:ajax_del({$allList['id']});">删除</a></span>
