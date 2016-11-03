@@ -341,6 +341,8 @@ function update_pay_status($order_sn,$pay_status = 1)
 
     $orderLogic -> orderProcessHandle( $order['order_id'] , "confirm" );
 
+    CommoditySalesVolume($order['order_id']);
+
     sendWeChatMessageUseUserId( $order['user_id'] , "支付" , array("orderId" => $order['order_id']) );
     return true;
     //分销设置
