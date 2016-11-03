@@ -20,8 +20,8 @@
             <dd>
                 <p>
                     <if condition="$items[status] eq 0">未处理</if>
-                    <if condition="$items[status] eq 1">处理中</if>
-                    <if condition="$items[status] eq 2">已完成</if>
+                    <if condition="$items[status] eq 2 AND empty($items['remark'])">已完成</if>
+                    <if condition="!empty($items['remark'])">已驳回</if>
                 </p>
             </dd>
             <dd>

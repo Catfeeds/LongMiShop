@@ -35,12 +35,12 @@
                 <p>{$goods.member_goods_price}</p>
                 <p>（{$goods.goods_num}件）</p>
             </dd>
+            <dd>
+                <if condition="!empty($goods['returnId'])">
+                    <a href="{:U('Admin/order/return_info',array('id'=>$goods['returnId']))}" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="售后">{$goods['returnType'] == 0 ? '退货' : '换货'}</a>
+                </if>
+            </dd>
             <if condition = "$key == 0">
-                <dd>
-                    <if condition="!empty($list['sendBack'])">
-                        <a href="{:U('Admin/order/return_list',array('order_sn'=>$list['sendBack']))}" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="售后">售后</a>
-                    </if>
-                </dd>
                 <dd>
                     <!--<p>视察</p>-->
                     <p>{$list.consignee}</p>
@@ -63,12 +63,12 @@
                 </dd>
                 <dd>{$list.total_amount}</dd>
             <else/>
-                <dd></dd>
-                <dd></dd>
-                <dd></dd>
-                <dd></dd>
-                <dd></dd>
-                <dd></dd>
+
+                <!--<dd></dd>-->
+                <!--<dd></dd>-->
+                <!--<dd></dd>-->
+                <!--<dd></dd>-->
+                <!--<dd></dd>-->
             </if>
 
             </div>

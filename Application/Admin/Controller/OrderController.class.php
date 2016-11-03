@@ -97,27 +97,35 @@ class OrderController extends BaseController {
             foreach($orderList as $keys => $items){
                 $orderList[$keys] = setBtnOrderStatus( $items );
                 $orderList[$keys]["goods"] = $orderLogic -> getOrderGoods( $items["order_id"] );
-                //是否售后
-                if( isExistenceDataWithCondition( 'return_goods' , array( 'order_id' => $items["order_id"] )  ) ) {
-                    $orderList[$keys]['sendBack'] = $items['order_sn'];
-                }
+
                 if( $items['order_status'] == 1 && $items['pay_status'] == 1 && $items['shipping_status'] != 1 && empty( $orderList[$keys]['sendBack'] )){
                     //是否快速发货按钮
                     $orderList[$keys]['isFast'] = getFastDeliveryBool( $items["admin_list"] , session("admin_id") );
                 }
-                //供应商 计算订单总价
-                if( is_supplier() ){
+
+                foreach($orderList[$keys]["goods"] as $key=>$item){
+                    //供应商 计算订单总价
                     $sum = 0;
                     $count_postage = 0;
-                    foreach($orderList[$keys]["goods"] as $key=>$item){
+                    if( is_supplier() ){
                         $goods_num = $item['goods_num'];
                         $goods_price = $item['goods_price'];
                         $sum += $goods_num * $goods_price;
                         $count_postage += $item['goods_postage'];
                     }
+                    //是否售后
+                    $returnRes = findDataWithCondition( 'return_goods' , array( 'order_id' => $item["order_id"],'goods_id' => $item['goods_id'],'spec_key'=>$item['spec_key'],'remark'=>array("eq","") )  );
+                    if( !empty($returnRes)  ) {
+                        $orderList[$keys]["goods"][$key]['returnId'] = $returnRes['id'];
+                        $orderList[$keys]["goods"][$key]['returnType'] = $returnRes['type'];
+                    }
 
+
+                }
+                if( is_supplier() ){
                     $orderList[$keys]['total_amount'] =  $sum + $count_postage; //实付金额
                 }
+
 
             }
         }
@@ -623,7 +631,7 @@ class OrderController extends BaseController {
                 $where .= "  AND status = 0 ";
                 break;
             case 'processed': //已退款
-                $where .= "AND status = 2 ";
+                $where .= "AND status = 2 AND remark = '' ";
                 break;
             case 'decline': //已驳回
                 $where .= "  AND remark != '' ";
@@ -802,6 +810,12 @@ class OrderController extends BaseController {
         if(I('pay_status')!=""){
             $where .= " AND pay_status = ".I('pay_status');
         }
+
+        $search_type = I('search_type');//条件
+        $search_name = I('search_name');//值
+        !empty($search_name) ? $where .= " AND ".$search_type." = ".$search_name."" : '';
+
+        //订单状态
         if(I('order_status')!=""){
 
             switch (I('order_status')) {
@@ -853,33 +867,42 @@ class OrderController extends BaseController {
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">发货状态</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">商品信息</td>';
     	$strTable .= '</tr>';
-    	
+//    	dd(count($orderList));
     	foreach($orderList as $k=>$val){
-
-    		$strTable .= '<tr>';
-    		$strTable .= '<td style="text-align:center;font-size:12px;">&nbsp;'.$val['order_sn'].'</td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['create_time'].' </td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'."{$val['consignee']}".' </td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'."{$region[$val['province']]},{$region[$val['city']]},{$region[$val['district']]},{$region[$val['twon']]}".$val['address'].'</td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['mobile'].'</td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['goods_price'].'</td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['order_amount'].'</td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$val['pay_name'].'</td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$this->pay_status[$val['pay_status']].'</td>';
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$this->shipping_status[$val['shipping_status']].'</td>';
+            $tempString = "";
+            $tempString .= '<tr>';
+            $tempString .= '<td style="text-align:center;font-size:12px;">&nbsp;'.$val['order_sn'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['create_time'].' </td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;">'."{$val['consignee']}".' </td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;">'."{$region[$val['province']]},{$region[$val['city']]},{$region[$val['district']]},{$region[$val['twon']]}".$val['address'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['mobile'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['goods_price'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['order_amount'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['pay_name'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;">'.$this->pay_status[$val['pay_status']].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;">'.$this->shipping_status[$val['shipping_status']].'</td>';
     		$orderGoods = D('order_goods')->where('order_id='.$val['order_id'])->select();
 
     		$strGoods="";
     		foreach($orderGoods as $goods){
+                $returnRes = M('return_goods')->where(array('order_id'=>$goods['order_id'],'goods_id'=>$goods['goods_id'],'spec_key'=>$goods['spec_key']))->find();
+    			if(!empty($returnRes) && $returnRes['status'] == 0){ //有未处理订单 不能导出该订单
+                    continue 2;
                 }
-    			$strGoods .= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name']." 数量: <b style='color:red;font-size:18px;'>".$goods['goods_num']."</b>";
+                if( $returnRes['status'] == 2 && !empty($returnRes['remark']) ){ //同意退款 跳出该商品
+                    continue;
+                }
+                $strGoods .= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name']." 数量: <b style='color:red;font-size:18px;'>".$goods['goods_num']."</b>";
                 !empty($goods['user_message']) ? $strGoods .= " 用户留言：".$goods['user_message'] : '';
     			if ($goods['spec_key_name'] != '') $strGoods .= " 规格：".$goods['spec_key_name'];
     			$strGoods .= "<br />";
+    		}
 
-    		unset($orderGoods);
-    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$strGoods.' </td>';
-    		$strTable .= '</tr>';
+            unset($orderGoods);
+            $tempString .= '<td style="text-align:left;font-size:12px;">'.$strGoods.' </td>';
+            $tempString .= '</tr>';
+
+            $strTable .= $tempString;
     	}
     	$strTable .='</table>';
     	unset($orderList);
