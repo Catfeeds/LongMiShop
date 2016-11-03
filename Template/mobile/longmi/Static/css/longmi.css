@@ -374,6 +374,18 @@ Load—more a{
 	line-height: 45px;
 }
 
+.figure{
+	font-size: 12px !important;
+	line-height: 1 !important;
+	color: #FFF !important;
+	position: absolute;
+	z-index: 2;
+	top: 16px;
+	right: 25%;
+}
 
+.er1 li {
+	position: relative;
+}
 
 

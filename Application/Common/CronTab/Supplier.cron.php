@@ -127,8 +127,23 @@ class SupplierCronClass
 
 
         $where = array();
-        $where["update_time"] = array( "between" , array( $lastTime , $endTime ) );
-        $where["state"] = 1;
+        $where1 = array();
+        $where1["_complex"] = array(
+            array(
+                "create_time" => array( "between" , array( $lastTime , $endTime ) ),
+                "state" => array( "in" , "0 , 1" ),
+            ),
+//            array(
+//                "update_time" => array( "between" , array( $lastTime , $endTime ) ),
+//                "state" => array( "eq" , 1 ),
+//            ),
+//            array(
+//                "create_time" => array( "between" , array( $lastTime , $endTime ) ),
+//                "state" => array( "eq" , 0),
+//            ),
+//            "_logic" => "OR",
+        );
+        $where["_complex"] = $where1;
         $where["admin_id"] = $admin;
         $withdrawalsList = selectDataWithCondition( "admin_withdrawals" , $where , "money" );
         if( !empty( $withdrawalsList ) ){
