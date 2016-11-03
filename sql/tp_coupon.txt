@@ -364,3 +364,6 @@ ADD COLUMN `admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT '供应商id' AFTER `orde
 ALTER TABLE `lm_logistics`
 ADD COLUMN `admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT '供应商id' AFTER `log_time`;
 
+
+ALTER TABLE `lm_admin`
+ADD COLUMN `nickname`  varchar(255) NULL COMMENT '帐号昵称' AFTER `role_id`;
