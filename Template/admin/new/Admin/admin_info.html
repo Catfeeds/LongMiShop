@@ -26,7 +26,14 @@
                                         <input type="text" class="form-control" name="user_name" value="{$info.user_name}" >
                                                                       
                                     </td>
-                                </tr>  
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">帐号昵称：</td>
+                                    <td class="col-sm-8">
+                                        <input type="text" class="form-control" name="nickname" value="{$info.nickname}" >
+
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>手机号码：</td>
                                     <td >
@@ -80,6 +87,10 @@ function adsubmit(){
 		layer.msg('用户名不能为空！', {icon: 2,time: 1000});   //alert('少年，用户名不能为空！');
 		return false;
 	}
+    if($('input[name=nickname]').val() == ''){
+        layer.msg('昵称不能为空！', {icon: 2,time: 1000});   //alert('少年，用户名不能为空！');
+        return false;
+    }
 	if($('input[name=phone]').val() == ''){
 		layer.msg('手机号码不能为空！', {icon: 2,time: 1000});//alert('少年，邮箱不能为空！');
 		return false;
