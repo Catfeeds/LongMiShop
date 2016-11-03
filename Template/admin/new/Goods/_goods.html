@@ -276,9 +276,8 @@
                                         <input type="text" class="input-sm"  name="original_img" id="original_img" value="{$goodsInfo.original_img}"/>
                                         <if condition="$goodsInfo['original_img'] neq null">
                                             &nbsp;&nbsp;
-                                            <img width="150" height="150" src="{$goodsInfo.original_img}">
-                                            <a target="_blank" style="display: none" href="{$goodsInfo.original_img}" id="original_img2">
-                                                <img width="25" height="25" src="/Public/images/image_icon.jpg">
+                                            <a target="_blank" href="{$goodsInfo.original_img}" id="original_img2">
+                                                <img width="150" height="150" src="{$goodsInfo.original_img}">
                                             </a>
                                         </if>
                                         <span id="err_original_img" style="color:#F00; display:none;"></span>					                                        
@@ -529,7 +528,8 @@
     // 上传商品图片成功回调函数
     function call_back(fileurl_tmp){
         $("#original_img").val(fileurl_tmp);
-    	$("#original_img2").attr('href', fileurl_tmp);
+        $("#original_img2").attr('href', fileurl_tmp);
+    	$("#original_img2 img").attr('src', fileurl_tmp);
     }
  
     // 上传商品相册回调函数
