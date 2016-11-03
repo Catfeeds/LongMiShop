@@ -135,9 +135,8 @@ class OrderController extends BaseController {
     	$condition = array();
     	I('consignee') ? $condition['consignee'] = trim(I('consignee')) : false;
     	I('order_sn') != '' ? $condition['order_sn'] = trim(I('order_sn')) : false;
-        // $condition['order_status'] = array('egt',1);
-//    	$condition['order_status'] = array('eq',1);
-//        $condition['pay_status'] = 1; //支付状态
+    	$condition['order_status'] = array('eq',1);
+        $condition['pay_status'] = 1; //支付状态
 //    	$shipping_status = I('shipping_status');
 //    	$condition['shipping_status'] = empty($shipping_status) ? array('neq',1) : $shipping_status;
 
@@ -147,13 +146,13 @@ class OrderController extends BaseController {
         $type =   I('type');
         switch ($type) {
             case 'unfilledOrders': //待发货
-                $condition["_string"] = " 1=1 " . C('WAITSEND');
+                $condition["shipping_status"] = " 0   ";
                 break;
             case 'delivered': //已发货
-                $condition["_string"] = " 1=1 " .C('WAITRECEIVE');
+                $condition["shipping_status"] = " 1    ";
                 break;
             case 'partDelivered': //部分发货
-                $condition["_string"] = " shipping_status=2 AND order_status = 1 ";
+                $condition["shipping_status"] = " 2  ";
                 break;
         }
 
@@ -165,8 +164,13 @@ class OrderController extends BaseController {
     	foreach($condition as $key=>$val) {
     		$Page->parameter[$key]   =   urlencode($val);
     	}
-    	$show = $Page->show();
+    	//SELECT * FROM `lm_order` WHERE `order_status` = 1 AND `pay_status` = 1 ORDER BY add_time DESC
+        //SELECT * FROM `lm_order` WHERE `order_status` = 1 AND `pay_status` = 1 AND (  1=1  AND (pay_status=1 OR pay_code="cod") AND shipping_status !=1 AND order_status in(0,1)  ) ORDER BY add_time DESC
+    	//SELECT * FROM `lm_order` WHERE (  1=1  AND shipping_status=1 AND order_status = 1  ) ORDER BY add_time DESC
+        //SELECT * FROM `lm_order` WHERE (  shipping_status=2 AND order_status = 1  ) ORDER BY add_time DESC
+        $show = $Page->show();
     	$orderList = M('order')->where($condition)->limit($Page->firstRow.','.$Page->listRows)->order('add_time DESC')->select();
+//        dd($orderList);
         if(is_supplier()){
             //计算邮费
             foreach($orderList as $key=>$item){
