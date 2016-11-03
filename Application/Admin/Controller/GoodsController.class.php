@@ -266,6 +266,8 @@ class GoodsController extends BaseController {
                 );
                 $this->ajaxReturn(json_encode($return_arr));
             }else {
+
+
                 //  form表单提交
                 // C('TOKEN_ON',true);
                 $Goods->on_time = time(); // 上架时间
@@ -282,6 +284,32 @@ class GoodsController extends BaseController {
                 {
 
                     $goods_id = $_POST['goods_id'];
+
+                    if (is_supplier()) {
+                        $data = $_POST;
+                        $goodsRes = findDataWithCondition( 'goods', "goods_id = '$goods_id' " );
+                        $sum = 0;
+                        $array = array(
+                            'store_count',
+                            'market_price',
+                            'shop_price',
+                            'cost_price',
+                            'virtual_sales',
+                            'virtual_address',
+                            'delivery_way',
+                            'weight'
+                        );
+                        if( !empty($data['cat_id_2']))$data['cat_id'] = $data['cat_id_2'];
+                        foreach($data as $key=>$item){
+                            //条件
+                            if($item != $goodsRes[$key] && !in_array($key,$array) && !empty( $goodsRes[$key] )){
+                                $sum++;
+                            }
+                        }
+                        if($sum > 0){
+                            $Goods->is_on_sale = "0" ;
+                        }
+                    }
                     $Goods->save(); // 写入数据到数据库
                     $Goods->afterSave($goods_id);
                 }
