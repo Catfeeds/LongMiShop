@@ -397,8 +397,12 @@ class UserController extends BaseController {
             }else{
                 $where .=  " AND goods_id = 0  ";
             }
+            $goodsList = M("goods") -> where( array( 'admin_id' => session('admin_id') ) ) -> getField("goods_id,goods_name",true);
+        }else{
+            $goodsList = M("goods") -> where( array( 'admin_id' => 0 ) ) -> getField("goods_id,goods_name",true);
         }
         $goodsComment = M('goods_comment');
+
         $list['allList']    = $goodsComment -> where('1 = 1 ' . $where) -> order('create_time DESC') -> select(); //全部
         $list['well']       = $goodsComment -> where("level in('4','5') AND is_buyer = 1 " . $where) -> order('create_time DESC') -> select(); //4-5星
         $list['middle']     = $goodsComment -> where("level in('2','3') AND is_buyer = 1 " . $where) -> order('create_time DESC') -> select(); //2-3星
@@ -406,6 +410,7 @@ class UserController extends BaseController {
         $list['visitors']   = $goodsComment -> where("is_buyer = 0 " . $where) -> order('create_time DESC') -> select(); //游客
 
         $this->assign('list',$list);
+        $this->assign('goodsList',$goodsList);
         $this->display();
     }
 

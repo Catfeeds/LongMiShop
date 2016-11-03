@@ -114,21 +114,23 @@
                                             </select>
                                         </td>
                                     </tr>
+                                <input type="hidden" value="2" name="log_is_take_their"/>
+                                <input type="hidden" value="" name="log_take_their_site"/>
 
-                                    <tr>
-                                        <td>允许自提</td>
-                                        <td>
-                                            <select name="log_is_take_their" id="is_take_their">
-                                                <option value="2" {: !empty($edit_list) ? $edit_list['log_is_take_their']==2?'selected':'' :'selected'}>否</option>
-                                                <option value="1" {: $edit_list['log_is_take_their']==1?'selected':''}>是</option>
-                                            </select>
-                                        </td>
-                                    </tr>
+                                    <!--<tr>-->
+                                        <!--<td>允许自提</td>-->
+                                        <!--<td>-->
+                                            <!--<select name="log_is_take_their" id="is_take_their">-->
+                                                <!--<option value="2" {: !empty($edit_list) ? $edit_list['log_is_take_their']==2?'selected':'' :'selected'}>否</option>-->
+                                                <!--<option value="1" {: $edit_list['log_is_take_their']==1?'selected':''}>是</option>-->
+                                            <!--</select>-->
+                                        <!--</td>-->
+                                    <!--</tr>-->
 
-                                    <tr id="take_their_site" style="display:{: $edit_list['log_is_take_their']==1?'block':'none'}">
-                                        <td>请填写自提地址</td>
-                                        <td><input name="log_take_their_site" type="text" value="{: !empty($edit_list)?$edit_list['log_take_their_site']:''}"></td>
-                                    </tr>
+                                    <!--<tr id="take_their_site" style="display:{: $edit_list['log_is_take_their']==1?'block':'none'}">-->
+                                        <!--<td>请填写自提地址</td>-->
+                                        <!--<td><input name="log_take_their_site" type="text" value="{: !empty($edit_list)?$edit_list['log_take_their_site']:''}"></td>-->
+                                    <!--</tr>-->
 
                                     <tr>
                                         <td>卖家包邮</td>
