@@ -631,7 +631,7 @@ class OrderController extends BaseController {
                 $where .= "  AND status = 0 ";
                 break;
             case 'processed': //已退款
-                $where .= "AND status = 2 ";
+                $where .= "AND status = 2 AND remark = '' ";
                 break;
             case 'decline': //已驳回
                 $where .= "  AND remark != '' ";
