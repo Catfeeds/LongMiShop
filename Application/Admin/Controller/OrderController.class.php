@@ -84,7 +84,7 @@ class OrderController extends BaseController {
               break;
         }
         $count = M('order')->where($condition)->count();
-        $limit = 1;
+        $limit = 10;
         $Page  = new \Admin\Common\AjaxPage($count,$limit);
         //  搜索条件下 分页赋值
         foreach($condition as $key=>$val) {
