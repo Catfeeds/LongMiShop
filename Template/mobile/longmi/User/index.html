@@ -34,16 +34,28 @@
 <div class="er1" style="margin:5px 0;">
 	<ul>
 		<li>
-			<p><a href="{:U('Mobile/Order/order_list',array('type'=>'WAITPAY'))}">待付款</a></p>
+			<p>
+				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITPAY'))}">待付款</a>
+				<span class="mui-badge mui-badge-danger figure">{$orderCount.WAITPAY}</span>
+			</p>
 		</li>
 		<li style="background-image:url('__STATIC__/SVG/a2.svg')">
-			<p><a href="{:U('Mobile/Order/order_list',array('type'=>'WAITSEND'))}">待发货</a></p>
+			<p>
+				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITSEND'))}">待发货</a>
+				<span class="mui-badge mui-badge-danger figure">{$orderCount.WAITSEND}</span>
+			</p>
 		</li>
 		<li style="background-image:url('__STATIC__/SVG/a3.svg')">
-			<p><a href="{:U('Mobile/Order/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a></p>
+			<p>
+				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a>
+				<span class="mui-badge mui-badge-danger figure">{$orderCount.WAITRECEIVE}</span>
+			</p>
 		</li>
 		<li style="background-image:url('__STATIC__/SVG/a4.svg')">
-			<p><a href="{:U('Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a></p>
+			<p>
+				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a>
+				<span class="mui-badge mui-badge-danger figure">{$orderCount.WAITCCOMMENT}</span>
+			</p>
 		</li>
 	</ul>
 

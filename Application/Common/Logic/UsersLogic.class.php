@@ -805,4 +805,31 @@ class UsersLogic extends BaseLogic
     	}
     	exit(json_encode($res));
     }
+
+    /**
+     * 获取某个用户的订单数目
+     * @param $userId
+     * @return array
+     */
+    public function getOrderCount( $userId ){
+        $count = array(
+            "WAITPAY" => 0,
+            "WAITSEND" => 0,
+            "WAITRECEIVE" => 0,
+            "WAITCCOMMENT" => 0
+        );
+        $where = ' user_id="' . $userId.'" ';
+        $where .= C(strtoupper("WAITPAY"));
+        $count['WAITPAY'] = M('order')->where($where)->count();
+        $where = ' user_id="' . $userId.'" ';
+        $where .= C(strtoupper("WAITSEND"));
+        $count['WAITSEND'] = M('order')->where($where)->count();
+        $where = ' user_id="' . $userId.'" ';
+        $where .= C(strtoupper("WAITRECEIVE"));
+        $count['WAITRECEIVE'] = M('order')->where($where)->count();
+        $where = ' user_id="' . $userId.'" ';
+        $where .= C(strtoupper("FINISHED"));
+        $count['WAITCCOMMENT'] = M('order')->where($where)->count();
+        return $count;
+    }
 }
