@@ -55,9 +55,7 @@ class GoodsModel extends Model
      */
     public function afterSave($goods_id)
     {
-        if (is_supplier()) {
-            M('goods')->where("goods_id = $goods_id ")->save(array('is_on_sale'=>'0'));
-        }
+
         // 商品货号
         $goods_sn = "LM" . str_pad($goods_id, 7, "0", STR_PAD_LEFT);
         // 商品图片相册  图册
