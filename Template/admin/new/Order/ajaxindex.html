@@ -47,28 +47,32 @@
                     <p>{$list.mobile}</p>
                 </dd>
                 <dd>
-                    <p>{$list.pay_name}</p>
+                    <p style="line-height: 80px;">{$list.pay_name}</p>
                 </dd>
                 <dd>
                     <p>{$list.add_time|date='Y-m-d',###}</p>
                     <p>{$list.add_time|date='H:i:s',###}</p>
                 </dd>
                 <dd>
-                    <p>{$list.order_status_desc}</p>
-                    <p>
-                        <notempty name = "list.isFast" >
+                    <notempty name = "list.isFast" >
+                        <p style="line-height: 40px;">{$list.order_status_desc}</p>
+                        <p style="line-height: 40px;">
                             <a onclick="shipping('{$list.order_id}')">发货</a>
-                        </notempty>
-                    </p>
+                        </p>
+                    <else/>
+                        <p style="line-height: 80px;">{$list.order_status_desc}</p>
+                    </notempty>
                 </dd>
-                <dd>{$list.total_amount}</dd>
+                <dd>
+                    <p style="line-height: 80px;">{$list.total_amount}</p>
+                </dd>
             <else/>
 
-                <!--<dd></dd>-->
-                <!--<dd></dd>-->
-                <!--<dd></dd>-->
-                <!--<dd></dd>-->
-                <!--<dd></dd>-->
+                <dd></dd>
+                <dd></dd>
+                <dd></dd>
+                <dd></dd>
+                <dd></dd>
             </if>
 
             </div>
