@@ -1057,6 +1057,14 @@ class OrderController extends BaseController {
             }
             $html = '';
             foreach($goodsList as $item){
+                //检测是否退货
+                $returnRes = M('return_goods')->where(array('order_id'=>$item['order_id'],'goods_id'=>$item['goods_id']))->find();
+                if(!empty($returnRes) && $returnRes['status'] == 0){ //申请退货 未处理
+                    continue;
+                }
+                if(!empty($returnRes) && $returnRes['status'] == 2 && empty($returnRes['remark']) ){ //申请退货 已同意
+                    continue;
+                }
                 $invoice_no = '';
                 if( $item['is_send'] == 1 && !empty($item['delivery_id']) ){
                     $invoice_no = M('delivery_doc')->where(array('id'=>$item['delivery_id']))->find();
