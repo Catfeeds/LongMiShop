@@ -1055,8 +1055,8 @@ class OrderController extends BaseController {
             if(empty($goodsList)){
                 exit(json_encode(callback(true,'没有订单数据')));
             }
+            $html = '';
             foreach($goodsList as $item){
-                $html = '';
                 $invoice_no = '';
                 if( $item['is_send'] == 1 && !empty($item['delivery_id']) ){
                     $invoice_no = M('delivery_doc')->where(array('id'=>$item['delivery_id']))->find();
@@ -1077,7 +1077,7 @@ class OrderController extends BaseController {
                         break;
 
                 }
-                $html = '<tr><td><div class="sp"><div class="sp_l">';
+                $html .= '<tr><td><div class="sp"><div class="sp_l">';
                 if($item['is_send'] == 0 && empty($item['delivery_id'])){
                     $html .= '<input type="checkbox" name="selected[]" value="'.$item['rec_id'].'">';
                 }
@@ -1106,6 +1106,42 @@ class OrderController extends BaseController {
             $result = $orderLogic->deliveryHandle($data);
             exit(json_encode($result));
         }
+    }
+
+
+    /**
+     * 批量发货
+     */
+    public function batchDelivery(){
+        if( IS_POST ){
+            $saveName = session("admin_id") . "_42368";
+            $uploadConfig = array(
+                "exts"     => array('xls'),
+                "saveName" => ''.$saveName.'',
+                "replace"  => True,
+                "maxSize"  => 1024*1024,
+                'autoSub'  => false,
+            );
+            $upload = new \Think\Upload($uploadConfig);//实例化上传类
+            $info = $upload->upload();
+            if(!$info) {// 上传错误提示错误信息
+                exit(json_encode(callback(false,$upload->getError())));
+            }
+            $path = $_SERVER['DOCUMENT_ROOT'].$info['create']['urlpath'];
+            $resDate = excel_import($path);
+            if(empty($resDate)){
+                exit(json_encode(callback(false,'批量发货失败')));
+            }
+            delFile('.'.$info['create']['urlpath']);
+
+
+            if( batchDelivery( $resDate ) ){
+
+                exit(json_encode(callback(true,'批量发货成功')));
+            }
+            exit(json_encode(callback(false,'批量发货失败')));
+        }
+        $this -> display();
     }
 
 
