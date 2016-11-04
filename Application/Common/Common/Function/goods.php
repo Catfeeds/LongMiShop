@@ -166,7 +166,7 @@ function getGoodsCategoryTree(){
 
 
 //商品销量
-function CommoditySalesVolume($orderId){
+function commoditySalesVolume($orderId){
     $orderList = M('order_goods')->where(array('order_id'=>$orderId))->select();
     $Goods = M('goods');
     foreach($orderList as $item){

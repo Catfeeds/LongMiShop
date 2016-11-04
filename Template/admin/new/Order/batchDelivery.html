@@ -26,10 +26,10 @@
 
 
                 <p><img src="__STATIC__/img/l1.jpg" width="896" height="461"></p>
-                <p><img src="__STATIC__/img/l2.jpg" width="896" height="532"></p>
+                <!--<p><img src="__STATIC__/img/l2.jpg" width="896" height="532"></p>-->
             </div>
             <div class="flow">
-                <p><span>3</span>用导出的 csv 文件去上传批量发货吧</p>
+                <p><span>3</span>用导出的 xls 文件去上传批量发货吧</p>
                 <p>
                 <div class="btn_e"><a href="javascript:create();">上传</a></div>
                 </p>
@@ -44,7 +44,7 @@
 </form>
 <script>
 
-    function create(  ){
+    function create(){
         $('.fileCreate').trigger('click');
     };
 
@@ -59,8 +59,17 @@
             dataType:  'json',
             success: function(res) {
                 console.log(res);
+                if( res.state == 1 ){
+                    var datas = res.data;
+                    var html = "";
+                    for(var item in datas) {
+                        html += "订单【" + datas[item].orderSn +"】:【" + datas[item].msg +"】\n";
+                    }
+                    alert(html);
+                }
 
-//                window.location.href = window.location.href;
+                window.location.href = window.location.href;
+
             },
             error:function(res){
                 alert(res['msg']);

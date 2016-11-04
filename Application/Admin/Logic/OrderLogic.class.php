@@ -271,11 +271,13 @@ class OrderLogic extends RelationModel
             }
 //            $shippingId = null;
             $is_delivery = 0;
+            $isSendAction = 0;
             foreach ($orderGoods as $k=>$v){
                 if($v['is_send'] == 1){
                     $is_delivery++;
                 }
                 if($v['is_send'] == 0 && in_array($v['rec_id'],$selectGoods)){
+                    $isSendAction++;
                     $res['is_send'] = 1;
                     $res['delivery_id'] = $did;
 //                    if( ! is_null($shippingId) ){
@@ -294,6 +296,10 @@ class OrderLogic extends RelationModel
 
                 }
             }
+            if( $is_delivery == 0 ){
+                throw new \Exception('此订单全部商品已经发货！');
+            }
+
 //            if( empty($shippingId) ){
 //                throw new \Exception('物流ID错误！');
 //            }

@@ -1137,17 +1137,11 @@ class OrderController extends BaseController {
             }
             $path = $_SERVER['DOCUMENT_ROOT'].$info['create']['urlpath'];
             $resDate = excel_import($path);
+            delFile('.'.$info['create']['urlpath']);
             if(empty($resDate)){
                 exit(json_encode(callback(false,'批量发货失败')));
             }
-            delFile('.'.$info['create']['urlpath']);
-
-
-            if( batchDelivery( $resDate ) ){
-
-                exit(json_encode(callback(true,'批量发货成功')));
-            }
-            exit(json_encode(callback(false,'批量发货失败')));
+            exit( json_encode( batchDelivery( $resDate ) ) );
         }
         $this -> display();
     }

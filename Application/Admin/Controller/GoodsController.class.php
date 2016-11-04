@@ -313,11 +313,24 @@ class GoodsController extends BaseController {
                     $Goods->save(); // 写入数据到数据库
                     $Goods->afterSave($goods_id);
                 }
-                
                 else
                 {
+                    if( is_supplier() ){
+                        $adminInfo = findDataWithCondition( "admin" , array( "admin_id" => session("admin_id") ) , "goods_limit" );
+                        if( !empty( $adminInfo["goods_limit"] ) && $adminInfo["goods_limit"] > 0 ){
+                            $goodsCount = M("goods") -> where( array( "admin_id" => session("admin_id") ) ) -> count();
+                            if( $goodsCount >= $adminInfo["goods_limit"] ){
+                                $return_arr = array(
+                                    'status' => -1,
+                                    'msg'   => '商品发布数量达到上限',
+                                    'data'  => "",
+                                );
+                                $this->ajaxReturn(json_encode($return_arr));
+                            }
+                        }
+                    }
                     $goods_id = $insert_id = $Goods->add(); // 写入数据到数据库
-                        $Goods->adminSave($goods_id);
+                    $Goods->adminSave($goods_id);
                     $Goods->afterSave($goods_id);
                 }
 

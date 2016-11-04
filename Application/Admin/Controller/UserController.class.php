@@ -19,6 +19,7 @@ class UserController extends BaseController {
         // 搜索条件
         $condition = array();
         I('mobile') ? $condition['mobile'] = I('mobile') : false;
+        I('nickname') ? $condition['nickname'] = array("like" , "%".I('nickname')."%") : false;
         I('email') ? $condition['email'] = I('email') : false;
         $sort_order = I('order_by','user_id').' '.I('sort','desc');
                

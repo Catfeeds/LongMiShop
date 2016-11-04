@@ -65,6 +65,7 @@ class AdminController extends BaseController {
                 exit;
             }
         }
+
     	if($data['act'] == 'add'){
     		unset($data['admin_id']);    		
     		$data['add_time'] = time();
