@@ -163,3 +163,15 @@ function getGoodsCategoryTree(){
     }
     return $result;
 }
+
+
+//商品销量
+function CommoditySalesVolume($orderId){
+    $orderList = M('order_goods')->where(array('order_id'=>$orderId))->select();
+    $Goods = M('goods');
+    foreach($orderList as $item){
+        if($item){
+            $Goods->where(array('goods_id'=>$item['goods_id']))->setInc('sales_sum',$item['goods_num']);
+        }
+    }
+}

@@ -135,13 +135,16 @@
             });
         });
     }
-    function skipPage(obj){
+    function skipPage(obj,max){
         var id = $(obj).parent().parent().parent().parent().parent().attr('id');
         var page = $(obj).parent().find(".page-go input").val();
 
         if(page == ''){
             $(obj).parent().find(".page-go input").focus();
             return false;
+        }
+        if(page > max){
+            page = max;
         }
         ajax_get_table('search-form2',page,id);
     }

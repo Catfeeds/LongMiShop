@@ -103,9 +103,10 @@ class AjaxPage{
 
         $up_page .= '</span>';
 
+        //最后一页
         $link_page = '<span class="searchPage">';
         $link_page .= '<span class="page-sum">共<strong class="allPage"><span class="color-c">'.$this->nowPage.'</span>/'.$this->totalPages.'</strong>页 每页'.$this->listRows.'条</span>';
-        $link_page .= '<span class="page-go">跳转<input type="text" name="page">页</span><a href="javascript:void(0);" onclick="skipPage(this);" class="page-btn">GO</a>';
+        $link_page .= '<span class="page-go">跳转<input type="text" name="page">页</span><a href="javascript:void(0);" onclick="skipPage(this,'.$this->totalPages.');" class="page-btn">GO</a>';
         $link_page .= '</span>';
 
 
