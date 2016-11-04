@@ -341,7 +341,7 @@ function update_pay_status($order_sn,$pay_status = 1)
 
     $orderLogic -> orderProcessHandle( $order['order_id'] , "confirm" );
 
-    CommoditySalesVolume($order['order_id']);
+    commoditySalesVolume($order['order_id']);
 
     sendWeChatMessageUseUserId( $order['user_id'] , "支付" , array("orderId" => $order['order_id']) );
     return true;
@@ -569,47 +569,57 @@ function getFastDeliveryBool( $adminList , $adminId ){
 
 function batchDelivery( $deliveryList = null ){
 
-
-
-    if( !is_null( $deliveryList ) ){
+    if( !is_null( $deliveryList ) ) {
 
         $errorMsgList = array();
+        $orderLogic = new \Admin\Logic\OrderLogic();
         $expressList = include_once 'Application/Common/Conf/express.php'; //快递名称
 
-        foreach ( $deliveryList as  $deliveryItem ){
-            if( $deliveryItem['A'] == "订单id" &&  $deliveryItem['B'] == "物流公司" && $deliveryItem['C'] == "物流单号"){
+
+        foreach ($deliveryList as $deliveryItem) {
+            $order_sn = $deliveryItem['A'];
+            $shipping_name = $deliveryItem['B'];
+            $invoice_no = $deliveryItem['C'];
+
+            if ($order_sn == "订单id" && $shipping_name == "物流公司" && $invoice_no == "物流单号") {
                 continue;
             }
-            if( !in_array( $deliveryItem['B'] , $expressList ) ){
+            if (!in_array($shipping_name, $expressList)) {
                 $errorMsgList[] = array(
-                    "orderSn" => $deliveryItem['A'],
-                    "msg" => "后台不支持【" . $deliveryItem['B'] . "】此快递",
+                    "orderSn" => $order_sn,
+                    "msg"     => "后台不支持【" . $shipping_name . "】此快递",
                 );
-
+                continue;
             }
+            $orderInfo = findDataWithCondition("order", array("order_sn" => $order_sn), "order_id");
+            if (empty($orderInfo)) {
+                $errorMsgList[] = array(
+                    "orderSn" => $order_sn,
+                    "msg"     => "没有此订单信息",
+                );
+                continue;
+            }
+            $order_id = $orderInfo["order_id"];
+            $goods = M("order_goods")->where(array('order_id' => $order_id))->getField("rec_id", true);
+            $data = array(
+                "order_id"       => $order_id,
+                "invoice_no"     => $invoice_no,
+                "myShippingName" => $shipping_name,
+                "goods"          => $goods,
+                "note"           => " ",
+            );
+            $result = $orderLogic->deliveryHandle($data);
+            if (!callbackIsTrue($result)) {
+                $errorMsgList[] = array(
+                    "orderSn" => $order_sn,
+                    "msg"     => getCallbackMessage($result),
+                );
+                continue;
+            }
+
         }
+        return callback( true , "批量发货成功"  , $errorMsgList );
+
     }
-
-
-
-
-    $id =  I("id");
-    $invoice_no =  I("invoice_no");
-    $shipping_name =  I("shipping_name");
-    $list = M("order_goods") -> where(array('order_id' => $id   )) -> field("rec_id") -> select();
-    $goods = array();
-    if(!empty($list)){
-        foreach ( $list as $item ){
-            $goods[] = $item['rec_id'];
-        }
-    }
-    $data = array(
-        "order_id" => $id,
-        "invoice_no" => $invoice_no,
-        "myShippingName" => $shipping_name,
-        "goods"=>$goods,
-        "note"=>" ",
-    );
-    $orderLogic = new OrderLogic();
-    $result = $orderLogic->deliveryHandle($data);
+    return callback( false );
 }

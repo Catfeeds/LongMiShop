@@ -44,7 +44,7 @@
 </form>
 <script>
 
-    function create(  ){
+    function create(){
         $('.fileCreate').trigger('click');
     };
 
@@ -59,8 +59,17 @@
             dataType:  'json',
             success: function(res) {
                 console.log(res);
+                if( res.state == 1 ){
+                    var datas = res.data;
+                    var html = "";
+                    for(var item in datas) {
+                        html += "订单【" + datas[item].orderSn +"】:【" + datas[item].msg +"】\n";
+                    }
+                    alert(html);
+                }
 
-//                window.location.href = window.location.href;
+                window.location.href = window.location.href;
+
             },
             error:function(res){
                 alert(res['msg']);
