@@ -57,13 +57,28 @@
                                 <tr>
                                     <td>所属角色：</td>
                                     <td>
-                             			<select name="role_id">
+                             			<select name="role_id" id="role_id">
 	                               			<volist name="role" id="item">
 	                         					<option value="{$item.role_id}" <if condition="$item[role_id] eq $info[role_id]"> selected="selected"</if> >{$item.role_name}</option>
 	                         				</volist>                  
                          				</select>    
                                     </td>
-                                </tr></if>                             
+                                </tr>
+                                </if>
+                                    <tr id="supplierDiv1" style="display: none;">
+                                        <td>商品发布上限：</td>
+                                        <td >
+                                            <input type="number" class="form-control" name="goods_limit" value="{$info.goods_limit}" >
+                                            0 为不限制
+                                        </td>
+                                    </tr>
+                                    <tr id="supplierDiv2" style="display: none;">
+                                        <td>积分比例</td>
+                                        <td>
+                                            <input type="number" class="form-control" name="point_number" value="{$info.point_number}" >
+                                            填写数字为 N ，表示积分转化比例为 1 ：N ;
+                                        </td>
+                                    </tr>
                                 </tbody> 
                                 <tfoot>
                                 	<tr>
@@ -101,6 +116,22 @@ function adsubmit(){
 	}
 	$('#adminHandle').submit();
 }
+$(function(){
+    $("#role_id").change(function(){
+        roleIdChange();
+    });
+    function roleIdChange(){
+        var roleId= $("#role_id").val();
+        if( roleId == 3 ){
+            $("#supplierDiv1").show();
+            $("#supplierDiv2").show();
+        }else{
+            $("#supplierDiv1").hide();
+            $("#supplierDiv2").hide();
+        }
+    }
+    roleIdChange();
+});
 </script>
 </body>
 </html>
