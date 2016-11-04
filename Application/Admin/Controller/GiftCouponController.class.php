@@ -157,11 +157,11 @@ class GiftCouponController extends BaseController {
         $upload = new \Think\Upload($uploadConfig);//实例化上传类
         $info = $upload->upload();
         if(!$info) {// 上传错误提示错误信息
-            $this->error($upload->getError());
+            exit(json_encode(callback(false,$upload->getError())));
         }
         $path = $_SERVER['DOCUMENT_ROOT'].$info['create']['urlpath'];
 
-        $resDate = $this->excel_import($path);
+        $resDate = excel_import($path);
         if(empty($resDate)){
             exit(json_encode(callback(false,'兑换码生成失败')));
         }
@@ -177,41 +177,6 @@ class GiftCouponController extends BaseController {
 
     }
 
-
-
-    public function excel_import($inputFileName){
-        //設置內存使用量與腳本過期時間
-        ini_set('memory_limit', '1024M');
-        set_time_limit(600);
-        if (!file_exists($inputFileName)) {
-            return '文件不存在';
-        }
-        $file_ext = end(explode(".", $inputFileName));
-
-        switch ($file_ext){
-            case 'xls' :
-                $inputFileType = 'Excel5';
-                break;
-            case 'xlsx' :
-                $inputFileType = 'Excel2007';
-                break;
-            case 'csv' :
-                $inputFileType = 'CSV';
-                break;
-            default :
-                $inputFileType = 'Excel5';
-                break;
-        }
-//        return $inputFileName;
-//        require_once '\ThinkPHP/Library/Vendor/PHPExcel/PHPExcel/IOFactory.php';
-        Vendor('PHPExcel.PHPExcel.IOFactory');
-        $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
-        $objPHPExcel = $objReader -> load($inputFileName);
-
-        $temp = $objPHPExcel -> getActiveSheet() -> toArray(null, true, true, true);
-        unset($objPHPExcel, $objReader);
-        return $temp;
-    }
 
     /**
      * 选择搜索商品

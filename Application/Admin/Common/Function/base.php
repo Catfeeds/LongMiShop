@@ -143,3 +143,38 @@ function file_tree($path) {
 //
 //
 //}
+
+
+function excel_import($inputFileName){
+    //設置內存使用量與腳本過期時間
+    ini_set('memory_limit', '1024M');
+    set_time_limit(600);
+    if (!file_exists($inputFileName)) {
+        return '文件不存在';
+    }
+    $file_ext = end(explode(".", $inputFileName));
+
+    switch ($file_ext){
+        case 'xls' :
+            $inputFileType = 'Excel5';
+            break;
+        case 'xlsx' :
+            $inputFileType = 'Excel2007';
+            break;
+        case 'csv' :
+            $inputFileType = 'CSV';
+            break;
+        default :
+            $inputFileType = 'Excel5';
+            break;
+    }
+//        return $inputFileName;
+//        require_once '\ThinkPHP/Library/Vendor/PHPExcel/PHPExcel/IOFactory.php';
+    Vendor('PHPExcel.PHPExcel.IOFactory');
+    $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
+    $objPHPExcel = $objReader -> load($inputFileName);
+
+    $temp = $objPHPExcel -> getActiveSheet() -> toArray(null, true, true, true);
+    unset($objPHPExcel, $objReader);
+    return $temp;
+}
