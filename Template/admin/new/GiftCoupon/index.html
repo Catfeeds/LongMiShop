@@ -61,9 +61,9 @@
                                             <!--</if>-->
                                             <if condition="$list['is_create_code'] eq 0">
                                                 <a href="javascript:void(0)" class="btn btn-info"  title="生成兑换码"  data-url="{:U('Admin/GiftCoupon/convert',array('id'=>$list[id]))}" onclick="converts(this)">系统生成兑换码</a>
-                                                <a href="javascript:void(0)" class="btn btn-info"  title="生成兑换码"   onclick="create()">导入excel表格</a>
+                                                <a href="javascript:void(0)" class="btn btn-info"  title="生成兑换码"   onclick="create(this)">导入excel表格</a>
                                             </if>
-                                            <form id="myuploads" action="{:U('Admin/GiftCoupon/excelCreate')}" method="post" enctype="multipart/form-data" style="display: none">
+                                            <form  action="{:U('Admin/GiftCoupon/excelCreate')}" method="post" enctype="multipart/form-data" style="display: none">
                                                 <input type="file" name="create" style="display:none" class="fileCreate" >
                                                 <input type="text" name="id" value="{$list[id]}">
                                             </form>
@@ -139,8 +139,8 @@ function converts(obj){
   return false;
 }
 
-function create(){
-    $('.fileCreate').trigger('click');
+function create( obj ){
+    $(obj).parent().find('.fileCreate').trigger('click');
 };
 
 $('.fileCreate').change(function(){
@@ -153,7 +153,7 @@ $('.fileCreate').change(function(){
         return false;
     }
 
-    $("#myuploads").ajaxSubmit({
+    $(this).parent().ajaxSubmit({
         dataType:  'json',
         success: function(res) {
             window.location.href = window.location.href;

@@ -562,3 +562,52 @@ function getFastDeliveryBool( $adminList , $adminId ){
     return false;
 
 }
+
+
+
+function batchDelivery( $deliveryList = null ){
+
+
+
+    if( !is_null( $deliveryList ) ){
+
+        $errorMsgList = array();
+        $expressList = include_once 'Application/Common/Conf/express.php'; //快递名称
+
+        foreach ( $deliveryList as  $deliveryItem ){
+            if( $deliveryItem['A'] == "订单id" &&  $deliveryItem['B'] == "物流公司" && $deliveryItem['C'] == "物流单号"){
+                continue;
+            }
+            if( !in_array( $deliveryItem['B'] , $expressList ) ){
+                $errorMsgList[] = array(
+                    "orderSn" => $deliveryItem['A'],
+                    "msg" => "后台不支持【" . $deliveryItem['B'] . "】此快递",
+                );
+
+            }
+        }
+    }
+
+
+
+
+    $id =  I("id");
+    $invoice_no =  I("invoice_no");
+    $shipping_name =  I("shipping_name");
+    $list = M("order_goods") -> where(array('order_id' => $id   )) -> field("rec_id") -> select();
+    $goods = array();
+    if(!empty($list)){
+        foreach ( $list as $item ){
+            $goods[] = $item['rec_id'];
+        }
+    }
+    $data = array(
+        "order_id" => $id,
+        "invoice_no" => $invoice_no,
+        "myShippingName" => $shipping_name,
+        "goods"=>$goods,
+        "note"=>" ",
+    );
+    $orderLogic = new OrderLogic();
+    $result = $orderLogic->deliveryHandle($data);
+}
