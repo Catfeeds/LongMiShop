@@ -174,6 +174,7 @@ class GoodsController extends MobileBaseController {
 
         $goodsLogic = new \Common\Logic\GoodsLogic();
         $goods_id = I("get.id");
+        goodsStatistics($goods_id);
         $goods = M('Goods')->where("goods_id = $goods_id")->find();
         if(empty($goods)){
         	$this->error('此商品不存在或者已下架');
