@@ -1032,8 +1032,8 @@ class OrderController extends BaseController {
             if(empty($goodsList)){
                 exit(json_encode(callback(true,'没有订单数据')));
             }
+            $html = '';
             foreach($goodsList as $item){
-                $html = '';
                 $invoice_no = '';
                 if( $item['is_send'] == 1 && !empty($item['delivery_id']) ){
                     $invoice_no = M('delivery_doc')->where(array('id'=>$item['delivery_id']))->find();
@@ -1054,7 +1054,7 @@ class OrderController extends BaseController {
                         break;
 
                 }
-                $html = '<tr><td><div class="sp"><div class="sp_l">';
+                $html .= '<tr><td><div class="sp"><div class="sp_l">';
                 if($item['is_send'] == 0 && empty($item['delivery_id'])){
                     $html .= '<input type="checkbox" name="selected[]" value="'.$item['rec_id'].'">';
                 }
