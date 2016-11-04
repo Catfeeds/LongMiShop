@@ -368,8 +368,28 @@ ADD COLUMN `admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT '供应商id' AFTER `log_
 ALTER TABLE `lm_admin`
 ADD COLUMN `nickname`  varchar(255) NULL COMMENT '帐号昵称' AFTER `role_id`;
 
+ALTER TABLE `lm_goods`
+ADD COLUMN `goods_pv`  int(11) NOT NULL DEFAULT 0 AFTER `my_parameter`,
+ADD COLUMN `goods_uv`  int(11) NOT NULL DEFAULT 0 AFTER `goods_pv`;
+
+DROP TABLE IF EXISTS `lm_goods_uv`;
+CREATE TABLE `lm_goods_uv` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL COMMENT '用户id',
+  `goods_id` int(11) DEFAULT NULL COMMENT '商品id',
+  `create_time` int(11) DEFAULT NULL COMMENT '插入时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `lm_goods_pv`;
+CREATE TABLE `lm_goods_pv` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `sum` int(11) DEFAULT NULL COMMENT '总数',
+  `goods_id` int(11) DEFAULT NULL COMMENT '商品id',
+  `create_time` int(11) DEFAULT NULL COMMENT '插入时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+
 ALTER TABLE `lm_admin`
 ADD COLUMN `goods_limit`  int(11) NOT NULL DEFAULT 0 COMMENT '商品发布限制' AFTER `amount_refresh_time`,
 ADD COLUMN `point_number`  float(11,2) NOT NULL DEFAULT 1.00 COMMENT '积分比例' AFTER `goods_limit`;
-
-

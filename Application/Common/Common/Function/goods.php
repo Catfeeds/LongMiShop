@@ -175,3 +175,50 @@ function commoditySalesVolume($orderId){
         }
     }
 }
+
+//商品PV UV 统计
+function goodsStatistics($goodsId){
+    //PV
+    $todayBegin = strtotime(date('Y-m-d'));
+    $wherePv = "goods_id = ".$goodsId." AND create_time >".$todayBegin."";
+    $resPv = M('goods_pv')->where($wherePv)->find();
+    $pvAddData = array(
+        "sum"=>1,
+        "goods_id"=>$goodsId,
+        "create_time"=>time(),
+    );
+    if(empty($resPv)){
+        M('goods_pv')->add($pvAddData);
+    }else{
+        $pvSaveData = array(
+            "sum"=>$resPv['sum']+1,
+            "create_time"=>time(),
+        );
+        M('goods_pv')->where($wherePv)->save($pvSaveData);
+    }
+    M('goods')->where(array("goods_id"=>$goodsId))->setInc('goods_pv');
+
+    //UV
+    if(isLoginState()){
+        $whereUv = "goods_id = ".$goodsId." AND user_id = ".session(__UserID__)." AND create_time > ".$todayBegin."";
+        $UvRes = M('goods_uv')->where($whereUv)->find();
+        if(empty($UvRes)){
+            $UvAdd = array(
+                'user_id'=>session(__UserID__),
+                'goods_id'=>$goodsId,
+                'create_time'=>time(),
+            );
+            M('goods_uv')->add($UvAdd);
+            M('goods')->where(array("goods_id"=>$goodsId))->setInc('goods_uv');
+        }
+    }
+
+    //删除7天前数据
+    $sevenDays = strtotime(date('Y/m/d',(time()-7*60*60*24)));
+    M('goods_pv')->where("create_time < ".$sevenDays."")->delete();
+    M('goods_uv')->where("create_time < ".$sevenDays."")->delete();
+
+
+
+
+}

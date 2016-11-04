@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>龙米</title>
+<link href="__STATIC__/CSS/css.css" rel="stylesheet" type="text/css" />
+<link href="__STATIC__/CSS/longmi.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="g-mn1">
+  <div class="g-mn1c">
+    <include file="Public/breadcrumb" />
+    <div class="more-box">
+      <div class="more-box-l">今日数据<span class="a1">（更新时间：<?php echo date('Y-m-d H:i:s',time());?>）</span></div>
+    </div>
+    <div class="data-box">
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$today['todayCount']}</p>
+        <p class="data-t2">付款订单数</p>
+      </div>
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$today['todayMoney'][0]}.<span>{$today['todayMoney'][1]}</span></p>
+        <p class="data-t2">付款金额</p>
+      </div>
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$today['pv']}</p>
+        <p class="data-t2">今日商品PV</p>
+      </div>
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$today['uv']}</p>
+        <p class="data-t2">今日商品UV</p>
+      </div>
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$today['$todaySum']}</p>
+        <p class="data-t2">付款商品件数</p>
+      </div>
+    </div>
+    <div class="more-box">
+      <div class="more-box-l">昨日数据 </div>
+    </div>
+    <div class="data-box">
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$yesterday['new']}</p>
+        <p class="data-t2">新增粉丝</p>
+      </div>
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$yesterday['cancel']}</p>
+        <p class="data-t2">取关粉丝</p>
+      </div>
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$yesterday['increase']}</p>
+        <p class="data-t2">净增粉丝</p>
+      </div>
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$yesterday['total']}</p>
+        <p class="data-t2">总粉丝</p>
+      </div>
+    </div>
+    <div class="data-box">
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$yesterday['Orders']}</p>
+        <p class="data-t2">下单笔数</p>
+      </div>
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$yesterday['payment']}</p>
+        <p class="data-t2">付款笔数</p>
+      </div>
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$yesterday['deliverGoods']}</p>
+        <p class="data-t2">发货订单数</p>
+      </div>
+      <div class="data">
+        <div class="click"><a href="#"></a></div>
+        <p class="data-t1">{$yesterday['salesReturn']}</p>
+        <p class="data-t2">维权订单</p>
+      </div>
+    </div>
+    <div class="more-box">
+      <div class="more-box-l">7日浏览排行榜</div>
+    </div>
+    <div class="k">
+      <dl class="dl_box4">
+        <dt> 商品名称</dt>
+        <dd>PV</dd>
+        <dd>UV</dd>
+      </dl>
+      <volist name="Ranking" id="item">
+        <dl class="dl_box3">
+          <dt> <a href="#">{$item.name}</a> </dt>
+          <dd>
+            <p>{$item.pv}</p>
+          </dd>
+          <dd>{$item.uv}</dd>
+        </dl>
+      </volist>
+    </div>
+  </div>
+</div>
+</body>
+</html>
