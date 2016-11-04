@@ -591,7 +591,15 @@ function batchDelivery( $deliveryList = null ){
                 );
                 continue;
             }
-            $orderInfo = findDataWithCondition("order", array("order_sn" => $order_sn), "order_id");
+            $condition = array();
+            $condition["order_sn"] = $order_sn;
+            if( is_supplier() ){
+                $condition["admin_list"] = array("like","%[". session("admin_id") ."]%");
+            }else{
+                $condition["admin_list"] = array("like","%[0]%");
+            }
+            $condition["order_sn"] = $order_sn;
+            $orderInfo = findDataWithCondition("order", $condition, "order_id");
             if (empty($orderInfo)) {
                 $errorMsgList[] = array(
                     "orderSn" => $order_sn,
@@ -600,7 +608,23 @@ function batchDelivery( $deliveryList = null ){
                 continue;
             }
             $order_id = $orderInfo["order_id"];
-            $goods = M("order_goods")->where(array('order_id' => $order_id))->getField("rec_id", true);
+
+            $condition = array();
+            $condition["order_id"] = $order_id;
+            $condition["is_send"] = "0";
+            if( is_supplier() ){
+                $condition["admin_id"] = session("admin_id");
+            }else{
+                $condition["admin_id"] = "0";
+            }
+            $goods = M("order_goods")->where( $condition )->getField("rec_id", true);
+            if( empty($goods) ){
+                $errorMsgList[] = array(
+                    "orderSn" => $order_sn,
+                    "msg"     => "订单已经全部发货",
+                );
+                continue;
+            }
             $data = array(
                 "order_id"       => $order_id,
                 "invoice_no"     => $invoice_no,
