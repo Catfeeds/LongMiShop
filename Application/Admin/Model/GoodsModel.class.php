@@ -213,37 +213,7 @@ class GoodsModel extends Model
             $model->rollback();
             setLogResult($e->getMessage(), "规格报错", "goods");
         }
-
-
-        // 商品规格价钱处理
-//        if($_POST['item'])
-//        {
-//            $spec = M('Spec')->getField('id,name'); // 规格表
-//            $specItem = M('SpecItem')->getField('id,item');//规格项
-//
-//            $specGoodsPrice = M("SpecGoodsPrice"); // 实例化 商品规格 价格对象
-//            $specGoodsPrice->where('goods_id = '.$goods_id)->delete(); // 删除原有的价格规格对象
-//            foreach($_POST['item'] as $k => $v)
-//            {
-//                // 批量添加数据
-//                $v['price'] = trim($v['price']);
-//                $store_count = $v['store_count'] = trim($v['store_count']); // 记录商品总库存
-//                $v['sku'] = trim($v['sku']);
-//                $dataList[] = array('goods_id'=>$goods_id,'key'=>$k,'key_name'=>$v['key_name'],'price'=>$v['price'],'store_count'=>$v['store_count'],'sku'=>$v['sku']);
-//            }
-//            $specGoodsPrice->addAll($dataList);
-//            //M('Goods')->where("goods_id = 1")->save(array('store_count'=>10)); // 修改总库存为各种规格的库存相加
-//        }
-
-        // 商品规格图片处理
-//        if($_POST['item_img'])
-//        {
-//            M('SpecImage')->where("goods_id = $goods_id")->delete(); // 把原来是删除再重新插入
-//            foreach ($_POST['item_img'] as $key => $val)
-//            {
-//                M('SpecImage')->data(array('goods_id'=>$goods_id ,'spec_image_id'=>$key,'src'=>$val))->add();
-//            }
-//        }
+        
         refresh_stock($goods_id); // 刷新商品库存
     }
 }
