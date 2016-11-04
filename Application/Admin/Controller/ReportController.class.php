@@ -185,5 +185,67 @@ class ReportController extends BaseController{
 		$this->assign('result',json_encode($result));
 		$this->display();
 	}
+
+	/**
+	 *  数据
+	 *
+	 */
+	public function information(){
+	    //今天
+        $todayBegin = strtotime(date('Y-m-d'));
+        $todayEnd = strtotime(date('Y-m-d H:i:s'));
+        $todayCountWhere = array(
+            'add_time'=>array('between',"$todayBegin,$todayEnd"),
+            'pay_status'=> 1,
+        );
+        $todayMoneyList = M('order')->field('goods_price,shipping_price')->where($todayCountWhere)->select();
+        $todayMoney = 0;
+        foreach($todayMoneyList as $moneyItem){
+            $todayMoney += ( $moneyItem['goods_price'] + $moneyItem['shipping_price'] );
+        }
+        $prefix = C('DB_PREFIX'); //表前缀
+        $todayMoney = number_format($todayMoney,2);
+        $todaySumWhere =  $prefix."order.add_time >".$todayBegin." AND  ".$prefix."order.add_time < ".$todayEnd;
+        $todaySum = M('order_goods')->join("LEFT JOIN ".$prefix."order ON ".$prefix."order.order_id = ".$prefix."order_goods.order_id ")->where($todaySumWhere)->sum("".$prefix."order_goods.goods_num");
+        $today['todayMoney'] = explode('.',$todayMoney);//今天付款金额
+        $today['todayCount'] = count($todayMoneyList);//今天付款订单
+        $today['$todaySum'] = $todaySum; //今天付款件数
+        $today['pv'] = M('goods_pv')->where("create_time > ".$todayBegin."")->sum("sum");
+        $today['uv'] = M('goods_uv')->where("create_time > ".$todayBegin."")->count();
+
+
+        //昨天
+        $yesterdayBegin = strtotime(date('Y-m-d',strtotime("-1 day")));
+        $yesterdayWhere = "add_time > ".$yesterdayBegin." AND add_time < ".$todayBegin." ";
+        $yesterdayUserWhere = " oauth in('weixin','weChat','WeChat') AND  is_follow = 1 ";
+        $yesterday['total'] = M('users')->where($yesterdayUserWhere)->count(); //全部粉丝
+        $yesterday['new'] = M('users')->where($yesterdayUserWhere." AND follow_time >".$yesterdayBegin." AND follow_time < ".$todayBegin."")->count(); //新增粉丝
+        $yesterday['cancel'] =  M('users')->where("oauth in('weixin','weChat','WeChat') AND  is_follow = 0 AND follow_time > ".$yesterdayBegin." AND follow_time < ".$todayBegin."")->count(); //取消
+        $increase = $yesterday['new'] - $yesterday['cancel'];
+        $yesterday['increase'] = $increase > 0 ? $increase : 0;
+        $yesterday['Orders'] = M('order')->where($yesterdayWhere)->count(); //下单数
+        $yesterday['payment'] = M('order')->where($yesterdayWhere." AND pay_status = 1")->count(); //付款笔数
+        $yesterday['deliverGoods'] = M('order')->where($yesterdayWhere." AND shipping_status in(1,2) ")->count(); //付款笔数
+        $yesterday['salesReturn'] = M('return_goods')->where("addtime >".$yesterdayBegin." AND addtime < ".$todayBegin."")->count(); //退款
+
+        //7日排行
+        $pvList = M('goods_pv')->group('goods_id')->order("sum(sum) desc")->getField("goods_id,sum(sum) as pv_sum",true);
+        $uvList = M('goods_uv')->group('goods_id')->getField("goods_id,count(*) as pu_sum",true);
+        $Ranking = array();
+        foreach($pvList as $goods_id => $pvItem){
+            $resGoods = M('goods')->field("goods_name")->where()->find();
+            $Ranking[$goods_id] = array(
+                "pv"=>$pvItem,
+                "uv"=>$uvList[$goods_id],
+                "name"=>$resGoods['goods_name'],
+            );
+        }
+        $this->assign('today',$today);
+        $this->assign('yesterday',$yesterday);
+        $this->assign('Ranking',$Ranking);
+        $this->display();
+    }
+
+
 	
 }
