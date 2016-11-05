@@ -456,7 +456,10 @@
         var specNumber = -1;
         var show_is_buyer = 0;
         $(function(){
-
+            $('#commentLevel').data("rate",5);
+            $("#commentLevel span").removeClass("rate-empty");
+            $("#commentLevel span").addClass("rate-full");
+            $("#commentLevel").addClass("rated");
             $(".subNav").click(function(){
                 $(this).next(".navContent").slideToggle(300).siblings(".navContent").slideUp(500);
                 $(this).toggleClass("on").siblings(".subNav").removeClass("on");
