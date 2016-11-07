@@ -497,6 +497,16 @@ function returnOrderHandle( $returnOrderInfo , $postData )
             if (!$moneyRes) {
                 throw new \Exception('退款失败！');
             }
+            $type = 3;
+            $where = array(
+                "order_id" => $returnOrderInfo['order_id'],
+                "goods_id" => $returnOrderInfo['goods_id'],
+                "spec_key" => $returnOrderInfo['spec_key'],
+            );
+            $orderGoods = M('order_goods')->where($where)->save(array('is_send' => $type));
+            if ($orderGoods == false) {
+                throw new \Exception('订单商品状态修改失败！');
+            }
         }
 
         $data['status'] = 2;
@@ -504,16 +514,7 @@ function returnOrderHandle( $returnOrderInfo , $postData )
             throw new \Exception('操作失败！');
         }
 
-        $type = 3;
-        $where = array(
-            "order_id" => $returnOrderInfo['order_id'],
-            "goods_id" => $returnOrderInfo['goods_id'],
-            "spec_key" => $returnOrderInfo['spec_key'],
-        );
-        $orderGoods = M('order_goods')->where($where)->save(array('is_send' => $type));
-        if ($orderGoods == false) {
-            throw new \Exception('订单商品状态修改失败！');
-        }
+
         $orderLogic = new \Admin\Logic\OrderLogic();
         $note = "处理退换货, 状态:{$statusMsg[$data['status']]},处理备注：{$data['remark']}";
         if (!$orderLogic->orderActionLog($returnOrderInfo['order_id'], 'refund', $note)) {
