@@ -209,8 +209,9 @@ class ReportController extends BaseController{
         $todaySum = M('order_goods')->join("LEFT JOIN ".$prefix."order ON ".$prefix."order.order_id = ".$prefix."order_goods.order_id ")->where($todaySumWhere)->sum("".$prefix."order_goods.goods_num");
         $today['todayMoney'] = explode('.',$todayMoney);//今天付款金额
         $today['todayCount'] = count($todayMoneyList);//今天付款订单
-        $today['$todaySum'] = $todaySum; //今天付款件数
-        $today['pv'] = M('goods_pv')->where("create_time > ".$todayBegin."")->sum("sum");
+        $today['todaySum'] = !empty($todaySum) ? $todaySum : 0; //今天付款件数
+        $todayPv = M('goods_pv')->where("create_time > ".$todayBegin."")->sum("sum");
+        $today['pv'] = !empty($todayPv) ? $todayPv : 0;
         $today['uv'] = M('goods_uv')->where("create_time > ".$todayBegin."")->count();
 
 
