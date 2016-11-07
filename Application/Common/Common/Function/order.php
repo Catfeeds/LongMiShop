@@ -582,13 +582,13 @@ function batchDelivery( $deliveryList = null ){
             $shipping_name = $deliveryItem['B'];
             $invoice_no = $deliveryItem['C'];
 
-            if ($order_sn == "订单id" && $shipping_name == "物流公司" && $invoice_no == "物流单号") {
+            if ( ( $order_sn == "订单id" || $order_sn == "订单号" ) && $shipping_name == "物流公司" && $invoice_no == "物流单号") {
                 continue;
             }
             if (!in_array($shipping_name, $expressList)) {
                 $errorMsgList[] = array(
                     "orderSn" => $order_sn,
-                    "msg"     => "后台不支持【" . $shipping_name . "】此快递",
+                    "msg"     => "后台不支持【" . $shipping_name . "】这个快递",
                 );
                 continue;
             }
@@ -599,9 +599,8 @@ function batchDelivery( $deliveryList = null ){
             }else{
                 $condition["admin_list"] = array("like","%[0]%");
             }
-            $condition["order_sn"] = $order_sn;
             $orderInfo = findDataWithCondition("order", $condition, "order_id");
-            if (empty($orderInfo)) {
+            if ( empty($orderInfo) ) {
                 $errorMsgList[] = array(
                     "orderSn" => $order_sn,
                     "msg"     => "没有此订单信息",
@@ -626,6 +625,14 @@ function batchDelivery( $deliveryList = null ){
                 );
                 continue;
             }
+            if( isExistenceDataWithCondition("return_goods",array("order_id"=>$order_id,"result"=>"0")) ){
+                $errorMsgList[] = array(
+                    "orderSn" => $order_sn,
+                    "msg"     => "此订单有售后申请",
+                );
+                continue;
+            }
+
             $data = array(
                 "order_id"       => $order_id,
                 "invoice_no"     => $invoice_no,
@@ -634,10 +641,10 @@ function batchDelivery( $deliveryList = null ){
                 "note"           => " ",
             );
             $result = $orderLogic->deliveryHandle($data);
-            if (!callbackIsTrue($result)) {
+            if ( ! callbackIsTrue( $result ) ) {
                 $errorMsgList[] = array(
                     "orderSn" => $order_sn,
-                    "msg"     => getCallbackMessage($result),
+                    "msg"     => getCallbackMessage( $result ),
                 );
                 continue;
             }
