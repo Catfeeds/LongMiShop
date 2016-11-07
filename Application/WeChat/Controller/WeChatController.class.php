@@ -68,7 +68,7 @@ class WeChatController extends Controller {
         {
             $keyword = $this -> shopConfig['basic_subscribe_reply'];
             if( !empty($fromUsername) ){
-                afterSubscribe( $fromUsername );
+                afterSubscribe( $fromUsername , $this->weChatConfig );
                 $data = array();
                 $where = " openid = '$fromUsername'";
                 $data['is_follow'] = 1;

@@ -8,7 +8,7 @@ class SystemController extends BaseController{
 	 * 配置入口
 	 */
 	public function index()
-	{          
+	{
 		/*配置列表*/
 		$group_list = array('shop_info'=>'网站信息','basic'=>'基本设置','sms'=>'短信设置','shopping'=>'购物流程设置','smtp'=>'邮件设置','water'=>'水印设置','prize'=>'邀请奖品');		//,'distribut'=>'分销设置'
 		$coupon_list = M('coupon')->select();
