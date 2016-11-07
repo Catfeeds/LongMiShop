@@ -114,7 +114,7 @@ class OrderController extends BaseController {
                         $count_postage += $item['goods_postage'];
                     }
                     //是否售后
-                    $returnRes = findDataWithCondition( 'return_goods' , array( 'order_id' => $item["order_id"],'goods_id' => $item['goods_id'],'spec_key'=>$item['spec_key'],'remark'=>array("eq","") )  );
+                    $returnRes = findDataWithCondition( 'return_goods' , array( 'order_id' => $item["order_id"],'goods_id' => $item['goods_id'],'spec_key'=>$item['spec_key'],'result'=>array("in","0,1") )  );
                     if( !empty($returnRes)  ) {
                         $orderList[$keys]["goods"][$key]['returnId'] = $returnRes['id'];
                         $orderList[$keys]["goods"][$key]['returnType'] = $returnRes['type'];
@@ -135,8 +135,8 @@ class OrderController extends BaseController {
     }
 
     
-    /*
-     * ajax 发货订单列表
+    /**
+    * ajax 发货订单列表
     */
     public function ajaxdelivery(){
     	$orderLogic = new OrderLogic();
@@ -335,7 +335,7 @@ class OrderController extends BaseController {
         $this->display();
     }
     
-    /*
+    /**
      * 拆分订单
      */
     public function split_order(){
@@ -427,7 +427,7 @@ class OrderController extends BaseController {
     	$this->display();
     }
     
-    /*
+    /**
      * 价钱修改
      */
     public function editprice($order_id){
@@ -542,6 +542,9 @@ class OrderController extends BaseController {
     }
 
 
+    /**
+     * 快速发货
+     */
     public function fastShipping(){
         $id =  I("id");
         $invoice_no =  I("invoice_no");
@@ -886,10 +889,10 @@ class OrderController extends BaseController {
     		$strGoods="";
     		foreach($orderGoods as $goods){
                 $returnRes = M('return_goods')->where(array('order_id'=>$goods['order_id'],'goods_id'=>$goods['goods_id'],'spec_key'=>$goods['spec_key']))->find();
-    			if(!empty($returnRes) && $returnRes['status'] == 0){ //有未处理订单 不能导出该订单
+    			if(!empty($returnRes) && $returnRes['result'] == 0){ //有未处理订单 不能导出该订单
                     continue 2;
                 }
-                if( $returnRes['status'] == 2 && !empty($returnRes['remark']) ){ //同意退款 跳出该商品
+                if( $returnRes['result'] == 1 ){ //同意退款 跳出该商品
                     continue;
                 }
                 $strGoods .= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name']." 数量: <b style='color:red;font-size:18px;'>".$goods['goods_num']."</b>";
@@ -1059,10 +1062,10 @@ class OrderController extends BaseController {
             foreach($goodsList as $item){
                 //检测是否退货
                 $returnRes = M('return_goods')->where(array('order_id'=>$item['order_id'],'goods_id'=>$item['goods_id']))->find();
-                if(!empty($returnRes) && $returnRes['status'] == 0){ //申请退货 未处理
+                if(!empty($returnRes) && $returnRes['result'] == 0){ //申请退货 未处理
                     continue;
                 }
-                if(!empty($returnRes) && $returnRes['status'] == 2 && empty($returnRes['remark']) ){ //申请退货 已同意
+                if(!empty($returnRes) && $returnRes['result'] == 2 ){ //申请退货 已同意
                     continue;
                 }
                 $invoice_no = '';
@@ -1100,15 +1103,16 @@ class OrderController extends BaseController {
      * ajax发货商品
      *
      **/
-    public function ajaxSend(){
-        if(IS_POST){
+    public function ajaxSend()
+    {
+        if (IS_POST) {
             $data = I('post.');
             $data = array(
-                "order_id" => $data['id'],
-                "invoice_no" => $data['invoice_no'],
+                "order_id"       => $data['id'],
+                "invoice_no"     => $data['invoice_no'],
                 "myShippingName" => $data['shipping_name'],
-                "goods"=>$data['rec_id_list'],
-                "note"=>" ",
+                "goods"          => $data['rec_id_list'],
+                "note"           => " ",
             );
             $orderLogic = new OrderLogic();
             $result = $orderLogic->deliveryHandle($data);

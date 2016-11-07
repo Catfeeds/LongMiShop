@@ -12,8 +12,8 @@
         <dl class="dl_box3">
             <dd style="width:15%">{$item.create_time|date='Y-m-d H:i:s',###}</dd>
             <dd style="width:27%; text-align:left">
-                <p>{$item['mode'] == 1 ? '私人账户' : '公司账户' }丨{$item.bank}...<?php echo substr($item['card_number'],-4);?></p>
-                <p class="color-d">20564856156165</p>
+                <p>{$item['mode'] == 1 ? '私人账户' : '公司账户' }丨{$item.bank}</p>
+                <p class="color-d">{$item['card_number']}</p>
             </dd>
             <dd style="width:8%"><span class="color-c" style="width:9%">{$item.money}</span></dd>
             <dd style="width:15%"><span style="width:15%">{$item.update_time|date='Y-m-d H:i:s',###}</span></dd>

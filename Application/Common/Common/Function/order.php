@@ -476,58 +476,60 @@ function setOrderPayCode( $orderId , $code , $name ){
  * @param $postData
  * @return array
  */
-function returnOrderHandle( $returnOrderInfo , $postData ){
-    $id = $returnOrderInfo['id'] ;
+function returnOrderHandle( $returnOrderInfo , $postData )
+{
+    $id = $returnOrderInfo['id'];
     $data['refund_money'] = $postData['refund_money'];
     $data['remark'] = $postData['remark'];
+    $data['result'] = 2;
     $condition = array("id" => $id);
 //    $typeMsg = array('退换','换货');
-    $statusMsg = array('未处理','处理中','已完成');
+    $statusMsg = array('未处理', '处理中', '已完成');
 
-    $model  = new \Think\Model();
+    $model = new \Think\Model();
     try {
-        $model  -> startTrans();
+        $model->startTrans();
 
-        if(!empty($data['refund_money'])){ //退款
+        if (!empty($data['refund_money'])) { //退款
+            $data['result'] = 1;
             $desc = '售后退款';
             $userId = $returnOrderInfo['user_id'];
-            $moneyRes = accountLog($userId,$data['refund_money'],0,$desc);
-            if( !$moneyRes ){
+            $moneyRes = accountLog($userId, $data['refund_money'], 0, $desc);
+            if (!$moneyRes) {
                 throw new \Exception('退款失败！');
+            }
+            $type = 3;
+            $where = array(
+                "order_id" => $returnOrderInfo['order_id'],
+                "goods_id" => $returnOrderInfo['goods_id'],
+                "spec_key" => $returnOrderInfo['spec_key'],
+            );
+            $orderGoods = M('order_goods')->where($where)->save(array('is_send' => $type));
+            if ($orderGoods == false) {
+                throw new \Exception('订单商品状态修改失败！');
             }
         }
 
         $data['status'] = 2;
-        if( M('return_goods') -> where( $condition ) -> save($data) == false ){
+        if ( M('return_goods') -> where($condition) -> save($data) == false ) {
             throw new \Exception('操作失败！');
         }
 
-        $type = 3;
-        $where = array(
-            "order_id" => $returnOrderInfo['order_id'],
-            "goods_id" => $returnOrderInfo['goods_id'],
-            "spec_key" => $returnOrderInfo['spec_key'],
-        );
-        $orderGoods = M('order_goods')->where($where)->save(array('is_send'=>$type));
-//        dd($orderGoods);
-//        throw new \Exception($orderGoods);
-        if( $orderGoods == false ){
-            throw new \Exception('订单商品状态修改失败！');
-        }
+
         $orderLogic = new \Admin\Logic\OrderLogic();
-        $note ="处理退换货, 状态:{$statusMsg[$data['status']]},处理备注：{$data['remark']}";
-        if( !$orderLogic -> orderActionLog($returnOrderInfo['order_id'],'refund',$note) ){
+        $note = "处理退换货, 状态:{$statusMsg[$data['status']]},处理备注：{$data['remark']}";
+        if (!$orderLogic->orderActionLog($returnOrderInfo['order_id'], 'refund', $note)) {
             throw new \Exception('插入日志失败！');
         }
 //            throw new \Exception('我是断点！');
-        $model  -> commit();
+        $model -> commit();
 
-        return callback(true,'处理成功');
+        return callback(true, '处理成功');
 
-    } catch (\Exception $e){
-        $model  -> rollback();
+    } catch (\Exception $e) {
+        $model -> rollback();
 
-        return callback( false, $e->getMessage() );
+        return callback(false, $e->getMessage());
     }
 }
 
@@ -582,13 +584,13 @@ function batchDelivery( $deliveryList = null ){
             $shipping_name = $deliveryItem['B'];
             $invoice_no = $deliveryItem['C'];
 
-            if ($order_sn == "订单id" && $shipping_name == "物流公司" && $invoice_no == "物流单号") {
+            if ( ( $order_sn == "订单id" || $order_sn == "订单号" ) && $shipping_name == "物流公司" && $invoice_no == "物流单号") {
                 continue;
             }
             if (!in_array($shipping_name, $expressList)) {
                 $errorMsgList[] = array(
                     "orderSn" => $order_sn,
-                    "msg"     => "后台不支持【" . $shipping_name . "】此快递",
+                    "msg"     => "后台不支持【" . $shipping_name . "】这个快递",
                 );
                 continue;
             }
@@ -599,9 +601,8 @@ function batchDelivery( $deliveryList = null ){
             }else{
                 $condition["admin_list"] = array("like","%[0]%");
             }
-            $condition["order_sn"] = $order_sn;
             $orderInfo = findDataWithCondition("order", $condition, "order_id");
-            if (empty($orderInfo)) {
+            if ( empty($orderInfo) ) {
                 $errorMsgList[] = array(
                     "orderSn" => $order_sn,
                     "msg"     => "没有此订单信息",
@@ -626,6 +627,14 @@ function batchDelivery( $deliveryList = null ){
                 );
                 continue;
             }
+            if( isExistenceDataWithCondition("return_goods",array("order_id"=>$order_id,"result"=>"0")) ){
+                $errorMsgList[] = array(
+                    "orderSn" => $order_sn,
+                    "msg"     => "此订单有售后申请",
+                );
+                continue;
+            }
+
             $data = array(
                 "order_id"       => $order_id,
                 "invoice_no"     => $invoice_no,
@@ -634,13 +643,18 @@ function batchDelivery( $deliveryList = null ){
                 "note"           => " ",
             );
             $result = $orderLogic->deliveryHandle($data);
-            if (!callbackIsTrue($result)) {
+            if ( ! callbackIsTrue( $result ) ) {
                 $errorMsgList[] = array(
                     "orderSn" => $order_sn,
-                    "msg"     => getCallbackMessage($result),
+                    "msg"     => getCallbackMessage( $result ),
                 );
                 continue;
             }
+            $errorMsgList[] = array(
+                "orderSn" => $order_sn,
+                "msg"     => "发货成功!",
+            );
+            continue;
 
         }
         return callback( true , "批量发货成功"  , $errorMsgList );
