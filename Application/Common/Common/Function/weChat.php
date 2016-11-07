@@ -453,7 +453,7 @@ function afterSubscribe( $openid , $weChatConfig = null ){
     }
 
     if( !isExistenceUserWithOpenid( $openid ) ){
-        registerFromOpenid( $openid , array("subscribe" => 1) , "WeChat" , false );
+        registerFromOpenid( $openid , array("subscribe" => 1 , "sex" => 1 , "nickname" => "新用户" , "headimgurl" => "/Public/images/default/user.png") , "WeChat" , false );
         weChatPullingMessage( $openid );
     }
     $userInfo = findDataWithCondition( "users" , array( "openid" => $openid ) );
