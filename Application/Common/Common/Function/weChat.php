@@ -444,15 +444,29 @@ function xmlToArray($xml)
 
 /**
  * 微信关注后事件
+ * @param $openid
+ * @param null $weChatConfig
  */
 function afterSubscribe( $openid , $weChatConfig = null ){
-    if( empty($weChatConfig) ){
+    if( is_null($weChatConfig) ){
         $weChatConfig = M('wx_user')->find();
     }
-    $sendCouponsId = M('config')->where(array('name'=>'send_coupons_id'))->find();
-    $sendCouponsCont = M('config')->where(array('name'=>'send_coupons_cont'))->find();
+
+    if( !isExistenceUserWithOpenid( $openid ) ){
+        registerFromOpenid( $openid , array("subscribe" => 1) , "WeChat" , false );
+    }
+    $userInfo = findDataWithCondition( "users" , array( "openid" => $openid ) );
+
+    if( empty($userInfo) ){
+        return;
+    }
+    $userId = $userInfo['user_id'];
+
+
+    $sendCouponsId = M('config')->where(array('name'=>'send_coupons_id'))->getField("value");
+    $sendCouponsCont = M('config')->where(array('name'=>'send_coupons_cont'))->getField("value");
     //查询是否存在优惠券
-    $coupon = M('coupon')->where("id=".$sendCouponsId['value']."")->find();
+    $coupon = M('coupon')->where("id=".$sendCouponsId."")->find();
     if($coupon['createnum']>0){
         $remain = $coupon['createnum'] - $coupon['send_num'];//剩余派发量
         if($remain<=0) $this->error($coupon['name'].'已经发放完了');
@@ -460,18 +474,18 @@ function afterSubscribe( $openid , $weChatConfig = null ){
     //查询会员表id
 //    $openid = 'owjy5v_3bK5zRxuh1mB1nvDA8QJg';
     $users = M('users')->field('user_id')->where(array('openid'=>$openid))->find();
-    $coupon_list = M('coupon_list')->where(array('cid'=>$sendCouponsId['value'],'uid'=>$users['user_id']))->find();
+    $coupon_list = M('coupon_list')->where(array('cid'=>$sendCouponsId,'uid'=>$users['user_id']))->find();
     if(empty($coupon_list)){
-        $add['cid'] = $sendCouponsId['value'];
+        $add['cid'] = $sendCouponsId;
         $add['type'] = 2;
         $add['uid'] = $users['user_id'];
         $add['send_time'] = time();
         $add['code'] = get_rand_str(8,0,1);//获取随机8位字符串
         M('coupon_list')->add($add);
-        M('coupon')->where("id=".$sendCouponsId['value']."")->setInc('send_num',1);
+        M('coupon')->where("id=".$sendCouponsId."")->setInc('send_num',1);
     }
     //发送模版消息
     $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
-    $jsSdkLogic -> push_msg( $openid , $sendCouponsCont['value'] );
+    $jsSdkLogic -> push_msg( $openid , $sendCouponsCont );
 }
 

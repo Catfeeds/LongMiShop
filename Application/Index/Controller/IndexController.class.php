@@ -62,7 +62,6 @@ class IndexController extends IndexBaseController {
         $jsSdkLogic -> push_msg( "owjy5v4020Mh7yNAT0aVapESwqNM" , "<a href='http://www.baidu.com'>23333</a>" );
     }
     public function test(){
-        afterSubscribe("owjy5vz4wXZUcmrvprMvCoQDXdqg" );
         exit;
         set_time_limit(0);
         $model = new Model();
