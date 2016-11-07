@@ -393,6 +393,20 @@ CREATE TABLE `lm_goods_pv` (
 ALTER TABLE `lm_admin`
 ADD COLUMN `goods_limit`  int(11) NOT NULL DEFAULT 0 COMMENT '商品发布限制' AFTER `amount_refresh_time`,
 ADD COLUMN `point_number`  float(11,2) NOT NULL DEFAULT 1.00 COMMENT '积分比例' AFTER `goods_limit`;
+ALTER TABLE `lm_admin`
+ADD COLUMN `point`  float(11,2) NULL DEFAULT 0 COMMENT '当前积分' AFTER `point_number`,
+ADD COLUMN `transaction_point`  float(11,2) NULL DEFAULT 0 COMMENT '累计积分' AFTER `point`;
+
+CREATE TABLE `lm_admin_point` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `admin_id` int(11) NOT NULL DEFAULT '0' COMMENT '后台用户id',
+  `point` float(11,2) DEFAULT '0.00' COMMENT '积分数值',
+  `create_time` int(11) DEFAULT NULL,
+  `title` varchar(100) DEFAULT NULL COMMENT '标题',
+  `flow` varchar(30) DEFAULT '' COMMENT '流水',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 ALTER TABLE `lm_return_goods`
 ADD COLUMN `result`  int(1) NOT NULL DEFAULT 0 COMMENT '退货退款结果  1 成功 2 拒绝' AFTER `refund_money`;
