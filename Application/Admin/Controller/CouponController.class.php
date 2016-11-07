@@ -77,7 +77,7 @@ class CouponController extends BaseController {
         //查询是否存在优惠券
         $data = M('coupon')->where(array('id'=>$cid))->find();
         $remain = $data['createnum'] - $data['send_num'];//剩余派发量
-    	if($remain<=0) $this->error($data['name'].'已经发放完了');
+    	if($remain <= 0) $this->error($data['name'].'已经发放完了');
         if(!$data) $this->error("优惠券类型不存在");
         if($type != 4) $this->error("该优惠券类型不支持发放");
         if(IS_POST){
