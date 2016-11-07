@@ -473,6 +473,5 @@ function afterSubscribe( $openid , $weChatConfig = null ){
     //发送模版消息
     $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
     $jsSdkLogic -> push_msg( $openid , $sendCouponsCont['value'] );
-    dd($weChatConfig);
 }
 
