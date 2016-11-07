@@ -373,6 +373,7 @@ function setOrderReturnState( $orderInfo , $userId ){
         $where['user_id']   = $userId;
         $where['goods_id']  = $goodsItem['goods_id'];
         $where['spec_key']  = $goodsItem['spec_key'];
+        $where['result']  = array("");
         $goodsList[$key]['isReturn'] = $count = M('return_goods')->where($where)->count();
         if( $count > 0){
             $returnCount ++;
