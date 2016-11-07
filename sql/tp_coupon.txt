@@ -393,3 +393,6 @@ CREATE TABLE `lm_goods_pv` (
 ALTER TABLE `lm_admin`
 ADD COLUMN `goods_limit`  int(11) NOT NULL DEFAULT 0 COMMENT '商品发布限制' AFTER `amount_refresh_time`,
 ADD COLUMN `point_number`  float(11,2) NOT NULL DEFAULT 1.00 COMMENT '积分比例' AFTER `goods_limit`;
+
+ALTER TABLE `lm_return_goods`
+ADD COLUMN `result`  int(1) NOT NULL DEFAULT 0 COMMENT '退货退款结果  1 成功 2 拒绝' AFTER `refund_money`;

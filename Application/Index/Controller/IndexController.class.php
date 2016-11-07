@@ -26,6 +26,20 @@ class IndexController extends IndexBaseController {
     	$this->display();
     }
     public function test4(){
+        $order_goods_list  = selectDataWithCondition("return_goods");
+        foreach ( $order_goods_list as $order_goods_item ){
+            $data = array();
+            if( $order_goods_item['status'] == 2 ){
+                if( $order_goods_item['remark'] == "" ){
+                    $data["result"] = 2;
+                }else{
+                    $data["result"] = 1;
+                }
+            }
+            M('return_goods') -> where( array("id" => $order_goods_item['id']) ) -> save($data);
+        }
+
+
         exit;
         $list = M("system_module") -> where("ctl = ''") -> select();
 //        dd($list)/;
