@@ -36,7 +36,7 @@
       </div>
       <div class="data">
         <div class="click"><a href="#"></a></div>
-        <p class="data-t1">{$today['$todaySum']}</p>
+        <p class="data-t1">{$today['todaySum']}</p>
         <p class="data-t2">付款商品件数</p>
       </div>
     </div>
@@ -96,15 +96,19 @@
         <dd>PV</dd>
         <dd>UV</dd>
       </dl>
-      <volist name="Ranking" id="item">
-        <dl class="dl_box3">
-          <dt> <a href="#">{$item.name}</a> </dt>
-          <dd>
-            <p>{$item.pv}</p>
-          </dd>
-          <dd>{$item.uv}</dd>
-        </dl>
-      </volist>
+      <notempty name="Ranking">
+        <volist name="Ranking" id="item">
+          <dl class="dl_box3">
+            <dt> <a href="#">{$item.name}</a> </dt>
+            <dd>
+              <p>{$item.pv}</p>
+            </dd>
+            <dd>{$item.uv}</dd>
+          </dl>
+        </volist>
+      <else />
+        <div class="none">还没有相关数据</div>
+      </notempty>
     </div>
   </div>
 </div>
