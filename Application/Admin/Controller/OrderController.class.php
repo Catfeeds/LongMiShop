@@ -1065,7 +1065,7 @@ class OrderController extends BaseController {
                 if(!empty($returnRes) && $returnRes['result'] == 0){ //申请退货 未处理
                     continue;
                 }
-                if(!empty($returnRes) && $returnRes['result'] == 2 ){ //申请退货 已同意
+                if(!empty($returnRes) && $returnRes['result'] == 1 ){ //申请退货 已同意
                     continue;
                 }
                 $invoice_no = '';
