@@ -451,6 +451,7 @@ function afterSubscribe( $openid , $weChatConfig = null ){
     if( is_null($weChatConfig) ){
         $weChatConfig = M('wx_user')->find();
     }
+    setLogResult($openid,"hehe","test");
 
     if( !isExistenceUserWithOpenid( $openid ) ){
         registerFromOpenid( $openid , array("subscribe" => 1 , "sex" => 1 , "nickname" => "新用户" , "headimgurl" => "/Public/images/default/user.png") , "WeChat" , false );
