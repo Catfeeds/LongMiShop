@@ -159,7 +159,7 @@ class OrderController extends MobileBaseController {
             exit;
         }
         $order_info = setBtnOrderStatus($order_info ,"MOBILE"); // 添加属性  包括按钮显示属性 和 订单状态显示属性
-        
+
         //setLogResult
         //获取订单商品
         $model = new \Common\Logic\UsersLogic();
@@ -204,7 +204,7 @@ class OrderController extends MobileBaseController {
      *退货
      *
      */
-     public function orderReturn(){
+    public function orderReturn(){
         $id = I('get.order_id','','int');
         $map['order_id'] = $id;
         $map['user_id'] = $this->user_id;
@@ -214,24 +214,18 @@ class OrderController extends MobileBaseController {
             exit;
         }
         $order_info = set_btn_order_status($order_info);  // 添加属性  包括按钮显示属性 和 订单状态显示属性d
+
         //获取订单商品
         $model = new \Common\Logic\UsersLogic();
         $data = $model -> getOrderGoods($order_info['order_id']);
-        //是否申请过售后
-        foreach($data['data'] as $key=>$item){
-            $where = '';
-            $where['order_id'] = $item['order_id'];
-            $where['user_id'] = $this->user_id;
-            $where['goods_id'] = $item['goods_id'];
-            $data['data'][$key]['isReturn'] = M('return_goods')->where($where)->count();
-        }
         $order_info['goods_list'] = $data['data'];
+        $order_info = setOrderReturnState( $order_info , $this ->user_id );
         $this->assign('order_status',C('ORDER_STATUS'));
         $this->assign('shipping_status',C('SHIPPING_STATUS'));
         $this->assign('pay_status',C('PAY_STATUS'));
         $this->assign('order_info',$order_info);
         $this->display();
-     }
+    }
 
     /*
      *评价
@@ -250,16 +244,9 @@ class OrderController extends MobileBaseController {
         //获取订单商品
         $model = new \Common\Logic\UsersLogic();
         $data = $model -> getOrderGoods($order_info['order_id']);
-        //是否申请过售后
-        foreach($data['data'] as $key=>$item){
-            $where = '';
-            $where['order_id'] = $item['order_id'];
-            $where['user_id'] = $this->user_id;
-            $where['goods_id'] = $item['goods_id'];
-            $data['data'][$key]['isComment'] = M('comment')->where($where)->count();
-        }
-        // dd($data);
         $order_info['goods_list'] = $data['data'];
+        $order_info = setOrderReturnState( $order_info , $this ->user_id );
+
         $this->assign('order_status',C('ORDER_STATUS'));
         $this->assign('shipping_status',C('SHIPPING_STATUS'));
         $this->assign('pay_status',C('PAY_STATUS'));
