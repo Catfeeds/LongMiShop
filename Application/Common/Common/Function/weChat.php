@@ -491,9 +491,10 @@ function afterSubscribe( $openid , $weChatConfig = null ){
 
 /**
  * 微信拉取个人信息
+ * @param $openid
+ * @return bool|string
  */
-
-function wechatPullingMessage( $openid ){
+function weChatPullingMessage( $openid ){
 
     $WeChatLogic = new \Common\Logic\WeChatLogic();
     if( !empty($openid) ){
