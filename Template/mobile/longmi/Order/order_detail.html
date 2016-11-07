@@ -43,8 +43,11 @@
 		</div>
 		<div class="cp1_l">
 			<img src="{$good.goods_id|goods_thum_images=100,100}" width="92" height="92">
-			<if condition='$good[isReturn]' >
+			<if condition='$good.isReturn' >
 				<div class="cj">退货中</div>
+			</if>
+			<if condition='$good.isReturnPass' >
+				<div class="cj">已退货</div>
 			</if>
 		</div>
 		<div class="cp1_r">
