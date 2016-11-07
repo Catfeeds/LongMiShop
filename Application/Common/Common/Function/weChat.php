@@ -489,3 +489,40 @@ function afterSubscribe( $openid , $weChatConfig = null ){
     $jsSdkLogic -> push_msg( $openid , $sendCouponsCont );
 }
 
+/**
+ * 微信拉取个人信息
+ */
+
+function wechatPullingMessage( $openid ){
+
+    $WeChatLogic = new \Common\Logic\WeChatLogic();
+    if( !empty($openid) ){
+        $userData = $WeChatLogic->WechatFans($openid);
+        $save['head_pic'] = $userData['headimgurl'];
+        $save['nickname'] = $userData['nickname'];
+        if( !empty( $userData['subscribe'] ) ){
+            $save['is_follow'] = 1;
+        }else{
+            $save['is_follow'] = 0;
+        }
+        $save['sync_time'] = time();
+        $where = array(
+            "openid"=>$openid,
+        );
+        $res = M('users')->where($where) -> save($save);
+
+        $userRes =  M('users')->where($where)->find();
+        if(empty($userRes['nickname'])){
+            $datas['nickname'] = '龙米会员'.$item;
+            $datas['user_id'] = $item;
+            M('users')->save($datas);
+        }
+        return $res;
+    }
+
+    return '缺少参数';
+
+
+}
+
+
