@@ -264,7 +264,7 @@ class UserController extends BaseController {
             foreach($data as $item){
                 $where['user_id'] = $item;
                 $user =  M('users')->where($where)->find();
-                $res[] = wechatPullingMessage($user['openid']);
+                $res[] = weChatPullingMessage($user['openid']);
             }
             $isin = in_array('1',$res);
             if($isin){
