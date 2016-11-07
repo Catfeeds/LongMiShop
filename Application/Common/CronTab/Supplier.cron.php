@@ -61,6 +61,22 @@ class SupplierCronClass
                         $addData["income_count"] = $countData["income_count"];
                         $addData["expend_count"] = $countData["expend_count"];
                         isSuccessToAddData( "account_statement" , $addData );
+
+                        $point = array();
+
+                        $adminInfo = findDataWithCondition( "admin" , array( "admin_id" => $adminId )  );
+                        $point["admin_id"] = $adminId;
+                        $point["point"] = $pointNumber = $addData["income"] * $adminInfo['point_number'];
+                        $point["create_time"] = time();
+                        $point["title"] = date("Y年m月",strtotime(date("Y-m")." -1 month"))."龙币结算";
+                        $point["flow"] = "";
+                        isSuccessToAddData( "admin_point" , $point );
+
+                        $adminArray = array();
+                        $adminArray["point"] = $adminInfo["point"] + $pointNumber;
+                        $adminArray["transaction_point"] = $adminInfo["transaction_point"] + $pointNumber;
+                        M("admin") -> where( array("admin_id" => $adminId) ) -> save($adminArray);
+
                     }
                 }
             }

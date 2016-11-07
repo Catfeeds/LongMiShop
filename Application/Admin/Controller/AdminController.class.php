@@ -432,6 +432,11 @@ class AdminController extends BaseController {
      * 龙币（积分）
      */
     public function dragonCoin(){
+        $adminId = session('admin_id');
+        $adminInfo = findDataWithCondition( "admin" , array( "admin_id" => $adminId )  );
+        $list = M("admin_point") -> where( array( "admin_id" => $adminId )  ) -> order("create_time desc") -> select();
+        $this->assign('list',$list);
+        $this->assign('adminInfo',$adminInfo);
         $this->display();
     }
 
