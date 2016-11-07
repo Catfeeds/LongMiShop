@@ -506,6 +506,9 @@ function wechatPullingMessage( $openid ){
             $save['is_follow'] = 0;
         }
         $save['sync_time'] = time();
+        $where = array(
+            "openid"=>$openid,
+        );
         $res = M('users')->where($where) -> save($save);
 
         $userRes =  M('users')->where($where)->find();
