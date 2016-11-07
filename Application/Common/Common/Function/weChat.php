@@ -452,7 +452,7 @@ function afterSubscribe( $openid , $weChatConfig = null ){
     $sendCouponsId = M('config')->where(array('name'=>'send_coupons_id'))->find();
     $sendCouponsCont = M('config')->where(array('name'=>'send_coupons_cont'))->find();
     //查询是否存在优惠券
-    $coupon = M('coupon')->where("id=$cid")->find();
+    $coupon = M('coupon')->where("id=".$sendCouponsId['value']."")->find();
     if($coupon['createnum']>0){
         $remain = $coupon['createnum'] - $coupon['send_num'];//剩余派发量
         if($remain<=0) $this->error($coupon['name'].'已经发放完了');
