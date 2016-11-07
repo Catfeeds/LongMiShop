@@ -458,7 +458,8 @@ function afterSubscribe( $openid , $weChatConfig = null ){
         if($remain<=0) $this->error($coupon['name'].'已经发放完了');
     }
     //查询会员表id
-    $users = M('users')->where(array('openid'=>$openid))->find();
+//    $openid = 'owjy5v_3bK5zRxuh1mB1nvDA8QJg';
+    $users = M('users')->field('user_id')->where(array('openid'=>$openid))->find();
     $coupon_list = M('coupon_list')->where(array('cid'=>$sendCouponsId['value'],'uid'=>$users['user_id']))->find();
     if(empty($coupon_list)){
         $add['cid'] = $sendCouponsId['value'];
@@ -469,7 +470,6 @@ function afterSubscribe( $openid , $weChatConfig = null ){
         M('coupon_list')->add($add);
         M('coupon')->where("id=".$sendCouponsId['value']."")->setInc('send_num',1);
     }
-
     //发送模版消息
     $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
     $jsSdkLogic -> push_msg( $openid , $sendCouponsCont['value'] );
