@@ -500,8 +500,11 @@ function wechatPullingMessage( $openid ){
             $datas['user_id'] = $item;
             M('users')->save($datas);
         }
+        return $res;
     }
-    return $res;
+
+    return '缺少参数';
+
 
 }
 
