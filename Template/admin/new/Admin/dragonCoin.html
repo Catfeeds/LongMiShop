@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>龙米</title>
-<link href="__STATIC__/CSS/css.css" rel="stylesheet" type="text/css" />
-<link href="__STATIC__/CSS/longmi.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8">
+  <title>龙米</title>
+  <link href="__STATIC__/CSS/css.css" rel="stylesheet" type="text/css" />
+  <link href="__STATIC__/CSS/longmi.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="g-mn1">
@@ -13,12 +13,14 @@
     <include file="Public/breadcrumb" />
 
     <div class="more-box">
-      <div class="more-box-l">今日数据<span class="a1">（更新时间：2016-10-26 15:00:00）</span></div>
+      <div class="more-box-l">今日数据
+        <span class="a1">（更新时间：{$list.0.create_time|date='Y-m-d H:i:s',###}）</span>
+      </div>
     </div>
     <div class="data-box">
       <div class="data">
         <div class="click"><a href="#"></a></div>
-        <p class="data-t1">56810</p>
+        <p class="data-t1">{$adminInfo.point}</p>
         <p class="data-t2">我的龙币</p>
       </div>
     </div>
@@ -30,24 +32,22 @@
         <dd style="width:15%">时间</dd>
         <dt> 详细说明</dt>
         <dd>收入丨支付</dd>
-        <dd style="width:15%">流水号</dd>
+        <!--<dd style="width:15%">流水号</dd>-->
       </dl>
-      <dl class="dl_box3">
-        <dd style="width:15%">2016-10-18 21:15:49</dd>
-        <dt> 8月龙币结算 </dt>
-        <dd class="color-b">+99</dd>
-        <dd style="width:15%">
-          <p>16548465156165</p>
-        </dd>
-      </dl>
-      <dl class="dl_box3">
-        <dd style="width:15%">2016-10-18 21:15:49</dd>
-        <dt> 8月龙币结算 </dt>
-        <dd class="color-c">+99</dd>
-        <dd style="width:15%">
-          <p>16548465156165</p>
-        </dd>
-      </dl>
+      <notempty name = "list">
+        <volist name="list" id="item">
+          <dl class="dl_box3">
+            <dd style="width:15%">{$item.create_time|date='Y-m-d H:i:s',###}</dd>
+            <dt>{$item.title}</dt>
+            <dd class="color-b">+{$item.point}</dd>
+            <!--<dd style="width:15%">-->
+            <!--<p>16548465156165</p>-->
+            <!--</dd>-->
+          </dl>
+        </volist>
+        <else/>
+        <div class="none">还没有相关数据</div>
+      </notempty>
     </div>
   </div>
 </div>
