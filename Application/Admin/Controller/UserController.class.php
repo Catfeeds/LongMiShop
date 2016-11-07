@@ -268,7 +268,7 @@ class UserController extends BaseController {
             }
             $isin = in_array('1',$res);
             if($isin){
-                $this->success('拉取成功',U('Admin/User/index'));
+                $this->success('拉取成功');
             }else{
                 $this->error("拉取失败");
             }
