@@ -86,9 +86,9 @@
 	                         <foreach name="list" item="vo" key="k" >
 	                          <tr role="row" align="center">
 	                          	 <td>{$vo.day}</td>
-	                          	 <td>{$vo.amount}</td>
-	                             <td>{$vo.sign}</td>
-			                     <td>{$vo.order_num}</td>		                     
+	                          	 <td>{$vo.order_num}</td>
+	                             <td>{$vo.amount}</td>
+			                     <td>{$vo.sign}</td>
 			                     <td><a href="{:U('Report/saleList',array('begin'=>$vo['day'],'end'=>$vo['end']))}">订单列表</a></td>
 			                   </tr>
 			                  </foreach>
