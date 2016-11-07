@@ -58,8 +58,9 @@ function loginFromUserId( $userId ){
  * @param $openid
  * @param array $info
  * @param string $fromTo
+ * @param bool $needJs
  */
-function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
+function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" , $needJs = true ){
     $data = array(
         'openid'        => $openid,
         'oauth'         => $fromTo,
@@ -82,6 +83,7 @@ function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
     $usersLogic = new \Common\Logic\UsersLogic();
     $result = $usersLogic -> thirdLogin($data);
 
+    if( $needJs ){
 //    if($result['status'] == 1){
         $openid = session('openid');
         session(null);
@@ -90,6 +92,7 @@ function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" ){
         echo "<script language=JavaScript> location.replace(location.href);</script>";
         exit;
 //    }
+    }
 }
 
 
