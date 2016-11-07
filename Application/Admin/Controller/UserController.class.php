@@ -261,36 +261,16 @@ class UserController extends BaseController {
             if(empty($data)){
                 $this->error('没有数据');exit;
             }
-            $this->user = M('users');
-            $WeChatLogic = new \Common\Logic\WeChatLogic();
             foreach($data as $item){
                 $where['user_id'] = $item;
-                $user =  $this->user->where($where)->find();
-                if( !empty($user["openid"]) ){
-                    $userData = $WeChatLogic->WechatFans($user['openid']);
-                    $save['head_pic'] = $userData['headimgurl'];
-                    $save['nickname'] = $userData['nickname'];
-                    if( !empty( $userData['subscribe'] ) ){
-                        $save['is_follow'] = 1;
-                    }else{
-                        $save['is_follow'] = 0;
-                    }
-                    $save['sync_time'] = time();
-                    $res[] = $this->user->where($where) -> save($save);
-                    $userRes =  $this->user->where($where)->find();
-                    if(empty($userRes['nickname'])){
-                        $datas['nickname'] = '龙米会员'.$item;
-                        $datas['user_id'] = $item;
-                        $this->user->save($datas);
-                    }
-                    $isin = in_array('1',$res);
-                    if($isin){
-                        $this->success('拉取成功',U('Admin/User/index'));
-                    }else{
-                        $this->error("拉取失败");
-                    }
-                    exit;
-                }
+                $user =  M('users')->where($where)->find();
+                $res[] = wechatPullingMessage($user['openid']);
+            }
+            $isin = in_array('1',$res);
+            if($isin){
+                $this->success('拉取成功',U('Admin/User/index'));
+            }else{
+                $this->error("拉取失败");
             }
 
 
