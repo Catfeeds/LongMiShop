@@ -510,11 +510,10 @@ function wechatPullingMessage( $openid ){
             "openid"=>$openid,
         );
         $res = M('users')->where($where) -> save($save);
-
         $userRes =  M('users')->where($where)->find();
         if(empty($userRes['nickname'])){
-            $datas['nickname'] = '龙米会员'.$item;
-            $datas['user_id'] = $item;
+            $datas['nickname'] = '龙米会员'.$userRes['user_id'];
+            $datas['user_id'] = $userRes['user_id'];
             M('users')->save($datas);
         }
         return $res;
