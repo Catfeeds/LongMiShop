@@ -211,7 +211,7 @@ class BuyLogic extends BaseLogic
         $this -> _post_data["type"]         = I('type') == "REFUND0" ? 0 : 1;
         $this -> _post_data["refundWay"]    = I('returnWay') != "YUAN_LU" ? 1 : 0;
         $this -> _post_data["refundMoney"]  = I('refundMoney')  ? I('refundMoney') : 0;
-        $goodsInfo = findDataWithCondition("goods".array("goods_id"=>$goods_id),"admin_id");
+        $goodsInfo = findDataWithCondition("goods",array("goods_id"=>$goods_id),"admin_id");
         if( empty($goodsInfo) ){
             throw new \Exception("商品不存在！");
         }

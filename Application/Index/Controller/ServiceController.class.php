@@ -75,11 +75,18 @@ class ServiceController extends IndexBaseController {
             exit;
         }
         $data = $orderLogic -> getOrderGoods($orderInfo['order_id']);
+//        dd($data);
+//        $goodsList = M('return_goods')->where("order_id = '{$orderInfo['order_id']}' and result != '2' ")->select();//getField('goods_id,goods_id');
+        foreach ($data['data'] as $key => $dataItem){
+            $condition = array(
+                "order_id" => $dataItem['order_id'],
+                "result" => array("neq","2"),
+                "goods_id" => $dataItem['goods_id'],
+                "spec_key" => $dataItem['spec_key'],
+            );
 
-        $goodsList = M('return_goods')->where("order_id = '{$orderInfo['order_id']}'")->getField('goods_id,goods_id');
-        foreach ($data as $key => $dataItem){
-            if( in_array($dataItem['goods_id'],$goodsList) ){
-                unset($data[$key]);
+            if( isExistenceDataWithCondition( "return_goods" , $condition ) ){
+                unset($data['data'][$key]);
             }
         }
         $orderInfo['goods_list'] = $data['data'];
