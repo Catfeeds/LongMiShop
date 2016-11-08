@@ -450,6 +450,7 @@ function xmlToArray($xml)
 function afterSubscribe( $openid , $weChatConfig = null )
 {
     try {
+        $openid =  (string)$openid;
         if (is_null($weChatConfig)) {
             $weChatConfig = M('wx_user')->find();
         }
