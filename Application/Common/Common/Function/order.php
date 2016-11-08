@@ -377,12 +377,16 @@ function setOrderReturnState( $orderInfo , $userId ){
         $goodsList[$key]['isReturn'] = $count = M('return_goods')->where($where)->count();
         $where['result']  = "1";
         $goodsList[$key]['isReturnPass'] = M('return_goods')->where($where)->count();
+        $goodsCount -=  $goodsList[$key]['isReturnPass'] != 0 ? 1 : 0 ;
         if( $count > 0){
             $returnCount ++;
         }
     }
     if( $returnCount != 0 ){
         $orderInfo['isReturn'] = true;
+    }
+    if( $returnCount == $goodsCount ){
+        $orderInfo['isEetreat'] = true;
     }
     $orderInfo['goods_list'] = $goodsList;
     return $orderInfo;
