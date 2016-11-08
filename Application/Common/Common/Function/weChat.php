@@ -447,53 +447,67 @@ function xmlToArray($xml)
  * @param $openid
  * @param null $weChatConfig
  */
-function afterSubscribe( $openid , $weChatConfig = null ){
-    if( is_null($weChatConfig) ){
-        $weChatConfig = M('wx_user')->find();
+function afterSubscribe( $openid , $weChatConfig = null )
+{
+    try {
+        if (is_null($weChatConfig)) {
+            $weChatConfig = M('wx_user')->find();
+        }
+        $userInfo = findDataWithCondition("users", array("openid" => $openid));
+        if (empty($userInfo)) {
+            $info = array(
+                "subscribe"  => 1,
+                "sex"        => 1,
+                "nickname"   => "新用户",
+                "headimgurl" => "/Public/images/default/user.png"
+            );
+            registerFromOpenid($openid, $info, "WeChat", false);
+            weChatPullingMessage($openid);
+        }
+        $userInfo = findDataWithCondition("users", array("openid" => $openid));
+        setLogResult(json_encode($userInfo), "afterSubscribe", "test");
+        if (empty($userInfo)) {
+            return;
+        }
+        $userId = $userInfo['user_id'];
+        if (isExistenceDataWithCondition("invite_list", array('user_id' => $userId))) {
+            return;
+        }
+        $sendCouponsId = M('config')->where(array('name' => 'send_coupons_id'))->getField("value");
+        $sendCouponsCont = M('config')->where(array('name' => 'send_coupons_cont'))->getField("value");
+        //查询是否存在优惠券
+        $coupon = findDataWithCondition('coupon', array("id" => $sendCouponsId));
+        if (empty($coupon)) {
+            return;
+        }
+        if ($coupon['createnum'] > 0) {
+            $remain = $coupon['createnum'] - $coupon['send_num'];//剩余派发量
+            if ($remain <= 0) {
+                return;
+            }
+        }
+        //查询会员表id
+        $users = findDataWithCondition('users', array('openid' => $openid), 'user_id');
+        $coupon_list = findDataWithCondition('coupon_list', array('cid' => $sendCouponsId, 'uid' => $users['user_id']));
+        if (empty($coupon_list)) {
+            $add['cid'] = $sendCouponsId;
+            $add['type'] = 2;
+            $add['uid'] = $users['user_id'];
+            $add['send_time'] = time();
+            do {
+                $code = get_rand_str(8, 0, 1);//获取随机8位字符串
+                $check_exist = isExistenceDataWithCondition('coupon_list', array('code' => $code));
+            } while ($check_exist);
+            $add['code'] = $code;
+            isSuccessToAddData('coupon_list', $add);
+            M('coupon')->where("id=" . $sendCouponsId . "")->setInc('send_num', 1);
+            //发送模版消息
+            $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
+            $jsSdkLogic->push_msg($openid, $sendCouponsCont);
+        }
+    } catch (\Exception $e) {
+        setLogResult( $e->getMessage(), "afterSubscribe Exception", "test");
     }
-    setLogResult($openid,"hehe","test");
-
-    if( !isExistenceUserWithOpenid( $openid ) ){
-        registerFromOpenid( $openid , array("subscribe" => 1 , "sex" => 1 , "nickname" => "新用户" , "headimgurl" => "/Public/images/default/user.png") , "WeChat" , false );
-        weChatPullingMessage( $openid );
-    }
-    $userInfo = findDataWithCondition( "users" , array( "openid" => $openid ) );
-
-    if( empty($userInfo) ){
-        return;
-    }
-    $userId = $userInfo['user_id'];
-    if( isExistenceDataWithCondition( "invite_list" , array('user_id' => $userId) ) ){
-        return;
-    }
-    $sendCouponsId = M('config')->where(array('name'=>'send_coupons_id'))->getField("value");
-    $sendCouponsCont = M('config')->where(array('name'=>'send_coupons_cont'))->getField("value");
-    //查询是否存在优惠券
-    $coupon = findDataWithCondition('coupon' , array("id" => $sendCouponsId ) );
-    if( $coupon['createnum'] > 0 ){
-        $remain = $coupon['createnum'] - $coupon['send_num'];//剩余派发量
-        if($remain <= 0){return;}
-    }
-    //查询会员表id
-    $users = findDataWithCondition('users' , array('openid'=>$openid) , 'user_id' );
-    $coupon_list = findDataWithCondition( 'coupon_list' , array('cid'=>$sendCouponsId,'uid'=>$users['user_id']) );
-    if( empty( $coupon_list ) ){
-        $add['cid'] = $sendCouponsId;
-        $add['type'] = 2;
-        $add['uid'] = $users['user_id'];
-        $add['send_time'] = time();
-        do{
-            $code = get_rand_str(8,0,1);//获取随机8位字符串
-            $check_exist = isExistenceDataWithCondition( 'coupon_list',array('code'=>$code));
-        }while($check_exist);
-        $add['code'] = $code;
-        isSuccessToAddData('coupon_list',$add);
-        M('coupon')->where("id=".$sendCouponsId."")->setInc('send_num',1);
-        //发送模版消息
-        $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
-        $jsSdkLogic -> push_msg( $openid , $sendCouponsCont );
-    }
-
 }
 
 /**
