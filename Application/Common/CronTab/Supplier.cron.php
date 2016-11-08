@@ -30,7 +30,7 @@ class SupplierCronClass
                     "type"        => 1
                 );
                 if ( !isExistenceDataWithCondition( "account_statement" , $condition1 ) ) {
-                    $this -> refreshAccountMoney( $adminId );
+//                    $this -> refreshAccountMoney( $adminId );
                     $addData = array(
                         "admin_id"    => $adminId,
                         "create_time" => $this->thisTime,
@@ -67,6 +67,7 @@ class SupplierCronClass
                         $adminInfo = findDataWithCondition( "admin" , array( "admin_id" => $adminId )  );
                         $point["admin_id"] = $adminId;
                         $point["point"] = $pointNumber = $addData["income"] * $adminInfo['point_number'];
+                        $amountNumber = $addData["income"] ;
                         $point["create_time"] = time();
                         $point["title"] = date("Y年m月",strtotime(date("Y-m")." -1 month"))."龙币结算";
                         $point["flow"] = "";
@@ -75,6 +76,8 @@ class SupplierCronClass
                         $adminArray = array();
                         $adminArray["point"] = $adminInfo["point"] + $pointNumber;
                         $adminArray["transaction_point"] = $adminInfo["transaction_point"] + $pointNumber;
+                        $adminArray["amount"] = $adminInfo["amount"] + $amountNumber;
+                        $adminArray["transaction_amount"] = $adminInfo["transaction_amount"] + $amountNumber;
                         M("admin") -> where( array("admin_id" => $adminId) ) -> save($adminArray);
 
                     }
