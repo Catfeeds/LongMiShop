@@ -33,6 +33,10 @@ class WeChatController extends Controller {
             $this->responseMsg();
     }
 
+    public function test(){
+//        afterSubscribe( "owjy5v4020Mh7yNAT0aVapESwqNM11" , $this->weChatConfig );
+    }
+
     public function responseMsg()
     {
         //get post data, May be due to the different environments
@@ -68,7 +72,7 @@ class WeChatController extends Controller {
         {
             $keyword = $this -> shopConfig['basic_subscribe_reply'];
             if( !empty($fromUsername) ){
-//                afterSubscribe( $fromUsername , $this->weChatConfig );
+                afterSubscribe( $fromUsername , $this->weChatConfig );
                 $data = array();
                 $where = " openid = '$fromUsername'";
                 $data['is_follow'] = 1;
