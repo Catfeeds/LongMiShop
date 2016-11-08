@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>装逼图片生成器</title>
+    <link type="text/css" rel="stylesheet" href="__STATIC__/css/frozen.css" />
+    <script src="__STATIC__/js/jquery.js"></script>
+    <style>
+        body{color:#a6a6a6; font-size:16px; padding-top:45px;}
+        body b{color: #00A5E3}
+        body>a{display:none;}
+        h2.title {line-height: 45px;font-size: 20px;color: #FF0000;position: fixed;top: 0;height: 45px;-webkit-box-sizing: border-box;width: 100%;z-index: 99;background-color: #f8f9fa;text-align:center;}
+        .pr5{padding-bottom:45px;}
+        .pr5 p{margin-bottom:5px;}
+        .ui-list{background-color:#f8f9fa;padding-bottom:5px}
+        #mcover{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0, 0, 0, 0.7);display:none;z-index:20000;}
+        #mcover img{position:fixed;right: 18px;top:5px;width:260px;height:180px;z-index:20001;}
+        .ui-header-positive, .ui-footer-positive {
+            background-color: #e6c413 !important;
+        }
+        .ui-btn-danger{
+            background-color: #e6c413 !important;
+            background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0.5,#e6c413),to(#e6c413)) !important;
+        }
+    </style>
+</head>
+<body>
+<notempty name = "name">
+    <header class="ui-header ui-header-positive ui-border-b">
+        <h1>长按下方图片点选保存图片</h1>
+    </header>
+    <div class="wrapper">
+        <img src="{:U('Mobile/pictureGeneration/run',array('name' => $name,'position' => $position))}" width="100%"/>
+    </div>
+    <div class="ui-btn-wrap">
+        <a href="{:U('Mobile/pictureGeneration/index')}" class="ui-btn-lg ui-btn-danger">返回</a>
+    </div>
+<else/>
+    <header class="ui-header ui-header-positive ui-border-b">
+        <h1>装逼图片生成器</h1>
+    </header>
+    <div class="wrapper">
+        <div class="ui-form">
+            <if condition="$signPackage neq null && $user['is_follow'] neq 1">
+                <else/>
+                 <form  method="POST" id="myForm">
+            </if>
+                <div class="ui-form-item ui-border-b">
+                    <label for="#">姓名</label>
+                    <input type="text" name="name" placeholder="输入你的姓名"/>
+                </div>
+                <div class="ui-form-item ui-border-b">
+                    <label for="#">职位</label>
+                    <input type="text" name="position" placeholder="输入你的职位"/>
+                </div>
+
+                <div class="ui-btn-wrap">
+                    <a id="mySubmit" class="ui-btn-lg ui-btn-danger">确定</a>
+                </div>
+            <if condition="$signPackage neq null && $user['is_follow'] neq 1">
+                <else/>
+                </form>
+            </if>
+        </div>
+    </div>
+
+    <script>
+        $(function(){
+            $("#mySubmit").click(function(){
+                <if condition="$signPackage neq null && $user['is_follow'] neq 1">
+                $('#followMask').show();
+                <else/>
+                $("#myForm").submit();
+                </if>
+            });
+        });
+    </script>
+    <if condition="$signPackage neq null && $user['is_follow'] neq 1">
+        <include file="Public/wx_button"/>
+    </if>
+</notempty>
+</body>
+</html>
