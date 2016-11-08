@@ -381,7 +381,7 @@ function setOrderReturnState( $orderInfo , $userId ){
             $returnCount ++;
         }
     }
-    if( $goodsCount == $returnCount ){
+    if( $returnCount != 0 ){
         $orderInfo['isReturn'] = true;
     }
     $orderInfo['goods_list'] = $goodsList;
