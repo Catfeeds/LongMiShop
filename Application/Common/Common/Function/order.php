@@ -510,6 +510,17 @@ function returnOrderHandle( $returnOrderInfo , $postData )
             if ($orderGoods == false) {
                 throw new \Exception('订单商品状态修改失败！');
             }
+            $isSendList = M('order_goods')->where("order_id = ".$returnOrderInfo['order_id']."")->select();
+            $send = 0;
+            foreach($isSendList as $item){
+                if($item['is_send'] == 2 || $item['is_send'] == 3){
+                    $send++;
+                }
+            }
+            if($send == count($isSendList)){
+                M('order')->where("order_id = ".$returnOrderInfo['order_id']."")->save(array('order_status'=>3));
+            }
+
         }
 
         $data['status'] = 2;

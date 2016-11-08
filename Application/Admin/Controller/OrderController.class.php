@@ -114,10 +114,10 @@ class OrderController extends BaseController {
                         $count_postage += $item['goods_postage'];
                     }
                     //是否售后
-                    $returnRes = findDataWithCondition( 'return_goods' , array( 'order_id' => $item["order_id"],'goods_id' => $item['goods_id'],'spec_key'=>$item['spec_key'],'result'=>array("in","0,1") )  );
+                    $returnRes = findDataWithCondition( 'return_goods' , array( 'order_id' => $item["order_id"],'goods_id' => $item['goods_id'],'spec_key'=>$item['spec_key'] )  );
                     if( !empty($returnRes)  ) {
                         $orderList[$keys]["goods"][$key]['returnId'] = $returnRes['id'];
-                        $orderList[$keys]["goods"][$key]['returnType'] = $returnRes['type'];
+                        $orderList[$keys]["goods"][$key]['result'] = $returnRes['result'];
                     }
 
 
