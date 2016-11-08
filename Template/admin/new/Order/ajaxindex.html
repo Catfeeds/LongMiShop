@@ -37,7 +37,15 @@
             </dd>
             <dd>
                 <if condition="!empty($goods['returnId'])">
-                    <a href="{:U('Admin/order/return_info',array('id'=>$goods['returnId']))}" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="售后">{$goods['returnType'] == 0 ? '退货' : '换货'}</a>
+                    <a href="{:U('Admin/order/return_info',array('id'=>$goods['returnId']))}" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="售后">
+                    <if condition="$goods['result'] eq 0">
+                        未处理
+                    <elseif condition="$goods['result'] eq 1" />
+                        已同意退款
+                    <elseif condition="$goods['result'] eq 2" />
+                        申请已驳回
+                    </if>
+                    </a>
                 </if>
             </dd>
             <if condition = "$key == 0">
