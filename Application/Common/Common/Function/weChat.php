@@ -463,7 +463,7 @@ function afterSubscribe( $openid , $weChatConfig = null ){
         weChatPullingMessage($openid);
     }
     $userInfo = findDataWithCondition( "users" , array( "openid" => $openid ) );
-
+    setLogResult(json_encode($userInfo),"afterSubscribe","test");
     if( empty($userInfo) ){
         return;
     }
@@ -475,9 +475,10 @@ function afterSubscribe( $openid , $weChatConfig = null ){
     $sendCouponsCont = M('config')->where(array('name'=>'send_coupons_cont'))->getField("value");
     //查询是否存在优惠券
     $coupon = findDataWithCondition('coupon' , array("id" => $sendCouponsId ) );
+    if( empty($coupon) ){ return; }
     if( $coupon['createnum'] > 0 ){
         $remain = $coupon['createnum'] - $coupon['send_num'];//剩余派发量
-        if($remain <= 0){return;}
+        if($remain <= 0){ return; }
     }
     //查询会员表id
     $users = findDataWithCondition('users' , array('openid'=>$openid) , 'user_id' );
