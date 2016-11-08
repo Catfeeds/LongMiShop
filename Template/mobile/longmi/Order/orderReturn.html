@@ -10,7 +10,7 @@
 
 	<div class="cp6">
 		<div class="c">
-			<a href="{: $good['isReturn'] == 1 ? 'javascript:isReturns()' :  U('/Mobile/User/return_goods',array('goods_id'=>$good['goods_id'],'order_id'=>$good['order_id']))  }"></a>
+			<a href="{: $good['isReturn'] != 0 || $good['isReturnPass'] != 0  ? 'javascript:isReturns()' :  U('/Mobile/User/return_goods',array('goods_id'=>$good['goods_id'],'order_id'=>$good['order_id']))  }"></a>
 		</div>
 		<div class="cp1_l">
 			<img src="{$good.goods_id|goods_thum_images=100,100}" width="92" height="92">
