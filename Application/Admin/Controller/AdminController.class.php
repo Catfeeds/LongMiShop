@@ -291,12 +291,15 @@ class AdminController extends BaseController {
 
 
 
+        $bankList = include_once 'Application/Common/Conf/bank.php'; //快递名称
+        $this -> assign('bankList',$bankList);
+
         $phone = M('admin')->field('phone')->where("admin_id = '".session('admin_id')."'")->find();
-        $this->assign('accountMoney',$accountInfo['amount']);
-        $this->assign('moneySum',$moneySum);
-        $this->assign('phone',$phone['phone']);
-        $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
-        $this->display();
+        $this -> assign('accountMoney',$accountInfo['amount']);
+        $this -> assign('moneySum',$moneySum);
+        $this -> assign('phone',$phone['phone']);
+        $this -> assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
+        $this -> display();
     }
 
     //手机修改验证码发送
