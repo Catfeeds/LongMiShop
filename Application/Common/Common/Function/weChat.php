@@ -452,6 +452,8 @@ function afterSubscribe( $openid , $weChatConfig = null ){
         $weChatConfig = M('wx_user')->find();
     }
 
+    setLogResult(json_encode($openid),"afterSubscribe openid","test");
+    setLogResult(json_encode($weChatConfig),"afterSubscribe weChatConfig","test");
     if( !isExistenceUserWithOpenid( $openid ) ) {
         $info = array(
             "subscribe"  => 1,
@@ -459,7 +461,9 @@ function afterSubscribe( $openid , $weChatConfig = null ){
             "nickname"   => "新用户",
             "headimgurl" => "/Public/images/default/user.png"
         );
+        setLogResult(json_encode($info),"afterSubscribe info","test");
         registerFromOpenid($openid, $info , "WeChat" , false );
+        setLogResult(1,"afterSubscribe lq","test");
         weChatPullingMessage($openid);
     }
     $userInfo = findDataWithCondition( "users" , array( "openid" => $openid ) );
