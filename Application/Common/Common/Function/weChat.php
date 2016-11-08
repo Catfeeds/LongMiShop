@@ -466,7 +466,6 @@ function afterSubscribe( $openid , $weChatConfig = null )
             weChatPullingMessage($openid);
         }
         $userInfo = findDataWithCondition("users", array("openid" => $openid));
-        setLogResult(json_encode($userInfo), "afterSubscribe", "test");
         if (empty($userInfo)) {
             return;
         }
