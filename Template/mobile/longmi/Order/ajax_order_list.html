@@ -57,7 +57,7 @@
                     <!--</a>-->
                 <!--</div>-->
             <!--</if>-->
-            <if condition="$list.return_btn eq 1 && $list.isReturn neq 1">
+            <if condition="$list.return_btn eq 1 && $list.isReturn neq 1 && $list.isEetreat neq 1">
                 <div class="l_btn2">
                     <a href="{:U('/Mobile/Order/orderReturn',array('order_id'=>$list['order_id']))}">退货
                     </a>
