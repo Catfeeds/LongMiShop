@@ -44,8 +44,11 @@
                             <td nowrap><span class="gray">开户银行：</span>
                                 <select name="bank" class="select">
                                     <option value="0">请选择</option>
-                                    <option value="中国工商银行">中国工商银行</option>
-                                </select></td>
+                                    <foreach name="bankList" item="bankItem" key ="bankKey">
+                                        <option value="{$bankKey}">{$bankKey}</option>
+                                    </foreach>
+                                </select>
+                            </td>
                         </tr>
                         <tr>
                             <td nowrap><label for="select"></label>
