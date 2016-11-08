@@ -18,7 +18,7 @@ function is_supplier(){
  * @return mixed
  */
 function getAccountInfo(){
-    refreshAccountMoney( session("admin_id") );
+//    refreshAccountMoney( session("admin_id") );
     $condition = array(
         "admin_id" => session("admin_id"),
     );
