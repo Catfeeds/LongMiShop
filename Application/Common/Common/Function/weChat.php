@@ -451,9 +451,8 @@ function afterSubscribe( $openid , $weChatConfig = null ){
     if( is_null($weChatConfig) ){
         $weChatConfig = M('wx_user')->find();
     }
-
-    setLogResult($openid,"afterSubscribe openid","test");
-    if( !isExistenceUserWithOpenid( $openid ) ) {
+    $userInfo = findDataWithCondition( "users" , array( "openid" => $openid ) );
+    if( empty( $userInfo ) ) {
         $info = array(
             "subscribe"  => 1,
             "sex"        => 1,
