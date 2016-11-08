@@ -367,6 +367,7 @@ function setOrderReturnState( $orderInfo , $userId ){
     }
     $goodsCount  = count( $goodsList );
     $returnCount = 0;
+    $isEetreats = 0;
     foreach ( $goodsList as $key => $goodsItem ){
         $where = array();
         $where['order_id']  = $goodsItem['order_id'];
@@ -376,17 +377,20 @@ function setOrderReturnState( $orderInfo , $userId ){
         $where['result']  = "0";
         $goodsList[$key]['isReturn'] = $count = M('return_goods')->where($where)->count();
         $where['result']  = "1";
-        $goodsList[$key]['isReturnPass'] = $isEetreat = M('return_goods')->where($where)->count();
-        $goodsCount -=  $isEetreat ;
+        $goodsList[$key]['isReturnPass']  = M('return_goods')->where($where)->count();
+
         if( $count > 0){
             $returnCount ++;
+        }
+        if($goodsList[$key]['isReturnPass'] !=0 || $goodsList[$key]['isReturn'] != 0 ){
+            $isEetreats++;
         }
     }
     if( $returnCount != 0 ){
         $orderInfo['isReturn'] = true;
     }
-    if( $returnCount == $goodsCount ){
-        $orderInfo['isEetreat'] = true;
+    if( $isEetreats == $goodsCount ){
+        $orderInfo['isEetreats'] = true;
     }
     $orderInfo['goods_list'] = $goodsList;
     return $orderInfo;
