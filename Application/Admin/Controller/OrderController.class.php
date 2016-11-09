@@ -220,7 +220,6 @@ class OrderController extends BaseController {
         }
         $order['goods_list'] = $orderLogic -> getOrderGoods($order_id);
         $order = setOrderReturnState( $order , $order['user_id'] );
-        dd($order);
 
         $condition = array();
         $condition['order_id'] = $order_id;

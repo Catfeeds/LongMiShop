@@ -114,7 +114,7 @@
             </div>
         </div>
         <!--发货状态下课修改订单号-->
-        <if condition="$order['shipping_status'] neq 1">
+        <if condition="$order['shipping_status'] neq 1 and $order['isReturn'] eq 0 ">
             <!--新订单列表 操作信息-->
             <div class="panel panel-default">
                 <div class="panel-heading">
