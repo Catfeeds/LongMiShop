@@ -21,12 +21,12 @@ class TemplateController extends BaseController {
                  $template_config[$val] = include "./Template/$t/$val/config.php";
          }
         
-        $this->assign('t',$t);        
-        // $default_theme =  tpCache("hidden.{$t}_default_theme"); // //$default_theme = M('Config')->where("name='{$t}_default_theme'")->getField('value');
+        $this -> assign('t',$t);
+        // $default_theme =  tpCache("hidden.{$t}_default_theme"); // //$default_theme = M('Config') -> where("name='{$t}_default_theme'")->getField('value');
         $template_arr = include("./Application/$m/Conf/html.php");        
-        $this->assign('default_theme',$template_arr['DEFAULT_THEME']);
-        $this->assign('template_config',$template_config);
-        $this->display();
+        $this -> assign('default_theme',$template_arr['DEFAULT_THEME']);
+        $this -> assign('template_config',$template_config);
+        $this -> display();
     }
 
 
@@ -36,8 +36,8 @@ class TemplateController extends BaseController {
      */
     public function listDiyTemplate(){
         $list = M('diy_page') -> select();
-        $this->assign('list',$list);
-        $this->display();
+        $this -> assign('list',$list);
+        $this -> display();
     }
 
 
@@ -89,13 +89,13 @@ class TemplateController extends BaseController {
 //            }
             $this->success("页面保存成功!!!",U('Admin/Template/listDiyTemplate'));
         } else {
-            $page = $model_diy_page -> where(array(':id' => $id)) ->find();
+            $page = $model_diy_page -> where(array(':id' => $id)) -> find();
             if(empty($page)&&!empty($id)){
                 $this->error("非法访问",U('Admin/Template/listDiyTemplate'));
             }
-//            $this->assign('page',$page);
+//            $this -> assign('page',$page);
         }
-        $this->display();
+        $this -> display();
 
 
     }

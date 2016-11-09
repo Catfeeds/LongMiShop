@@ -19,5 +19,5 @@ function getCurrentAddress( $userId , $addressId = null ){
         $condition['is_default'] = 1;
     }
 
-    return M('user_address')->where($condition)->find();
+    return M('user_address') -> where($condition)->find();
 }

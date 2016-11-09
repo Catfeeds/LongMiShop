@@ -51,10 +51,10 @@ abstract class MobileBaseController extends BaseController {
             $this -> weChatConfig   = $this -> weChatLogic -> weChatConfig;
 
             $this -> weChatLogic -> authorization();
-            $this->assign('wechat_config', $this->weChatConfig);
+            $this -> assign('wechat_config', $this->weChatConfig);
 
             $signPackage = $this -> weChatLogic -> getSignPackage();
-            $this->assign('signPackage', $signPackage);
+            $this -> assign('signPackage', $signPackage);
 
         }else{
             /**
@@ -74,22 +74,22 @@ abstract class MobileBaseController extends BaseController {
     {
         //用户上次访问时间
         $push_message_time = push_message_time($this->user_id);
-        $this->assign('push_message_time',$push_message_time);
+        $this -> assign('push_message_time',$push_message_time);
 
 
 //        $mobileMessage = cookie("mobileMessage");
 //        if ( !empty($mobileMessage) ){
-//            $this->assign('mobileMessage', $mobileMessage);
+//            $this -> assign('mobileMessage', $mobileMessage);
 ////            if( cookie('haveMobileMessage') == 1 ){
 ////                session( "mobileMessage" , null );
 ////            }
 //        }
 
 
-//        $brand_list = M('brand')->cache(true,MY_CACHE_TIME)->field('id,parent_cat_id,logo,is_hot')->where("parent_cat_id>0")->select();
-//        $this->assign('brand_list', $brand_list);
+//        $brand_list = M('brand')->cache(true,MY_CACHE_TIME)->field('id,parent_cat_id,logo,is_hot') -> where("parent_cat_id>0")->select();
+//        $this -> assign('brand_list', $brand_list);
 
-        $this->assign('lmshop_config', $this -> shopConfig);
+        $this -> assign('lmshop_config', $this -> shopConfig);
 
     }
 

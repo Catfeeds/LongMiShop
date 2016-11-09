@@ -108,7 +108,7 @@ class UserController extends BaseController {
         $user_id = I('user_id');
         if(!$user_id)
             exit(json_encode(array('status'=>-1,'msg'=>'缺少参数','result'=>'')));
-            $address = M('user_address')->where(array('user_id'=>$user_id))->select();
+            $address = M('user_address') -> where(array('user_id'=>$user_id))->select();
         if(!$address)
             exit(json_encode(array('status'=>1,'msg'=>'没有数据','result'=>'')));
         exit(json_encode(array('status'=>1,'msg'=>'获取成功','result'=>$address)));
@@ -129,13 +129,13 @@ class UserController extends BaseController {
     public function del_address(){
         $id = I('id');
         
-        $address = M('user_address')->where("address_id = $id")->find();
-        $row = M('user_address')->where(array('user_id'=>$this->user_id,'address_id'=>$id))->delete();                
+        $address = M('user_address') -> where("address_id = $id")->find();
+        $row = M('user_address') -> where(array('user_id'=>$this->user_id,'address_id'=>$id))->delete();
         // 如果删除的是默认收货地址 则要把第一个地址设置为默认收货地址
         if($address['is_default'] == 1)
         {
-            $address = M('user_address')->where("user_id = {$this->user_id}")->find();            
-            M('user_address')->where("address_id = {$address['address_id']}")->save(array('is_default'=>1));
+            $address = M('user_address') -> where("user_id = {$this->user_id}")->find();
+            M('user_address') -> where("address_id = {$address['address_id']}")->save(array('is_default'=>1));
         }        
         if(!$row)
            exit(json_encode(array('status'=>1,'msg'=>'删除成功','result'=>''))); 
@@ -197,12 +197,12 @@ class UserController extends BaseController {
         
         
         if(I('type') )
-        $count = M('order')->where($map)->count();
+        $count = M('order') -> where($map)->count();
         $Page       = new \Think\Page($count,10);
 
-        $show = $Page->show();
+        $show = $Page -> show();
         $order_str = "order_id DESC";
-        $order_list = M('order')->order($order_str)->where($map)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $order_list = M('order')->order($order_str) -> where($map)->limit($Page->firstRow.','.$Page->listRows)->select();
 
         //获取订单商品
         foreach($order_list as $k=>$v){     
@@ -226,7 +226,7 @@ class UserController extends BaseController {
             $map['order_sn'] = I('sn');
         }
         $map['user_id'] = $user_id;
-        $order_info = M('order')->where($map)->find();
+        $order_info = M('order') -> where($map)->find();
         $order_info = set_btn_order_status($order_info);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
         
         if(!$user_id > 0 || !$user_id > 0)
@@ -235,10 +235,10 @@ class UserController extends BaseController {
             exit(json_encode(array('status'=>-1,'msg'=>'订单不存在','result'=>'')));
         }
         
-        $invoice_no = M('DeliveryDoc')->where("order_id = $id")->getField('invoice_no',true);
+        $invoice_no = M('DeliveryDoc') -> where("order_id = $id")->getField('invoice_no',true);
         $order_info['invoice_no'] = implode(' , ', $invoice_no);
         // 获取 最新的 一次发货时间
-        $order_info['shipping_time'] = M('DeliveryDoc')->where("order_id = $id")->order('id desc')->getField('create_time');        
+        $order_info['shipping_time'] = M('DeliveryDoc') -> where("order_id = $id")->order('id desc')->getField('create_time');
         
         //获取订单商品
         $data = $this->userLogic->get_order_goods($order_info['order_id']);
@@ -319,7 +319,7 @@ class UserController extends BaseController {
             
             $unique_id = I("unique_id"); // 唯一id  类似于 pc 端的session id
             $user_id = I('user_id'); // 用户id
-            $user_info = M('users')->where("user_id = $user_id")->find();            
+            $user_info = M('users') -> where("user_id = $user_id")->find();
 
             $add['goods_id'] = I('goods_id');
             $add['email'] = $user_info['email'];
@@ -363,18 +363,18 @@ class UserController extends BaseController {
         
         $unique_id = I("unique_id"); // 唯一id  类似于 pc 端的session id
         $user_id = I('user_id'); // 用户id       
-        $count = M('return_goods')->where("user_id = $user_id")->count();        
+        $count = M('return_goods') -> where("user_id = $user_id")->count();
         $page = new \Think\Page($count,4);
-        $list = M('return_goods')->where("user_id = $user_id")->order("id desc")->limit("{$page->firstRow},{$page->listRows}")->select();
+        $list = M('return_goods') -> where("user_id = $user_id")->order("id desc")->limit("{$page->firstRow},{$page->listRows}")->select();
         $goods_id_arr = get_arr_column($list, 'goods_id');
         if(!empty($goods_id_arr))
-            $goodsList = M('goods')->where("goods_id in (".  implode(',',$goods_id_arr).")")->getField('goods_id,goods_name');        
+            $goodsList = M('goods') -> where("goods_id in (".  implode(',',$goods_id_arr).")")->getField('goods_id,goods_name');
         foreach ($list as $key => $val)
         {
             $val['goods_name'] = $goodsList[$val[goods_id]];
             $list[$key] = $val;
         }
-        //$this->assign('page', $page->show());// 赋值分页输出                    	    	
+        //$this -> assign('page', $page -> show());// 赋值分页输出
         exit(json_encode(array('status'=>1,'msg'=>'获取成功','result'=>$list)));
     }    
     
@@ -385,10 +385,10 @@ class UserController extends BaseController {
     public function return_goods_info()
     {
         $id = I('id',0);
-        $return_goods = M('return_goods')->where("id = $id")->find();
+        $return_goods = M('return_goods') -> where("id = $id")->find();
         if($return_goods['imgs'])
             $return_goods['imgs'] = explode(',', $return_goods['imgs']);        
-        $goods = M('goods')->where("goods_id = {$return_goods['goods_id']} ")->find();                
+        $goods = M('goods') -> where("goods_id = {$return_goods['goods_id']} ")->find();
         $return_goods['goods_name'] = $goods['goods_name'];
         exit(json_encode(array('status'=>1,'msg'=>'获取成功','result'=>$return_goods)));
     }    
@@ -403,7 +403,7 @@ class UserController extends BaseController {
         $goods_id = I('goods_id',0);
         $spec_key = I('spec_key','');
         
-        $return_goods = M('return_goods')->where("order_id = $order_id and goods_id = $goods_id and spec_key = '$spec_key' and status in(0,1)")->find();            
+        $return_goods = M('return_goods') -> where("order_id = $order_id and goods_id = $goods_id and spec_key = '$spec_key' and status in(0,1)")->find();
         if(!empty($return_goods))        
             exit(json_encode(array('status'=>1,'msg'=>'已经在申请退货中..','result'=>$return_goods['id']))); 
          else
@@ -426,7 +426,7 @@ class UserController extends BaseController {
         if(empty($order_id) || empty($order_sn) || empty($goods_id)|| empty($user_id)|| empty($type)|| empty($reason))
             exit(json_encode(array('status'=>-1,'msg'=>'参数不齐!')));
         
-        $return_goods = M('return_goods')->where("order_id = $order_id and goods_id = $goods_id and spec_key = '$spec_key' and status in(0,1)")->find();            
+        $return_goods = M('return_goods') -> where("order_id = $order_id and goods_id = $goods_id and spec_key = '$spec_key' and status in(0,1)")->find();
         if(!empty($return_goods))
         {
             exit(json_encode(array('status'=>-2,'msg'=>'已经提交过退货申请!')));

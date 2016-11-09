@@ -143,7 +143,7 @@
 		//  DEPRECATED METHODS
 		//	Methods used in older parser versions, soon will be removed
 		function set_templatefile ($template_filename)	{	$this->tpl_file  =  $template_filename;	}
-		function add_value ($name, $value )				{	$this->assign($name, $value);	}
+		function add_value ($name, $value )				{	$this -> assign($name, $value);	}
 		function add_array ($name, $value )				{	$this->append($name, $value);	}
 
 

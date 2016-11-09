@@ -315,7 +315,7 @@ class GoodsLogic extends RelationModel
                        
          $spec = M('Spec')->getField('id,name'); // 规格表
          $specItem = M('SpecItem')->getField('id,item');//规格项
-         $keySpecGoodsPrice = M('SpecGoodsPrice')->where('goods_id = '.$goods_id)->getField('key,key_name,price,store_count,sku');//规格项
+         $keySpecGoodsPrice = M('SpecGoodsPrice') -> where('goods_id = '.$goods_id)->getField('key,key_name,price,store_count,sku');//规格项
                           
        $str = "<table class='table table-bordered' id='spec_input_tab'>";
        $str .="<tr>";       

@@ -20,7 +20,7 @@ class BaseController extends Controller {
         $this->user_id = I("user_id",0); // 用户id   
         if($this->user_id)
         {
-            $this->user = M('users')->where("user_id = {$this->user_id}")->find();
+            $this->user = M('users') -> where("user_id = {$this->user_id}")->find();
         }      
         $unique_id = I("unique_id"); // 唯一id  类似于 pc 端的session id
         define('SESSION_ID',$unique_id); //将当前的session_id保存为常量，供其它方法调用
@@ -91,7 +91,7 @@ class BaseController extends Controller {
      * 获取全部地址信息
      */
     public function allAddress(){
-        $data =  M('region')->where('level < 4')->select();
+        $data =  M('region') -> where('level < 4')->select();
         $json_arr = array('status'=>1,'msg'=>'成功!','result'=>$data);
         $json_str = json_encode($json_arr);
         exit($json_str);

@@ -63,7 +63,7 @@ function getOpenidBindingUserId( $openid = null )
     $condition = array(
         "openid" => $openid
     );
-    $bindingInfo = M('binding') -> where($condition) ->find();
+    $bindingInfo = M('binding') -> where($condition) -> find();
     return $bindingInfo['user_id'];
 }
 
@@ -301,9 +301,9 @@ function userWechatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户�
     }
 
 	$appid = $weChatConfig['appid']; 
-    $pluginRes  = M('plugin')->where(array('code'=>'weixin','name'=>'微信支付'))->find();
+    $pluginRes  = M('plugin') -> where(array('code'=>'weixin','name'=>'微信支付'))->find();
     $key = unserialize($pluginRes['config_value']);
-    $merchantConf = M('merchant_conf')->where(array('wx_uid'=>$weChatConfig['id']))->find();
+    $merchantConf = M('merchant_conf') -> where(array('wx_uid'=>$weChatConfig['id']))->find();
     
     $keyRes = $key['key'];
 	$mch_appid = $appid;
@@ -473,8 +473,8 @@ function afterSubscribe( $openid , $weChatConfig = null )
         if (isExistenceDataWithCondition("invite_list", array('user_id' => $userId))) {
             return;
         }
-        $sendCouponsId = M('config')->where(array('name' => 'send_coupons_id'))->getField("value");
-        $sendCouponsCont = M('config')->where(array('name' => 'send_coupons_cont'))->getField("value");
+        $sendCouponsId = M('config') -> where(array('name' => 'send_coupons_id'))->getField("value");
+        $sendCouponsCont = M('config') -> where(array('name' => 'send_coupons_cont'))->getField("value");
         //查询是否存在优惠券
         $coupon = findDataWithCondition('coupon', array("id" => $sendCouponsId));
         if (empty($coupon)) {
@@ -500,7 +500,7 @@ function afterSubscribe( $openid , $weChatConfig = null )
             } while ($check_exist);
             $add['code'] = $code;
             isSuccessToAddData('coupon_list', $add);
-            M('coupon')->where("id=" . $sendCouponsId . "")->setInc('send_num', 1);
+            M('coupon') -> where("id=" . $sendCouponsId . "")->setInc('send_num', 1);
             //发送模版消息
             $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
             $jsSdkLogic->push_msg($openid, $sendCouponsCont);
@@ -531,8 +531,8 @@ function weChatPullingMessage( $openid ){
         $where = array(
             "openid"=>$openid,
         );
-        $res = M('users')->where($where) -> save($save);
-        $userRes =  M('users')->where($where)->find();
+        $res = M('users') -> where($where) -> save($save);
+        $userRes =  M('users') -> where($where)->find();
         if(empty($userRes['nickname'])){
             $datas['nickname'] = '龙米会员'.$userRes['user_id'];
             $datas['user_id'] = $userRes['user_id'];

@@ -18,7 +18,7 @@ class CartController extends BaseController {
         $user_id = I("user_id",0); // 用户id                       
         // 给用户计算会员价 登录前后不一样
         if($user_id){
-            $user = M('users')->where("user_id = $user_id")->find();
+            $user = M('users') -> where("user_id = $user_id")->find();
             M('Cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price * {$user[discount]} where (user_id ={$user[user_id]} or session_id = '{$unique_id}') and prom_type = 0");        
         }
             
@@ -46,7 +46,7 @@ class CartController extends BaseController {
     public function delCart()
     {       
         $ids = I("ids"); // 商品 ids        
-        $result = M("Cart")->where(" id in ($ids)")->delete(); // 删除id为5的用户数据
+        $result = M("Cart") -> where(" id in ($ids)")->delete(); // 删除id为5的用户数据
         
         // 查找购物车数量
         $unique_id = I("unique_id"); // 唯一id  类似于 pc 端的session id
@@ -68,7 +68,7 @@ class CartController extends BaseController {
         $user_id = I("user_id",0); // 用户id                
         $where = " session_id = '$unique_id' "; // 默认按照 $unique_id 查询
         $user_id && $where = " user_id = ".$user_id; // 如果这个用户已经等了则按照用户id查询
-        $cartList = M('Cart')->where($where)->getField("id,goods_num,selected"); 
+        $cartList = M('Cart') -> where($where)->getField("id,goods_num,selected");
         
         if($cart_form_data)
         {
@@ -79,9 +79,9 @@ class CartController extends BaseController {
                 $data['selected'] = $val['selected'];
                 $cartID = $val['cartID'];
                 if(($cartList[$cartID]['goods_num'] != $data['goods_num']) || ($cartList[$cartID]['selected'] != $data['selected'])) 
-                    M('Cart')->where("id = $cartID")->save($data);
+                    M('Cart') -> where("id = $cartID")->save($data);
             }
-            //$this->assign('select_all', $_POST['select_all']); // 全选框
+            //$this -> assign('select_all', $_POST['select_all']); // 全选框
         }                  
                        
         $result = $this->cartLogic->cartList($this->user, $unique_id,1,0); // 选中的商品        
@@ -114,14 +114,14 @@ class CartController extends BaseController {
         }            
         $cart_result['cartList'] = $cartList;     
         // 物流公司
-        $shippingList = M('Plugin')->where("`type` = 'shipping' and status = 1")->select();// 物流公司                
+        $shippingList = M('Plugin') -> where("`type` = 'shipping' and status = 1")->select();// 物流公司
         // 优惠券
         $Model = new \Think\Model(); // 找出这个用户的优惠券 没过期的  并且 订单金额达到 condition 优惠券指定标准的     
         $sql = "select c1.name,c1.money,c1.condition, c2.* from __PREFIX__coupon as c1 inner join __PREFIX__coupon_list as c2  on c2.cid = c1.id and c1.type in(0,1,2,3) and order_id = 0 where c2.uid = $user_id and ".time()." < c1.use_end_time and c1.condition <= {$cart_result['total_price']['total_fee']}";		
         $couponList = $Model->query($sql);                       
         // 收货地址
-        $addresslist = M('UserAddress')->where("user_id = $user_id")->select();
-        $c = M('UserAddress')->where("user_id = $user_id and is_default = 1")->count(); // 看看有没默认收货地址        
+        $addresslist = M('UserAddress') -> where("user_id = $user_id")->select();
+        $c = M('UserAddress') -> where("user_id = $user_id and is_default = 1")->count(); // 看看有没默认收货地址
         if((count($addresslist) > 0) && ($c == 0)) // 如果没有设置默认收货地址, 则第一条设置为默认收货地址
             $addresslist[0]['is_default'] = 1;        
         
@@ -161,8 +161,8 @@ class CartController extends BaseController {
         if(!$address_id) exit(json_encode(array('status'=>-1,'msg'=>'请完善收货人信息','result'=>null))); // 返回结果状态
         if(!$shipping_code) exit(json_encode(array('status'=>-1,'msg'=>'请选择物流信息','result'=>null))); // 返回结果状态
         
- 	$address = M('UserAddress')->where("address_id = $address_id")->find();
-	$order_goods = M('cart')->where("user_id = {$user_id} and selected = 1")->select();
+ 	$address = M('UserAddress') -> where("address_id = $address_id")->find();
+	$order_goods = M('cart') -> where("user_id = {$user_id} and selected = 1")->select();
         $result = calculate_price($user_id,$order_goods,$shipping_code,0,$address[province],$address[city],$address[district],$pay_points,$user_money,$coupon_id,$couponCode);
                 
 	if($result['status'] < 0)	
@@ -188,7 +188,7 @@ class CartController extends BaseController {
         if($_REQUEST['act'] == 'submit_order')
         {            
             if(empty($coupon_id) && !empty($couponCode))
-               $coupon_id = M('CouponList')->where("`code`='$couponCode'")->getField('id');           
+               $coupon_id = M('CouponList') -> where("`code`='$couponCode'")->getField('id');
             $result = $this->cartLogic->addOrder($user_id,$address_id,$shipping_code,$invoice_title,$coupon_id,$car_price); // 添加订单                        
             exit(json_encode($result));            
         }

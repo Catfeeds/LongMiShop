@@ -36,7 +36,7 @@ function navigate_goods($id,$type = 0)
     $cat_id = $id; //
     // 如果传递过来的是
     if($type == 1){
-        $cat_id = M('goods')->where("goods_id = $id")->getField('cat_id');
+        $cat_id = M('goods') -> where("goods_id = $id")->getField('cat_id');
     }
     $categoryList = M('GoodsCategory')->getField("id,name,parent_id");
 

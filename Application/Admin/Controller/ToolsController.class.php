@@ -10,10 +10,10 @@ class ToolsController extends BaseController {
             $dbtables[$k]['size'] = format_bytes($v['data_length'] + $v['index_length']);
             $total += $v['data_length'] + $v['index_length'];
         }
-        $this->assign('list', $dbtables);
-        $this->assign('total', format_bytes($total));
-        $this->assign('tableNum', count($dbtables));
-        $this->display();
+        $this -> assign('list', $dbtables);
+        $this -> assign('total', format_bytes($total));
+        $this -> assign('tableNum', count($dbtables));
+        $this -> display();
     }
     
     public function backup(){
@@ -145,10 +145,10 @@ class ToolsController extends BaseController {
     	
     	if(empty($fileArray)) $fileArray = array();
     	krsort($fileArray); //按备份时间倒序排列    	
-    	$this->assign('vlist', $fileArray);
-    	$this->assign('total', format_bytes($size));
-    	$this->assign('filenum', count($fileArray));
-    	$this->display();
+    	$this -> assign('vlist', $fileArray);
+    	$this -> assign('total', format_bytes($size));
+    	$this -> assign('filenum', count($fileArray));
+    	$this -> display();
     }
     
     
@@ -366,12 +366,12 @@ class ToolsController extends BaseController {
     	if($parent_id == 0){
     		$parent = array('id'=>0,'name'=>"中国省份地区",'level'=>0);
     	}else{
-    		$parent = M('region')->where("id=$parent_id")->find();
+    		$parent = M('region') -> where("id=$parent_id")->find();
     	}
-    	$region = M('region')->where("parent_id=$parent_id")->select();
-    	$this->assign('parent',$parent);
-    	$this->assign('region',$region);
-    	$this->display();
+    	$region = M('region') -> where("parent_id=$parent_id")->select();
+    	$this -> assign('parent',$parent);
+    	$this -> assign('region',$region);
+    	$this -> display();
     }
     
     public function regionHandle(){
@@ -384,7 +384,7 @@ class ToolsController extends BaseController {
     		if(empty($data['name'])){
     			$this->error("请填写地区名称", $referurl);
     		}else{
-    			$res = M('region')->where("parent_id = ".$data['parent_id']." and name='".$data['name']."'")->find();
+    			$res = M('region') -> where("parent_id = ".$data['parent_id']." and name='".$data['name']."'")->find();
     			if(empty($res)){
     				M('region')->add($data);
                     $this->fwrite();
@@ -395,7 +395,7 @@ class ToolsController extends BaseController {
     			}
     		}
     	}else{
-    		M('region')->where("id=$id or parent_id=$id")->delete();
+    		M('region') -> where("id=$id or parent_id=$id")->delete();
             $this->fwrite();
             $this->cache();
     		$this->success("操作成功", $referurl);
@@ -407,9 +407,9 @@ class ToolsController extends BaseController {
     public function fwrite(){
         set_time_limit(0);
         // 获取省份
-        $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
-        $c = M('region')->where(array('level'=> 2))->select();
-        $d = M('region')->where(array('level'=> 3))->select();
+        $p = M('region') -> where(array('parent_id'=>0,'level'=> 1))->select();
+        $c = M('region') -> where(array('level'=> 2))->select();
+        $d = M('region') -> where(array('level'=> 3))->select();
         $content = "var  cityData3 = [" ;
         foreach($p as $key_p => $item_p){
             $content .= "{ \r\n value: '".$item_p['id']."', \r\n";

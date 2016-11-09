@@ -37,7 +37,7 @@ class GoodsModel extends Model
     {
         $admin_id = session('admin_id');
         if (is_supplier()) {
-            M('goods')->where("goods_id = $goods_id ")->save(array("admin_id" => $admin_id)); // 根据条件更新记录
+            M('goods') -> where("goods_id = $goods_id ")->save(array("admin_id" => $admin_id)); // 根据条件更新记录
             $data = array(
                'goods_id'=> $goods_id,
                'admin_id'=>$admin_id,
@@ -62,12 +62,12 @@ class GoodsModel extends Model
         if (count($_POST['goods_images']) > 1) {
 //            array_unshift($_POST['goods_images'],$_POST['original_img']); // 商品原始图 默认为 相册第一张图片
 //            array_pop($_POST['goods_images']); // 弹出最后一个
-            $goodsImagesArr = M('GoodsImages')->where("goods_id = $goods_id")->getField('img_id,image_url'); // 查出所有已经存在的图片
+            $goodsImagesArr = M('GoodsImages') -> where("goods_id = $goods_id")->getField('img_id,image_url'); // 查出所有已经存在的图片
 
             // 删除图片
             foreach ($goodsImagesArr as $key => $val) {
                 if (!in_array($val, $_POST['goods_images']))
-                    M('GoodsImages')->where("img_id = {$key}")->delete(); // 删除所有状态为0的用户数据
+                    M('GoodsImages') -> where("img_id = {$key}")->delete(); // 删除所有状态为0的用户数据
             }
             // 添加图片
             foreach ($_POST['goods_images'] as $key => $val) {
@@ -86,7 +86,7 @@ class GoodsModel extends Model
                 $data = array(
                     "sort" => $_POST['goods_images_sort'][$key],
                 );
-                M('GoodsImages')->where($where)->save($data);
+                M('GoodsImages') -> where($where)->save($data);
             }
         }
 
@@ -101,12 +101,12 @@ class GoodsModel extends Model
                         'goods_id' => $goods_id,
                         'name'     => array('not in', implode(',', $spec_title)),
                     );
-                    $specList = M("spec")->where($condition)->field("id")->select();
+                    $specList = M("spec") -> where($condition)->field("id")->select();
                     if (!empty($specList)) {
                         foreach ($specList as $specItem) {
-                            M("spec_item")->where(array('spec_id' => $specItem['id']))->delete();
+                            M("spec_item") -> where(array('spec_id' => $specItem['id']))->delete();
                         }
-                        M("spec")->where(array('goods_id' => $goods_id))->delete();
+                        M("spec") -> where(array('goods_id' => $goods_id))->delete();
                     }
 
                     foreach ($spec_title as $specTitleKey => $specTitleItem) {
@@ -127,7 +127,7 @@ class GoodsModel extends Model
                                     'spec_id' => $specId,
                                     'item'    => array('not in', implode(',', $specItemTitle)),
                                 );
-                                M('spec_item')->where($condition4)->delete();
+                                M('spec_item') -> where($condition4)->delete();
                                 foreach ($specItemTitle as $specItemTitleKey => $specItemTitleItem) {
                                     $condition3 = array(
                                         'spec_id' => $specId,
@@ -143,13 +143,13 @@ class GoodsModel extends Model
                         }
                     }
                 } else {
-                    $specList = M("spec")->where(array('goods_id' => $goods_id))->field("id")->select();
+                    $specList = M("spec") -> where(array('goods_id' => $goods_id))->field("id")->select();
                     if (!empty($specList)) {
                         foreach ($specList as $specItem) {
-                            M("spec_item")->where(array('spec_id' => $specItem['id']))->delete();
+                            M("spec_item") -> where(array('spec_id' => $specItem['id']))->delete();
                         }
-                        M("spec")->where(array('goods_id' => $goods_id))->delete();
-                        M("SpecGoodsPrice")->where(array('goods_id' => $goods_id))->delete();
+                        M("spec") -> where(array('goods_id' => $goods_id))->delete();
+                        M("SpecGoodsPrice") -> where(array('goods_id' => $goods_id))->delete();
                     }
                 }
             }

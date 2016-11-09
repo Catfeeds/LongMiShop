@@ -20,9 +20,9 @@ class ProblemController extends BaseController {
         	$pager = new \Think\Page($count,$size);// 实例化分页类 传入总记录数和每页显示的记录数
         	$page = $pager->show();//分页显示输出
         }
-        $this->assign('list',$list);
-        $this->assign('page',$page);// 赋值分页输出
-        $this->display();
+        $this -> assign('list',$list);
+        $this -> assign('page',$page);// 赋值分页输出
+        $this -> display();
     }
 
     //新增
@@ -30,9 +30,9 @@ class ProblemController extends BaseController {
     	if(IS_GET){ //编辑
     		$where['pro_id'] = I('id');
     		$edit_list = $this->pro->where($where)->find();
-    		$this->assign('edit_list',$edit_list);
+    		$this -> assign('edit_list',$edit_list);
     	}
-    	$this->display();
+    	$this -> display();
     }
 
     public function save(){

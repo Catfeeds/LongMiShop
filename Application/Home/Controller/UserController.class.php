@@ -15,12 +15,12 @@ class UserController extends BaseController {
         if(session('?user'))
         {
         	$user = session('user');
-            $user = M('users')->where("user_id = {$user['user_id']}")->find();
+            $user = M('users') -> where("user_id = {$user['user_id']}")->find();
             session('user',$user);  //覆盖session 中的 user               
         	$this->user = $user;
         	$this->user_id = $user['user_id'];
-        	$this->assign('user',$user); //存储用户信息
-        	$this->assign('user_id',$this->user_id);
+        	$this -> assign('user',$user); //存储用户信息
+        	$this -> assign('user_id',$this->user_id);
         }else{
         	$nologin = array(
         			'login','pop_login','do_login','logout','verify','set_pwd','finished',
@@ -34,7 +34,7 @@ class UserController extends BaseController {
         }
         //用户中心面包屑导航
         $navigate_user = navigate_user();
-        $this->assign('navigate_user',$navigate_user);        
+        $this -> assign('navigate_user',$navigate_user);
     }
 
     /*
@@ -46,9 +46,9 @@ class UserController extends BaseController {
         $user = $user['result'];
         $level = M('user_level')->select();
         $level = convert_arr_key($level,'level_id');
-        $this->assign('level',$level);
-        $this->assign('user',$user);
-        $this->display();
+        $this -> assign('level',$level);
+        $this -> assign('user',$user);
+        $this -> display();
     }
 
 
@@ -73,11 +73,11 @@ class UserController extends BaseController {
         $data = $logic->get_account_log($this->user_id,I('get.type'));
         $account_log = $data['result'];
 
-        $this->assign('user',$user);
-        $this->assign('account_log',$account_log);
-        $this->assign('page',$data['show']);
-        $this->assign('active','account');
-        $this->display();
+        $this -> assign('user',$user);
+        $this -> assign('account_log',$account_log);
+        $this -> assign('page',$data['show']);
+        $this -> assign('active','account');
+        $this -> display();
     }
     /*
      * 优惠券列表
@@ -86,10 +86,10 @@ class UserController extends BaseController {
         $logic = new UsersLogic();
         $data = $logic->get_coupon($this->user_id,$_REQUEST['type']);
         $coupon_list = $data['result'];
-        $this->assign('coupon_list',$coupon_list);
-        $this->assign('page',$data['show']);
-        $this->assign('active','coupon');
-        $this->display();
+        $this -> assign('coupon_list',$coupon_list);
+        $this -> assign('page',$data['show']);
+        $this -> assign('active','coupon');
+        $this -> display();
     }
     /**
      *  登录
@@ -99,8 +99,8 @@ class UserController extends BaseController {
         	header("Location: ".U('Home/User/Index'));
         }           
         $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Home/User/index");
-        $this->assign('referurl',$referurl);
-        $this->display();
+        $this -> assign('referurl',$referurl);
+        $this -> display();
     }
 
     public function pop_login(){
@@ -108,8 +108,8 @@ class UserController extends BaseController {
     		header("Location: ".U('Home/User/Index'));
     	}
         $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Home/User/index");
-        $this->assign('referurl',$referurl);
-    	$this->display();
+        $this -> assign('referurl',$referurl);
+    	$this -> display();
     }
     
     public function do_login(){
@@ -179,10 +179,10 @@ class UserController extends BaseController {
             $this->success($data['msg'],U('Home/User/index'));
             exit;
         }
-        $this->assign('regis_sms_enable',tpCache('sms.regis_sms_enable')); // 注册启用短信：
+        $this -> assign('regis_sms_enable',tpCache('sms.regis_sms_enable')); // 注册启用短信：
         $sms_time_out = tpCache('sms.sms_time_out')>0 ? tpCache('sms.sms_time_out') : 120;
-        $this->assign('sms_time_out', $sms_time_out); // 手机短信超时时间
-        $this->display();
+        $this -> assign('sms_time_out', $sms_time_out); // 手机短信超时时间
+        $this -> display();
     }
 
     /*
@@ -201,12 +201,12 @@ class UserController extends BaseController {
           $where .= " and (order_sn like '%$search_key%' or order_id in (select order_id from `".C('DB_PREFIX')."order_goods` where goods_name like '%$search_key%') ) ";
        }
        
-        $count = M('order')->where($where)->count();
+        $count = M('order') -> where($where)->count();
         $Page       = new Page($count,5);
 
-        $show = $Page->show();
+        $show = $Page -> show();
         $order_str = "order_id DESC";
-        $order_list = M('order')->order($order_str)->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $order_list = M('order')->order($order_str) -> where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
 
         //获取订单商品
         $model = new UsersLogic();
@@ -217,14 +217,14 @@ class UserController extends BaseController {
             $data = $model->get_order_goods($v['order_id']);
             $order_list[$k]['goods_list'] = $data['result'];            
         }
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('page',$show);
-        $this->assign('lists',$order_list);
-        $this->assign('active','order_list');
-        $this->assign('active_status',I('get.type'));
-        $this->display();
+        $this -> assign('order_status',C('ORDER_STATUS'));
+        $this -> assign('shipping_status',C('SHIPPING_STATUS'));
+        $this -> assign('pay_status',C('PAY_STATUS'));
+        $this -> assign('page',$show);
+        $this -> assign('lists',$order_list);
+        $this -> assign('active','order_list');
+        $this -> assign('active_status',I('get.type'));
+        $this -> display();
     }
 
     /*
@@ -235,7 +235,7 @@ class UserController extends BaseController {
 
         $map['order_id'] = $id;
         $map['user_id'] = $this->user_id;
-        $order_info = M('order')->where($map)->find();
+        $order_info = M('order') -> where($map)->find();
         $order_info = set_btn_order_status($order_info);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
         
         if(!$order_info){
@@ -253,18 +253,18 @@ class UserController extends BaseController {
         $items_count = count($items);
         $region_list = get_region_list();
         
-        $invoice_no = M('DeliveryDoc')->where("order_id = $id")->getField('invoice_no',true);
+        $invoice_no = M('DeliveryDoc') -> where("order_id = $id")->getField('invoice_no',true);
         $order_info[invoice_no] = implode(' , ', $invoice_no);
         //获取订单操作记录
-        $order_action = M('order_action')->where(array('order_id'=>$id))->select();
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('region_list',$region_list);
-        $this->assign('order_info',$order_info);
-        $this->assign('order_action',$order_action);
-        $this->assign('active','order_list');
-        $this->display();
+        $order_action = M('order_action') -> where(array('order_id'=>$id))->select();
+        $this -> assign('order_status',C('ORDER_STATUS'));
+        $this -> assign('shipping_status',C('SHIPPING_STATUS'));
+        $this -> assign('pay_status',C('PAY_STATUS'));
+        $this -> assign('region_list',$region_list);
+        $this -> assign('order_info',$order_info);
+        $this -> assign('order_action',$order_action);
+        $this -> assign('active','order_list');
+        $this -> display();
     }
 
     /*
@@ -286,11 +286,11 @@ class UserController extends BaseController {
     public function address_list(){
         $address_lists = get_user_address_list($this->user_id);
         $region_list = get_region_list();
-        $this->assign('region_list',$region_list);
-        $this->assign('lists',$address_lists);
-        $this->assign('active','address_list');
+        $this -> assign('region_list',$region_list);
+        $this -> assign('lists',$address_lists);
+        $this -> assign('active','address_list');
 
-        $this->display();
+        $this -> display();
     }
     /*
      * 添加地址
@@ -306,9 +306,9 @@ class UserController extends BaseController {
             echo "<script>parent.{$call_back}('success');</script>";
             exit(); // 成功 回调closeWindow方法 并返回新增的id
         }
-        $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
-        $this->assign('province',$p);
-        $this->display('addressEdit');
+        $p = M('region') -> where(array('parent_id'=>0,'level'=> 1))->select();
+        $this -> assign('province',$p);
+        $this -> display('addressEdit');
 
     }
 
@@ -318,7 +318,7 @@ class UserController extends BaseController {
     public function edit_address(){
         header("Content-type:text/html;charset=utf-8");
         $id = I('get.id');
-        $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
+        $address = M('user_address') -> where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
         if(IS_POST){
             $logic = new UsersLogic();
             $data = $logic->add_address($this->user_id,$id,I('post.'));
@@ -330,19 +330,19 @@ class UserController extends BaseController {
             exit(); // 成功 回调closeWindow方法 并返回新增的id
         }
         //获取省份
-        $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
-        $c = M('region')->where(array('parent_id'=>$address['province'],'level'=> 2))->select();
-        $d = M('region')->where(array('parent_id'=>$address['city'],'level'=> 3))->select();
+        $p = M('region') -> where(array('parent_id'=>0,'level'=> 1))->select();
+        $c = M('region') -> where(array('parent_id'=>$address['province'],'level'=> 2))->select();
+        $d = M('region') -> where(array('parent_id'=>$address['city'],'level'=> 3))->select();
         if($address['twon']){
-        	$e = M('region')->where(array('parent_id'=>$address['district'],'level'=>4))->select();
-        	$this->assign('twon',$e);
+        	$e = M('region') -> where(array('parent_id'=>$address['district'],'level'=>4))->select();
+        	$this -> assign('twon',$e);
         }
 
-        $this->assign('province',$p);
-        $this->assign('city',$c);
-        $this->assign('district',$d);
-        $this->assign('address',$address);
-        $this->display();
+        $this -> assign('province',$p);
+        $this -> assign('city',$c);
+        $this -> assign('district',$d);
+        $this -> assign('address',$address);
+        $this -> display();
     }
 
     /*
@@ -350,8 +350,8 @@ class UserController extends BaseController {
      */
     public function set_default(){
         $id = I('get.id');
-        M('user_address')->where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
-        $row = M('user_address')->where(array('user_id'=>$this->user_id,'address_id'=>$id))->save(array('is_default'=>1));
+        M('user_address') -> where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
+        $row = M('user_address') -> where(array('user_id'=>$this->user_id,'address_id'=>$id))->save(array('is_default'=>1));
         if(!$row)
             $this->error('操作失败');
         $this->success("操作成功");
@@ -363,13 +363,13 @@ class UserController extends BaseController {
     public function del_address(){
         $id = I('get.id');
         
-        $address = M('user_address')->where("address_id = $id")->find();
-        $row = M('user_address')->where(array('user_id'=>$this->user_id,'address_id'=>$id))->delete();                
+        $address = M('user_address') -> where("address_id = $id")->find();
+        $row = M('user_address') -> where(array('user_id'=>$this->user_id,'address_id'=>$id))->delete();
         // 如果删除的是默认收货地址 则要把第一个地址设置为默认收货地址
         if($address['is_default'] == 1)
         {
-            $address = M('user_address')->where("user_id = {$this->user_id}")->find();            
-            M('user_address')->where("address_id = {$address['address_id']}")->save(array('is_default'=>1));
+            $address = M('user_address') -> where("user_id = {$this->user_id}")->find();
+            M('user_address') -> where("address_id = {$address['address_id']}")->save(array('is_default'=>1));
         }        
         if(!$row)
             $this->error('操作失败',U('/Mobile/User/address_list'));
@@ -385,10 +385,10 @@ class UserController extends BaseController {
         $status = I('get.status',-1);
         $logic = new UsersLogic();
         $data = $logic->get_comment($user_id,$status); //获取评论列表
-        $this->assign('page',$data['show']);// 赋值分页输出
-        $this->assign('comment_list',$data['result']);
-        $this->assign('active','comment');
-        $this->display();
+        $this -> assign('page',$data['show']);// 赋值分页输出
+        $this -> assign('comment_list',$data['result']);
+        $this -> assign('active','comment');
+        $this -> display();
     }
 
     /*
@@ -440,19 +440,19 @@ class UserController extends BaseController {
             exit;
         }
         //  获取省份
-        $province = M('region')->where(array('parent_id'=>0,'level'=>1))->select();
+        $province = M('region') -> where(array('parent_id'=>0,'level'=>1))->select();
         //  获取订单城市
-        $city =  M('region')->where(array('parent_id'=>$user_info['province'],'level'=>2))->select();
+        $city =  M('region') -> where(array('parent_id'=>$user_info['province'],'level'=>2))->select();
         //获取订单地区
-        $area =  M('region')->where(array('parent_id'=>$user_info['city'],'level'=>3))->select();
+        $area =  M('region') -> where(array('parent_id'=>$user_info['city'],'level'=>3))->select();
 
-        $this->assign('province',$province);
-        $this->assign('city',$city);
-        $this->assign('area',$area);
-        $this->assign('user',$user_info);
-        $this->assign('sex',C('SEX'));
-        $this->assign('active','info');
-        $this->display();
+        $this -> assign('province',$province);
+        $this -> assign('city',$city);
+        $this -> assign('area',$area);
+        $this -> assign('user',$user_info);
+        $this -> assign('sex',C('SEX'));
+        $this -> assign('active','info');
+        $this -> display();
     }
 
     /*
@@ -483,8 +483,8 @@ class UserController extends BaseController {
             }
             $this->error('邮箱验证码不匹配');
         }
-        $this->assign('step',$step);
-        $this->display();
+        $this -> assign('step',$step);
+        $this -> display();
     }
 
 
@@ -529,9 +529,9 @@ class UserController extends BaseController {
             }
             $this->error('手机验证码不匹配');
         }
-        $this->assign('time',$sms_time_out);
-        $this->assign('step',$step);
-        $this->display();
+        $this -> assign('time',$sms_time_out);
+        $this -> assign('step',$step);
+        $this -> display();
     }
     
     /**
@@ -554,10 +554,10 @@ class UserController extends BaseController {
     public function goods_collect(){
         $userLogic = new UsersLogic();
         $data = $userLogic->get_goods_collect($this->user_id);
-        $this->assign('page',$data['show']);// 赋值分页输出
-        $this->assign('lists',$data['result']);
-        $this->assign('active','goods_collect');
-        $this->display();
+        $this -> assign('page',$data['show']);// 赋值分页输出
+        $this -> assign('lists',$data['result']);
+        $this -> assign('active','goods_collect');
+        $this -> display();
     }
 
     /*
@@ -567,7 +567,7 @@ class UserController extends BaseController {
         $id = I('get.id');
         if(!$id)
             $this->error("缺少ID参数");
-        $row = M('goods_collect')->where(array('collect_id'=>$id,'user_id'=>$this->user_id))->delete();
+        $row = M('goods_collect') -> where(array('collect_id'=>$id,'user_id'=>$this->user_id))->delete();
         if(!$row)
             $this->error("删除失败");
         $this->success('删除成功');
@@ -591,7 +591,7 @@ class UserController extends BaseController {
             $this->success($data['msg']);
             exit;
         }
-        $this->display();
+        $this -> display();
     }
 
     public function forget_pwd(){
@@ -633,7 +633,7 @@ class UserController extends BaseController {
     		$this->success($data['msg'],U('Home/User/login'));
     		exit;
     	}
-        $this->display();
+        $this -> display();
     }
     
     public function set_pwd(){
@@ -654,22 +654,22 @@ class UserController extends BaseController {
     		}  		
     		if($check['is_check']==1){
     			//$user = get_user_info($check['sender'],1);
-                        $user = M('users')->where("mobile = '{$check['sender']}' or email = '{$check['sender']}'")->find();
-    			M('users')->where("user_id=".$user['user_id'])->save(array('password'=>encrypt($password)));
+                        $user = M('users') -> where("mobile = '{$check['sender']}' or email = '{$check['sender']}'")->find();
+    			M('users') -> where("user_id=".$user['user_id'])->save(array('password'=>encrypt($password)));
     			session('validate_code',null);
     			header("Location:".U('Home/User/finished'));
     		}else{
     			$this->error('验证码还未验证通过',U('Home/User/forget_pwd'));
     		}
     	}
-    	$this->display();
+    	$this -> display();
     }
     
     public function finished(){
     	if($this->user_id > 0){
     		header("Location: ".U('Home/User/Index'));
     	}
-    	$this->display();
+    	$this -> display();
     }   
     
     public function check_captcha(){
@@ -685,7 +685,7 @@ class UserController extends BaseController {
     public function check_username(){
     	$username = I('post.username');
     	if(!empty($username)){
-    		$count = M('users')->where("email='$username' or mobile='$username'")->count();
+    		$count = M('users') -> where("email='$username' or mobile='$username'")->count();
     		exit(json_encode(intval($count)));
     	}else{
     		exit(json_encode(0));
@@ -699,7 +699,7 @@ class UserController extends BaseController {
     	$username = I('post.username');
     	$userinfo = array();
     	if($username){
-    		$userinfo = M('users')->where("email='$username' or mobile='$username'")->find();
+    		$userinfo = M('users') -> where("email='$username' or mobile='$username'")->find();
     		$userinfo['username'] = $username;
     		session('userinfo',$userinfo);
     	}else{
@@ -709,8 +709,8 @@ class UserController extends BaseController {
     		$this->error('非法请求！！！');
     	}
     	unset($user_info['password']);
-    	$this->assign('userinfo',$userinfo);
-    	$this->display();
+    	$this -> assign('userinfo',$userinfo);
+    	$this -> display();
     }
     
     //发送验证码
@@ -775,7 +775,7 @@ class UserController extends BaseController {
         $goods_id = I('goods_id',0);        
 	    $spec_key = I('spec_key');
         
-        $return_goods = M('return_goods')->where("order_id = $order_id and goods_id = $goods_id and status in(0,1) and spec_key = '$spec_key'")->find();            
+        $return_goods = M('return_goods') -> where("order_id = $order_id and goods_id = $goods_id and status in(0,1) and spec_key = '$spec_key'")->find();
         if(!empty($return_goods))
         {
             $this->success('已经提交过退货申请!',U('Home/User/return_goods_info',array('id'=>$return_goods['id'])));
@@ -797,12 +797,12 @@ class UserController extends BaseController {
             exit;
         }
                
-        $goods = M('goods')->where("goods_id = $goods_id")->find();        
-        $this->assign('goods',$goods);
-        $this->assign('order_id',$order_id);
-        $this->assign('order_sn',$order_sn);
-        $this->assign('goods_id',$goods_id);
-        $this->display();
+        $goods = M('goods') -> where("goods_id = $goods_id")->find();
+        $this -> assign('goods',$goods);
+        $this -> assign('order_id',$order_id);
+        $this -> assign('order_sn',$order_sn);
+        $this -> assign('goods_id',$goods_id);
+        $this -> display();
     }
     
     /**
@@ -810,16 +810,16 @@ class UserController extends BaseController {
      */
     public function return_goods_list()
     {        
-        $count = M('return_goods')->where("user_id = {$this->user_id}")->count();
+        $count = M('return_goods') -> where("user_id = {$this->user_id}")->count();
         $page = new Page($count,10);
-        $list = M('return_goods')->where("user_id = {$this->user_id}")->order("id desc")->limit("{$page->firstRow},{$page->listRows}")->select();
+        $list = M('return_goods') -> where("user_id = {$this->user_id}")->order("id desc")->limit("{$page->firstRow},{$page->listRows}")->select();
         $goods_id_arr = get_arr_column($list, 'goods_id');
         if(!empty($goods_id_arr))
-            $goodsList = M('goods')->where("goods_id in (".  implode(',',$goods_id_arr).")")->getField('goods_id,goods_name');        
-        $this->assign('goodsList', $goodsList);
-        $this->assign('list', $list);
-        $this->assign('page', $page->show());// 赋值分页输出
-        $this->display();
+            $goodsList = M('goods') -> where("goods_id in (".  implode(',',$goods_id_arr).")")->getField('goods_id,goods_name');
+        $this -> assign('goodsList', $goodsList);
+        $this -> assign('list', $list);
+        $this -> assign('page', $page -> show());// 赋值分页输出
+        $this -> display();
     }
     
     /**
@@ -828,13 +828,13 @@ class UserController extends BaseController {
     public function return_goods_info()
     {
         $id = I('id',0);
-        $return_goods = M('return_goods')->where("id = $id")->find();
+        $return_goods = M('return_goods') -> where("id = $id")->find();
         if($return_goods['imgs'])
             $return_goods['imgs'] = explode(',', $return_goods['imgs']);        
-        $goods = M('goods')->where("goods_id = {$return_goods['goods_id']} ")->find();                
-        $this->assign('goods',$goods);
-        $this->assign('return_goods',$return_goods);
-        $this->display();
+        $goods = M('goods') -> where("goods_id = {$return_goods['goods_id']} ")->find();
+        $this -> assign('goods',$goods);
+        $this -> assign('return_goods',$return_goods);
+        $this -> display();
     }
     
     /**
@@ -845,7 +845,7 @@ class UserController extends BaseController {
         $userLogic = new UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $user_info = $user_info['result'];        
-        $this->assign('user',$user_info);
-        $this->display();      
+        $this -> assign('user',$user_info);
+        $this -> display();
     }
 }

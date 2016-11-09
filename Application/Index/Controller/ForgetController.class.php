@@ -43,7 +43,7 @@ class ForgetController extends IndexBaseController {
                 $where['email'] = $genre;
             }
 
-            $res = M('users')->where($where)->find();
+            $res = M('users') -> where($where)->find();
             if(empty($res)){
                 $this->error('帐号不存在，请重新输入',U('Index/Forget/index'));exit;
             }
@@ -70,7 +70,7 @@ class ForgetController extends IndexBaseController {
 
 
         }
-        $this->display();
+        $this -> display();
     }
 
 
@@ -98,7 +98,7 @@ class ForgetController extends IndexBaseController {
             $where['mobile'] = session('forget_mobile');
             $where['code'] = I('code');
             $where['session_id'] = session('forget_id');
-            $res = M('sms_log')->where($where)->count();
+            $res = M('sms_log') -> where($where)->count();
             if($res){
                 session('check_forget_mobile',true);
                 $this->success('验证码正确，请填写新密码',U('Index/Forget/check_forget_mobile'));
@@ -108,9 +108,9 @@ class ForgetController extends IndexBaseController {
             exit;
         }
 
-        $this->assign('sms_time_out',$sms_time_out);
-        $this->assign('mobile',$mobile);
-        $this->display();
+        $this -> assign('sms_time_out',$sms_time_out);
+        $this -> assign('mobile',$mobile);
+        $this -> display();
     }
 
     //手机验证密码修改
@@ -122,7 +122,7 @@ class ForgetController extends IndexBaseController {
         if(IS_POST){
             $data['password'] = encrypt(I('password'));
             $data['user_id'] = session('forget_id');
-            $detection = M('users')->where($data)->count();
+            $detection = M('users') -> where($data)->count();
             if($detection){
                 $this->error('修改密码不能和旧密码一致');exit;
             }
@@ -130,7 +130,7 @@ class ForgetController extends IndexBaseController {
             if($res){
                 $user_id = session('forget_id');
                 $wheres['session_id'] = $user_id;
-                M('sms_log')->where($wheres)->delete();
+                M('sms_log') -> where($wheres)->delete();
                 session('auth',true);
                 session(__UserID__,$user_id);
                $this->success('修改成功',U('Index/User/info'));
@@ -140,7 +140,7 @@ class ForgetController extends IndexBaseController {
             exit;
         }
 
-        $this->display();
+        $this -> display();
 
     }
 
@@ -184,7 +184,7 @@ class ForgetController extends IndexBaseController {
             session('send_email_time',$info);
         }
         
-        $this->display();
+        $this -> display();
     }
 
     //发送邮件
@@ -231,7 +231,7 @@ class ForgetController extends IndexBaseController {
         $secret_key = I('secret_key');
         $where['secret_key'] = $secret_key;
         $where['user_id'] = $user_id ;
-        $email_res = M('email_log')->where($where)->find();
+        $email_res = M('email_log') -> where($where)->find();
         if(!empty($email_res)){ //有效时间
             $valid_time = time() - $email_res['time'];
             if($valid_time > 1800){ 
@@ -243,7 +243,7 @@ class ForgetController extends IndexBaseController {
         if(IS_POST){
             $password = I('password');
             $data['user_id'] = $user_id;
-            $userInfo = M('users')->where($data)->find();
+            $userInfo = M('users') -> where($data)->find();
             if($userInfo['password'] == encrypt($password)){
                 $this->error('修改密码不能和旧密码一致');exit;
             }
@@ -251,7 +251,7 @@ class ForgetController extends IndexBaseController {
             $data['password'] = encrypt($password);
             $res = M('users')->save($data);
             if($res){
-                M('email_log')->where($where)->delete();
+                M('email_log') -> where($where)->delete();
                 $logic = new \Common\Logic\UsersLogic();
                 $result = $logic->login($username,$password);
                 if( !callbackIsTrue($result) ){
@@ -264,8 +264,8 @@ class ForgetController extends IndexBaseController {
             }
             exit;
         }
-        $this->assign('secret_key',$secret_key);
-        $this->display();
+        $this -> assign('secret_key',$secret_key);
+        $this -> display();
 
     }
 

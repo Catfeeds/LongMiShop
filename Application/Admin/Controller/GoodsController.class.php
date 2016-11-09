@@ -12,8 +12,8 @@ class GoodsController extends BaseController {
     public function categoryList(){
         $GoodsLogic = new GoodsLogic();
         $cat_list = $GoodsLogic->goods_cat_list();
-        $this->assign('cat_list',$cat_list);
-        $this->display();
+        $this -> assign('cat_list',$cat_list);
+        $this -> display();
     }
 
     /**
@@ -30,14 +30,14 @@ class GoodsController extends BaseController {
         $GoodsLogic = new GoodsLogic();
         if(IS_GET)
         {
-            $goods_category_info = D('GoodsCategory')->where('id='.I('GET.id',0))->find();
+            $goods_category_info = D('GoodsCategory') -> where('id='.I('GET.id',0))->find();
             $level_cat = $GoodsLogic->find_parent_cat($goods_category_info['id']); // 获取分类默认选中的下拉框
 
-            $cat_list = M('goods_category')->where("parent_id = 0")->select(); // 已经改成联动菜单
-            $this->assign('level_cat',$level_cat);
-            $this->assign('cat_list',$cat_list);
-            $this->assign('goods_category_info',$goods_category_info);
-            $this->display('_category');
+            $cat_list = M('goods_category') -> where("parent_id = 0")->select(); // 已经改成联动菜单
+            $this -> assign('level_cat',$level_cat);
+            $this -> assign('cat_list',$cat_list);
+            $this -> assign('goods_category_info',$goods_category_info);
+            $this -> display('_category');
             exit;
         }
 
@@ -113,7 +113,7 @@ class GoodsController extends BaseController {
     public function ajaxGetSpecList(){
         $GoodsLogic = new GoodsLogic();
         $_REQUEST['category_id'] = $_REQUEST['category_id'] ? $_REQUEST['category_id'] : 0;
-        $filter_spec = M('GoodsCategory')->where("id = ".$_REQUEST['category_id'])->getField('filter_spec');
+        $filter_spec = M('GoodsCategory') -> where("id = ".$_REQUEST['category_id'])->getField('filter_spec');
         $filter_spec_arr = explode(',',$filter_spec);
         $str = $GoodsLogic->GetSpecCheckboxList($_REQUEST['type_id'],$filter_spec_arr);
         $str = $str ? $str : '没有可筛选的商品规格';
@@ -126,7 +126,7 @@ class GoodsController extends BaseController {
     public function ajaxGetAttrList(){
         $GoodsLogic = new GoodsLogic();
         $_REQUEST['category_id'] = $_REQUEST['category_id'] ? $_REQUEST['category_id'] : 0;
-        $filter_attr = M('GoodsCategory')->where("id = ".$_REQUEST['category_id'])->getField('filter_attr');
+        $filter_attr = M('GoodsCategory') -> where("id = ".$_REQUEST['category_id'])->getField('filter_attr');
         $filter_attr_arr = explode(',',$filter_attr);
         $str = $GoodsLogic->GetAttrCheckboxList($_REQUEST['type_id'],$filter_attr_arr);
         $str = $str ? $str : '没有可筛选的商品属性';
@@ -142,7 +142,7 @@ class GoodsController extends BaseController {
         $count = $GoodsCategory->where("parent_id = {$_GET['id']}")->count("id");
         $count > 0 && $this->error('该分类下还有分类不得删除!',U('Admin/Goods/categoryList'));
         // 判断是否存在商品
-        $goods_count = M('Goods')->where("cat_id = {$_GET['id']}")->count('1');
+        $goods_count = M('Goods') -> where("cat_id = {$_GET['id']}")->count('1');
         $goods_count > 0 && $this->error('该分类下有商品不得删除!',U('Admin/Goods/categoryList'));
         // 删除分类
         $GoodsCategory->where("id = {$_GET['id']}")->delete();
@@ -157,9 +157,9 @@ class GoodsController extends BaseController {
         $GoodsLogic = new GoodsLogic();
         $brandList = $GoodsLogic->getSortBrands();
         $categoryList = $GoodsLogic->getSortCategory();
-        $this->assign('categoryList',$categoryList);
-        $this->assign('brandList',$brandList);
-        $this->display();
+        $this -> assign('categoryList',$categoryList);
+        $this -> assign('brandList',$brandList);
+        $this -> display();
     }
 
     /**
@@ -197,17 +197,17 @@ class GoodsController extends BaseController {
         $Page->parameter[$key]   =   urlencode($val);
         }
          */
-        $show = $Page->show();
+        $show = $Page -> show();
         $orderby1 = I("orderby1","goods_id");
         $orderby2 = I("orderby2","desc");
         $order_str = "`{$orderby1}` {$orderby2}";
         $goodsList = $model->where($where)->order($order_str)->limit($Page->firstRow.','.$Page->listRows) ->select();
         $catList = D('goods_category')->select();
         $catList = convert_arr_key($catList, 'id');
-        $this->assign('catList',$catList);
-        $this->assign('goodsList',$goodsList);
-        $this->assign('page',$show);// 赋值分页输出
-        $this->display();
+        $this -> assign('catList',$catList);
+        $this -> assign('goodsList',$goodsList);
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
 
     /**
@@ -219,7 +219,7 @@ class GoodsController extends BaseController {
         $res = array();
         foreach($data['data'] as $item){
             if(!empty($item)){
-                $res[] = M('goods')->where(array('admin_id'=>session('admin_id'),'goods_id'=>$item))->save(array('is_on_sale'=>0));
+                $res[] = M('goods') -> where(array('admin_id'=>session('admin_id'),'goods_id'=>$item))->save(array('is_on_sale'=>0));
             }
         }
         if(in_array('1',$res)){
@@ -345,7 +345,7 @@ class GoodsController extends BaseController {
             }
         }
 
-        $goodsInfo = D('Goods')->where('goods_id='.I('GET.id',0))->find();
+        $goodsInfo = D('Goods') -> where('goods_id='.I('GET.id',0))->find();
         $goodsInfo['my_parameter'] = unserialize(base64_decode($goodsInfo['my_parameter']));
         $paRcount = count($goodsInfo['my_parameter']);
 
@@ -356,7 +356,7 @@ class GoodsController extends BaseController {
         //$cat_list = $GoodsLogic->goods_cat_list(); // 已经改成联动菜单
         $level_cat = $GoodsLogic->find_parent_cat($goodsInfo['cat_id']); // 获取分类默认选中的下拉框
         $level_cat2 = $GoodsLogic->find_parent_cat($goodsInfo['extend_cat_id']); // 获取分类默认选中的下拉框
-        $cat_list = M('goods_category')->where("parent_id = 0")->select(); // 已经改成联动菜单
+        $cat_list = M('goods_category') -> where("parent_id = 0")->select(); // 已经改成联动菜单
 
         $logisticsWhere = array();
         if( is_supplier() ) {
@@ -369,19 +369,19 @@ class GoodsController extends BaseController {
         }
         $brandList = $GoodsLogic->getSortBrands();
         $goodsType = M("GoodsType")->select();
-        $this->assign('level_cat',$level_cat);
-        $this->assign('level_cat2',$level_cat2);
-        $this->assign('cat_list',$cat_list);
-        $this->assign('brandList',$brandList);
-        $this->assign('goodsType',$goodsType);
-        $this->assign('goodsInfo',$goodsInfo);  // 商品详情
-        $goodsImages = M("GoodsImages")->where('goods_id ='.I('GET.id',0))->select();
-        $this->assign('goodsImages',$goodsImages);  // 商品相册
-        $this->assign('logistics_list',$logistics_list);
-        $this->assign('paRcount',$paRcount);
-        $this->assign('parI',0);
+        $this -> assign('level_cat',$level_cat);
+        $this -> assign('level_cat2',$level_cat2);
+        $this -> assign('cat_list',$cat_list);
+        $this -> assign('brandList',$brandList);
+        $this -> assign('goodsType',$goodsType);
+        $this -> assign('goodsInfo',$goodsInfo);  // 商品详情
+        $goodsImages = M("GoodsImages") -> where('goods_id ='.I('GET.id',0))->select();
+        $this -> assign('goodsImages',$goodsImages);  // 商品相册
+        $this -> assign('logistics_list',$logistics_list);
+        $this -> assign('paRcount',$paRcount);
+        $this -> assign('parI',0);
         $this->initEditor(); // 编辑器
-        $this->display('_goods');
+        $this -> display('_goods');
     }
 
 
@@ -393,11 +393,11 @@ class GoodsController extends BaseController {
         $model = M("GoodsType");
         $count = $model->count();
         $Page  = new Page($count,100);
-        $show  = $Page->show();
+        $show  = $Page -> show();
         $goodsTypeList = $model->order("id desc")->limit($Page->firstRow.','.$Page->listRows)->select();
-        $this->assign('show',$show);
-        $this->assign('goodsTypeList',$goodsTypeList);
-        $this->display('goodsTypeList');
+        $this -> assign('show',$show);
+        $this -> assign('goodsTypeList',$goodsTypeList);
+        $this -> display('goodsTypeList');
     }
 
 
@@ -419,8 +419,8 @@ class GoodsController extends BaseController {
             exit;
         }
         $goodsType = $model->find($_GET['id']);
-        $this->assign('goodsType',$goodsType);
-        $this->display('_goodsType');
+        $this -> assign('goodsType',$goodsType);
+        $this -> display('_goodsType');
     }
 
     /**
@@ -428,8 +428,8 @@ class GoodsController extends BaseController {
      */
     public function goodsAttributeList(){
         $goodsTypeList = M("GoodsType")->select();
-        $this->assign('goodsTypeList',$goodsTypeList);
-        $this->display();
+        $this -> assign('goodsTypeList',$goodsTypeList);
+        $this -> display();
     }
 
     /**
@@ -443,15 +443,15 @@ class GoodsController extends BaseController {
         $model = M('GoodsAttribute');
         $count = $model->where($where)->count();
         $Page       = new AjaxPage($count,13);
-        $show = $Page->show();
+        $show = $Page -> show();
         $goodsAttributeList = $model->where($where)->order('`order` desc,attr_id DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
         $goodsTypeList = M("GoodsType")->getField('id,name');
         $attr_input_type = array(0=>'手工录入',1=>' 从列表中选择',2=>' 多行文本框');
-        $this->assign('attr_input_type',$attr_input_type);
-        $this->assign('goodsTypeList',$goodsTypeList);
-        $this->assign('goodsAttributeList',$goodsAttributeList);
-        $this->assign('page',$show);// 赋值分页输出
-        $this->display();
+        $this -> assign('attr_input_type',$attr_input_type);
+        $this -> assign('goodsTypeList',$goodsTypeList);
+        $this -> assign('goodsAttributeList',$goodsAttributeList);
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
 
     /**
@@ -499,9 +499,9 @@ class GoodsController extends BaseController {
         $_GET['attr_id'] = $_GET['attr_id'] ? $_GET['attr_id'] : 0;
         $goodsTypeList = M("GoodsType")->select();
         $goodsAttribute = $model->find($_GET['attr_id']);
-        $this->assign('goodsTypeList',$goodsTypeList);
-        $this->assign('goodsAttribute',$goodsAttribute);
-        $this->display('_goodsAttribute');
+        $this -> assign('goodsTypeList',$goodsTypeList);
+        $this -> assign('goodsAttribute',$goodsAttribute);
+        $this -> display('_goodsAttribute');
     }
 
     /**
@@ -544,16 +544,16 @@ class GoodsController extends BaseController {
         $error = '';
 
         // 判断此商品是否有订单
-        $c1 = M('OrderGoods')->where("goods_id = $goods_id")->count('1');
+        $c1 = M('OrderGoods') -> where("goods_id = $goods_id")->count('1');
         $c1 && $error .= '此商品有订单,不得删除! <br/>';
 
 
         // 商品团购
-        $c1 = M('group_buy')->where("goods_id = $goods_id")->count('1');
+        $c1 = M('group_buy') -> where("goods_id = $goods_id")->count('1');
         $c1 && $error .= '此商品有团购,不得删除! <br/>';
 
         // 商品退货记录
-        $c1 = M('return_goods')->where("goods_id = $goods_id")->count('1');
+        $c1 = M('return_goods') -> where("goods_id = $goods_id")->count('1');
         $c1 && $error .= '此商品有退货记录,不得删除! <br/>';
 
         if($error)
@@ -563,15 +563,15 @@ class GoodsController extends BaseController {
         }
 
         // 删除此商品
-        M("Goods")->where('goods_id ='.$goods_id)->delete();  //商品表
-        M("cart")->where('goods_id ='.$goods_id)->delete();  // 购物车
-        M("comment")->where('goods_id ='.$goods_id)->delete();  //商品评论
-        M("goods_consult")->where('goods_id ='.$goods_id)->delete();  //商品咨询
-        M("goods_images")->where('goods_id ='.$goods_id)->delete();  //商品相册
-        M("spec_goods_price")->where('goods_id ='.$goods_id)->delete();  //商品规格
-        M("spec_image")->where('goods_id ='.$goods_id)->delete();  //商品规格图片
-        M("goods_attr")->where('goods_id ='.$goods_id)->delete();  //商品属性
-        M("goods_collect")->where('goods_id ='.$goods_id)->delete();  //商品收藏
+        M("Goods") -> where('goods_id ='.$goods_id)->delete();  //商品表
+        M("cart") -> where('goods_id ='.$goods_id)->delete();  // 购物车
+        M("comment") -> where('goods_id ='.$goods_id)->delete();  //商品评论
+        M("goods_consult") -> where('goods_id ='.$goods_id)->delete();  //商品咨询
+        M("goods_images") -> where('goods_id ='.$goods_id)->delete();  //商品相册
+        M("spec_goods_price") -> where('goods_id ='.$goods_id)->delete();  //商品规格
+        M("spec_image") -> where('goods_id ='.$goods_id)->delete();  //商品规格图片
+        M("goods_attr") -> where('goods_id ='.$goods_id)->delete();  //商品属性
+        M("goods_collect") -> where('goods_id ='.$goods_id)->delete();  //商品收藏
 
         $return_arr = array('status' => 1,'msg' => '操作成功','data'  =>'',);   //$return_arr = array('status' => -1,'msg' => '删除失败','data'  =>'',);
         $this->ajaxReturn(json_encode($return_arr));
@@ -583,13 +583,13 @@ class GoodsController extends BaseController {
     public function delGoodsType()
     {
         // 判断 商品规格
-        $count = M("Spec")->where("type_id = {$_GET['id']}")->count("1");
+        $count = M("Spec") -> where("type_id = {$_GET['id']}")->count("1");
         $count > 0 && $this->error('该类型下有商品规格不得删除!',U('Admin/Goods/goodsTypeList'));
         // 判断 商品属性
-        $count = M("GoodsAttribute")->where("type_id = {$_GET['id']}")->count("1");
+        $count = M("GoodsAttribute") -> where("type_id = {$_GET['id']}")->count("1");
         $count > 0 && $this->error('该类型下有商品属性不得删除!',U('Admin/Goods/goodsTypeList'));
         // 删除分类
-        M('GoodsType')->where("id = {$_GET['id']}")->delete();
+        M('GoodsType') -> where("id = {$_GET['id']}")->delete();
         $this->success("操作成功!!!",U('Admin/Goods/goodsTypeList'));
     }
 
@@ -599,10 +599,10 @@ class GoodsController extends BaseController {
     public function delGoodsAttribute()
     {
         // 判断 有无商品使用该属性
-        $count = M("GoodsAttr")->where("attr_id = {$_GET['id']}")->count("1");
+        $count = M("GoodsAttr") -> where("attr_id = {$_GET['id']}")->count("1");
         $count > 0 && $this->error('有商品使用该属性,不得删除!',U('Admin/Goods/goodsAttributeList'));
         // 删除 属性
-        M('GoodsAttribute')->where("attr_id = {$_GET['id']}")->delete();
+        M('GoodsAttribute') -> where("attr_id = {$_GET['id']}")->delete();
         $this->success("操作成功!!!",U('Admin/Goods/goodsAttributeList'));
     }
 
@@ -612,10 +612,10 @@ class GoodsController extends BaseController {
     public function delGoodsSpec()
     {
         // 判断 商品规格项
-        $count = M("SpecItem")->where("spec_id = {$_GET['id']}")->count("1");
+        $count = M("SpecItem") -> where("spec_id = {$_GET['id']}")->count("1");
         $count > 0 && $this->error('清空规格项后才可以删除!',U('Admin/Goods/specList'));
         // 删除分类
-        M('Spec')->where("id = {$_GET['id']}")->delete();
+        M('Spec') -> where("id = {$_GET['id']}")->delete();
         $this->success("操作成功!!!",U('Admin/Goods/specList'));
     }
 
@@ -630,12 +630,12 @@ class GoodsController extends BaseController {
         $count = $model->where($where)->count();
         $Page  = new Page($count,10);
         $brandList = $model->where($where)->order("`sort` asc")->limit($Page->firstRow.','.$Page->listRows)->select();
-        $show  = $Page->show();
-        $cat_list = M('goods_category')->where("parent_id = 0")->getField('id,name'); // 已经改成联动菜单
-        $this->assign('cat_list',$cat_list);
-        $this->assign('show',$show);
-        $this->assign('brandList',$brandList);
-        $this->display('brandList');
+        $show  = $Page -> show();
+        $cat_list = M('goods_category') -> where("parent_id = 0")->getField('id,name'); // 已经改成联动菜单
+        $this -> assign('cat_list',$cat_list);
+        $this -> assign('show',$show);
+        $this -> assign('brandList',$brandList);
+        $this -> display('brandList');
     }
 
     /**
@@ -655,11 +655,11 @@ class GoodsController extends BaseController {
             $this->success("操作成功!!!",U('Admin/Goods/brandList',array('p'=>$_GET['p'])));
             exit;
         }
-        $cat_list = M('goods_category')->where("parent_id = 0")->select(); // 已经改成联动菜单
-        $this->assign('cat_list',$cat_list);
+        $cat_list = M('goods_category') -> where("parent_id = 0")->select(); // 已经改成联动菜单
+        $this -> assign('cat_list',$cat_list);
         $brand = $model->find($id);
-        $this->assign('brand',$brand);
-        $this->display('_brand');
+        $this -> assign('brand',$brand);
+        $this -> display('_brand');
     }
 
     /**
@@ -668,7 +668,7 @@ class GoodsController extends BaseController {
     public function delBrand()
     {
         // 判断此品牌是否有商品在使用
-        $goods_count = M('Goods')->where("brand_id = {$_GET['id']}")->count('1');
+        $goods_count = M('Goods') -> where("brand_id = {$_GET['id']}")->count('1');
         if($goods_count)
         {
             $return_arr = array('status' => -1,'msg' => '此品牌有商品在用不得删除!','data'  =>'',);   //$return_arr = array('status' => -1,'msg' => '删除失败','data'  =>'',);
@@ -687,14 +687,14 @@ class GoodsController extends BaseController {
      */
     private function initEditor()
     {
-        $this->assign("URL_upload", U('Admin/Ueditor/imageUp',array('savepath'=>'goods'))); // 图片上传目录
-        $this->assign("URL_imageUp", U('Admin/Ueditor/imageUp',array('savepath'=>'article'))); //  不知道啥图片
-        $this->assign("URL_fileUp", U('Admin/Ueditor/fileUp',array('savepath'=>'article'))); // 文件上传s
-        $this->assign("URL_scrawlUp", U('Admin/Ueditor/scrawlUp',array('savepath'=>'article')));  //  图片流
-        $this->assign("URL_getRemoteImage", U('Admin/Ueditor/getRemoteImage',array('savepath'=>'article'))); // 远程图片管理
-        $this->assign("URL_imageManager", U('Admin/Ueditor/imageManager',array('savepath'=>'article'))); // 图片管理
-        $this->assign("URL_getMovie", U('Admin/Ueditor/getMovie',array('savepath'=>'article'))); // 视频上传
-        $this->assign("URL_Home", "");
+        $this -> assign("URL_upload", U('Admin/Ueditor/imageUp',array('savepath'=>'goods'))); // 图片上传目录
+        $this -> assign("URL_imageUp", U('Admin/Ueditor/imageUp',array('savepath'=>'article'))); //  不知道啥图片
+        $this -> assign("URL_fileUp", U('Admin/Ueditor/fileUp',array('savepath'=>'article'))); // 文件上传s
+        $this -> assign("URL_scrawlUp", U('Admin/Ueditor/scrawlUp',array('savepath'=>'article')));  //  图片流
+        $this -> assign("URL_getRemoteImage", U('Admin/Ueditor/getRemoteImage',array('savepath'=>'article'))); // 远程图片管理
+        $this -> assign("URL_imageManager", U('Admin/Ueditor/imageManager',array('savepath'=>'article'))); // 图片管理
+        $this -> assign("URL_getMovie", U('Admin/Ueditor/getMovie',array('savepath'=>'article'))); // 视频上传
+        $this -> assign("URL_Home", "");
     }
 
 
@@ -704,8 +704,8 @@ class GoodsController extends BaseController {
      */
     public function specList(){
         $goodsTypeList = M("GoodsType")->select();
-        $this->assign('goodsTypeList',$goodsTypeList);
-        $this->display();
+        $this -> assign('goodsTypeList',$goodsTypeList);
+        $this -> display();
     }
 
 
@@ -720,7 +720,7 @@ class GoodsController extends BaseController {
         $model = D('spec');
         $count = $model->where($where)->count();
         $Page       = new AjaxPage($count,13);
-        $show = $Page->show();
+        $show = $Page -> show();
         $specList = $model->where($where)->order('`type_id` desc')->limit($Page->firstRow.','.$Page->listRows)->select();
         $GoodsLogic = new GoodsLogic();
         foreach($specList as $k => $v)
@@ -729,12 +729,12 @@ class GoodsController extends BaseController {
             $specList[$k]['spec_item'] = implode(' , ', $arr);
         }
 
-        $this->assign('specList',$specList);
-        $this->assign('page',$show);// 赋值分页输出
+        $this -> assign('specList',$specList);
+        $this -> assign('page',$show);// 赋值分页输出
         $goodsTypeList = M("GoodsType")->select(); // 规格分类
         $goodsTypeList = convert_arr_key($goodsTypeList, 'id');
-        $this->assign('goodsTypeList',$goodsTypeList);
-        $this->display();
+        $this -> assign('goodsTypeList',$goodsTypeList);
+        $this -> display();
     }
     /**
      * 添加修改编辑  商品规格
@@ -781,11 +781,11 @@ class GoodsController extends BaseController {
         $GoodsLogic = new GoodsLogic();
         $items = $GoodsLogic->getSpecItem($id);
         $spec[items] = implode(PHP_EOL, $items);
-        $this->assign('spec',$spec);
+        $this -> assign('spec',$spec);
 
         $goodsTypeList = M("GoodsType")->select();
-        $this->assign('goodsTypeList',$goodsTypeList);
-        $this->display('_spec');
+        $this -> assign('goodsTypeList',$goodsTypeList);
+        $this -> display('_spec');
     }
 
 
@@ -796,23 +796,23 @@ class GoodsController extends BaseController {
         $goods_id = $_GET['goods_id'] ? $_GET['goods_id'] : 0;
         $GoodsLogic = new GoodsLogic();
         //$_GET['spec_type'] =  13;
-        $specList = D('Spec')->where("type_id = ".$_GET['spec_type'])->order('`order` desc')->select();
+        $specList = D('Spec') -> where("type_id = ".$_GET['spec_type'])->order('`order` desc')->select();
         foreach($specList as $k => $v)
-            $specList[$k]['spec_item'] = D('SpecItem')->where("spec_id = ".$v['id'])->getField('id,item'); // 获取规格项
+            $specList[$k]['spec_item'] = D('SpecItem') -> where("spec_id = ".$v['id'])->getField('id,item'); // 获取规格项
 
-        $items_id = M('SpecGoodsPrice')->where('goods_id = '.$goods_id)->getField("GROUP_CONCAT(`key` SEPARATOR '_') AS items_id");
+        $items_id = M('SpecGoodsPrice') -> where('goods_id = '.$goods_id)->getField("GROUP_CONCAT(`key` SEPARATOR '_') AS items_id");
         $items_ids = explode('_', $items_id);
 
         // 获取商品规格图片
         if($goods_id)
         {
-            $specImageList = M('SpecImage')->where("goods_id = $goods_id")->getField('spec_image_id,src');
+            $specImageList = M('SpecImage') -> where("goods_id = $goods_id")->getField('spec_image_id,src');
         }
-        $this->assign('specImageList',$specImageList);
+        $this -> assign('specImageList',$specImageList);
 
-        $this->assign('items_ids',$items_ids);
-        $this->assign('specList',$specList);
-        $this->display('ajax_spec_select');
+        $this -> assign('items_ids',$items_ids);
+        $this -> assign('specList',$specList);
+        $this -> display('ajax_spec_select');
     }
 
     /**
@@ -843,7 +843,7 @@ class GoodsController extends BaseController {
                 $v['title'] = $v['item'];
                 $new_arr[$v['name']]["items"][] = $v;
             }
-            $this->assign('specList',$new_arr);
+            $this -> assign('specList',$new_arr);
 //        }
 
         $specGoodsPriceList = M( "spec_goods_price" ) -> where( array("goods_id" => $goods_id) ) -> select();
@@ -950,9 +950,9 @@ class GoodsController extends BaseController {
         if( empty($specGoodsPriceList) ){
             $html = '';
         }
-        $this->assign('html',$html);
-        $this->assign('goods_id',$goods_id);
-        $this->display();
+        $this -> assign('html',$html);
+        $this -> assign('goods_id',$goods_id);
+        $this -> display();
     }
 
     public function goodsCheck(){
@@ -973,7 +973,7 @@ class GoodsController extends BaseController {
 
             );
             $goodsRes = M('goods')->save(array('goods_id'=>$id,'is_on_sale'=>$is_on_sale));
-            $checkRes = M('goods_check')->where(array('goods_id'=>$id))->save(array('check'=>$check,'uptatetime'=>$uptatetime));
+            $checkRes = M('goods_check') -> where(array('goods_id'=>$id))->save(array('check'=>$check,'uptatetime'=>$uptatetime));
             if($goodsRes && $checkRes){
                 $mes = $mes."架成功";
                 exit(json_encode(callback(true,$mes)));
@@ -985,7 +985,7 @@ class GoodsController extends BaseController {
             exit;
 
         }
-        $this->display();
+        $this -> display();
     }
 
     public function ajaxGoodsCheck(){
@@ -1020,17 +1020,17 @@ class GoodsController extends BaseController {
         $Page->parameter[$key]   =   urlencode($val);
         }
          */
-        $show = $Page->show();
+        $show = $Page -> show();
         $prefix = C('DB_PREFIX');
 //        $order_str = "`{$_POST['orderby1']}` {$_POST['orderby2']}";
-        $goodsList = $model->join("LEFT JOIN `".$prefix."goods`   ON ".$prefix."goods_check.goods_id = ".$prefix."goods.goods_id  ")->where($where)->order($order_str)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $goodsList = $model->join("LEFT JOIN `".$prefix."goods`   ON ".$prefix."goods_check.goods_id = ".$prefix."goods.goods_id  ") -> where($where)->order($order_str)->limit($Page->firstRow.','.$Page->listRows)->select();
 //        dd($goodsList);
 //        $catList = D('goods_category')->select();
 //        $catList = convert_arr_key($catList, 'id');
-//        $this->assign('catList',$catList);
-        $this->assign('goodsList',$goodsList);
-        $this->assign('page',$show);// 赋值分页输出
-        $this->display();
+//        $this -> assign('catList',$catList);
+        $this -> assign('goodsList',$goodsList);
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
 
 
@@ -1042,10 +1042,10 @@ class GoodsController extends BaseController {
         $thirtyDays= date('Y/m/d',(time()-30*60*60*24));//30天前
         $end = date('Y/m/d',strtotime('+1 days'));
         $sevenDays = date('Y/m/d',(time()-7*60*60*24));//7天前
-        $this->assign('thirtyDays',$thirtyDays);
-        $this->assign('end',$end);
-        $this->assign('sevenDays',$sevenDays);
-        $this->display();
+        $this -> assign('thirtyDays',$thirtyDays);
+        $this -> assign('end',$end);
+        $this -> assign('sevenDays',$sevenDays);
+        $this -> display();
     }
 
     public function ajaxtradingRecord(){
@@ -1074,16 +1074,16 @@ class GoodsController extends BaseController {
                 $condition[$prefix.'order.order_status'] = '3';
                 break;
         }
-        $count = M('order_goods')->join("LEFT JOIN ".$prefix."order ON ".$prefix."order_goods.order_id = ".$prefix."order.order_id ")->where($condition)->count();
+        $count = M('order_goods')->join("LEFT JOIN ".$prefix."order ON ".$prefix."order_goods.order_id = ".$prefix."order.order_id ") -> where($condition)->count();
         $limit = 10;
         $Page  = new \Admin\Common\AjaxPage($count,$limit);
         //  搜索条件下 分页赋值
         foreach($condition as $key=>$val) {
             $Page->parameter[$key]   =  urlencode($val);
         }
-        $show = $Page->show();
+        $show = $Page -> show();
         // ->field("".$prefix."order_goods.*,".$prefix."order.order_sn,".$prefix."order.add_time,".$prefix."order.mobile")
-        $orderList = M('order_goods')->join("LEFT JOIN ".$prefix."order ON ".$prefix."order_goods.order_id = ".$prefix."order.order_id ")->limit($Page->firstRow.','.$Page->listRows)->where($condition)->order($order)->select();
+        $orderList = M('order_goods')->join("LEFT JOIN ".$prefix."order ON ".$prefix."order_goods.order_id = ".$prefix."order.order_id ")->limit($Page->firstRow.','.$Page->listRows) -> where($condition)->order($order)->select();
         // $orderList[$keys] = setBtnOrderStatus( $items );
         foreach($orderList as $key=>$item){
             $orderList[$key] = setBtnOrderStatus( $item );
@@ -1091,9 +1091,9 @@ class GoodsController extends BaseController {
         }
 //        dd($orderList);
 
-        $this->assign('orderList',$orderList);
-        $this->assign('page',$show);// 赋值分页输出
-        $this->display();
+        $this -> assign('orderList',$orderList);
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
 
 

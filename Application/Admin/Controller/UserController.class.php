@@ -9,13 +9,13 @@ use Think\Page;
 class UserController extends BaseController {
 
     public function index(){
-        $this->display();
+        $this -> display();
     }
 
     /**
      * 会员列表
      */
-    public function ajaxindex(){
+    public function ajaxIndex(){
         // 搜索条件
         $condition = array();
         I('mobile') ? $condition['mobile'] = I('mobile') : false;
@@ -45,14 +45,14 @@ class UserController extends BaseController {
             $third_leader = M('users')->query("select third_leader,count(1) as count  from __PREFIX__users where third_leader in(".  implode(',', $user_id_arr).")  group by third_leader");
             $third_leader = convert_arr_key($third_leader,'third_leader');            
         }
-        $this->assign('first_leader',$first_leader);
-        $this->assign('second_leader',$second_leader);
-        $this->assign('third_leader',$third_leader);
+        $this -> assign('first_leader',$first_leader);
+        $this -> assign('second_leader',$second_leader);
+        $this -> assign('third_leader',$third_leader);
                                 
-        $show = $Page->show();
-        $this->assign('userList',$userList);
-        $this->assign('page',$show);// 赋值分页输出
-        $this->display();
+        $show = $Page -> show();
+        $this -> assign('userList',$userList);
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
 
     /**
@@ -60,7 +60,7 @@ class UserController extends BaseController {
      */
     public function detail(){
         $uid = I('get.id');
-        $user = D('users')->where(array('user_id'=>$uid))->find();
+        $user = D('users') -> where(array('user_id'=>$uid))->find();
         if(!$user)
             exit($this->error('会员不存在'));
         if(IS_POST){
@@ -76,18 +76,18 @@ class UserController extends BaseController {
                 $_POST['password'] = encrypt($_POST['password']);
             }
 
-            $row = M('users')->where(array('user_id'=>$uid))->save($_POST);
+            $row = M('users') -> where(array('user_id'=>$uid))->save($_POST);
             if($row)
                 exit($this->success('修改成功'));
             exit($this->error('未作内容修改或修改失败'));
         }
         
-        $user['first_lower'] = M('users')->where("first_leader = {$user['user_id']}")->count();
-        $user['second_lower'] = M('users')->where("second_leader = {$user['user_id']}")->count();
-        $user['third_lower'] = M('users')->where("third_leader = {$user['user_id']}")->count();
+        $user['first_lower'] = M('users') -> where("first_leader = {$user['user_id']}")->count();
+        $user['second_lower'] = M('users') -> where("second_leader = {$user['user_id']}")->count();
+        $user['third_lower'] = M('users') -> where("third_leader = {$user['user_id']}")->count();
  
-        $this->assign('user',$user);
-        $this->display();
+        $this -> assign('user',$user);
+        $this -> display();
     }
 
     /**
@@ -95,11 +95,11 @@ class UserController extends BaseController {
      */
     public function address(){
         $uid = I('get.id');
-        $lists = D('user_address')->where(array('user_id'=>$uid))->select();
+        $lists = D('user_address') -> where(array('user_id'=>$uid))->select();
         $regionList = M('Region')->getField('id,name');
-        $this->assign('regionList',$regionList);
-        $this->assign('lists',$lists);
-        $this->display();
+        $this -> assign('regionList',$regionList);
+        $this -> assign('lists',$lists);
+        $this -> display();
     }
 
     /**
@@ -107,7 +107,7 @@ class UserController extends BaseController {
      */
     public function delete(){
         $uid = I('get.id');
-        $row = M('users')->where(array('user_id'=>$uid))->delete();
+        $row = M('users') -> where(array('user_id'=>$uid))->delete();
         if($row){
             $this->success('成功删除会员');
         }else{
@@ -123,14 +123,14 @@ class UserController extends BaseController {
         //获取类型
         $type = I('get.type');
         //获取记录总数
-        $count = M('account_log')->where(array('user_id'=>$user_id))->count();
+        $count = M('account_log') -> where(array('user_id'=>$user_id))->count();
         $page = new Page($count);
-        $lists  = M('account_log')->where(array('user_id'=>$user_id))->order('change_time desc')->limit($page->firstRow.','.$page->listRows)->select();
+        $lists  = M('account_log') -> where(array('user_id'=>$user_id))->order('change_time desc')->limit($page->firstRow.','.$page->listRows)->select();
 
-        $this->assign('user_id',$user_id);
-        $this->assign('page',$page->show());
-        $this->assign('lists',$lists);
-        $this->display();
+        $this -> assign('user_id',$user_id);
+        $this -> assign('page',$page -> show());
+        $this -> assign('lists',$lists);
+        $this -> display();
     }
 
     /**
@@ -164,20 +164,20 @@ class UserController extends BaseController {
             }
             exit;
         }
-        $this->assign('user_id',$user_id);
-        $this->display();
+        $this -> assign('user_id',$user_id);
+        $this -> display();
     }
     
     public function level(){
     	$act = I('GET.act','add');
-    	$this->assign('act',$act);
+    	$this -> assign('act',$act);
     	$level_id = I('GET.level_id');
     	$level_info = array();
     	if($level_id){
-    		$level_info = D('user_level')->where('level_id='.$level_id)->find();
-    		$this->assign('info',$level_info);
+    		$level_info = D('user_level') -> where('level_id='.$level_id)->find();
+    		$this -> assign('info',$level_info);
     	}
-    	$this->display();
+    	$this -> display();
     }
     
     public function levelList(){
@@ -188,12 +188,12 @@ class UserController extends BaseController {
     			$list[] = $val;
     		}
     	}
-    	$this->assign('list',$list);
+    	$this -> assign('list',$list);
     	$count = $Ad->where('1=1')->count();
     	$Page = new \Think\Page($count,10);
-    	$show = $Page->show();
-    	$this->assign('page',$show);
-    	$this->display();
+    	$show = $Page -> show();
+    	$this -> assign('page',$show);
+    	$this -> display();
     }
     
     public function levelHandle(){
@@ -202,11 +202,11 @@ class UserController extends BaseController {
     		$r = D('user_level')->add($data);
     	}
     	if($data['act'] == 'edit'){
-    		$r = D('user_level')->where('level_id='.$data['level_id'])->save($data);
+    		$r = D('user_level') -> where('level_id='.$data['level_id'])->save($data);
     	}
     	 
     	if($data['act'] == 'del'){
-    		$r = D('user_level')->where('level_id='.$data['level_id'])->delete();
+    		$r = D('user_level') -> where('level_id='.$data['level_id'])->delete();
     		if($r) exit(json_encode(1));
     	}
     	 
@@ -225,7 +225,7 @@ class UserController extends BaseController {
         $search_key = trim(I('search_key'));        
         if(strstr($search_key,'@'))    
         {
-            $list = M('users')->where(" email like '%$search_key%' ")->select();        
+            $list = M('users') -> where(" email like '%$search_key%' ")->select();
             foreach($list as $key => $val)
             {
                 echo "<option value='{$val['user_id']}'>{$val['email']}</option>";
@@ -233,7 +233,7 @@ class UserController extends BaseController {
         }
         else
         {
-            $list = M('users')->where(" mobile like '%$search_key%' ")->select();        
+            $list = M('users') -> where(" mobile like '%$search_key%' ")->select();
             foreach($list as $key => $val)
             {
                 echo "<option value='{$val['user_id']}'>{$val['mobile']}</option>";
@@ -247,8 +247,8 @@ class UserController extends BaseController {
      */
     public function ajax_distribut_tree()
     {
-          $list = M('users')->where("first_leader = 1")->select();
-          $this->display();
+          $list = M('users') -> where("first_leader = 1")->select();
+          $this -> display();
     }
 
 
@@ -263,7 +263,7 @@ class UserController extends BaseController {
             }
             foreach($data as $item){
                 $where['user_id'] = $item;
-                $user =  M('users')->where($where)->find();
+                $user =  M('users') -> where($where)->find();
                 $res[] = weChatPullingMessage($user['openid']);
             }
             $isin = in_array('1',$res);
@@ -281,7 +281,7 @@ class UserController extends BaseController {
     }
 
     public function feedback(){
-        $this->display();
+        $this -> display();
     }
 
     public function ajaxfeedback(){
@@ -301,10 +301,10 @@ class UserController extends BaseController {
 
         $userList = $model->where($condition)->order($sort_order)->limit($Page->firstRow.','.$Page->listRows)->select();
 
-        $show = $Page->show();
-        $this->assign('userList',$userList);
-        $this->assign('page',$show);// 赋值分页输出
-        $this->display();
+        $show = $Page -> show();
+        $this -> assign('userList',$userList);
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
 
     public function detailfeedback(){
@@ -312,15 +312,15 @@ class UserController extends BaseController {
         if(empty($id)){
             $this->error('参数错误');exit;
         }
-        $list = M('user_feedback')->where(array('id'=>$id))->find();
-        $this->assign('list',$list);
-        $this->display();
+        $list = M('user_feedback') -> where(array('id'=>$id))->find();
+        $this -> assign('list',$list);
+        $this -> display();
     }
 
 
     //提现审核
     public function withdrawDeposit(){
-        $this->display();
+        $this -> display();
     }
 
     public function ajaxWithdrawDeposit(){
@@ -340,10 +340,10 @@ class UserController extends BaseController {
 
         $userList = $model->where($condition)->order($sort_order)->limit($Page->firstRow.','.$Page->listRows)->select();
 
-        $show = $Page->show();
-        $this->assign('userList',$userList);
-        $this->assign('page',$show);// 赋值分页输出
-        $this->display();
+        $show = $Page -> show();
+        $this -> assign('userList',$userList);
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
 
     //审核通过
@@ -390,14 +390,14 @@ class UserController extends BaseController {
         $list['bad']        = $goodsComment -> where("level in('0','1') AND is_buyer = 1 " . $where) -> order('create_time DESC') -> select(); //0-1星
         $list['visitors']   = $goodsComment -> where("is_buyer = 0 " . $where) -> order('create_time DESC') -> select(); //游客
 
-        $this->assign('list',$list);
-        $this->assign('goodsList',$goodsList);
-        $this->display();
+        $this -> assign('list',$list);
+        $this -> assign('goodsList',$goodsList);
+        $this -> display();
     }
 
     public function ajaxDleComment(){
         $id = I('id');
-        $res = M('goods_comment')->where(array('id'=>$id))->save(array('is_delete'=>1));
+        $res = M('goods_comment') -> where(array('id'=>$id))->save(array('is_delete'=>1));
         if($res){
             exit(json_encode(callback(true,'删除成功')));
         }

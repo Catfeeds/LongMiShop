@@ -77,7 +77,7 @@ class Rbac {
     static public function authenticate($map,$model='') {
         if(empty($model)) $model =  C('USER_AUTH_MODEL');
         //使用给定的Map进行认证
-        return M($model)->where($map)->find();
+        return M($model) -> where($map)->find();
     }
 
     //用于检测用户权限的方法,并保存到Session中

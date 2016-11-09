@@ -8,17 +8,17 @@ class AdController extends BaseController{
         $ad_id = I('GET.ad_id');
         $ad_info = array();
         if($ad_id){
-            $ad_info = D('ad')->where('ad_id='.$ad_id)->find();
+            $ad_info = D('ad') -> where('ad_id='.$ad_id)->find();
             $ad_info['start_time'] = date('Y-m-d',$ad_info['start_time']);
             $ad_info['end_time'] = date('Y-m-d',$ad_info['end_time']);            
         }
         if($act == 'add')          
            $ad_info['pid'] = $_GET['pid'];                
-        $position = D('ad_position')->where('1=1')->select();
-        $this->assign('info',$ad_info);
-        $this->assign('act',$act);
-        $this->assign('position',$position);
-        $this->display();
+        $position = D('ad_position') -> where('1=1')->select();
+        $this -> assign('info',$ad_info);
+        $this -> assign('act',$act);
+        $this -> assign('position',$position);
+        $this -> display();
     }
     
     public function adList(){
@@ -29,7 +29,7 @@ class AdController extends BaseController{
         $where = "1=1";
         if(I('pid')){
         	$where = "pid=".I('pid');
-        	$this->assign('pid',I('pid'));
+        	$this -> assign('pid',I('pid'));
         }
         $keywords = I('keywords',false);
         if($keywords){
@@ -48,11 +48,11 @@ class AdController extends BaseController{
         }
                                      
         $ad_position_list = M('AdPosition')->getField("position_id,position_name,is_open");                        
-        $this->assign('ad_position_list',$ad_position_list);//广告位 
-        $show = $Page->show();// 分页显示输出
-        $this->assign('list',$list);// 赋值数据集
-        $this->assign('page',$show);// 赋值分页输出
-        $this->display();
+        $this -> assign('ad_position_list',$ad_position_list);//广告位
+        $show = $Page -> show();// 分页显示输出
+        $this -> assign('list',$list);// 赋值数据集
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
     
     public function position(){
@@ -60,11 +60,11 @@ class AdController extends BaseController{
         $position_id = I('GET.position_id');
         $info = array();
         if($position_id){
-            $info = D('ad_position')->where('position_id='.$position_id)->find();
-            $this->assign('info',$info);
+            $info = D('ad_position') -> where('position_id='.$position_id)->find();
+            $this -> assign('info',$info);
         }
-        $this->assign('act',$act);
-        $this->display();
+        $this -> assign('act',$act);
+        $this -> display();
     }
     
     public function positionList(){
@@ -73,10 +73,10 @@ class AdController extends BaseController{
         $Page = new \Think\Page($count,10);// 实例化分页类 传入总记录数和每页显示的记录数
         $list = $Position->order('position_id DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
         
-        $this->assign('list',$list);// 赋值数据集                
-        $show = $Page->show();// 分页显示输出
-        $this->assign('page',$show);// 赋值分页输出
-        $this->display();
+        $this -> assign('list',$list);// 赋值数据集
+        $show = $Page -> show();// 分页显示输出
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
     
     public function adHandle(){
@@ -88,11 +88,11 @@ class AdController extends BaseController{
     		$r = D('ad')->add($data);
     	}
     	if($data['act'] == 'edit'){
-    		$r = D('ad')->where('ad_id='.$data['ad_id'])->save($data);
+    		$r = D('ad') -> where('ad_id='.$data['ad_id'])->save($data);
     	}
     	
     	if($data['act'] == 'del'){
-    		$r = D('ad')->where('ad_id='.$data['del_id'])->delete();
+    		$r = D('ad') -> where('ad_id='.$data['del_id'])->delete();
     		if($r) exit(json_encode(1));
     	}
     	$referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U('Admin/Ad/adList');
@@ -113,14 +113,14 @@ class AdController extends BaseController{
         }
         
         if($data['act'] == 'edit'){
-        	$r = M('ad_position')->where('position_id='.$data['position_id'])->save($data);
+        	$r = M('ad_position') -> where('position_id='.$data['position_id'])->save($data);
         }
         
         if($data['act'] == 'del'){
-        	if(M('ad')->where('pid='.$data['position_id'])->count()>0){
+        	if(M('ad') -> where('pid='.$data['position_id'])->count()>0){
         		$this->error("此广告位下还有广告，请先清除",U('Admin/Ad/positionList'));
         	}else{
-        		$r = M('ad_position')->where('position_id='.$data['position_id'])->delete();
+        		$r = M('ad_position') -> where('position_id='.$data['position_id'])->delete();
         		if($r) exit(json_encode(1));
         	}
         }

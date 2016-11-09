@@ -313,7 +313,7 @@ class GoodsLogic extends RelationModel
                        
          $spec = M('Spec')->getField('id,name'); // 规格表
          $specItem = M('SpecItem')->getField('id,item,spec_id');//规格项
-         $keySpecGoodsPrice = M('SpecGoodsPrice')->where('goods_id = '.$goods_id)->getField('key,key_name,price,store_count,bar_code,sku');//规格项
+         $keySpecGoodsPrice = M('SpecGoodsPrice') -> where('goods_id = '.$goods_id)->getField('key,key_name,price,store_count,bar_code,sku');//规格项
                           
        $str = "<table class='table table-bordered' id='spec_input_tab'>";
        $str .="<tr>";       
@@ -358,8 +358,8 @@ class GoodsLogic extends RelationModel
      * @param type $checked
      */
     function GetSpecCheckboxList($type_id, $checked = array()){
-        $list = M('Spec')->where("type_id = $type_id")->order('`order` desc')->select();        
-        //$list = M('Spec')->where("1=1")->order('`order` desc')->select();        
+        $list = M('Spec') -> where("type_id = $type_id")->order('`order` desc')->select();
+        //$list = M('Spec') -> where("1=1")->order('`order` desc')->select();
         $str = '';
         
         foreach($list as $key => $val)
@@ -378,8 +378,8 @@ class GoodsLogic extends RelationModel
      * @param type $checked
      */
     function GetAttrCheckboxList($type_id, $checked = array()){                
-        $list = M('GoodsAttribute')->where("type_id = $type_id and attr_index > 0 ")->order('`order` desc')->select();        
-        //$list = M('Spec')->where("1=1")->order('`order` desc')->select();        
+        $list = M('GoodsAttribute') -> where("type_id = $type_id and attr_index > 0 ")->order('`order` desc')->select();
+        //$list = M('Spec') -> where("1=1")->order('`order` desc')->select();
         $str = '';
         
         foreach($list as $key => $val)
@@ -428,8 +428,8 @@ class GoodsLogic extends RelationModel
     function getSortBrands()
     {
         $brandList =  M("Brand")->select();
-        $brandIdArr =  M("Brand")->where("name in (select `name` from `".C('DB_PREFIX')."brand` group by name having COUNT(id) > 1)")->getField('id,cat_id'); 
-        $goodsCategoryArr = M('goodsCategory')->where("level = 1")->getField('id,name');
+        $brandIdArr =  M("Brand") -> where("name in (select `name` from `".C('DB_PREFIX')."brand` group by name having COUNT(id) > 1)")->getField('id,cat_id');
+        $goodsCategoryArr = M('goodsCategory') -> where("level = 1")->getField('id,name');
         $nameList = array();
         foreach($brandList as $k => $v)
         {

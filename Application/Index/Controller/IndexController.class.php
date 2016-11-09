@@ -23,7 +23,7 @@ class IndexController extends IndexBaseController {
     }
 
     public function index(){
-    	$this->display();
+    	$this -> display();
     }
     public function test4(){
         $order_goods_list  = selectDataWithCondition("return_goods");
@@ -72,7 +72,7 @@ class IndexController extends IndexBaseController {
             $regionList[$region_item['name']] = $region_item['id'];
         }
 
-        $goods = M('goods')->where("goods_id = '1' ")->find();
+        $goods = M('goods') -> where("goods_id = '1' ")->find();
         try{
             $model -> startTrans();
             for ($i = 0;; ){
@@ -322,7 +322,7 @@ class IndexController extends IndexBaseController {
                     $data['code'] = $userItem['code'];
                     $data['state'] = 0;
                     if( $userItem["status"] == 1 && !empty($userItem['recid']) ) {
-                        $fansInfo = M()->table("ims_mc_mapping_fans")->where(array('fanid' => $userItem['fanid']))->field("openid")->find();
+                        $fansInfo = M()->table("ims_mc_mapping_fans") -> where(array('fanid' => $userItem['fanid']))->field("openid")->find();
 
                         $userInfo = findDataWithCondition('users', array('openid' => $fansInfo['openid']), "user_id");
                         $data['user_id'] = $userInfo["user_id"];
@@ -331,7 +331,7 @@ class IndexController extends IndexBaseController {
                         }
                         $recid = $userItem['recid'];
                         $data['receive_time'] = $userItem['gettime'];
-                        $recordInfo = M()->table("ims_activity_coupon_record")->where(array('recid' => $recid))->find();
+                        $recordInfo = M()->table("ims_activity_coupon_record") -> where(array('recid' => $recid))->find();
                         if ($recordInfo['status'] == 1) {
                             $data['state'] = 1;
                         }

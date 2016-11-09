@@ -359,7 +359,7 @@ class RelationModel extends Model {
                                             if(isset($relationId)) {
                                                 $this->startTrans();
                                                 // 删除关联表数据
-                                                $this->table($mappingRelationTable)->where($mappingCondition)->delete();
+                                                $this->table($mappingRelationTable) -> where($mappingCondition)->delete();
                                                 // 插入关联表数据
                                                 $sql  = 'INSERT INTO '.$mappingRelationTable.' ('.$mappingFk.','.$mappingRelationFk.') SELECT a.'.$this->getPk().',b.'.$model->getPk().' FROM '.$this->getTableName().' AS a ,'.$model->getTableName()." AS b where a.".$this->getPk().' ='. $pk.' AND  b.'.$model->getPk().' IN ('.$relationId.") ";
                                                 $result =   $model->execute($sql);
@@ -372,7 +372,7 @@ class RelationModel extends Model {
                                             }
                                             break;
                                         case 'DEL': // 根据外键删除中间表关联数据
-                                            $result =   $this->table($mappingRelationTable)->where($mappingCondition)->delete();
+                                            $result =   $this->table($mappingRelationTable) -> where($mappingCondition)->delete();
                                             break;
                                     }
                                     break;

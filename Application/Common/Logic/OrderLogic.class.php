@@ -22,7 +22,7 @@ class OrderLogic extends BaseLogic
         if( !is_null($userId) ){
             $condition['user_id'] = $userId;
         }
-        return M('order')->where($condition)->find();
+        return M('order') -> where($condition)->find();
     }
 
 
@@ -46,7 +46,7 @@ class OrderLogic extends BaseLogic
      * @return array
      */
     public function cancelOrder($userId,$orderId,$isOverdue = false){
-        $order = M('order')->where(array('order_id'=>$orderId,'user_id'=>$userId))->find();
+        $order = M('order') -> where(array('order_id'=>$orderId,'user_id'=>$userId))->find();
         //检查是否未支付订单 已支付联系客服处理退款
         if(empty($order)){
             return callback(false,'订单不存在','');
@@ -56,7 +56,7 @@ class OrderLogic extends BaseLogic
             return callback(false,'支付状态或订单状态不允许');
         }
         //获取记录表信息
-        //$log = M('account_log')->where(array('order_id'=>$order_id))->find();
+        //$log = M('account_log') -> where(array('order_id'=>$order_id))->find();
         //有余额支付的情况
 //        if($order['user_money'] > 0 || $order['integral'] > 0){
 //            accountLog($userId,$order['user_money'],$order['integral'],"订单取消，退回{$order['user_money']}元,{$order['integral']}积分");
@@ -98,7 +98,7 @@ class OrderLogic extends BaseLogic
         }
 
         M('order_action')->add($data);//订单操作记录
-        $row = M('order')->where(array('order_id'=>$orderId,'user_id'=>$userId))->save(array('order_status'=>3));
+        $row = M('order') -> where(array('order_id'=>$orderId,'user_id'=>$userId))->save(array('order_status'=>3));
 
         if(!$row){
             return callback(false,'操作失败','');
@@ -128,7 +128,7 @@ class OrderLogic extends BaseLogic
     public function getOrderInfoByRecId( $recId ,$userId ,$needGoodsList = false){
         $condition = array();
         $condition["rec_id"] = $recId;
-        $orderGoodsInfo = M('order_goods')->where( $condition )->find();
+        $orderGoodsInfo = M('order_goods') -> where( $condition )->find();
         if( empty($orderGoodsInfo) ){
             return callback(false,'找不到订单商品');
         }
