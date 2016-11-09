@@ -170,7 +170,7 @@ class OrderController extends BaseController {
         $id =  I("id");
         $invoice_no =  I("invoice_no");
         $shipping_name =  I("shipping_name");
-        $list = M("order_goods") -> where(array('order_id' => $id   )) -> field("rec_id") -> select();
+        $list = M("order_goods") -> where(array('order_id' => $id )) -> field("rec_id") -> select();
         $goods = array();
         if(!empty($list)){
             foreach ( $list as $item ){
