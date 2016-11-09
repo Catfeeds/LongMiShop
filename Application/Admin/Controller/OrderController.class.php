@@ -631,26 +631,18 @@ class OrderController extends BaseController {
         $type =   I('type');
         switch ($type) {
             case 'untreated': //待处理
-                $where .= "  AND status = 0 ";
+                $where .= "  AND result = 0 ";
                 break;
             case 'processed': //已退款
-                $where .= "AND status = 2 AND remark = '' ";
+                $where .= "AND result = 1 ";
                 break;
             case 'decline': //已驳回
-                $where .= "  AND remark != '' ";
+                $where .= "  AND result = 2 ";
                 break;
         }
 
         if(is_supplier()){
-            $id_lists = M('goods')->where(array('admin_id' => session('admin_id'))) -> field('goods_id') -> select();
-            $temp_string = "";
-            if(!empty($id_lists)){
-                foreach ($id_lists as $id_list){
-                    $temp_string .= $id_list['goods_id'].",";
-                }
-            }
-            $temp_string .= "0";
-            $where .= " AND goods_id in (".$temp_string.")";
+            $where .= " AND admin_id in '".session("admin_id")."'";
         }
 
 //        $order_sn && $where.= " and order_sn like '%$order_sn%' ";

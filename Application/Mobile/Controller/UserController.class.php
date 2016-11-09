@@ -1002,6 +1002,7 @@ class UserController extends MobileBaseController {
             $data['goods_id'] = $goodsId; 
             $data['addtime'] = time(); 
             $data['user_id'] = $this->user_id;
+            $data['admin_id'] = $OrderGoods['admin_id'];
             $data['spec_key'] = $OrderGoods['spec_key'];
             $data['reason'] = I('reason'); // 问题描述
             M('return_goods')->add($data);   
