@@ -642,7 +642,7 @@ class OrderController extends BaseController {
         }
 
         if(is_supplier()){
-            $where .= " AND admin_id in '".session("admin_id")."'";
+            $where .= " AND admin_id = '".session("admin_id")."' ";
         }
 
 //        $order_sn && $where.= " and order_sn like '%$order_sn%' ";
