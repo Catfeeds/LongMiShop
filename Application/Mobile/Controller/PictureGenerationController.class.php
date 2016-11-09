@@ -4,6 +4,7 @@ namespace Mobile\Controller;
 
 class PictureGenerationController extends MobileBaseController {
 
+    public $key = null;
     function exceptAuthActions()
     {
         return null;
@@ -14,11 +15,14 @@ class PictureGenerationController extends MobileBaseController {
      */
     public function _initialize() {
         parent::_initialize();
+        $this -> key = md5("42368");
     }
 
     public function index(){
         $name = I("name");
+        $name = str_replace(' ',$this -> key,$name);
         $position = I("position");
+        $position = str_replace(' ',$this -> key,$position);
         $this -> assign('name',$name);
         $this -> assign('position',$position);
         $this -> display();
@@ -26,9 +30,9 @@ class PictureGenerationController extends MobileBaseController {
 
     public function run(){
         $name = I("name","米兔");
-        $name = str_replace('+',' ',$name);
+        $name = str_replace($this -> key,' ',$name);
         $position = I("position","主编");
-        $position = str_replace('+',' ',$position);
+        $position = str_replace($this -> key,' ',$position);
         $im = imagecreatetruecolor(588, 800);
         $bg = imagecreatefromjpeg('./Template/mobile/longmi/Static/images/toutu.jpg');
         imagecopy($im,$bg,0,0,0,0,588, 800);
