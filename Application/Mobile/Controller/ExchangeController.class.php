@@ -18,7 +18,7 @@ class ExchangeController extends MobileBaseController {
     }
 
     public function exchange(){
-        $this->display();
+        $this -> display();
     }
 
     public function checkExchangeCode(){
@@ -50,17 +50,17 @@ class ExchangeController extends MobileBaseController {
             exit;
         }
         $region_list = get_region_list();
-        $this->assign('region_list',$region_list);
+        $this -> assign('region_list',$region_list);
         $address = getCurrentAddress( $this->user_id , I('address_id',null) );
         addressTheJump(ACTION_NAME);
         if( empty($address) ){
             header("Location: ".U('Mobile/User/edit_address',array('source'=>'exchange')));
         }
-        $this->assign('goodsList',$goodsList);
-        $this->assign('exchangeCode',$code);
-        $this->assign('region_list',$region_list);
-        $this->assign('address',$address);
-        $this->display();
+        $this -> assign('goodsList',$goodsList);
+        $this -> assign('exchangeCode',$code);
+        $this -> assign('region_list',$region_list);
+        $this -> assign('address',$address);
+        $this -> display();
     }
 
     public function createExchangeOrder(){

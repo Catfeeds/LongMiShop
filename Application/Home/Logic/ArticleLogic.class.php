@@ -18,12 +18,12 @@ class ArticleLogic extends RelationModel
 	}
 	
 	public function getSiteArticle(){
-		$syscate =  M('ArticleCat')->where("cat_type  = 1")->select();
+		$syscate =  M('ArticleCat') -> where("cat_type  = 1")->select();
 		foreach($syscate as $v){
 			$cats .= $v['cat_id'].',';
 		}
 		$cats = trim($cats,',');
-		$result = M('Article')->where("cat_id  in ($cats)")->select();
+		$result = M('Article') -> where("cat_id  in ($cats)")->select();
 		foreach ($result as $val){
 			$arr[$val['cat_id']][] = $val;
 		}

@@ -18,9 +18,9 @@ class WidgetController extends BaseController {
             "title" => $_GET['title'],
             "show" => 1
         );
-        $this->assign('spec',$spec);
-        $this->assign('specitem',$specitem);
-        $this->display();
+        $this -> assign('spec',$spec);
+        $this -> assign('specitem',$specitem);
+        $this -> display();
     }
 
     public function spec(){
@@ -28,8 +28,8 @@ class WidgetController extends BaseController {
             "id" => time(),
             "title" => $_GET['title']
         );
-        $this->assign('spec',$spec);
-        $this->display();
+        $this -> assign('spec',$spec);
+        $this -> display();
     }
 
 

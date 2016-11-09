@@ -7,23 +7,23 @@ class ArticleController extends BaseController {
     public function categoryList(){
         $ArticleCat = new ArticleCatLogic(); 
         $cat_list = $ArticleCat->article_cat_list(0, 0, false);
-        $this->assign('cat_list',$cat_list);
-        $this->display('categoryList');
+        $this -> assign('cat_list',$cat_list);
+        $this -> display('categoryList');
     }
     
     public function category(){
         $ArticleCat = new ArticleCatLogic();  
  		$act = I('GET.act','add');
-        $this->assign('act',$act);
+        $this -> assign('act',$act);
         $cat_id = I('GET.cat_id');
         $cat_info = array();
         if($cat_id){
-            $cat_info = D('article_cat')->where('cat_id='.$cat_id)->find();
-            $this->assign('cat_info',$cat_info);
+            $cat_info = D('article_cat') -> where('cat_id='.$cat_id)->find();
+            $this -> assign('cat_info',$cat_info);
         }
         $cats = $ArticleCat->article_cat_list(0,$cat_info['parent_id'],true);
-        $this->assign('cat_select',$cats);
-        $this->display();
+        $this -> assign('cat_select',$cats);
+        $this -> display();
     }
     
     public function articleList(){
@@ -49,9 +49,9 @@ class ArticleController extends BaseController {
         		$list[] = $val;
         	}
         }
-        $this->assign('list',$list);// 赋值数据集
-        $this->assign('page',$page);// 赋值分页输出
-        $this->display('articleList');
+        $this -> assign('list',$list);// 赋值数据集
+        $this -> assign('page',$page);// 赋值分页输出
+        $this -> display('articleList');
     }
     
     public function article(){
@@ -61,14 +61,14 @@ class ArticleController extends BaseController {
         $info['publish_time'] = time()+3600*24;
         if(I('GET.article_id')){
            $article_id = I('GET.article_id');
-           $info = M('article')->where('article_id='.$article_id)->find();
+           $info = M('article') -> where('article_id='.$article_id)->find();
         }
         $cats = $ArticleCat->article_cat_list(0,$info['cat_id']);
-        $this->assign('cat_select',$cats);
-        $this->assign('act',$act);
-        $this->assign('info',$info);
+        $this -> assign('cat_select',$cats);
+        $this -> assign('act',$act);
+        $this -> assign('info',$info);
         $this->initEditor();
-        $this->display();
+        $this -> display();
     }
     
     
@@ -78,14 +78,14 @@ class ArticleController extends BaseController {
      */
     private function initEditor()
     {
-        $this->assign("URL_upload", U('Admin/Ueditor/imageUp',array('savepath'=>'article')));
-        $this->assign("URL_fileUp", U('Admin/Ueditor/fileUp',array('savepath'=>'article')));
-        $this->assign("URL_scrawlUp", U('Admin/Ueditor/scrawlUp',array('savepath'=>'article')));
-        $this->assign("URL_getRemoteImage", U('Admin/Ueditor/getRemoteImage',array('savepath'=>'article')));
-        $this->assign("URL_imageManager", U('Admin/Ueditor/imageManager',array('savepath'=>'article')));
-        $this->assign("URL_imageUp", U('Admin/Ueditor/imageUp',array('savepath'=>'article')));
-        $this->assign("URL_getMovie", U('Admin/Ueditor/getMovie',array('savepath'=>'article')));
-        $this->assign("URL_Home", "");
+        $this -> assign("URL_upload", U('Admin/Ueditor/imageUp',array('savepath'=>'article')));
+        $this -> assign("URL_fileUp", U('Admin/Ueditor/fileUp',array('savepath'=>'article')));
+        $this -> assign("URL_scrawlUp", U('Admin/Ueditor/scrawlUp',array('savepath'=>'article')));
+        $this -> assign("URL_getRemoteImage", U('Admin/Ueditor/getRemoteImage',array('savepath'=>'article')));
+        $this -> assign("URL_imageManager", U('Admin/Ueditor/imageManager',array('savepath'=>'article')));
+        $this -> assign("URL_imageUp", U('Admin/Ueditor/imageUp',array('savepath'=>'article')));
+        $this -> assign("URL_getMovie", U('Admin/Ueditor/getMovie',array('savepath'=>'article')));
+        $this -> assign("URL_Home", "");
     }
     
     
@@ -107,21 +107,21 @@ class ArticleController extends BaseController {
         	{
         		$this->error("所选分类的上级分类不能是当前分类的子分类",U('Admin/Article/category',array('cat_id'=>$data['cat_id'])));
         	}
-        	$d = D('article_cat')->where("cat_id=$data[cat_id]")->save($data);
+        	$d = D('article_cat') -> where("cat_id=$data[cat_id]")->save($data);
         }
         
         if($data['act'] == 'del'){      	
-        	$res = D('article_cat')->where('parent_id ='.$data['cat_id'])->select(); 
+        	$res = D('article_cat') -> where('parent_id ='.$data['cat_id'])->select();
         	if ($res)
         	{
         		exit(json_encode('还有子分类，不能删除'));
         	}
-        	$res = D('article')->where('cat_id ='.$data['cat_id'])->select();       	      	
+        	$res = D('article') -> where('cat_id ='.$data['cat_id'])->select();
         	if ($res)
         	{
         		exit(json_encode('非空的分类不允许删除'));
         	}      	
-        	$r = D('article_cat')->where('cat_id='.$data['cat_id'])->delete();
+        	$r = D('article_cat') -> where('cat_id='.$data['cat_id'])->delete();
         	if($r) exit(json_encode(1));
         }
         if($d){
@@ -142,11 +142,11 @@ class ArticleController extends BaseController {
         }
         
         if($data['act'] == 'edit'){
-            $r = M('article')->where('article_id='.$data['article_id'])->save($data);
+            $r = M('article') -> where('article_id='.$data['article_id'])->save($data);
         }
         
         if($data['act'] == 'del'){
-        	$r = M('article')->where('article_id='.$data['article_id'])->delete();
+        	$r = M('article') -> where('article_id='.$data['article_id'])->delete();
         	if($r) exit(json_encode(1));       	
         }
         $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U('Admin/Article/articleList');
@@ -160,14 +160,14 @@ class ArticleController extends BaseController {
     
     public function link(){
     	$act = I('GET.act','add');
-    	$this->assign('act',$act);
+    	$this -> assign('act',$act);
     	$link_id = I('GET.link_id');
     	$link_info = array();
     	if($link_id){
-    		$link_info = D('friend_link')->where('link_id='.$link_id)->find();
-    		$this->assign('info',$link_info);
+    		$link_info = D('friend_link') -> where('link_id='.$link_id)->find();
+    		$this -> assign('info',$link_info);
     	}
-    	$this->display();
+    	$this -> display();
     }
     
     public function linkList(){
@@ -179,12 +179,12 @@ class ArticleController extends BaseController {
     			$list[] = $val;
     		}
     	}
-    	$this->assign('list',$list);// 赋值数据集
+    	$this -> assign('list',$list);// 赋值数据集
     	$count = $Ad->where('1=1')->count();// 查询满足要求的总记录数
     	$Page = new \Think\Page($count,10);// 实例化分页类 传入总记录数和每页显示的记录数
-    	$show = $Page->show();// 分页显示输出
-    	$this->assign('page',$show);// 赋值分页输出
-    	$this->display();
+    	$show = $Page -> show();// 分页显示输出
+    	$this -> assign('page',$show);// 赋值分页输出
+    	$this -> display();
     }
     
     public function linkHandle(){
@@ -194,11 +194,11 @@ class ArticleController extends BaseController {
     		$r = D('friend_link')->add($data);
     	}
     	if($data['act'] == 'edit'){
-    		$r = D('friend_link')->where('link_id='.$data['link_id'])->save($data);
+    		$r = D('friend_link') -> where('link_id='.$data['link_id'])->save($data);
     	}
     	
     	if($data['act'] == 'del'){
-    		$r = D('friend_link')->where('link_id='.$data['link_id'])->delete();
+    		$r = D('friend_link') -> where('link_id='.$data['link_id'])->delete();
     		if($r) exit(json_encode(1));
     	}
     	

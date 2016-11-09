@@ -21,14 +21,14 @@ class CartLogic extends BaseLogic
      */
     function addCart($goods_id,$goods_num,$goods_spec,$session_id,$user_id = 0)
     {
-        $goods = M('Goods')->where("goods_id = $goods_id")->find(); // 找出这个商品
-        $specGoodsPriceList = M('SpecGoodsPrice')->where("goods_id = $goods_id")->getField("key,key_name,price,store_count,sku"); // 获取商品对应的规格价钱 库存 条码
+        $goods = M('Goods') -> where("goods_id = $goods_id")->find(); // 找出这个商品
+        $specGoodsPriceList = M('SpecGoodsPrice') -> where("goods_id = $goods_id")->getField("key,key_name,price,store_count,sku"); // 获取商品对应的规格价钱 库存 条码
 
         $where = " session_id = '$session_id' ";
         $user_id = $user_id ? $user_id : 0;
         if($user_id)
             $where .= "  or user_id= $user_id ";
-        $catr_count = M('Cart')->where($where)->count(); // 查找购物车商品总数量
+        $catr_count = M('Cart') -> where($where)->count(); // 查找购物车商品总数量
         if($catr_count >= 20)
             return array('status'=>-9,'msg'=>'购物车最多只能放20种商品','result'=>'');
 
@@ -46,9 +46,9 @@ class CartLogic extends BaseLogic
         //限时抢购 不能超过购买数量
         if($goods['prom_type'] == 1)
         {
-            $flash_sale = M('flash_sale')->where("id = {$goods['prom_id']} and ".time()." > start_time and ".time()." < end_time and goods_num > buy_num")->find(); // 限时抢购活动
+            $flash_sale = M('flash_sale') -> where("id = {$goods['prom_id']} and ".time()." > start_time and ".time()." < end_time and goods_num > buy_num")->find(); // 限时抢购活动
             if($flash_sale){
-                $cart_goods_num = M('Cart')->where("($where) and goods_id = {$goods['goods_id']}")->getField('goods_num');
+                $cart_goods_num = M('Cart') -> where("($where) and goods_id = {$goods['goods_id']}")->getField('goods_num');
                 // 如果购买数量 大于每人限购数量
                 if(($goods_num + $cart_goods_num) > $flash_sale['buy_limit'])
                 {
@@ -78,7 +78,7 @@ class CartLogic extends BaseLogic
         else
             $where .= " and  session_id = '$session_id' ";
 
-        $catr_goods = M('Cart')->where($where)->find(); // 查找购物车是否已经存在该商品
+        $catr_goods = M('Cart') -> where($where)->find(); // 查找购物车是否已经存在该商品
         $price = $spec_price ? $spec_price : $goods['shop_price']; // 如果商品规格没有指定价格则用商品原始价格
 
         // 商品参与促销
@@ -112,7 +112,7 @@ class CartLogic extends BaseLogic
         // 如果商品购物车已经存在
         if($catr_goods)
         {
-            $result = M('Cart')->where("id =".$catr_goods[id])->save(  array("goods_num"=> ($catr_goods['goods_num'] + $goods_num)) ); // 数量相加
+            $result = M('Cart') -> where("id =".$catr_goods[id])->save(  array("goods_num"=> ($catr_goods['goods_num'] + $goods_num)) ); // 数量相加
             $cart_count = cart_goods_num($user_id,$session_id); // 查找购物车数量
             setcookie('cn',$cart_count,null,'/');
             return array('status'=>1,'msg'=>'成功加入购物车','result'=>$cart_count);
@@ -153,7 +153,7 @@ class CartLogic extends BaseLogic
             $user['user_id'] = 0;
         }
 
-        $cartData = M('Cart')->where($where)->order(' goods_id asc')->select();  // 获取购物车商品
+        $cartData = M('Cart') -> where($where)->order(' goods_id asc')->select();  // 获取购物车商品
         $num = $total_price =  $cut_fee = 0;
         $cartList = array();
         if(!empty($cartData)){
@@ -168,11 +168,11 @@ class CartLogic extends BaseLogic
                     $cartList[$k]['store_count'] = 0;
                     $cartList[$k]['selected'] = 0;
                     $val['selected'] = 0;
-                    M('Cart')->where("id = '{$val['id']}'")->save(array("selected" => 0));
+                    M('Cart') -> where("id = '{$val['id']}'")->save(array("selected" => 0));
                     $cartList[$k]['goods_num']= 0;
                 }
                 if( $cartList[$k]['store_count'] < $val['goods_num'] ){
-                    M('Cart')->where("id = '{$val['id']}'")->save(array("goods_num" => $cartList[$k]['store_count'] ));
+                    M('Cart') -> where("id = '{$val['id']}'")->save(array("goods_num" => $cartList[$k]['store_count'] ));
                     $cartList[$k]['goods_num'] = $val['goods_num'] = $cartList[$k]['store_count'];
                     $cartList[$k]['isLack'] = true;
                 }
@@ -206,26 +206,26 @@ class CartLogic extends BaseLogic
         if($shipping_code == '') return 0;
 
         // 先根据 镇 县 区找 shipping_area_id
-        $shipping_area_id = M('AreaRegion')->where("shipping_area_id in (select shipping_area_id from  ".C('DB_PREFIX')."shipping_area where shipping_code = '$shipping_code') and region_id = {$district}")->getField('shipping_area_id');
+        $shipping_area_id = M('AreaRegion') -> where("shipping_area_id in (select shipping_area_id from  ".C('DB_PREFIX')."shipping_area where shipping_code = '$shipping_code') and region_id = {$district}")->getField('shipping_area_id');
 
         // 先根据市区找 shipping_area_id
         if($shipping_area_id == false)
-            $shipping_area_id = M('AreaRegion')->where("shipping_area_id in (select shipping_area_id from  ".C('DB_PREFIX')."shipping_area where shipping_code = '$shipping_code') and region_id = {$city}")->getField('shipping_area_id');
+            $shipping_area_id = M('AreaRegion') -> where("shipping_area_id in (select shipping_area_id from  ".C('DB_PREFIX')."shipping_area where shipping_code = '$shipping_code') and region_id = {$city}")->getField('shipping_area_id');
 
         // 市区找不到 根据省份找shipping_area_id
         if($shipping_area_id == false)
-            $shipping_area_id = M('AreaRegion')->where("shipping_area_id in (select shipping_area_id from  ".C('DB_PREFIX')."shipping_area where shipping_code = '$shipping_code') and region_id = {$province}")->getField('shipping_area_id');
+            $shipping_area_id = M('AreaRegion') -> where("shipping_area_id in (select shipping_area_id from  ".C('DB_PREFIX')."shipping_area where shipping_code = '$shipping_code') and region_id = {$province}")->getField('shipping_area_id');
 
         // 省份找不到 找默认配置全国的物流费
         if($shipping_area_id == false)
         {
             // 如果市和省份都没查到, 就查询 tp_shipping_area 表 is_default = 1 的  表示全国的  select * from `tp_plugin`  select * from  `tp_shipping_area` select * from  `tp_area_region`
-            $shipping_area_id = M("ShippingArea")->where("shipping_code = '$shipping_code' and is_default = 1")->getField('shipping_area_id');
+            $shipping_area_id = M("ShippingArea") -> where("shipping_code = '$shipping_code' and is_default = 1")->getField('shipping_area_id');
         }
         if($shipping_area_id == false)
             return 0;
         /// 找到了 shipping_area_id  找config
-        $shipping_config = M('ShippingArea')->where("shipping_area_id = $shipping_area_id")->getField('config');
+        $shipping_config = M('ShippingArea') -> where("shipping_area_id = $shipping_area_id")->getField('config');
         $shipping_config  = unserialize($shipping_config);
         $shipping_config['money'] = $shipping_config['money'] ? $shipping_config['money'] : 0;
 
@@ -250,13 +250,13 @@ class CartLogic extends BaseLogic
      */
     public function getCouponMoney($user_id, $coupon_id,$mode)
     {
-        $couponlist = M('CouponList')->where("uid = $user_id and id = $coupon_id")->find(); // 获取用户的优惠券
+        $couponlist = M('CouponList') -> where("uid = $user_id and id = $coupon_id")->find(); // 获取用户的优惠券
         if(empty($couponlist)) {
             if($mode == 1) return 0;
             return array('status'=>1,'msg'=>'','result'=>0);
         }
 
-        $coupon = M('Coupon')->where("id = {$couponlist['cid']}")->find(); // 获取 优惠券类型表
+        $coupon = M('Coupon') -> where("id = {$couponlist['cid']}")->find(); // 获取 优惠券类型表
         $coupon['money'] = $coupon['money'] ? $coupon['money'] : 0;
         
         if($coupon['is_discount'] == 1 && $mode == 1){
@@ -278,10 +278,10 @@ class CartLogic extends BaseLogic
      */
     public function getCouponMoneyByCode($couponCode,$order_momey)
     {
-        $couponlist = M('CouponList')->where("code = '$couponCode'")->find(); // 获取用户的优惠券
+        $couponlist = M('CouponList') -> where("code = '$couponCode'")->find(); // 获取用户的优惠券
         if(empty($couponlist))
             return array('status'=>-9,'msg'=>'优惠券码不存在','result'=>'');
-        $coupon = M('Coupon')->where("id = {$couponlist['cid']}")->find(); // 获取优惠券类型表
+        $coupon = M('Coupon') -> where("id = {$couponlist['cid']}")->find(); // 获取优惠券类型表
         if(time() > $coupon['use_end_time'])
             return array('status'=>-10,'msg'=>'优惠券已经过期','result'=>'');
         if($order_momey < $coupon['condition'])
@@ -306,12 +306,12 @@ class CartLogic extends BaseLogic
     {
 
         // 仿制灌水 1天只能下 50 单  // select * from `tp_order` where user_id = 1  and order_sn like '20151217%'
-        $order_count = M('Order')->where("user_id= $user_id and order_sn like '" . date('Ymd') . "%'")->count(); // 查找购物车商品总数量
+        $order_count = M('Order') -> where("user_id= $user_id and order_sn like '" . date('Ymd') . "%'")->count(); // 查找购物车商品总数量
         if ($order_count >= 50)
             return array('status' => -9, 'msg' => '一天只能下50个订单', 'result' => '');
         // 0插入订单 order
-        $address = M('UserAddress')->where("address_id = $address_id")->find();
-        $shipping = M('Plugin')->where("code = '$shipping_code'")->find();
+        $address = M('UserAddress') -> where("address_id = $address_id")->find();
+        $shipping = M('Plugin') -> where("code = '$shipping_code'")->find();
         $data = array(
             'order_sn'         => date('YmdHis').rand(1000,9999), // 订单编号
             'user_id'          =>$user_id, // 用户id
@@ -347,17 +347,17 @@ class CartLogic extends BaseLogic
         // 记录订单操作日志
         logOrder($order_id,'您提交了订单，请等待系统确认','提交订单',$user_id);
 
-        $order = M('Order')->where("order_id = $order_id")->find();
+        $order = M('Order') -> where("order_id = $order_id")->find();
         // 如果应付金额为0  可能是余额支付 + 积分 + 优惠券 这里订单支付状态直接变成已支付
         if($data['order_amount'] == 0)
         {
             update_pay_status($order['order_sn'], 1);
         }
         // 1插入order_goods 表
-        $cartList = M('Cart')->where("user_id = $user_id and selected = 1")->select();
+        $cartList = M('Cart') -> where("user_id = $user_id and selected = 1")->select();
         foreach($cartList as $key => $val)
         {
-            $goods = M('goods')->where("goods_id = {$val['goods_id']} ")->find();
+            $goods = M('goods') -> where("goods_id = {$val['goods_id']} ")->find();
             $data2['order_id']           = $order_id; // 订单id
             $data2['admin_id']           = $val['admin_id']; // 供应商id
             $data2['goods_id']           = $val['goods_id']; // 商品id
@@ -376,24 +376,24 @@ class CartLogic extends BaseLogic
             $data2['prom_id']            = $val['prom_id']; // 活动id
             $order_goods_id              = M("OrderGoods")->data($data2)->add();
             // 扣除商品库存  扣除库存移到 付完款后扣除
-            //M('Goods')->where("goods_id = ".$val['goods_id'])->setDec('store_count',$val['goods_num']); // 商品减少库存
+            //M('Goods') -> where("goods_id = ".$val['goods_id'])->setDec('store_count',$val['goods_num']); // 商品减少库存
         }
         // 2修改优惠券状态
         if($coupon_id > 0){
             $data3['uid'] = $user_id;
             $data3['order_id'] = $order_id;
             $data3['use_time'] = time();
-            M('CouponList')->where("id = $coupon_id")->save($data3);
-            $cid = M('CouponList')->where("id = $coupon_id")->getField('cid');
-            M('Coupon')->where("id = $cid")->setInc('use_num'); // 优惠券的使用数量加一
+            M('CouponList') -> where("id = $coupon_id")->save($data3);
+            $cid = M('CouponList') -> where("id = $coupon_id")->getField('cid');
+            M('Coupon') -> where("id = $cid")->setInc('use_num'); // 优惠券的使用数量加一
         }
         // 3 扣除积分 扣除余额
         if($car_price['pointsFee']>0)
-            M('Users')->where("user_id = $user_id")->setDec('pay_points',($car_price['pointsFee'] * tpCache('shopping.point_rate'))); // 消费积分
+            M('Users') -> where("user_id = $user_id")->setDec('pay_points',($car_price['pointsFee'] * tpCache('shopping.point_rate'))); // 消费积分
         if($car_price['balance']>0)
-            M('Users')->where("user_id = $user_id")->setDec('user_money',$car_price['balance']); // 抵扣余额
+            M('Users') -> where("user_id = $user_id")->setDec('user_money',$car_price['balance']); // 抵扣余额
         // 4 删除已提交订单商品
-        M('Cart')->where("user_id = $user_id and selected = 1")->delete();
+        M('Cart') -> where("user_id = $user_id and selected = 1")->delete();
 
         // 5 记录log 日志
         $data4['user_id'] = $user_id;
@@ -414,7 +414,7 @@ class CartLogic extends BaseLogic
             $distributLogic->rebate_log($order); // 生成分成记录
         }
         // 如果有微信公众号 则推送一条消息到微信
-        $user = M('users')->where("user_id = $user_id")->find();
+        $user = M('users') -> where("user_id = $user_id")->find();
         if($user['oauth']== 'weixin')
         {
             $wx_user = M('wx_user')->find();
@@ -431,7 +431,7 @@ class CartLogic extends BaseLogic
      * $mode 0  返回数组形式  1 直接返回result
      */
     public function cart_count($user_id,$mode = 0){
-        $count = M('Cart')->where("user_id = '$user_id' and selected = 1")->count();
+        $count = M('Cart') -> where("user_id = '$user_id' and selected = 1")->count();
         if($mode == 1) return  $count;
 
         return array('status'=>1,'msg'=>'','result'=>$count);
@@ -445,7 +445,7 @@ class CartLogic extends BaseLogic
      */
     public function get_group_buy_price($goods_id,$mode=0)
     {
-        $group_buy = M('GroupBuy')->where("goods_id = $goods_id and ".time()." >= start_time and ".time()." <= end_time ")->find(); // 找出这个商品
+        $group_buy = M('GroupBuy') -> where("goods_id = $goods_id and ".time()." >= start_time and ".time()." <= end_time ")->find(); // 找出这个商品
         if(empty($group_buy))
             return 0;
 
@@ -463,7 +463,7 @@ class CartLogic extends BaseLogic
         if(empty($session_id) || empty($user_id))
             return false;
         // 登录后将购物车的商品的 user_id 改为当前登录的id
-        M('cart')->where("session_id = '$session_id'")->save(array('user_id'=>$user_id));
+        M('cart') -> where("session_id = '$session_id'")->save(array('user_id'=>$user_id));
 
         $Model = new \Think\Model();
         // 查找购物车两件完全相同的商品

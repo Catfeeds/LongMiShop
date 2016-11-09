@@ -59,12 +59,12 @@ class OrderController extends IndexBaseController {
 //            $where .= " and (order_sn like '%$search_key%' or order_id in (select order_id from `".C('DB_PREFIX')."order_goods` where goods_name like '%$search_key%') ) ";
 //        }
 
-        $count = M('order')->where($where)->count();
+        $count = M('order') -> where($where)->count();
         $Page = new Page($count,5);
 
-        $show = $Page->show();
+        $show = $Page -> show();
         $order_str = "order_id DESC";
-        $order_list = M('order')->order($order_str)->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $order_list = M('order')->order($order_str) -> where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
         //获取订单商品
         $model = new UsersLogic();
         foreach($order_list as $k=>$v)
@@ -74,16 +74,16 @@ class OrderController extends IndexBaseController {
             $result = $model -> getOrderGoods($v['order_id']);
             $order_list[$k]['goods_list'] = getCallbackData( $result );
         }
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('page',$show);
-        $this->assign('lists',$order_list);
-        $this->assign('active','order_list');
-        $this->assign('active_status',I('get.type'));
-        $this->assign('status',$status);
-        $this->assign('times',$add_time);
-        $this->display();
+        $this -> assign('order_status',C('ORDER_STATUS'));
+        $this -> assign('shipping_status',C('SHIPPING_STATUS'));
+        $this -> assign('pay_status',C('PAY_STATUS'));
+        $this -> assign('page',$show);
+        $this -> assign('lists',$order_list);
+        $this -> assign('active','order_list');
+        $this -> assign('active_status',I('get.type'));
+        $this -> assign('status',$status);
+        $this -> assign('times',$add_time);
+        $this -> display();
     }
 
 
@@ -100,7 +100,7 @@ class OrderController extends IndexBaseController {
         $orderInfo['goods_list'] = $data['data'];
         foreach($orderInfo['goods_list'] as $keys=>$items){
             if($items['is_send'] == 1){
-                $deliveryRres = M('delivery_doc')->where(array('id'=>$items['delivery_id']))->find();
+                $deliveryRres = M('delivery_doc') -> where(array('id'=>$items['delivery_id']))->find();
                 $orderInfo['goods_list'][$keys]['shipping_name'] =   $deliveryRres['shipping_name'];
                 $orderInfo['goods_list'][$keys]['invoice_no'] =   $deliveryRres['invoice_no'];
             }
@@ -109,15 +109,15 @@ class OrderController extends IndexBaseController {
         $progressBar = getOrderProgressBar($orderInfo);
         $region_list = get_region_list();
         //统计订单条数
-        $countGood = M('order_goods')->where(array('order_id'=>$orderInfo['order_id']))->group('delivery_id')->select();
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('region_list',$region_list);
-        $this->assign('order_info',$orderInfo);
-        $this->assign('progressBar',$progressBar);
-        $this->assign('countGood',count($countGood));
-        $this->display();
+        $countGood = M('order_goods') -> where(array('order_id'=>$orderInfo['order_id']))->group('delivery_id')->select();
+        $this -> assign('order_status',C('ORDER_STATUS'));
+        $this -> assign('shipping_status',C('SHIPPING_STATUS'));
+        $this -> assign('pay_status',C('PAY_STATUS'));
+        $this -> assign('region_list',$region_list);
+        $this -> assign('order_info',$orderInfo);
+        $this -> assign('progressBar',$progressBar);
+        $this -> assign('countGood',count($countGood));
+        $this -> display();
     }
 
     //取消订单

@@ -12,7 +12,7 @@ class LoginApiController extends BaseController {
         parent::__construct();
         $this->oauth = I('get.oauth');
         //获取配置
-        $data = M('Plugin')->where("code='{$this->oauth}' and  type = 'login' ")->find();
+        $data = M('Plugin') -> where("code='{$this->oauth}' and  type = 'login' ")->find();
         $this->config = unserialize($data['config_value']); // 配置反序列化
         if(!$this->oauth)
             $this->error('非法操作',U('User/login'));
@@ -37,7 +37,7 @@ class LoginApiController extends BaseController {
             $this->error($data['msg']);
         session('user',$data['result']);
         // 登录后将购物车的商品的 user_id 改为当前登录的id            
-        M('cart')->where("session_id = '{$this->session_id}'")->save(array('user_id'=>$data['result']['user_id']));
+        M('cart') -> where("session_id = '{$this->session_id}'")->save(array('user_id'=>$data['result']['user_id']));
         if(isMobile())
             $this->success('登陆成功',U('Mobile/User/index'));
         else

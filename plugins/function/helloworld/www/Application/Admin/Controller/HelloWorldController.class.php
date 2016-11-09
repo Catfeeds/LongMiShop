@@ -7,7 +7,7 @@ class HelloWorldController extends BaseController {
 
     public function index(){        
         $hello = M('HelloWorld')->find();        
-        $this->assign('hello',$hello);
-        $this->display();
+        $this -> assign('hello',$hello);
+        $this -> display();
     }
 }

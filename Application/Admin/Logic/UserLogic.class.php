@@ -16,7 +16,7 @@ class UserLogic extends RelationModel
      */
     public function detail($uid, $relation = true)
     {
-        $user = D('User')->where(array('user_id' => $uid))->relation($relation)->find();
+        $user = D('User') -> where(array('user_id' => $uid))->relation($relation)->find();
         return $user;
     }
     
@@ -28,7 +28,7 @@ class UserLogic extends RelationModel
      */
     public function update($uid = 0, $data = array())
     {
-        $db_res = D('User')->where(array("user_id" => $uid))->data($data)->save();
+        $db_res = D('User') -> where(array("user_id" => $uid))->data($data)->save();
         if ($db_res) {
             return array(1, "用户信息修改成功");
         } else {
@@ -77,7 +77,7 @@ class UserLogic extends RelationModel
         $data['user_id'] = $uid;
         $data['user_pass'] = encrypt($newPassword);
     
-        if (D('User')->where(array("user_id" => $uid))->data($data)->save()) {
+        if (D('User') -> where(array("user_id" => $uid))->data($data)->save()) {
             return array(1, "密码修改成功", U("Admin/login/logout"));
         } else {
             return array(0, "密码修改失败");

@@ -20,7 +20,7 @@ class OrderController extends MobileBaseController {
             'WAITRECEIVE'=>'待收货', //订单查询状态 待收货
             'WAITCCOMMENT'=>'待评价', //订单查询状态 待评价
         );
-        $this->assign('order_status_coment',$order_status_coment);
+        $this -> assign('order_status_coment',$order_status_coment);
     }
 
 
@@ -78,7 +78,7 @@ class OrderController extends MobileBaseController {
 
 
     public function weChatPaySuccess(){
-        $this->display();
+        $this -> display();
     }
 
 
@@ -97,12 +97,12 @@ class OrderController extends MobileBaseController {
 //        }else{
         $where .= C(strtoupper($type));
 //        }
-        $count = M('order')->where($where)->count();
+        $count = M('order') -> where($where)->count();
         $limit = 12;
         $Page = new Page($count,$limit);
-        $show = $Page->show();
+        $show = $Page -> show();
         $order_str = "order_id DESC";
-        $order_list = M('order')->order($order_str)->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $order_list = M('order')->order($order_str) -> where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
 
         //获取订单商品
         $model = new \Common\Logic\UsersLogic();
@@ -114,28 +114,28 @@ class OrderController extends MobileBaseController {
             $data = $model -> getOrderGoods($v['order_id']);
             $order_list[$k]['goods_list'] = $data['data'];
             $order_list[$k] = setOrderReturnState( $order_list[$k] , $this ->user_id );
-            $countGood = M('order_goods')->where(array('order_id'=>$v['order_id']))->group('delivery_id')->select();
+            $countGood = M('order_goods') -> where(array('order_id'=>$v['order_id']))->group('delivery_id')->select();
             $order_list[$k]['countGood'] = count($countGood);
         }
 //        dd($order_list);
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('page',$show);
-        $this->assign('lists',$order_list);
-        $this->assign('active','order_list');
-        $this->assign('active_status',I('get.type'));
-        $this->assign('p',I('p'));
-        $this->assign('number',I('number'));
-        $this->assign('count',$count);
-        $this->assign('type',$type);
-        $this->assign('limit',$limit);
+        $this -> assign('order_status',C('ORDER_STATUS'));
+        $this -> assign('shipping_status',C('SHIPPING_STATUS'));
+        $this -> assign('pay_status',C('PAY_STATUS'));
+        $this -> assign('page',$show);
+        $this -> assign('lists',$order_list);
+        $this -> assign('active','order_list');
+        $this -> assign('active_status',I('get.type'));
+        $this -> assign('p',I('p'));
+        $this -> assign('number',I('number'));
+        $this -> assign('count',$count);
+        $this -> assign('type',$type);
+        $this -> assign('limit',$limit);
         if($_GET['is_ajax'])
         {
-            $this->display('ajax_order_list');
+            $this -> display('ajax_order_list');
             exit;
         }
-        $this->display();
+        $this -> display();
     }
 
 
@@ -153,7 +153,7 @@ class OrderController extends MobileBaseController {
         $id = I('get.order_id','','int');
         $map['order_id'] = $id;
         $map['user_id'] = $this->user_id;
-        $order_info = M('order')->where($map)->find();
+        $order_info = M('order') -> where($map)->find();
         if(!$order_info){
             $this->error('没有获取到订单信息');
             exit;
@@ -169,34 +169,34 @@ class OrderController extends MobileBaseController {
         //$order_info['total_fee'] = $order_info['goods_price'] + $order_info['shipping_price'] - $order_info['integral_money'] -$order_info['coupon_price'] - $order_info['discount'];
 
         $region_list = get_region_list();
-        $invoice_no = M('DeliveryDoc')->where("order_id = $id")->getField('invoice_no',true);
+        $invoice_no = M('DeliveryDoc') -> where("order_id = $id")->getField('invoice_no',true);
         $order_info["invoice_no"] = implode(' , ', $invoice_no);
         //获取订单操作记录
-        $order_action = M('order_action')->where(array('order_id'=>$id))->select();
+        $order_action = M('order_action') -> where(array('order_id'=>$id))->select();
         //获取使用代金券
-        // $coupon_list = M('coupon_list')->where(array('order_id'=>$order_info['order_id']))->find();
-        // $coupon_res = empty($coupon_list) ? '' : M('coupon')->where(array('id'=>$coupon_list['cid']))->find();
-        // $this->assign('coupon_res',$coupon_res);
+        // $coupon_list = M('coupon_list') -> where(array('order_id'=>$order_info['order_id']))->find();
+        // $coupon_res = empty($coupon_list) ? '' : M('coupon') -> where(array('id'=>$coupon_list['cid']))->find();
+        // $this -> assign('coupon_res',$coupon_res);
 
 
         foreach($order_info['goods_list'] as $keys=>$items){
             if($items['is_send'] == 1){
-                $deliveryRres = M('delivery_doc')->where(array('id'=>$items['delivery_id']))->find();
+                $deliveryRres = M('delivery_doc') -> where(array('id'=>$items['delivery_id']))->find();
                 $order_info['goods_list'][$keys]['shipping_name'] =   $deliveryRres['shipping_name'];
                 $order_info['goods_list'][$keys]['invoice_no'] =   $deliveryRres['invoice_no'];
             }
         }
         //统计订单条数
-        $countGood = M('order_goods')->where(array('order_id'=>$order_info['order_id']))->group('delivery_id')->select();
+        $countGood = M('order_goods') -> where(array('order_id'=>$order_info['order_id']))->group('delivery_id')->select();
 
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('region_list',$region_list);
-        $this->assign('order_info',$order_info);
-        $this->assign('order_action',$order_action);
-        $this->assign('countGood',count($countGood));
-        $this->display();
+        $this -> assign('order_status',C('ORDER_STATUS'));
+        $this -> assign('shipping_status',C('SHIPPING_STATUS'));
+        $this -> assign('pay_status',C('PAY_STATUS'));
+        $this -> assign('region_list',$region_list);
+        $this -> assign('order_info',$order_info);
+        $this -> assign('order_action',$order_action);
+        $this -> assign('countGood',count($countGood));
+        $this -> display();
     }
 
 
@@ -208,7 +208,7 @@ class OrderController extends MobileBaseController {
         $id = I('get.order_id','','int');
         $map['order_id'] = $id;
         $map['user_id'] = $this->user_id;
-        $order_info = M('order')->where($map)->find();
+        $order_info = M('order') -> where($map)->find();
         if(!$order_info){
             $this->error('没有获取到订单信息');
             exit;
@@ -220,11 +220,11 @@ class OrderController extends MobileBaseController {
         $data = $model -> getOrderGoods($order_info['order_id']);
         $order_info['goods_list'] = $data['data'];
         $order_info = setOrderReturnState( $order_info , $this ->user_id );
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('order_info',$order_info);
-        $this->display();
+        $this -> assign('order_status',C('ORDER_STATUS'));
+        $this -> assign('shipping_status',C('SHIPPING_STATUS'));
+        $this -> assign('pay_status',C('PAY_STATUS'));
+        $this -> assign('order_info',$order_info);
+        $this -> display();
     }
 
     /*
@@ -235,7 +235,7 @@ class OrderController extends MobileBaseController {
         $id = I('get.order_id','','int');
         $map['order_id'] = $id;
         $map['user_id'] = $this->user_id;
-        $order_info = M('order')->where($map)->find();
+        $order_info = M('order') -> where($map)->find();
         if(!$order_info){
             $this->error('没有获取到订单信息');
             exit;
@@ -247,11 +247,11 @@ class OrderController extends MobileBaseController {
         $order_info['goods_list'] = $data['data'];
         $order_info = setOrderReturnState( $order_info , $this ->user_id );
 
-        $this->assign('order_status',C('ORDER_STATUS'));
-        $this->assign('shipping_status',C('SHIPPING_STATUS'));
-        $this->assign('pay_status',C('PAY_STATUS'));
-        $this->assign('order_info',$order_info);
-        $this->display();
+        $this -> assign('order_status',C('ORDER_STATUS'));
+        $this -> assign('shipping_status',C('SHIPPING_STATUS'));
+        $this -> assign('pay_status',C('PAY_STATUS'));
+        $this -> assign('order_info',$order_info);
+        $this -> display();
     }
 
 

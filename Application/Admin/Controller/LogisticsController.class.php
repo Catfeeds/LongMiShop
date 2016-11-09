@@ -20,8 +20,8 @@ class LogisticsController extends BaseController {
             $where['admin_id'] = session("admin_id");
         }
         $list = $this->logi -> where($where)->order('log_rank DESC ')->select();
-        $this->assign('list',$list);
-        $this->display();
+        $this -> assign('list',$list);
+        $this -> display();
     }
 
     //新增
@@ -39,14 +39,14 @@ class LogisticsController extends BaseController {
             $city_list = $this->region->where('parent_id = '.$pro['id'])->select();
             $edit_list['condition'] = unserialize($edit_list['log_condition']);
             // dump($edit_list['condition']);exit;
-            $this->assign('edit_list',$edit_list);
-            $this->assign('city_list',$city_list);
+            $this -> assign('edit_list',$edit_list);
+            $this -> assign('city_list',$city_list);
         }
         //省
         $province_list = $this->region->where('level = 1')->select();
-        $this->assign('province_list',$province_list);
-        $this->assign('region_list',$region_list);
-    	$this->display();
+        $this -> assign('province_list',$province_list);
+        $this -> assign('region_list',$region_list);
+    	$this -> display();
     }
 
     //ajax获取市

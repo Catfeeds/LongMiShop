@@ -9,36 +9,111 @@ use Think\Model\RelationModel;
 class OrderLogic extends RelationModel
 {
     /**
+     * 获取订单列表
      * @param array $condition  搜索条件
      * @param string $order   排序方式
      * @param int $start    limit开始行
      * @param int $page_size  获取数量
      */
     public function getOrderList($condition,$order='',$start=0,$page_size=20){
-        $res = M('order')->where($condition)->limit("$start,$page_size")->order($order)->select();
 
-        return $res;
-
-//        if(is_supplier()){
-//            $where .= "1=1";
-//            !empty($condition['order_sn']) ? $where .= " o.order_sn = '".$condition['order_sn']."'" : false;
-//            !empty($condition['order_status'])  ? $where .= " AND o.order_status = '".$condition['order_status']."'" : false;
-//            !empty($condition['pay_status']) ? $where .= " AND o.pay_status = '".$condition['pay_status']."'" : false;
-//            !empty($condition['pay_code']) ? $where .= " AND o.pay_code = '".$condition['pay_code']."'" : false;
-//            !empty($condition['shipping_status']) ? $where .= " AND o.shipping_status = '".$condition['shipping_status']."'" : false;
-//            !empty($condition['user_id']) ? $where .= " AND o.shipping_status = '".$condition['shipping_status']."'" : false;
-//            !empty($condition['add_time']) ? $where .= " AND o.add_time > '".$condition['begin']."' AND o.add_time < '".$condition['end']."'" : false  ;
-//            $where .= " AND g.admin_id = '".session('admin_id')."'";
-//            $sql = "SELECT g.*,o.* FROM __PREFIX__order_goods as g LEFT JOIN __PREFIX__order as o ON o.order_id = g.order_id WHERE ".$where." ORDER BY '".$order."'  LIMIT ".$start.",".$page_size."";
-//            $res = $this->query($sql);
-//            return $res;
-//
-//        }else{
-//            $res = M('order')->where($condition)->limit("$start,$page_size")->order($order)->select();
-//            return $res;
-//        }
-
+        $orderList = M('order') -> where($condition)->limit("$start,$page_size")->order($order)->select();
+        return $orderList;
     }
+
+
+    /**
+     * 获取订单详细信息
+     * @param $orderList
+     * @return mixed
+     */
+    public function getOrderListInfo( $orderList ){
+        if( !empty( $orderList ) ){
+            foreach($orderList as $orderKeys => $items) {
+
+                $orderList[$orderKeys] = setBtnOrderStatus($items);
+                $orderList[$orderKeys]["goods"] = $this -> getOrderGoods( $items["order_id"] );
+                if (
+                    $items['order_status'] == 1 &&
+                    $items['pay_status'] == 1 &&
+                    $items['shipping_status'] != 1
+                ) {
+                    //是否快速发货按钮
+                    $orderList[$orderKeys]['isFast'] = getFastDeliveryBool($items["admin_list"], session("admin_id"));
+                }
+
+                $orderList[$orderKeys]['total_amount'] = 0;
+
+                foreach ( $orderList[$orderKeys]["goods"] as $goodsKey => $item ) {
+                    //供应商 计算订单总价
+                    $orderList[$orderKeys]['total_amount'] += $item['goods_num'] * $item['goods_price'];
+                    $orderList[$orderKeys]['total_amount'] += $item['goods_postage'];
+
+                    //是否售后
+                    $returnRes = findDataWithCondition(
+                        'return_goods',
+                        array(
+                            'order_id' => $item["order_id"],
+                            'goods_id' => $item['goods_id'],
+                            'spec_key' => $item['spec_key'],
+                            'result'   => array('in', '0,1')
+                        ),
+                        'id,result'
+                    );
+                    if (!empty($returnRes)) {
+                        $orderList[$orderKeys]["goods"][$goodsKey]['returnId']  = $returnRes['id'];
+                        $orderList[$orderKeys]["goods"][$goodsKey]['result']    = $returnRes['result'];
+                        $returnRes['result'] == 0 ? $orderList[$orderKeys]['isFast'] = false : false ;
+                    }
+                }
+            }
+        }
+        return $orderList;
+    }
+
+
+    /**
+     * 获取退款中和 退款成功的订单id列表
+     * @param bool $needFinish
+     * @return mixed
+     */
+    public function getReturnGoodsField( $needFinish = true ){
+        $condition = array();
+        if ( is_supplier() ) {
+            $condition["admin_id"] = session("admin_id");
+        }else{
+            $condition["admin_id"] = "0";
+        }
+        if( $needFinish ){
+            $condition["result"] = array("in","0,1");
+        }else{
+            $condition["result"] = "0";
+        }
+        return M("return_goods") -> where( $condition ) -> getField( "order_id" , true );
+    }
+
+
+    /**
+     * 获取订单列表快递费用
+     * @param $orderList
+     * @param bool $isSupplier
+     * @return mixed
+     */
+    public function getOrderListShippingPrice( $orderList , $isSupplier = true ){
+        if( !empty( $orderList ) ){
+            foreach($orderList as $key => $item){
+                $condition = array(
+                    'order_id' => $item['order_id']
+                );
+                if( $isSupplier ){
+                    $condition['admin_id'] = session('admin_id');
+                }
+                $orderList[$key]['shipping_price'] = M('order_goods') -> where( $condition )->sum("goods_postage");
+            }
+        }
+        return $orderList;
+    }
+
     /**
      * 获取订单商品详情
      * @param $order_id
@@ -60,15 +135,37 @@ class OrderLogic extends RelationModel
         return $res;
     }
 
-    /*
+    /**
      * 获取订单信息
+     * @param $order_id
+     * @return mixed
      */
     public function getOrderInfo($order_id)
     {
-        //  订单总金额查询语句		
-        $order = M('order')->where("order_id = $order_id")->find();
-        $order['address2'] = $this->getAddressName($order['province'],$order['city'],$order['district']);
-        $order['address2'] = $order['address2'].$order['address'];		
+        $condition = array(
+            "order_id" => $order_id
+        );
+        if( is_supplier() ){
+            $condition["admin_list"] = array( "like" , "[" . session("admin_id") . "]" );
+        }
+        $order = findDataWithCondition( 'order' , $condition );
+        if( !empty($order) ){
+            $order['address2'] = $this -> getAddressName($order['province'],$order['city'],$order['district']);
+            $order['address2'] = $order['address2'] . $order['address'];
+            if( is_supplier() ){
+                $orderGoodsList = selectDataWithCondition( 'order_goods' , array( 'order_id' => $order_id , 'admin_id' => session('admin_id') ) );
+                $sum = 0;
+                $count_postage = 0;
+                foreach($orderGoodsList as $key => $item){
+                    $sum            += $item['goods_num'] * $item['goods_price'];
+                    $count_postage  += $item['goods_postage'];
+                }
+                $order['goods_price']       = $sum;                     //商品总价
+                $order['shipping_price']    = $count_postage;           //运费
+                $order['order_amount']      = $sum + $count_postage;    //应付金额
+            }
+
+        }
         return $order;
     }
 
@@ -80,7 +177,7 @@ class OrderLogic extends RelationModel
     		foreach($goods_id_arr as $key => $val)
     		{
     			$arr = array();
-    			$goods = M('goods')->where("goods_id = $key")->find();
+    			$goods = M('goods') -> where("goods_id = $key")->find();
     			$arr['goods_id'] = $key; // 商品id
                 $arr['admin_id'] = $goods['admin_id'];
     			$arr['goods_name'] = $goods['goods_name'];
@@ -96,7 +193,7 @@ class OrderLogic extends RelationModel
     				if($k != 'key')
     				{
     					$arr['spec_key'] = $k;
-    					$spec_goods = M('spec_goods_price')->where("goods_id = $key and `key` = '{$k}'")->find();
+    					$spec_goods = M('spec_goods_price') -> where("goods_id = $key and `key` = '{$k}'")->find();
     					$arr['spec_key_name'] = $spec_goods['key_name'];
     					$arr['member_goods_price'] = $arr['goods_price'] = $spec_goods['price'];
     					$arr['sku'] = $spec_goods['sku']; // 参考 sku  http://www.zhihu.com/question/19841574
@@ -111,7 +208,7 @@ class OrderLogic extends RelationModel
      * 订单操作记录
      */
     public function orderActionLog($order_id,$action,$note=''){    	
-        $order = M('order')->where(array('order_id'=>$order_id))->find();
+        $order = M('order') -> where(array('order_id'=>$order_id))->find();
         if( empty($order) ){
             return false;
         }
@@ -204,7 +301,7 @@ class OrderLogic extends RelationModel
     	$updata = array();
     	switch ($act){
     		case 'pay': //付款
-                        $order_sn = M('order')->where("order_id = $order_id")->getField("order_sn");
+                        $order_sn = M('order') -> where("order_id = $order_id")->getField("order_sn");
                         update_pay_status($order_sn); // 调用确认收货按钮
     			return true;    			
     		case 'pay_cancel': //取消付款
@@ -228,7 +325,7 @@ class OrderLogic extends RelationModel
     		default:
     			return true;
     	}
-    	return M('order')->where("order_id=$order_id")->save($updata);//改变订单状态
+    	return M('order') -> where("order_id=$order_id")->save($updata);//改变订单状态
     }
     
     /**
@@ -287,7 +384,7 @@ class OrderLogic extends RelationModel
 //                    }else{
 //                        $shippingId = $v['delivery_way'];
 //                    }
-                    $r = M('order_goods')->where("rec_id=".$v['rec_id'])->save($res);//改变订单商品发货状态
+                    $r = M('order_goods') -> where("rec_id=".$v['rec_id'])->save($res);//改变订单商品发货状态
                     if( $r >0 || $r ===0 ){
                         $is_delivery++;
                     }else{
@@ -314,7 +411,7 @@ class OrderLogic extends RelationModel
             }else{
                 $update['shipping_status'] = 2;
             }
-            M('order')->where("order_id=".$data['order_id'])->save($update);//改变订单状态
+            M('order') -> where("order_id=".$data['order_id'])->save($update);//改变订单状态
             sendWeChatMessageUseUserId( $order['user_id'] , "发货" , array("orderId" => $data['order_id']) );
 
 
@@ -350,9 +447,9 @@ class OrderLogic extends RelationModel
      * @return string
      */
     public function getAddressName($p=0,$c=0,$d=0){
-        $p = M('region')->where(array('id'=>$p))->field('name')->find();
-        $c = M('region')->where(array('id'=>$c))->field('name')->find();
-        $d = M('region')->where(array('id'=>$d))->field('name')->find();
+        $p = M('region') -> where(array('id'=>$p))->field('name')->find();
+        $c = M('region') -> where(array('id'=>$c))->field('name')->find();
+        $d = M('region') -> where(array('id'=>$d))->field('name')->find();
         return $p['name'].','.$c['name'].','.$d['name'].',';
     }
 
@@ -360,8 +457,8 @@ class OrderLogic extends RelationModel
      * 删除订单
      */
     function delOrder($order_id){
-    	$a = M('order')->where(array('order_id'=>$order_id))->delete();
-    	$b = M('order_goods')->where(array('order_id'=>$order_id))->delete();
+    	$a = M('order') -> where(array('order_id'=>$order_id))->delete();
+    	$b = M('order_goods') -> where(array('order_id'=>$order_id))->delete();
     	return $a && $b;
     }
 

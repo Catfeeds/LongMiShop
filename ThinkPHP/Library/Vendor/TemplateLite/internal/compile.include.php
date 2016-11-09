@@ -38,7 +38,7 @@ function compile_include($arguments, &$object)
 	if (isset($assign_var))
 	{
 		$output = '<?php $_templatelite_tpl_vars = $this->_vars;' .
-			"\n\$this->assign(" . $assign_var . ", \$this->_fetch_compile_include(" . $include_file . ", array(".implode(',', (array)$arg_list).")));\n" .
+			"\n\$this -> assign(" . $assign_var . ", \$this->_fetch_compile_include(" . $include_file . ", array(".implode(',', (array)$arg_list).")));\n" .
 			"\$this->_vars = \$_templatelite_tpl_vars;\n" .
 			"unset(\$_templatelite_tpl_vars);\n" .
 			' ?>';

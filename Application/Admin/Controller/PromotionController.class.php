@@ -7,7 +7,7 @@ use Admin\Logic\GoodsLogic;
 class PromotionController extends BaseController {
 
     public function index(){
-        $this->display();
+        $this -> display();
     }
     
         /**
@@ -22,11 +22,11 @@ class PromotionController extends BaseController {
 				$lv[$v['level_id']] = $v['level_name'];
 			}
 		}
-		$this->assign("parse_type",$parse_type);
+		$this -> assign("parse_type",$parse_type);
                 
                 $count = M('prom_goods')->count();
                 $Page  = new \Think\Page($count,10);    	 
-                $show = $Page->show();                      
+                $show = $Page -> show();
 		$res = M('prom_goods')->limit($Page->firstRow.','.$Page->listRows)->select();    
 		if($res){
 			foreach ($res as $val){
@@ -39,30 +39,30 @@ class PromotionController extends BaseController {
 				$prom_list[] = $val;
 			}
 		}
-                $this->assign('page',$show);// 赋值分页输出
-		$this->assign('prom_list',$prom_list);
-		$this->display();
+                $this -> assign('page',$show);// 赋值分页输出
+		$this -> assign('prom_list',$prom_list);
+		$this -> display();
 	}
 	
 	public function prom_goods_info()
 	{
-		$this->assign('min_date',date('Y-m-d'));
+		$this -> assign('min_date',date('Y-m-d'));
 		$level = M('user_level')->select();
-		$this->assign('level',$level);
+		$this -> assign('level',$level);
 		$prom_id = I('id');
 		$info['start_time'] = date('Y-m-d');
 		$info['end_time'] = date('Y-m-d',time()+3600*60*24);
 		if($prom_id>0){
-			$info = M('prom_goods')->where("id=$prom_id")->find();
+			$info = M('prom_goods') -> where("id=$prom_id")->find();
 			$info['start_time'] = date('Y-m-d',$info['start_time']);
 			$info['end_time'] = date('Y-m-d',$info['end_time']);
-			$prom_goods = M('goods')->where("prom_id=$prom_id and prom_type=3")->select();
-			$this->assign('prom_goods',$prom_goods);
+			$prom_goods = M('goods') -> where("prom_id=$prom_id and prom_type=3")->select();
+			$this -> assign('prom_goods',$prom_goods);
 		}
-		$this->assign('info',$info);
-		$this->assign('min_date',date('Y-m-d'));
+		$this -> assign('info',$info);
+		$this -> assign('min_date',date('Y-m-d'));
 		$this->initEditor();
-		$this->display();
+		$this -> display();
 	}
 	
 	public function prom_goods_save()
@@ -73,7 +73,7 @@ class PromotionController extends BaseController {
 		$data['end_time'] = strtotime($data['end_time']);
 		$data['group'] = implode(',', $data['group']);
 		if($prom_id){
-			M('prom_goods')->where("id=$prom_id")->save($data);
+			M('prom_goods') -> where("id=$prom_id")->save($data);
 			$last_id = $prom_id;
 			adminLog("管理员修改了商品促销 ".I('name'));
 		}else{
@@ -84,9 +84,9 @@ class PromotionController extends BaseController {
 		if(is_array($data['goods_id'])){
 			$goods_id = implode(',', $data['goods_id']);
 			if($prom_id>0){
-				M("goods")->where("prom_id=$prom_id and prom_type=3")->save(array('prom_id'=>0,'prom_type'=>0));
+				M("goods") -> where("prom_id=$prom_id and prom_type=3")->save(array('prom_id'=>0,'prom_type'=>0));
 			}
-			M("goods")->where("goods_id in($goods_id)")->save(array('prom_id'=>$last_id,'prom_type'=>3));
+			M("goods") -> where("goods_id in($goods_id)")->save(array('prom_id'=>$last_id,'prom_type'=>3));
 		}
 		$this->success('编辑促销活动成功',U('Promotion/prom_goods_list'));
 	}
@@ -94,13 +94,13 @@ class PromotionController extends BaseController {
 	public function prom_goods_del()
 	{
 		$prom_id = I('id');                
-                $order_goods = M('order_goods')->where("prom_type = 3 and prom_id = $prom_id")->find();
+                $order_goods = M('order_goods') -> where("prom_type = 3 and prom_id = $prom_id")->find();
                 if(!empty($order_goods))
                 {
                     $this->error("该活动有订单参与不能删除!");    
                 }                
-		M("goods")->where("prom_id=$prom_id and prom_type=3")->save(array('prom_id'=>0,'prom_type'=>0));
-		M('prom_goods')->where("id=$prom_id")->delete();
+		M("goods") -> where("prom_id=$prom_id and prom_type=3")->save(array('prom_id'=>0,'prom_type'=>0));
+		M('prom_goods') -> where("id=$prom_id")->delete();
 		$this->success('删除活动成功',U('Promotion/prom_goods_list'));
 	}
     
@@ -120,7 +120,7 @@ class PromotionController extends BaseController {
 		}
                 $count = M('prom_order')->count();
                 $Page  = new \Think\Page($count,10);    	 
-                $show = $Page->show();               
+                $show = $Page -> show();
 		$res = M('prom_order')->limit($Page->firstRow.','.$Page->listRows)->select();
 		if($res){
 			foreach ($res as $val){
@@ -133,28 +133,28 @@ class PromotionController extends BaseController {
 				$prom_list[] = $val;
 			}
 		}
-                $this->assign('page',$show);// 赋值分页输出                  
-                $this->assign("parse_type",$parse_type);
-		$this->assign('prom_list',$prom_list);
-		$this->display();
+                $this -> assign('page',$show);// 赋值分页输出
+                $this -> assign("parse_type",$parse_type);
+		$this -> assign('prom_list',$prom_list);
+		$this -> display();
 	}
 	
 	public function prom_order_info(){
-		$this->assign('min_date',date('Y-m-d'));
+		$this -> assign('min_date',date('Y-m-d'));
 		$level = M('user_level')->select();
-		$this->assign('level',$level);
+		$this -> assign('level',$level);
 		$prom_id = I('id');
 		$info['start_time'] = date('Y-m-d');
 		$info['end_time'] = date('Y-m-d',time()+3600*24*60);
 		if($prom_id>0){
-			$info = M('prom_order')->where("id=$prom_id")->find();
+			$info = M('prom_order') -> where("id=$prom_id")->find();
 			$info['start_time'] = date('Y-m-d',$info['start_time']);
 			$info['end_time'] = date('Y-m-d',$info['end_time']);
 		}
-		$this->assign('info',$info);
-		$this->assign('min_date',date('Y-m-d'));
+		$this -> assign('info',$info);
+		$this -> assign('min_date',date('Y-m-d'));
 		$this->initEditor();
-		$this->display();
+		$this -> display();
 	}
 	
 	public function prom_order_save(){
@@ -164,7 +164,7 @@ class PromotionController extends BaseController {
 		$data['end_time'] = strtotime($data['end_time']);
 		$data['group'] = implode(',', $data['group']);
 		if($prom_id){
-			M('prom_order')->where("id=$prom_id")->save($data);
+			M('prom_order') -> where("id=$prom_id")->save($data);
 			adminLog("管理员修改了商品促销 ".I('name'));
 		}else{
 			M('prom_order')->add($data);
@@ -176,13 +176,13 @@ class PromotionController extends BaseController {
 	public function prom_order_del()
 	{
 		$prom_id = I('id');                                
-                $order = M('order')->where("order_prom_id = $prom_id")->find();
+                $order = M('order') -> where("order_prom_id = $prom_id")->find();
                 if(!empty($order))
                 {
                     $this->error("该活动有订单参与不能删除!");    
                 }
                                 
-		M('prom_order')->where("id=$prom_id")->delete();
+		M('prom_order') -> where("id=$prom_id")->delete();
 		$this->success('删除活动成功',U('Promotion/prom_order_list'));
 	}
 	
@@ -200,10 +200,10 @@ class PromotionController extends BaseController {
     			$list[] = $val;
     		}
     	}
-    	$this->assign('list',$list);
-    	$show = $Page->show();
-    	$this->assign('page',$show);
-    	$this->display();
+    	$this -> assign('list',$list);
+    	$show = $Page -> show();
+    	$this -> assign('page',$show);
+    	$this -> display();
     }
     
     public function group_buy(){
@@ -213,15 +213,15 @@ class PromotionController extends BaseController {
     	$group_info['start_time'] = date('Y-m-d');
     	$group_info['end_time'] = date('Y-m-d',time()+3600*365);
     	if($groupbuy_id){
-    		$group_info = D('group_buy')->where('id='.$groupbuy_id)->find();
+    		$group_info = D('group_buy') -> where('id='.$groupbuy_id)->find();
     		$group_info['start_time'] = date('Y-m-d',$group_info['start_time']);
     		$group_info['end_time'] = date('Y-m-d',$group_info['end_time']);
     		$act = 'edit';
     	}
-    	$this->assign('min_date',date('Y-m-d'));
-    	$this->assign('info',$group_info);
-    	$this->assign('act',$act);
-    	$this->display();
+    	$this -> assign('min_date',date('Y-m-d'));
+    	$this -> assign('info',$group_info);
+    	$this -> assign('act',$act);
+    	$this -> display();
     }
     
     public function groupbuyHandle(){
@@ -230,18 +230,18 @@ class PromotionController extends BaseController {
     	$data['start_time'] = strtotime($data['start_time']);
     	$data['end_time'] = strtotime($data['end_time']);
     	if($data['act'] == 'del'){
-    		$r = D('group_buy')->where('id='.$data['id'])->delete();
-    		M('goods')->where("prom_type=2 and prom_id=".$data['id'])->save(array('prom_id'=>0,'prom_type'=>0));
+    		$r = D('group_buy') -> where('id='.$data['id'])->delete();
+    		M('goods') -> where("prom_type=2 and prom_id=".$data['id'])->save(array('prom_id'=>0,'prom_type'=>0));
     		if($r) exit(json_encode(1));
     	}
     	if($data['act'] == 'add'){
     		$r = D('group_buy')->add($data);
-    		M('goods')->where("goods_id=".$data['goods_id'])->save(array('prom_id'=>$r,'prom_type'=>2));
+    		M('goods') -> where("goods_id=".$data['goods_id'])->save(array('prom_id'=>$r,'prom_type'=>2));
     	}
     	if($data['act'] == 'edit'){
-    		$r = D('group_buy')->where('id='.$data['id'])->save($data);
-    		M('goods')->where("prom_type=2 and prom_id=".$data['id'])->save(array('prom_id'=>0,'prom_type'=>0));
-    		M('goods')->where("goods_id=".$data['goods_id'])->save(array('prom_id'=>$r,'prom_type'=>2));
+    		$r = D('group_buy') -> where('id='.$data['id'])->save($data);
+    		M('goods') -> where("prom_type=2 and prom_id=".$data['id'])->save(array('prom_id'=>0,'prom_type'=>0));
+    		M('goods') -> where("goods_id=".$data['goods_id'])->save(array('prom_id'=>$r,'prom_type'=>2));
     	}
     	if($r){
     		$this->success("操作成功",U('Admin/Promotion/group_buy_list'));
@@ -252,21 +252,21 @@ class PromotionController extends BaseController {
     
     public function get_goods(){
     	$prom_id = I('id');
-    	$count = M('goods')->where("prom_id=$prom_id and prom_type=3")->count(); 
+    	$count = M('goods') -> where("prom_id=$prom_id and prom_type=3")->count();
     	$Page  = new \Think\Page($count,10);
-    	$goodsList = M('goods')->where("prom_id=$prom_id and prom_type=3")->order('goods_id DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
-    	$show = $Page->show();
-    	$this->assign('page',$show);
-    	$this->assign('goodsList',$goodsList);
-    	$this->display(); 
+    	$goodsList = M('goods') -> where("prom_id=$prom_id and prom_type=3")->order('goods_id DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
+    	$show = $Page -> show();
+    	$this -> assign('page',$show);
+    	$this -> assign('goodsList',$goodsList);
+    	$this -> display();
     }   
     
     public function search_goods(){
     	$GoodsLogic = new \Admin\Logic\GoodsLogic;
     	$brandList = $GoodsLogic->getSortBrands();
-    	$this->assign('brandList',$brandList);
+    	$this -> assign('brandList',$brandList);
     	$categoryList = $GoodsLogic->getSortCategory();
-    	$this->assign('categoryList',$categoryList);
+    	$this -> assign('categoryList',$categoryList);
     	
     	$goods_id = I('goods_id');
     	$where = ' is_on_sale = 1 and prom_type=0 and store_count>0 ';//搜索条件
@@ -275,27 +275,27 @@ class PromotionController extends BaseController {
     	}
     	I('intro')  && $where = "$where and ".I('intro')." = 1";
     	if(I('cat_id')){
-    		$this->assign('cat_id',I('cat_id'));
+    		$this -> assign('cat_id',I('cat_id'));
     		$grandson_ids = getCatGrandson(I('cat_id'));
     		$where = " $where  and cat_id in(".  implode(',', $grandson_ids).") "; // 初始化搜索条件
     	}
     	if(I('brand_id')){
-    		$this->assign('brand_id',I('brand_id'));
+    		$this -> assign('brand_id',I('brand_id'));
     		$where = "$where and brand_id = ".I('brand_id');
     	}
     	if(!empty($_REQUEST['keywords']))
     	{
-    		$this->assign('keywords',I('keywords'));
+    		$this -> assign('keywords',I('keywords'));
     		$where = "$where and (goods_name like '%".I('keywords')."%' or keywords like '%".I('keywords')."%')" ;
     	}
-    	$count = M('goods')->where($where)->count();
+    	$count = M('goods') -> where($where)->count();
     	$Page  = new \Think\Page($count,10);
-    	$goodsList = M('goods')->where($where)->order('goods_id DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
-    	$show = $Page->show();//分页显示输出
-    	$this->assign('page',$show);//赋值分页输出
-    	$this->assign('goodsList',$goodsList);
+    	$goodsList = M('goods') -> where($where)->order('goods_id DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
+    	$show = $Page -> show();//分页显示输出
+    	$this -> assign('page',$show);//赋值分页输出
+    	$this -> assign('goodsList',$goodsList);
     	$tpl = I('get.tpl','search_goods');
-    	$this->display($tpl);
+    	$this -> display($tpl);
     }
     
     //限时抢购
@@ -304,11 +304,11 @@ class PromotionController extends BaseController {
     	$model = M('flash_sale');
     	$count = $model->where($condition)->count();
     	$Page  = new \Think\Page($count,10);    	 
-    	$show = $Page->show();
+    	$show = $Page -> show();
     	$prom_list = $model->where($condition)->order("id desc")->limit($Page->firstRow.','.$Page->listRows)->select();
-    	$this->assign('prom_list',$prom_list);
-    	$this->assign('page',$show);// 赋值分页输出
-    	$this->display();
+    	$this -> assign('prom_list',$prom_list);
+    	$this -> assign('page',$show);// 赋值分页输出
+    	$this -> display();
     }
     
     public function flash_sale_info(){
@@ -318,12 +318,12 @@ class PromotionController extends BaseController {
     		$data['end_time'] = strtotime($data['end_time']);
     		if(empty($data['id'])){
     			$r = M('flash_sale')->add($data);
-    			M('goods')->where("goods_id=".$data['goods_id'])->save(array('prom_id'=>$r,'prom_type'=>1));
+    			M('goods') -> where("goods_id=".$data['goods_id'])->save(array('prom_id'=>$r,'prom_type'=>1));
     			adminLog("管理员添加抢购活动 ".$data['name']);
     		}else{
-    			$r = M('flash_sale')->where("id=".$data['id'])->save($data);
-    			M('goods')->where("prom_type=1 and prom_id=".$data['id'])->save(array('prom_id'=>0,'prom_type'=>0));
-    			M('goods')->where("goods_id=".$data['goods_id'])->save(array('prom_id'=>$data['id'],'prom_type'=>1));
+    			$r = M('flash_sale') -> where("id=".$data['id'])->save($data);
+    			M('goods') -> where("prom_type=1 and prom_id=".$data['id'])->save(array('prom_id'=>0,'prom_type'=>0));
+    			M('goods') -> where("goods_id=".$data['goods_id'])->save(array('prom_id'=>$data['id'],'prom_type'=>1));
     		}
     		if($r){
     			$this->success('编辑抢购活动成功',U('Promotion/flash_sale'));
@@ -336,20 +336,20 @@ class PromotionController extends BaseController {
     	$info['start_time'] = date('Y-m-d');
     	$info['end_time'] = date('Y-m-d',time()+3600*24*60);
     	if($id>0){
-    		$info = M('flash_sale')->where("id=$id")->find();
+    		$info = M('flash_sale') -> where("id=$id")->find();
     		$info['start_time'] = date('Y-m-d',$info['start_time']);
     		$info['end_time'] = date('Y-m-d',$info['end_time']);
     	}
-    	$this->assign('info',$info);
-    	$this->assign('min_date',date('Y-m-d'));
-    	$this->display();
+    	$this -> assign('info',$info);
+    	$this -> assign('min_date',date('Y-m-d'));
+    	$this -> display();
     }
     
     public function flash_sale_del(){
     	$id = I('del_id');
     	if($id){
-    		M('flash_sale')->where("id=$id")->delete();
-    		M('goods')->where("prom_type=1 and prom_id=$id")->save(array('prom_id'=>0,'prom_type'=>0));
+    		M('flash_sale') -> where("id=$id")->delete();
+    		M('goods') -> where("prom_type=1 and prom_id=$id")->save(array('prom_id'=>0,'prom_type'=>0));
     		 exit(json_encode(1));
     	}else{
     		 exit(json_encode(0));
@@ -358,14 +358,14 @@ class PromotionController extends BaseController {
     
     private function initEditor()
     {
-    	$this->assign("URL_upload", U('Admin/Ueditor/imageUp',array('savepath'=>'promotion')));
-    	$this->assign("URL_fileUp", U('Admin/Ueditor/fileUp',array('savepath'=>'promotion')));
-    	$this->assign("URL_scrawlUp", U('Admin/Ueditor/scrawlUp',array('savepath'=>'promotion')));
-    	$this->assign("URL_getRemoteImage", U('Admin/Ueditor/getRemoteImage',array('savepath'=>'promotion')));
-    	$this->assign("URL_imageManager", U('Admin/Ueditor/imageManager',array('savepath'=>'promotion')));
-    	$this->assign("URL_imageUp", U('Admin/Ueditor/imageUp',array('savepath'=>'promotion')));
-    	$this->assign("URL_getMovie", U('Admin/Ueditor/getMovie',array('savepath'=>'promotion')));
-    	$this->assign("URL_Home", "");
+    	$this -> assign("URL_upload", U('Admin/Ueditor/imageUp',array('savepath'=>'promotion')));
+    	$this -> assign("URL_fileUp", U('Admin/Ueditor/fileUp',array('savepath'=>'promotion')));
+    	$this -> assign("URL_scrawlUp", U('Admin/Ueditor/scrawlUp',array('savepath'=>'promotion')));
+    	$this -> assign("URL_getRemoteImage", U('Admin/Ueditor/getRemoteImage',array('savepath'=>'promotion')));
+    	$this -> assign("URL_imageManager", U('Admin/Ueditor/imageManager',array('savepath'=>'promotion')));
+    	$this -> assign("URL_imageUp", U('Admin/Ueditor/imageUp',array('savepath'=>'promotion')));
+    	$this -> assign("URL_getMovie", U('Admin/Ueditor/getMovie',array('savepath'=>'promotion')));
+    	$this -> assign("URL_Home", "");
     }
     
 }

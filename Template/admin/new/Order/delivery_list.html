@@ -100,7 +100,7 @@
         obj += "&type="+ulId;
         $.ajax({
             type : "GET",
-            url:"/index.php/Admin/Order/ajaxdelivery",
+            url:"/index.php/Admin/Order/ajaxDelivery",
             data :obj,// 你的formid
             success: function(data){
                 $("#"+ulId).html('');

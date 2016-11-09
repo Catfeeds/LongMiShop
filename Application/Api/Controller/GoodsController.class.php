@@ -6,7 +6,7 @@ use Think\Page;
 class GoodsController extends BaseController {
     public function index(){
        // $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px } a,a:hover,{color:blue;}</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>版本 V{$Think.version}</div><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_55e75dfae343f5a1"></thinkad><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
-        $this->display();
+        $this -> display();
     }
     
     /**
@@ -15,7 +15,7 @@ class GoodsController extends BaseController {
     public function goodsCategoryList(){        
         $parent_id = I("parent_id",0);
         
-        $goodsCategoryList = M('GoodsCategory')->where("parent_id = $parent_id AND is_show=1")->order("parent_id_path,sort_order desc")->select();
+        $goodsCategoryList = M('GoodsCategory') -> where("parent_id = $parent_id AND is_show=1")->order("parent_id_path,sort_order desc")->select();
         $json_arr = array('status'=>1,'msg'=>'获取成功','result'=>$goodsCategoryList );
         $json_str = json_encode($json_arr);            
         exit($json_str);
@@ -33,7 +33,7 @@ class GoodsController extends BaseController {
         $test_str .= 'GET'.print_r($_GET,true);
         file_put_contents('D:\temp\a.html', $test_str);
         
-        $list = M('GoodsCategory')->where("parent_id_path LIKE '%0\\_{$parent_id}\\_%' AND is_show=1")->getField('id,mobile_name,image, level , parent_id');
+        $list = M('GoodsCategory') -> where("parent_id_path LIKE '%0\\_{$parent_id}\\_%' AND is_show=1")->getField('id,mobile_name,image, level , parent_id');
         $list2 = array();
         foreach ($list as $k =>$v )
         {        
@@ -100,14 +100,14 @@ class GoodsController extends BaseController {
          
     	$goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
     	// 分类菜单显示
-    	$goodsCate = M('GoodsCategory')->where("id = $id")->find();// 当前分类
+    	$goodsCate = M('GoodsCategory') -> where("id = $id")->find();// 当前分类
     	//($goodsCate['level'] == 1) && header('Location:'.U('Home/Channel/index',array('cat_id'=>$id))); //一级分类跳转至大分类馆
     	$cateArr = $goodsLogic->get_goods_cate($goodsCate);
     	 
     	// 帅选 品牌 规格 属性 价格
     	$cat_id_arr = getCatGrandson ($id);
         
-    	$filter_goods_id = M('goods')->where("is_on_sale=1 and cat_id in(".  implode(',', $cat_id_arr).") ")->cache(true)->getField("goods_id",true);
+    	$filter_goods_id = M('goods') -> where("is_on_sale=1 and cat_id in(".  implode(',', $cat_id_arr).") ")->cache(true)->getField("goods_id",true);
     	
     	// 过滤帅选的结果集里面找商品
     	if($brand_id || $price)// 品牌或者价格
@@ -136,10 +136,10 @@ class GoodsController extends BaseController {
     	$page = new Page($count,10);
     	if($count > 0)
     	{
-    		$goods_list = M('goods')->field('goods_id,cat_id,goods_sn,goods_name,shop_price,comment_count')->where("goods_id in (".  implode(',', $filter_goods_id).")")->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows)->select();
+    		$goods_list = M('goods')->field('goods_id,cat_id,goods_sn,goods_name,shop_price,comment_count') -> where("goods_id in (".  implode(',', $filter_goods_id).")")->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows)->select();
     		$filter_goods_id2 = get_arr_column($goods_list, 'goods_id');
     	}
-    	$goods_category = M('goods_category')->where('is_show=1')->cache(true)->getField('id,name,parent_id,level'); // 键值分类数组
+    	$goods_category = M('goods_category') -> where('is_show=1')->cache(true)->getField('id,name,parent_id,level'); // 键值分类数组
     	$list['goods_list'] = $goods_list;
         $i = 1;
     	//菜单
@@ -225,7 +225,7 @@ class GoodsController extends BaseController {
             exit(json_encode(array('status'=>-1,'msg'=>'请输入搜索关键词'),true));            
         
     	$goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
-    	$filter_goods_id = M('goods')->where("is_on_sale=1 and goods_name like '%{$q}%'  ")->cache(true)->getField("goods_id",true);
+    	$filter_goods_id = M('goods') -> where("is_on_sale=1 and goods_name like '%{$q}%'  ")->cache(true)->getField("goods_id",true);
     	
     	// 过滤帅选的结果集里面找商品
     	if($brand_id || $price)// 品牌或者价格
@@ -242,10 +242,10 @@ class GoodsController extends BaseController {
     	$page = new Page($count,4);
     	if($count > 0)
     	{
-                $goods_list = M('goods')->field('goods_id,cat_id,goods_sn,goods_name,shop_price,comment_count')->where("goods_id in (".  implode(',', $filter_goods_id).")")->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows)->select();    		
+                $goods_list = M('goods')->field('goods_id,cat_id,goods_sn,goods_name,shop_price,comment_count') -> where("goods_id in (".  implode(',', $filter_goods_id).")")->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows)->select();
     		$filter_goods_id2 = get_arr_column($goods_list, 'goods_id');
     	}
-    	$goods_category = M('goods_category')->where('is_show=1')->cache(true)->getField('id,name,parent_id,level'); // 键值分类数组
+    	$goods_category = M('goods_category') -> where('is_show=1')->cache(true)->getField('id,name,parent_id,level'); // 键值分类数组
     	    	
     	$list['goods_list'] = $goods_list;
     	 
@@ -299,7 +299,7 @@ class GoodsController extends BaseController {
         
         // 处理商品属性
         $goods_attribute = M('GoodsAttribute')->getField('attr_id,attr_name'); // 查询属性
-        $goods_attr_list = M('GoodsAttr')->where("goods_id = $goods_id")->select(); // 查询商品属性表                        
+        $goods_attr_list = M('GoodsAttr') -> where("goods_id = $goods_id")->select(); // 查询商品属性表
         foreach($goods_attr_list as $key => $val)
         {
             $goods_attr_list[$key]['attr_name'] = $goods_attribute[$val['attr_id']];
@@ -309,10 +309,10 @@ class GoodsController extends BaseController {
         // 处理商品规格
         $Model = new \Think\Model();        
         // 商品规格 价钱 库存表 找出 所有 规格项id
-        $keys = M('SpecGoodsPrice')->where("goods_id = $goods_id")->getField("GROUP_CONCAT(`key` SEPARATOR '_') ");         
+        $keys = M('SpecGoodsPrice') -> where("goods_id = $goods_id")->getField("GROUP_CONCAT(`key` SEPARATOR '_') ");
         if($keys)
         {
-             $specImage =  M('SpecImage')->where("goods_id = $goods_id and src != '' ")->getField("spec_image_id,src");// 规格对应的 图片表， 例如颜色                
+             $specImage =  M('SpecImage') -> where("goods_id = $goods_id and src != '' ")->getField("spec_image_id,src");// 规格对应的 图片表， 例如颜色
              $keys = str_replace('_',',',$keys);             
              $sql  = "SELECT a.name,a.order,b.* FROM __PREFIX__spec AS a INNER JOIN __PREFIX__spec_item AS b ON a.id = b.spec_id WHERE b.id IN($keys) ORDER BY a.order";
              $filter_spec2 = $Model->query($sql);             
@@ -336,13 +336,13 @@ class GoodsController extends BaseController {
         $goods['goods_content'] = htmlspecialchars_decode($goods['goods_content']);
        $goods['original_img'] = SITE_URL.$goods['original_img'];
         $return['goods'] = $goods;
-        $return['spec_goods_price']  = M('spec_goods_price')->where("goods_id = $goods_id")->getField("key,price,store_count"); // 规格 对应 价格 库存表
-        $return['gallery'] = M('goods_images')->field('image_url')->where(array('goods_id'=>$goods_id))->select();
+        $return['spec_goods_price']  = M('spec_goods_price') -> where("goods_id = $goods_id")->getField("key,price,store_count"); // 规格 对应 价格 库存表
+        $return['gallery'] = M('goods_images')->field('image_url') -> where(array('goods_id'=>$goods_id))->select();
         foreach($return['gallery'] as $key => $val){
            $return['gallery'][$key]['image_url'] = SITE_URL.$return['gallery'][$key]['image_url'];
         }
         //获取最近的两条评论
-        $latest_comment = M('comment')->where("goods_id={$goods_id} AND is_show=1 AND parent_id=0")->limit(2)->select();
+        $latest_comment = M('comment') -> where("goods_id={$goods_id} AND is_show=1 AND parent_id=0")->limit(2)->select();
         $return['comment'] = $latest_comment ? $latest_comment : '';
         
         if(!$goods){
@@ -362,7 +362,7 @@ class GoodsController extends BaseController {
     {        
         $goods_id = I("goods_id"); // 商品id
         $goods_num = I("goods_num");// 商品数量
-        $goods = M('Goods')->where("goods_id = $goods_id")->find();
+        $goods = M('Goods') -> where("goods_id = $goods_id")->find();
         $goods_price = $goods['shop_price']; // 商品价格 
         
         // 有选择商品规格
@@ -371,7 +371,7 @@ class GoodsController extends BaseController {
             $spec_item = explode(',', $_REQUEST['spec_list']);
             sort($spec_item);
             $spec_item_key = implode('_', $spec_item);
-            $specGoodsPrice = M("SpecGoodsPrice")->where("goods_id = $goods_id and `key` = '$spec_item_key'")->find();
+            $specGoodsPrice = M("SpecGoodsPrice") -> where("goods_id = $goods_id and `key` = '$spec_item_key'")->find();
             if($specGoodsPrice)
                 $goods_price = $specGoodsPrice['price'];
         }    
@@ -409,10 +409,10 @@ class GoodsController extends BaseController {
     {        
         $goods_id = I('goods_id');        
         $where = " goods_id = $goods_id  and is_show = 1";
-        $count = M('comment')->where($where)->count();
+        $count = M('comment') -> where($where)->count();
         $_GET['p'] = $_REQUEST['p'];
         $page = new Page($count,10);        
-        $list = M('comment')->where($where)->order("comment_id desc")->limit("{$page->firstRow},{$page->listRows}")->select();        
+        $list = M('comment') -> where($where)->order("comment_id desc")->limit("{$page->firstRow},{$page->listRows}")->select();
         foreach ($list as $key => $val)
         {
             if(empty($val['img']))
@@ -438,14 +438,14 @@ class GoodsController extends BaseController {
         $user_id = I('user_id');
         $goods_id = I('goods_id');
         $type = I('type',0);
-        $count = M('Goods')->where("goods_id = $goods_id")->count();
+        $count = M('Goods') -> where("goods_id = $goods_id")->count();
         if($count == 0)  exit(json_encode(array('status'=>1,'msg'=>'收藏商品不存在','result'=>array())));
         //删除收藏商品
         if($type==1){
-            M('GoodsCollect')->where("user_id = $user_id and goods_id = $goods_id")->delete();
+            M('GoodsCollect') -> where("user_id = $user_id and goods_id = $goods_id")->delete();
             exit(json_encode(array('status'=>1,'msg'=>'成功取消收藏','result'=>array() )));
         }
-        $count = M('GoodsCollect')->where("user_id = $user_id and goods_id = $goods_id")->count();
+        $count = M('GoodsCollect') -> where("user_id = $user_id and goods_id = $goods_id")->count();
         if($count > 0)        exit(json_encode(array('status'=>1,'msg'=>'您已收藏过该商品','result'=>array() )));
         M('GoodsCollect')->add(array(
             'goods_id'=>$goods_id,
@@ -461,7 +461,7 @@ class GoodsController extends BaseController {
      */
     public function guessYouLike(){
         $p = I('p',1);
-       $favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->page($p,10)->getField('goods_id,cat_id,goods_sn,goods_name,shop_price,comment_count');//首页/购物车/我的 推荐商品
+       $favourite_goods = M('goods') -> where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->page($p,10)->getField('goods_id,cat_id,goods_sn,goods_name,shop_price,comment_count');//首页/购物车/我的 推荐商品
        $goods = array();
     	foreach ($favourite_goods as $k => $v){
     	    $goods[] = $v;

@@ -32,7 +32,7 @@ function get_user_info($user_id_or_name,$type = 0,$oauth=''){
         $map['openid'] = $user_id_or_name;
         $map['oauth'] = $oauth;
     }
-    $user = M('users')->where($map)->find();
+    $user = M('users') -> where($map)->find();
     return $user;
 }
 
@@ -43,7 +43,7 @@ function get_user_info($user_id_or_name,$type = 0,$oauth=''){
  */
 function update_user_level($user_id){
     $level_info = D('user_level')->order('level_id')->select();
-    $total_amount = D('order')->where("user_id=$user_id AND order_status=2 or order_status=4")->sum('order_amount');
+    $total_amount = D('order') -> where("user_id=$user_id AND order_status=2 or order_status=4")->sum('order_amount');
     foreach($level_info as $k=>$v){
         if($v['amount']>$total_amount && !isset($level)){
             if($k==0){
@@ -56,7 +56,7 @@ function update_user_level($user_id){
         }
     }
     $updata = array('level'=>$level,'discount'=>$discount,'total_amount'=>$total_amount);
-    return M('users')->where("user_id=$user_id")->save($updata);
+    return M('users') -> where("user_id=$user_id")->save($updata);
 }
 
 /**
@@ -79,7 +79,7 @@ function goods_thum_images($goods_id,$width,$height){
     if(file_exists($path.$goods_thumb_name.'.gif'))  return '/'.$path.$goods_thumb_name.'.gif'; 
     if(file_exists($path.$goods_thumb_name.'.png'))  return '/'.$path.$goods_thumb_name.'.png'; 
         
-    $original_img = M('Goods')->where("goods_id = $goods_id")->getField('original_img');
+    $original_img = M('Goods') -> where("goods_id = $goods_id")->getField('original_img');
     if(empty($original_img)) return '';
     
     $original_img = '.'.$original_img; // 相对路径
@@ -146,11 +146,11 @@ function get_sub_images($sub_img,$goods_id,$width,$height){
  * @param type $goods_id  商品id
  */
 function refresh_stock($goods_id){
-    $count = M("SpecGoodsPrice")->where("goods_id = $goods_id")->count();
+    $count = M("SpecGoodsPrice") -> where("goods_id = $goods_id")->count();
     if($count == 0) return false; // 没有使用规格方式 没必要更改总库存
 
-    $store_count = M("SpecGoodsPrice")->where("goods_id = $goods_id")->sum('store_count');
-    M("Goods")->where("goods_id = $goods_id")->save(array('store_count'=>$store_count)); // 更新商品的总库存
+    $store_count = M("SpecGoodsPrice") -> where("goods_id = $goods_id")->sum('store_count');
+    M("Goods") -> where("goods_id = $goods_id")->save(array('store_count'=>$store_count)); // 更新商品的总库存
 }
 
 
@@ -290,7 +290,7 @@ function sendSMS($mobile, $code)
     if ($resp)
     {
         // 从数据库中查询是否有验证码
-        $data = M('sms_log')->where("code = '$code' and add_time > ".(time() - 60*60))->find();
+        $data = M('sms_log') -> where("code = '$code' and add_time > ".(time() - 60*60))->find();
         // 没有就插入验证码,供验证用
         empty($data) && M('sms_log')->add(array('mobile' => $mobile, 'code' => $code, 'add_time' => time(), 'session_id' => SESSION_ID));
         return true;        
@@ -350,7 +350,7 @@ function getCatGrandson ($cat_id)
     // 把整张表找出来
     $GLOBALS['category_id_arr'] = M('GoodsCategory')->cache(true,MY_CACHE_TIME)->getField('id,parent_id');
     // 先把所有儿子找出来
-    $son_id_arr = M('GoodsCategory')->where("parent_id = $cat_id")->cache(true,MY_CACHE_TIME)->getField('id',true);
+    $son_id_arr = M('GoodsCategory') -> where("parent_id = $cat_id")->cache(true,MY_CACHE_TIME)->getField('id',true);
     foreach($son_id_arr as $k => $v)
     {
         getCatGrandson2($v);
@@ -371,7 +371,7 @@ function getArticleCatGrandson ($cat_id)
     // 把整张表找出来
     $GLOBALS['cat_id_arr'] = M('ArticleCat')->getField('cat_id,parent_id');
     // 先把所有儿子找出来
-    $son_id_arr = M('ArticleCat')->where("parent_id = $cat_id")->getField('cat_id',true);
+    $son_id_arr = M('ArticleCat') -> where("parent_id = $cat_id")->getField('cat_id',true);
     foreach($son_id_arr as $k => $v)
     {
         getArticleCatGrandson2($v);
@@ -425,7 +425,7 @@ function cart_goods_num($user_id = 0,$session_id = '')
     $where = " session_id = '$session_id' ";
     $user_id && $where .= " or user_id = $user_id ";
     // 查找购物车数量
-    $cart_count =  M('Cart')->where($where)->sum('goods_num');
+    $cart_count =  M('Cart') -> where($where)->sum('goods_num');
     $cart_count = $cart_count ? $cart_count : 0;
     return $cart_count;
 }
@@ -438,9 +438,9 @@ function cart_goods_num($user_id = 0,$session_id = '')
 function getGoodNum($goods_id,$key)
 {
     if(!empty($key))
-        return  M("SpecGoodsPrice")->where("goods_id = $goods_id and `key` = '$key'")->getField('store_count');
+        return  M("SpecGoodsPrice") -> where("goods_id = $goods_id and `key` = '$key'")->getField('store_count');
     else
-        return  M("Goods")->where("goods_id = $goods_id")->getField('store_count');
+        return  M("Goods") -> where("goods_id = $goods_id")->getField('store_count');
 }
  
 /**
@@ -457,7 +457,7 @@ function tpCache($config_key,$data = array()){
         $config = F($param[0],'',TEMP_PATH);//直接获取缓存文件
         if(empty($config)){
             //缓存文件不存在就读取数据库
-            $res = D('config')->where("inc_type='$param[0]'")->select();
+            $res = D('config') -> where("inc_type='$param[0]'")->select();
             if($res){
                 foreach($res as $k=>$val){
                     $config[$val['name']] = $val['value'];
@@ -472,7 +472,7 @@ function tpCache($config_key,$data = array()){
         }
     }else{
         //更新缓存
-        $result =  D('config')->where("inc_type='$param[0]'")->select();
+        $result =  D('config') -> where("inc_type='$param[0]'")->select();
         if($result){
             foreach($result as $val){
                 $temp[$val['name']] = $val['value'];
@@ -483,11 +483,11 @@ function tpCache($config_key,$data = array()){
                     M('config')->add($newArr);//新key数据插入数据库
                 }else{
                     if($v!=$temp[$k])
-                        M('config')->where("name='$k'")->save($newArr);//缓存key存在且值有变更新此项
+                        M('config') -> where("name='$k'")->save($newArr);//缓存key存在且值有变更新此项
                 }
             }
             //更新后的数据库记录
-            $newRes = D('config')->where("inc_type='$param[0]'")->select();
+            $newRes = D('config') -> where("inc_type='$param[0]'")->select();
             foreach ($newRes as $rs){
                 $newData[$rs['name']] = $rs['value'];
             }
@@ -546,7 +546,7 @@ function logOrder($order_id,$action_note,$status_desc,$user_id = 0)
     // if(!in_array($status_desc, $status_desc_arr))
     // return false;
 
-    $order = M('order')->where("order_id = $order_id")->find();
+    $order = M('order') -> where("order_id = $order_id")->find();
     $action_info = array(
         'order_id'        =>$order_id,
         'action_user'     =>$user_id,
@@ -581,7 +581,7 @@ function get_region_list(){
  * 获取用户地址列表
  */
 function get_user_address_list($user_id){
-    $lists = M('user_address')->where(array('user_id'=>$user_id)) ->order('address_id desc')->select();
+    $lists = M('user_address') -> where(array('user_id'=>$user_id)) ->order('address_id desc')->select();
     return $lists;
 }
 
@@ -589,14 +589,14 @@ function get_user_address_list($user_id){
  * 获取指定地址信息
  */
 function get_user_address_info($user_id,$address_id){
-    $data = M('user_address')->where(array('user_id'=>$user_id,'address_id'=>$address_id))->find();
+    $data = M('user_address') -> where(array('user_id'=>$user_id,'address_id'=>$address_id))->find();
     return $data;
 }
 /*
  * 获取用户默认收货地址
  */
 function get_user_default_address($user_id){
-    $data = M('user_address')->where(array('user_id'=>$user_id,'is_default'=>1))->find();
+    $data = M('user_address') -> where(array('user_id'=>$user_id,'is_default'=>1))->find();
     return $data;
 }
 
@@ -608,7 +608,7 @@ function get_user_default_address($user_id){
      */
     function confirm_order($id){
         $id = intval($id);
-        $order = M('order')->where('order_id="'.$id.'"')->find();
+        $order = M('order') -> where('order_id="'.$id.'"')->find();
         if( empty($order) || $order['order_id'] != $id ){
             return array('status'=>-1,'msg'=>'没有找到该订单');
         }
@@ -621,7 +621,7 @@ function get_user_default_address($user_id){
         $data['order_status'] = 2; // 已收货        
         $data['pay_status'] = 1; // 已付款        
         $data['confirm_time'] = time(); //  收货确认时间
-        $row = M('order')->where(array('order_id'=>$id))->save($data);
+        $row = M('order') -> where(array('order_id'=>$id))->save($data);
         if(!$row)        
             return array('status'=>-3,'msg'=>'操作失败');
 
@@ -636,16 +636,16 @@ function get_user_default_address($user_id){
  */
 function order_give($order)
 {
-	$order_goods = M('order_goods')->where("order_id=".$order['order_id'])->cache(true)->select();
+	$order_goods = M('order_goods') -> where("order_id=".$order['order_id'])->cache(true)->select();
 	//查找购买商品送优惠券活动
 	foreach ($order_goods as $val)
        {
 		if($val['prom_type'] == 3)
                 {
-			$prom = M('prom_goods')->where('type=3 and id='.$val['prom_id'])->find();
+			$prom = M('prom_goods') -> where('type=3 and id='.$val['prom_id'])->find();
 			if($prom)
                         {
-				$coupon = M('coupon')->where("id=".$prom['expression'])->find();//查找优惠券模板
+				$coupon = M('coupon') -> where("id=".$prom['expression'])->find();//查找优惠券模板
 				if($coupon && $coupon['createnum']>0)
                                 {					                                        
                                         $remain = $coupon['createnum'] - $coupon['send_num'];//剩余派发量
@@ -653,7 +653,7 @@ function order_give($order)
                                         {
                                             $data = array('cid'=>$coupon['id'],'type'=>$coupon['type'],'uid'=>$order['user_id'],'send_time'=>time());
                                             M('coupon_list')->add($data);       
-                                            M('Coupon')->where("id = {$coupon['id']}")->setInc('send_num'); // 优惠券领取数量加一
+                                            M('Coupon') -> where("id = {$coupon['id']}")->setInc('send_num'); // 优惠券领取数量加一
                                          }
 				}
 		 	}
@@ -662,10 +662,10 @@ function order_give($order)
 	
 	//查找订单满额送优惠券活动
 	$pay_time = $order['pay_time'];
-	$prom = M('prom_order')->where("type>1 and end_time>$pay_time and start_time<$pay_time and money<=".$order['order_amount'])->order('money desc')->find();
+	$prom = M('prom_order') -> where("type>1 and end_time>$pay_time and start_time<$pay_time and money<=".$order['order_amount'])->order('money desc')->find();
 	if($prom){
 		if($prom['type']==3){
-			$coupon = M('coupon')->where("id=".$prom['expression'])->find();//查找优惠券模板
+			$coupon = M('coupon') -> where("id=".$prom['expression'])->find();//查找优惠券模板
 			if($coupon){
 				if($coupon['createnum']>0)
                                {
@@ -674,7 +674,7 @@ function order_give($order)
                                         {
                                             $data = array('cid'=>$coupon['id'],'type'=>$coupon['type'],'uid'=>$order['user_id'],'send_time'=>time());
                                             M('coupon_list')->add($data);           
-                                            M('Coupon')->where("id = {$coupon['id']}")->setInc('send_num'); // 优惠券领取数量加一
+                                            M('Coupon') -> where("id = {$coupon['id']}")->setInc('send_num'); // 优惠券领取数量加一
                                         }				
 				}
 			}
@@ -682,7 +682,7 @@ function order_give($order)
 			accountLog($order['user_id'], 0 , $prom['expression'] ,"订单活动赠送积分");
 		}
 	}
-    $points = M('order_goods')->where("order_id = {$order[order_id]}")->sum("give_integral * goods_num");
+    $points = M('order_goods') -> where("order_id = {$order[order_id]}")->sum("give_integral * goods_num");
     $points && accountLog($order['user_id'], 0,$points,"下单赠送积分");
 }
 
@@ -694,7 +694,7 @@ function order_give($order)
 
 function get_goods_promotion($goods_id,$user_id=0){
 	$now = time();
-	$goods = M('goods')->where("goods_id=$goods_id")->cache(true)->find();
+	$goods = M('goods') -> where("goods_id=$goods_id")->cache(true)->find();
 	$where = "end_time>$now and start_time<$now and id=".$goods['prom_id'];
 	
 	$prom['price'] = $goods['shop_price'];
@@ -703,16 +703,16 @@ function get_goods_promotion($goods_id,$user_id=0){
 	$prom['is_end'] = 0;
 	
 	if($goods['prom_type'] == 1){//抢购
-		$prominfo = M('flash_sale')->where($where)->cache(true)->find();
+		$prominfo = M('flash_sale') -> where($where)->cache(true)->find();
 		if(!empty($prominfo)){
 			if($prominfo['goods_num'] == $prominfo['buy_num']){
 				$prom['is_end'] = 2;//已售馨
 			}else{
 				//核查用户购买数量
 				$where = "user_id = $user_id and order_status!=3 and  add_time>".$prominfo['start_time']." and add_time<".$prominfo['end_time'];
-				$order_id_arr = M('order')->where($where)->getField('order_id',true);
+				$order_id_arr = M('order') -> where($where)->getField('order_id',true);
 				if($order_id_arr){
-					$goods_num = M('order_goods')->where("prom_id=".$goods['prom_id']." and order_id in (".implode(',', $order_id_arr).")")->sum('goods_num');
+					$goods_num = M('order_goods') -> where("prom_id=".$goods['prom_id']." and order_id in (".implode(',', $order_id_arr).")")->sum('goods_num');
 					if($goods_num < $prominfo['buy_limit']){
 						$prom['price'] = $prominfo['price'];
 					}
@@ -724,7 +724,7 @@ function get_goods_promotion($goods_id,$user_id=0){
 	}
 	
 	if($goods['prom_type']==2){//团购
-		$prominfo = M('group_buy')->where($where)->cache(true)->find();
+		$prominfo = M('group_buy') -> where($where)->cache(true)->find();
 		if(!empty($prominfo)){			
 			if($prominfo['goods_num'] == $prominfo['buy_num']){
 				$prom['is_end'] = 2;//已售馨
@@ -736,7 +736,7 @@ function get_goods_promotion($goods_id,$user_id=0){
 	}
 	if($goods['prom_type'] == 3){//优惠促销
 		$parse_type = array('0'=>'直接打折','1'=>'减价优惠','2'=>'固定金额出售','3'=>'买就赠优惠券','4'=>'买M件送N件');
-		$prominfo = M('prom_goods')->where($where)->cache(true)->find();
+		$prominfo = M('prom_goods') -> where($where)->cache(true)->find();
 		if(!empty($prominfo)){
 			if($prominfo['type'] == 0){
 				$prom['price'] = $goods['shop_price']*$prominfo['expression']/100;//打折优惠
@@ -757,7 +757,7 @@ function get_goods_promotion($goods_id,$user_id=0){
 	}
 	
 	if($prom['prom_id'] == 0){
-		M('goods')->where("goods_id=$goods_id")->save($prom);
+		M('goods') -> where("goods_id=$goods_id")->save($prom);
 	}
 	return $prom;
 }
@@ -769,7 +769,7 @@ function get_goods_promotion($goods_id,$user_id=0){
 function get_order_promotion($order_amount){
 	$parse_type = array('0'=>'满额打折','1'=>'满额优惠金额','2'=>'满额送倍数积分','3'=>'满额送优惠券','4'=>'满额免运费');
 	$now = time();
-	$prom = M('prom_order')->where("type<2 and end_time>$now and start_time<$now and money<=$order_amount")->order('money desc')->find();
+	$prom = M('prom_order') -> where("type<2 and end_time>$now and start_time<$now and money<=$order_amount")->order('money desc')->find();
 	$res = array('order_amount'=>$order_amount,'order_prom_id'=>0,'order_prom_amount'=>0);
 	if($prom){
 		if($prom['type'] == 0){
@@ -803,13 +803,13 @@ function get_order_promotion($order_amount){
 function calculate_price($user_id=0,$order_goods,$shipping_code='',$shipping_price=0,$province=0,$city=0,$district=0,$pay_points=0,$user_money=0,$coupon_id=0,$couponCode='')
 {    
     $cartLogic = new \Common\Logic\CartLogic();
-    $user = M('users')->where("user_id = $user_id")->find();// 找出这个用户
+    $user = M('users') -> where("user_id = $user_id")->find();// 找出这个用户
     
     if(empty($order_goods)) 
         return array('status'=>-9,'msg'=>'商品列表不能为空','result'=>'');  
     
     $goods_id_arr = get_arr_column($order_goods,'goods_id');
-    $goods_arr = M('goods')->where("goods_id in(".  implode(',',$goods_id_arr).")")->getField('goods_id,weight,market_price,is_free_shipping'); // 商品id 和重量对应的键值对
+    $goods_arr = M('goods') -> where("goods_id in(".  implode(',',$goods_id_arr).")")->getField('goods_id,weight,market_price,is_free_shipping'); // 商品id 和重量对应的键值对
     
         foreach($order_goods as $key => $val)
         {       
@@ -892,7 +892,7 @@ function calculate_price($user_id=0,$order_goods,$shipping_code='',$shipping_pri
  */
 function get_goods_category_tree(){
 	$result = array();
-	$cat_list = M('goods_category')->where("is_show = 1")->order('sort_order')->cache(true)->select();//所有分类
+	$cat_list = M('goods_category') -> where("is_show = 1")->order('sort_order')->cache(true)->select();//所有分类
 	
 	foreach ($cat_list as $val){
 		if($val['level'] == 2){

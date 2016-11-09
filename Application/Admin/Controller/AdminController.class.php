@@ -21,22 +21,22 @@ class AdminController extends BaseController {
     			$list[] = $val;
     		}
     	}
-    	$this->assign('list',$list);
-        $this->display();
+    	$this -> assign('list',$list);
+        $this -> display();
     }
     
     public function admin_info(){
     	$admin_id = I('get.admin_id',0);   	
     	if($admin_id){
-    		$info = D('admin')->where("admin_id=$admin_id")->find();
+    		$info = D('admin') -> where("admin_id=$admin_id")->find();
                 $info['password'] =  "";
-    		$this->assign('info',$info);
+    		$this -> assign('info',$info);
     	}
     	$act = empty($admin_id) ? 'add' : 'edit';
-    	$this->assign('act',$act);
-    	$role = D('admin_role')->where('1=1')->select();
-    	$this->assign('role',$role);
-    	$this->display();
+    	$this -> assign('act',$act);
+    	$role = D('admin_role') -> where('1=1')->select();
+    	$this -> assign('role',$role);
+    	$this -> display();
     }
     
     public function adminHandle(){
@@ -69,7 +69,7 @@ class AdminController extends BaseController {
     	if($data['act'] == 'add'){
     		unset($data['admin_id']);    		
     		$data['add_time'] = time();
-    		if(D('admin')->where("user_name='".$data['user_name']."'")->count()){
+    		if(D('admin') -> where("user_name='".$data['user_name']."'")->count()){
     			$this->error("此用户名已被注册，请更换",U('Admin/Admin/admin_info'));
     		}else{
     			$r = D('admin')->add($data);
@@ -77,11 +77,11 @@ class AdminController extends BaseController {
     	}
     	
     	if($data['act'] == 'edit'){
-    		$r = D('admin')->where('admin_id='.$data['admin_id'])->save($data);
+    		$r = D('admin') -> where('admin_id='.$data['admin_id'])->save($data);
     	}
     	
         if($data['act'] == 'del' && $data['admin_id']>1){
-    		$r = D('admin')->where('admin_id='.$data['admin_id'])->delete();
+    		$r = D('admin') -> where('admin_id='.$data['admin_id'])->delete();
     		exit(json_encode(1));
     	}
     	
@@ -110,13 +110,13 @@ class AdminController extends BaseController {
             $condition['password'] = I('post.password');
             if(!empty($condition['user_name']) && !empty($condition['password'])){
                 $condition['password'] = encrypt($condition['password']);
-               	$admin_info = M('admin')->join('__ADMIN_ROLE__ ON __ADMIN__.role_id=__ADMIN_ROLE__.role_id')->where($condition)->find();
+               	$admin_info = M('admin')->join('__ADMIN_ROLE__ ON __ADMIN__.role_id=__ADMIN_ROLE__.role_id') -> where($condition)->find();
                 if(is_array($admin_info)){
                     session('admin_id',$admin_info['admin_id']);
                     session('admin_role_id',$admin_info['role_id']);
                     session('act_list',$admin_info['act_list']);
-                    $last_login_time = M('admin_log')->where("admin_id = ".$admin_info['admin_id']." and log_info = '后台登录'")->order('log_id desc')->limit(1)->getField('log_time');
-                    M('admin')->where("admin_id = ".$admin_info['admin_id'])->save(array('last_login'=>time(),'last_ip'=>  getIP()));
+                    $last_login_time = M('admin_log') -> where("admin_id = ".$admin_info['admin_id']." and log_info = '后台登录'")->order('log_id desc')->limit(1)->getField('log_time');
+                    M('admin') -> where("admin_id = ".$admin_info['admin_id'])->save(array('last_login'=>time(),'last_ip'=>  getIP()));
                     session('last_login_time',$last_login_time);                            
                     adminLog('后台登录',__ACTION__);
                     $url = session('from_url') ? session('from_url') : U('Admin/Index/index');
@@ -129,7 +129,7 @@ class AdminController extends BaseController {
             }
         }
         
-        $this->display();
+        $this -> display();
     }
     
     /**
@@ -158,16 +158,16 @@ class AdminController extends BaseController {
     
     public function role(){
     	$list = D('admin_role')->order('role_id desc')->select();
-    	$this->assign('list',$list);
-    	$this->display();
+    	$this -> assign('list',$list);
+    	$this -> display();
     }
     
     public function role_info(){
     	$role_id = I('get.role_id');
     	$tree = $detail = array();
     	if($role_id){
-    		$detail = D('admin_role')->where("role_id=$role_id")->find();
-    		$this->assign('detail',$detail);
+    		$detail = D('admin_role') -> where("role_id=$role_id")->find();
+    		$this -> assign('detail',$detail);
     	}
 
     	$res = D('system_module')->order('mod_id ASC')->select();
@@ -202,8 +202,8 @@ class AdminController extends BaseController {
     		}
     	}
 
-    	$this->assign('menu_tree',$tree);
-    	$this->display();
+    	$this -> assign('menu_tree',$tree);
+    	$this -> display();
     }
     
     public function roleSave(){
@@ -213,7 +213,7 @@ class AdminController extends BaseController {
     	if(empty($data['role_id'])){
     		$r = D('admin_role')->add($res);
     	}else{
-    		$r = D('admin_role')->where('role_id='.$data['role_id'])->save($res);
+    		$r = D('admin_role') -> where('role_id='.$data['role_id'])->save($res);
     	}
 		if($r){
 			adminLog('管理角色',__ACTION__);
@@ -225,11 +225,11 @@ class AdminController extends BaseController {
     
     public function roleDel(){
     	$role_id = I('post.role_id');
-    	$admin = D('admin')->where('role_id='.$role_id)->find();
+    	$admin = D('admin') -> where('role_id='.$role_id)->find();
     	if($admin){
     		exit(json_encode("请先清空所属该角色的管理员"));
     	}else{
-    		$d = M('admin_role')->where("role_id=$role_id")->delete();
+    		$d = M('admin_role') -> where("role_id=$role_id")->delete();
     		if($d){
     			exit(json_encode(1));
     		}else{
@@ -242,12 +242,12 @@ class AdminController extends BaseController {
     	$Log = M('admin_log');
     	$p = I('p',1);
     	$logs = $Log->join('__ADMIN__ ON __ADMIN__.admin_id =__ADMIN_LOG__.admin_id')->order('log_time DESC')->page($p.',20')->select();
-    	$this->assign('list',$logs);
+    	$this -> assign('list',$logs);
     	$count = $Log->where('1=1')->count();
     	$Page = new \Think\Page($count,20);
-    	$show = $Page->show();
-    	$this->assign('page',$show); 	
-    	$this->display();
+    	$show = $Page -> show();
+    	$this -> assign('page',$show);
+    	$this -> display();
     }
 
     /**
@@ -271,8 +271,8 @@ class AdminController extends BaseController {
             $data['state'] = 0;
             $data['create_time'] = time();
 
-            M('admin')->where(array('admin_id'=>$data['admin_id']))->setDec('amount',$data['money']);
-            M('admin')->where(array('admin_id'=>$data['admin_id']))->setInc('withdrawals_amount',$data['money']);
+            M('admin') -> where(array('admin_id'=>$data['admin_id']))->setDec('amount',$data['money']);
+            M('admin') -> where(array('admin_id'=>$data['admin_id']))->setInc('withdrawals_amount',$data['money']);
             $res = M('admin_withdrawals')->add($data);
             if($res){
                 $this->success('申请成功');
@@ -294,7 +294,7 @@ class AdminController extends BaseController {
         $bankList = include_once 'Application/Common/Conf/bank.php'; //快递名称
         $this -> assign('bankList',$bankList);
 
-        $phone = M('admin')->field('phone')->where("admin_id = '".session('admin_id')."'")->find();
+        $phone = M('admin')->field('phone') -> where("admin_id = '".session('admin_id')."'")->find();
         $this -> assign('accountMoney',$accountInfo['amount']);
         $this -> assign('moneySum',$moneySum);
         $this -> assign('phone',$phone['phone']);
@@ -323,7 +323,7 @@ class AdminController extends BaseController {
      */
     public function withdrawDeposit()
     {
-        $this->display();
+        $this -> display();
     }
 
 
@@ -342,10 +342,10 @@ class AdminController extends BaseController {
                 break;
         }
         $prefix = C('DB_PREFIX');
-        $list = M('admin_withdrawals')->join("LEFT JOIN ".$prefix."admin ON ".$prefix."admin.admin_id = ".$prefix."admin_withdrawals.admin_id")->where($where)->select(); //->limit($Page->firstRow,$Page->listRows)
+        $list = M('admin_withdrawals')->join("LEFT JOIN ".$prefix."admin ON ".$prefix."admin.admin_id = ".$prefix."admin_withdrawals.admin_id") -> where($where)->select(); //->limit($Page->firstRow,$Page->listRows)
 
-        $this->assign('list',$list);
-        $this->display();
+        $this -> assign('list',$list);
+        $this -> display();
     }
 
 
@@ -357,7 +357,7 @@ class AdminController extends BaseController {
         if(IS_POST){
             $id = I('id');
             $state = I('state');
-            $stateRes = M('admin_withdrawals')->field('state,admin_id,money')->where(array('id'=>$id))->find();
+            $stateRes = M('admin_withdrawals')->field('state,admin_id,money') -> where(array('id'=>$id))->find();
             if($stateRes['state'] != 0){
                 exit(json_encode(callback(false,"该申请已处理")));
             }
@@ -371,8 +371,8 @@ class AdminController extends BaseController {
             $data['update_time'] = time();
             $manageRes = M('admin_withdrawals')->save($data);
             if($data['state'] == 2){ //驳回请求
-                M('admin')->where("admin_id = '".$stateRes['admin_id']."'")->setInc('amount',$stateRes['money']);
-                M('admin')->where("admin_id = '".$stateRes['admin_id']."'")->setDec('withdrawals_amount',$stateRes['money']);
+                M('admin') -> where("admin_id = '".$stateRes['admin_id']."'")->setInc('amount',$stateRes['money']);
+                M('admin') -> where("admin_id = '".$stateRes['admin_id']."'")->setDec('withdrawals_amount',$stateRes['money']);
             }
             if($manageRes){
                 exit(json_encode(callback(true,"处理成功")));
@@ -395,10 +395,10 @@ class AdminController extends BaseController {
         $thirtyDays= date('Y/m/d',(time()-30*60*60*24));//30天前
         $end = date('Y/m/d',strtotime('+1 days'));
         $sevenDays = date('Y/m/d',(time()-7*60*60*24));//7天前
-        $this->assign('thirtyDays',$thirtyDays);
-        $this->assign('end',$end);
-        $this->assign('sevenDays',$sevenDays);
-        $this->display();
+        $this -> assign('thirtyDays',$thirtyDays);
+        $this -> assign('end',$end);
+        $this -> assign('sevenDays',$sevenDays);
+        $this -> display();
     }
 
     public function ajaxwithdrawalRecord(){
@@ -418,17 +418,17 @@ class AdminController extends BaseController {
             $condition['create_time'] = array('between',"$begin,$end");
         }
         $condition['admin_id'] = session('admin_id');
-        $count = M('admin_withdrawals')->where($condition)->count();
+        $count = M('admin_withdrawals') -> where($condition)->count();
         $Page  = new \Admin\Common\AjaxPage($count,10);
         //  搜索条件下 分页赋值
         foreach($condition as $key=>$val) {
             $Page->parameter[$key]   =  urlencode($val);
         }
-        $show = $Page->show();
-        $list = M('admin_withdrawals')->where($condition)->limit($Page->firstRow.','.$Page->listRows)->order('create_time DESC')->select();
-        $this->assign('list',$list);
-        $this->assign('page',$show);// 赋值分页输出
-        $this->display();
+        $show = $Page -> show();
+        $list = M('admin_withdrawals') -> where($condition)->limit($Page->firstRow.','.$Page->listRows)->order('create_time DESC')->select();
+        $this -> assign('list',$list);
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
 
     /**
@@ -438,9 +438,9 @@ class AdminController extends BaseController {
         $adminId = session('admin_id');
         $adminInfo = findDataWithCondition( "admin" , array( "admin_id" => $adminId )  );
         $list = M("admin_point") -> where( array( "admin_id" => $adminId )  ) -> order("create_time desc") -> select();
-        $this->assign('list',$list);
-        $this->assign('adminInfo',$adminInfo);
-        $this->display();
+        $this -> assign('list',$list);
+        $this -> assign('adminInfo',$adminInfo);
+        $this -> display();
     }
 
 

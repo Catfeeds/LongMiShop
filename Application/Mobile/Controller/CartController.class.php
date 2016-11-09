@@ -26,7 +26,7 @@ class CartController extends MobileBaseController {
     }
 
     public function cart(){
-        $this->display();
+        $this -> display();
     }
 
     /**
@@ -67,7 +67,7 @@ class CartController extends MobileBaseController {
         $user_id = I("user_id"); // 用户id
         $where = " session_id = '$unique_id' "; // 默认按照 $unique_id 查询
         $user_id && $where = " user_id = ".$user_id; // 如果这个用户已经等了则按照用户id查询
-        $cartList = M('Cart')->where($where)->getField("id,goods_num,selected");
+        $cartList = M('Cart') -> where($where)->getField("id,goods_num,selected");
         if($cart_form_data)
         {
             // 修改购物车数量 和勾选状态
@@ -77,9 +77,9 @@ class CartController extends MobileBaseController {
                 $data['selected'] = $val['selected'];
                 $cartID = $val['cartID'];
                 if(($cartList[$cartID]['goods_num'] != $data['goods_num']) || ($cartList[$cartID]['selected'] != $data['selected']))
-                    M('Cart')->where("id = $cartID")->save($data);
+                    M('Cart') -> where("id = $cartID")->save($data);
             }
-            //$this->assign('select_all', $_POST['select_all']); // 全选框
+            //$this -> assign('select_all', $_POST['select_all']); // 全选框
         }
 
         $result = $this->cartLogic->cartList($this->user, $unique_id,0);
@@ -100,14 +100,14 @@ class CartController extends MobileBaseController {
     public function cart2()
     {
         $region_list = get_region_list();
-        $this->assign('region_list',$region_list);
+        $this -> assign('region_list',$region_list);
 
         $address = getCurrentAddress( $this->user_id , I('address_id',null) );
         addressTheJump(ACTION_NAME);
         if( empty($address) ){
         	header("Location: ".U('Mobile/User/edit_address',array('source'=>'cart2')));
         }
-        $this->assign('address',$address);
+        $this -> assign('address',$address);
 
         if($this->cartLogic->cart_count($this->user_id,1) == 0 )
             $this->error ('你的购物车没有选中商品',U('Mobile/Cart/cart'));
@@ -138,7 +138,7 @@ class CartController extends MobileBaseController {
         foreach($result['cartList'] as $key => $item){
 
             if($item['selected'] == 1){ 
-              $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
+              $goods_res = M('goods')->field('weight,delivery_way') -> where("goods_id = '".$item['goods_id']."'")->find();
               $goods_data[$key]['spec_key'] = $item['spec_key']; //商品规格
               $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
               $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
@@ -162,16 +162,16 @@ class CartController extends MobileBaseController {
         $totalPrice['goods_fee'] = $totalPrice['total_fee'];
         $totalPrice['total_fee'] = $totalPrice['total_fee'] + $count_postage['data']['count'];
         // dd($count_postage);
-         $shippingList = M('Plugin')->where("`type` = 'shipping' and status = 1")->select();// 物流公司
+         $shippingList = M('Plugin') -> where("`type` = 'shipping' and status = 1")->select();// 物流公司
 
         $usersLogic = new \Common\Logic\UsersLogic();
         $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum );
-        $this->assign('couponList',$result['data']['result']);
-        $this->assign('shippingList', $shippingList); // 物流公司
-        $this->assign('cartList', $cartList); // 购物车的商品
-        $this->assign('total_price', $totalPrice); // 总计
-        $this->assign('carriage_sum',$count_postage['data']['count']); //总邮费
-        $this->display();
+        $this -> assign('couponList',$result['data']['result']);
+        $this -> assign('shippingList', $shippingList); // 物流公司
+        $this -> assign('cartList', $cartList); // 购物车的商品
+        $this -> assign('total_price', $totalPrice); // 总计
+        $this -> assign('carriage_sum',$count_postage['data']['count']); //总邮费
+        $this -> display();
     }
 
 
@@ -190,17 +190,17 @@ class CartController extends MobileBaseController {
 //    public function cart4(){
 //
 //        $order_id = I('order_id');
-//        $order = M('Order')->where("order_id = $order_id")->find();
+//        $order = M('Order') -> where("order_id = $order_id")->find();
 //        // 如果已经支付过的订单直接到订单详情页面. 不再进入支付页面
 //        if($order['pay_status'] == 1){
 //            $order_detail_url = U("Mobile/User/order_detail",array('id'=>$order_id));
 //            header("Location: $order_detail_url");
 //        }
 //
-//        $paymentList = M('Plugin')->where("`type`='payment' and status = 1 and  scene in(0,1)")->select();
+//        $paymentList = M('Plugin') -> where("`type`='payment' and status = 1 and  scene in(0,1)")->select();
 //        //微信浏览器
 //        if(strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
-//            $paymentList = M('Plugin')->where("`type`='payment' and status = 1 and code in('weixin','cod')")->select();
+//            $paymentList = M('Plugin') -> where("`type`='payment' and status = 1 and code in('weixin','cod')")->select();
 //        }
 //        $paymentList = convert_arr_key($paymentList, 'code');
 //
@@ -214,13 +214,13 @@ class CartController extends MobileBaseController {
 //        }
 //
 //        $bank_img = include 'Application/Home/Conf/bank.php'; // 银行对应图片
-//        $payment = M('Plugin')->where("`type`='payment' and status = 1")->select();
-//        $this->assign('paymentList',$paymentList);
-//        $this->assign('bank_img',$bank_img);
-//        $this->assign('order',$order);
-//        $this->assign('bankCodeList',$bankCodeList);
-//        $this->assign('pay_date',date('Y-m-d', strtotime("+1 day")));
-//        $this->display();
+//        $payment = M('Plugin') -> where("`type`='payment' and status = 1")->select();
+//        $this -> assign('paymentList',$paymentList);
+//        $this -> assign('bank_img',$bank_img);
+//        $this -> assign('order',$order);
+//        $this -> assign('bankCodeList',$bankCodeList);
+//        $this -> assign('pay_date',date('Y-m-d', strtotime("+1 day")));
+//        $this -> display();
 //    }
 
 
@@ -234,7 +234,7 @@ class CartController extends MobileBaseController {
         $where = " session_id = '$this->session_id' "; // 默认按照 session_id 查询
         $this->user_id && $where = " user_id = ".$this->user_id; // 如果这个用户已经等了则按照用户id查询
 
-        $cartList = M('Cart')->where($where)->getField("id,goods_num,selected,prom_type,prom_id");
+        $cartList = M('Cart') -> where($where)->getField("id,goods_num,selected,prom_type,prom_id");
 
         if($post_goods_num)
         {
@@ -244,24 +244,24 @@ class CartController extends MobileBaseController {
                 $data['goods_num'] = $val < 1 ? 1 : $val;
 //                if($cartList[$key]['prom_type'] == 1) //限时抢购 不能超过购买数量
 //                {
-//                    $flash_sale = M('flash_sale')->where("id = {$cartList[$key]['prom_id']}")->find();
+//                    $flash_sale = M('flash_sale') -> where("id = {$cartList[$key]['prom_id']}")->find();
 //                    $data['goods_num'] = $data['goods_num'] > $flash_sale['buy_limit'] ? $flash_sale['buy_limit'] : $data['goods_num'];
 //                }
 //
                 $data['selected'] = $post_cart_select[$key] ? 1 : 0 ;
                 if(($cartList[$key]['goods_num'] != $data['goods_num']) || ($cartList[$key]['selected'] != $data['selected']))
-                    M('Cart')->where("id = $key")->save($data);
+                    M('Cart') -> where("id = $key")->save($data);
             }
-            $this->assign('select_all', $_POST['select_all']); // 全选框
+            $this -> assign('select_all', $_POST['select_all']); // 全选框
         }
 
         $result = $this -> cartLogic-> cartList($this->user, $this->session_id,1,1);
         if(empty($result['total_price'])){
             $result['total_price'] = Array( 'total_fee' =>0, 'cut_fee' =>0, 'num' => 0, 'atotal_fee' =>0, 'acut_fee' =>0, 'anum' => 0);
         }
-        $this->assign('cartList', $result['cartList']); // 购物车的商品                
-        $this->assign('total_price', $result['total_price']); // 总计       
-        $this->display();
+        $this -> assign('cartList', $result['cartList']); // 购物车的商品
+        $this -> assign('total_price', $result['total_price']); // 总计
+        $this -> display();
     }
 
     /*
@@ -271,14 +271,14 @@ class CartController extends MobileBaseController {
 
         $regionList = M('Region')->getField('id,name');
 
-        $address_list = M('UserAddress')->where("user_id = {$this->user_id}")->select();
-        $c = M('UserAddress')->where("user_id = {$this->user_id} and is_default = 1")->count(); // 看看有没默认收货地址
+        $address_list = M('UserAddress') -> where("user_id = {$this->user_id}")->select();
+        $c = M('UserAddress') -> where("user_id = {$this->user_id} and is_default = 1")->count(); // 看看有没默认收货地址
         if((count($address_list) > 0) && ($c == 0)) // 如果没有设置默认收货地址, 则第一条设置为默认收货地址
             $address_list[0]['is_default'] = 1;
 
-        $this->assign('regionList', $regionList);
-        $this->assign('address_list', $address_list);
-        $this->display('ajax_address');
+        $this -> assign('regionList', $regionList);
+        $this -> assign('address_list', $address_list);
+        $this -> display('ajax_address');
     }
 
     /**
@@ -287,7 +287,7 @@ class CartController extends MobileBaseController {
     public function ajaxDelCart()
     {
         $ids = I("ids"); // 商品 ids
-         M("Cart")->where(" id in ($ids)")->delete();
+         M("Cart") -> where(" id in ($ids)")->delete();
         exit(json_encode(callback(true,"删除成功")));
     }
 
@@ -300,10 +300,10 @@ class CartController extends MobileBaseController {
             $money = I('money'); //总金额
             $where['id'] = I('couponId');
             $where['uid'] = $this->user_id;
-            $couponListRes = M('coupon_list')->where($where)->find();
+            $couponListRes = M('coupon_list') -> where($where)->find();
             if(!empty($couponListRes)){
                 $wheres['id'] = $couponListRes['cid'];
-                $couRes =  M('coupon')->where($wheres)->find();
+                $couRes =  M('coupon') -> where($wheres)->find();
                 if($couRes['is_discount'] == 1){ //折扣券
                     $couResMoney = intval($couRes['money']) / 100;
                     $moneyRes = $money * $couResMoney;

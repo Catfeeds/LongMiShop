@@ -19,7 +19,7 @@ class UsersLogic extends RelationModel
     	$result = array();
         if(!$username || !$password)
            $result= array('status'=>0,'msg'=>'请填写账号或密码');
-        $user = M('users')->where("mobile='{$username}' OR email='{$username}'")->find();
+        $user = M('users') -> where("mobile='{$username}' OR email='{$username}'")->find();
         if(!$user){
            $result = array('status'=>-1,'msg'=>'账号不存在!');
         }elseif(encrypt($password) != $user['password']){
@@ -29,7 +29,7 @@ class UsersLogic extends RelationModel
         }else{
             //查询用户信息之后, 查询用户的登记昵称
             $levelId = $user['level'];
-            $levelName = M("user_level")->where("level_id = {$levelId}")->getField("level_name"); 
+            $levelName = M("user_level") -> where("level_id = {$levelId}")->getField("level_name");
             $user['level_name'] = $levelName;
           
            $result = array('status'=>1,'msg'=>'登陆成功','result'=>$user);
@@ -64,7 +64,7 @@ class UsersLogic extends RelationModel
             // 如果找到他老爸还要找他爷爷他祖父等
             if($map['first_leader'])
             {
-                $first_leader = M('users')->where("user_id = {$map['first_leader']}")->find();
+                $first_leader = M('users') -> where("user_id = {$map['first_leader']}")->find();
                 $map['second_leader'] = $first_leader['first_leader']; //  第一级推荐人
                 $map['third_leader'] = $first_leader['second_leader']; // 第二级推荐人
             }else
@@ -80,12 +80,12 @@ class UsersLogic extends RelationModel
             $row = M('users')->add($map);
             $user = get_user_info($openid,3,$oauth);
 			// 会员注册送优惠券
-			$coupon = M('coupon')->where("send_end_time > ".time()." and ((createnum - send_num) > 0 or createnum = 0) and type = 2")->select();
+			$coupon = M('coupon') -> where("send_end_time > ".time()." and ((createnum - send_num) > 0 or createnum = 0) and type = 2")->select();
 			foreach ($coupon as $key => $val)
 			{
 				// 送券            
 				M('coupon_list')->add(array('cid'=>$val['id'],'type'=>$val['type'],'uid'=>$user[user_id],'send_time'=>time()));
-				M('Coupon')->where("id = {$val['id']}")->setInc('send_num'); // 优惠券领取数量加一            
+				M('Coupon') -> where("id = {$val['id']}")->setInc('send_num'); // 优惠券领取数量加一
 			}
 			
 			
@@ -133,7 +133,7 @@ class UsersLogic extends RelationModel
         // 如果找到他老爸还要找他爷爷他祖父等
         if($map['first_leader'])
         {
-            $first_leader = M('users')->where("user_id = {$map['first_leader']}")->find();
+            $first_leader = M('users') -> where("user_id = {$map['first_leader']}")->find();
             $map['second_leader'] = $first_leader['first_leader'];
             $map['third_leader'] = $first_leader['second_leader'];
         }else
@@ -154,14 +154,14 @@ class UsersLogic extends RelationModel
         $pay_points = tpCache('basic.reg_integral'); // 会员注册赠送积分
         if($pay_points > 0)
             accountLog($user_id, 0,$pay_points, '会员注册赠送积分'); // 记录日志流水                  
-        $user = M('users')->where("user_id = {$user_id}")->find();
+        $user = M('users') -> where("user_id = {$user_id}")->find();
         // 会员注册送优惠券
-        $coupon = M('coupon')->where("send_end_time > ".time()." and ((createnum - send_num) > 0 or createnum = 0) and type = 2")->select();
+        $coupon = M('coupon') -> where("send_end_time > ".time()." and ((createnum - send_num) > 0 or createnum = 0) and type = 2")->select();
         foreach ($coupon as $key => $val)
         {
             // 送券            
             M('coupon_list')->add(array('cid'=>$val['id'],'type'=>$val['type'],'uid'=>$user_id,'send_time'=>time()));
-            M('Coupon')->where("id = {$val['id']}")->setInc('send_num'); // 优惠券领取数量加一            
+            M('Coupon') -> where("id = {$val['id']}")->setInc('send_num'); // 优惠券领取数量加一
         }
         
         return array('status'=>1,'msg'=>'注册成功','result'=>$user);
@@ -173,16 +173,16 @@ class UsersLogic extends RelationModel
      public function get_info($user_id){
          if(!$user_id > 0)
              return array('status'=>-1,'msg'=>'缺少参数','result'=>'');
-        $user_info = M('users')->where("user_id = {$user_id}")->find();
+        $user_info = M('users') -> where("user_id = {$user_id}")->find();
         if(!$user_info)
             return false;
          
-         $user_info['coupon_count'] = M('coupon_list')->where("uid = $user_id and use_time = 0")->count(); //获取优惠券列表         
-         $user_info['collect_count'] = M('goods_collect')->where(array('user_id'=>$user_id))->count(); //获取收藏数量         
+         $user_info['coupon_count'] = M('coupon_list') -> where("uid = $user_id and use_time = 0")->count(); //获取优惠券列表
+         $user_info['collect_count'] = M('goods_collect') -> where(array('user_id'=>$user_id))->count(); //获取收藏数量
                                     
-         $user_info['waitPay']     = M('order')->where("user_id = $user_id ".C('WAITPAY'))->count(); //待付款数量
-         $user_info['waitSend']    = M('order')->where("user_id = $user_id ".C('WAITSEND'))->count(); //待发货数量         
-         $user_info['waitReceive'] = M('order')->where("user_id = $user_id ".C('WAITRECEIVE'))->count(); //待收货数量                  
+         $user_info['waitPay']     = M('order') -> where("user_id = $user_id ".C('WAITPAY'))->count(); //待付款数量
+         $user_info['waitSend']    = M('order') -> where("user_id = $user_id ".C('WAITSEND'))->count(); //待发货数量
+         $user_info['waitReceive'] = M('order') -> where("user_id = $user_id ".C('WAITRECEIVE'))->count(); //待收货数量
          $user_info['order_count'] = $user_info['waitPay'] + $user_info['waitSend'] + $user_info['waitReceive'];
          return array('status'=>1,'msg'=>'获取成功','result'=>$user_info);
      }
@@ -191,7 +191,7 @@ class UsersLogic extends RelationModel
      * 获取最近一笔订单
      */
     public function get_last_order($user_id){
-        $last_order = M('order')->where("user_id = {$user_id}")->order('order_id DESC')->find();
+        $last_order = M('order') -> where("user_id = {$user_id}")->order('order_id DESC')->find();
         return $last_order;
     }
 
@@ -214,7 +214,7 @@ class UsersLogic extends RelationModel
 //                if($admin_id == 0){
 //                    $admin_name = "商城自营";
 //                }else{
-//                    $admin_info  = M('admin')->where(array('admin_id' => $admin_id)) -> find();
+//                    $admin_info  = M('admin') -> where(array('admin_id' => $admin_id)) -> find();
 //                    $admin_name = !empty($admin_info) ? $admin_info['company_name'] : "未知";
 //                    $admin_name = !empty($admin_name) ? $admin_name : $admin_info['user_name'];
 //                    $admin_name = "供货商：".$admin_name;
@@ -244,14 +244,14 @@ class UsersLogic extends RelationModel
             $where = 'user_money < 0 OR pay_points < 0 AND user_id='.$user_id;
         }
 
-        $count = M('account_log')->where($where)->count();
+        $count = M('account_log') -> where($where)->count();
         $Page = new Page($count,16);
-        $logs = M('account_log')->where($where)->order('change_time desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $logs = M('account_log') -> where($where)->order('change_time desc')->limit($Page->firstRow.','.$Page->listRows)->select();
 
         $return['status'] = 1;
         $return['msg'] = '';
         $return['result'] = $logs;
-        $return['show'] = $Page->show();
+        $return['show'] = $Page -> show();
 
         return $return;
     }
@@ -291,7 +291,7 @@ class UsersLogic extends RelationModel
         $return['status'] = 1;
         $return['msg'] = '获取成功';
         $return['result'] = $logs;
-        $return['show'] = $Page->show();
+        $return['show'] = $Page -> show();
         return $return;
     }
 
@@ -300,9 +300,9 @@ class UsersLogic extends RelationModel
      * @param $user_id  用户id
      */
     public function get_goods_collect($user_id){
-        $count = M('goods_collect')->where(array('user_id'=>$user_id))->count();
+        $count = M('goods_collect') -> where(array('user_id'=>$user_id))->count();
         $page = new Page($count,10);
-        $show = $page->show();
+        $show = $page -> show();
         //获取我的收藏列表
         $sql = "SELECT c.collect_id,c.add_time,g.goods_id,g.goods_name,g.shop_price,g.original_img FROM __PREFIX__goods_collect c ".
             "inner JOIN __PREFIX__goods g ON g.goods_id = c.goods_id ".
@@ -345,7 +345,7 @@ class UsersLogic extends RelationModel
             $where order by o.order_id desc  LIMIT {$page->firstRow},{$page->listRows}";            
         }
         
-        $show = $page->show();
+        $show = $page -> show();
         $comment_list = M()->query($sql);
         if($comment_list){
         	$return['result'] = $comment_list;
@@ -369,12 +369,12 @@ class UsersLogic extends RelationModel
             return array('status'=>-1,'msg'=>'非法操作','result'=>'');
         
         //检查订单是否已完成
-        $order = M('order')->where("order_id = {$add[order_id]} AND user_id = {$add[user_id]}")->find();
+        $order = M('order') -> where("order_id = {$add[order_id]} AND user_id = {$add[user_id]}")->find();
         if($order['order_status'] != 2)
             return array('status'=>-1,'msg'=>'该笔订单还未完成','result'=>'');
 
         //检查是否已评论过
-        $goods = M('comment')->where("order_id = {$add[order_id]} AND goods_id = {$add[goods_id]}")->find();
+        $goods = M('comment') -> where("order_id = {$add[order_id]} AND goods_id = {$add[goods_id]}")->find();
         if($goods)            
             return array('status'=>-1,'msg'=>'您已经评论过该商品','result'=>'');        
         
@@ -382,13 +382,13 @@ class UsersLogic extends RelationModel
         if($row)
         {
             //更新订单商品表状态
-            M('order_goods')->where(array('goods_id'=>$add[goods_id],'order_id'=>$add[order_id]))->save(array('is_comment'=>1));
-            M('goods')->where(array('goods_id'=>$add[goods_id]))->setInc('comment_count',1); // 评论数加一  
+            M('order_goods') -> where(array('goods_id'=>$add[goods_id],'order_id'=>$add[order_id]))->save(array('is_comment'=>1));
+            M('goods') -> where(array('goods_id'=>$add[goods_id]))->setInc('comment_count',1); // 评论数加一
             // 查看这个订单是否全部已经评论,如果全部评论了 修改整个订单评论状态            
-            $comment_count   = M('order_goods')->where("order_id ='{$add[order_id]}' and is_comment = 0")->count();
+            $comment_count   = M('order_goods') -> where("order_id ='{$add[order_id]}' and is_comment = 0")->count();
             if($comment_count == 0) // 如果所有的商品都已经评价了 订单状态改成已评价
             {
-                M('order')->where("order_id ='{$add[order_id]}'")->save(array('order_status'=>4));
+                M('order') -> where("order_id ='{$add[order_id]}'")->save(array('order_status'=>4));
             }
             return array('status'=>1,'msg'=>'评论成功','result'=>'');
         }
@@ -411,13 +411,13 @@ class UsersLogic extends RelationModel
         $condition['user_id'] = array('neq',$user_id);
         $condition[$field] = $email_mobile;
 
-        $is_exist = M('users')->where($condition)->find();
+        $is_exist = M('users') -> where($condition)->find();
         if($is_exist)
             return false;
         unset($condition[$field]);
         $condition['user_id'] = $user_id;
         $validate = $field.'_validated';
-        M('users')->where($condition)->save(array($field=>$email_mobile,$validate=>1));
+        M('users') -> where($condition)->save(array($field=>$email_mobile,$validate=>1));
         return true;
     }
 
@@ -428,7 +428,7 @@ class UsersLogic extends RelationModel
      * @return bool
      */
     public function update_info($user_id,$post=array()){
-        $model = M('users')->where("user_id = ".$user_id);
+        $model = M('users') -> where("user_id = ".$user_id);
         $row = $model->save($post);
         if($row === false)
            return false;
@@ -445,7 +445,7 @@ class UsersLogic extends RelationModel
         $post = $data;
         if($address_id == 0)
         {
-            $c = M('UserAddress')->where("user_id = $user_id")->count();
+            $c = M('UserAddress') -> where("user_id = $user_id")->count();
             if($c >= 20)
                 return array('status'=>-1,'msg'=>'最多只能添加20个收货地址','result'=>'');
         }        
@@ -463,10 +463,10 @@ class UsersLogic extends RelationModel
         //编辑模式
         if($address_id > 0){
 
-            $address = M('user_address')->where(array('address_id'=>$address_id,'user_id'=> $user_id))->find();
+            $address = M('user_address') -> where(array('address_id'=>$address_id,'user_id'=> $user_id))->find();
             if($post['is_default'] == 1 && $address['is_default'] != 1)
-                M('user_address')->where(array('user_id'=>$user_id))->save(array('is_default'=>0));
-            $row = M('user_address')->where(array('address_id'=>$address_id,'user_id'=> $user_id))->save($post);
+                M('user_address') -> where(array('user_id'=>$user_id))->save(array('is_default'=>0));
+            $row = M('user_address') -> where(array('address_id'=>$address_id,'user_id'=> $user_id))->save($post);
             if(!$row)
                 return array('status'=>-1,'msg'=>'操作完成','result'=>'');
             return array('status'=>1,'msg'=>'编辑成功','result'=>'');
@@ -475,7 +475,7 @@ class UsersLogic extends RelationModel
         $post['user_id'] = $user_id;
         
         // 如果目前只有一个收货地址则改为默认收货地址
-        $c = M('user_address')->where("user_id = {$post['user_id']}")->count();        
+        $c = M('user_address') -> where("user_id = {$post['user_id']}")->count();
         if($c == 0)  $post['is_default'] = 1;
         
         $address_id = M('user_address')->add($post);
@@ -485,7 +485,7 @@ class UsersLogic extends RelationModel
         $map['address_id'] = array('neq',$insert_id);
                
         if($post['is_default'] == 1)
-            M('user_address')->where($map)->save(array('is_default'=>0));
+            M('user_address') -> where($map)->save(array('is_default'=>0));
         if(!$address_id)
             return array('status'=>-1,'msg'=>'添加失败','result'=>'');
         
@@ -499,8 +499,8 @@ class UsersLogic extends RelationModel
      * @param $address_id
      */
     public function set_default($user_id,$address_id){
-        M('user_address')->where(array('user_id'=>$user_id))->save(array('is_default'=>0)); //改变以前的默认地址地址状态
-        $row = M('user_address')->where(array('user_id'=>$user_id,'address_id'=>$address_id))->save(array('is_default'=>1));
+        M('user_address') -> where(array('user_id'=>$user_id))->save(array('is_default'=>0)); //改变以前的默认地址地址状态
+        $row = M('user_address') -> where(array('user_id'=>$user_id,'address_id'=>$address_id))->save(array('is_default'=>1));
         if(!$row)
             return false;
         return true;
@@ -523,7 +523,7 @@ class UsersLogic extends RelationModel
         //验证原密码
         if($is_update && ($user['password'] != '' && encrypt($old_password) != $user['password']))
             return array('status'=>-1,'msg'=>'密码验证失败','result'=>'');
-        $row = M('users')->where("user_id='{$user_id}'")->save(array('password'=>encrypt($new_password)));
+        $row = M('users') -> where("user_id='{$user_id}'")->save(array('password'=>encrypt($new_password)));
         if(!$row)
             return array('status'=>-1,'msg'=>'修改失败','result'=>'');
         return array('status'=>1,'msg'=>'修改成功','result'=>'');
@@ -533,7 +533,7 @@ class UsersLogic extends RelationModel
      * 取消订单
      */
     public function cancel_order($user_id,$order_id){
-        $order = M('order')->where(array('order_id'=>$order_id,'user_id'=>$user_id))->find();
+        $order = M('order') -> where(array('order_id'=>$order_id,'user_id'=>$user_id))->find();
         //检查是否未支付订单 已支付联系客服处理退款
         if(empty($order))
             return array('status'=>-1,'msg'=>'订单不存在','result'=>'');
@@ -541,13 +541,13 @@ class UsersLogic extends RelationModel
         if($order['pay_status'] > 0 || $order['order_status'] > 0)
             return array('status'=>-1,'msg'=>'支付状态或订单状态不允许','result'=>'');
         //获取记录表信息
-        //$log = M('account_log')->where(array('order_id'=>$order_id))->find();
+        //$log = M('account_log') -> where(array('order_id'=>$order_id))->find();
         //有余额支付的情况
         if($order['user_money'] > 0 || $order['integral'] > 0){
             accountLog($user_id,$order['user_money'],$order['integral'],"订单取消，退回{$order['user_money']}元,{$order['integral']}积分");
         }
 
-        $row = M('order')->where(array('order_id'=>$order_id,'user_id'=>$user_id))->save(array('order_status'=>3));
+        $row = M('order') -> where(array('order_id'=>$order_id,'user_id'=>$user_id))->save(array('order_status'=>3));
 				
         $data['order_id'] = $order_id;
         $data['action_user'] = $user_id;
@@ -573,7 +573,7 @@ class UsersLogic extends RelationModel
      */
     public function sms_log($mobile,$code,$session_id){
         //判断是否存在验证码
-        $data = M('sms_log')->where(array('mobile'=>$mobile,'session_id'=>$session_id))->order('id DESC')->find();
+        $data = M('sms_log') -> where(array('mobile'=>$mobile,'session_id'=>$session_id))->order('id DESC')->find();
         //获取时间配置
         $sms_time_out = tpCache('sms.sms_time_out');
         $sms_time_out = $sms_time_out ? $sms_time_out : 120;
@@ -600,7 +600,7 @@ class UsersLogic extends RelationModel
      */
     public function sms_code_verify($mobile,$code,$session_id){
         //判断是否存在验证码
-        $data = M('sms_log')->where(array('mobile'=>$mobile,'session_id'=>$session_id,'code'=>$code))->order('id DESC')->find();
+        $data = M('sms_log') -> where(array('mobile'=>$mobile,'session_id'=>$session_id,'code'=>$code))->order('id DESC')->find();
         if(empty($data))
             return array('status'=>-1,'msg'=>'手机验证码不匹配');
 
@@ -610,7 +610,7 @@ class UsersLogic extends RelationModel
         //验证是否过时
         if((time() - $data['add_time']) > $sms_time_out)
             return array('status'=>-1,'msg'=>'手机验证码超时'); //超时处理
-        M('sms_log')->where(array('mobile'=>$mobile,'session_id'=>$session_id,'code'=>$code))->delete();
+        M('sms_log') -> where(array('mobile'=>$mobile,'session_id'=>$session_id,'code'=>$code))->delete();
         return array('status'=>1,'msg'=>'验证成功');
     }
     

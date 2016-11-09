@@ -104,7 +104,7 @@ class JsSdkLogic extends BaseLogic
         $return = httpRequest($url,'GET');
         $return = json_decode($return,1);
         $web_expires = time() + 7000; // 提前200秒过期
-        M('wx_user')->where(array('id'=>$wechat['id']))->save(array('web_access_token'=>$return['access_token'],'web_expires'=>$web_expires));
+        M('wx_user') -> where(array('id'=>$wechat['id']))->save(array('web_access_token'=>$return['access_token'],'web_expires'=>$web_expires));
         return $return['access_token'];
     }
 

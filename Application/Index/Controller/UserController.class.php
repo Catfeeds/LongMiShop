@@ -35,8 +35,8 @@ class UserController extends IndexBaseController {
         }
         $redirectedUrl = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Index/Index/index");
         $redirectedUrl = !empty($_GET['redirectedUrl']) ? urldecode($_GET['redirectedUrl']) : $redirectedUrl;
-        $this->assign('redirectedUrl',$redirectedUrl);
-        $this->display();
+        $this -> assign('redirectedUrl',$redirectedUrl);
+        $this -> display();
     }
 
     public function doLogin(){
@@ -58,7 +58,7 @@ class UserController extends IndexBaseController {
     public function check_pwd(){
         if(IS_POST){
             $where['mobile'] = I('username');
-            $user = M('users')->where($where)->find();
+            $user = M('users') -> where($where)->find();
             if(!empty($user) && empty($user['password'])){
                 session('forget_mobile',$user['mobile']);
                 session('forget_id',$user['user_id']); //用户id
@@ -102,7 +102,7 @@ class UserController extends IndexBaseController {
             //是否注册
             !empty($data['email']) ? $where['email'] = $data['email'] : '' ; 
             !empty($data['mobile']) ? $where['mobile'] = $data['mobile'] : '';
-            $res = M('users')->where($where)->count();
+            $res = M('users') -> where($where)->count();
             if(empty($res)){
                 $password = $data['password'];
                 $data['password'] = encrypt($data['password']);
@@ -133,24 +133,24 @@ class UserController extends IndexBaseController {
             }
 
         }
-        $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
-        $this->display();
+        $this -> assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
+        $this -> display();
     }
 
     public function coupon(){
         $usersLogic = new \Common\Logic\UsersLogic();
         $result = $usersLogic -> getCoupon( $this->user_id);
-        $this->assign('coupon_list',$result['data']['result']);
-        $this->display();
+        $this -> assign('coupon_list',$result['data']['result']);
+        $this -> display();
     }
 
     public function addressList(){
         $address_lists = get_user_address_list($this->user_id);
         $region_list = get_region_list();
-        $this->assign('region_list',$region_list);
-        $this->assign('lists',$address_lists);
-        $this->assign('active','address_list');
-        $this->display();
+        $this -> assign('region_list',$region_list);
+        $this -> assign('lists',$address_lists);
+        $this -> assign('active','address_list');
+        $this -> display();
     }
 
 
@@ -158,18 +158,18 @@ class UserController extends IndexBaseController {
     public function info(){
         $user_info = $this -> user_info;
         //获取省份
-        $province = M('region')->where(array('parent_id'=>0,'level'=>1))->select();
+        $province = M('region') -> where(array('parent_id'=>0,'level'=>1))->select();
         //获取订单城市
-        $city =  M('region')->where(array('parent_id'=>$user_info['province'],'level'=>2))->select();
+        $city =  M('region') -> where(array('parent_id'=>$user_info['province'],'level'=>2))->select();
         //获取订单地区
-        $area =  M('region')->where(array('parent_id'=>$user_info['city'],'level'=>3))->select();
+        $area =  M('region') -> where(array('parent_id'=>$user_info['city'],'level'=>3))->select();
 
-        $this->assign('province',$province);
-        $this->assign('city',$city);
-        $this->assign('area',$area);
-        $this->assign('sex',C('SEX'));
-        $this->assign('active','info');
-        $this->display();
+        $this -> assign('province',$province);
+        $this -> assign('city',$city);
+        $this -> assign('area',$area);
+        $this -> assign('sex',C('SEX'));
+        $this -> assign('active','info');
+        $this -> display();
     }
 
 
@@ -186,10 +186,10 @@ class UserController extends IndexBaseController {
             }
             $this->success("操作成功");exit;
         }
-        $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
-        $this->assign('formUrl',$formUrl);
-        $this->assign('province',$p);
-        $this->display('addressEdit');
+        $p = M('region') -> where(array('parent_id'=>0,'level'=> 1))->select();
+        $this -> assign('formUrl',$formUrl);
+        $this -> assign('province',$p);
+        $this -> display('addressEdit');
 
     }
 
@@ -203,7 +203,7 @@ class UserController extends IndexBaseController {
         }else{
             $formUrl = U('addressAdd');
         }
-        $address = M('user_address')->where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
+        $address = M('user_address') -> where(array('address_id'=>$id,'user_id'=> $this->user_id))->find();
         if(IS_POST){
             $id = I('post.id');
             $logic = new UsersLogic();
@@ -214,20 +214,20 @@ class UserController extends IndexBaseController {
             $this->success("操作成功");exit;
         }
         //获取省份
-        $p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
-        $c = M('region')->where(array('parent_id'=>$address['province'],'level'=> 2))->select();
-        $d = M('region')->where(array('parent_id'=>$address['city'],'level'=> 3))->select();
+        $p = M('region') -> where(array('parent_id'=>0,'level'=> 1))->select();
+        $c = M('region') -> where(array('parent_id'=>$address['province'],'level'=> 2))->select();
+        $d = M('region') -> where(array('parent_id'=>$address['city'],'level'=> 3))->select();
         if($address['twon']){
-            $e = M('region')->where(array('parent_id'=>$address['district'],'level'=>4))->select();
-            $this->assign('twon',$e);
+            $e = M('region') -> where(array('parent_id'=>$address['district'],'level'=>4))->select();
+            $this -> assign('twon',$e);
         }
-        $this->assign('formUrl',$formUrl);
-        $this->assign('id',$id);
-        $this->assign('province',$p);
-        $this->assign('city',$c);
-        $this->assign('district',$d);
-        $this->assign('address',$address);
-        $this->display();
+        $this -> assign('formUrl',$formUrl);
+        $this -> assign('id',$id);
+        $this -> assign('province',$p);
+        $this -> assign('city',$c);
+        $this -> assign('district',$d);
+        $this -> assign('address',$address);
+        $this -> display();
     }
 
 
@@ -238,8 +238,8 @@ class UserController extends IndexBaseController {
      */
     public function set_default(){
         $id = I('get.id');
-        M('user_address')->where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
-        $row = M('user_address')->where(array('user_id'=>$this->user_id,'address_id'=>$id))->save(array('is_default'=>1));
+        M('user_address') -> where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
+        $row = M('user_address') -> where(array('user_id'=>$this->user_id,'address_id'=>$id))->save(array('is_default'=>1));
         if(!$row)
             $this->error('操作失败');
         $this->success("操作成功");
@@ -251,13 +251,13 @@ class UserController extends IndexBaseController {
     public function del_address(){
         $id = I('get.id');
 
-        $address = M('user_address')->where("address_id = $id")->find();
-        $row = M('user_address')->where(array('user_id'=>$this->user_id,'address_id'=>$id))->delete();
+        $address = M('user_address') -> where("address_id = $id")->find();
+        $row = M('user_address') -> where(array('user_id'=>$this->user_id,'address_id'=>$id))->delete();
         // 如果删除的是默认收货地址 则要把第一个地址设置为默认收货地址
         if($address['is_default'] == 1)
         {
-            $address = M('user_address')->where("user_id = '{$this->user_id}'")->find();
-            M('user_address')->where("address_id = '{$address['address_id']}'")->save(array('is_default'=>1));
+            $address = M('user_address') -> where("user_id = '{$this->user_id}'")->find();
+            M('user_address') -> where("address_id = '{$address['address_id']}'")->save(array('is_default'=>1));
         }
         if(!$row)
             $this->error('操作失败');
@@ -267,7 +267,7 @@ class UserController extends IndexBaseController {
 
     public function payment(){
         $order_id = I('order_id');
-        $order = M('Order')->where(array('order_id' => $order_id,'user_id' => $this->user_id))->find();
+        $order = M('Order') -> where(array('order_id' => $order_id,'user_id' => $this->user_id))->find();
         if( empty($order) ){
             $order_list_url = U("Index/Order/orderList");
             header("Location: $order_list_url");
@@ -277,7 +277,7 @@ class UserController extends IndexBaseController {
             $order_detail_url = U("Index/Order/orderDetail",array('id'=>$order_id));
             header("Location: $order_detail_url");
         }
-        $paymentList = M('Plugin')->where("`type`='payment' and status = 1 and  scene in(0,2)")->select();
+        $paymentList = M('Plugin') -> where("`type`='payment' and status = 1 and  scene in(0,2)")->select();
         $paymentList = convert_arr_key($paymentList, 'code');
 
         $bankCodeList = array();
@@ -290,24 +290,24 @@ class UserController extends IndexBaseController {
             }
         }
         $bank_img = include_once 'Application/Common/Conf/bank.php'; // 银行对应图片
-        $payment = M('Plugin')->where("`type`='payment' and status = 1")->select();
+        $payment = M('Plugin') -> where("`type`='payment' and status = 1")->select();
 
         $orderLogic = new \Common\Logic\OrderLogic();
         $data = $orderLogic -> getOrderGoods($order['order_id']);
-        $this->assign('goodsList',$data['data']);
+        $this -> assign('goodsList',$data['data']);
 
         $region_list = get_region_list();
 
         $buyLLogic = new \Common\Logic\BuyLogic();
         $codeStr = $buyLLogic -> getWeChatCode($order_id);
-        $this->assign('codeStr',$codeStr);
-        $this->assign('paymentList',$paymentList);
-        $this->assign('region_list',$region_list);
-        $this->assign('bank_img',$bank_img);
-        $this->assign('order',$order);
-        $this->assign('bankCodeList',$bankCodeList);
-        $this->assign('pay_date',date('Y-m-d', strtotime("+1 day")));
-        $this->display();
+        $this -> assign('codeStr',$codeStr);
+        $this -> assign('paymentList',$paymentList);
+        $this -> assign('region_list',$region_list);
+        $this -> assign('bank_img',$bank_img);
+        $this -> assign('order',$order);
+        $this -> assign('bankCodeList',$bankCodeList);
+        $this -> assign('pay_date',date('Y-m-d', strtotime("+1 day")));
+        $this -> display();
     }
 
     //昵称修改
@@ -318,10 +318,10 @@ class UserController extends IndexBaseController {
                 $this->error('昵称不能为空',U('/Index/User/edit_name'));
             }
             $data['nickname'] = I('nickname');
-            $res = M('users')->where("user_id = '".$this->user_id."'")->save($data);
+            $res = M('users') -> where("user_id = '".$this->user_id."'")->save($data);
             $res ? $this->success('修改成功',U('/Index/User/info')) : $this->error('修改失败',U('/Index/User/edit_name'));exit;
         }
-        $this->display();
+        $this -> display();
     }
 
     //密码修改
@@ -339,7 +339,7 @@ class UserController extends IndexBaseController {
             }else if($initial_pwd == $password){
                 $this->error('新密码和旧密码一致',U('/Index/User/edit_pwd'));exit;
             }
-            $user = M('users')->field('password')->where("user_id = '".$this->user_id."'")->find();
+            $user = M('users')->field('password') -> where("user_id = '".$this->user_id."'")->find();
             if(encrypt($initial_pwd) != $user['password']){
                 $this->error('旧密码错误',U('/Index/User/edit_pwd'));exit;
             }else{
@@ -354,7 +354,7 @@ class UserController extends IndexBaseController {
                 exit;
             }
         }
-        $this->display();
+        $this -> display();
     }
 
     /*
@@ -392,10 +392,10 @@ class UserController extends IndexBaseController {
             exit;
         }
         $phone = $user_info['mobile'];
-        $this->assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
-        $this->assign('step',$step);
-        $this->assign('phone',$phone);
-        $this->display();
+        $this -> assign('sms_time_out',tpCache('sms.sms_time_out')); // 手机短信超时时间
+        $this -> assign('step',$step);
+        $this -> assign('phone',$phone);
+        $this -> display();
     }
 
     /**
@@ -409,7 +409,7 @@ class UserController extends IndexBaseController {
         if(!$verify->check($code,$id)){
             exit(json_encode(array('status'=>-1,'msg'=>'验证码输入错误')));
         }
-        $user_res = M('users')->where($where)->count();
+        $user_res = M('users') -> where($where)->count();
         if(!empty($user_res)){
             exit(json_encode(array('status'=>-1,'msg'=>'此手机已被注册')));
         }
@@ -430,7 +430,7 @@ class UserController extends IndexBaseController {
         if(!check_mobile($mobile))
             exit(json_encode(array('status'=>-1,'msg'=>'手机号码格式有误')));
         $where['mobile'] = $mobile;
-        $user_res = M('users')->where($where)->find();
+        $user_res = M('users') -> where($where)->find();
         if(!empty($user_res)){
             if($user_res['user_id'] != $this->user_id){
                 exit(json_encode(array('status'=>-1,'msg'=>'此手机已被注册')));
@@ -453,7 +453,7 @@ class UserController extends IndexBaseController {
         if(IS_POST){
             $phone = I('phone');
             $where['mobile'] = $phone;
-            $phone_res  = M('users')->field('user_id,mobile')->where($where)->find();
+            $phone_res  = M('users')->field('user_id,mobile') -> where($where)->find();
 
             if(empty($phone_res)){ //可以更换
                 $res = 1;
@@ -483,8 +483,8 @@ class UserController extends IndexBaseController {
         $userLogic = new UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $email_url = $this->gotomail($user_info['result']['email']); 
-        $this->assign('email_url',$email_url);
-        $this->display();
+        $this -> assign('email_url',$email_url);
+        $this -> display();
     }
 
     //发送邮箱验证
@@ -512,7 +512,7 @@ class UserController extends IndexBaseController {
             
             if($user_info['result']['email_validated'] != 0) { //状态修改为 未验证
                 $datas['email_validated'] = 0;
-                M('users')->where("user_id = '".$user_info['result']['user_id']."'")->save($datas); //验证
+                M('users') -> where("user_id = '".$user_info['result']['user_id']."'")->save($datas); //验证
             }
             if($res){
                 $url = 'http://'.$_SERVER['SERVER_NAME'].U('Index/User/check_email',array('secret_key'=>$secret_key,'user_id'=>$user_info['result']['user_id']));
@@ -538,7 +538,7 @@ class UserController extends IndexBaseController {
     public function check_email(){
         $where['secret_key'] = I('get.secret_key');
         $where['user_id'] = I('get.user_id');
-        $email_res = M('email_log')->where($where)->find();
+        $email_res = M('email_log') -> where($where)->find();
         $valid_time = time() - $email_res['time'];
         if($valid_time > 1800){ //有效时间
             $this->error('链接超过有效期，请重新发送邮件',U('Index/Index/index'));
@@ -547,7 +547,7 @@ class UserController extends IndexBaseController {
             $data['user_id'] = $this->user_id;
             $res = M('users')->save($data); //修改验证字段
             if($res){
-                M('email_log')->where($where)->delete();
+                M('email_log') -> where($where)->delete();
                 $this->success('验证成功',U('Index/User/info'));
             }else{
                 $this->error('验证失败',U('Index/Index/index'));
@@ -568,7 +568,7 @@ class UserController extends IndexBaseController {
 
             $data['email'] = I('email');
             $where['email'] = I('email');
-            $find_res = M('users')->field('user_id,email')->where($where)->find();
+            $find_res = M('users')->field('user_id,email') -> where($where)->find();
             if($find_res['user_id'] == session(__UserID__) ){
                 $this->error('修改邮箱和原邮箱一致');exit;
             }else if(!empty($find_res)){
@@ -588,7 +588,7 @@ class UserController extends IndexBaseController {
             }
 
         }
-        $this->display();
+        $this -> display();
     }
 
 
@@ -677,7 +677,7 @@ class UserController extends IndexBaseController {
 
     /*修改删除文件*/
     public function del_before($id){
-        $res = M('users')->field('head_pic')->where('user_id = '.$id)->find();
+        $res = M('users')->field('head_pic') -> where('user_id = '.$id)->find();
         // $file = './Template/mobile/longmi/Static/images/'.$res['head_pic'];
         unlink($res['head_pic']);//删除
     }

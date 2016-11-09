@@ -8,12 +8,12 @@
            <nav class="navbar navbar-default">	     
 			<div class="collapse navbar-collapse">
                 <div class="navbar-form pull-right margin">
-                      <if condition="$order['order_status'] lt 2">
-                         <a href="{:U('Admin/order/edit_order',array('order_id'=>$order['order_id']))}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="编辑">修改订单</a>
-                      </if>
-                      <if condition="($split eq 1) and ($order['order_status'] lt 2)">
-                         <a href="{:U('Admin/order/split_order',array('order_id'=>$order['order_id']))}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="编辑">拆分订单</a>
-                      </if>
+                      <!--<if condition="$order['order_status'] lt 2">-->
+                         <!--<a href="{:U('Admin/order/edit_order',array('order_id'=>$order['order_id']))}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="编辑">修改订单</a>-->
+                      <!--</if>-->
+                      <!--<if condition="($split eq 1) and ($order['order_status'] lt 2)">-->
+                         <!--<a href="{:U('Admin/order/split_order',array('order_id'=>$order['order_id']))}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="编辑">拆分订单</a>-->
+                      <!--</if>-->
                       <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
                </div>
             </div>
@@ -31,7 +31,6 @@
                         <td>订单 ID:</td>
                         <td>订单号:</td>
                         <td>会员:</td>
-                        <td>E-Mail:</td>
                         <td>电话:</td>
                         <if condition=" !is_supplier() ">
                             <td>应付:</td>
@@ -44,8 +43,7 @@
                     <tr>
                         <td>{$order.order_id}</td>
                         <td>{$order.order_sn}</td>
-                        <td><a href="#" target="_blank">{$order.consignee}</a></td>
-                        <td><a href="#">{$order.email}</a></td>
+                        <td>{$order.consignee}</td>
                         <td>{$order.mobile}</td>
                         <if condition=" !is_supplier() ">
                             <td>{$order.order_amount}</td>
@@ -78,7 +76,6 @@
 					<td>收货人:</td>
 					<td>联系方式:</td>
 					<td>地址:</td>
-					<td>邮编:</td>
 					<td>配送方式:</td>
 			 
                     </tr>
@@ -87,17 +84,7 @@
                         <td>{$order.mobile}</td>
                         <td>{$order.address2}</td>
                         <td>
-                            <if condition="$order.zipcode neq ''">
-                                {$order.zipcode}
-                                <else/>
-                                N
-                            </if>
-                        </td>
-                        <td>
                             {$order.shipping_name}
-                            <if condition="$order[shipping_name]">
-                                <a href="{:U('Admin/Order/shipping_print',array('order_id'=>$order['order_id'],'code'=>$order['shipping_code']))}" target="_blank" class="btn btn-primary input-sm" onclick="">打印快递单</a>
-                            </if>
                         </td>
                       
                     </tr>
@@ -158,9 +145,10 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title text-center">费用信息
-                    <a class="btn btn-primary btn-xs" data-original-title="修改费用" title="" data-toggle="tooltip" href="{:U('Admin/Order/editprice',array('order_id'=>$order['order_id']))}">
-                    <i class="fa fa-pencil"></i>
-                </a></h3>
+                    <!--<a class="btn btn-primary btn-xs" data-original-title="修改费用" title="" data-toggle="tooltip" href="{:U('Admin/Order/editprice',array('order_id'=>$order['order_id']))}">-->
+                        <!--<i class="fa fa-pencil"></i>-->
+                    <!--</a>-->
+                </h3>
             </div>
             <div class="panel-body">
                 <table class="table table-bordered">

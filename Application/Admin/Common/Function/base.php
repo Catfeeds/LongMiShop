@@ -17,7 +17,7 @@ function adminLog($log_info){
 
 
 function getAdminInfo($admin_id){
-    return D('admin')->where("admin_id=$admin_id")->find();
+    return D('admin') -> where("admin_id=$admin_id")->find();
 }
 
 //function tpversion()
@@ -51,8 +51,8 @@ function getAdminInfo($admin_id){
 function navigate_admin()
 {
 
-    $logName = M('admin')->where(array('admin_id'=>session('admin_id')))->find();
-    $role_name = M('admin_role')->field('role_name')->where(array('role_id'=>session('admin_role_id')))->find();
+    $logName = M('admin') -> where(array('admin_id'=>session('admin_id')))->find();
+    $role_name = M('admin_role')->field('role_name') -> where(array('role_id'=>session('admin_role_id')))->find();
     $logName['role_name'] = $role_name['role_name'];
     return $logName;
 
@@ -98,7 +98,7 @@ function format_bytes($size, $delimiter = '') {
  * @param $regionId id
  */
 function getRegionName($regionId){
-    $data = M('region')->where(array('id'=>$regionId))->field('name')->find();
+    $data = M('region') -> where(array('id'=>$regionId))->field('name')->find();
     return $data['name'];
 }
 

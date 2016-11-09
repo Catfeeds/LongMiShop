@@ -19,7 +19,7 @@ class PaymentController extends BaseController {
      */
     public function alipayNotify(){
              
-        $paymentPlugin = M('Plugin')->where("code='alipay' and  type = 'payment' ")->find(); // 找到支付插件的配置
+        $paymentPlugin = M('Plugin') -> where("code='alipay' and  type = 'payment' ")->find(); // 找到支付插件的配置
         $config_value = unserialize($paymentPlugin['config_value']); // 配置反序列化        
         
         require_once("plugins/payment/alipay/app_notify/alipay.config.php");
@@ -46,7 +46,7 @@ class PaymentController extends BaseController {
             {            
                 update_pay_status($order_sn); // 修改订单支付状态                
             }               
-            M('order')->where("order_sn = '$order_sn'")->save(array('pay_code'=>'alipay','pay_name'=>'app支付宝'));
+            M('order') -> where("order_sn = '$order_sn'")->save(array('pay_code'=>'alipay','pay_name'=>'app支付宝'));
 
             echo "success"; //  告诉支付宝支付成功 请不要修改或删除               
         }

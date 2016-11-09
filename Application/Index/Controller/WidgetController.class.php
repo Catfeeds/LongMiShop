@@ -23,19 +23,19 @@ class WidgetController extends IndexBaseController {
 //         if( callbackIsTrue($result) ){
 //            if($result['data']['status'] == 1){
 //                //支付时间
-//                $pay_time = M('order')->field('pay_time')->where("order_id = '".$id."'")->find();
-//                $this->assign('pay_time',$pay_time['pay_time']);
-//                $this->assign('expressData', $result['data']);
+//                $pay_time = M('order')->field('pay_time') -> where("order_id = '".$id."'")->find();
+//                $this -> assign('pay_time',$pay_time['pay_time']);
+//                $this -> assign('expressData', $result['data']);
 //            }else{
-//                $this->assign('expressMessage', $result['data']['message']);
+//                $this -> assign('expressMessage', $result['data']['message']);
 //            }
 //         }else{
-//             $this->assign('expressMessage', $result['msg'] );
+//             $this -> assign('expressMessage', $result['msg'] );
 //         }
         !empty($id) ? $where['id'] = $id : $where['order_id'] =  $orderId;
-        $delivery = M('delivery_doc')->where($where)->limit(1)->find();
+        $delivery = M('delivery_doc') -> where($where)->limit(1)->find();
         if(empty($delivery)){
-            $this->assign('expressMessage', '查询物流失败' );
+            $this -> assign('expressMessage', '查询物流失败' );
         }
         $result = kuaidi($delivery['invoice_no'],$delivery['shipping_name']);
 
@@ -59,25 +59,25 @@ class WidgetController extends IndexBaseController {
                     $notFind = false;
                 }
             }
-            $this->assign('invoice_no', $delivery['invoice_no']);
-            $this->assign('shipping_name', $delivery['shipping_name']);
-            $this->assign('queryUrl',$queryUrl);
-            $this->assign('notFind',$notFind);
-            $this->assign('isNoFindApi',true);
-            $this->display();
+            $this -> assign('invoice_no', $delivery['invoice_no']);
+            $this -> assign('shipping_name', $delivery['shipping_name']);
+            $this -> assign('queryUrl',$queryUrl);
+            $this -> assign('notFind',$notFind);
+            $this -> assign('isNoFindApi',true);
+            $this -> display();
             exit;
         }
 
         if( $result['status'] == 200  ){
 //            dd($result['data']);
             //支付时间
-            $pay_time = M('order')->field('pay_time')->where($where)->find();
-            $this->assign('pay_time',$pay_time['pay_time']);
-            $this->assign('expressData', $result);
-            $this->assign('odd_numbers',$delivery['invoice_no']);
+            $pay_time = M('order')->field('pay_time') -> where($where)->find();
+            $this -> assign('pay_time',$pay_time['pay_time']);
+            $this -> assign('expressData', $result);
+            $this -> assign('odd_numbers',$delivery['invoice_no']);
         }else{
-            $this->assign('expressMessage', $result['message'] );
+            $this -> assign('expressMessage', $result['message'] );
         }
-        $this->display();
+        $this -> display();
     }
 }

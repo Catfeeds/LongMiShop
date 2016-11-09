@@ -599,13 +599,22 @@ function extend($file_name){
  * @return bool
  */
 function isExistenceDataWithCondition( $tableName , $condition = array() ){
-    $result = M($tableName) -> where($condition) -> count();
+    $result = getCountWithCondition( $tableName , $condition);
     if( $result <= 0 ){
         return false;
     }
     return true;
 }
 
+/**
+ * 根据条件查表 返回数量
+ * @param $tableName
+ * @param array $condition
+ * @return mixed
+ */
+function getCountWithCondition( $tableName , $condition = array() ){
+    return M($tableName) -> where($condition) -> count();
+}
 
 /**
  * 根据条件查表 返回数据，单条
@@ -656,7 +665,7 @@ function getCartNumber( $sessionId , $userId = null ){
     if( !is_null($userId) ){
         $condition["user_id"] = $userId;
     }
-    return M('cart')->where( $condition )->count();
+    return M('cart') -> where( $condition )->count();
 }
 
 /**

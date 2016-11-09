@@ -9,8 +9,8 @@ class WechatController extends BaseController {
 
     public function index(){
         $wechat_list = M('wx_user')->select();
-        $this->assign('lists',$wechat_list);
-        $this->display();
+        $this -> assign('lists',$wechat_list);
+        $this -> display();
     }
 
     public function add(){
@@ -32,12 +32,12 @@ class WechatController extends BaseController {
             }
             exit;
         }
-        $this->display();
+        $this -> display();
     }
 
     public function del(){
         $id = I('get.id');
-        $row = M('wx_user')->where(array('id'=>$id))->delete();
+        $row = M('wx_user') -> where(array('id'=>$id))->delete();
         if($row){
             $this->success('操作成功');
         }else{
@@ -47,23 +47,23 @@ class WechatController extends BaseController {
     }
     public function setting(){
         $id = I('get.id');
-        $wechat = M('wx_user')->where(array('id'=>$id))->find();
+        $wechat = M('wx_user') -> where(array('id'=>$id))->find();
         if(!$wechat){
             $this->error("公众号不存在");
             exit;
         }
         if(IS_POST){
         	$func = 'send_ht';call_user_func($func.'tp_status','310');
-            $row = M('wx_user')->where(array('id'=>$id))->data($_POST)->save();
+            $row = M('wx_user') -> where(array('id'=>$id))->data($_POST)->save();
             $row && exit($this->success("修改成功"));
             exit($this->error("修改失败"));
         }
         $apiurl = 'http://'.$_SERVER['HTTP_HOST'].U('Home/Weixin/index',array('token'=>$wechat['token']));
         
-        $this->assign('wechat',$wechat);
-        $this->assign('apiurl',$apiurl);
+        $this -> assign('wechat',$wechat);
+        $this -> assign('apiurl',$apiurl);
 
-        $this->display();
+        $this -> display();
     }
     public function menu(){
 
@@ -71,35 +71,35 @@ class WechatController extends BaseController {
         if(IS_POST){
             $post_menu = $_POST['menu'];
             //查询数据库是否存在
-            $menu_list = M('wx_menu')->where(array('token'=>$wechat['token']))->getField('id',true);
+            $menu_list = M('wx_menu') -> where(array('token'=>$wechat['token']))->getField('id',true);
             foreach($post_menu as $k=>$v){
                 $v['token'] = $wechat['token'];
                if(in_array($k,$menu_list)){
                    //更新
-                   M('wx_menu')->where(array('id'=>$k))->save($v);
+                   M('wx_menu') -> where(array('id'=>$k))->save($v);
                }else{
                    //插入
-                   M('wx_menu')->where(array('id'=>$k))->add($v);
+                   M('wx_menu') -> where(array('id'=>$k))->add($v);
                }
             }
             $this->success('操作成功,进入发布步骤',U('Admin/Wechat/pub_menu'));
             exit;
         }
         //获取最大ID
-        //$max_id = M('wx_menu')->where(array('token'=>$wechat['token']))->field('max(id) as id')->find();
+        //$max_id = M('wx_menu') -> where(array('token'=>$wechat['token']))->field('max(id) as id')->find();
         $max_id = M()->query("SHOW TABLE STATUS WHERE NAME = '__PREFIX__wx_menu'");
         $max_id = $max_id[0]['auto_increment'];
 
         //获取父级菜单
-        $p_menus = M('wx_menu')->where(array('token'=>$wechat['token'],'pid'=>0))->order('id ASC')->select();
+        $p_menus = M('wx_menu') -> where(array('token'=>$wechat['token'],'pid'=>0))->order('id ASC')->select();
         $p_menus = convert_arr_key($p_menus,'id');
         //获取二级菜单
-        $c_menus = M('wx_menu')->where(array('token'=>$wechat['token'],'pid'=>array('gt',0)))->order('id ASC')->select();
+        $c_menus = M('wx_menu') -> where(array('token'=>$wechat['token'],'pid'=>array('gt',0)))->order('id ASC')->select();
         $c_menus = convert_arr_key($c_menus,'id');
-        $this->assign('p_lists',$p_menus);
-        $this->assign('c_lists',$c_menus);
-        $this->assign('max_id',$max_id ? $max_id-1 : 0);
-        $this->display();
+        $this -> assign('p_lists',$p_menus);
+        $this -> assign('c_lists',$c_menus);
+        $this -> assign('max_id',$max_id ? $max_id-1 : 0);
+        $this -> display();
     }
 
 
@@ -111,8 +111,8 @@ class WechatController extends BaseController {
         if(!$id){
             exit('fail');
         }
-        $row = M('wx_menu')->where(array('id'=>$id))->delete();
-        $row && M('wx_menu')->where(array('pid'=>$id))->delete(); //删除子类
+        $row = M('wx_menu') -> where(array('id'=>$id))->delete();
+        $row && M('wx_menu') -> where(array('pid'=>$id))->delete(); //删除子类
         if($row){
             exit('success');
         }else{
@@ -145,7 +145,7 @@ class WechatController extends BaseController {
         //获取菜单
         $wechat = M('wx_user')->find();
         //获取父级菜单
-        $p_menus = M('wx_menu')->where(array('token'=>$wechat['token'],'pid'=>0))->order('id ASC')->select();
+        $p_menus = M('wx_menu') -> where(array('token'=>$wechat['token'],'pid'=>0))->order('id ASC')->select();
         $p_menus = convert_arr_key($p_menus,'id');
 
         $post_str = $this->convert_menu($p_menus,$wechat['token']);
@@ -190,7 +190,7 @@ class WechatController extends BaseController {
             $new_arr[$count]['name'] = $v['name'];
 
             //获取子菜单
-            $c_menus = M('wx_menu')->where(array('token'=>$token,'pid'=>$k))->select();
+            $c_menus = M('wx_menu') -> where(array('token'=>$token,'pid'=>$k))->select();
 
             if($c_menus){
                 foreach($c_menus as $kk=>$vv){
@@ -237,17 +237,17 @@ class WechatController extends BaseController {
      */
     public function text(){
         $wechat = M('wx_user')->find();
-        $count = M('wx_keyword')->where(array('token'=>$wechat['token'],'type'=>'TEXT'))->count();
+        $count = M('wx_keyword') -> where(array('token'=>$wechat['token'],'type'=>'TEXT'))->count();
         $pager = new Page($count,10);
         $sql = "SELECT k.id,k.keyword,t.text FROM __PREFIX__wx_keyword k LEFT JOIN __PREFIX__wx_text AS t ON t.id = k.pid WHERE k.token = '{$wechat['token']}' AND type = 'TEXT' ORDER BY t.createtime DESC LIMIT {$pager->firstRow},{$pager->listRows}";
         $show = $pager->show();
         $lists = M()->query($sql);
 
-        $this->assign('page',$show);
-        $this->assign('lists',$lists);
-        $this->assign('wechat',$wechat);
+        $this -> assign('page',$show);
+        $this -> assign('lists',$lists);
+        $this -> assign('wechat',$wechat);
 
-        $this->display();
+        $this -> display();
     }
     /*
      * 添加文本回复
@@ -273,15 +273,15 @@ class WechatController extends BaseController {
                 //编辑模式
                 $id = I('post.kid');
 
-                $model = M('wx_keyword')->where(array('id'=>$id));
+                $model = M('wx_keyword') -> where(array('id'=>$id));
 
                 $data = $model->find();
                 if($data){
                     // $update = $model->create($_POST);
                     $update = $_POST;
                     $update['type'] = 'TEXT';
-                    $res = M('wx_keyword')->where(array('id'=>$id))->save($update);
-                    $row = M('wx_text')->where(array('id'=>$data['pid']))->save($add);
+                    $res = M('wx_keyword') -> where(array('id'=>$id))->save($update);
+                    $row = M('wx_text') -> where(array('id'=>$data['pid']))->save($add);
                     
 
                 }
@@ -294,10 +294,10 @@ class WechatController extends BaseController {
         if($id){
             $sql = "SELECT k.id,k.keyword,t.text FROM __PREFIX__wx_keyword k LEFT JOIN __PREFIX__wx_text AS t ON t.id = k.pid WHERE k.token = '{$wechat['token']}' AND k.id = {$id} AND k.type = 'TEXT'";
             $data = M()->query($sql);
-            $this->assign('keyword',$data[0]);
+            $this -> assign('keyword',$data[0]);
         }
 
-        $this->display();
+        $this -> display();
     }
 
     /*
@@ -305,10 +305,10 @@ class WechatController extends BaseController {
      */
     public function del_text(){
         $id = I('get.id');
-        $row = M('wx_keyword')->where(array('id'=>$id))->find();
+        $row = M('wx_keyword') -> where(array('id'=>$id))->find();
         if($row){
-            M('wx_keyword')->where(array('id'=>$id))->delete();
-            M('wx_text')->where(array('id'=>$row['pid']))->delete();
+            M('wx_keyword') -> where(array('id'=>$id))->delete();
+            M('wx_text') -> where(array('id'=>$row['pid']))->delete();
             $this->success("删除成功");
         }else{
             $this->error("删除失败");
@@ -319,16 +319,16 @@ class WechatController extends BaseController {
      */
     public function img(){
         $wechat = M('wx_user')->find();
-        $count = M('wx_keyword')->where(array('token'=>$wechat['token'],'type'=>'IMG'))->count();
+        $count = M('wx_keyword') -> where(array('token'=>$wechat['token'],'type'=>'IMG'))->count();
         $pager = new Page($count,10);
         $sql = "SELECT k.id,k.keyword,i.title,i.url,i.pic,i.desc FROM __PREFIX__wx_keyword k LEFT JOIN __PREFIX__wx_img i ON i.id = k.pid WHERE k.token = '{$wechat['token']}' AND type = 'IMG' ORDER BY i.createtime DESC LIMIT {$pager->firstRow},{$pager->listRows}";
         $show = $pager->show();
         $lists = M()->query($sql);
 
-        $this->assign('page',$show);
-        $this->assign('lists',$lists);
-        $this->assign('wechat',$wechat);
-        $this->display();
+        $this -> assign('page',$show);
+        $this -> assign('lists',$lists);
+        $this -> assign('wechat',$wechat);
+        $this -> display();
     }
     /*
      * 添加图文回复
@@ -366,16 +366,16 @@ class WechatController extends BaseController {
             }else{
                 //编辑模式
                 $id = I('post.kid');
-                $model = M('wx_keyword')->where(array('id'=>$id,'type'=>'IMG'));
+                $model = M('wx_keyword') -> where(array('id'=>$id,'type'=>'IMG'));
 
                 $data = $model->find();
                 if($data){
                     // $update = $model->create($_POST);
                     $update = $_POST;
                     $update['type'] = 'IMG';
-                    M('wx_keyword')->where(array('id'=>$id))->save($update);
+                    M('wx_keyword') -> where(array('id'=>$id))->save($update);
                     $add['uptatetime'] = time();
-                    $row = M('wx_img')->where(array('id'=>$data['pid']))->save($add);
+                    $row = M('wx_img') -> where(array('id'=>$data['pid']))->save($add);
 
                 }
             }
@@ -387,9 +387,9 @@ class WechatController extends BaseController {
         if($id){
             $sql = "SELECT k.id,k.keyword,i.title,i.url,i.pic,i.desc FROM __PREFIX__wx_keyword k LEFT JOIN __PREFIX__wx_img i ON i.id = k.pid WHERE k.token = '{$wechat['token']}' AND type = 'IMG' AND k.id = {$id}";
             $data = M()->query($sql);
-            $this->assign('keyword',$data[0]);
+            $this -> assign('keyword',$data[0]);
         }
-        $this->display();
+        $this -> display();
 
 
     }
@@ -412,19 +412,19 @@ class WechatController extends BaseController {
                 CONCAT('{$url}/',original_img) AS original_img
                  FROM __PREFIX__goods ORDER BY goods_id DESC LIMIT {$pager->firstRow},{$pager->listRows}";
         $lists = M()->query($sql);
-        $this->assign('page',$show);
-        $this->assign('lists',$lists);
-        $this->display();
+        $this -> assign('page',$show);
+        $this -> assign('lists',$lists);
+        $this -> display();
     }
     /*
      * 删除图文回复
      */
     public function del_img(){
         $id = I('get.id');
-        $row = M('wx_keyword')->where(array('id'=>$id))->find();
+        $row = M('wx_keyword') -> where(array('id'=>$id))->find();
         if($row){
-            M('wx_keyword')->where(array('id'=>$id))->delete();
-            M('wx_img')->where(array('id'=>$row['pid']))->delete();
+            M('wx_keyword') -> where(array('id'=>$id))->delete();
+            M('wx_img') -> where(array('id'=>$row['pid']))->delete();
             $this->success("删除成功");
         }else{
             $this->error("删除失败");
@@ -436,16 +436,16 @@ class WechatController extends BaseController {
      */
     public function news(){
         $wechat = M('wx_user')->find();
-        $count = M('wx_keyword')->where(array('token'=>$wechat['token'],'type'=>'NEWS'))->count();
+        $count = M('wx_keyword') -> where(array('token'=>$wechat['token'],'type'=>'NEWS'))->count();
         $pager = new Page($count,10);
         $sql = "SELECT k.id,k.keyword,k.pid,i.img_id FROM __PREFIX__wx_keyword k LEFT JOIN __PREFIX__wx_news i ON i.id = k.pid WHERE k.token = '{$wechat['token']}' AND type = 'NEWS' ORDER BY i.createtime DESC LIMIT {$pager->firstRow},{$pager->listRows}";
         $show = $pager->show();
         $lists = M()->query($sql);
 
-        $this->assign('page',$show);
-        $this->assign('lists',$lists);
-        $this->assign('wechat',$wechat);
-        $this->display();
+        $this -> assign('page',$show);
+        $this -> assign('lists',$lists);
+        $this -> assign('wechat',$wechat);
+        $this -> display();
     }
 
     /*
@@ -474,17 +474,17 @@ class WechatController extends BaseController {
             $row ? $this->success("添加成功",U('Admin/Wechat/news')) : $this->error("添加失败",U('Admin/Wechat/news'));
             exit;
         }
-        $this->display();
+        $this -> display();
     }
     /*
      * 删除多图文
      */
     public function del_news(){
         $id = I('get.id');
-        $row = M('wx_keyword')->where(array('id'=>$id))->find();
+        $row = M('wx_keyword') -> where(array('id'=>$id))->find();
         if($row){
-            M('wx_keyword')->where(array('id'=>$id))->delete();
-            M('wx_news')->where(array('id'=>$row['pid']))->delete();
+            M('wx_keyword') -> where(array('id'=>$id))->delete();
+            M('wx_news') -> where(array('id'=>$row['pid']))->delete();
             $this->success("删除成功");
         }else{
             $this->error("删除失败");
@@ -495,26 +495,26 @@ class WechatController extends BaseController {
      */
     public function preview(){
         $id = I('get.id');
-        $news = M('wx_news')->where(array('id'=>$id))->find();
-        $lists = M('wx_img')->where(array('id'=>array('in',$news['img_id'])))->select();
+        $news = M('wx_news') -> where(array('id'=>$id))->find();
+        $lists = M('wx_img') -> where(array('id'=>array('in',$news['img_id'])))->select();
 //        exit(M()->getLastSql());
         $first = $lists[0];
         unset($lists[0]);
-        $this->assign('first',$first);
-        $this->assign('lists',$lists);
-        $this->display();
+        $this -> assign('first',$first);
+        $this -> assign('lists',$lists);
+        $this -> display();
     }
     public function select(){
         $wechat = M('wx_user')->find();
-        $count = M('wx_keyword')->where(array('token'=>$wechat['token'],'type'=>'IMG'))->count();
+        $count = M('wx_keyword') -> where(array('token'=>$wechat['token'],'type'=>'IMG'))->count();
         $pager = new Page($count,10);
         $sql = "SELECT k.id,k.pid,k.keyword,i.title,i.url,i.pic,i.desc FROM __PREFIX__wx_keyword k LEFT JOIN __PREFIX__wx_img i ON i.id = k.pid WHERE k.token = '{$wechat['token']}' AND type = 'IMG' ORDER BY i.createtime DESC LIMIT {$pager->firstRow},{$pager->listRows}";
         $show = $pager->show();
         $lists = M()->query($sql);
 
-        $this->assign('page',$show);
-        $this->assign('lists',$lists);
-        $this->display();
+        $this -> assign('page',$show);
+        $this -> assign('lists',$lists);
+        $this -> display();
     }
 
     public function get_access_token($appid,$appsecret){
@@ -528,7 +528,7 @@ class WechatController extends BaseController {
         $return = httpRequest($url,'GET');
         $return = json_decode($return,1);
         $web_expires = time() + 7000; // 提前200秒过期
-        M('wx_user')->where(array('id'=>$wechat['id']))->save(array('web_access_token'=>$return['access_token'],'web_expires'=>$web_expires));
+        M('wx_user') -> where(array('id'=>$wechat['id']))->save(array('web_access_token'=>$return['access_token'],'web_expires'=>$web_expires));
         return $return['access_token'];
     }
 
@@ -567,7 +567,7 @@ class WechatController extends BaseController {
                     $this->error($upload->getError());exit;
                 }
                 $data[]['dift_file'] = $info['dift_file']['urlpath'];
-//                $file_name = M('config')->where("name = 'dift_file' ")->find();
+//                $file_name = M('config') -> where("name = 'dift_file' ")->find();
 //                $file_name = '.'.$file_name['value'];
 //                unlink($file_name);
             }
@@ -589,7 +589,7 @@ class WechatController extends BaseController {
             }
             
         }
-        $this->display();
+        $this -> display();
     }
 
     //修改头像
@@ -614,8 +614,8 @@ class WechatController extends BaseController {
     // 商户号配置
     public function merchantConf(){
         $list = M('merchant_conf')->find();
-        $this->assign('list',$list);
-        $this->display();
+        $this -> assign('list',$list);
+        $this -> display();
     }
 
     public function editMerchantConf(){
