@@ -39,8 +39,8 @@ class PictureGenerationController extends MobileBaseController {
         imagedestroy($bg);
         $black = imagecolorallocate($im, 115, 115, 115);
         $font = './Template/mobile/longmi/Static/fonts/test.ttf';
-        imagettftext($im, 24, 4, 100, 360, $black, $font, $name);
-        imagettftext($im, 24, 4, 105, 400, $black, $font, $position);
+        imagettftext($im, 24, 5, 100, 360, $black, $font, $name);
+        imagettftext($im, 18, 5, 105, 400, $black, $font, $position);
         imagejpeg($im);
         imagedestroy($im);
         header("content-type:image/jpeg");
