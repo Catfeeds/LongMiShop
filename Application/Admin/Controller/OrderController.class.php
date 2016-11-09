@@ -218,7 +218,7 @@ class OrderController extends BaseController {
             $this -> error('没有此订单');
             exit;
         }
-        $order['goods_list'] = $orderLogic -> getOrderGoods($order_id);
+        $order['goods_list'] = $orderGoods = $orderLogic -> getOrderGoods($order_id);
         $order = setOrderReturnState( $order , $order['user_id'] );
 
         $condition = array();
