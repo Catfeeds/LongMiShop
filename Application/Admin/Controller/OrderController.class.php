@@ -207,26 +207,34 @@ class OrderController extends BaseController {
 		}
     }
 
-    
+    /**
+     * 发货单详情
+     */
     public function delivery_info(){
     	$order_id = I('order_id');
     	$orderLogic = new OrderLogic();
-    	$order = $orderLogic->getOrderInfo($order_id);
-    	$orderGoods = $orderLogic->getOrderGoods($order_id);
-
-    	$this -> assign('orderGoods',$orderGoods);
-        $condition = 'order_id='.$order_id;
-        if(is_supplier()){
-            $condition .= " and admin_id = '".session('admin_id')."'";
-            $order['shipping_price'] =  M('order_goods')->field('goods_postage') -> where(array('order_id'=>$order['order_id'],'admin_id'=>session('admin_id'))) -> sum("goods_postage");
-
+    	$order      = $orderLogic -> getOrderInfo($order_id);
+        if( empty( $order )){
+            $this -> error('没有此订单');
+            exit;
         }
+        $order['goods_list'] = $orderLogic -> getOrderGoods($order_id);
+        $order = setOrderReturnState( $order , $order['user_id'] );
+        dd($order);
 
-		$delivery_record = M('delivery_doc') -> where($condition)->select();
+        $condition = array();
+        $condition['order_id'] = $order_id;
+        if(is_supplier()){
+            $condition['admin_id'] = session('admin_id');
+        }
+		$deliveryRecord = selectDataWithCondition( 'delivery_doc' , $condition );
+
         $expressList = include_once 'Application/Common/Conf/express.php'; //快递名称
-        $this -> assign('expressList',$expressList);
-		$this -> assign('delivery_record',$delivery_record);//发货记录
+
         $this -> assign('order',$order);
+        $this -> assign('orderGoods',$orderGoods);
+        $this -> assign('expressList',$expressList);
+        $this -> assign('delivery_record',$deliveryRecord);//发货记录
     	$this -> display();
     }
 
@@ -416,6 +424,7 @@ class OrderController extends BaseController {
      * @param int $id 订单id
      */
     public function order_print($order_id){
+        exit;
         $orderLogic = new OrderLogic();
         $order = $orderLogic->getOrderInfo($order_id);
         $order['province'] = getRegionName($order['province']);

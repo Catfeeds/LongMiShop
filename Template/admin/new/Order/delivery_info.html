@@ -15,9 +15,9 @@
                <nav class="navbar navbar-default">	     
 				<div class="collapse navbar-collapse">
 	                <div class="navbar-form pull-right margin">
-	                    <a href="{:U('Admin/Order/order_print',array('order_id'=>$order['order_id']))}" target="_blank" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="打印订单">
-	                        <i class="fa fa-print"></i>打印订单
-	                    </a>
+	                    <!--<a href="{:U('Admin/Order/order_print',array('order_id'=>$order['order_id']))}" target="_blank" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="打印订单">-->
+	                        <!--<i class="fa fa-print"></i>打印订单-->
+	                    <!--</a>-->
 	                    <a href="{:U('Admin/Order/delivery_list')}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
 	               </div>
 	            </div>
@@ -52,21 +52,13 @@
                         <td class="text-center">{$order.consignee}</td>
                         <td class="text-right">电话:</td>
                         <td class="text-center">{$order.mobile}</td>
-                        <!--<td class="text-right">电子邮件:</td>-->
-                        <!--<td class="text-center">{$order.email}</td>-->
                     </tr>
                     <tr>
                         <td class="text-right">地址:</td>
                         <td class="text-center">{$order.address2}</td>
-                        <!--<td class="text-right">邮编:</td>-->
-                        <!--<td class="text-center">{$order.zipcode}</td>-->
                     </tr>
-                    <!--<tr>-->
-                        <!--<td class="text-right">电话:</td>-->
-                        <!--<td class="text-center">{$order.mobile}</td>-->
-                        <!--<td colspan="2"></td>-->
-                    <!--</tr>-->
-                    </tbody></table>
+                    </tbody>
+                </table>
 
             </div>
         </div>
@@ -96,13 +88,21 @@
                             <td class="text-left">{$good.goods_num}</td>
                             <td class="text-right">{$good.goods_price}</td>
                             <td class="text-right">
-                            	<if condition="$good['is_send'] eq 1">
-                            		已发货
-                                    <else />
-                                    <if condition=" !is_supplier() and $good['admin_id'] neq 0">
-                                        供应商商品
-                                        <else />
-                                        <input type="checkbox" name="goods[]" value="{$good.rec_id}" checked="checked" >
+                                <if condition = "$good['isReturn'] neq 0 ">
+                                    退货中
+                                <else />
+                                    <if condition="$good['is_send'] eq 1">
+                                        已发货
+                                    </if>
+                                    <if condition="$good['is_send'] eq 2 and $good['is_send'] eq 3">
+                                        已退货
+                                    </if>
+                                    <if condition="$good['is_send'] eq 0">
+                                        <if condition="  !is_supplier() and $good['admin_id'] neq 0">
+                                            供应商商品
+                                            <else />
+                                            <input type="checkbox" name="goods[]" value="{$good.rec_id}" checked="checked" >
+                                        </if>
                                     </if>
                                 </if>
                             </td>
