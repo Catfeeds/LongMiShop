@@ -362,12 +362,12 @@ function update_pay_status($order_sn,$pay_status = 1)
  */
 function setOrderReturnState( $orderInfo , $userId ){
     $goodsList = $orderInfo['goods_list'];
-    if( empty($orderInfo) ){
+    if( empty( $goodsList ) ){
         return $orderInfo;
     }
     $goodsCount  = count( $goodsList );
     $returnCount = 0;
-    $isEetreats = 0;
+    $isRetreats  = 0;
     foreach ( $goodsList as $key => $goodsItem ){
         $where = array();
         $where['order_id']  = $goodsItem['order_id'];
@@ -383,14 +383,14 @@ function setOrderReturnState( $orderInfo , $userId ){
             $returnCount ++;
         }
         if($goodsList[$key]['isReturnPass'] !=0 || $goodsList[$key]['isReturn'] != 0 ){
-            $isEetreats++;
+            $isRetreats++;
         }
     }
     if( $returnCount != 0 ){
         $orderInfo['isReturn'] = true;
     }
-    if( $isEetreats == $goodsCount ){
-        $orderInfo['isEetreats'] = true;
+    if( $isRetreats == $goodsCount ){
+        $orderInfo['isRetreats'] = true;
     }
     $orderInfo['goods_list'] = $goodsList;
     return $orderInfo;
