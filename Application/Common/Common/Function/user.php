@@ -23,8 +23,8 @@ function getUserHeadImg( $userId = null ){
  * @return bool
  */
 function push_message_time( $user_id ){
-    $usr_time = M('push_message')->field('end_time')->where("user_id = '".$user_id."'")->find();
-    $art_time = M('article')->field('publish_time')->where('is_open = 1 AND  device_type != 1 ')->order('publish_time DESC')->limit(1)->find();
+    $usr_time = M('push_message')->field('end_time') -> where("user_id = '".$user_id."'")->find();
+    $art_time = M('article')->field('publish_time') -> where('is_open = 1 AND  device_type != 1 ')->order('publish_time DESC')->limit(1)->find();
     if($art_time['publish_time'] > $usr_time['end_time']){
     	return true;
     }else{
@@ -212,7 +212,7 @@ function loginFromOpenid( $openid ){
         }
         session('auth',true);
         session(__UserID__,$userId);
-        M('cart')->where(" user_id = 0  and session_id = '".session_id()."'")->save(array('user_id'=>$userInfo["user_id"]));
+        M('cart') -> where(" user_id = 0  and session_id = '".session_id()."'")->save(array('user_id'=>$userInfo["user_id"]));
         return callback(true,'登录成功');
     }
     return callback(false,'账号不存在或者异常被锁定');
@@ -232,7 +232,7 @@ function loginBindingCurrentAccount( $userId ){
     $loginUserId = $bindingInfo['current_user_id'];
     session('auth',true);
     session(__UserID__,$loginUserId);
-    M('cart')->where(" user_id = 0  and session_id = '".session_id()."'")->save(array('user_id'=>$loginUserId));
+    M('cart') -> where(" user_id = 0  and session_id = '".session_id()."'")->save(array('user_id'=>$loginUserId));
 
 }
 

@@ -200,7 +200,7 @@ class BuyLogic extends BaseLogic
         if( is_null($this -> userId) ){
             throw new \Exception('登录超时请重新登录');
         }
-        $this -> user =  M('users')->where("user_id = '{$this->userId}'")->find();
+        $this -> user =  M('users') -> where("user_id = '{$this->userId}'")->find();
         if( empty($this -> user) ){
             throw new \Exception('用户信息出错！');
         }
@@ -280,11 +280,11 @@ class BuyLogic extends BaseLogic
         if( is_null($this -> userId) ){
             throw new \Exception('登录超时请重新登录');
         }
-        $this -> user =  M('users')->where("user_id = '{$this->userId}'")->find();
+        $this -> user =  M('users') -> where("user_id = '{$this->userId}'")->find();
         if( empty($this -> user) ){
             throw new \Exception('用户信息出错！');
         }
-        $this -> _post_data['address'] = M('UserAddress')->where("address_id = '$address_id'")->find();
+        $this -> _post_data['address'] = M('UserAddress') -> where("address_id = '$address_id'")->find();
         if( empty($this -> _post_data['address'] ) ){
             throw new \Exception('收货人信息有误！');
         }
@@ -323,7 +323,7 @@ class BuyLogic extends BaseLogic
                 throw new \Exception('你的购物车没有选中商品！');
             }
 
-            $order_goods = M('cart')->where("user_id = '{$this->userId}' and selected = 1")->select();
+            $order_goods = M('cart') -> where("user_id = '{$this->userId}' and selected = 1")->select();
             if(empty($order_goods)){
                 throw new \Exception('商品列表不能为空！');
             }
@@ -344,7 +344,7 @@ class BuyLogic extends BaseLogic
         $couponInfo_list =  $this -> _post_data['couponInfo'];
 
         $goods_id_arr = get_arr_column($order_goods,'goods_id');
-        $goods_arr = M('goods')->where("goods_id in(".  implode(',',$goods_id_arr).")")->getField('goods_id,weight,market_price,is_free_shipping'); // 商品id 和重量对应的键值对
+        $goods_arr = M('goods') -> where("goods_id in(".  implode(',',$goods_id_arr).")")->getField('goods_id,weight,market_price,is_free_shipping'); // 商品id 和重量对应的键值对
 
         foreach($order_goods as $key => $val)
         {
@@ -377,7 +377,7 @@ class BuyLogic extends BaseLogic
         $region_list = get_region_list();
         $addRess = $this -> _post_data['address'];
         foreach($order_goods as $key => $item){
-                $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '".$item['goods_id']."'")->find();
+                $goods_res = M('goods')->field('weight,delivery_way') -> where("goods_id = '".$item['goods_id']."'")->find();
                 $goods_data[$key]['spec_key'] = $item['spec_key']; //商品规格
                 $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
                 $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
@@ -432,7 +432,7 @@ class BuyLogic extends BaseLogic
 
 
         // 仿制灌水 1天只能下 50 单  // select * from `tp_order` where user_id = 1  and order_sn like '20151217%'
-        $order_count = M('Order')->where("user_id= '{$this->userId}' and order_sn like '" . date('Ymd') . "%'")->count();
+        $order_count = M('Order') -> where("user_id= '{$this->userId}' and order_sn like '" . date('Ymd') . "%'")->count();
         if ($order_count >= 50){
             throw new \Exception('一天只能下50个订单！');
         }
@@ -442,9 +442,9 @@ class BuyLogic extends BaseLogic
         $car_price = $this -> _post_data['carPrice'];
 
         //查询配送id
-        $delivery_way = M('goods')->field('delivery_way')->where("goods_id = '".$this -> _post_data['orderGoods'][0]['goods_id']."'")->find();
+        $delivery_way = M('goods')->field('delivery_way') -> where("goods_id = '".$this -> _post_data['orderGoods'][0]['goods_id']."'")->find();
         //查询配送名字
-        $logistics = M('logistics')->field('log_delivery')->where("log_id = '".$delivery_way['delivery_way']."'")->find();
+        $logistics = M('logistics')->field('log_delivery') -> where("log_id = '".$delivery_way['delivery_way']."'")->find();
         !empty($logistics) ? $logistics   : $logistics = '';
         //判断发票类型
         $invoice_title = $this -> _post_data['invoice_title'] == 1 ?  '个人' : $this -> _post_data['invoice'];
@@ -485,7 +485,7 @@ class BuyLogic extends BaseLogic
         // 记录订单操作日志
         logOrder($order_id,'您提交了订单，请等待系统确认','提交订单',$user_id);
 
-        $order = M('Order')->where("order_id = $order_id")->find();
+        $order = M('Order') -> where("order_id = $order_id")->find();
 
         $cartList = $this -> _post_data['orderGoods'];
 
@@ -493,7 +493,7 @@ class BuyLogic extends BaseLogic
         foreach($cartList as $key => $val)
         {
             $adminListArray[$val['admin_id']] = $val['admin_id'];
-            $goods = M('goods')->where("goods_id = {$val['goods_id']} ")->find();
+            $goods = M('goods') -> where("goods_id = {$val['goods_id']} ")->find();
             $data2['order_id']           = $order_id; // 订单id
             $data2['admin_id']           = $val['admin_id']; // 供应商id
             $data2['goods_id']           = $val['goods_id']; // 商品id
@@ -519,8 +519,8 @@ class BuyLogic extends BaseLogic
         $adminListString = implode("][" ,$adminListArray );
         $adminListString = "[".$adminListString."]";
         //订单供应商
-        M('order')->where(array("order_id" =>$order_id )) -> save(array("admin_list" => $adminListString));
-        M('Cart')->where("user_id = '$user_id' and selected = 1")->delete();
+        M('order') -> where(array("order_id" =>$order_id )) -> save(array("admin_list" => $adminListString));
+        M('Cart') -> where("user_id = '$user_id' and selected = 1")->delete();
 
         $data4['user_id'] = $user_id;
         $data4['user_money'] = -$car_price['balance'];
@@ -605,9 +605,9 @@ class BuyLogic extends BaseLogic
         C('TOKEN_ON',false);
         header("Content-type:text/html;charset=utf-8");
         // 修改订单的支付方式
-        $payment_arr = M('Plugin')->where("`type` = 'payment'")->getField("code,name");
-        M('order')->where("order_id = $orderId")->save(array('pay_code'=>$payCode,'pay_name'=>$payment_arr[$payCode]));
-        $order = M('order')->where("order_id = $orderId")->find();
+        $payment_arr = M('Plugin') -> where("`type` = 'payment'")->getField("code,name");
+        M('order') -> where("order_id = $orderId")->save(array('pay_code'=>$payCode,'pay_name'=>$payment_arr[$payCode]));
+        $order = M('order') -> where("order_id = $orderId")->find();
         $pay_radio = "pay_code";
         $config_value = parse_url_param($pay_radio);
         $code_str = $payment->get_code($order,$config_value);
@@ -624,7 +624,7 @@ class BuyLogic extends BaseLogic
     public function getOrderPromotion($order_amount){
         $parse_type = array('0'=>'满额打折','1'=>'满额优惠金额','2'=>'满额送倍数积分','3'=>'满额送优惠券','4'=>'满额免运费');
         $now = $this -> nowTime;
-        $prom = M('prom_order')->where("type<2 and end_time>$now and start_time<$now and money<=$order_amount")->order('money desc')->find();
+        $prom = M('prom_order') -> where("type<2 and end_time>$now and start_time<$now and money<=$order_amount")->order('money desc')->find();
         $res = array('order_amount'=>$order_amount,'order_prom_id'=>0,'order_prom_amount'=>0);
         if($prom){
             if($prom['type'] == 0){

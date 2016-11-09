@@ -7,12 +7,12 @@ class IndexController extends BaseController {
         $this->pushVersion();
         $act_list = session('act_list');
         $menu_list = $this->getRoleMenu($act_list);
-        $this->assign('menu_list',$menu_list);
+        $this -> assign('menu_list',$menu_list);
         $admin_info = getAdminInfo(session('admin_id'));
-		$order_amount = M('order')->where("order_status=0 and (pay_status=1 or pay_code='cod')")->count();
-		$this->assign('order_amount',$order_amount);
-		$this->assign('admin_info',$admin_info);
-        $this->display();
+		$order_amount = M('order') -> where("order_status=0 and (pay_status=1 or pay_code='cod')")->count();
+		$this -> assign('order_amount',$order_amount);
+		$this -> assign('admin_info',$admin_info);
+        $this -> display();
     }
    
     public function welcome(){
@@ -39,16 +39,16 @@ class IndexController extends BaseController {
 
 
         $whereOrder .= "  `order_status` = 1 AND `pay_status` = 1 AND `shipping_status` <> 1 AND ".$where;
-        $count['not']  = M('order')->where($whereOrder)->count(); //待发货
-        $count['return'] = M('return_goods')->where("   1 = 1  and status = '0'  ".$returnWhere)->count(); //退货
+        $count['not']  = M('order') -> where($whereOrder)->count(); //待发货
+        $count['return'] = M('return_goods') -> where("   1 = 1  and status = '0'  ".$returnWhere)->count(); //退货
         $count['member']  = M('users')->count();
 
         $yesterdayTime = strtotime(date('Y-m-d',strtotime("-1 day")));
         $today = date('Y-m-d ')."00:00:00";
         $todayTime = strtotime($today);
         $where .= " AND add_time > ".$yesterdayTime." AND add_time < ".$todayTime."";
-        $count['yesterday'] = M('order')->where($where)->count(); //昨天订单
-        $money = M('order')->field("SUM(order_amount) as money")->where($where)->find(); //昨天金额
+        $count['yesterday'] = M('order') -> where($where)->count(); //昨天订单
+        $money = M('order')->field("SUM(order_amount) as money") -> where($where)->find(); //昨天金额
         $count['moneySum'] = explode(".", $money['money']);
         if( empty( $count['moneySum'][0] ) && empty( $count['moneySum'][1] ) ){
             $count['moneySum'][0] = 0;
@@ -94,14 +94,14 @@ class IndexController extends BaseController {
         }
 
 
-        $this->assign('count',$count);
-        $this->display();
+        $this -> assign('count',$count);
+        $this -> display();
     }
 
     public function map(){
     	$all_menu = $this->getRoleMenu('all');
-    	$this->assign('all_menu',$all_menu);
-    	$this->display();
+    	$this -> assign('all_menu',$all_menu);
+    	$this -> display();
     }
     
     public function get_sys_info(){
@@ -157,7 +157,7 @@ class IndexController extends BaseController {
     public function getRoleMenu($act_list)
     {
     	$modules = $roleMenu = array();
-    	$rs = M('system_module')->where('level>1 AND visible=1')->order('mod_id ASC') ->select();
+    	$rs = M('system_module') -> where('level>1 AND visible=1')->order('mod_id ASC') ->select();
 //dd($rs);
         $pmenu = array();
     	if($act_list=='all'){
@@ -207,7 +207,7 @@ class IndexController extends BaseController {
             $id_value = I('id_value'); // 表主键id值
             $field  = I('field'); // 修改哪个字段
             $value  = I('value'); // 修改字段值                        
-            M($table)->where("$id_name = $id_value")->save(array($field=>$value)); // 根据条件保存修改的数据
+            M($table) -> where("$id_name = $id_value")->save(array($field=>$value)); // 根据条件保存修改的数据
     }	    
 
 }

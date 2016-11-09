@@ -46,10 +46,10 @@ class PaymentController extends IndexBaseController {
 
         $order_id = I('order_id'); // 订单id
         // 修改订单的支付方式
-        $payment_arr = M('Plugin')->where("`type` = 'payment'")->getField("code,name");
-        M('order')->where("order_id = $order_id")->save(array('pay_code'=>$this->payCode,'pay_name'=>$payment_arr[$this->payCode]));
+        $payment_arr = M('Plugin') -> where("`type` = 'payment'")->getField("code,name");
+        M('order') -> where("order_id = $order_id")->save(array('pay_code'=>$this->payCode,'pay_name'=>$payment_arr[$this->payCode]));
 
-        $order = M('order')->where("order_id = $order_id")->find();
+        $order = M('order') -> where("order_id = $order_id")->find();
 
         // tpshop 订单支付提交
         $pay_radio = I('pay_radio');
@@ -60,9 +60,9 @@ class PaymentController extends IndexBaseController {
             $code_str = $this->payment->getJSAPI($order,$config_value);
             exit($code_str);
         }
-        $this->assign('code_str', $code_str);
-        $this->assign('order_id', $order_id);
-        $this->display('payment');  // 分跳转 和不 跳转
+        $this -> assign('code_str', $code_str);
+        $this -> assign('order_id', $order_id);
+        $this -> display('payment');  // 分跳转 和不 跳转
     }
 
 
@@ -75,8 +75,8 @@ class PaymentController extends IndexBaseController {
     // 页面跳转
     public function returnUrl(){
         $result = $this->payment->respond2(); // $result['order_sn'] = '201512241425288593';
-        $order = M('order')->where("order_sn = '{$result['order_sn']}'")->find();
-        $this->assign('order', $order);
+        $order = M('order') -> where("order_sn = '{$result['order_sn']}'")->find();
+        $this -> assign('order', $order);
         if($result['status'] == 1){
             header("Location: ".U('Index/Order/orderList'));
         }else{

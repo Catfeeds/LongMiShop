@@ -22,17 +22,17 @@ class ServiceController extends IndexBaseController {
      * 售后列表
      */
     public function returnGoodsList(){
-        $count = M('return_goods')->where("user_id = '{$this->user_id}'") -> count();
+        $count = M('return_goods') -> where("user_id = '{$this->user_id}'") -> count();
         $page = new Page($count,10);
-        $list = M('return_goods')->where("user_id = '{$this->user_id}'") -> order("id desc")->limit("{$page->firstRow},{$page->listRows}")->select();
+        $list = M('return_goods') -> where("user_id = '{$this->user_id}'") -> order("id desc")->limit("{$page->firstRow},{$page->listRows}")->select();
         $goods_id_arr = get_arr_column($list, 'goods_id');
         $goodsList = array();
         if(!empty($goods_id_arr)){
-            $goodsList = M('goods')->where("goods_id in (".  implode(',',$goods_id_arr).")")->getField('goods_id,goods_name');
+            $goodsList = M('goods') -> where("goods_id in (".  implode(',',$goods_id_arr).")")->getField('goods_id,goods_name');
         }
         $this -> assign('goodsList', $goodsList);
         $this -> assign('lists', $list);
-        $this -> assign('page', $page->show());// 赋值分页输出
+        $this -> assign('page', $page -> show());// 赋值分页输出
         $this -> display();
     }
 
@@ -76,7 +76,7 @@ class ServiceController extends IndexBaseController {
         }
         $data = $orderLogic -> getOrderGoods($orderInfo['order_id']);
 //        dd($data);
-//        $goodsList = M('return_goods')->where("order_id = '{$orderInfo['order_id']}' and result != '2' ")->select();//getField('goods_id,goods_id');
+//        $goodsList = M('return_goods') -> where("order_id = '{$orderInfo['order_id']}' and result != '2' ")->select();//getField('goods_id,goods_id');
         foreach ($data['data'] as $key => $dataItem){
             $condition = array(
                 "order_id" => $dataItem['order_id'],

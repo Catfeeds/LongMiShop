@@ -6,7 +6,7 @@ use Think\Page;
 use Think\Verify;
 class GoodsController extends BaseController {
     public function index(){      
-        $this->display();
+        $this -> display();
     }
    /**
     * 商品详情页
@@ -16,41 +16,41 @@ class GoodsController extends BaseController {
         C('TOKEN_ON',true);        
         $goodsLogic = new \Common\Logic\GoodsLogic();
         $goods_id = I("get.id");
-        $goods = M('Goods')->where("goods_id = $goods_id")->find();
+        $goods = M('Goods') -> where("goods_id = $goods_id")->find();
         if(empty($goods) || ($goods['is_on_sale'] == 0)){
         	$this->error('该商品已经下架',U('Index/index'));
         }
         if($goods['brand_id']){
-            $brnad = M('brand')->where("id =".$goods['brand_id'])->find();
+            $brnad = M('brand') -> where("id =".$goods['brand_id'])->find();
             $goods['brand_name'] = $brnad['name'];
         }
-        $goods_images_list = M('GoodsImages')->where("goods_id = $goods_id")->select(); // 商品 图册        
+        $goods_images_list = M('GoodsImages') -> where("goods_id = $goods_id")->select(); // 商品 图册
         $goods_attribute = M('GoodsAttribute')->getField('attr_id,attr_name'); // 查询属性
-        $goods_attr_list = M('GoodsAttr')->where("goods_id = $goods_id")->select(); // 查询商品属性表                        
+        $goods_attr_list = M('GoodsAttr') -> where("goods_id = $goods_id")->select(); // 查询商品属性表
 		$filter_spec = $goodsLogic->get_spec($goods_id);
                 
         //商品是否正在促销中        
         if($goods['prom_type'] == 1)
         {
             $goods['flash_sale'] = get_goods_promotion($goods['goods_id']);                        
-            $flash_sale = M('flash_sale')->where("id = {$goods['prom_id']}")->find();
-            $this->assign('flash_sale',$flash_sale);
+            $flash_sale = M('flash_sale') -> where("id = {$goods['prom_id']}")->find();
+            $this -> assign('flash_sale',$flash_sale);
         } 
         
-        $spec_goods_price  = M('spec_goods_price')->where("goods_id = $goods_id")->getField("key,price,store_count"); // 规格 对应 价格 库存表
-        M('Goods')->where("goods_id=$goods_id")->save(array('click_count'=>$goods['click_count']+1 )); //统计点击数
+        $spec_goods_price  = M('spec_goods_price') -> where("goods_id = $goods_id")->getField("key,price,store_count"); // 规格 对应 价格 库存表
+        M('Goods') -> where("goods_id=$goods_id")->save(array('click_count'=>$goods['click_count']+1 )); //统计点击数
         $commentStatistics = $goodsLogic->commentStatistics($goods_id);// 获取某个商品的评论统计     
-        $this->assign('spec_goods_price', json_encode($spec_goods_price,true)); // 规格 对应 价格 库存表
-        $this->assign('navigate_goods',navigate_goods($goods_id,1));// 面包屑导航 
-        $this->assign('commentStatistics',$commentStatistics);//评论概览
-        $this->assign('goods_attribute',$goods_attribute);//属性值     
-        $this->assign('goods_attr_list',$goods_attr_list);//属性列表
-        $this->assign('filter_spec',$filter_spec);//规格参数
-        $this->assign('goods_images_list',$goods_images_list);//商品缩略图
-        $this->assign('siblings_cate',$goodsLogic->get_siblings_cate($goods['cat_id']));//相关分类
-        $this->assign('look_see',$goodsLogic->get_look_see($goods));//看了又看      
-        $this->assign('goods',$goods);
-        $this->display();
+        $this -> assign('spec_goods_price', json_encode($spec_goods_price,true)); // 规格 对应 价格 库存表
+        $this -> assign('navigate_goods',navigate_goods($goods_id,1));// 面包屑导航
+        $this -> assign('commentStatistics',$commentStatistics);//评论概览
+        $this -> assign('goods_attribute',$goods_attribute);//属性值
+        $this -> assign('goods_attr_list',$goods_attr_list);//属性列表
+        $this -> assign('filter_spec',$filter_spec);//规格参数
+        $this -> assign('goods_images_list',$goods_images_list);//商品缩略图
+        $this -> assign('siblings_cate',$goodsLogic->get_siblings_cate($goods['cat_id']));//相关分类
+        $this -> assign('look_see',$goodsLogic->get_look_see($goods));//看了又看
+        $this -> assign('goods',$goods);
+        $this -> display();
     }
     
     /**
@@ -86,13 +86,13 @@ class GoodsController extends BaseController {
         $goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
         
         // 分类菜单显示
-        $goodsCate = M('GoodsCategory')->where("id = $id")->find();// 当前分类
+        $goodsCate = M('GoodsCategory') -> where("id = $id")->find();// 当前分类
         //($goodsCate['level'] == 1) && header('Location:'.U('Home/Channel/index',array('cat_id'=>$id))); //一级分类跳转至大分类馆
         $cateArr = $goodsLogic->get_goods_cate($goodsCate); 
          
         // 帅选 品牌 规格 属性 价格
         $cat_id_arr = getCatGrandson ($id);
-        $filter_goods_id = M('goods')->where("is_on_sale=1 and cat_id in(".  implode(',', $cat_id_arr).")")->cache(true)->getField("goods_id",true);      
+        $filter_goods_id = M('goods') -> where("is_on_sale=1 and cat_id in(".  implode(',', $cat_id_arr).")")->cache(true)->getField("goods_id",true);
  
         // 过滤帅选的结果集里面找商品        
         if($brand_id || $price)// 品牌或者价格
@@ -121,28 +121,28 @@ class GoodsController extends BaseController {
         $page = new Page($count,40);
         if($count > 0)
         {
-            $goods_list = M('goods')->where("goods_id in (".  implode(',', $filter_goods_id).")")->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows)->select();
+            $goods_list = M('goods') -> where("goods_id in (".  implode(',', $filter_goods_id).")")->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows)->select();
             $filter_goods_id2 = get_arr_column($goods_list, 'goods_id');
             if($filter_goods_id2)
-            $goods_images = M('goods_images')->where("goods_id in (".  implode(',', $filter_goods_id2).")")->cache(true)->select();       
+            $goods_images = M('goods_images') -> where("goods_id in (".  implode(',', $filter_goods_id2).")")->cache(true)->select();
         }
         // print_r($filter_menu);         
-        $goods_category = M('goods_category')->where('is_show=1')->cache(true)->getField('id,name,parent_id,level'); // 键值分类数组
+        $goods_category = M('goods_category') -> where('is_show=1')->cache(true)->getField('id,name,parent_id,level'); // 键值分类数组
         $navigate_cat = navigate_goods($id); // 面包屑导航         
-        $this->assign('goods_list',$goods_list);
-        $this->assign('navigate_cat',$navigate_cat);
-        $this->assign('goods_category',$goods_category);                
-        $this->assign('goods_images',$goods_images);  // 相册图片
-        $this->assign('filter_menu',$filter_menu);  // 帅选菜单
-        $this->assign('filter_spec',$filter_spec);  // 帅选规格
-        $this->assign('filter_attr',$filter_attr);  // 帅选属性
-        $this->assign('filter_brand',$filter_brand);  // 列表页帅选属性 - 商品品牌
-        $this->assign('filter_price',$filter_price);// 帅选的价格期间
-        $this->assign('goodsCate',$goodsCate);
-        $this->assign('cateArr',$cateArr);
-        $this->assign('filter_param',$filter_param); // 帅选条件
-        $this->assign('cat_id',$id);
-        $this->assign('page',$page);// 赋值分页输出
+        $this -> assign('goods_list',$goods_list);
+        $this -> assign('navigate_cat',$navigate_cat);
+        $this -> assign('goods_category',$goods_category);
+        $this -> assign('goods_images',$goods_images);  // 相册图片
+        $this -> assign('filter_menu',$filter_menu);  // 帅选菜单
+        $this -> assign('filter_spec',$filter_spec);  // 帅选规格
+        $this -> assign('filter_attr',$filter_attr);  // 帅选属性
+        $this -> assign('filter_brand',$filter_brand);  // 列表页帅选属性 - 商品品牌
+        $this -> assign('filter_price',$filter_price);// 帅选的价格期间
+        $this -> assign('goodsCate',$goodsCate);
+        $this -> assign('cateArr',$cateArr);
+        $this -> assign('filter_param',$filter_param); // 帅选条件
+        $this -> assign('cat_id',$id);
+        $this -> assign('page',$page);// 赋值分页输出
         C('TOKEN_ON',false);
         $html = $this->fetch();        
         S($key,$html);
@@ -181,12 +181,12 @@ class GoodsController extends BaseController {
             $where .= " and cat_id in(".  implode(',', $cat_id_arr).")";
         }
         
-        $search_goods = M('goods')->where($where)->getField('goods_id,cat_id');
+        $search_goods = M('goods') -> where($where)->getField('goods_id,cat_id');
         $filter_goods_id = array_keys($search_goods);                
         $filter_cat_id = array_unique($search_goods); // 分类需要去重
         if($filter_cat_id)        
         {
-            $cateArr = M('goods_category')->where("id in(".implode(',', $filter_cat_id).")")->select();            
+            $cateArr = M('goods_category') -> where("id in(".implode(',', $filter_cat_id).")")->select();
             $tmp = $filter_param;
             foreach($cateArr as $k => $v)            
             {
@@ -209,23 +209,23 @@ class GoodsController extends BaseController {
         $page = new Page($count,20);
         if($count > 0)
         {
-            $goods_list = M('goods')->where("is_on_sale=1 and goods_id in (".  implode(',', $filter_goods_id).")")->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows)->select();
+            $goods_list = M('goods') -> where("is_on_sale=1 and goods_id in (".  implode(',', $filter_goods_id).")")->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows)->select();
             $filter_goods_id2 = get_arr_column($goods_list, 'goods_id');
             if($filter_goods_id2)
-            $goods_images = M('goods_images')->where("goods_id in (".  implode(',', $filter_goods_id2).")")->select();       
+            $goods_images = M('goods_images') -> where("goods_id in (".  implode(',', $filter_goods_id2).")")->select();
         }    
                 
-        $this->assign('goods_list',$goods_list);  
-        $this->assign('goods_images',$goods_images);  // 相册图片
-        $this->assign('filter_menu',$filter_menu);  // 帅选菜单
-        $this->assign('filter_brand',$filter_brand);  // 列表页帅选属性 - 商品品牌
-        $this->assign('filter_price',$filter_price);// 帅选的价格期间
-        $this->assign('cateArr',$cateArr);
-        $this->assign('filter_param',$filter_param); // 帅选条件
-        $this->assign('cat_id',$id);
-        $this->assign('page',$page);// 赋值分页输出
+        $this -> assign('goods_list',$goods_list);
+        $this -> assign('goods_images',$goods_images);  // 相册图片
+        $this -> assign('filter_menu',$filter_menu);  // 帅选菜单
+        $this -> assign('filter_brand',$filter_brand);  // 列表页帅选属性 - 商品品牌
+        $this -> assign('filter_price',$filter_price);// 帅选的价格期间
+        $this -> assign('cateArr',$cateArr);
+        $this -> assign('filter_param',$filter_param); // 帅选条件
+        $this -> assign('cat_id',$id);
+        $this -> assign('page',$page);// 赋值分页输出
         C('TOKEN_ON',false);
-        $this->display();
+        $this -> display();
     }
     
     /**
@@ -239,17 +239,17 @@ class GoodsController extends BaseController {
         if($consult_type > 0)
             $where .= " and consult_type = $consult_type ";
         
-        $count = M('GoodsConsult')->where($where)->count();        
+        $count = M('GoodsConsult') -> where($where)->count();
         $page = new AjaxPage($count,5);
-        $show = $page->show();        
-        $list = M('GoodsConsult')->where($where)->order("id desc")->limit($page->firstRow.','.$page->listRows)->select();
-        $replyList = M('GoodsConsult')->where("parent_id > 0")->order("id desc")->select();
+        $show = $page -> show();
+        $list = M('GoodsConsult') -> where($where)->order("id desc")->limit($page->firstRow.','.$page->listRows)->select();
+        $replyList = M('GoodsConsult') -> where("parent_id > 0")->order("id desc")->select();
         
-        $this->assign('consultCount',$count);// 商品咨询数量
-        $this->assign('consultList',$list);// 商品咨询
-        $this->assign('replyList',$replyList); // 管理员回复
-        $this->assign('page',$show);// 赋值分页输出        
-        $this->display();        
+        $this -> assign('consultCount',$count);// 商品咨询数量
+        $this -> assign('consultList',$list);// 商品咨询
+        $this -> assign('replyList',$replyList); // 管理员回复
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
     
     /**
@@ -264,20 +264,20 @@ class GoodsController extends BaseController {
         	$typeArr = array('1'=>'0,1,2,3,4,5','2'=>'4,5','3'=>'3','4'=>'0,1,2');
         	$where = "is_show = 1 and  goods_id = $goods_id and parent_id = 0 and ceil((deliver_rank + goods_rank + service_rank) / 3) in($typeArr[$commentType])";
         }
-        $count = M('Comment')->where($where)->count();                
+        $count = M('Comment') -> where($where)->count();
         
         $page = new AjaxPage($count,5);
-        $show = $page->show();        
-        $list = M('Comment')->where($where)->order("add_time desc")->limit($page->firstRow.','.$page->listRows)->select();
-        $replyList = M('Comment')->where("is_show = 1 and  goods_id = $goods_id and parent_id > 0")->order("add_time desc")->select();
+        $show = $page -> show();
+        $list = M('Comment') -> where($where)->order("add_time desc")->limit($page->firstRow.','.$page->listRows)->select();
+        $replyList = M('Comment') -> where("is_show = 1 and  goods_id = $goods_id and parent_id > 0")->order("add_time desc")->select();
         
         foreach($list as $k => $v){
             $list[$k]['img'] = unserialize($v['img']); // 晒单图片            
         }        
-        $this->assign('commentlist',$list);// 商品评论
-        $this->assign('replyList',$replyList); // 管理员回复
-        $this->assign('page',$show);// 赋值分页输出        
-        $this->display();        
+        $this -> assign('commentlist',$list);// 商品评论
+        $this -> assign('replyList',$replyList); // 管理员回复
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }    
     
     /**
@@ -331,7 +331,7 @@ class GoodsController extends BaseController {
      */
     public function open_add_cart()
     {        
-         $this->display();
+         $this -> display();
     }
     
 }

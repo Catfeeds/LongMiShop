@@ -323,7 +323,7 @@
         obj += "&type="+ulId;
         $.ajax({
             type : "GET",
-            url:"/index.php/Admin/order/ajaxindex",
+            url:"/index.php/Admin/order/ajaxIndex",
             data :obj,// 你的formid
             success: function(data){
                 $("#"+ulId).html('');

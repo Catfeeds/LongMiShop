@@ -37,8 +37,8 @@ class ChannelController extends BaseController {
 			}
 		}
 			
-		$this->assign('parent_name', $this->cateTrre[$cat_id]['name']);
-		$this->assign('channel_cate',$channel_cate);
-		$this->display();
+		$this -> assign('parent_name', $this->cateTrre[$cat_id]['name']);
+		$this -> assign('channel_cate',$channel_cate);
+		$this -> display();
 	}
 }

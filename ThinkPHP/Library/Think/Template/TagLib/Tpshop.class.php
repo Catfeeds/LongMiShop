@@ -42,7 +42,7 @@ class Tpshop extends TagLib {
         $str = '<?php ';
         $str .= '$pid ='.$pid.';';
         $str .= '$ad_position = M("ad_position")->cache(true,MY_CACHE_TIME)->getField("position_id,position_name,ad_width,ad_height");';
-        $str .= '$result = D("ad")->where("pid=$pid  and enabled = 1 and start_time < '.strtotime(date('Y-m-d H:00:00')).' and end_time > '.strtotime(date('Y-m-d H:00:00')).' ")->order("orderby desc")->cache(true,MY_CACHE_TIME)->limit("'.$limit.'")->select();';
+        $str .= '$result = D("ad") -> where("pid=$pid  and enabled = 1 and start_time < '.strtotime(date('Y-m-d H:00:00')).' and end_time > '.strtotime(date('Y-m-d H:00:00')).' ")->order("orderby desc")->cache(true,MY_CACHE_TIME)->limit("'.$limit.'")->select();';
         $str .= '
 
 if(!in_array($pid,array_keys($ad_position)) && $pid)

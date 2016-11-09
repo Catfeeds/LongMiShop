@@ -14,11 +14,11 @@ class BaseController extends Controller {
 //        $upgradeLogic = new UpgradeLogic();
 //        $upgradeMsg = $upgradeLogic->checkVersion(); //升级包消息
         $upgradeMsg = null;
-        $this->assign('upgradeMsg',$upgradeMsg);    
+        $this -> assign('upgradeMsg',$upgradeMsg);
         //用户中心面包屑导航
         $navigate_admin = navigate_admin();
-        $this->assign('logName',$navigate_admin);
-//        $this->assign('navigate_admin',$navigate_admin);
+        $this -> assign('logName',$navigate_admin);
+//        $this -> assign('navigate_admin',$navigate_admin);
 //        tpversion();
 
 //        dd(session());
@@ -32,7 +32,7 @@ class BaseController extends Controller {
      */
     public function _initialize() 
     {
-        $this->assign('action',ACTION_NAME);
+        $this -> assign('action',ACTION_NAME);
         //过滤不需要登陆的行为
         if(in_array(ACTION_NAME,array('login','logout','vertify')) || in_array(CONTROLLER_NAME,array('Ueditor','Uploadify'))){
         	//return;
@@ -57,7 +57,7 @@ class BaseController extends Controller {
        {
           $lmshop_config[$v['inc_type'].'_'.$v['name']] = $v['value'];
        }
-       $this->assign('lmshop_config', $lmshop_config);
+       $this -> assign('lmshop_config', $lmshop_config);
     }
     
     public function check_priv()
@@ -71,7 +71,7 @@ class BaseController extends Controller {
     	}elseif(strpos('ajax',$act) || in_array($act,$no_check) || $act_list == 'all'){
     		return true;
     	}else{
-    		$mod_id = M('system_module')->where("ctl='$ctl' and act='$act'")->getField('mod_id');
+    		$mod_id = M('system_module') -> where("ctl='$ctl' and act='$act'")->getField('mod_id');
     		$act_list = explode(',', $act_list);
     		if($mod_id){
     			if(!in_array($mod_id, $act_list)){

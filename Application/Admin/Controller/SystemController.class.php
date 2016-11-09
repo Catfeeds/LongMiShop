@@ -12,14 +12,14 @@ class SystemController extends BaseController{
 		/*配置列表*/
 		$group_list = array('shop_info'=>'网站信息','basic'=>'基本设置','sms'=>'短信设置','shopping'=>'购物流程设置','smtp'=>'邮件设置','water'=>'水印设置','prize'=>'邀请奖品');		//,'distribut'=>'分销设置'
 		$coupon_list = M('coupon')->select();
-        $this->assign('coupon_list',$coupon_list);
-        $this->assign('group_list',$group_list);
+        $this -> assign('coupon_list',$coupon_list);
+        $this -> assign('group_list',$group_list);
 		$inc_type =  I('get.inc_type','shop_info');
-		$this->assign('inc_type',$inc_type);
-		$this->assign('config',tpCache($inc_type));//当前配置项
+		$this -> assign('inc_type',$inc_type);
+		$this -> assign('config',tpCache($inc_type));//当前配置项
                 C('TOKEN_ON',false);
 
-		$this->display($inc_type);
+		$this -> display($inc_type);
 	}
 	
 	/*
@@ -51,8 +51,8 @@ class SystemController extends BaseController{
     public function navigationList(){
            $model = M("Navigation");
            $navigationList = $model->order("id desc")->select();            
-           $this->assign('navigationList',$navigationList);
-           $this->display('navigationList');          
+           $this -> assign('navigationList',$navigationList);
+           $this -> display('navigationList');
      }
     
     /**
@@ -93,10 +93,10 @@ class SystemController extends BaseController{
                '/index.php?m=Home&c=Activity&a=group_list' => '团购',
            );           
            $system_nav = array_merge($system_nav,$select_option);
-           $this->assign('system_nav',$system_nav);
+           $this -> assign('system_nav',$system_nav);
            
-           $this->assign('navigation',$navigation);
-           $this->display('_navigation');
+           $this -> assign('navigation',$navigation);
+           $this -> display('_navigation');
     }   
     
     /**
@@ -105,14 +105,14 @@ class SystemController extends BaseController{
     public function delNav()
     {     
         // 删除导航
-        M('Navigation')->where("id = {$_GET['id']}")->delete();   
+        M('Navigation') -> where("id = {$_GET['id']}")->delete();
         $this->success("操作成功!!!",U('Admin/System/navigationList'));
     }
 	
     
     public function menu(){
-    	$this->assign('tree',$this->tree());
-    	$this->display();
+    	$this -> assign('tree',$this->tree());
+    	$this -> display();
     }
 
 
@@ -144,22 +144,22 @@ class SystemController extends BaseController{
             $this->success("操作成功!!!",U('Admin/System/poster'));
             exit;
         }
-        $this->assign('posterInfo', getPosterInfo());
-        $this->display();
+        $this -> assign('posterInfo', getPosterInfo());
+        $this -> display();
     }
 
 	public function create_menu(){
-		$this->assign('tree',$this->tree());
+		$this -> assign('tree',$this->tree());
 		$action = I('get.action','add');
 		$mod_id = I('get.mod_id',0);
 		if($mod_id>0){
-			$menu = D('system_module')->where("mod_id=$mod_id")->find();
-			$this->assign('menu',$menu);
+			$menu = D('system_module') -> where("mod_id=$mod_id")->find();
+			$this -> assign('menu',$menu);
 		}
-		$this->assign('pid',$mod_id);		
-		$this->assign('tree',$this->tree());
-		$this->assign('action',$action);
-		$this->display();
+		$this -> assign('pid',$mod_id);
+		$this -> assign('tree',$this->tree());
+		$this -> assign('action',$action);
+		$this -> display();
 	}
 	
 	public function menuSave(){
@@ -176,16 +176,16 @@ class SystemController extends BaseController{
 			$r = D('system_module')->add($data);
 		}
 		if($data['action'] == 'edit'){
-			$r = D('system_module')->where('mod_id='.$data['mod_id'])->save($data);
+			$r = D('system_module') -> where('mod_id='.$data['mod_id'])->save($data);
 		}
 
 		if($data['action'] == 'del'){
-			$res = D('system_module')->where('parent_id='.$data['mod_id'])->select();
+			$res = D('system_module') -> where('parent_id='.$data['mod_id'])->select();
 			if($res){
 				$res = array('stat'=>'fail','msg'=>'要删除的菜单中含有子项目,请先移动或删除子项目');
 				exit(json_encode($res));
 			}else{
-				$r = D('system_module')->where('mod_id='.$data['mod_id'])->delete();				
+				$r = D('system_module') -> where('mod_id='.$data['mod_id'])->delete();
 			}
 		}
 		
@@ -199,8 +199,8 @@ class SystemController extends BaseController{
 	}
 	
 	public function module(){
-		$this->assign('tree',$this->tree());
-		$this->display();
+		$this -> assign('tree',$this->tree());
+		$this -> display();
 	}
 	
 	public function ctl_detail(){
@@ -213,11 +213,11 @@ class SystemController extends BaseController{
 					$modules[$k] = $v;
 				}
 			}
-			$this->assign('pid',$mod_id);
-			$this->assign('modules',$modules);
+			$this -> assign('pid',$mod_id);
+			$this -> assign('modules',$modules);
 		}
-		$this->assign('menu_tree',$this->tree());
-		$this->display();
+		$this -> assign('menu_tree',$this->tree());
+		$this -> display();
 	}
 
 	public function ctlSave(){
@@ -226,7 +226,7 @@ class SystemController extends BaseController{
 		if($data['module']){
 			foreach ($data['module'] as $k=>$v){
 				$v['visible'] = empty($v['visible']) ? 0 : 1;
-				$r = D('system_module')->where("mod_id=$k")->save($v);
+				$r = D('system_module') -> where("mod_id=$k")->save($v);
 				if($r) $t = $r;
 			}
 		}
@@ -284,7 +284,7 @@ class SystemController extends BaseController{
 	
 	public function refreshMenu(){
 		$pmenu = $arr = array();
-		$rs = M('system_module')->where('level>1 AND visible=1')->order('mod_id ASC')->select();
+		$rs = M('system_module') -> where('level>1 AND visible=1')->order('mod_id ASC')->select();
 		foreach($rs as $row){
 			if($row['level'] == 2){
 				$pmenu[$row['mod_id']] = $row['title'];//父菜单
@@ -340,7 +340,7 @@ class SystemController extends BaseController{
                 $this->success("操作完成!!!");
                 exit;
             }            
-            $this->display();                     
+            $this -> display();
         }
 	    
     /**
@@ -398,13 +398,13 @@ class SystemController extends BaseController{
          
         /*** 随机清空购物车的垃圾数据*/                     
         $time = time() - 3600; // 删除购物车数据  1小时以前的
-        M("Cart")->where("user_id = 0 and  add_time < $time")->delete();            
+        M("Cart") -> where("user_id = 0 and  add_time < $time")->delete();
         $today_time = time();
         
 //        // 发货后满多少天自动收货确认
 //        $auto_confirm_date = tpCache('shopping.auto_confirm_date');
 //        $auto_confirm_date = $auto_confirm_date * (60 * 60 * 24); // 7天的时间戳
-//        $order_id_arr = M('order')->where("order_status = 1 and shipping_status = 1 and ($today_time - shipping_time) >  $auto_confirm_date")->getField('order_id',true);
+//        $order_id_arr = M('order') -> where("order_status = 1 and shipping_status = 1 and ($today_time - shipping_time) >  $auto_confirm_date")->getField('order_id',true);
 //        foreach($order_id_arr as $k => $v)
 //        {
 //            confirm_order($v);

@@ -795,7 +795,7 @@ class Template_Lite {
 			}
 			if (isset($arguments['assign']))
 			{
-				$this->assign($arguments['assign'], call_user_func_array('insert_' . $arguments['name'], array((array)$arguments, $this)));
+				$this -> assign($arguments['assign'], call_user_func_array('insert_' . $arguments['name'], array((array)$arguments, $this)));
 			}
 			else
 			{

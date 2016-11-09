@@ -7,10 +7,10 @@ class IndexController extends BaseController {
     
     /* 
     public function test(){
-        $goods_id_arr = M('goods')->where("goods_id >= 140")->getField('goods_id',true);
+        $goods_id_arr = M('goods') -> where("goods_id >= 140")->getField('goods_id',true);
         foreach($goods_id_arr as $key => $val)
         {
-            $goods_image_url = M('goods_images')->where("goods_id = $val")->getField('image_url',3);
+            $goods_image_url = M('goods_images') -> where("goods_id = $val")->getField('image_url',3);
             
             $data = array(                    
                     'goods_id'=>$val,
@@ -32,7 +32,7 @@ class IndexController extends BaseController {
             
            // M('goods_consult')->execute("insert into tp_goods_consult (goods_id,username,add_time,consult_type,content,parent_id) (
 //select $val,username,add_time,consult_type,content,parent_id from `tp_goods_consult`  where goods_id = 95)");
-            //M('comment')->where("goods_id = $val")->save(array('img'=>serialize($goods_image_url)));
+            //M('comment') -> where("goods_id = $val")->save(array('img'=>serialize($goods_image_url)));
         }
     }
     */ 
@@ -55,7 +55,7 @@ class IndexController extends BaseController {
 			}
 		}
 
-        $hot_category = M('goods_category')->where("is_hot=1 and level=3 and is_show=1")->select();//热门三级分类
+        $hot_category = M('goods_category') -> where("is_hot=1 and level=3 and is_show=1")->select();//热门三级分类
         foreach ($hot_category as $v){
         	$cat_path = explode('_', $v['parent_id_path']);
         	$hot_cate[$cat_path[1]][] = $v;
@@ -69,15 +69,15 @@ class IndexController extends BaseController {
         	}
         }
         
-        $this->assign('cateList',$cateList); 
-        $this->display();
+        $this -> assign('cateList',$cateList);
+        $this -> display();
     }
  
     /**
      *  公告详情页
      */
     public function notice(){
-        $this->display();
+        $this -> display();
     }
     
     // 二维码
@@ -115,9 +115,9 @@ class IndexController extends BaseController {
         $Model = new \Think\Model();
         $goodsList = $Model->query("select * from __PREFIX__goods as g inner join __PREFIX__flash_sale as f on g.goods_id = f.goods_id   where ".time()." > start_time  and ".time()." < end_time");                        
         $brandList = M('brand')->getField("id,name,logo");
-        $this->assign('brandList',$brandList);
-        $this->assign('goodsList',$goodsList);
-        $this->display();
+        $this -> assign('brandList',$brandList);
+        $this -> assign('goodsList',$goodsList);
+        $this -> display();
     }
     
 }

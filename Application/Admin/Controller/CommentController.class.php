@@ -11,12 +11,12 @@ class CommentController extends BaseController {
 
 
     public function index(){
-        $this->display();
+        $this -> display();
     }
 
     public function detail(){
         $id = I('get.id');
-        $res = M('comment')->where(array('comment_id'=>$id))->find();
+        $res = M('comment') -> where(array('comment_id'=>$id))->find();
         if(!$res){
             exit($this->error('不存在该评论'));
         }
@@ -38,17 +38,17 @@ class CommentController extends BaseController {
             exit;
 
         }
-        $reply = M('comment')->where(array('parent_id'=>$id))->select(); // 评论回复列表
+        $reply = M('comment') -> where(array('parent_id'=>$id))->select(); // 评论回复列表
          
-        $this->assign('comment',$res);
-        $this->assign('reply',$reply);
-        $this->display();
+        $this -> assign('comment',$res);
+        $this -> assign('reply',$reply);
+        $this -> display();
     }
 
 
     public function del(){
         $id = I('get.id');
-        $row = M('comment')->where(array('comment_id'=>$id))->delete();
+        $row = M('comment') -> where(array('comment_id'=>$id))->delete();
         if($row){
             $this->success('删除成功');
         }else{
@@ -65,14 +65,14 @@ class CommentController extends BaseController {
         if($type == 'del'){
             //删除回复
             $where .= " OR parent_id IN ({$selected_id})";
-            $row = M('comment')->where($where)->delete();
+            $row = M('comment') -> where($where)->delete();
 //            exit(M()->getLastSql());
         }
         if($type == 'show'){
-            $row = M('comment')->where($where)->save(array('is_show'=>1));
+            $row = M('comment') -> where($where)->save(array('is_show'=>1));
         }
         if($type == 'hide'){
-            $row = M('comment')->where($where)->save(array('is_show'=>0));
+            $row = M('comment') -> where($where)->save(array('is_show'=>0));
         }
         if(!$row)
             $this->error('操作失败');
@@ -80,7 +80,7 @@ class CommentController extends BaseController {
 
     }
 
-    public function ajaxindex(){
+    public function ajaxIndex(){
         $model = M('comment');
         $username = I('nickname','','trim');
         $content = I('content','','trim');
@@ -93,22 +93,22 @@ class CommentController extends BaseController {
         }        
         $count = $model->where($where)->count();
         $Page  = new AjaxPage($count,16);
-        $show = $Page->show();
+        $show = $Page -> show();
                 
         $comment_list = $model->where($where)->order('add_time DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
         if(!empty($comment_list))
         {
             $goods_id_arr = get_arr_column($comment_list, 'goods_id');
-            $goods_list = M('Goods')->where("goods_id in (".  implode(',', $goods_id_arr).")")->getField("goods_id,goods_name");
+            $goods_list = M('Goods') -> where("goods_id in (".  implode(',', $goods_id_arr).")")->getField("goods_id,goods_name");
         }
-        $this->assign('goods_list',$goods_list);
-        $this->assign('comment_list',$comment_list);
-        $this->assign('page',$show);// 赋值分页输出
-        $this->display();
+        $this -> assign('goods_list',$goods_list);
+        $this -> assign('comment_list',$comment_list);
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> display();
     }
     
     public function ask_list(){
-    	$this->display();
+    	$this -> display();
     }
     
     public function ajax_ask_list(){
@@ -124,25 +124,25 @@ class CommentController extends BaseController {
     	}
         $count = $model->where($where)->count();        
         $Page  = new AjaxPage($count,16);
-        $show = $Page->show();            	
+        $show = $Page -> show();
     	
         $comment_list = $model->where($where)->order('add_time DESC')->limit($Page->firstRow.','.$Page->listRows)->select(); 
     	if(!empty($comment_list))
     	{
     		$goods_id_arr = get_arr_column($comment_list, 'goods_id');
-    		$goods_list = M('Goods')->where("goods_id in (".  implode(',', $goods_id_arr).")")->getField("goods_id,goods_name");
+    		$goods_list = M('Goods') -> where("goods_id in (".  implode(',', $goods_id_arr).")")->getField("goods_id,goods_name");
     	}
     	$consult_type = array(0=>'默认咨询',1=>'商品咨询',2=>'支付咨询',3=>'配送',4=>'售后');
-    	$this->assign('consult_type',$consult_type);
-    	$this->assign('goods_list',$goods_list);
-    	$this->assign('comment_list',$comment_list);
-    	$this->assign('page',$show);// 赋值分页输出
-    	$this->display();
+    	$this -> assign('consult_type',$consult_type);
+    	$this -> assign('goods_list',$goods_list);
+    	$this -> assign('comment_list',$comment_list);
+    	$this -> assign('page',$show);// 赋值分页输出
+    	$this -> display();
     }
     
     public function consult_info(){
     	$id = I('get.id');
-    	$res = M('goods_consult')->where(array('id'=>$id))->find();
+    	$res = M('goods_consult') -> where(array('id'=>$id))->find();
     	if(!$res){
     		exit($this->error('不存在该咨询'));
     	}
@@ -161,10 +161,10 @@ class CommentController extends BaseController {
     		}
     		exit;    	
     	}
-    	$reply = M('goods_consult')->where(array('parent_id'=>$id))->select(); // 咨询回复列表   	 
-    	$this->assign('comment',$res);
-    	$this->assign('reply',$reply);
-    	$this->display();
+    	$reply = M('goods_consult') -> where(array('parent_id'=>$id))->select(); // 咨询回复列表
+    	$this -> assign('comment',$res);
+    	$this -> assign('reply',$reply);
+    	$this -> display();
     }
     public function ask_handle(){
     	$type = I('post.type');
@@ -176,13 +176,13 @@ class CommentController extends BaseController {
     	if($type == 'del'){
     		//删除咨询
     		$where .= "( id IN ({$selected_id}) OR parent_id IN ({$selected_id})) ";
-    		$row = M('goods_consult')->where($where)->delete();
+    		$row = M('goods_consult') -> where($where)->delete();
     	}
     	if($type == 'show'){
-    		$row = M('goods_consult')->where("id IN ({$selected_id})")->save(array('is_show'=>1));
+    		$row = M('goods_consult') -> where("id IN ({$selected_id})")->save(array('is_show'=>1));
     	}
     	if($type == 'hide'){
-    		$row = M('goods_consult')->where("id IN ({$selected_id})")->save(array('is_show'=>0));
+    		$row = M('goods_consult') -> where("id IN ({$selected_id})")->save(array('is_show'=>0));
     	}    		
     	$this->success('操作完成');
     }

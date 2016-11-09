@@ -19,13 +19,13 @@ class HelpController extends IndexBaseController {
 
 
     public function buy(){
-        $this->display();
+        $this -> display();
     }
     public function pay(){
-        $this->display();
+        $this -> display();
     }
     public function postage(){
-        $this->display();
+        $this -> display();
     }
 
 

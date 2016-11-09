@@ -27,7 +27,7 @@ class GoodsLogic extends BaseLogic
 
         $goods_id_str = implode(',', $goods_id_arr);
         $goods_id_str = $goods_id_str ? $goods_id_str : '0';
-        $list_brand = M('brand')->where("id in(select brand_id from ".C('DB_PREFIX')."goods where brand_id > 0 and goods_id in($goods_id_str))")->limit('30')->select();  //where("goods_id in($goods_id_str)")->select();
+        $list_brand = M('brand') -> where("id in(select brand_id from ".C('DB_PREFIX')."goods where brand_id > 0 and goods_id in($goods_id_str))")->limit('30')->select();  //where("goods_id in($goods_id_str)")->select();
 
         foreach($list_brand as $k => $v)
         {
@@ -94,8 +94,8 @@ class GoodsLogic extends BaseLogic
     {
         $goods_id_str = implode(',', $goods_id_arr);
         $goods_id_str = $goods_id_str ? $goods_id_str : '0';
-        $goods_attr = M('goods_attr')->where("goods_id in($goods_id_str) and attr_value != ''")->select();
-        // $goods_attr = M('goods_attr')->where("attr_value != ''")->select();
+        $goods_attr = M('goods_attr') -> where("goods_id in($goods_id_str) and attr_value != ''")->select();
+        // $goods_attr = M('goods_attr') -> where("attr_value != ''")->select();
         $goods_attribute = M('goods_attribute')->getField('attr_id,attr_name,attr_index');
         if(empty($goods_attr))
         {
@@ -215,9 +215,9 @@ class GoodsLogic extends BaseLogic
      */
     public function commentStatistics($goods_id)
     {
-        $c1 = M('Comment')->where("is_show = 1 and  goods_id = $goods_id and parent_id = 0 and  ceil((deliver_rank + goods_rank + service_rank) / 3) in(4,5)")->count(); // 好评
-        $c2 = M('Comment')->where("is_show = 1 and  goods_id = $goods_id and parent_id = 0 and  ceil((deliver_rank + goods_rank + service_rank) / 3) in(3)")->count(); // 中评
-        $c3 = M('Comment')->where("is_show = 1 and  goods_id = $goods_id and parent_id = 0 and  ceil((deliver_rank + goods_rank + service_rank) / 3) in(1,2)")->count(); // 差评
+        $c1 = M('Comment') -> where("is_show = 1 and  goods_id = $goods_id and parent_id = 0 and  ceil((deliver_rank + goods_rank + service_rank) / 3) in(4,5)")->count(); // 好评
+        $c2 = M('Comment') -> where("is_show = 1 and  goods_id = $goods_id and parent_id = 0 and  ceil((deliver_rank + goods_rank + service_rank) / 3) in(3)")->count(); // 中评
+        $c3 = M('Comment') -> where("is_show = 1 and  goods_id = $goods_id and parent_id = 0 and  ceil((deliver_rank + goods_rank + service_rank) / 3) in(1,2)")->count(); // 差评
 
         $c0 = $c1 + $c2 + $c3; // 所有评论
         $rate1 = ceil($c1 / ($c1+$c2+$c3) * 100); // 好评率
@@ -237,9 +237,9 @@ class GoodsLogic extends BaseLogic
     public function collect_goods($user_id,$goods_id)
     {
         if(!is_numeric($user_id) || $user_id <= 0) return array('status'=>-1,'msg'=>'必须登录后才能收藏','result'=>array());
-        //$count = M('Goods')->where("goods_id = $goods_id")->count();
+        //$count = M('Goods') -> where("goods_id = $goods_id")->count();
         //if($count == 0)  return array('status'=>-2,'msg'=>'收藏的商品不存在','result'=>array());
-        $count = M('GoodsCollect')->where("user_id = $user_id and goods_id = $goods_id")->count();
+        $count = M('GoodsCollect') -> where("user_id = $user_id and goods_id = $goods_id")->count();
         if($count > 0)  return array('status'=>-3,'msg'=>'商品已收藏','result'=>array());
         M('GoodsCollect')->add(array('goods_id'=>$goods_id,'user_id'=>$user_id, 'add_time'=>time()));
         return array('status'=>1,'msg'=>'收藏成功!请到个人中心查看','result'=>array());
@@ -250,11 +250,11 @@ class GoodsLogic extends BaseLogic
      */
     public function get_spec($goods_id){
         //商品规格 价钱 库存表 找出 所有 规格项id
-        $keys = M('SpecGoodsPrice')->where("goods_id = $goods_id")->getField("GROUP_CONCAT(`key` SEPARATOR '_') ");
+        $keys = M('SpecGoodsPrice') -> where("goods_id = $goods_id")->getField("GROUP_CONCAT(`key` SEPARATOR '_') ");
         $filter_spec = array();
         if($keys)
         {
-            $specImage =  M('SpecImage')->where("goods_id = $goods_id and src != '' ")->getField("spec_image_id,src");// 规格对应的 图片表， 例如颜色
+            $specImage =  M('SpecImage') -> where("goods_id = $goods_id and src != '' ")->getField("spec_image_id,src");// 规格对应的 图片表， 例如颜色
             $keys = str_replace('_',',',$keys);
             $sql  = "SELECT a.name,a.order,b.* FROM __PREFIX__spec AS a INNER JOIN __PREFIX__spec_item AS b ON a.id = b.spec_id WHERE b.id IN($keys) ORDER BY a.order";
             $filter_spec2 = M()->query($sql);
@@ -275,11 +275,11 @@ class GoodsLogic extends BaseLogic
      */
     public function getSpec($goods_id){
         //商品规格 价钱 库存表 找出 所有 规格项id
-        $keys = M('SpecGoodsPrice')->where("goods_id = '$goods_id'")->getField("GROUP_CONCAT(`key` SEPARATOR '_') ");
+        $keys = M('SpecGoodsPrice') -> where("goods_id = '$goods_id'")->getField("GROUP_CONCAT(`key` SEPARATOR '_') ");
         $filter_spec = array();
         if($keys)
         {
-            $specImage =  M('SpecImage')->where("goods_id = $goods_id and src != '' ")->getField("spec_image_id,src");// 规格对应的 图片表， 例如颜色
+            $specImage =  M('SpecImage') -> where("goods_id = $goods_id and src != '' ")->getField("spec_image_id,src");// 规格对应的 图片表， 例如颜色
             $keys = str_replace('_',',',$keys);
             $sql  = "SELECT a.name,a.order,b.* FROM __PREFIX__spec AS a INNER JOIN __PREFIX__spec_item AS b ON a.id = b.spec_id WHERE b.id IN($keys) ORDER BY b.id";
             $filter_spec2 = M()->query($sql);
@@ -302,8 +302,8 @@ class GoodsLogic extends BaseLogic
     public function get_siblings_cate($cat_id){
         if(empty($cat_id))
             return array();
-        $cate_info = M('goods_category')->where("id=$cat_id")->find();
-        $siblings_cate = M('goods_category')->where("id!=$cat_id and parent_id=".$cate_info['parent_id'])->select();
+        $cate_info = M('goods_category') -> where("id=$cat_id")->find();
+        $siblings_cate = M('goods_category') -> where("id!=$cat_id and parent_id=".$cate_info['parent_id'])->select();
         return empty($siblings_cate) ? array() : $siblings_cate;
     }
 
@@ -311,7 +311,7 @@ class GoodsLogic extends BaseLogic
      * 看了又看
      */
     public function get_look_see($goods){
-        return M('goods')->where("goods_id !=".$goods['goods_id']." and cat_id!=".$goods['cat_id']." and is_on_sale = 1")->limit(12)->select();
+        return M('goods') -> where("goods_id !=".$goods['goods_id']." and cat_id!=".$goods['cat_id']." and is_on_sale = 1")->limit(12)->select();
     }
 
 
@@ -328,7 +328,7 @@ class GoodsLogic extends BaseLogic
 
         $goods_id_str = implode(',', $goods_id_arr);
         $goods_id_str = $goods_id_str ? $goods_id_str : '0';
-        $priceList = M('goods')->where("goods_id in ($goods_id_str)")->getField('shop_price',true);  //where("goods_id in($goods_id_str)")->select();
+        $priceList = M('goods') -> where("goods_id in ($goods_id_str)")->getField('shop_price',true);  //where("goods_id in($goods_id_str)")->select();
 
         rsort($priceList);
         $max_price = (int)$priceList[0];
@@ -463,7 +463,7 @@ class GoodsLogic extends BaseLogic
             $goodsCate['open_id'] = $goodsCate['id'];//默认展开分类
             $goodsCate['select_id'] = 0;
         }else{
-            $parent = M('GoodsCategory')->where("id =".$goodsCate['parent_id'])->order('`sort_order` desc')->find();//父类
+            $parent = M('GoodsCategory') -> where("id =".$goodsCate['parent_id'])->order('`sort_order` desc')->find();//父类
             $cateArr = $cateAll[$parent['parent_id']]['tmenu'];
             $goodsCate['parent_name'] = $cateAll[$parent['parent_id']]['name'];//顶级分类名称
             $goodsCate['open_id'] = $parent['id'];
@@ -493,7 +493,7 @@ class GoodsLogic extends BaseLogic
             $price = explode('-',$price);
             $where .= " and shop_price >= {$price[0]} and  shop_price <= {$price[1]} ";
         }
-        $arr = M('goods')->where($where)->getField('goods_id',true);
+        $arr = M('goods') -> where($where)->getField('goods_id',true);
         return $arr ? $arr : array();
     }
     /**
@@ -518,7 +518,7 @@ class GoodsLogic extends BaseLogic
             }
             $where .=  " and (".  implode('or', $like).") ";
         }
-        //    $arr = M('spec_goods_price')->where($where)->getField('goods_id',true);
+        //    $arr = M('spec_goods_price') -> where($where)->getField('goods_id',true);
         $sql = "select * from (
                   select *,concat('_',`key`,'_') as key2 from __PREFIX__spec_goods_price as a
               ) b  $where";
@@ -551,9 +551,9 @@ class GoodsLogic extends BaseLogic
         $where = "attr_id in(".  implode(',',$attr_id).") and attr_value in('".  implode("','", $attr_value)."')";
         $c = count($attr_id) - 1;
         if($c > 0)
-            $arr = M('goods_attr')->where($where)->group('goods_id')->having("count(goods_id) > $c")->getField("goods_id",true);  //select * from   `tp_goods_attr` where attr_id in(59,80) and attr_value in('直板','翻盖','蓝牙4.0') group by goods_id having count(goods_id) > 1
+            $arr = M('goods_attr') -> where($where)->group('goods_id')->having("count(goods_id) > $c")->getField("goods_id",true);  //select * from   `tp_goods_attr` where attr_id in(59,80) and attr_value in('直板','翻盖','蓝牙4.0') group by goods_id having count(goods_id) > 1
         else
-            $arr = M('goods_attr')->where($where)->getField("goods_id",true); // 如果只有一个条件不再进行分组查询
+            $arr = M('goods_attr') -> where($where)->getField("goods_id",true); // 如果只有一个条件不再进行分组查询
 
         return ($arr ? $arr : array_unique($arr));
     }
@@ -862,7 +862,7 @@ class GoodsLogic extends BaseLogic
 
         $spec = M('Spec')->getField('id,name'); // 规格表
         $specItem = M('SpecItem')->getField('id,item');//规格项
-        $keySpecGoodsPrice = M('SpecGoodsPrice')->where('goods_id = '.$goods_id)->getField('key,key_name,price,store_count,sku');//规格项
+        $keySpecGoodsPrice = M('SpecGoodsPrice') -> where('goods_id = '.$goods_id)->getField('key,key_name,price,store_count,sku');//规格项
 
         $str = "<table class='table table-bordered' id='spec_input_tab'>";
         $str .="<tr>";

@@ -96,7 +96,7 @@ class WeChatController extends Controller {
         }
 
         // 图文回复
-        $wx_img = M('wx_img')->where("keyword like '%$keyword%'")->find();
+        $wx_img = M('wx_img') -> where("keyword like '%$keyword%'")->find();
         if($wx_img)
         {
             $textTpl = "<xml>
@@ -121,7 +121,7 @@ class WeChatController extends Controller {
 
 
         // 文本回复
-        $wx_text = M('wx_text')->where("keyword like '%$keyword%'")->find();
+        $wx_text = M('wx_text') -> where("keyword like '%$keyword%'")->find();
         if($wx_text)
         {
             $textTpl = "<xml>

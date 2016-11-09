@@ -352,7 +352,7 @@ class Template_Lite_Compiler extends Template_Lite {
 				$_result = '<?php for($for' . $this->_for_stack . ' = ' . $_args['start'] . '; ((' . $_args['start'] . ' < ' . $_args['stop'] . ') ? ($for' . $this->_for_stack . ' < ' . $_args['stop'] . ') : ($for' . $this->_for_stack . ' > ' . $_args['stop'] . ')); $for' . $this->_for_stack . ' += ((' . $_args['start'] . ' < ' . $_args['stop'] . ') ? ' . $_args['step'] . ' : -' . $_args['step'] . ')): ?>';
 				if (isset($_args['value']))
 				{
-					$_result .= '<?php $this->assign(\'' . $this->_dequote($_args['value']) . '\', $for' . $this->_for_stack . '); ?>';
+					$_result .= '<?php $this -> assign(\'' . $this->_dequote($_args['value']) . '\', $for' . $this->_for_stack . '); ?>';
 				}
 				return $_result;
 				break;
@@ -411,7 +411,7 @@ class Template_Lite_Compiler extends Template_Lite {
 				{
 					$this->trigger_error("missing 'value' attribute in 'assign'", E_USER_ERROR, __FILE__, __LINE__);
 				}
-				return '<?php $this->assign(\'' . $this->_dequote($_args['var']) . '\', ' . $_args['value'] . '); ?>';
+				return '<?php $this -> assign(\'' . $this->_dequote($_args['var']) . '\', ' . $_args['value'] . '); ?>';
 				break;
 			case 'switch':
 				$_args = $this->_parse_arguments($arguments);

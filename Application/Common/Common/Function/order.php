@@ -131,7 +131,7 @@ function getExpress($orderId){
     if( is_null($orderId) ){
         return callback(false,'没有获取到订单信息');
     }
-    $delivery = M('delivery_doc')->where("order_id='$orderId'")->limit(1)->find();
+    $delivery = M('delivery_doc') -> where("order_id='$orderId'")->limit(1)->find();
     if($delivery['shipping_name'] && $delivery['invoice_no']){
         return queryExpress($delivery['shipping_name'],$delivery['invoice_no']);
     }
@@ -181,7 +181,7 @@ function set_btn_order_status($order)
 function orderStatusDesc($order_id = 0, $order = array() ,$engName = null)
 {
     if(empty($order)){
-        $order = M('Order')->where("order_id = '$order_id'")->find();
+        $order = M('Order') -> where("order_id = '$order_id'")->find();
     }
     // 货到付款
     if($order['pay_code'] == 'cod')
@@ -229,7 +229,7 @@ function orderStatusDesc($order_id = 0, $order = array() ,$engName = null)
 function orderBtn($order_id = 0, $order = array())
 {
     if(empty($order))
-        $order = M('Order')->where("order_id = $order_id")->find();
+        $order = M('Order') -> where("order_id = $order_id")->find();
     /**
      *  订单用户端显示按钮
     去支付     AND pay_status=0 AND order_status=0 AND pay_code ! ="cod"
@@ -307,7 +307,7 @@ function orderBtn($order_id = 0, $order = array())
  * @return array
  */
 function getOverdueOrder(){
-    $orderList = M('Order')->where(' pay_status=0 AND order_status=0 AND pay_code !="cod" ')->select();
+    $orderList = M('Order') -> where(' pay_status=0 AND order_status=0 AND pay_code !="cod" ')->select();
     return $orderList;
 }
 
@@ -322,12 +322,12 @@ function getOverdueOrder(){
 function update_pay_status($order_sn,$pay_status = 1)
 {
     // 如果这笔订单已经处理过了
-    $count = M('order')->where("order_sn = '$order_sn' and pay_status = 0")->count();   // 看看有没已经处理过这笔订单  支付宝返回不重复处理操作
+    $count = M('order') -> where("order_sn = '$order_sn' and pay_status = 0")->count();   // 看看有没已经处理过这笔订单  支付宝返回不重复处理操作
     if($count == 0) return false;
     // 找出对应的订单
-    $order = M('order')->where("order_sn = '$order_sn'")->find();
+    $order = M('order') -> where("order_sn = '$order_sn'")->find();
     // 修改支付状态  已支付
-    M('order')->where("order_sn = '$order_sn'")->save(array('pay_status'=>1,'pay_time'=>time()));
+    M('order') -> where("order_sn = '$order_sn'")->save(array('pay_status'=>1,'pay_time'=>time()));
     // 减少对应商品的库存
 //    minus_stock($order['order_id']);
     // 给他升级, 根据order表查看消费记录 给他会员等级升级 修改他的折扣 和 总金额
@@ -346,11 +346,11 @@ function update_pay_status($order_sn,$pay_status = 1)
     sendWeChatMessageUseUserId( $order['user_id'] , "支付" , array("orderId" => $order['order_id']) );
     return true;
     //分销设置
-//    M('rebate_log')->where("order_id = {$order['order_id']}")->save(array('status'=>1));
+//    M('rebate_log') -> where("order_id = {$order['order_id']}")->save(array('status'=>1));
     // 成为分销商条件
 //    $distribut_condition = tpCache('distribut.condition');
 //    if($distribut_condition == 1)  // 购买商品付款才可以成为分销商
-//        M('users')->where("user_id = {$order['user_id']}")->save(array('is_distribut'=>1));
+//        M('users') -> where("user_id = {$order['user_id']}")->save(array('is_distribut'=>1));
 }
 
 
@@ -375,9 +375,9 @@ function setOrderReturnState( $orderInfo , $userId ){
         $where['goods_id']  = $goodsItem['goods_id'];
         $where['spec_key']  = $goodsItem['spec_key'];
         $where['result']  = "0";
-        $goodsList[$key]['isReturn'] = $count = M('return_goods')->where($where)->count();
+        $goodsList[$key]['isReturn'] = $count = M('return_goods') -> where($where)->count();
         $where['result']  = "1";
-        $goodsList[$key]['isReturnPass']  = M('return_goods')->where($where)->count();
+        $goodsList[$key]['isReturnPass']  = M('return_goods') -> where($where)->count();
 
         if( $count > 0){
             $returnCount ++;
@@ -403,16 +403,16 @@ function setOrderReturnState( $orderInfo , $userId ){
  * @param 订单取消 $goods_num
  */
 function minus_stock($order_id,$goods_num = null ){
-    $orderGoodsArr = M('OrderGoods')->where("order_id = $order_id")->select();
+    $orderGoodsArr = M('OrderGoods') -> where("order_id = $order_id")->select();
     foreach($orderGoodsArr as $key => $val)
     {
         // 有选择规格的商品
         if(!empty($val['spec_key']))
         {   // 先到规格表里面扣除数量 再重新刷新一个 这件商品的总数量
             if(!empty($goods_num)){
-                M('SpecGoodsPrice')->where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->setInc('store_count',$val['goods_num']);
+                M('SpecGoodsPrice') -> where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->setInc('store_count',$val['goods_num']);
             }else{
-                M('SpecGoodsPrice')->where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->setDec('store_count',$val['goods_num']);
+                M('SpecGoodsPrice') -> where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->setDec('store_count',$val['goods_num']);
             }
 
             refresh_stock($val['goods_id']);
@@ -421,15 +421,15 @@ function minus_stock($order_id,$goods_num = null ){
                 $prom = get_goods_promotion($val['goods_id']);
                 if($prom['is_end']==0){
                     $tb = $val['prom_type']==1 ? 'flash_sale' : 'group_buy';
-                    M($tb)->where("id=".$val['prom_id'])->setInc('buy_num',$val['goods_num']);
-                    M($tb)->where("id=".$val['prom_id'])->setInc('order_num');
+                    M($tb) -> where("id=".$val['prom_id'])->setInc('buy_num',$val['goods_num']);
+                    M($tb) -> where("id=".$val['prom_id'])->setInc('order_num');
                 }
             }
         }else{
             if(!empty($goods_num)){
-                M('Goods')->where("goods_id = {$val['goods_id']}")->setInc('store_count',$val['goods_num']); // 直接增加商品总数量
+                M('Goods') -> where("goods_id = {$val['goods_id']}")->setInc('store_count',$val['goods_num']); // 直接增加商品总数量
             }else{
-                M('Goods')->where("goods_id = {$val['goods_id']}")->setDec('store_count',$val['goods_num']); // 直接扣除商品总数量
+                M('Goods') -> where("goods_id = {$val['goods_id']}")->setDec('store_count',$val['goods_num']); // 直接扣除商品总数量
             }
 
         }
@@ -473,7 +473,7 @@ function setOrderPayCode( $orderId , $code , $name ){
     $where['order_id'] = $orderId;
     $saveData['pay_code'] = $code;
     $saveData['pay_name'] = $name;
-    $result = M('order')->where($where)->save($saveData);
+    $result = M('order') -> where($where)->save($saveData);
     if ($result > 0 || $result === 0) {
         return callback( true );
     }
@@ -514,11 +514,11 @@ function returnOrderHandle( $returnOrderInfo , $postData )
                 "goods_id" => $returnOrderInfo['goods_id'],
                 "spec_key" => $returnOrderInfo['spec_key'],
             );
-            $orderGoods = M('order_goods')->where($where)->save(array('is_send' => $type));
+            $orderGoods = M('order_goods') -> where($where)->save(array('is_send' => $type));
             if ($orderGoods == false) {
                 throw new \Exception('订单商品状态修改失败！');
             }
-            $isSendList = M('order_goods')->where("order_id = ".$returnOrderInfo['order_id']."")->select();
+            $isSendList = M('order_goods') -> where("order_id = ".$returnOrderInfo['order_id']."")->select();
             $send = 0;
             foreach($isSendList as $item){
                 if($item['is_send'] == 2 || $item['is_send'] == 3){
@@ -526,7 +526,7 @@ function returnOrderHandle( $returnOrderInfo , $postData )
                 }
             }
             if($send == count($isSendList)){
-                M('order')->where("order_id = ".$returnOrderInfo['order_id']."")->save(array('order_status'=>3));
+                M('order') -> where("order_id = ".$returnOrderInfo['order_id']."")->save(array('order_status'=>3));
             }
 
         }
@@ -640,7 +640,7 @@ function batchDelivery( $deliveryList = null ){
             }else{
                 $condition["admin_id"] = "0";
             }
-            $goods = M("order_goods")->where( $condition )->getField("rec_id", true);
+            $goods = M("order_goods") -> where( $condition )->getField("rec_id", true);
             if( empty($goods) ){
                 $errorMsgList[] = array(
                     "orderSn" => $order_sn,

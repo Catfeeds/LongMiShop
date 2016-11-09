@@ -13,7 +13,7 @@ class ApiController extends Controller {
     public function getRegion(){
         $parent_id = I('get.parent_id');
         $selected = I('get.selected',0);        
-        $data = M('region')->where("parent_id=$parent_id")->select();
+        $data = M('region') -> where("parent_id=$parent_id")->select();
         $html = '';
         if($data){
             foreach($data as $h){
@@ -29,7 +29,7 @@ class ApiController extends Controller {
 
     public function getTwon(){
     	$parent_id = I('get.parent_id');
-    	$data = M('region')->where("parent_id=$parent_id")->select();
+    	$data = M('region') -> where("parent_id=$parent_id")->select();
     	$html = '';
     	if($data){
     		foreach($data as $h){
@@ -48,7 +48,7 @@ class ApiController extends Controller {
      */
     public function get_category(){
         $parent_id = I('get.parent_id'); // 商品分类 父id  
-            $list = M('goods_category')->where("parent_id = $parent_id")->select();
+            $list = M('goods_category') -> where("parent_id = $parent_id")->select();
         
         foreach($list as $k => $v)
             $html .= "<option value='{$v['id']}'>{$v['name']}</option>";        

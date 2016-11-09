@@ -19,7 +19,7 @@ class unionpay extends RelationModel
     public function  __construct() {   
         parent::__construct();
         
-        $paymentPlugin = M('Plugin')->where("code='unionpay' and  type = 'payment' ")->find(); // 找到支付插件的配置
+        $paymentPlugin = M('Plugin') -> where("code='unionpay' and  type = 'payment' ")->find(); // 找到支付插件的配置
         $config_value = unserialize($paymentPlugin['config_value']); // 配置反序列化 
 		    
         $this->unionpay_config['unionpay_mid']= $config_value['unionpay_mid']; // 商户号

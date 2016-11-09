@@ -20,11 +20,11 @@ class PluginController extends BaseController {
         $plugin_list = M('plugin')->select();
         $plugin_list = group_same_key($plugin_list,'type');
         $local_list = $this->scanPlugin();
-        $this->assign('payment',$plugin_list['payment']);
-        $this->assign('login',$plugin_list['login']);
-        $this->assign('shipping',$plugin_list['shipping']);
-        $this->assign('function',$plugin_list['function']);
-        $this->display();
+        $this -> assign('payment',$plugin_list['payment']);
+        $this -> assign('login',$plugin_list['login']);
+        $this -> assign('shipping',$plugin_list['shipping']);
+        $this -> assign('function',$plugin_list['function']);
+        $this -> display();
     }
 
     /**
@@ -90,7 +90,7 @@ class PluginController extends BaseController {
                 if($update['status']){
                     M('shipping_area')->add($add);
                 }else{
-                    M('shipping_area')->where(array('shipping_code'=>$condition['code']))->delete();
+                    M('shipping_area') -> where(array('shipping_code'=>$condition['code']))->delete();
                 }
             }
             $info['status'] = 1;
@@ -171,7 +171,7 @@ class PluginController extends BaseController {
                 $tmp['type'] = $pt;
                 $new_arr[]=$tmp;
                 // 对比数据库 本地有 数据库没有
-                $is_exit = M('plugin')->where(array('type'=>$pt,'code'=>$v['code']))->find();
+                $is_exit = M('plugin') -> where(array('type'=>$pt,'code'=>$v['code']))->find();
                 if(empty($is_exit)){
                     $add['code'] = $v['code'];
                     $add['name'] = $v['name'];
@@ -191,7 +191,7 @@ class PluginController extends BaseController {
         //数据库有 本地没有
         foreach($d_list as $k=>$v){
             if(!in_array($v,$new_arr)){
-                M('plugin')->where($v)->delete();
+                M('plugin') -> where($v)->delete();
             }
         }
 
@@ -206,7 +206,7 @@ class PluginController extends BaseController {
         $condition['code'] = I('get.code');
 
         $model = M('plugin');
-        $row = $model->where($condition) ->find();
+        $row = $model->where($condition) -> find();
 
         if(!$row){
             exit($this->error("不存在该插件"));
@@ -227,10 +227,10 @@ class PluginController extends BaseController {
             }
             exit($this->error("操作失败"));
         }
-        $this->assign('plugin',$row);
-        $this->assign('config_value',unserialize($row['config_value']));
+        $this -> assign('plugin',$row);
+        $this -> assign('config_value',unserialize($row['config_value']));
 
-        $this->display();
+        $this -> display();
     }
 
     /*
@@ -242,15 +242,15 @@ class PluginController extends BaseController {
             "(SELECT GROUP_CONCAT(c.name SEPARATOR ',') FROM __PREFIX__area_region b LEFT JOIN __PREFIX__region c ON c.id = b.region_id WHERE b.shipping_area_id = a.shipping_area_id) AS region_list ".
             "FROM __PREFIX__shipping_area a WHERE shipping_code = '{$row['code']}'";
         //2016-01-11 获取插件信息
-        $shipping_info = M('plugin')->where(array('code'=>$row['code'],'type'=>'shipping'))->find();
+        $shipping_info = M('plugin') -> where(array('code'=>$row['code'],'type'=>'shipping'))->find();
         $result = M()->query($sql);
 
         //获取配送名称
-        $this->assign('plugin',$row);
-        $this->assign('shipping_list',$result);
-        $this->assign('shipping_info',$shipping_info);
+        $this -> assign('plugin',$row);
+        $this -> assign('shipping_list',$result);
+        $this -> assign('shipping_info',$shipping_info);
 
-        $this->display();
+        $this -> display();
     }
     /*
      * 物流描述信息
@@ -258,7 +258,7 @@ class PluginController extends BaseController {
     public function shipping_desc(){
         $desc = I('post.desc');
         $code = I('post.code');
-        $row = M('plugin')->where(array('code'=>$code,'type'=>'shipping'))->save(array('desc'=>$desc));
+        $row = M('plugin') -> where(array('code'=>$code,'type'=>'shipping'))->save(array('desc'=>$desc));
         if(!$row)
             exit(json_encode(array('status'=>0)));
         exit(json_encode(array('status'=>1)));
@@ -269,8 +269,8 @@ class PluginController extends BaseController {
      */
     public function shipping_print(){
         $shipping = $this->checkExist();
-        $this->assign('plugin',$shipping);
-        $this->display("shipping_print");
+        $this -> assign('plugin',$shipping);
+        $this -> display("shipping_print");
 
     }
 
@@ -296,12 +296,12 @@ class PluginController extends BaseController {
             file_put_contents(APP_PATH."Admin/View/Plugin/shipping/{$code}_print.html",$html);
             exit(json_encode(array('status'=>1,'msg'=>'保存成功')));
         }
-        $this->assign('is_edit',1);
-        $this->assign('img','/plugins/shipping/'.$code.'/template.jpg');
+        $this -> assign('is_edit',1);
+        $this -> assign('img','/plugins/shipping/'.$code.'/template.jpg');
         if(file_exists("Application/Admin/View/Plugin/shipping/{$code}_edit.html")){
-            $this->display("Plugin/shipping/{$code}_edit");
+            $this -> display("Plugin/shipping/{$code}_edit");
         }else{
-            $this->display("Plugin/shipping/edit");
+            $this -> display("Plugin/shipping/edit");
         }
     }
 
@@ -320,10 +320,10 @@ class PluginController extends BaseController {
                 $shipping_area_id = I('post.id');
                 $add['update_time'] = time();
                 //  编辑
-                $row = M('shipping_area')->where(array('shipping_area_id'=>$shipping_area_id))->save($add);
+                $row = M('shipping_area') -> where(array('shipping_area_id'=>$shipping_area_id))->save($add);
                 if($row){
                     //  删除对应地区ID
-                    M('area_region')->where(array('shipping_area_id'=>$shipping_area_id))->delete();
+                    M('area_region') -> where(array('shipping_area_id'=>$shipping_area_id))->delete();
                     foreach($area_list as $k=>$v){
                         $add2[$k]['shipping_area_id'] = $shipping_area_id;
                         $add2[$k]['region_id'] = $v;
@@ -349,25 +349,25 @@ class PluginController extends BaseController {
         }
 
         $shipping_area_id = I('get.id');
-        $province = M('region')->where(array('parent_id'=>0,'level'=>1))->select();
+        $province = M('region') -> where(array('parent_id'=>0,'level'=>1))->select();
 
         if($shipping_area_id){
             $sql = "SELECT ar.region_id,r.name FROM __PREFIX__area_region ar LEFT JOIN __PREFIX__region r ON r.id = ar.region_id WHERE ar.shipping_area_id = {$shipping_area_id}";
             $select_area = M()->query($sql);
-            $setting = M('shipping_area')->where(array('shipping_code'=>$shipping['code'],'shipping_area_id'=>$shipping_area_id))->find();
+            $setting = M('shipping_area') -> where(array('shipping_code'=>$shipping['code'],'shipping_area_id'=>$shipping_area_id))->find();
             $setting['config'] = unserialize($setting['config']);
-            $this->assign('setting',$setting);
-            $this->assign('select_area',$select_area);
+            $this -> assign('setting',$setting);
+            $this -> assign('select_area',$select_area);
         }
 
-        $this->assign('province',$province);
-        $this->assign('plugin',$shipping);
+        $this -> assign('province',$province);
+        $this -> assign('plugin',$shipping);
 
         if(I('get.default') == 1){
             //默认配置
-            $this->display('shipping_list_default');
+            $this -> display('shipping_list_default');
         }else{
-            $this->display();
+            $this -> display();
         }
     }
 
@@ -377,9 +377,9 @@ class PluginController extends BaseController {
     public function del_area(){
         $shipping = $this->checkExist();
         $shipping_area_id = I('get.id');
-        $row = M('shipping_area')->where(array('shipping_area_id'=>$shipping_area_id))->delete(); // 删除配送地区表信息
+        $row = M('shipping_area') -> where(array('shipping_area_id'=>$shipping_area_id))->delete(); // 删除配送地区表信息
         if($row){
-            M('area_region')->where(array('shipping_area_id'=>$shipping_area_id))->delete();
+            M('area_region') -> where(array('shipping_area_id'=>$shipping_area_id))->delete();
             $this->success("删除成功");
         }else{
             $this->error("删除失败");

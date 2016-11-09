@@ -20,7 +20,7 @@ class SupplierCronClass
         $condition = array(
             "role_id" => 3,
         );
-        $adminList = M('admin')->where($condition)->select();
+        $adminList = M('admin') -> where($condition)->select();
         if (!empty($adminList)) {
             foreach ($adminList as $adminItem) {
                 $adminId = $adminItem['admin_id'];

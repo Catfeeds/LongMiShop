@@ -112,7 +112,7 @@ abstract class BaseModel
 
         $result = array();
         $page = new Page($sqlInstance->count());
-        $result['page'] = $page->show();
+        $result['page'] = $page -> show();
         $result['total'] = $page->totalRows;
 
         $sqlInstance = self::getModel($tableName)->field($fields);
@@ -138,7 +138,7 @@ abstract class BaseModel
             $sqlInstance = $sqlInstance->where($condition);
 
             $page = new Page($sqlInstance->count());
-            $result['page'] = $page->show();
+            $result['page'] = $page -> show();
             $result['total'] = $page->totalRows;
         }
 
@@ -199,7 +199,7 @@ abstract class BaseModel
     protected static function LinkTableRecord($tableName, $joinTableName, $on, $condition, $fields = array("*"), $logSql = false){
         $sqlInstance = self::getModel($tableName);
         $join = $joinTableName." ON ".$on;
-        $result = $sqlInstance->join($join)->field($fields)->where($condition)->find();
+        $result = $sqlInstance->join($join)->field($fields) -> where($condition)->find();
         
         if($logSql){
             echo M()->getLastSql() . '</br>';

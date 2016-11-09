@@ -67,7 +67,7 @@ class SmartyBC extends Smarty {
      */
     public function assign_by_ref($tpl_var, &$value)
     {
-        $this->assignByRef($tpl_var, $value);
+        $this -> assignByRef($tpl_var, $value);
     }
 
     /**

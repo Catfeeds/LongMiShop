@@ -40,7 +40,7 @@ function changeCodeState( $code , $userId , $orderId = null )
     if( !is_null($orderId) ){
         $couponCodeData['g_code_order_id'] = $orderId;
     }
-    $result = M('coupon_code')->where($where)->save($couponCodeData);
+    $result = M('coupon_code') -> where($where)->save($couponCodeData);
     if ($result > 0 || $result === 0) {
        return callback( true );
     }

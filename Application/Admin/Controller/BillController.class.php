@@ -9,10 +9,10 @@ class BillController extends BaseController {
         $month = date('m');
         $year = date('Y');
         $adminId = I('adminId');
-        $this->assign('adminId',$adminId);
-        $this->assign('month',$month);
-        $this->assign('year',$year);
-        $this->display();
+        $this -> assign('adminId',$adminId);
+        $this -> assign('month',$month);
+        $this -> assign('year',$year);
+        $this -> display();
     }
 
     public function ajaxAccountStatement(){
@@ -31,10 +31,10 @@ class BillController extends BaseController {
         $condition['create_time'] =  array("between",array($timeRes,$nextMonth));
 
 
-        $list = M('account_statement')->where($condition)->order('create_time desc')->select();
+        $list = M('account_statement') -> where($condition)->order('create_time desc')->select();
 
-        $this->assign('list',$list);
-        $this->display();
+        $this -> assign('list',$list);
+        $this -> display();
     }
 
 }

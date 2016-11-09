@@ -31,7 +31,7 @@ class UeditorController extends Controller
     
     public function index()
     {
-        // $this->display();
+        // $this -> display();
     }
 
     /**

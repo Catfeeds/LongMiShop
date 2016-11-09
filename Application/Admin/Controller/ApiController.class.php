@@ -9,7 +9,7 @@ class ApiController extends BaseController {
      */
     public function getRegion(){
         $parent_id = I('get.parent_id');
-        $data = M('region')->where("parent_id=$parent_id")->select();
+        $data = M('region') -> where("parent_id=$parent_id")->select();
         $html = '';
         if($data){
             foreach($data as $h){
@@ -30,9 +30,9 @@ class ApiController extends BaseController {
             foreach($spec_item as $k=>$v){
                 $new_arr[$v['name']][] = $v;
             }
-            $this->assign('specList',$new_arr);
+            $this -> assign('specList',$new_arr);
         }
-       $this->display();
+       $this -> display();
     }
     /*
      * 获取商品价格
@@ -46,7 +46,7 @@ class ApiController extends BaseController {
         $item_arr = array_values($spec_id);
         sort($item_arr);
         $key = implode('_',$item_arr);
-        $goods = M('spec_goods_price')->where(array('key'=>$key,'goods_id'=>$goods_id))->find();
+        $goods = M('spec_goods_price') -> where(array('key'=>$key,'goods_id'=>$goods_id))->find();
         $info = array(
             'status' => 1,
             'msg' => 0,
@@ -59,7 +59,7 @@ class ApiController extends BaseController {
     public function calcGoods(){
         $goods_id = I('post.goods'); // 添加商品id
         $price_type = I('post.price') ? I('post.price') : 3; // 价钱类型
-        $goods_info = M('goods')->where(array('goods_id'=>$goods_id))->find();
+        $goods_info = M('goods') -> where(array('goods_id'=>$goods_id))->find();
         if(!$goods_info['goods_id'] > 0)
             exit; // 不存在商品
         switch($price_type){
