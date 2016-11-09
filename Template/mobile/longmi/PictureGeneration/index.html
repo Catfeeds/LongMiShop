@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>装逼图片生成器</title>
+    <title>我入职了苹果</title>
     <link type="text/css" rel="stylesheet" href="__STATIC__/css/frozen.css" />
     <script src="__STATIC__/js/jquery.js"></script>
     <style>
@@ -28,9 +28,11 @@
 <body>
 <notempty name = "name">
     <header class="ui-header ui-header-positive ui-border-b">
-        <h1>长按下方图片点选保存图片</h1>
+        <h1>我入职了苹果</h1>
     </header>
     <div class="wrapper">
+        <h1 style="text-align: center; padding: 0 10%; width: 80%;">长按保存图片，然后分享到朋友圈，大家一起装吧！</h1>
+
         <img src="{:U('Mobile/pictureGeneration/run',array('name' => $name,'position' => $position))}" width="100%"/>
     </div>
     <div class="ui-btn-wrap">
@@ -38,10 +40,13 @@
     </div>
 <else/>
     <header class="ui-header ui-header-positive ui-border-b">
-        <h1>装逼图片生成器</h1>
+        <h1>我入职了苹果</h1>
     </header>
     <div class="wrapper">
         <div class="ui-form">
+            <div>
+                <img src="__STATIC__/images/pictureGenerationShow.png" style=" width: 100%;">
+            </div>
             <if condition="$signPackage neq null && $user['is_follow'] neq 1">
                 <else/>
                  <form  method="POST" id="myForm">
@@ -64,20 +69,61 @@
             </if>
         </div>
     </div>
-
-    <script>
-        $(function(){
-            $("#mySubmit").click(function(){
-                <if condition="$signPackage neq null && $user['is_follow'] neq 1">
-                $('#followMask').show();
-                <else/>
-                $("#myForm").submit();
-                </if>
-            });
-        });
-    </script>
     <if condition="$signPackage neq null && $user['is_follow'] neq 1">
-        <include file="Public/wx_button"/>
+
+        <div id="followMask" style="display: ;" onclick="$(this).css('display','none');">
+            <img src="__STATIC__/SVG/padlockImg.svg" alt="" class="padlockImg">
+            <img src="__STATIC__/images/follow2.png" class="follow">
+        </div>
+        <style>
+
+            #followMask{
+                z-index:9999999999999999999999;
+                position:fixed;
+                width:100%;
+                height:100%;
+                top:0px;
+                right:0px;
+                margin-top:0;
+                background: #000;
+                /*background-size:50%;*/
+                opacity: 0.9;
+            }
+            #followMask .padlockImg{
+                position: relative;
+                left: 95%;
+                top: -27%;
+                width: 45px;
+                height: 40px;
+                margin: -50px 0 0 -50px;
+            }
+            #followMask .follow{
+                position: relative;
+                left: 50%;
+                top: 50%;
+                width: 240px;
+                height: 452px;
+                margin: -226px 0 0 -120px;
+            }
+        </style>
+
+        <script>
+            $(function(){
+                $("#mySubmit").click(function(){
+                    $('#followMask').show();
+                });
+            });
+        </script>
+        <else/>
+
+        <script>
+            $(function(){
+                $("#mySubmit").click(function(){
+                    $("#myForm").submit();
+                });
+            });
+        </script>
+
     </if>
 </notempty>
 </body>
