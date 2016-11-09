@@ -19,8 +19,8 @@ class PictureGenerationController extends MobileBaseController {
     public function index(){
         $name = I("name");
         $position = I("position");
-        $this->assign('name',$name);
-        $this->assign('position',$position);
+        $this -> assign('name',$name);
+        $this -> assign('position',$position);
         $this -> display();
     }
 
