@@ -10,7 +10,7 @@
         </div>
     </form>
     <div class="login_btn">
-        <a href="#" onclick="exchangeSubmit();">确认</a>
+        <a href="#" id="mySubmit">确认</a>
     </div>
     <div class="login_btn1">
         <a href="{:U('Mobile/User/index')}">取消</a>
@@ -81,18 +81,24 @@
 
 </style>
 <script>
+    var lock = false;
     function exchangeSubmit(){
+        if( lock == false ){
+            return;
+        }
         var exchangeCodeValue = $('#exchangeCode').val();
         if( exchangeCodeValue == "" ){
             alert("请输入密码");
             return;
         }
+        lock = false;
         $.ajax({
             type:'post',
             url:"{:U('Mobile/exchange/checkExchangeCode')}",
             data:{code:exchangeCodeValue},
             dataType:'json',
             success:function(res){
+                lock = true;
                 if(res.state == 1){
                     window.location.href = "{:U('Mobile/Exchange/exchangeInfo')}";
                 }else{
@@ -100,11 +106,67 @@
                 }
             },
             error:function(){
+                lock = true;
                 alert('网络超时');
             }
 
         });
     }
 </script>
+<if condition="$signPackage neq null && $user['is_follow'] neq 1">
+    <div id="followMask" style="display: ;" onclick="$(this).css('display','none');">
+        <img src="__STATIC__/SVG/padlockImg.svg" alt="" class="padlockImg">
+        <img src="__STATIC__/images/follow.png" class="follow">
+    </div>
+    <style>
+
+        #followMask{
+            z-index:9999999999999999999999;
+            position:fixed;
+            width:100%;
+            height:100%;
+            top:0px;
+            right:0px;
+            margin-top:0;
+            background: #000;
+            /*background-size:50%;*/
+            opacity: 0.9;
+        }
+        #followMask .padlockImg{
+            position: relative;
+            left: 95%;
+            top: -27%;
+            width: 45px;
+            height: 40px;
+            margin: -50px 0 0 -50px;
+        }
+        #followMask .follow{
+            position: relative;
+            left: 50%;
+            top: 50%;
+            width: 240px;
+            height: 452px;
+            margin: -226px 0 0 -120px;
+        }
+    </style>
+
+    <script>
+        $(function(){
+            $("#mySubmit").click(function(){
+                $('#followMask').show();
+            });
+        });
+    </script>
+<else/>
+
+    <script>
+        $(function(){
+            $("#mySubmit").click(function(){
+                exchangeSubmit();
+            });
+        });
+    </script>
+
+</if>
 <include file="Public/footer"/>
 </html>
