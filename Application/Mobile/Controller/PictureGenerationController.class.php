@@ -29,9 +29,9 @@ class PictureGenerationController extends MobileBaseController {
     }
 
     public function run(){
-        $name = I("name","米兔");
+        $name = I("name","STEVE Jobs");
         $name = str_replace($this -> key,' ',$name);
-        $position = I("position","主编");
+        $position = I("position","CEO");
         $position = str_replace($this -> key,' ',$position);
         $im = imagecreatetruecolor(588, 800);
         $bg = imagecreatefromjpeg('./Template/mobile/longmi/Static/images/toutu.jpg');
@@ -39,8 +39,8 @@ class PictureGenerationController extends MobileBaseController {
         imagedestroy($bg);
         $black = imagecolorallocate($im, 115, 115, 115);
         $font = './Template/mobile/longmi/Static/fonts/test.ttf';
-        imagettftext($im, 24, 4, 100, 360, $black, $font, $name);
-        imagettftext($im, 24, 4, 105, 400, $black, $font, $position);
+        imagettftext($im, 24, 5, 100, 360, $black, $font, $name);
+        imagettftext($im, 18, 5, 105, 400, $black, $font, $position);
         imagejpeg($im);
         imagedestroy($im);
         header("content-type:image/jpeg");

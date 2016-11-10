@@ -146,7 +146,7 @@ class OrderLogic extends RelationModel
             "order_id" => $order_id
         );
         if( is_supplier() ){
-            $condition["admin_list"] = array( "like" , "[" . session("admin_id") . "]" );
+            $condition["admin_list"] = array( "like" , "%[" . session("admin_id") . "]%" );
         }
         $order = findDataWithCondition( 'order' , $condition );
         if( !empty($order) ){
