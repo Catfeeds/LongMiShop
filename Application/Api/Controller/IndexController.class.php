@@ -5,6 +5,11 @@ use Think\Controller;
 class IndexController extends BaseController {
     public function index(){
         $adData = M('ad') -> where('pid = 2')->field(array('ad_link','ad_name','ad_code'))->cache(true,MY_CACHE_TIME)->select();
+        $serverNname = 'http://'.$_SERVER['SERVER_NAME'];
+        foreach($adData as $key=>$item){
+            $adData[$key]['ad_code'] =  $serverNname.$item['ad_code'];
+        }
+
         exit(json_encode(array('status'=>1,'msg'=>'获取成功','result'=>array('ad'=>$adData))));
     }
  
