@@ -30,28 +30,27 @@ class BaseController extends Controller {
      * 初始化操作
      */
     public function _initialize() {
-                 
+        $_POST = json_decode(file_get_contents('php://input'),true);
         $local_sign = $this->getSign();
         $api_secret_key = C('API_SECRET_KEY');
-        
          if('www.tp-shop.cn' == $api_secret_key)
                 exit(json_encode(array('status'=>-1,'msg'=>'请修改Application/Api/Conf/config.php 文件内的秘钥','data'=>'' )));
             
         // 不参与签名验证的方法
-        if(!in_array(strtolower(ACTION_NAME), array('getservertime','getconfig','alipaynotify','goodslist','search','goodsthumimages','login')))
-        {        
-            if($local_sign != $_POST['sign'])
-            {    
-                $json_arr = array('status'=>-1,'msg'=>'签名失败!!!','data'=>'' );
-                 exit(json_encode($json_arr));
-
-            }
-            if(time() - $_POST['time'] > 600)
-            {    
-                $json_arr = array('status'=>-1,'msg'=>'请求超时!!!','data'=>'' );
-                 exit(json_encode($json_arr));
-            }
-        }       
+//        if(!in_array(strtolower(ACTION_NAME), array('getservertime','getconfig','alipaynotify','goodslist','search','goodsthumimages','login')))
+//        {
+//            if($local_sign != $_POST['sign'])
+//            {
+//                $json_arr = array('status'=>-1,'msg'=>'签名失败!!!','data'=>'' );
+//                 exit(json_encode($json_arr));
+//
+//            }
+//            if(time() - $_POST['time'] > 600)
+//            {
+//                $json_arr = array('status'=>-1,'msg'=>'请求超时!!!','data'=>'' );
+//                 exit(json_encode($json_arr));
+//            }
+//        }
     }
     
     /**
@@ -108,7 +107,7 @@ class BaseController extends Controller {
         unset($data['sign']);    // 删除这两个参数再来进行排序
         ksort($data);
         $str = implode('', $data);        
-        $str = $str.$_POST['time'].C('API_SECRET_KEY');        
+        $str = $str.$_POST['time'].C('API_SECRET_KEY');
         return md5($str);
     }
         
