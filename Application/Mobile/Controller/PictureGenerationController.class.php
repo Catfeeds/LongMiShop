@@ -29,9 +29,9 @@ class PictureGenerationController extends MobileBaseController {
     }
 
     public function run(){
-        $name = I("name","米兔");
+        $name = I("name","STEVE Jobs");
         $name = str_replace($this -> key,' ',$name);
-        $position = I("position","主编");
+        $position = I("position","CEO");
         $position = str_replace($this -> key,' ',$position);
         $im = imagecreatetruecolor(588, 800);
         $bg = imagecreatefromjpeg('./Template/mobile/longmi/Static/images/toutu.jpg');
