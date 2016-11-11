@@ -43,7 +43,7 @@
             padding-top: 0px;
             padding-bottom: 0px;
         }
-</style>
+    </style>
     <link href="__STATIC__/css/htmleaf-demo.css" rel="stylesheet" />
 
 
@@ -264,7 +264,7 @@
                 <li><a>评论</a></li>
             </ul>
         </div>
-        <div class="bd" id="tabBox1-bd">
+        <div class="bd" id="tabBox1-bd" style="min-height: 300px;">
             <div class="con">
                 <ul>
                     <li>
@@ -350,15 +350,23 @@
     </div>
 
     <script type="text/javascript">
+        var children_i = 0;
         TouchSlide( { slideCell:"#leftTabBox",
 
-//            endFun:function(i){ //高度自适应
-//                var bd = document.getElementById("tabBox1-bd");
-//                bd.parentNode.style.height = bd.children[i].children[0].offsetHeight+"px";
-//                if(i>0)bd.parentNode.style.transition="200ms";//添加动画效果
-//            }
+            endFun:function(i){ //高度自适应
+                children_i = i;
+                changeTabHeight();
+                var bd = document.getElementById("tabBox1-bd");
+                if( i>0) bd.parentNode.style.transition="200ms";//添加动画效果
+            }
 
         } );
+        function changeTabHeight(){;
+            var bd = document.getElementById("tabBox1-bd");
+            bd.parentNode.style.height = bd.children[children_i].children[0].offsetHeight+"px";
+        }
+        setInterval("changeTabHeight()",1000);
+
     </script>
 
     <div style="height:55px"></div>
