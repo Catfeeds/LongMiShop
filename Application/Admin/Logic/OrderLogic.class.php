@@ -260,7 +260,7 @@ class OrderLogic extends RelationModel
         		$btn['confirm'] = '确认';
         	}elseif($os == 1 && $ss == 0 ){
         		$btn['delivery'] = '去发货';
-        		$btn['cancel'] = '取消确认';
+//        		$btn['cancel'] = '取消确认';
         	}elseif($ss == 1 && $os == 1 && $ps == 0){
         		$btn['pay'] = '付款';
         	}elseif($ps == 1 && $ss == 1 && $os == 1){
@@ -273,16 +273,16 @@ class OrderLogic extends RelationModel
         		$btn['pay_cancel'] = '设为未付款';
         		$btn['confirm'] = '确认';
         	}elseif($os == 1 && $ps == 1 && $ss==0){
-        		$btn['cancel'] = '取消确认';
+//        		$btn['cancel'] = '取消确认';
         		$btn['delivery'] = '去发货';
         	}
         } 
                
         if($ss == 1 && $os == 1 && $ps == 1){
         	$btn['delivery_confirm'] = '确认收货';
-        	$btn['refund'] = '申请退货';
+//        	$btn['refund'] = '申请退货';
         }elseif($os == 2 || $os == 4){
-        	$btn['refund'] = '申请退货';
+//        	$btn['refund'] = '申请退货';
         }elseif($os == 3 || $os == 5){
         	$btn['remove'] = '移除';
         }

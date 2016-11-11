@@ -468,13 +468,14 @@ class BuyLogic extends BaseLogic
             'shipping_price'   =>$car_price['postFee'],//'物流价格',
             'user_money'       =>$car_price['balance'],//'使用余额',
             'coupon_price'     =>$car_price['couponFee'],//'使用优惠券',
-            'integral'         =>($car_price['pointsFee'] * tpCache('shopping.point_rate')), //'使用积分',
-            'integral_money'   =>$car_price['pointsFee'],//'使用积分抵多少钱',
+//            'integral'         =>($car_price['pointsFee'] * tpCache('shopping.point_rate')), //'使用积分',
+//            'integral_money'   =>$car_price['pointsFee'],//'使用积分抵多少钱',
             'total_amount'     =>($car_price['goodsFee'] + $car_price['postFee']),// 订单总额
             'order_amount'     =>$car_price['payables'],//'应付款金额',
             'add_time'         =>$this -> nowTime, // 下单时间
             'order_prom_id'    =>$car_price['order_prom_id'],//'订单优惠活动id',
             'order_prom_amount'=>$car_price['order_prom_amount'],//'订单优惠活动优惠了多少钱',
+            'user_note'        =>$this -> _post_data['userMessage'], // 备注信息
         );
 
         $order_id = M("Order")->data($data)->add();
@@ -511,7 +512,6 @@ class BuyLogic extends BaseLogic
             $data2['give_integral']      = $goods['give_integral']; // 购买商品赠送积分
             $data2['prom_type']          = $val['prom_type']; // 0 普通订单,1 限时抢购, 2 团购 , 3 促销优惠
             $data2['prom_id']            = $val['prom_id']; // 活动id
-            $data2['user_message']       = $this -> _post_data['message_'.$val['id']];; // 备注信息
             if( !isSuccessToAddData("order_goods" , $data2) ){
                 throw new \Exception('添加商品失败！');
             }

@@ -86,7 +86,14 @@
                         <td>
                             {$order.shipping_name}
                         </td>
-                      
+
+                    </tr>
+                    <tr>
+                        <td>用户留言:</td>
+                        <td colspan="3">{:$order['user_note']?$order['user_note']:"此订单无用户留言"}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">注意：用户订单备注与您的商品无必然关系，请注意区分对待。</td>
                     </tr>
                     </tbody>
                 </table>
@@ -120,16 +127,6 @@
                             <td class="text-right">{$good.member_goods_price}</td>
                             <td class="text-right">{$good.goods_total}</td>
                         </tr>
-                        <if condition="!empty($good['user_message'])">
-                            <tr>
-                                <td colspan="6">
-                                    <div style="word-break:break-all;overflow-y:visible;line-height: 22px;" >
-                                        用户留言:{$good['user_message']}
-                                    </div>
-
-                                </td>
-                            </tr>
-                        </if>
                     </volist>
 
                     <tr>
