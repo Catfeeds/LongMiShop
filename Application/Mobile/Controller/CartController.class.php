@@ -106,36 +106,23 @@ class CartController extends MobileBaseController {
         addressTheJump(ACTION_NAME);
         if( empty($address) ){
         	header("Location: ".U('Mobile/User/edit_address',array('source'=>'cart2')));
+            exit;
         }
         $this -> assign('address',$address);
 
-        if($this->cartLogic->cart_count($this->user_id,1) == 0 )
+        if($this->cartLogic->cart_count($this->user_id,1) == 0 ){
             $this->error ('你的购物车没有选中商品',U('Mobile/Cart/cart'));
-
-        $result = $this->cartLogic->cartList($this->user, $this->session_id,1,1); // 获取购物车商品
-        $cartList = $result['cartList'];
-
-
-        foreach($cartList as $key=>$val){
-            $jian = '';
-            foreach($cartList as $k=>$v){
-                if($key != $k){
-                    if($val['goods_id'] == $v['goods_id']){
-                        $jian = $k;
-                    }
-                }
-            }
-            if($jian && $jian > $key){
-                $cartList[$jian]['mes'] = 1;
-            }else{
-                $cartList[$key]['mes'] = 1;
-            }
+            exit;
         }
 
+        $result = $this -> cartLogic -> cartList($this->user, $this->session_id,1,1); // 获取购物车商品
+        $cartList = $result['cartList'];
         $totalPrice = $result['total_price'];
-        $sum = 0;
+
         //计算邮费
-        foreach($result['cartList'] as $key => $item){
+        $sum = 0;
+        $goods_data = array();
+        foreach( $cartList  as $key => $item){
 
             if($item['selected'] == 1){ 
               $goods_res = M('goods')->field('weight,delivery_way') -> where("goods_id = '".$item['goods_id']."'")->find();

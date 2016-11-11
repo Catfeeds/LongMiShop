@@ -25,9 +25,6 @@
         </div>
         <input type="hidden" value="{$address.address_id}" name="address_id" />
     </div>
-    <!--<div class="titel_box">-->
-    <!--<div class="titel_box_l">龙米自营</div>-->
-    <!--</div>-->
     <foreach name="cartList" item="v" key="k" >
         <if condition = "$v['selected'] == 1" >
             <div class="cp6">
@@ -41,19 +38,8 @@
                 </div>
 
             </div>
-            <if condition="$v['mes'] == 1 and 1==2">
-                <div class="site_txtS">
-                    <a href="javascript:void(0);">给商家留言 <span  class="coupon_span">点击填写</span></a>
-                    <div class="site_txt" style="height:150px;  display: none;">
-                        <textarea class="c1" name="message_{$v.id}" cols="" rows="" placeholder="点击给店家留言"></textarea>
-                    </div>
-                </div>
-            </if>
         </if>
     </foreach>
-    <div class="site_txt" style="height:150px;  display: none;">
-        <textarea class="c1" name="textarea" cols="" rows="" placeholder="点击给店家留言"></textarea>
-    </div>
     <div class="site_txt1">
         <a href="javascript:void(0);">优惠券 <span  class="coupon_span">{: !empty($couponList) ?  count($couponList).'张可用' : '无可用'}</span></a>
         <div class="mui-input-group" style="display:none">
@@ -79,7 +65,16 @@
     <div class="site_txt">运费<span>￥{$carriage_sum}</span></div>
     <div class="site_txt">优惠金额<span id="privilege">￥0</span></div>
     <div class="site_txt">合计<span id="total_fee">￥{$total_price.total_fee}</span></div>
+
+    <div class="site_txt">备注：</div>
+    <div class="site_txt" style="height:150px; margin-top: 1px;">
+        <textarea class="c1" name="userMessage" cols="" rows="" id="myMessage" placeholder="点击给店家留言"></textarea>
+    </div>
     <div style="height:60px"></div>
+
+
+
+
     <div class="com_d">
         <div class="com_d_r">
             <div class="c_btn1"><a href="#picture">立即支付</a></div>
@@ -109,6 +104,8 @@
             </li>
         </ul>
     </div>
+
+
 </form>
 </body>
 <script>
@@ -142,62 +139,39 @@
             $('#privilege').text('￥'+0);
         }
     });
-    $(function(){
-//        $.ajax({
-//            type : "POST",
-//            url:'/index.php?m=Mobile&c=Cart&a=cart3&act=order_price&t='+Math.random(),
-//            data : $('#cart2_form').serialize(),
-//            dataType: "json",
-//            success: function(data){
-//
-//                if(data.status != 1)
-//                {
-//                    alert(data.msg);
-//                    // 登录超时
-//                    if(data.status == -100)
-//                        location.href ="{:U('Mobile/User/login')}";
-//
-//                    return false;
-//                }
-//                // console.log(data);
-//                $("#postFee").text(data.result.postFee); // 物流费
-//                $("#couponFee").text(data.result.couponFee);// 优惠券
-//                $("#balance").text(data.result.balance);// 余额
-//                $("#pointsFee").text(data.result.pointsFee);// 积分支付
-//                $("#payables").text(data.result.payables);// 应付
-//                $("#order_prom_amount").text(data.result.order_prom_amount);// 订单 优惠活动
-//            }
-//        });
-    });
-    // 提交订单
+
+
+    var lock  = false;
+
     function submit_order( key )
     {
-        var kong  = true;
-        if(kong){
-            kong  = false;
-            $.ajax({
-                type : "POST",
-                url:"{:U('Mobile/Cart/cart3')}",
-                data : $('#cart2_form').serialize(),
-                dataType: "json",
-                success: function(data){
-                    if(data.state != 1)
-                    {
-                        alert(data.msg);
-                        return false;
-                    }
-                    if( key == "weChat"){
-                        location.href = "/index.php?m=Mobile&c=Order&a=toWeChatPay&id="+data.data;
-                        return false;
-                    }
-                    if( key == "balance"){
-                        toBalancePay(data.data);
-                        return false;
-                    }
-                }
-            });
+        if( lock == true ){
+            alert('正在请求中...');
+            return;
         }
-
+        kong  = true;
+        $.ajax({
+            type : "POST",
+            url:"{:U('Mobile/Cart/cart3')}",
+            data : $('#cart2_form').serialize(),
+            dataType: "json",
+            success: function(data){
+                lock  = false;
+                if(data.state != 1)
+                {
+                    alert(data.msg);
+                    return false;
+                }
+                if( key == "weChat"){
+                    location.href = "/index.php?m=Mobile&c=Order&a=toWeChatPay&id="+data.data;
+                    return false;
+                }
+                if( key == "balance"){
+                    toBalancePay(data.data);
+                    return false;
+                }
+            }
+        });
     }
 
     //mui初始化
@@ -218,6 +192,10 @@
         });
     }
 
+    /**
+     * 余额支付按钮
+     * @param id
+     */
     function toBalancePay( id ){
         $.ajax({
             type:'post',
@@ -243,12 +221,6 @@
 
         });
     }
-
-    $(document).ready(function(){
-        $(".site_txtS a").click(function(){
-            $(this).parent().find(".site_txt").toggle()
-        });
-    });
 
 </script>
 

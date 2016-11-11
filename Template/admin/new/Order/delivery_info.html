@@ -57,6 +57,13 @@
                         <td class="text-right">地址:</td>
                         <td class="text-center">{$order.address2}</td>
                     </tr>
+                    <tr>
+                        <td>用户留言:</td>
+                        <td colspan="3">{:$order['user_note']?$order['user_note']:"此订单无用户留言"}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">注意：用户订单备注与您的商品无必然关系，请注意区分对待。</td>
+                    </tr>
                     </tbody>
                 </table>
 
