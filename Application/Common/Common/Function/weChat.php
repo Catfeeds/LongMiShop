@@ -477,7 +477,7 @@ function afterSubscribe( $openid , $weChatConfig = null )
         $sendCouponsCont = M('config') -> where(array('name' => 'send_coupons_cont'))->getField("value");
         //查询是否存在优惠券
         $coupon = findDataWithCondition('coupon', array("id" => $sendCouponsId));
-        if (empty($coupon)) {
+        if ( empty($sendCouponsId) || empty($coupon)) {
             return;
         }
         if ($coupon['createnum'] > 0) {
