@@ -91,15 +91,15 @@ class WeChatController extends Controller {
             }
 
         }
-        if(empty($keyword)){
-            exit("Input something...");
-        }
+        if(!empty($keyword)){
 
-        // 图文回复
-        $wx_img = M('wx_img') -> where("keyword like '%$keyword%'")->find();
-        if($wx_img)
-        {
-            $textTpl = "<xml>
+
+
+            // 图文回复
+            $wx_img = M('wx_img') -> where("keyword like '%$keyword%'")->find();
+            if($wx_img)
+            {
+                $textTpl = "<xml>
                                 <ToUserName><![CDATA[%s]]></ToUserName>
                                 <FromUserName><![CDATA[%s]]></FromUserName>
                                 <CreateTime>%s</CreateTime>
@@ -114,17 +114,17 @@ class WeChatController extends Controller {
                                     </item>                               
                                 </Articles>
                                 </xml>";
-            $resultStr = sprintf($textTpl,$fromUsername,$toUsername,$time,'news','1',$wx_img['title'],$wx_img['desc']
-                , $wx_img['pic'], $wx_img['url']);
-            exit($resultStr);
-        }
+                $resultStr = sprintf($textTpl,$fromUsername,$toUsername,$time,'news','1',$wx_img['title'],$wx_img['desc']
+                    , $wx_img['pic'], $wx_img['url']);
+                exit($resultStr);
+            }
 
 
-        // 文本回复
-        $wx_text = M('wx_text') -> where("keyword like '%$keyword%'")->find();
-        if($wx_text)
-        {
-            $textTpl = "<xml>
+            // 文本回复
+            $wx_text = M('wx_text') -> where("keyword like '%$keyword%'")->find();
+            if($wx_text)
+            {
+                $textTpl = "<xml>
                                 <ToUserName><![CDATA[%s]]></ToUserName>
                                 <FromUserName><![CDATA[%s]]></FromUserName>
                                 <CreateTime>%s</CreateTime>
@@ -132,9 +132,11 @@ class WeChatController extends Controller {
                                 <Content><![CDATA[%s]]></Content>
                                 <FuncFlag>0</FuncFlag>
                                 </xml>";
-            $contentStr = $wx_text['text'];
-            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
-            exit($resultStr);
+                $contentStr = $wx_text['text'];
+                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
+                exit($resultStr);
+            }
+
         }
 
 
