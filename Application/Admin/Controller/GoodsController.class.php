@@ -1039,16 +1039,19 @@ class GoodsController extends BaseController {
      *
      **/
     public function tradingRecord(){
+        $userId = I('user_id');
         $thirtyDays= date('Y/m/d',(time()-30*60*60*24));//30天前
         $end = date('Y/m/d',strtotime('+1 days'));
         $sevenDays = date('Y/m/d',(time()-7*60*60*24));//7天前
         $this -> assign('thirtyDays',$thirtyDays);
         $this -> assign('end',$end);
         $this -> assign('sevenDays',$sevenDays);
+        $this -> assign('userId',$userId);
         $this -> display();
     }
 
     public function ajaxtradingRecord(){
+        $userId = I('userId'); //用户id
         $begin = strtotime(I('begin')); //开始时间
         $end = strtotime(I('end')); // 结束时间
         $type =   I('type'); //订单类型
@@ -1060,6 +1063,7 @@ class GoodsController extends BaseController {
             $condition[$prefix.'order.add_time'] = array('between',"$begin,$end");
         }
         $condition[$prefix.'order_goods.admin_id'] = is_supplier() ? session('admin_id') : '0';
+        !empty($userId) ? $condition[$prefix.'order.user_id'] = $userId   : '' ;
         switch ($type) {
             case 'dealing': //进行中
                 $condition[$prefix.'order.order_status'] = array('in','0,1');
