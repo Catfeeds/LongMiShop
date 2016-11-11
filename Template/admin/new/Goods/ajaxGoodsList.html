@@ -166,6 +166,7 @@
                             <!--<a href="javascript:void(0);" onclick="del('{$list[goods_id]}')" class="btn btn-danger" title="删除"><i class="fa fa-trash-o"></i></a>-->
                             <a href="javascript:void(0);" onclick="ClearGoodsHtml('{$list[goods_id]}')" class="btn btn-default" title="清除静态缓存页面"><i class="fa fa-fw fa-refresh"></i></a>
                             <a href="javascript:void(0);" onclick="ClearGoodsThumb('{$list[goods_id]}')" class="btn btn-default" title="清除缩略图缓存"><i class="glyphicon glyphicon-picture"></i></a>
+                            <a href="javascript:void(0);" onclick="copyGoodsData('{$list[goods_id]}')" class="btn btn-default" title="复制">复制</a>
                         </td>
                     </tr>
                 </volist>
@@ -266,6 +267,25 @@
                 }
             }
         });
+    }
+
+
+    function copyGoodsData(goodId){
+        var  kong = true;
+        if(kong){
+            kong = false;
+            $.ajax({
+                type : "POST",
+                url:"/index.php/Admin/Goods/copyGoodsData/",//+tab,
+                data:{goodId:goodId},
+                dataTpey: 'json',
+                success:function(res){
+                    kong = true;
+
+                }
+            });
+        }
+
     }
 
 
