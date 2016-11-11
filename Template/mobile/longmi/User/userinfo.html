@@ -1,58 +1,75 @@
 <include file="Public/header"/>
 <body>
 
-<div class="cp_box" style="padding-top:10px">
-    <div class="cp1">
-        <div class="c">
-            <a href="{: U('Mobile/User/edit_details')}"></a>
-        </div>
-        <div class="setup_box">
-            <div class="se-1">修改基本信息</div>
-            <div class="se-2">（地址，昵称，头像）</div>
-        </div>
-    </div>
-    <if condition = " isThirdAccount( $user ) && !isBinding( $user['user_id'] )" >
-        <if condition = " empty( $user['mobile'] ) ">
-            <div class="cp1">
-                <div class="c">
-                    <a href="{: U('Mobile/User/binding')}"></a>
-                </div>
-                <div class="setup_box">
-                    <div class="se-1">绑定手机号码</div>
-                </div>
-            </div>
-            <else/>
-            <div class="cp1">
-                <div class="c">
-                    <a href="{: U('Mobile/User/edit_mobile')}"></a>
-                </div>
-                <div class="setup_box">
-                    <div class="se-1">修改手机号码</div>
-                    <div class="se-2" id="phones">（{: $user['mobile']}）</div>
-                </div>
-            </div>
+<div class="my_nav">
+    <ul>
+        <li><a href="{: U('Mobile/User/edit_details')}">修改基本信息</a></li>
+        <if condition = " isThirdAccount( $user ) && !isBinding( $user['user_id'] )" >
+            <if condition = " empty( $user['mobile'] ) ">
+                <li><a href="{: U('Mobile/User/binding')}">绑定手机号码</a></li>
+                <else/>
+                <li><a href="{: U('Mobile/User/edit_mobile')}">修改手机号码（{: $user['mobile']}）</a></li>
+            </if>
         </if>
+        <if condition = " !isThirdAccount( $user ) " >
+            <li><a href="{: U('Mobile/User/edit_mobile')}">修改手机号码（{: $user['mobile']}）</a></li>
+            <li><a href="{: U('Mobile/User/edit_password')}">修改登录密码</a></li>
+        </if>
+    </ul>
+</div>
+<div class="cp_box" style="padding-top:10px">
 
-    </if>
-    <if condition = " !isThirdAccount( $user ) " >
-        <div class="cp1">
-            <div class="c">
-                <a href="{: U('Mobile/User/edit_mobile')}"></a>
-            </div>
-            <div class="setup_box">
-                <div class="se-1">修改手机号码</div>
-                <div class="se-2" id="phones">（{: $user['mobile']}）</div>
-            </div>
-        </div>
-        <div class="cp1">
-            <div class="c">
-                <a href="{: U('Mobile/User/edit_password')}"></a>
-            </div>
-            <div class="setup_box">
-                <div class="se-1">修改登录密码</div>
-            </div>
-        </div>
-    </if>
+    <!--<div class="cp1">-->
+        <!--<div class="c">-->
+            <!--<a href="{: U('Mobile/User/edit_details')}"></a>-->
+        <!--</div>-->
+        <!--<div class="setup_box">-->
+            <!--<div class="se-1">修改基本信息</div>-->
+            <!--<div class="se-2">（地址，昵称，头像）</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<if condition = " isThirdAccount( $user ) && !isBinding( $user['user_id'] )" >-->
+        <!--<if condition = " empty( $user['mobile'] ) ">-->
+            <!--<div class="cp1">-->
+                <!--<div class="c">-->
+                    <!--<a href="{: U('Mobile/User/binding')}"></a>-->
+                <!--</div>-->
+                <!--<div class="setup_box">-->
+                    <!--<div class="se-1">绑定手机号码</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<else/>-->
+            <!--<div class="cp1">-->
+                <!--<div class="c">-->
+                    <!--<a href="{: U('Mobile/User/edit_mobile')}"></a>-->
+                <!--</div>-->
+                <!--<div class="setup_box">-->
+                    <!--<div class="se-1">修改手机号码</div>-->
+                    <!--<div class="se-2" id="phones">（{: $user['mobile']}）</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</if>-->
+
+    <!--</if>-->
+    <!--<if condition = " !isThirdAccount( $user ) " >-->
+        <!--<div class="cp1">-->
+            <!--<div class="c">-->
+                <!--<a href="{: U('Mobile/User/edit_mobile')}"></a>-->
+            <!--</div>-->
+            <!--<div class="setup_box">-->
+                <!--<div class="se-1">修改手机号码</div>-->
+                <!--<div class="se-2" id="phones">（{: $user['mobile']}）</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="cp1">-->
+            <!--<div class="c">-->
+                <!--<a href="{: U('Mobile/User/edit_password')}"></a>-->
+            <!--</div>-->
+            <!--<div class="setup_box">-->
+                <!--<div class="se-1">修改登录密码</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</if>-->
 
 
     <div class="login_btn9"><a href="{: U('Mobile/User/index')}" style="width:100%">返回</a></div>
