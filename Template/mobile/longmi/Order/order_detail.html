@@ -63,6 +63,12 @@
 	<div class="site_txt">优惠金额<span>￥{$order_info['coupon_price']}</span></div>
 </if>
 <div class="site_txt">合计<span>￥{$order_info['order_amount']}</span></div>
+<notempty name="order_info.user_note">
+	<div class="site_txt">备注：</div>
+	<div class="site_txt" style="height:150px; margin-top: 1px;">
+		<textarea class="c1" disabled>{$order_info['user_note']}</textarea>
+	</div>
+</notempty>
 <!--<div class="l">-->
 	<!--<div class="l_r">-->
 		<!--<div class="l_btn1"><a href="tel:4000787725" style="width:120px">拨打客服电话</a></div>-->
