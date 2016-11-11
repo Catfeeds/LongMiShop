@@ -14,7 +14,9 @@
 
     <div class="more-box">
       <div class="more-box-l">今日数据
-        <span class="a1">（更新时间：{$list.0.create_time|date='Y-m-d H:i:s',###}）</span>
+        <notempty name = "list">
+          <span class="a1">（更新时间：{$list.0.create_time|date='Y-m-d H:i:s',###}）</span>
+        </notempty>
       </div>
     </div>
     <div class="data-box">

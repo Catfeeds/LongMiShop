@@ -26,19 +26,19 @@ class IndexController extends IndexBaseController {
     	$this -> display();
     }
     public function test4(){
-        $order_goods_list  = selectDataWithCondition("return_goods");
-        foreach ( $order_goods_list as $order_goods_item ){
-            $data = array();
-            if( $order_goods_item['status'] == 2 ){
-                if( $order_goods_item['remark'] == "" ){
-                    $data["result"] = 2;
-                }else{
-                    $data["result"] = 1;
-                }
-            }
-            M('return_goods') -> where( array("id" => $order_goods_item['id']) ) -> save($data);
-        }
-
+//        $order_goods_list  = selectDataWithCondition("return_goods");
+//        foreach ( $order_goods_list as $order_goods_item ){
+//            $data = array();
+//            if( $order_goods_item['status'] == 2 ){
+//                if( $order_goods_item['remark'] == "" ){
+//                    $data["result"] = 1;
+//                }else{
+//                    $data["result"] = 2;
+//                }
+//            }
+//            M('return_goods') -> where( array("id" => $order_goods_item['id']) ) -> save($data);
+//        }
+//
 
         exit;
         $list = M("system_module") -> where("ctl = ''") -> select();
@@ -62,7 +62,6 @@ class IndexController extends IndexBaseController {
         $jsSdkLogic -> push_msg( "owjy5v4020Mh7yNAT0aVapESwqNM" , "<a href='http://www.baidu.com'>23333</a>" );
     }
     public function test(){
-        afterSubscribe("owjy5v4020Mh7yNAT0aVapESwqNM");
         exit;
         set_time_limit(0);
         $model = new Model();
