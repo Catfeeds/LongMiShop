@@ -1100,6 +1100,13 @@ class GoodsController extends BaseController {
         $this -> display();
     }
 
+    /**
+     * 供应商数据复制
+     *
+     **/
+    public function copyGoodsData(){
+        $goodId = I('goodId');
+    }
 
 
 
