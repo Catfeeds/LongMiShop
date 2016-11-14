@@ -1106,11 +1106,54 @@ class GoodsController extends BaseController {
      **/
     public function copyGoodsData(){
         $goodId = I('goodId');
-        $data = M('goods')->where("goods_id = ".$goodId."")->find();
+        $where['goods_id'] = $goodId;
+        $data = M('goods')->where($where)->find();
+        $goodsPriceList  = M('spec_goods_price')->where($where)->select();
+        $goodImages = M('goods_images')->where($where)->select();
         unset($data['goods_id']);
         $data['on_time'] = '';
         $data['is_on_sale'] = 0;
+        $data['is_hot'] = 0;
+        $data['is_recommend'] = 0;
+        $data['is_new'] = 0;
+        $data['goods_content'] = '';
+        if(!empty($data['original_img'])){
+            $file =  pathinfo($data['original_img']);
+            $srand = mt_rand().'.'.$file['extension'];
+            $oldImg = $_SERVER['DOCUMENT_ROOT'].$data['original_img'];
+            $urlImg = $file['dirname']."/".$srand;
+            $newImg = $_SERVER['DOCUMENT_ROOT'].$urlImg;
+            $ImgRes  = copy($oldImg,$newImg);
+            if($ImgRes){
+                $data['original_img'] = $urlImg;
+            }
+        }
         $info = M('goods')->add($data);
+        if(!empty($goodsPriceList) && $info){
+            foreach($goodsPriceList as $item){
+                $item['goods_id'] = $info;
+                M('spec_goods_price')->add($item);
+            }
+        }
+        //<p><img src="/Public/upload/goods/2016/10-28/5812b748652b3.jpg" style="float:none;" title="1.jpg"/></p><p><img src="/Public/upload/goods/2016/10-28/5812b7487aced.jpg" style="float:none;" title="2.jpg"/></p><p><img src="/Public/upload/goods/2016/10-28/5812b7488c2e3.jpg" style="float:none;" title="3.jpg"/></p><p><br/></p>
+
+
+        if(!empty($goodImages)){
+            foreach($goodImages as $imgItem){
+                unset($imgItem['img_id']);
+                $fileImages = pathinfo($imgItem['image_url']);
+                $srandImage = mt_rand().'.'.$fileImages['extension'];
+                $oldImages = $_SERVER['DOCUMENT_ROOT'].$imgItem['image_url'];
+                $urlImages = $fileImages['dirname'].'/'.$srandImage;
+                $newImages = $_SERVER['DOCUMENT_ROOT'].$urlImages;
+                $ImagesRes  = copy($oldImages,$newImages);
+                if($ImagesRes){
+                    $imgItem['image_url'] = $urlImages;
+                    $imgItem['goods_id'] = $info;
+                    M('goods_images')->add($imgItem);
+                }
+            }
+        }
         if($info){
             exit(json_encode(callback(true,'复制成功')));
         }
@@ -1118,6 +1161,7 @@ class GoodsController extends BaseController {
 
     }
 
+  
 
 
 
