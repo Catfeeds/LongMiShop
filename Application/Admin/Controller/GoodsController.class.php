@@ -1106,6 +1106,16 @@ class GoodsController extends BaseController {
      **/
     public function copyGoodsData(){
         $goodId = I('goodId');
+        $data = M('goods')->where("goods_id = ".$goodId."")->find();
+        unset($data['goods_id']);
+        $data['on_time'] = '';
+        $data['is_on_sale'] = 0;
+        $info = M('goods')->add($data);
+        if($info){
+            exit(json_encode(callback(true,'复制成功')));
+        }
+        exit(json_encode(callback(false,'复制失败')));
+
     }
 
 

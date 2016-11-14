@@ -278,10 +278,13 @@
                 type : "POST",
                 url:"/index.php/Admin/Goods/copyGoodsData/",//+tab,
                 data:{goodId:goodId},
-                dataTpey: 'json',
+                dataType: 'json',
                 success:function(res){
+                    alert(res.msg);
+                    if(res.state == 1){
+                        location.reload();
+                    }
                     kong = true;
-
                 }
             });
         }
