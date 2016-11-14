@@ -97,14 +97,13 @@
 	padding-left: 10px;
 	padding-right: 10px;
 }
-.c_btn555_box {
+.c_btn55_box {
+	overflow: hidden;
+	width: 210px;
 	margin-right: auto;
 	margin-left: auto;
 	margin-bottom: 20px;
-	width: 142px;
-	height: 36px;
-	margin-top: -10px;
-	background-color: #FFF;
+	margin-top: 20px;
 }
 .c_btn55 a {
 	border-radius: 4px;

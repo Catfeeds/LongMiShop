@@ -35,9 +35,8 @@
         before_request = 0;
 
         var ajaxData=  $('#cart_form').serialize();
-        var html = '<div class="mui-loading"><div class="mui-spinner"></div></div>';
+        var html = '<div class="mui-loading" style=" text-align:center"><img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important"></div>';
         $("#cart_form").html(html);
-
         $.ajax({
             type : "POST",
             url:"{:U('Mobile/Cart/ajaxCartList')}",//+tab,
