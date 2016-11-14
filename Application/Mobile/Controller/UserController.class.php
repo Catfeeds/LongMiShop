@@ -232,6 +232,8 @@ class UserController extends MobileBaseController {
         $delivery = M('delivery_doc') -> where($where)->limit(1)->find();
         if(empty($delivery)){
             $this -> assign('expressMessage', '查询物流失败' );
+            $this -> display('error');
+            exit;
         }
         $result = kuaidi($delivery['invoice_no'],$delivery['shipping_name']);
 //        dd($result);
@@ -260,7 +262,7 @@ class UserController extends MobileBaseController {
             $this -> assign('queryUrl',$queryUrl);
             $this -> assign('notFind',$notFind);
             $this -> assign('isNoFindApi',true);
-            $this -> display();
+            $this -> display('error');
             exit;
         }
         if( $result['status'] == 200  ){
@@ -270,11 +272,16 @@ class UserController extends MobileBaseController {
             $this -> assign('pay_time',$pay_time['pay_time']);
             $this -> assign('expressData', $result);
             $this -> assign('odd_numbers',$delivery['invoice_no']);
+            $this -> display();
          }else{
              $this -> assign('expressMessage', $result['message'] );
+             $this -> display('error');
+             exit;
          }
 
-        $this -> display();
+
+
+
     }
 
 
