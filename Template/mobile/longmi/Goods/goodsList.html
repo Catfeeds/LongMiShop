@@ -21,45 +21,48 @@
 		<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4">
 		</div>
 		<div class="mui-slider-group">
-			<div id="item1mobile" class="mui-slider-item mui-control-content <if condition="($_GET[sort] eq 'is_new') or ($_GET[sort] eq 'is_new')">mui-active </if>">
+			<div id="item1mobile"  style="background-color:#efeff4 !important"  class="mui-slider-item mui-control-content <if condition="($_GET[sort] eq 'is_new') or ($_GET[sort] eq 'is_new')">mui-active </if>">
 				<div id="scroll1" class="mui-scroll-wrapper">
-						<div class="mui-scroll">
-							<div class="mui-loading">
-								<div class="mui-spinner">
-								</div>
-							</div>
+
+					<div class="mui-scroll">
+						<div class="mui-loading" style=" text-align:center">
+							<img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important">
 						</div>
+					</div>
 
 				</div>
 			</div>
-			<div id="item2mobile" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'sales_sum'">mui-active </if>">
+			<div id="item2mobile"  style="background-color:#efeff4 !important" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'sales_sum'">mui-active </if>">
 				<div id="scroll2" class="mui-scroll-wrapper">
-						<div class="mui-scroll">
-							<div class="mui-loading">
-								<div class="mui-spinner">
-								</div>
-							</div>
+
+					<div class="mui-scroll">
+						<div class="mui-loading" style=" text-align:center">
+							<img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important">
 						</div>
+					</div>
+
 				</div>
 			</div>
-			<div id="item3mobile" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'is_recommend'">mui-active </if>">
+			<div id="item3mobile"  style="background-color:#efeff4 !important" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'is_recommend'">mui-active </if>">
 				<div id="scroll3" class="mui-scroll-wrapper">
-						<div class="mui-scroll">
-							<div class="mui-loading">
-								<div class="mui-spinner">
-								</div>
-							</div>
+
+					<div class="mui-scroll">
+						<div class="mui-loading" style=" text-align:center">
+							<img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important">
 						</div>
+					</div>
+
 				</div>
 			</div>
-			<div id="item4mobile" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'shop_price'">mui-active </if>">
+			<div id="item4mobile"  style="background-color:#efeff4 !important" class="mui-slider-item mui-control-content <if condition="$_GET[sort] eq 'shop_price'">mui-active </if>">
 				<div id="scroll4" class="mui-scroll-wrapper">
-						<div class="mui-scroll">
-							<div class="mui-loading">
-								<div class="mui-spinner">
-								</div>
-							</div>
+
+					<div class="mui-scroll">
+						<div class="mui-loading" style=" text-align:center">
+							<img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important">
 						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -71,7 +74,7 @@
 	});
 	var  rank = 1;
 	var  sort_asc = '';
-	var loadingHtml  = '<div class="mui-scroll"><div class="mui-loading"><div class="mui-spinner"></div></div></div>';
+	var loadingHtml  = '<div class="mui-scroll"><div class="mui-loading" style=" text-align:center"><img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important"></div></div>';
 	var kong = true;
 	(function($) {
 		$('.mui-scroll-wrapper').scroll({
@@ -179,16 +182,6 @@
 	});
 </script>
 <include file="Public/nav"/>
-
-<style>
-	.mui-table-view.mui-grid-view .mui-table-view-cell {
-		padding: 0 0 6px 0 !important;
-		margin-right:0px !important;
-	}
-	.mui-table-view.mui-grid-view .mui-table-view-cell>a:not(.mui-btn) {
-		margin:  0 -14px -11px 0 !important;
-	}
-</style>
 
 </body>
 <include file="Public/footer"/>
