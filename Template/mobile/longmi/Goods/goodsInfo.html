@@ -180,6 +180,30 @@
         #leftTabBox .bd .con ul{
             min-height:100px;
         }
+
+
+        .fixedTop{
+            position: fixed;
+            top:0px;
+            z-index: 22;
+        }
+
+        /*滚动后css*/
+        .com_d_so {
+            background-color: #FFF;
+            padding: 5px;
+            overflow: hidden;
+            text-align: center;
+            position: fixed;
+            _position: absolute;
+            bottom: 0px;
+            _bottom: 0px;
+            _margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop);
+            width: 100%;
+            max-width: 800px;
+            z-index: 2;
+            box-shadow: 10px 0.866px 10px 1px rgb( 210, 210, 210 );
+        }
     </style>
 </head>
 <body>
@@ -261,7 +285,7 @@
     <div style="clear:both"></div>
     <div id="leftTabBox" class="tabBox">
         <div class="hd">
-            <ul class="fixed">
+            <ul class="fixed" id="fixedTop">
                 <li><a>商品信息</a></li>
                 <li><a>规格参数</a></li>
                 <li><a>评论</a></li>
@@ -687,6 +711,26 @@
 <script src="__STATIC__/js/mui.previewimage.js"></script>
 <script>
     mui.previewImage();
+    $(function(){
+        $(window).scroll(function() {
+            fixedTop();
+        });
+        fixedTop();
+    });
+    function fixedTop(){
+        var fixedTopTop = $("#leftTabBox .hd").offset().top;
+        var scrollTop = $(window).scrollTop();
+        if(
+                scrollTop < fixedTopTop
+        ){
+            $('.com_d').removeClass("com_d_so");
+            $("#fixedTop").removeClass("fixedTop");
+        }else{
+            $('.com_d').addClass("com_d_so");
+            $("#fixedTop").addClass("fixedTop");
+        }
+    }
+
 </script>
 <style>
     .m33 li{ border: 1px solid #eaeaea;}
