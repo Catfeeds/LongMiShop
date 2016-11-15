@@ -93,6 +93,11 @@ class IndexController extends BaseController {
             $count['tnum'] = '["'.$count['tnum'].'"]';
         }
 
+        //未处理会员提现
+        $count['userWithdrawal'] = M('withdraw_deposit')->where("status = 1")->count();
+
+        //未处理商户提现
+        $count['adminWithdrawal'] = M('admin_withdrawals')->where("state = 0")->count();
 
         $this -> assign('count',$count);
         $this -> display();
