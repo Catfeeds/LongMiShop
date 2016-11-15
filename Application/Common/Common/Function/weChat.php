@@ -527,6 +527,7 @@ function weChatPullingMessage( $openid , $needPic = true ){
         }
         if( !empty( $userData['subscribe'] ) ){
             $save['is_follow'] = 1;
+            $save['follow_time'] = $userData['subscribe_time'] ;
         }else{
             $save['is_follow'] = 0;
         }
