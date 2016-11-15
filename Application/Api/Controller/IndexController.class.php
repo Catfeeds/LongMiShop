@@ -4,14 +4,15 @@ namespace Api\Controller;
 use Think\Controller;
 class IndexController extends BaseController {
     public function index(){
-        $adData = M('ad') -> where('pid = 2')->field(array('ad_link','ad_name','ad_code'))->cache(true,MY_CACHE_TIME)->select();
-        $serverNname = 'http://'.$_SERVER['SERVER_NAME'];
-        foreach($adData as $key=>$item){
-            $adData[$key]['ad_code'] =  $serverNname.$item['ad_code'];
-        }
-
-        exit(json_encode(array('status'=>1,'msg'=>'获取成功','result'=>array('ad'=>$adData))));
+        $adData = M('ad') -> where('pid = 2 AND enabled = 1')->field(array('ad_link','ad_name','ad_code'))->cache(true,MY_CACHE_TIME)->select();
+        $adData = changeAddress($adData,'ad_code');
+        $newGoods = M("goods") -> where(array("is_new"=>1)) -> order("sort" ) -> limit('10') -> select();
+        $newGoods = changeAddress($newGoods,'original_img');
+        $hotGoods = M("goods") -> where(array("is_hot"=>1)) -> order("sort" ) -> limit('6') -> select();
+        $hotGoods = changeAddress($hotGoods,'original_img');
+        exit(json_encode(callback(true,'获取成功',array('adv'=>$adData,'new'=>$newGoods,'top'=>$hotGoods))));
     }
+
  
     /*
      * 获取首页数据
