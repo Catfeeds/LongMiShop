@@ -86,6 +86,7 @@ body {
 }
 .news {
 	position: relative;
+	right: 12px;
 }
 .news_t {
 	position: absolute;
@@ -402,13 +403,13 @@ body {
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
-	background-image: url(../images/top_bg.jpg);
+	background-image: url(../images/top_bg1.jpg);
 	background-repeat: no-repeat;
 	background-position: center top;
 	padding-top: 60px;
 	padding-bottom: 50px;
 	position: relative;
-	background-size: 100% 100%
+	background-size:  100% 100%
 }
 .user img {
 	height: 64px;
@@ -474,6 +475,7 @@ body {
 	background-image: url(../SVG/a1.svg);
 	background-repeat: no-repeat;
 	background-position: center 20px;
+	background-size:28px 28px
 }
 .er1 li span {
 	font-size: 18px;
@@ -906,8 +908,8 @@ body {
 .price {
 	padding-top: 20px;
 	padding-bottom: 20px;
-	padding-right: 5px;
-	padding-left: 5px;
+	padding-right: 10px;
+	padding-left: 10px;
 	overflow: hidden;
 	background-color: #FFF;
 }
