@@ -1110,18 +1110,36 @@ class GoodsController extends BaseController {
         $data = M('goods')->where($where)->find();
         $goodsPriceList  = M('spec_goods_price')->where($where)->select();
         $goodImages = M('goods_images')->where($where)->select();
-//        $str='<p><img src="/Public/upload/goods/2016/10-28/5812b748652b3.jpg" style="float:none;" title="1.jpg"/></p><p><img src="/Public/upload/goods/2016/10-28/5812b7487aced.jpg" style="float:none;" title="2.jpg"/></p><p><img src="/Public/upload/goods/2016/10-28/5812b7488c2e3.jpg" style="float:none;" title="3.jpg"/></p><p><br/></p>';
-//
-        $str = htmlspecialchars_decode($data['goods_content']);
-        $pattern="/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg]))[\'|\"].*?[\/]?>/";
-        preg_match_all($pattern,$str,$match);
+        
+        if(!empty($data['goods_content'])){
+            $str = htmlspecialchars_decode($data['goods_content']);
+            $pattern="/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg]))[\'|\"].*?[\/]?>/";
+            preg_match_all($pattern,$str,$match);
+            foreach($match[1] as $goodsContItem){
+                if(strstr($goodsContItem,'http')){
+                    continue;
+                }else{
+                    $pathInfo = pathinfo($goodsContItem);
+                    $ContSrand = mt_rand().'.'.$pathInfo['extension'];
+                    $ContOldImg = $_SERVER['DOCUMENT_ROOT'].$goodsContItem;
+                    $ContImg = $pathInfo['dirname'].'/'.$ContSrand;
+                    $ContNewImg = $_SERVER['DOCUMENT_ROOT'].$ContImg;
+                    $res = copy($ContOldImg,$ContNewImg);
+                    if($res){
+                        $str = str_replace($goodsContItem,$ContImg,$str);
+                    }
+                }
+
+            }
+            $data['goods_content'] = htmlspecialchars($str);
+        }
+
         unset($data['goods_id']);
         $data['on_time'] = '';
         $data['is_on_sale'] = 0;
         $data['is_hot'] = 0;
         $data['is_recommend'] = 0;
         $data['is_new'] = 0;
-        $data['goods_content'] = '';
         if(!empty($data['original_img'])){
             $file =  pathinfo($data['original_img']);
             $srand = mt_rand().'.'.$file['extension'];
@@ -1140,8 +1158,6 @@ class GoodsController extends BaseController {
                 M('spec_goods_price')->add($item);
             }
         }
-        //<p><img src="/Public/upload/goods/2016/10-28/5812b748652b3.jpg" style="float:none;" title="1.jpg"/></p><p><img src="/Public/upload/goods/2016/10-28/5812b7487aced.jpg" style="float:none;" title="2.jpg"/></p><p><img src="/Public/upload/goods/2016/10-28/5812b7488c2e3.jpg" style="float:none;" title="3.jpg"/></p><p><br/></p>
-
 
         if(!empty($goodImages)){
             foreach($goodImages as $imgItem){
