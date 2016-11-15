@@ -1128,6 +1128,9 @@ class UserController extends MobileBaseController {
         $limit = 3;
         $Page = new Page($count,$limit);
         $art_list = M('article')->field('article_id,title,content,thumb,publish_time') -> where($where)->order('publish_time DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
+        foreach($art_list as $artKey=>$artItem){
+            $art_list[$artKey]['desc'] = str_replace(array("&nbsp;",' '),'',subtext(strip_tags(htmlspecialchars_decode($artItem['content'])),60));
+        }
         $need_top = I('need_top',0);
         $this -> assign('need_top',$need_top);
         $this -> assign('art_list',$art_list);
@@ -1144,8 +1147,10 @@ class UserController extends MobileBaseController {
     public function message_details(){
         $id = I('get.id','','int');
         if(!empty($id)){
-            $art = M('article')->field('content') -> where("article_id = '".$id."'")->find();
-            $this -> assign('art',$art['content']);
+            $artWhere['article_id'] =  $id;
+            $art = M('article')->field('title,content,publish_time,author') -> where($artWhere)->find();
+            M('article')->where($artWhere)->setInc('click');
+            $this -> assign('art',$art);
         }
         $this -> display();
         
