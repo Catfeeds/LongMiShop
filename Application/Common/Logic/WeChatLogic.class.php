@@ -321,11 +321,15 @@ class WeChatLogic extends BaseLogic
 
     /**
      * 获取用户
+     * @param null $openid
      * @return mixed
      */
-    public function getWeChatUserList(){
+    public function getWeChatUserList( $openid = null ){
         $accessToken = $this -> weChatConfig['web_access_token'];
         $url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=" . $accessToken;
+        if( !is_null( $openid ) ){
+            $url .= "&openid=".$openid;
+        }
         $call_back_url = json_decode(file_get_contents($url),true);
         if(isset($call_back_url->errcode)){
             exit;

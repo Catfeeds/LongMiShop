@@ -5,9 +5,11 @@ use Think\Controller;
 class ToolController extends Controller {
 
     public function _initialize(){
+        set_time_limit(0);
     }
 
     public function index(){
+        $thisOpenid = null;
         $weChatUserList = getWeChatUserList();
         if ( !empty( $weChatUserList ) ){
             foreach ( $weChatUserList as $openid ) {
