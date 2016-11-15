@@ -177,11 +177,14 @@
                 opacity: 0;
             }
         }
+        #leftTabBox .bd .con ul{
+            min-height:100px;
+        }
     </style>
 </head>
 <body>
 <div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
-<div class="commodity_top" style="position:inherit; background: #fff; height: 51px;">
+<div class="commodity_top" style="z-index: 12;">
     <div class="commodity_top_l"><a href="javascript:void(0);" onclick="history.back(-1);"><img src="__STATIC__/SVG/b1.svg"></a></div>
     <div class="commodity_top_r"><a href="javascript:void(0);" onclick="{: isWeChatBrowser() ? 'javascript:share();' : 'http://www.jiathis.com/share' }"><img src="__STATIC__/SVG/b2.svg"></a></div>
 </div>
@@ -264,7 +267,7 @@
                 <li><a>评论</a></li>
             </ul>
         </div>
-        <div class="bd" id="tabBox1-bd" style="min-height: 300px;">
+        <div class="bd" id="tabBox1-bd">
             <div class="con">
                 <ul>
                     <li>
