@@ -9,6 +9,7 @@ class ToolController extends Controller {
     }
 
     public function index(){
+        $thisOpenid = null;
         $weChatUserList = getWeChatUserList();
         if ( !empty( $weChatUserList ) ){
             foreach ( $weChatUserList as $openid ) {
