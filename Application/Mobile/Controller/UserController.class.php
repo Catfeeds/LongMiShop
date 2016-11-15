@@ -1148,7 +1148,7 @@ class UserController extends MobileBaseController {
         $id = I('get.id','','int');
         if(!empty($id)){
             $artWhere['article_id'] =  $id;
-            $art = M('article')->field('title,content,publish_time,author') -> where($artWhere)->find();
+            $art = M('article')->field('title,content,publish_time,author,click') -> where($artWhere)->find();
             M('article')->where($artWhere)->setInc('click');
             $this -> assign('art',$art);
         }
