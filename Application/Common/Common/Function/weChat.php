@@ -551,10 +551,11 @@ function weChatPullingMessage( $openid , $needPic = true ){
 
 /**
  * 获取openid 列表
- * @return array|mixed
+ * @param null $openid
+ * @return mixed
  */
-function getWeChatUserList(){
+function getWeChatUserList( $openid = null ){
     $WeChatLogic = new \Common\Logic\WeChatLogic();
-    $res = $WeChatLogic -> getWeChatUserList();
+    $res = $WeChatLogic -> getWeChatUserList( $openid );
     return $res['data']["openid"];
 }
