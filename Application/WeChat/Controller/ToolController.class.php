@@ -9,12 +9,14 @@ class ToolController extends Controller {
 
     public function index(){
         $weChatUserList = getWeChatUserList();
-        setLogResult( $weChatUserList , "微信列表" , "test" );
         if ( !empty( $weChatUserList ) ){
             foreach ( $weChatUserList as $openid) {
                 $res = weChatPullingMessage( $openid , false );
-                setLogResult( $res , "微信info" , "test" );
+                echo $openid . "[" . $res . "]<br>";
             }
         }
+        echo "===========<br>";
+        echo "拉取完成";
+        exit;
     }
 }

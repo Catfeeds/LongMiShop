@@ -555,7 +555,5 @@ function weChatPullingMessage( $openid , $needPic = true ){
 function getWeChatUserList(){
     $WeChatLogic = new \Common\Logic\WeChatLogic();
     $res = $WeChatLogic -> getWeChatUserList();
-    $openidList = json_decode( $res['data'] , true );
-    $openidList = explode( ","  , $openidList["openid"] );
-    return $openidList;
+    return $res['data']["openid"];
 }
