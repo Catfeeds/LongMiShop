@@ -37,6 +37,19 @@
                 <p class="data-t1">{$count['member']}</p>
                 <p class="data-t2">粉丝数量</p>
             </div>
+            <if condition="!is_supplier()">
+                <div class="data">
+                    <div class="click"><a ></a></div>
+                    <p class="data-t1">{$count['userWithdrawal']}</p>
+                    <p class="data-t2">待处理会员提现申请</p>
+                </div>
+                <div class="data">
+                    <div class="click"><a ></a></div>
+                    <p class="data-t1">{$count['adminWithdrawal']}</p>
+                    <p class="data-t2">待处理商户提现申请</p>
+                </div>
+            </if>
+
         </div>
 
 
