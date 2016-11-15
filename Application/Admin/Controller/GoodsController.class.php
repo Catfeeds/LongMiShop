@@ -1110,11 +1110,11 @@ class GoodsController extends BaseController {
         $data = M('goods')->where($where)->find();
         $goodsPriceList  = M('spec_goods_price')->where($where)->select();
         $goodImages = M('goods_images')->where($where)->select();
-       // $str='<p><img src="/Public/upload/goods/2016/10-28/5812b748652b3.jpg" style="float:none;" title="1.jpg"/></p><p><img src="/Public/upload/goods/2016/10-28/5812b7487aced.jpg" style="float:none;" title="2.jpg"/></p><p><img src="/Public/upload/goods/2016/10-28/5812b7488c2e3.jpg" style="float:none;" title="3.jpg"/></p><p><br/></p>';
-        $str = $data['goods_content'];
+//        $str='<p><img src="/Public/upload/goods/2016/10-28/5812b748652b3.jpg" style="float:none;" title="1.jpg"/></p><p><img src="/Public/upload/goods/2016/10-28/5812b7487aced.jpg" style="float:none;" title="2.jpg"/></p><p><img src="/Public/upload/goods/2016/10-28/5812b7488c2e3.jpg" style="float:none;" title="3.jpg"/></p><p><br/></p>';
+//
+        $str = htmlspecialchars_decode($data['goods_content']);
         $pattern="/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg]))[\'|\"].*?[\/]?>/";
         preg_match_all($pattern,$str,$match);
-        dd($match);
         unset($data['goods_id']);
         $data['on_time'] = '';
         $data['is_on_sale'] = 0;
