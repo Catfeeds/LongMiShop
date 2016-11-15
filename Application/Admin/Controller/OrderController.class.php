@@ -14,9 +14,9 @@ class OrderController extends BaseController {
         parent::_initialize();
         C('TOKEN_ON',false); // 关闭表单令牌验证
         // 订单 支付 发货状态
-        $this -> order_status =C('ORDER_STATUS');
-        $this -> shipping_status =C('SHIPPING_STATUS');
-        $this -> pay_status =C('PAY_STATUS');
+        $this -> order_status = C('ORDER_STATUS');
+        $this -> shipping_status = C('SHIPPING_STATUS');
+        $this -> pay_status = C('PAY_STATUS');
         $this -> assign('order_status',C('ORDER_STATUS'));
         $this -> assign('pay_status',C('PAY_STATUS'));
         $this -> assign('shipping_status',C('SHIPPING_STATUS'));
@@ -287,7 +287,7 @@ class OrderController extends BaseController {
     public function return_del(){
         $id = I('get.id');
         M('return_goods') -> where("id = $id")->delete();
-        $this->success('成功删除!');
+        $this -> success('成功删除!');
     }
     /**
      * 退换货操作
@@ -598,8 +598,9 @@ class OrderController extends BaseController {
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">实际支付</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付方式</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付状态</td>';
-    	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">发货状态</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">发货状态</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">商品信息</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">用户备注</td>';
     	$strTable .= '</tr>';
 //    	dd(count($orderList));
     	foreach($orderList as $k=>$val){
@@ -615,7 +616,7 @@ class OrderController extends BaseController {
             $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['pay_name'].'</td>';
             $tempString .= '<td style="text-align:left;font-size:12px;">'.$this->pay_status[$val['pay_status']].'</td>';
             $tempString .= '<td style="text-align:left;font-size:12px;">'.$this->shipping_status[$val['shipping_status']].'</td>';
-    		$orderGoods = D('order_goods') -> where('order_id='.$val['order_id'])->select();
+            $orderGoods = D('order_goods') -> where('order_id='.$val['order_id'])->select();
 
     		$strGoods="";
     		foreach($orderGoods as $goods){
@@ -627,13 +628,13 @@ class OrderController extends BaseController {
                     continue;
                 }
                 $strGoods .= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name']." 数量: <b style='color:red;font-size:18px;'>".$goods['goods_num']."</b>";
-                !empty($goods['user_message']) ? $strGoods .= " 用户留言：".$goods['user_message'] : '';
     			if ($goods['spec_key_name'] != '') $strGoods .= " 规格：".$goods['spec_key_name'];
     			$strGoods .= "<br />";
     		}
 
             unset($orderGoods);
             $tempString .= '<td style="text-align:left;font-size:12px;">'.$strGoods.' </td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['user_note'].'</td>';
             $tempString .= '</tr>';
 
             $strTable .= $tempString;

@@ -518,16 +518,9 @@ function returnOrderHandle( $returnOrderInfo , $postData )
             if ($orderGoods == false) {
                 throw new \Exception('订单商品状态修改失败！');
             }
-            $isSendList = M('order_goods') -> where("order_id = ".$returnOrderInfo['order_id']."")->select();
-            $send = 0;
-            foreach($isSendList as $item){
-                if($item['is_send'] == 2 || $item['is_send'] == 3){
-                    $send++;
-                }
-            }
-            if($send == count($isSendList)){
-                M('order') -> where("order_id = ".$returnOrderInfo['order_id']."")->save(array('order_status'=>3));
-            }
+            closeOrderCheck( $returnOrderInfo['order_id'] );
+            deliveryOrderCheck( $returnOrderInfo['order_id'] );
+
 
         }
 
@@ -553,7 +546,6 @@ function returnOrderHandle( $returnOrderInfo , $postData )
         return callback(false, $e->getMessage());
     }
 }
-
 
 /**
  * 拆分admin-list 字段
@@ -682,4 +674,39 @@ function batchDelivery( $deliveryList = null ){
 
     }
     return callback( false );
+}
+
+
+
+
+
+/**
+ * 订单关闭检测
+ * @param $orderId
+ */
+function closeOrderCheck( $orderId ){
+    $condition1 =  array("order_id" => $orderId ) ;
+    $condition2 =  array("order_id" => $orderId , "is_send" => array( "in" , "2,3" ) ) ;
+
+    $orderGoodsNumber   = getCountWithCondition( 'order_goods' , $condition1 );
+    $returnGoodsNumber  = getCountWithCondition( 'order_goods' , $condition2 );
+
+    if( $returnGoodsNumber == $orderGoodsNumber ){
+        M('order') -> where( $condition1 )->save( array( 'order_status' => 3 ) );
+    }
+}
+
+/**
+ * 订单待收货检测
+ * @param $orderId
+ */
+function deliveryOrderCheck( $orderId ){
+    $condition1 =  array( "order_id" => $orderId ) ;
+    $condition2 =  array( "order_id" => $orderId , "is_send" => "0" ) ;
+    $notSendGoodsNumber   = getCountWithCondition( 'order_goods' , $condition2 );
+    if( $notSendGoodsNumber == 0 ){
+        $update['shipping_time'] = time();
+        $update['shipping_status'] = 1;
+        M('order') -> where( $condition1 ) -> save( $update );
+    }
 }
