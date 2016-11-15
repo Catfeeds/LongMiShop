@@ -305,19 +305,56 @@ class WeChatLogic extends BaseLogic
 
     /**
      * 重新拉取用户数据
+     * @param $openid
+     * @return mixed
      */
-    public function WechatFans($openid){
-        $access_token = $this->_getWeChatConfig();
+    public function weChatFans( $openid ){
+        $accessToken = $this -> weChatConfig['web_access_token'];
         // 获取用户 信息
-        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$access_token['web_access_token']."&openid=".$openid."&lang=zh_CN";
+        $url = $this -> __createOauthUrlForUserinfo( $accessToken , $openid );
         $call_back_url = json_decode(file_get_contents($url),true);
         if(isset($call_back_url->errcode)){
             exit;
         }
         return $call_back_url;
-
     }
 
+    /**
+     * 获取用户
+     * @return mixed
+     */
+    public function getWeChatUserList(){
+        $accessToken = $this -> weChatConfig['web_access_token'];
+        $url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=" . $accessToken;
+        $call_back_url = json_decode('{
+    "total": 15, 
+    "count": 15, 
+    "data": {
+        "openid": [
+            "owjy5v4GbMVyIeAB3A6XHn-2_85g", 
+            "owjy5vwAObf6SnO_TfnAQvEwL_Lw", 
+            "owjy5vz4wXZUcmrvprMvCoQDXdqg", 
+            "owjy5v7nMAt8eFE5bLo5THw7FOwk", 
+            "owjy5v9CIv45x2j5ESBpiO-Kq1_I", 
+            "owjy5v5PdL5RdBni_WYp_L9tsYok", 
+            "owjy5v-s_LBMls5zk3TCrW0tfTTU", 
+            "owjy5v_3bK5zRxuh1mB1nvDA8QJg", 
+            "owjy5vwXmwCnznWSBEQi7uEc4M-c", 
+            "owjy5v_wNzFoiAoYRoJaIhZHhSPM", 
+            "owjy5v6Nt-98l2vSxtQEmoKReCBU", 
+            "owjy5v8s0YruD4brsfv9V8VwFdew", 
+            "owjy5vzUYXcynPbtGQ6b9FqBlYoE", 
+            "owjy5v5Oh7vgB6K1x7Ni8bW_4Z70", 
+            "owjy5v_IaAC9pPSFgquIkb1DwFL4"
+        ]
+    }, 
+    "next_openid": "owjy5v_IaAC9pPSFgquIkb1DwFL4"
+}',true);
+        if(isset($call_back_url->errcode)){
+            exit;
+        }
+        return $call_back_url;
+    }
 
 
 }

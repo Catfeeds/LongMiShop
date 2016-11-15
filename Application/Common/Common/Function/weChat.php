@@ -513,15 +513,18 @@ function afterSubscribe( $openid , $weChatConfig = null )
 /**
  * 微信拉取个人信息
  * @param $openid
+ * @param bool $needPic
  * @return bool|string
  */
-function weChatPullingMessage( $openid ){
+function weChatPullingMessage( $openid , $needPic = true ){
 
     $WeChatLogic = new \Common\Logic\WeChatLogic();
     if( !empty($openid) ){
-        $userData = $WeChatLogic->WechatFans($openid);
-        $save['head_pic'] = $userData['headimgurl'];
-        $save['nickname'] = $userData['nickname'];
+        $userData = $WeChatLogic -> weChatFans($openid);
+        if( $needPic == true ){
+            $save['head_pic'] = $userData['headimgurl'];
+            $save['nickname'] = $userData['nickname'];
+        }
         if( !empty( $userData['subscribe'] ) ){
             $save['is_follow'] = 1;
         }else{
@@ -536,14 +539,23 @@ function weChatPullingMessage( $openid ){
         if(empty($userRes['nickname'])){
             $datas['nickname'] = '龙米会员'.$userRes['user_id'];
             $datas['user_id'] = $userRes['user_id'];
-            M('users')->save($datas);
+            M('users')->save( $datas );
         }
         return $res;
     }
 
     return '缺少参数';
-
-
 }
 
 
+/**
+ * 获取openid 列表
+ * @return array|mixed
+ */
+function getWeChatUserList(){
+    $WeChatLogic = new \Common\Logic\WeChatLogic();
+    $res = $WeChatLogic -> getWeChatUserList();
+    $openidList = json_decode( $res['data'] , true );
+    $openidList = explode( ","  , $openidList["openid"] );
+    return $openidList;
+}
