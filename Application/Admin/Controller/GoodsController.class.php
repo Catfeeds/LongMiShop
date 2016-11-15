@@ -834,16 +834,16 @@ class GoodsController extends BaseController {
 //        $goods_spec_item = $temp[0]['goods_spec_item'];
 //        $goods_spec_item = array_unique(explode('_',$goods_spec_item));
 //        if($goods_spec_item[0] != ''){
-            $spec_item = M() ->fetchSql()->query("SELECT i.*,s.name FROM __PREFIX__spec_item i LEFT JOIN __PREFIX__spec s ON s.id = i.spec_id WHERE s.goods_id ='".$goods_id."' ");//and i.id IN (".implode(',',$goods_spec_item).")
+        $spec_item = M() ->fetchSql()->query("SELECT i.*,s.name FROM __PREFIX__spec_item i LEFT JOIN __PREFIX__spec s ON s.id = i.spec_id WHERE s.goods_id ='".$goods_id."' ");//and i.id IN (".implode(',',$goods_spec_item).")
 
-            $new_arr = array();
-            foreach($spec_item as $k=>$v){
-                $new_arr[$v['name']]["title"] = $v['name'];
-                $new_arr[$v['name']]["id"] = $v['id'];
-                $v['title'] = $v['item'];
-                $new_arr[$v['name']]["items"][] = $v;
-            }
-            $this -> assign('specList',$new_arr);
+        $new_arr = array();
+        foreach($spec_item as $k=>$v){
+            $new_arr[$v['name']]["title"] = $v['name'];
+            $new_arr[$v['name']]["id"] = $v['id'];
+            $v['title'] = $v['item'];
+            $new_arr[$v['name']]["items"][] = $v;
+        }
+        $this -> assign('specList',$new_arr);
 //        }
 
         $specGoodsPriceList = M( "spec_goods_price" ) -> where( array("goods_id" => $goods_id) ) -> select();
@@ -1108,9 +1108,12 @@ class GoodsController extends BaseController {
         $goodId = I('goodId');
         $where['goods_id'] = $goodId;
         $data = M('goods')->where($where)->find();
-        $goodsPriceList  = M('spec_goods_price')->where($where)->select();
         $goodImages = M('goods_images')->where($where)->select();
-        
+
+        //商品规格
+        $specList = M('spec')->where($where)->select();
+        $goodsPriceList  = M('spec_goods_price')->where($where)->select();
+
         if(!empty($data['goods_content'])){
             $str = htmlspecialchars_decode($data['goods_content']);
             $pattern="/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg]))[\'|\"].*?[\/]?>/";
@@ -1151,12 +1154,44 @@ class GoodsController extends BaseController {
                 $data['original_img'] = $urlImg;
             }
         }
-        $info = M('goods')->add($data);
-        if(!empty($goodsPriceList) && $info){
-            foreach($goodsPriceList as $item){
-                $item['goods_id'] = $info;
-                M('spec_goods_price')->add($item);
+
+        $newGoodsId = M('goods')->add($data);
+
+        //复制商品规格
+        $specKeyArray = array();
+        if(!empty($specList) && $newGoodsId){
+            foreach($specList as $specItem){
+                $spec_id = $specItem['id'];
+                unset($specItem['id']);
+                $specItem['goods_id'] = $newGoodsId;
+                $specId = M('spec')->add($specItem);
+                if($specId){
+                    $specItemList = M('spec_item')->where("spec_id = ".$spec_id."")->select();
+                    foreach($specItemList as $specItemListItem){
+                        $orderItemId = $specItemListItem["id"];
+                        unset($specItemListItem['id']);
+                        $specItemListItem['spec_id'] = $specId;
+                        $specItemId = M('spec_item')->add($specItemListItem);
+                        $specKeyArray[$orderItemId] = $specItemId;
+                    }
+                }
             }
+            if( !empty($specKeyArray) ){
+               $specGoodsPriceList = selectDataWithCondition( "spec_goods_price" , array( "goods_id" => $goodId ) );
+                if( !empty( $specGoodsPriceList ) ){
+                    foreach ( $specGoodsPriceList as $specGoodsPriceItem ){
+                        $specGoodsPriceKey = $specGoodsPriceItem['key'];
+                        foreach ( $specKeyArray as $specKeyOld => $specKeyNew ){
+                            $specGoodsPriceKey  = str_replace( $specKeyOld , $specKeyNew , $specGoodsPriceKey );
+                        }
+                        $specGoodsPriceItem['key'] = $specGoodsPriceKey;
+                        $specGoodsPriceItem['goods_id'] = $newGoodsId;
+                        isSuccessToAddData(  "spec_goods_price" , $specGoodsPriceItem );
+                    }
+                }
+
+            }
+
         }
 
         if(!empty($goodImages)){
@@ -1170,19 +1205,19 @@ class GoodsController extends BaseController {
                 $ImagesRes  = copy($oldImages,$newImages);
                 if($ImagesRes){
                     $imgItem['image_url'] = $urlImages;
-                    $imgItem['goods_id'] = $info;
+                    $imgItem['goods_id'] = $newGoodsId;
                     M('goods_images')->add($imgItem);
                 }
             }
         }
-        if($info){
+        if($newGoodsId){
             exit(json_encode(callback(true,'复制成功')));
         }
         exit(json_encode(callback(false,'复制失败')));
 
     }
 
-  
+
 
 
 
