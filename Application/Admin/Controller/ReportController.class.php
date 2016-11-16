@@ -222,8 +222,7 @@ class ReportController extends BaseController{
         $yesterday['total'] = M('users') -> where($yesterdayUserWhere)->count(); //全部粉丝
         $yesterday['new'] = M('users') -> where($yesterdayUserWhere." AND follow_time >".$yesterdayBegin." AND follow_time < ".$todayBegin."")->count(); //新增粉丝
         $yesterday['cancel'] =  M('users') -> where("oauth in('weixin','weChat','WeChat') AND  is_follow = 0 AND unfollow_time > ".$yesterdayBegin." AND unfollow_time < ".$todayBegin."")->count(); //取消
-        $increase = $yesterday['new'] - $yesterday['cancel'];
-        $yesterday['increase'] = $increase > 0 ? $increase : 0;
+        $yesterday['increase'] = $yesterday['new'] - $yesterday['cancel'];
         $yesterday['Orders'] = M('order') -> where($yesterdayWhere)->count(); //下单数
         $yesterday['payment'] = M('order') -> where($yesterdayWhere." AND pay_status = 1")->count(); //付款笔数
         $yesterday['deliverGoods'] = M('order') -> where($yesterdayWhere." AND shipping_status in(1,2) ")->count(); //付款笔数
