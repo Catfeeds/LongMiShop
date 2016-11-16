@@ -55,16 +55,17 @@ class OrderController extends BaseController {
         I('pay_status')      != ''   ? $condition['pay_status']      = I('pay_status')                              : false;
         I('pay_code')        != ''   ? $condition['pay_code']        = I('pay_code')                                : false;
         I('shipping_status') != ''   ? $condition['shipping_status'] = I('shipping_status')                         : false;
-        I('user_id')                 ? $condition['user_id']         = trim(I('user_id'))                           : false;
         $begin && $end               ? $condition['add_time']        = array('between',"$begin,$end")               : false;
-        $search_name && $search_type ? $condition[$search_type]      = $search_name                                 : false;
         is_supplier()                ? $condition['admin_list']      = array('like',"%[".session("admin_id")."]%")  : false;//供应商判断
         $type == "notPayment"        ? $condition["_string"]         = " 1=1 " . C('WAITPAY')                       : false;//订单查询状态 待支付
         $type == "nonDeliverGoods"   ? $condition["_string"]         = " 1=1 " . C('WAITSEND')                      : false;//订单查询状态 待发货
         $type == "delivered"         ? $condition["_string"]         = " 1=1 " . C('WAITRECEIVE')                   : false;//订单查询状态 待收货
         $type == "Completed"         ? $condition["_string"]         = " 1=1 " . C('FINISHED')                      : false;//订单查询状态 已完成
         $type == "close"             ? $condition["_string"]         = " 1=1 " . C('CANCEL')                        : false;//订单查询状态 已取消
-
+        $search_type == 1 && !empty($search_name)            ? $condition['order_sn']        = $search_name                                 : false ;
+        $search_type == 2 && !empty($search_name)            ? $condition['consignee']       = $search_name                                 : false ;
+        $search_type == 3 && !empty($search_name)            ? $condition['mobile']          = $search_name                                 : false ;
+        $search_type == 4 && !empty($search_name)            ? $condition['user_id']         = findUserId($search_name)                     : false ;
         //排序
         $sort_order = I('order_by','order_id').' '.I('sort','DESC');
 
