@@ -9,6 +9,7 @@ class ToolController extends Controller {
     }
 
     public function index(){
+        $needPic = I( "needPic" , false );
         $thisOpenid = null;
         $weChatUserList = getWeChatUserList();
         if ( !empty( $weChatUserList ) ){
@@ -18,7 +19,7 @@ class ToolController extends Controller {
                     registerFromOpenid( $openid , array() , "WeChat" , false );
                     echo "[注册]";
                 }
-                $res = weChatPullingMessage( $openid , false );
+                $res = weChatPullingMessage( $openid , $needPic );
                 echo "[拉取：" . $res . "]<br>";
             }
         }
