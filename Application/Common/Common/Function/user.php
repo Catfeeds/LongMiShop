@@ -536,3 +536,13 @@ function checkWithdrawDeposit( $id , $status , $reason ){
     }
 
 }
+
+function findUserId($nickName){
+    $user = findDataWithCondition("users",array("nickname"=>$nickName),"user_id");
+    return $user['user_id'];
+}
+
+function findUserNickName($userId){
+    $user = findDataWithCondition("users",array("user_id"=>$userId),"nickname");
+    return $user['nickname'];
+}

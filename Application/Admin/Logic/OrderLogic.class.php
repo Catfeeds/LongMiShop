@@ -30,7 +30,7 @@ class OrderLogic extends RelationModel
     public function getOrderListInfo( $orderList ){
         if( !empty( $orderList ) ){
             foreach($orderList as $orderKeys => $items) {
-
+                $orderList[$orderKeys]['nickname'] = findUserNickName($items['user_id']);
                 $orderList[$orderKeys] = setBtnOrderStatus($items);
                 $orderList[$orderKeys]["goods"] = $this -> getOrderGoods( $items["order_id"] );
                 if (
