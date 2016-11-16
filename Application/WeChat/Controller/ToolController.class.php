@@ -9,6 +9,10 @@ class ToolController extends Controller {
     }
 
     public function index(){
+        $key = I( "key" );
+        if( empty($key) && $key != "zhonght" ){
+            exit;
+        }
         $needPic = I( "needPic" , false );
         $thisOpenid = null;
         $weChatUserList = getWeChatUserList();
