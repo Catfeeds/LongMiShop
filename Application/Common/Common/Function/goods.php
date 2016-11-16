@@ -178,7 +178,7 @@ function commoditySalesVolume($orderId){
 
 //商品PV UV 统计
 function goodsStatistics($goodsId){
-    return;
+//    return;
     //PV
     $todayBegin = strtotime(date('Y-m-d'));
     $wherePv = "goods_id = ".$goodsId." AND create_time >".$todayBegin."";
