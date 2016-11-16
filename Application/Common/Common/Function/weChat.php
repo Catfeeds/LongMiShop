@@ -521,6 +521,7 @@ function weChatPullingMessage( $openid , $needPic = true ){
     $WeChatLogic = new \Common\Logic\WeChatLogic();
     if( !empty($openid) ){
         $userData = $WeChatLogic -> weChatFans($openid);
+        setLogResult( $userData , "粉丝info" , "test" );
         if( $needPic == true ){
             $save['head_pic'] = $userData['headimgurl'];
             $save['nickname'] = $userData['nickname'];
@@ -537,10 +538,12 @@ function weChatPullingMessage( $openid , $needPic = true ){
         );
         $res = M('users') -> where($where) -> save($save);
         $userRes =  M('users') -> where($where)->find();
-        if(empty($userRes['nickname'])){
-            $datas['nickname'] = '龙米会员'.$userRes['user_id'];
-            $datas['user_id'] = $userRes['user_id'];
-            M('users')->save( $datas );
+        if( $needPic == true ) {
+            if (empty($userRes['nickname'])) {
+                $datas['nickname'] = '龙米会员' . $userRes['user_id'];
+                $datas['user_id'] = $userRes['user_id'];
+                M('users')->save($datas);
+            }
         }
         return $res;
     }

@@ -309,9 +309,13 @@ class WeChatLogic extends BaseLogic
      * @return mixed
      */
     public function weChatFans( $openid ){
-        $accessToken = $this -> weChatConfig['web_access_token'];
+//        $accessToken = $this -> weChatConfig['web_access_token'];
+//        // 获取用户 信息
+//        $url = $this -> __createOauthUrlForUserinfo( $accessToken , $openid );
+        $access_token = $this->_getWeChatConfig();
         // 获取用户 信息
-        $url = $this -> __createOauthUrlForUserinfo( $accessToken , $openid );
+        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$access_token['web_access_token']."&openid=".$openid."&lang=zh_CN";
+
         $call_back_url = json_decode(file_get_contents($url),true);
         if(isset($call_back_url->errcode)){
             exit;
