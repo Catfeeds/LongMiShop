@@ -522,11 +522,13 @@ function weChatPullingMessage( $openid , $needPic = true ){
     if( !empty($openid) ){
         $userData = $WeChatLogic -> weChatFans($openid);
         setLogResult( $userData , "粉丝info" , "test" );
-        if( $needPic == true ){
-            $save['head_pic'] = $userData['headimgurl'];
-            $save['nickname'] = $userData['nickname'];
-        }
         if( !empty( $userData['subscribe'] ) ){
+
+            if( $needPic == true ){
+                $save['head_pic'] = $userData['headimgurl'];
+                $save['nickname'] = $userData['nickname'];
+            }
+            
             $save['is_follow'] = 1;
             $save['follow_time'] = $userData['subscribe_time'] ;
         }else{
