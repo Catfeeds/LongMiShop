@@ -49,7 +49,7 @@
             <if condition = "$key == 0">
                 <dd>
                     <!--<p>视察</p>-->
-                    <p>{$list.consignee}（{$list.nickname}）</p>
+                    <p>{$list.consignee}{:$list['nickname']?"(".$list['nickname'].")":""}</p>
                     <p>{$list.mobile}</p>
                 </dd>
                 <dd>
