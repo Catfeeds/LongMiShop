@@ -93,6 +93,9 @@
 			if(kong){
 				var spans = document.getElementById('mobile_spans').innerHTML;
 				document.getElementById('scroll4').innerHTML = loadingHtml;
+				$('.mui-scroll-wrapper').scroll({
+					indicators: true //是否显示滚动条
+				});
 				if( spans == 1 ){
 					document.getElementById('mobile_spans').innerHTML = '2';
 					document.getElementById('mobile_symbol').innerHTML = '↓';
