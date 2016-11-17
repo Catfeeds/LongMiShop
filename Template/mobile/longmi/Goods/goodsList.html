@@ -3,10 +3,12 @@
 <style>
 	.mui-control-content {
 		background-color: #FFF;
-		min-height: 600px;
 	}
 	.mui-control-content .mui-loading {
 		margin-top: 50px;
+	}
+	.mui-table-view.mui-grid-view .mui-table-view-cell {
+		 margin-right: 0px !important;
 	}
 </style>
 <body class="inGoodsList">
@@ -72,9 +74,15 @@
 	mui.init({
 		swipeBack: false
 	});
+	$(function(){
+		var windowHeight = $(window).height();
+		windowHeight = windowHeight - 91;
+		$('.mui-control-content').css("height",windowHeight+"px");
+
+	});
 	var  rank = 1;
 	var  sort_asc = '';
-	var loadingHtml  = '<div class="mui-scroll"><div class="mui-loading" style=" text-align:center"><img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important"></div></div>';
+//	var loadingHtml  = '<div class="mui-scroll"><div class="mui-loading" style=" text-align:center"><img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important"></div></div>';
 	var kong = true;
 	(function($) {
 		$('.mui-scroll-wrapper').scroll({
@@ -84,7 +92,6 @@
 
 			if(kong){
 				var spans = document.getElementById('mobile_spans').innerHTML;
-				document.getElementById('scroll4').innerHTML = loadingHtml;
 				if( spans == 1 ){
 					document.getElementById('mobile_spans').innerHTML = '2';
 					document.getElementById('mobile_symbol').innerHTML = '↓';
@@ -159,7 +166,6 @@
 			url:url[number] + "/is_ajax/1/p/"+page[number]+"/number/"+number,
 			success: function(data)
 			{
-
 				if( is_first == true ){
 					$("#"+obj_name+" .mui-scroll").html(data);
 					kong = true;
@@ -170,6 +176,7 @@
 						$("#"+obj_name+" ul").append(data);
 					}
 				}
+				imgErrorEvent();
 			}
 		});
 		page[number] += 1;
