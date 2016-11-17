@@ -8,4 +8,9 @@
             <div class="m12">有效期至：{$coupon.use_end_time|date='Y-m-d',###}</div>
         </div>
     </div>
-</volist>	 
+</volist>
+<if condition="$count elt $limit && $p != 1">
+    <script>
+        $('#getmore').hide();
+    </script>
+</if>

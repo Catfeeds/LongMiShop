@@ -22,7 +22,7 @@
             </div>
         </foreach>
     </div>
-    <if condition="$count gt $limit">
+    <if condition="$count gt $limit ">
         <div class="Load—more" id="getmore">
             <a  href="javascript:void(0)" onClick="ajax_sourch_submit()">点击加载更多</a>
         </div>
@@ -43,7 +43,7 @@
                     if($.trim(data) == '')
                         $('#getmore').hide();
                     else
-                        $(".Funds > ul").append(data);
+                        $("#account_list").append(data);
                 }
             });
         }
