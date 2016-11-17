@@ -243,7 +243,7 @@ class ReportController extends BaseController
         $uvList = M('goods_uv')->group('goods_id')->getField("goods_id,count(*) as pu_sum", true);
         $Ranking = array();
         foreach ($pvList as $goods_id => $pvItem) {
-            $resGoods = M('goods')->field("goods_name")->where(array("goods_id" => $pvItem["goods_id"]))->find();
+            $resGoods = M('goods')->field("goods_name")->where(array("goods_id" => $goods_id))->find();
             $Ranking[$goods_id] = array(
                 "pv"   => $pvItem,
                 "uv"   => $uvList[$goods_id],
