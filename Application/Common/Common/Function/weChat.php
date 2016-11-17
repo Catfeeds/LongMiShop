@@ -221,7 +221,7 @@ function sendWeChatMessage( $openid , $type , $data ){
 
     $messageArray = array(
         "下单"            =>  "为你生成了订单：{$data['goodsName']} 等{$data['goodsNumber']}件，24小时内请完成支付【<a href = '{$data['url']}'>点击支付</a>】，客服热线：4000787725。",
-        "支付"            =>  "您的订单：<a href = '{$data['url']}'>{$data['goodsName']} 等{$data['goodsNumber']}件</a>，已支付成功，我们将在48小时内为您发货，客服热线：4000787725。",
+        "支付"            =>  "您的订单：{$data['goodsName']} <a href = '{$data['url']}'>等{$data['goodsNumber']}件</a>，已支付成功，我们将在48小时内为您发货，客服热线：4000787725。",
         "发货"            =>  "您的订单：{$data['goodsName']} 等{$data['goodsNumber']}件，已发货【<a href = '{$data['url']}'>查看物流信息</a>】。请注意查收，客服热线：4000787725。",
         "完成"            =>  "您的订单：{$data['goodsName']} 等{$data['goodsNumber']}件，交易成功。感谢您的购买！【<a href = '{$data['url']}'>查看详情</a>】，客服热线：4000787725。",
         "送券"            =>  "【系统消息】：我们向您送出了一张【{$data['couponName']}】，【<a href = '{$data['url']}'>点此查看</a>】，客服热线：4000787725。",

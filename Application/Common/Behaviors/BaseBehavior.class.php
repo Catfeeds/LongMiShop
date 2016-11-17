@@ -7,5 +7,12 @@ class BaseBehavior extends Behavior{
         if(MODULE_NAME == "Home"){
             exit;
         }
+        if(MODULE_NAME == "Admin"){
+            if( isMobile() ){
+
+            }else{
+
+            }
+        }
     }
 }
