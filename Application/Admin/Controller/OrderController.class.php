@@ -162,8 +162,39 @@ class OrderController extends BaseController {
         $this -> assign('button',$button);
         $this -> display();
     }
+    /**
+     * 快速发货 手机端页面
+     */
+    public function fastIndex(){
+        $expressList = include_once 'Application/Common/Conf/express.php'; //快递名称
+        $this -> assign('expressList',$expressList);
+        $this->display();
+    }
+    public function ajaxFastIndex(){
+        $orderLogic = new OrderLogic();
+        is_supplier()  ? $condition['admin_list']   = array('like',"%[".session("admin_id")."]%")  : false;//供应商判断
+        $condition["_string"]   = " 1=1 " . C('WAITSEND');
+        $limit = 20;
+        $count = getCountWithCondition( 'order' , $condition );
+        $Page  = new \Admin\Common\AjaxPage( $count , $limit );
+
+        $sort_order = "add_time DESC";
+        //获取订单列表
+        $orderList = $orderLogic -> getOrderList( $condition , $sort_order , $Page->firstRow , $Page->listRows );
+        $orderList = $orderLogic -> getOrderListInfo( $orderList );
 
 
+        $region_list = get_region_list();
+        //收货人
+        foreach($orderList as $key=>$item){
+            $orderList[$key]['site'] = $region_list[$item['province']]['name'].' '.$region_list[$item['city']]['name'].' '.$region_list[$item['district']]['name'].' '.$item['address'].', '.$item['consignee'].' '.$item['mobile'];
+        }
+        $this -> assign('number',I('p'));
+        $this->assign("orderList",$orderList);
+        $this -> assign('count',$count);
+        $this -> assign('limit',$limit * I('p'));
+        $this->display();
+    }
     /**
      * 快速发货
      */

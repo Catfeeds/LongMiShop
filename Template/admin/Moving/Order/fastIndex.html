@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<title>快速发货</title>
+<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
+</head>
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+  <h1 class="mui-title">快速发货</h1>
+  <button onclick="skip()"  class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left"><span class="mui-icon mui-icon-left-nav"></span>返回</button>
+</header>
+<select name="shipping_name" class="web_text">
+  <option value="0">请选择物流公司</option>
+  <volist name="expressList" id="item">
+    <option value="{$item}">{$item}</option>
+  </volist>
+</select>
+<div id="ajax_return">
+
+</div>
+
+
+</body>
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    ajaxData(1);
+  });
+
+  function ajaxData(page){
+    $.ajax({
+      type : "GET",
+      url:"/index.php/Admin/order/ajaxFastIndex/p/"+page,//+tab,
+      success: function(data){
+        $("#ajax_return").append(data);
+      }
+    });
+  }
+
+  function skip(){
+    location.href="{:U('Admin/Index/welcome')}";
+  }
+
+
+
+</script>
+</html>

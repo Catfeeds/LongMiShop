@@ -87,6 +87,11 @@
             <a  href="javascript:void(0)" onClick="ajax_sourch_submit({$number},'item{:++$number}mobile',false)">点击加载更多</a>
         </div>
     </if>
+    <if condition="$count elt $limit && $p != 1">
+        <script>
+            $('#getmore{$number}').hide();
+        </script>
+    </if>
 <else/>
     <if condition = " $p == 1 ">
         <div class="empty"><img src="__STATIC__/SVG/d1.svg?42368"></div>

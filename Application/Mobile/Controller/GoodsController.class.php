@@ -122,7 +122,7 @@ class GoodsController extends MobileBaseController {
         $this -> assign('p',I('p'));
         $this -> assign('number',I('number'));
         $this -> assign('count',$count);
-        $this -> assign('limit',$limit);
+        $this -> assign('limit',$limit * I('p') );
     	$this -> assign('sort_asc', $sort_asc == 'asc' ? 'desc' : 'asc');
     	C('TOKEN_ON',false);
 

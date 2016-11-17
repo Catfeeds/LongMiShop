@@ -129,7 +129,7 @@ class OrderController extends MobileBaseController {
         $this -> assign('number',I('number'));
         $this -> assign('count',$count);
         $this -> assign('type',$type);
-        $this -> assign('limit',$limit);
+        $this -> assign('limit',$limit * I('p'));
         if($_GET['is_ajax'])
         {
             $this -> display('ajax_order_list');
