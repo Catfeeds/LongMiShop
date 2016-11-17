@@ -167,8 +167,6 @@
 			url:url[number] + "/is_ajax/1/p/"+page[number]+"/number/"+number,
 			success: function(data)
 			{
-
-				console.log(data);
 				if( is_first == true ){
 					$("#"+obj_name+" .mui-scroll").html(data);
 					kong = true;
