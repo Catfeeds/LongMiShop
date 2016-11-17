@@ -16,11 +16,9 @@ class IndexController extends BaseController {
     }
    
     public function welcome(){
-
         $where = "1 = 1";
         $whereOrder = "";
         if(is_supplier()){
-
             $where .=  " AND admin_list like '%[".session("admin_id")."]%'";
             $returnWhere = "AND admin_id = ".session("admin_id")."";
             //查询退货表
@@ -33,8 +31,6 @@ class IndexController extends BaseController {
                 $returnString .= "0";
                 $whereOrder .=  "  order_id not in(".$returnString.") AND";
             }
-
-
         }
 
 
