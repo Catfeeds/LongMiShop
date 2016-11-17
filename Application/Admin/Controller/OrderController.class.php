@@ -177,7 +177,7 @@ class OrderController extends BaseController {
         $limit = 20;
         $count = getCountWithCondition( 'order' , $condition );
         $Page  = new \Admin\Common\AjaxPage( $count , $limit );
-        $show = $Page -> show();
+
         $sort_order = "add_time DESC";
         //获取订单列表
         $orderList = $orderLogic -> getOrderList( $condition , $sort_order , $Page->firstRow , $Page->listRows );
