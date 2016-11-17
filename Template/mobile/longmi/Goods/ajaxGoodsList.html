@@ -16,6 +16,9 @@
         </li>
 
     </foreach>
+    <if condition = " $p == 1 ">
+        </ul>
+    </if>
     <if condition="$count gt $limit && $p == 1">
         <div class="Load—more" id="getmore{$number}">
             <a  href="javascript:void(0)" onClick="ajax_sourch_submit({$number},'item{:++$number}mobile',false)">点击加载更多</a>
