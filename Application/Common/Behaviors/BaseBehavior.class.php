@@ -7,11 +7,12 @@ class BaseBehavior extends Behavior{
         if(MODULE_NAME == "Home"){
             exit;
         }
+
         if(MODULE_NAME == "Admin"){
             if( isMobile() ){
-
+                C("DEFAULT_THEME","Moving");
             }else{
-
+                C("DEFAULT_THEME","new");
             }
         }
     }
