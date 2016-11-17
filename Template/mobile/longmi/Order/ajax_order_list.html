@@ -13,7 +13,7 @@
             <foreach name="list.goods_list" item="good" key="k" >
                 <div class="cp6">
                     <div class="cp1_l1">
-                        <img src="{$good.goods_id|goods_thum_images=92,92}" width="92" height="92">
+                        <img src="{$good.goods_id|goods_thum_images=92,92}" style="width:92px !important; height:92px !important">
                         <if condition='$good["isReturnPass"] neq 0' >
                             <div class="cj">已退货</div>
                             <else/>
