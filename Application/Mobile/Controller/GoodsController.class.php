@@ -95,7 +95,7 @@ class GoodsController extends MobileBaseController {
     	$filter_attr  = $goodsLogic->get_filter_attr($filter_goods_id,$filter_param,'goodsList',1); // 获取指定分类下的帅选属性
 
     	$count = count($filter_goods_id);
-        $limit = 12;
+        $limit = 2;
     	$page = new Page($count,$limit);
     	if($count > 0)
     	{

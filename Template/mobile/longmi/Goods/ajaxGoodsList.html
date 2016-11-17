@@ -31,17 +31,3 @@
     </if>
 
 </notempty>
-
-<script src="__STATIC__/js/mui.min.js"></script>
-<script>
-    $(function(){
-        $('img').each(function(){
-            if($(this).attr('src') == ''){
-                $(this).attr('src',"__DefaultGoodsgroundImages__");
-            }
-        });
-        $('img').error(function(){
-            $(this).attr('src',"__DefaultGoodsgroundImages__");
-        });
-    });
-</script>
