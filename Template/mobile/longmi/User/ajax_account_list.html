@@ -7,3 +7,9 @@
           <div class="m6_right">{$item.user_money}</div>
       </div>
   </foreach>
+  <if condition="$count elt $limit ">
+      <script>
+          $("#getmore").hide();
+      </script>
+
+  </if>
