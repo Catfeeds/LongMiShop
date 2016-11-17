@@ -3,7 +3,6 @@
 <style>
 	.mui-control-content {
 		background-color: #FFF;
-		min-height: 600px;
 	}
 	.mui-control-content .mui-loading {
 		margin-top: 50px;
@@ -71,6 +70,12 @@
 <script>
 	mui.init({
 		swipeBack: false
+	});
+	$(function(){
+		var windowHeight = $(window).height();
+		windowHeight = windowHeight - 91;
+		$('.mui-control-content').css("height",windowHeight+"px");
+
 	});
 	var  rank = 1;
 	var  sort_asc = '';
