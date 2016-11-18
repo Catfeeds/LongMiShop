@@ -43,11 +43,15 @@
             alert('请选择发货方式');
             kong = true;
             return false;
-        }else if(invoice_no == ''){
-            alert('请输入运单号');
-            kong = true;
-            return false;
         }
+        if(shipping_name != '无需物流' ){
+            if(invoice_no == ''){
+                alert('请输入运单号');
+                kong = true;
+                return false;
+            }
+        }
+
         $.ajax({
             type : "POST",
             url:"/index.php/Admin/order/fastShipping/",

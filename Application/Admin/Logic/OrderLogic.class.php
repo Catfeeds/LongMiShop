@@ -362,6 +362,9 @@ class OrderLogic extends RelationModel
                 $data['shipping_name'] = $order['shipping_name'] = $data['myShippingName'] ;
                 unset($data['myShippingName']);
             }
+            if($data['shipping_name'] == '无需物流'){
+                $data['invoice_no'] = 0;
+            }
             $did = M('delivery_doc')->add($data);
             if( empty($did) ){
                 throw new \Exception('生成发货单失败！');
@@ -377,6 +380,7 @@ class OrderLogic extends RelationModel
                     $isSendAction++;
                     $res['is_send'] = 1;
                     $res['delivery_id'] = $did;
+
 //                    if( ! is_null($shippingId) ){
 //                        if( $shippingId != $v['delivery_way'] ){
 //                            throw new \Exception('不同物流的商品不能同时发货！');
@@ -425,10 +429,17 @@ class OrderLogic extends RelationModel
 
 
             $model  -> commit();
-            $mobileMessages = array(
-                "kuaidiname" => $data['shipping_name'],
-                "kuaidisn" => $data['invoice_no'],
-            );
+            if($data['kuaidiname'] == '无需物流'){
+                $mobileMessages = array(
+                    "kuaidiname" => "方式为自送，无需物流",
+                    "kuaidisn" => 'test',
+                );
+            }else{
+                $mobileMessages = array(
+                    "kuaidiname" => $data['shipping_name'],
+                    "kuaidisn" => $data['invoice_no'],
+                );
+            }
             sendMobileMessages( $order['mobile'] , $mobileMessages  );
             return callback(true,'');
         }catch (\Exception $e){

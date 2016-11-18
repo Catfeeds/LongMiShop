@@ -210,10 +210,13 @@ function dosubmit(){
         layer.alert('请选择配送方式', {icon: 2});
         return;
     }
-    if($('#invoice_no').val() ==''){
-        layer.alert('请输入配送单号', {icon: 2});
-        return;
+    if($('#expressList').val() != '无需物流' ){
+        if($('#invoice_no').val() ==''){
+            layer.alert('请输入配送单号', {icon: 2});
+            return;
+        }
     }
+
 	var a = [];
 	$('input[name*=goods]').each(function(i,o){
 		if($(o).is(':checked')){
