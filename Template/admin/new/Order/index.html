@@ -431,10 +431,13 @@
             layer.alert('请选择配送方式', {icon: 2});
             return;
         }
-        if(invoice_no ==''){
-            layer.alert('请输入配送单号', {icon: 2});
-            return;
+        if(shipping_name != '无需物流' ){
+            if(invoice_no ==''){
+                layer.alert('请输入配送单号', {icon: 2});
+                return;
+            }
         }
+
         isLock = 1;
         $.ajax({
             type : "POST",

@@ -73,7 +73,7 @@ class UserController extends MobileBaseController {
         $this -> assign('account_log',$account_log);
         $this -> assign('page',$data['show']);
         $this -> assign('count',$data['count']);
-        $this -> assign('limit',$data['limit']);
+        $this -> assign('limit',$data['limit'] * I('p'));
 
         if($_GET['is_ajax'])
         {
@@ -91,7 +91,8 @@ class UserController extends MobileBaseController {
         $this -> assign('coupon_list',$coupon_list);
         $this -> assign('page',$data['show']);
         $this -> assign('count',$data['count']);
-        $this -> assign('limit',$data['limit']);
+        $this -> assign('p',I('p'));
+        $this -> assign('limit',$data['limit'] * I('p'));
         if($_GET['is_ajax'])
         {
             $this -> display('ajax_coupon_list');
@@ -1125,7 +1126,7 @@ class UserController extends MobileBaseController {
         $this->push_message();
         $where .= "is_open = 1 AND  device_type != 1 ";
         $count = M('article') -> where($where)->count();
-        $limit = 3;
+        $limit = 1;
         $Page = new Page($count,$limit);
         $art_list = M('article')->field('article_id,title,content,thumb,publish_time') -> where($where)->order('publish_time DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
         foreach($art_list as $artKey=>$artItem){
@@ -1135,7 +1136,7 @@ class UserController extends MobileBaseController {
         $this -> assign('need_top',$need_top);
         $this -> assign('art_list',$art_list);
         $this -> assign('count',$count);
-        $this -> assign('limit',$limit);
+        $this -> assign('limit',$limit * I('p'));
         if($_GET['is_ajax'])
         {
             $this -> display('ajax_message');
