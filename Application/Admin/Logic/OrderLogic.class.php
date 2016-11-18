@@ -429,10 +429,10 @@ class OrderLogic extends RelationModel
 
 
             $model  -> commit();
-            if($data['kuaidiname'] == '无需物流'){
+            if($data['shipping_name'] == '无需物流'){
                 $mobileMessages = array(
-                    "kuaidiname" => "方式为自送，无需物流",
-                    "kuaidisn" => 'test',
+                    "kuaidiname" => "无需物流",
+                    "kuaidisn" => '方式为自送',
                 );
             }else{
                 $mobileMessages = array(
