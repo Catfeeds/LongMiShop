@@ -1,37 +1,31 @@
 <?php
+namespace Admin\Controller;
 
-namespace Mobile\Controller;
-
-use Common\Logic\AddonsLogic;
-
-class AddonsController extends MobileBaseController {
+class AddonsController extends BaseController {
 
     const THEME = "default";
-    const APPOINTED = "Mobile";
+    const APPOINTED = "Admin";
+    const ADDONS_PATH = "./Addons";
 
     public $pluginName = null;
+
     private $addonsLogic = null;
     private $addonsConfig = null;
 
-    function exceptAuthActions()
-    {
-        return null;
-    }
+    public function index(){
+        $list = getAddonsList( self::ADDONS_PATH );
+        $this -> assign( 'list' , $list );
 
-    public function  _initialize() {
-        parent::_initialize();
-        $this -> _init();
+        $this -> display();
     }
-
     /**
      * 初始化
      */
     private function _init(){
-
         $this -> pluginName = I( "pluginName" , "index" );
-        $this -> addonsLogic = new AddonsLogic();
-        $this -> addonsLogic -> loadAddons( ACTION_NAME , $this -> pluginName , self::APPOINTED , $this -> user_info );
-        
+        $this -> addonsLogic = new \Common\Logic\AddonsLogic();
+        $this -> addonsLogic -> loadAddons( ACTION_NAME , $this -> pluginName , self::APPOINTED );
+
         $this -> addonsConfig  = $this -> addonsLogic -> getAddonsConfig();
         $dataList = $this -> addonsLogic -> run() ;
         if( !empty( $dataList ) ){
@@ -47,7 +41,9 @@ class AddonsController extends MobileBaseController {
     /**
      * 跳过报错
      */
-    public function  _empty(){}
+    public function  _empty(){
+        $this -> _init();
+    }
 
 
 }

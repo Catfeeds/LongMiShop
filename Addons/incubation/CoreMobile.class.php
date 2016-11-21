@@ -1,11 +1,9 @@
 <?php
-/**
- * 入职苹果
- * Class entryAppleAdminController
- */
-class entryAppleAdminController {
+
+class incubationMobileController {
 
     public $assignData = array();
+
 
     public function __construct()
     {
