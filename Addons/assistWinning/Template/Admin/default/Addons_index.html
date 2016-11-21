@@ -107,9 +107,15 @@
 <script>
 
 function subform(){
-
-        $('#search-form2').submit();
+    $('#search-form2').submit();
 }
+
+$('.paginate_button').each(function(){
+   $(this).click(function(){
+        var data = $(this).find('a').attr('data-p');
+        window.location.href = "admin/Addons/assistWinning/pluginName/index/p/"+data;
+   });
+});
 
 
 

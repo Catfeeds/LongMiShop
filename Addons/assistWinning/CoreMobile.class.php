@@ -16,8 +16,9 @@ class assistWinningMobileController {
     //初始页面
     public function index(){
         $Uid = I('id');
-//        $Uid = '5823';
+
         $user_id = $this->user['user_id'];
+//        $user_id = '5823';
         $temArray = array(
             '1'=>'25',
             '2'=>'20',
