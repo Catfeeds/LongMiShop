@@ -496,7 +496,10 @@ function afterSubscribe( $openid , $weChatConfig = null )
             $add['send_time'] = time();
             do {
                 $code = get_rand_str(8, 0, 1);//获取随机8位字符串
-                $check_exist = isExistenceDataWithCondition('coupon_list', array('code' => $code));
+                $check_exist = findDataWithCondition('coupon_list',array('code'=>$code),"code");
+                if( empty( $check_exist ) ){
+                    $check_exist = findDataWithCondition('coupon_code',array('code'=>$code),"code");
+                }
             } while ($check_exist);
             $add['code'] = $code;
             isSuccessToAddData('coupon_list', $add);

@@ -243,12 +243,20 @@ class ReportController extends BaseController
         $uvList = M('goods_uv')->group('goods_id')->getField("goods_id,count(*) as pu_sum", true);
         $Ranking = array();
         foreach ($pvList as $goods_id => $pvItem) {
-            $resGoods = M('goods')->field("goods_name")->where(array("goods_id" => $goods_id))->find();
-            $Ranking[$goods_id] = array(
-                "pv"   => $pvItem,
-                "uv"   => $uvList[$goods_id],
-                "name" => $resGoods['goods_name'],
+            $resGoodsCondition = array(
+                "goods_id" => $goods_id
             );
+            if( is_supplier() ){
+                $resGoodsCondition["admin_id"] = session("admin_id");
+            }
+            $resGoods = findDataWithCondition( 'goods' , $resGoodsCondition , "goods_name" );
+            if( !empty( $resGoods ) ){
+                $Ranking[$goods_id] = array(
+                    "pv"   => $pvItem,
+                    "uv"   => $uvList[$goods_id],
+                    "name" => $resGoods['goods_name'],
+                );
+            }
         }
         $this->assign('today', $today);
         $this->assign('yesterday', $yesterday);
