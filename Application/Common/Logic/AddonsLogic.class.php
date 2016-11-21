@@ -54,7 +54,7 @@ class AddonsLogic extends BaseLogic
         }
 
         try{
-            $className = $addonsName . "MobileController";
+            $className = $addonsName . $module ."Controller";
             if( class_exists($className) ){
                 $this -> classController =  new $className();
             }else{

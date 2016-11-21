@@ -13,5 +13,6 @@ class entryAppleAdminController {
 
     //初始页面
     public function index(){
+        return $this -> assignData;
     }
 }
