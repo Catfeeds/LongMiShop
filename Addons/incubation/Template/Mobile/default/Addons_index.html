@@ -9,8 +9,8 @@
 
 
     <title>好友孵蛋</title>
-    <link rel="stylesheet" href="__ADDONS__/css/common.css?v=20161110" />
-    <link rel="stylesheet" href="__ADDONS__/css/main.css?v=20161110" />
+    <link rel="stylesheet" href="__ADDONS__/css/common.css" />
+    <link rel="stylesheet" href="__ADDONS__/css/main.css" />
     <script type="text/javascript" src="http://static.resource.weijuju.com/js/jquery-1.7.2.min.js?v=20161110"></script>
     <style type="text/css">
         .container .wrap{
@@ -118,76 +118,8 @@
 </head>
 <body>
 
+<include file="/Addons_follow"/>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style>
-    .top-banner{
-        width:100%;
-        height:40px;
-        background-color:black;
-        opacity:0.4;
-        position:fixed;
-        top:0px;
-        left:0px;
-        z-index:999;
-    }
-    .top-banner-left{
-        position:fixed;
-        top:0px;
-        left:12px;
-        font-size:15px;
-        font-weight:bold;
-        line-height:40px;
-        z-index:999;
-    }
-    .top-banner-right{
-        position:fixed;
-        top:0px;
-        right:12px;
-        font-size:15px;
-        font-weight:bold;
-        line-height:40px;
-        z-index:999;
-    }
-    .top-banner-left .white{
-        color:white;
-    }
-    .top-banner-left .yellow{
-        color:#f1cf53;
-        text-decoration: none;
-    }
-    .top-banner-right .yellow{
-        color:#f1cf53;
-        text-decoration: none;
-    }
-</style>
-
-<div class="top-banner"></div>
-<div class="top-banner-left"><span class="white">公众帐号</span> <a class="yellow tofollow">weijuju_huaer</a></div>
-<div class="top-banner-right"><a class="yellow tofollow">立即关注</a></div>
 
 
 <script type="text/javascript" src="http://static.resource.weijuju.com/js/mobile/football/share.js?v=20161110"></script>
@@ -265,7 +197,7 @@
 
 
 <div id="mask" style="position:fixed;z-index:999998;top:0;left:0;height:100%;width:100%;background:black;opacity:0.7;display:none;"></div>
-<img id="guide" style="position:fixed;z-index:999999;top:0;right:0;display:none;" src="http://static.resource.weijuju.com/image/mobile/common/guide.png">
+<img id="guide" style="position:fixed;z-index:999999;top:0;right:0;display:none;" src="__ADDONS__/images/guide.png">
 
 <script>
     var $mask=$('#mask');
@@ -279,20 +211,20 @@
         $guide.hide();
     });
 </script>
-<div class="container" style="background-image:url('http://static.resource.weijuju.com/image/mobile/fudan/tbg.jpg');">
+<div class="container" style="background-image:url('__ADDONS__/images/tbg.jpg');">
 
     <div class="wrap" style="position: absolute;left: 19%;margin-top: 147px;width: 53%;">
-        <img src="http://static.resource.weijuju.com/image/mobile/fudan/t1.png" width="100%"/>
+        <img src="__ADDONS__/images/t1.png" width="100%"/>
     </div>
 
-    <img style="position: absolute;right: 4%;margin-top: 45px;width: 14%;" src="http://static.resource.weijuju.com/image/mobile/fudan/tp1.png" width=""/>
+    <img style="position: absolute;right: 4%;margin-top: 45px;width: 14%;" src="__ADDONS__/images/tp1.png" width=""/>
 
     <div class="tip nickname" style="margin-top:-5px;font-size:19px;font-weight:normal;margin-top:113%;color:#532900;">分享给好友，请TA帮您孵蛋</div>
     <div class="tip" style="font-size:14px;margin-top:10px;color:#532900;">每位好朋友最多帮您孵蛋一次</div>
     <div class="tip" style="font-size:13px;margin-top:10px;line-height:28px;color:#532900;">奖品只剩<span class="nickname" style="font-size:18px;font-weight:normal;"> 10000 </span>件，蛋<span class="nickname" style="font-size:18px;font-weight:normal;"> 碎 </span>即可领奖！<br>邀请好友越多，获奖机会越大</div>
 
     <a class="btn" onclick="showGuide();" style="margin-top:10px;">
-        <img src="http://static.resource.weijuju.com/image/mobile/fudan/tbtn_gethelper.png" width="100%"/>
+        <img src="__ADDONS__/images/tbtn_gethelper.png" width="100%"/>
     </a>
 
     <div class="wrap" style="margin-top:8px;margin-bottom:10px;">

@@ -1,6 +1,7 @@
 <?php
 
-class incubationMobileController {
+class incubationMobileController
+{
 
     public $assignData = array();
 
@@ -9,8 +10,21 @@ class incubationMobileController {
     {
     }
 
-    //初始页面
-    public function index(){
-        return $this -> assignData;
+
+    public function init()
+    {
+
+        return $this->assignData;
+
     }
+
+
+    //初始页面
+    public function index()
+    {
+
+        return $this->assignData;
+
+    }
+
 }

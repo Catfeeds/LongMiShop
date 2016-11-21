@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,user-scalable=no,maximum-scale=1,initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+
+    <title>好友孵蛋</title>
+    <link rel="stylesheet" href="__ADDONS__/css/common.css" />
+    <link rel="stylesheet" href="__ADDONS__/css/main.css" />
+    <link rel="stylesheet" href="__ADDONS__/css/main.css" />
+</head>
+<body>
+
+<include file="default/Addons_follow"/>
+
+
+
+<div class="container" style="background-image:url('__ADDONS__/images/tbg3.jpg');">
+    <a class="btn getTree" style="margin-top: 111%;">
+        <img src="__ADDONS__/images/tbtn_get3.png" width="100%"/>
+    </a>
+    <div class="wrap" style="margin-top:50px;margin-bottom:10px;">
+        <strong>活动说明：</strong>
+        参与“好友孵蛋”，您需要先领取一棵专属的蛋（此时您的蛋没有被孵开过），
+        然后分享给好友，让好友帮忙孵蛋，当有10个好友帮您孵蛋成功后，您的蛋将会被孵开，
+        然后您填写信息后即可到商家处兑换礼物（xxx）。
+    </div>
+
+
+    <div class="wrap" style="margin-bottom:15px;text-align:center;padding-bottom:10px;">
+        <a href="{:U('Mobile/User/index')}" style="color: white;text-decoration: none;font-size: 13px;background: black;display: inline-block;padding: 2px 8px;border-radius: 2px;">个人中心</a>
+    </div>
+
+    <script type="text/javascript">
+        $(function(){
+            var ing=false;
+            $('.getTree').click(function(){
+                if(ing) return;
+                ing=true;
+                $.ajax({
+                    url: '/mobile/game/fudan',
+                    data: {
+                        action:'getTree',
+                        openid:'ocOeEjkLjRWU0hzP5PqZ2o2m5WPk',
+                        header:'http://wx.qlogo.cn/mmopen/ajNVdqHZLLBFsGwwBjrIZAhJ1e41LpJYD3Y8iaoljHExsqx0wh4q3gCMCI5OzY07yQiaH2L8FYXIK2ibUpsT7oLyg/0',
+                        name:'🙈',
+                        aid:'144057'
+                    },
+                    type: 'POST',
+                    dataType: "json",
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    success: function (data) {
+                        ing=false;
+                        if(data.success==true){
+                            location.href="my.jsp?aid=144057&wuid=234964&uid=244271&myopenid=ocOeEjkLjRWU0hzP5PqZ2o2m5WPk";
+                        }else{
+                            if(data.msg){
+                                alert(data.msg);
+                            }else{
+                                alert("领取蛋蛋失败");
+                            }
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+
+</div>
+
+
+
+
+
+<style>
+    .trialTip {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 99999;
+        display: none;
+    }
+    #buyTip {
+        background: url(http://v2.static.resource.weijuju.com/image/mobile/trial/buyTip.png) center center no-repeat;
+        background-size: 100% 100%;
+    }
+    .trialTipClose {
+        display: block;
+        width: 5rem;
+        height: 5rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    #noChangceTip {
+        background: url(http://v2.static.resource.weijuju.com/image/mobile/trial/noChangceTip.png) center center no-repeat;
+        background-size: 100% 100%;
+    }
+    .topTrialTip {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2rem;
+        color: #fff;
+        line-height: 2rem;
+        text-align: center;
+        font-size: .55rem;
+        z-index: 99998;
+    }
+    .topTrialTipBg {
+        background: #000;
+        opacity: 0.6;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .topTrialTip p {
+        position: relative;
+    }
+    .topTrialTip p a {
+        color: #F5FB3C;
+    }
+</style>
+
+
+
+
+
+
+
+
+<script>
+
+</script>
+
+</body>
+</html>
