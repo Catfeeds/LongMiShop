@@ -27,26 +27,29 @@ class assistWinningMobileController {
         );
         if( !empty($Uid) ){
             $where['user_id'] = $Uid;
-            $count = M('addons_assistwinning_help')->where($where)->count();
-            if($count > count($temArray) + 1 ){
-                $temperature = 0;
-            }else{
-                $temperature = $temArray[$count+1];
-            }
-            $arrData = array(
-                'help_uid'=>$user_id,
-                'user_id'=>$Uid,
-            );
-            $helpRes = M('addons_assistwinning_help')->where($arrData)->find();
-            if(!empty($helpRes)){
-                $arrData['temperature'] = $temperature;
-                $arrData['create_time'] = time();
-                M('addons_assistwinning_help')->add($arrData);
-            }
-
         }else{
             $where['user_id'] = $user_id;
         }
+
+        //加热
+        $count = M('addons_assistwinning_help')->where($where)->count();
+        if($count > count($temArray) + 1 ){
+            $temperature = 0;
+        }else{
+            $temperature = $temArray[$count+1];
+        }
+        $arrData = array(
+            'help_uid'=>$user_id,
+            'user_id'=>$where['user_id'],
+        );
+
+        $helpRes = M('addons_assistwinning_help')->where($arrData)->find();
+        if(empty($helpRes)){
+            $arrData['temperature'] = $temperature;
+            $arrData['create_time'] = time();
+            M('addons_assistwinning_help')->add($arrData);
+        }
+
         $list = M('users')->where($where)->find();
         $helpList = M('addons_assistwinning_help')->where($where)->order('create_time ASC')->limit(5)->select();
         $list['sumTem'] = 0;
