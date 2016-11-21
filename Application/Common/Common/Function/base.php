@@ -271,7 +271,12 @@ function recurse_copy($src, $dst)
 	closedir($dir);
 }
 
-// 递归删除文件夹
+
+/**
+ * 递归删除文件夹
+ * @param $dir
+ * @param string $file_type
+ */
 function delFile($dir,$file_type='') {
 	if(is_dir($dir)){
 		$files = scandir($dir);
@@ -645,12 +650,34 @@ function selectDataWithCondition( $tableName , $condition = array() , $field = "
  * @return bool
  */
 function isSuccessToAddData( $tableName , $data = array() ){
-    $result = M($tableName) -> add($data);
+    $result = addData( $tableName , $data );
     if( empty($result) ){
         return false;
     }
     return true;
 }
+
+/**
+ * 插入表
+ * @param $tableName
+ * @param array $data
+ * @return mixed
+ */
+function addData( $tableName , $data = array() ){
+    return M( $tableName ) -> add( $data );
+}
+
+/**
+ * 修改数据
+ * @param $tableName
+ * @param $condition
+ * @param $data
+ * @return bool
+ */
+function saveData( $tableName , $condition , $data ){
+    return M( $tableName ) -> where( $condition ) -> save( $data );
+}
+
 
 /**
  * 获取购物车数量

@@ -130,7 +130,10 @@ class GiftCouponController extends BaseController {
                 $data['create_time'] = time();
                 do{
                     $code = get_rand_str(8,0,1);//获取随机8位字符串
-                    $check_exist = findDataWithCondition('coupon_code',array('code'=>$code),"code");
+                    $check_exist = findDataWithCondition('coupon_list',array('code'=>$code),"code");
+                    if( empty( $check_exist ) ){
+                        $check_exist = findDataWithCondition('coupon_code',array('code'=>$code),"code");
+                    }
                 }while($check_exist);
                 $data['code'] = $code;
                 M('coupon_code')->add($data);
@@ -239,7 +242,10 @@ class GiftCouponController extends BaseController {
             for($i=0;$i<$num; $i++){
                 do{
                     $code = get_rand_str(8,0,1);//获取随机8位字符串
-                    $check_exist = M('coupon_list') -> where(array('code'=>$code))->find();
+                    $check_exist = findDataWithCondition('coupon_list',array('code'=>$code),"code");
+                    if( empty( $check_exist ) ){
+                        $check_exist = findDataWithCondition('coupon_code',array('code'=>$code),"code");
+                    }
                 }while($check_exist);
                 $add['code'] = $code;
                 M('coupon_list')->add($add);
