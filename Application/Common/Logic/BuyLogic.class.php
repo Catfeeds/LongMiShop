@@ -501,7 +501,7 @@ class BuyLogic extends BaseLogic
             $data2['goods_name']         = $val['goods_name']; // 商品名称
             $data2['goods_sn']           = $val['goods_sn']; // 商品货号
             $data2['goods_num']          = $val['goods_num']; // 购买数量
-            $data2['goods_postage']      =  $this -> _post_data['count_postage'][$val['goods_id'].'_LM_'.$val['spec_key']]; // 商品邮费
+            $data2['goods_postage']      = $this -> _post_data['count_postage'][$val['goods_id'].'_LM_'.$val['spec_key']]; // 商品邮费
             $data2['market_price']       = $val['market_price']; // 市场价
             $data2['goods_price']        = $val['goods_price']; // 商品价
             $data2['spec_key']           = $val['spec_key']; // 商品规格

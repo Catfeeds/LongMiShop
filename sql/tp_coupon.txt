@@ -410,3 +410,14 @@ CREATE TABLE `lm_admin_point` (
 
 ALTER TABLE `lm_return_goods`
 ADD COLUMN `result`  int(1) NOT NULL DEFAULT 0 COMMENT '退货退款结果  1 成功 2 拒绝' AFTER `refund_money`;
+
+
+ALTER TABLE `lm_order_goods`
+MODIFY COLUMN `spec_key`  varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '商品规格key' AFTER `give_integral`,
+MODIFY COLUMN `spec_key_name`  varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '规格对应的中文名字' AFTER `spec_key`;
+
+ALTER TABLE `lm_order`
+MODIFY COLUMN `user_note`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户备注' AFTER `discount`;
+
+
+
