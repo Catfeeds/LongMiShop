@@ -64,6 +64,13 @@ header { width: 100%;  background: #fff; padding: 7px 0; -webkit-box-sizing: bor
 .last-m .last-bt{ position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,109%);width:7.0rem; }
 .last-m .last-bt-f{ -webkit-transform:translate(-50%,186%); }
 
+/* ---- 填写领奖资料 ---- */
+#fillIn{ position:absolute;top:0px;width:100%;height:100%; }
+#fillIn .last-m{ position:absolute;width:83%;top:0px;left:50%;margin-top:67%;-webkit-transform:translateX(-50%); }
+#fillIn .last-m .last-h{ position:absolute;top:0px;left:-0.5rem;width:2.4rem; }
+#fillIn .last-m .last-bt{ position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,109%);width:7.0rem; }
+#fillIn .last-m .last-bt-f{ -webkit-transform:translate(-50%,186%); }
+
 /*---- 二维码 ----*/
 .code-b{ position:absolute;top:50%;left:50%;width:8rem;-webkit-transform:translate(-50%,-23%); }
 .code-t{ position:absolute;top:10%;left:10%;width:2rem;height:2rem;border-radius:50%;background:#fa6311;color:#fff;font-size:16px;font-weight:bold;padding-top:.4rem;text-align:center; }
