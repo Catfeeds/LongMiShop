@@ -62,6 +62,7 @@
                                         <td class="text-center">{$list.use_end_time|date='Y-m-d',###}</td>
                                         <td class="text-center">
                                             <if condition="$list[type] eq 4">
+                                                <a href="{:U('Admin/Coupon/exportCoupon',array('id'=>$list['id'],'type'=>$list['type']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="导出">导出兑换码</a>
                                                 <a href="{:U('Admin/Coupon/make_coupon',array('id'=>$list['id'],'type'=>$list['type']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="发放"><i class="fa fa-send"></i></a>
                                             <elseif condition="$list[type] eq 1"/>
                                             	<a href="javascript:void(0)" data-toggle="tooltip" title="发放" class="btn btn-info send_user" data-url="{:U('Coupon/send_coupon',array('cid'=>$list[id]))}"><i class="fa fa-send-o"></i></a>

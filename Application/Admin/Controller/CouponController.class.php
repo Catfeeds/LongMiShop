@@ -258,4 +258,50 @@ class CouponController extends BaseController {
             $this->error('删除失败');
         $this->success('删除成功');
     }
+
+
+    /**
+     * 导出优惠券兑换码列表
+     */
+    public function exportCoupon(){
+
+        $couponId = I( "id" );
+        $couponType = I( "type" );
+        $couponInfo = findDataWithCondition( "coupon" , array( "id" => $couponId , "type" => $couponType ) );
+        if( empty( $couponInfo ) ){
+            $this -> error( '找不到优惠券' );
+            exit;
+        }
+        $list = selectDataWithCondition( "coupon_list" , array( "cid" => $couponId ) );
+
+        $strTable ='<table width="500" border="1">';
+        $strTable .= '<tr>';
+        $strTable .= '<td style="text-align:center;font-size:12px;width:120px;">优惠券名称</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="100">兑换码</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">状态</td>';
+        $strTable .= '</tr>';
+        foreach( $list as $k => $val){
+            $tempString = "";
+            $tempString .= '<tr>';
+            $tempString .= '<td style="text-align:center;font-size:12px;width:120px;">' . $couponInfo['name'] . '</td>';
+            $tempString .= '<td style="text-align:center;font-size:12px;" width="100">' . $val['code'] . '</td>';
+            $tempString .= '<td style="text-align:center;font-size:12px;" width="*">';
+            if( empty( $val['uid'] ) ){
+                $tempString .= '未领取';
+            }else{
+                if( !empty( $val['order_id'] ) ){
+                    $tempString .= '已使用';
+                }else{
+                    $tempString .= '已领取';
+                }
+            }
+            $tempString .= '</td>';
+            $tempString .= '</tr>';
+            $strTable .= $tempString;
+        }
+        $strTable .='</table>';
+        unset( $list );
+        downloadExcel( $strTable , '兑换码列表' );
+        exit();
+    }
 }
