@@ -10,7 +10,6 @@ class AddonsController extends MobileBaseController {
     const APPOINTED = "Mobile";
 
     public $pluginName = null;
-
     private $addonsLogic = null;
     private $addonsConfig = null;
 
@@ -31,9 +30,7 @@ class AddonsController extends MobileBaseController {
 
         $this -> pluginName = I( "pluginName" , "index" );
         $this -> addonsLogic = new AddonsLogic();
-        $this -> addonsLogic -> loadAddons( ACTION_NAME , $this -> pluginName , "Mobile" , $this -> user_info );
-
-        C( "TMPL_PARSE_STRING.__ADDONS__" , '/Addons/' . ACTION_NAME . '/Static' );
+        $this -> addonsLogic -> loadAddons( ACTION_NAME , $this -> pluginName , self::APPOINTED , $this -> user_info );
         
         $this -> addonsConfig  = $this -> addonsLogic -> getAddonsConfig();
         $dataList = $this -> addonsLogic -> run() ;
@@ -42,19 +39,10 @@ class AddonsController extends MobileBaseController {
                 $this -> assign( $dataKey , $dataItem );
             }
         }
-
-        $this -> display();
-    }
-
-
-    /**
-     * 重新定义 display 方法
-     */
-    protected function display() {
+        C( "TMPL_PARSE_STRING.__ADDONS__" , '/Addons/' . ACTION_NAME . '/Static' );
         $viewPath = "./Addons/".ACTION_NAME."/Template/" . self::APPOINTED . "/" . self::THEME . "/Addons_" . $this -> pluginName . ".html";
         $this -> view -> display($viewPath);
     }
-
 
     /**
      * 跳过报错

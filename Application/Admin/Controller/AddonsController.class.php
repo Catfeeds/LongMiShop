@@ -26,8 +26,6 @@ class AddonsController extends BaseController {
         $this -> addonsLogic = new \Common\Logic\AddonsLogic();
         $this -> addonsLogic -> loadAddons( ACTION_NAME , $this -> pluginName , self::APPOINTED );
 
-        C( "TMPL_PARSE_STRING.__ADDONS__" , '/Addons/' . ACTION_NAME . '/Static' );
-
         $this -> addonsConfig  = $this -> addonsLogic -> getAddonsConfig();
         $dataList = $this -> addonsLogic -> run() ;
         if( !empty( $dataList ) ){
@@ -35,14 +33,7 @@ class AddonsController extends BaseController {
                 $this -> assign( $dataKey , $dataItem );
             }
         }
-        $this -> display();
-    }
-
-
-    /**
-     * 重新定义 display 方法
-     */
-    protected function display() {
+        C( "TMPL_PARSE_STRING.__ADDONS__" , '/Addons/' . ACTION_NAME . '/Static' );
         $viewPath = "./Addons/".ACTION_NAME."/Template/" . self::APPOINTED . "/" . self::THEME . "/Addons_" . $this -> pluginName . ".html";
         $this -> view -> display($viewPath);
     }
