@@ -39,8 +39,9 @@ class AddonsLogic extends BaseLogic
      * @param $addonsName
      * @param string $actionName
      * @param string $module
+     * @param array $data
      */
-    public function loadAddons( $addonsName , $actionName = "index" , $module = "Mobile" ){
+    public function loadAddons( $addonsName , $actionName = "index" , $module = "Mobile" , $data = array() ){
 
         $this -> addonsName = $addonsName;
         $this -> actionName = $actionName;
@@ -56,7 +57,7 @@ class AddonsLogic extends BaseLogic
         try{
             $className = $addonsName . "MobileController";
             if( class_exists($className) ){
-                $this -> classController =  new $className();
+                $this -> classController =  new $className( $data );
             }else{
                 die("Not Find This Addons");
             }

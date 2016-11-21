@@ -28,7 +28,7 @@ class AddonsController extends MobileBaseController {
 
         $this -> pluginName = I( "pluginName" , "index" );
         $this -> addonsLogic = new AddonsLogic();
-        $this -> addonsLogic -> loadAddons( ACTION_NAME , $this -> pluginName );
+        $this -> addonsLogic -> loadAddons( ACTION_NAME , $this -> pluginName , "Mobile" , $this -> user_info );
 
         C( "TMPL_FILE_DEPR" , "_" );
         C( "VIEW_PATH" , "./Addons/".ACTION_NAME."/Template/Mobile/" );
