@@ -250,11 +250,13 @@ class ReportController extends BaseController
                 $resGoodsCondition["admin_id"] = session("admin_id");
             }
             $resGoods = findDataWithCondition( 'goods' , $resGoodsCondition , "goods_name" );
-            $Ranking[$goods_id] = array(
-                "pv"   => $pvItem,
-                "uv"   => $uvList[$goods_id],
-                "name" => $resGoods['goods_name'],
-            );
+            if( !empty( $resGoods ) ){
+                $Ranking[$goods_id] = array(
+                    "pv"   => $pvItem,
+                    "uv"   => $uvList[$goods_id],
+                    "name" => $resGoods['goods_name'],
+                );
+            }
         }
         $this->assign('today', $today);
         $this->assign('yesterday', $yesterday);
