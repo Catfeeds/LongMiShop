@@ -55,7 +55,7 @@ class AddonsController extends BaseController {
             }
         }
         C( "TMPL_PARSE_STRING.__ADDONS__" , '/Addons/' . ACTION_NAME . '/Static' );
-        $viewPath = "./Addons/".ACTION_NAME."/Template/" . self::APPOINTED . "/" . self::THEME . "/Addons_" . $this -> pluginName . ".html";
+        $viewPath = "/Addons/".ACTION_NAME."/Template/" . self::APPOINTED . "/" . self::THEME . "/Addons_" . $this -> pluginName ;
         $this -> view -> display($viewPath);
     }
 
