@@ -5,20 +5,30 @@
  * @param $code
  * @return array
  */
-function checkCode( $code  ){
-    if( !empty($code) ){
+function checkCode( $code  )
+{
+    if (!empty($code)) {
         $condition = array(
-            "gift_coupon_id"    =>  array('neq',0),
-            "coupon_id"         =>  array('eq',0),
-            "user_id"           =>  array('eq',0),
-            "state"             =>  array('eq',0),
-            "code"              =>  $code,
+            "gift_coupon_id" => array('neq', 0),
+            "coupon_id"      => array('eq', 0),
+            "user_id"        => array('eq', 0),
+            "state"          => array('eq', 0),
+            "code"           => $code,
         );
-        if( isExistenceDataWithCondition( "coupon_code" , $condition ) ){
-            return callback( true , "可用兑换码" );
+        if ( isExistenceDataWithCondition( "coupon_code" , $condition ) ) {
+            return callback(true, "可用兑换码");
         }
+        $condition = array(
+            "uid"      => array('eq', 0),
+            "order_id" => array('eq', 0),
+            "code"     => $code,
+        );
+        if ( isExistenceDataWithCondition( "coupon_list" , $condition ) ) {
+            return callback(true, "可用兑换码");
+        }
+
     }
-    return callback( false , "未找到兑换码" );
+    return callback(false, "未找到兑换码");
 }
 
 /**
@@ -44,7 +54,7 @@ function changeCodeState( $code , $userId , $orderId = null )
     if ($result > 0 || $result === 0) {
        return callback( true );
     }
-    return callback( false , "修改礼品券状态失败" );
+    return callback( false , "修改券状态失败" );
 }
 
 /**
@@ -57,7 +67,7 @@ function getExchangeGoodsList( $code ){
     $condition = array(
         "gift_coupon_id"    =>  $GiftCouponId,
     );
-    $goodsList = M('gift_coupon_goods_list') -> where( $condition ) -> select();
+    $goodsList = selectDataWithCondition( 'gift_coupon_goods_list' , $condition );
     if( !empty($goodsList) ){
         foreach ( $goodsList as $key => $goodsItem ){
             $goodsInfo = findDataWithCondition( "goods" , array( 'goods_id' => $goodsItem['goods_id'] ) ) ;

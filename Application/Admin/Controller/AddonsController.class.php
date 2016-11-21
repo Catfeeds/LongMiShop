@@ -18,8 +18,29 @@ class AddonsController extends BaseController {
 
         $this -> display();
     }
+
+    public function install(){
+        $addonsName = I( "addonsName" );
+        if( empty( $addonsName ) ){
+            exit;
+        }
+        $sqlPath = "./Addons/" . $addonsName ."/install.sql";
+        try{
+            $Model = new \Think\Model();
+            $Model->execute( $sqlPath );
+        }catch (\Exception $e) {
+            die("Sql die");
+        }
+    }
+
+
+
+
+
+
+
     /**
-     * 初始化
+     * 插件初始化
      */
     private function _init(){
         $this -> pluginName = I( "pluginName" , "index" );

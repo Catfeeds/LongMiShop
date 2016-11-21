@@ -1,56 +1,72 @@
 <include file="Public/header"/>
 <body>
-<div class="pay">
-    <div class="pay-OK">兑换成功</div>
-    <div class="pay-order">
-                <volist name="goodsList" id="goodsItem">
-                    <p style="text-align:center">
-        {$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}
-                    </p>
-                </volist>
-    </div>
-</div>
 
-<div class="mui-content">
-    <div class="site1">
-        <div class="c">
-            <a href="{:U('User/address_list',array('source'=>'exchange'))}"></a>
-        </div>
-        <div class="consignee">
-            <p>收货人：{$address.consignee} {$address.mobile}</p>
-            <p>地址：{$region_list[$address['province']]['name']} {$region_list[$address['city']]['name']} {$region_list[$address['district']]['name']} {$address.address}</p>
+
+<if condition = " !$isGetCoupon ">
+    <div class="pay">
+        <div class="pay-OK">兑换成功</div>
+        <div class="pay-order">
+            <volist name="goodsList" id="goodsItem">
+                <p style="text-align:center">
+                    {$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}
+                </p>
+            </volist>
         </div>
     </div>
-</div>
-<div class="login_btn">
-    <a href="#" onclick="exchangeSubmit()">立即领取</a>
-</div>
-<input type="hidden" id="exchangeCode" value="{$exchangeCode}" />
-<input type="hidden" id="addressId" value="{$address.address_id}" />
-</body>
-<script>
-    function exchangeSubmit(){
-        var exchangeCode = $('#exchangeCode').val();
-        var addressId = $('#addressId').val();
-        $.ajax({
-            type:'post',
-            url:"{:U('Mobile/exchange/createExchangeOrder')}",
-            data:{code:exchangeCode,addressId:addressId},
-            dataType:'json',
-            success:function(res){
-                if(res.state == 1){
-                    alert(res.msg);
-                    window.location.href = "{:U('Mobile/Order/order_list',array('type'=>'WAITSEND'))}" ;
-                }else{
-                    alert(res.msg);
+    <div class="mui-content">
+        <div class="site1">
+            <div class="c">
+                <a href="{:U('User/address_list',array('source'=>'exchange'))}"></a>
+            </div>
+            <div class="consignee">
+                <p>收货人：{$address.consignee} {$address.mobile}</p>
+                <p>地址：{$region_list[$address['province']]['name']} {$region_list[$address['city']]['name']} {$region_list[$address['district']]['name']} {$address.address}</p>
+            </div>
+        </div>
+    </div>
+    <div class="login_btn">
+        <a href="#" onclick="exchangeSubmit()">立即领取</a>
+    </div>
+    <input type="hidden" id="exchangeCode" value="{$exchangeCode}" />
+    <input type="hidden" id="addressId" value="{$address.address_id}" />
+    <script>
+        function exchangeSubmit(){
+            var exchangeCode = $('#exchangeCode').val();
+            var addressId = $('#addressId').val();
+            $.ajax({
+                type:'post',
+                url:"{:U('Mobile/exchange/createExchangeOrder')}",
+                data:{code:exchangeCode,addressId:addressId},
+                dataType:'json',
+                success:function(res){
+                    if(res.state == 1){
+                        alert(res.msg);
+                        window.location.href = "{:U('Mobile/Order/order_list',array('type'=>'WAITSEND'))}" ;
+                    }else{
+                        alert(res.msg);
+                    }
+                },
+                error:function(){
+                    alert('网络超时');
                 }
-            },
-            error:function(){
-                alert('网络超时');
-            }
 
-        });
-    }
-</script>
+            });
+        }
+    </script>
+    <else/>
+    <div class="pay">
+        <div class="pay-OK">兑换成功</div>
+        <div class="pay-order">
+                <p style="text-align:center">
+                    {$couponId}
+                    {$couponInfo.name}
+                </p>
+        </div>
+    </div>
+    <div class="login_btn">
+        <a href="{:U('Mobile/User/coupon')}">立即查看</a>
+    </div>
+</if>
+</body>
 <include file="Public/footer"/>
 </html>

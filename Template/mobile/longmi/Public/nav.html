@@ -18,16 +18,16 @@
 		</if>
 		<if condition="$_SERVER['REQUEST_URI']==U('Goods/categoryList') ">
 			<li class="h">
-				<a href="{:U('Goods/categoryList')}">
+				<a href="{:U('Mobile/Goods/goodsList')}">
 					<img src="__STATIC__/SVG/commodity_h.svg">
-					<span>分类</span>
+					<span>全部</span>
 				</a>
 			</li>
 			<else/>
 			<li>
-				<a href="{:U('Goods/categoryList')}">
+				<a href="{:U('Mobile/Goods/goodsList')}">
 					<img src="__STATIC__/SVG/commodity.svg">
-					<span>分类</span>
+					<span>全部</span>
 				</a>
 			</li>
 		</if>
