@@ -54,7 +54,7 @@
                     </div>
                     <div class='home-m-h'>
                         <div class='head-box'>
-                            <img src="__ADDONS__/images/0.jpg" alt="" />
+                            <img src="{$list['head_pic']}" alt="" />
                         </div>
                     </div>
                     <div class='progress'></div>
@@ -82,31 +82,20 @@
             <div class="friendHelp" style="display: block;">
                 <p class="helpP">以下为最近帮助的5位好友</p>
                 <ul class="people clearfix">
-                                    <li class="clearfix">
-                        <span class="photo"><img src="__ADDONS__/images/1.jpg"></span>
-                        <span class="message">
-                            <span>小心一转，温度上升16℃</span>
-                        </span>
-                    </li>
-                                    <li class="clearfix">
-                        <span class="photo"><img src="__ADDONS__/images/2.jpg"></span>
-                        <span class="message">
-                            <span>自信一调，温度上升17℃</span>
-                        </span>
-                    </li>
-                                    <li class="clearfix">
-                        <span class="photo"><img src="__ADDONS__/images/3.jpg"></span>
-                        <span class="message">
-                            <span>自信一调，温度上升18℃</span>
-                        </span>
-                    </li>
-                                    <li class="clearfix">
-                        <span class="photo"><img src="__ADDONS__/images/0.jpg"></span>
-                        <span class="message">
-                            <span>努力控温，温度上升29℃</span>
-                        </span>
-                    </li>
-                                </ul>
+                    <notempty name="list['help']">
+                            <volist name="list['help']" id="item">
+                                <li class="clearfix">
+                                    <span class="photo"><img src="{:$item['head_pic']}"></span>
+                                    <span class="message">
+                                        <span>小心一转，温度上升{:$item['temperature']}℃</span>
+                                    </span>
+                                </li>
+                            </volist>
+                        <else/>
+                            邀请好友帮忙加热
+                    </notempty>
+
+                </ul>
             </div>
             <!-- 礼品介绍 -->
             <div class="lipin" style="display:none;style='padding-top:40px;'">
@@ -209,16 +198,16 @@
             this.state = initState;
 
             //测试数据  上线注释
-            // this.state = {
-            //     focusOn : false,
-            //     pageType : 'IS_LAST',
-            //     //当前进度
-            //     progress : parseInt('80'),
-            //     //目标值
-            //     target : 0,
-            //     //判断增减
-            //     isAdd : true
-            // }  
+//             this.state = {
+//                 focusOn : false,
+//                 pageType : 'IS_LAST',
+//                 //当前进度
+//                 progress : parseInt('80'),
+//                 //目标值
+//                 target : 0,
+//                 //判断增减
+//                 isAdd : true
+//             }
             this.init();
         }
         User.prototype = {
@@ -264,7 +253,7 @@
                         //执行事件
                         t.global();
                         $('.home-m-bt').find('.want').show().click(function(){
-                            location.href = 'index.php';
+                            location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'Index' ))}";
                         }.bind(this)).siblings('.begin').remove();
 
                         t.contLay();
@@ -356,10 +345,9 @@
         $(function(){
             var state = {
                  //是否关注
-                                    focusOn : '1',
-                    pageType : 'IS_PLAY',
-                                    //是否中奖
-                                progress : parseInt('80'),
+                focusOn : '0',
+                pageType : 'IS_PLAY',//是否中奖
+                progress : parseInt("{:$list['sumTem']}"),
                 target : 0,
                 isAdd : true,
             }
@@ -371,12 +359,9 @@
           
     </script>
 
-    <script>
-        </script>
-    <script type="text/javascript">
-$.post("../../weixin_visit_tongji_ajax.php",{is_action:'1',openid:'o4KaWjgOFJ-e9GJwtlDkMDp2QHVA',ip:'113.68.205.182',url:'http://weixin.wy100.com/2016_action/20161111kaoxiang/friend.php?op=o4KaWjg9dBV4nett5UDS07ab4Db4&code=011PsWX72ku73O0BYPY72oARX72PsWX1&state=1',source_url:'',source_type:'0',url_like:'20161111kaoxiang'},function(d,s){d;});
-</script>
 
-</script>
+
+
+
 </body>
 </html>
