@@ -450,7 +450,7 @@ class BuyLogic extends BaseLogic
         $invoice_title = $this -> _post_data['invoice_title'] == 1 ?  '个人' : $this -> _post_data['invoice'];
 
         $data = array(
-            'order_sn'         => date('YmdHis').rand(1000,9999), // 订单编号
+            'order_sn'         =>date('YmdHis').rand(1000,9999), // 订单编号
             'user_id'          =>$user_id, // 用户id
             'consignee'        =>$address['consignee'], // 收货人
             'province'         =>$address['province'],//'省份id',
@@ -475,7 +475,7 @@ class BuyLogic extends BaseLogic
             'add_time'         =>$this -> nowTime, // 下单时间
             'order_prom_id'    =>$car_price['order_prom_id'],//'订单优惠活动id',
             'order_prom_amount'=>$car_price['order_prom_amount'],//'订单优惠活动优惠了多少钱',
-            'user_note'        =>$this -> _post_data['userMessage'], // 备注信息
+            'user_note'        =>$this -> _post_data['userMessage']." ", // 备注信息
         );
 
         $order_id = M("Order")->data($data)->add();
