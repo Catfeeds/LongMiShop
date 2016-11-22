@@ -6,11 +6,18 @@ class assistWinningMobileController {
 
     public $key = null;
     public $temArray = array(
-        '1'=>'100',
-        '2'=>'80',
-        '3'=>'30',
-        '4'=>'10',
+        '1'=>'29',
+        '2'=>'18',
+        '3'=>'10',
+        '4'=>'-16',
         '5'=>'5',
+    );
+    public $hints = array(
+        '29' => "自信一调，温度上升29",
+        '18' => '小心一转，温度上升18',
+        '10' => '努力控温，温度上升10',
+        '-16'=> '好奇打开门，温度下降16',
+        '5'=>'煽了个风，温度下降5',
     );
 
     public function __construct($userInfo)
@@ -63,7 +70,7 @@ class assistWinningMobileController {
         $list['sumTem'] = 0;
         foreach($helpList as $key=>$item){
             $list['help'][$key] =  M('users')->where(array("user_id"=>$item['help_uid']))->find();
-            $list['help'][$key]['temperature'] = $item['temperature'];
+            $list['help'][$key]['temperature'] = $this->hints[$item['temperature']];
             $list['sumTem'] +=  $item['temperature'];
         }
         if($list['sumTem'] > 180){
@@ -107,12 +114,13 @@ class assistWinningMobileController {
         }
 
         //加热
-        $count = M('addons_assistwinning_help')->where($where)->count();
-        if($count > count($this->temArray) + 1 ){
-            $temperature = 0;
-        }else{
-            $temperature = $this->temArray[$count+1];
-        }
+//        $count = M('addons_assistwinning_help')->where($where)->count();
+//        if($count > count($this->temArray) + 1 ){
+//            $temperature = 0;
+//        }else{
+//            $temperature = $this->temArray[$count+1];
+//        }
+        $temperature = array_rand($this->temArray,1);
         $arrData = array(
             'help_uid'=>$user_id,
             'user_id'=>$where['user_id'],
