@@ -11,7 +11,7 @@
     <title>好友孵蛋</title>
     <link rel="stylesheet" href="__ADDONS__/css/common.css" />
     <link rel="stylesheet" href="__ADDONS__/css/main.css" />
-    <link rel="stylesheet" href="__ADDONS__/css/main.css" />
+    <script src="__STATIC__/js/jquery.js"></script>
 </head>
 <body>
 
@@ -37,24 +37,19 @@
 
     <script type="text/javascript">
         $(function(){
-            var ing=false;
+            var lock=false;
             $('.getTree').click(function(){
-                if(ing) return;
-                ing=true;
+                if( lock ){ return; }
+                lock = true;
                 $.ajax({
-                    url: '/mobile/game/fudan',
+                    url: '{:U("Mobile/addons/incubation")}',
                     data: {
-                        action:'getTree',
-                        openid:'ocOeEjkLjRWU0hzP5PqZ2o2m5WPk',
-                        header:'http://wx.qlogo.cn/mmopen/ajNVdqHZLLBFsGwwBjrIZAhJ1e41LpJYD3Y8iaoljHExsqx0wh4q3gCMCI5OzY07yQiaH2L8FYXIK2ibUpsT7oLyg/0',
-                        name:'🙈',
-                        aid:'144057'
+                        pluginName:'createActivity'
                     },
                     type: 'POST',
                     dataType: "json",
-                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
                     success: function (data) {
-                        ing=false;
+                        lock = false;
                         if(data.success==true){
                             location.href="my.jsp?aid=144057&wuid=234964&uid=244271&myopenid=ocOeEjkLjRWU0hzP5PqZ2o2m5WPk";
                         }else{

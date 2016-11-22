@@ -4,18 +4,30 @@ class incubationMobileController
 {
 
     public $assignData = array();
+    public $userInfo = array();
 
+    private $activeVersion = null;
 
-    public function __construct()
+    public function __construct( $userInfo )
     {
+        $this -> userInfo = $userInfo;
+
     }
 
 
-    public function init()
+    public function initial()
     {
 
         return $this->assignData;
 
+    }
+
+
+    public function createActivity()
+    {
+        $userId = $this -> userInfo["user_id"];
+//        findDataWithCondition($userId);
+        exit;
     }
 
 
