@@ -64,6 +64,9 @@ class BaseController extends Controller {
     {
     	$ctl = CONTROLLER_NAME;
     	$act = ACTION_NAME;
+        if( $ctl == "Addons" &&  $act != "index" && $act != "install" ){
+            $act = "_empty";
+        }
 		$act_list = session('act_list');
 		$no_check = array('login','logout','vertifyHandle','vertify','imageUp','upload');
     	if($ctl == "Index" && $act == 'index'){
