@@ -23,7 +23,7 @@ header { width: 100%;  background: #fff; padding: 7px 0; -webkit-box-sizing: bor
 .inner ul li.current { background: #ed3b1e; color: #fff; }
 
 
-.container{ position:relative;width:100%;overflow:hidden;background:#F8BC37; }
+.container{ position:relative;width:100%;background:#F8BC37; }
 
 /* -------首页-------*/
 #home{ position:absolute;top:0px;width:100%;height:100%; }
