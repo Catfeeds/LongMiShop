@@ -5,7 +5,13 @@ class assistWinningMobileController {
     public $user = array();
 
     public $key = null;
-
+    public $temArray = array(
+        '1'=>'100',
+        '2'=>'80',
+        '3'=>'30',
+        '4'=>'10',
+        '5'=>'5',
+    );
 
     public function __construct($userInfo)
     {
@@ -16,16 +22,10 @@ class assistWinningMobileController {
     //初始页面
     public function index(){
         $Uid = I('id');
-
+//        $Uid = '5823';
         $user_id = $this->user['user_id'];
 //        $user_id = '5823';
-        $temArray = array(
-            '1'=>'100',
-            '2'=>'80',
-            '3'=>'30',
-            '4'=>'10',
-            '5'=>'5',
-        );
+
         if( !empty($Uid) ){
             $where['user_id'] = $Uid;
         }else{
@@ -36,29 +36,16 @@ class assistWinningMobileController {
                 $this -> assignData["prize"] = true;
             }
         }
-
-
-        //加热
-        $count = M('addons_assistwinning_help')->where($where)->count();
-        if($count > count($temArray) + 1 ){
-            $temperature = 0;
-        }else{
-            $temperature = $temArray[$count+1];
-        }
+        $list = M('users')->where($where)->find();
         $arrData = array(
             'help_uid'=>$user_id,
             'user_id'=>$where['user_id'],
         );
-
         $helpRes = M('addons_assistwinning_help')->where($arrData)->find();
         if(empty($helpRes)){
-            $arrData['temperature'] = $temperature;
-            $arrData['create_time'] = time();
-            M('addons_assistwinning_help')->add($arrData);
+            $list['Ishelp'] = true;
         }
-
-        $list = M('users')->where($where)->find();
-        $helpList = M('addons_assistwinning_help')->where($where)->order('create_time ASC')->limit(5)->select();
+        $helpList = M('addons_assistwinning_help')->where($where)->order('create_time DESC')->limit(5)->select();
         $list['sumTem'] = 0;
         foreach($helpList as $key=>$item){
             $list['help'][$key] =  M('users')->where(array("user_id"=>$item['help_uid']))->find();
@@ -68,8 +55,25 @@ class assistWinningMobileController {
         if($list['sumTem'] > 180){
             $list['sumTem'] = 180;
         }
+
         $list['visitId'] = $user_id;
+        if($user_id == $list['user_id']){ //自己给自己加温
+            $arrData = array(
+                'help_uid'=>$user_id,
+                'user_id'=>$where['user_id'],
+            );
+            $helpRes = M('addons_assistwinning_help')->where($arrData)->find();
+            if(empty($helpRes)){
+                $arrData['temperature'] = $this->temArray[1];
+                $arrData['create_time'] = time();
+                M('addons_assistwinning_help')->add($arrData);
+            }
+
+
+        }
         $this -> assignData["list"] = $list;
+        $isFollow = M('users')->field('is_follow')->where(array("user_id"=>$user_id))->find();
+        $this -> assignData['isFollow'] = $isFollow['is_follow'];
         return $this -> assignData;
     }
 
@@ -91,8 +95,35 @@ class assistWinningMobileController {
     }
 
 
-    public function history(){
+    //加热
+    public function help(){
+        $Uid = I('id');
+        $user_id = $this->user['user_id'];
+        if( !empty($Uid) ){
+            $where['user_id'] = $Uid;
+        }else{
+            $where['user_id'] = $user_id;
+        }
 
+        //加热
+        $count = M('addons_assistwinning_help')->where($where)->count();
+        if($count > count($this->temArray) + 1 ){
+            $temperature = 0;
+        }else{
+            $temperature = $this->temArray[$count+1];
+        }
+        $arrData = array(
+            'help_uid'=>$user_id,
+            'user_id'=>$where['user_id'],
+        );
+        $helpRes = M('addons_assistwinning_help')->where($arrData)->find();
+        if(empty($helpRes)){
+            $arrData['temperature'] = $temperature;
+            $arrData['create_time'] = time();
+            M('addons_assistwinning_help')->add($arrData);
+            exit(json_encode(callback(true,'加温成功')));
+        }
+        exit(json_encode(callback(false,'加温失败')));
     }
 
 
