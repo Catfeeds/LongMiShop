@@ -9,7 +9,6 @@
         <div class="container-fluid">
             <div class="pull-right">
                 <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
-           		<a href="javascript:;" class="btn btn-default" data-url="http://www.tp-shop.cn/Doc/Index/article/id/1012/developer/user.html" onclick="get_help(this)"><i class="fa fa-question-circle"></i> 帮助</a>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -33,10 +32,6 @@
                                     </td>
                                     <td>请选择券类型</td>
                                 </tr>
-
-                            
-                            
-                                
                                 <tr id="coupon">
                                     <td class="col-sm-2">优惠券名称：</td>
                                     <td class="col-sm-4">
@@ -46,7 +41,7 @@
                                     <td class="col-sm-4">请填写优惠券名称
                                     </td>
                                 </tr>  
-                                <tr id="coupon">
+                                <tr>
                                     <td class="col-sm-2">优惠券简介：</td>
                                     <td class="col-sm-4">
                                         <textarea name="desc" id="" cols="68" rows="10">{$coupon.desc}</textarea>
@@ -77,11 +72,12 @@
 			                        <td id="order-status">
 			                         	<input name="type" type="radio" value="0" <if condition="$coupon['type'] eq 0">checked</if> >面额模板
 			                            <input name="type" type="radio" value="1" <if condition="$coupon['type'] eq 1">checked</if> >按用户发放			                           
-			                            <input name="type" type="radio" value="2" <if condition="$coupon['type'] eq 2">checked</if> >注册发放
-			                            <input name="type" type="radio" value="3" <if condition="$coupon['type'] eq 3">checked</if> >邀请发放
-			                            <input name="type" type="radio" value="4" <if condition="$coupon['type'] eq 4">checked</if> >线下发放
+			                            <!--<input name="type" type="radio" value="2" <if condition="$coupon['type'] eq 2">checked</if> >注册发放-->
+			                            <!--<input name="type" type="radio" value="3" <if condition="$coupon['type'] eq 3">checked</if> >邀请发放-->
+										<input name="type" type="radio" value="4" <if condition="$coupon['type'] eq 4">checked</if> >线下发放
 			                        </td>
-			                    </tr> 
+									<td class="col-sm-4"></td>
+			                    </tr>
 			                    <tr>
 			                    	<td>发放数量:</td>
 			                    	<td><input type="text" value="{$coupon.createnum}" class="form-control" id="createnum" name="createnum" placeholder="0" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" /></td>
@@ -112,7 +108,15 @@
 			                        </td>
 			                        <td class="col-sm-4"></td>
 			                    </tr>
-					            <tr>
+								<tr>
+									<td>使用类型:</td>
+									<td id="useType">
+										<input name="use_type" type="radio" value="0" <if condition="$coupon['use_type'] eq 0">checked</if> >固定时间
+										<input name="use_type" type="radio" value="1" <if condition="$coupon['use_type'] eq 1">checked</if> >动态时间
+									</td>
+									<td class="col-sm-4"></td>
+								</tr>
+								<tr class="useTimed">
 			                        <td>使用起始日期:</td>
 			                        <td>
 			                            <div class="input-prepend input-group">
@@ -124,7 +128,7 @@
 			                        </td>
 			                        <td class="col-sm-4"></td>
 			                    </tr> 
-			                    <tr>
+			                    <tr class="useTimed">
 			                        <td>使用结束日期:</td>
 			                        <td>
 			                            <div class="input-prepend input-group">
@@ -135,8 +139,15 @@
 			                            </div>
 			                        </td>
 			                        <td class="col-sm-4"></td>
-			                    </tr>                              
-                                </tbody> 
+			                    </tr>
+								<tr class="useTimed2">
+									<td> 天数限制：</td>
+									<td >
+										<input type="number" value="{$coupon.limit_day}" class="form-control"  name="limit_day"  onpaste="this.value=this.value.replace(/[^\d]/g,'')" onkeyup="this.value=this.value.replace(/[^\d]/g,'')"/>
+									</td>
+									<td class="col-sm-4"><span>获得券时间算起</span></td>
+								</tr>
+								</tbody>
                                 <tfoot>
                                 	<tr>
                                 	<td>
@@ -157,13 +168,24 @@
 </div>
 
 <script>
-$('input[type="radio"]').click(function(){
-    if($(this).val() == 0){
-    	$('.timed').hide();
-    }else{
-    	$('.timed').show();
-    }
-})
+	$(function(){
+		$('#order-status input[type="radio"]').click(function(){
+			if($(this).val() == 0){
+				$('.timed').hide();
+			}else{
+				$('.timed').show();
+			}
+		});
+		$('#useType input[type="radio"]').click(function(){
+			if($(this).val() == 0){
+				$('.useTimed').show();
+				$('.useTimed2').hide();
+			}else{
+				$('.useTimed').hide();
+				$('.useTimed2').show();
+			}
+		});
+	});
 
 
 $(function(){
@@ -171,7 +193,8 @@ $(function(){
     data_pick('send_end_time');
     data_pick('use_start_time');
     data_pick('use_end_time');
-    $('input[type="radio"]:checked').trigger('click');
+	$('#order-status input[type="radio"]:checked').trigger('click');
+	$('#useType input[type="radio"]:checked').trigger('click');
 })
     
 function data_pick(id){

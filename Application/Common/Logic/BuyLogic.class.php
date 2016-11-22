@@ -291,22 +291,28 @@ class BuyLogic extends BaseLogic
 
         //检查优惠券情况
         if( !empty( $userCouponId ) ){
-            $userCouponInfo = M('coupon_list') -> where("id = '{$userCouponId}' ") -> find();
+            $userCouponInfo = findDataWithCondition( 'coupon_list' , array( "id" => $userCouponId ) );
             if( empty($userCouponInfo) ){
                 throw new \Exception('您的优惠券信息有误！');
             }
             if( !empty($userCouponInfo['order_id']) ){
                 throw new \Exception('优惠券已被使用！');
             }
-            $couponInfo = M('coupon') -> where("id = '{$userCouponInfo['cid']}' ") -> find();
+            $couponInfo = findDataWithCondition( 'coupon' , array("id" => $userCouponInfo['cid'] ) );
             if( empty($couponInfo) ){
                 throw new \Exception('优惠券信息有误！');
             }
-            if( $couponInfo['use_start_time'] > $this -> nowTime ){
-                throw new \Exception('此优惠券还未到使用时间！');
-            }
-            if( $couponInfo['use_end_time'] < $this -> nowTime  ){
-                throw new \Exception('此优惠券已过期！');
+            if( !empty( $couponInfo['use_type'] ) && $couponInfo['use_type'] == 1 ){
+                if( $userCouponInfo['receive_time'] + $couponInfo['limit_day'] * 24 * 60 *60  < $this -> nowTime ){
+                    throw new \Exception('此优惠券已过期！');
+                }
+            }else{
+                if( $couponInfo['use_start_time'] > $this -> nowTime ){
+                    throw new \Exception('此优惠券还未到使用时间！');
+                }
+                if( $couponInfo['use_end_time'] < $this -> nowTime  ){
+                    throw new \Exception('此优惠券已过期！');
+                }
             }
             $this -> _post_data['userCouponId'] = $userCouponId;
             $this -> _post_data['couponInfo'] = $couponInfo;

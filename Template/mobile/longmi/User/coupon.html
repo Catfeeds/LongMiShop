@@ -10,7 +10,11 @@
 					<div class="m9">{$coupon.name}</div>
 					<div class="m10">简介：{$coupon.desc}</div>
 					<div class="m11">￥{$coupon.money}</div>
-					<div class="m12">有效期至：{$coupon.use_end_time|date='Y-m-d',###}</div>
+					<if condition = "$coupon['use_type'] == 1">
+						<div class="m12">有效期至：{:date('Y-m-d',($coupon['limit_day']*24*60*60 + $coupon['receive_time']))}</div>
+					<else/>
+						<div class="m12">有效期至：{$coupon.use_end_time|date='Y-m-d',###}</div>
+					</if>
 				</div>
 			</div>
 		</volist>

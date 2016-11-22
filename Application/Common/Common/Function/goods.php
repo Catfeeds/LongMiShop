@@ -172,6 +172,7 @@ function commoditySalesVolume($orderId){
     foreach($orderList as $item){
         if($item){
             $Goods->where(array('goods_id'=>$item['goods_id']))->setInc('sales_sum',$item['goods_num']);
+            $Goods->where(array('goods_id'=>$item['goods_id']))->setInc('virtual_sales',$item['goods_num']);
         }
     }
 }
