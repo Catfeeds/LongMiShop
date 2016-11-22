@@ -96,7 +96,8 @@ function receiveCouponCode( $code , $userId  )
         "order_id" => array("eq", "0"),
     );
     $data = array(
-        "uid"       => $userId,
+        "uid"           => $userId,
+        "receive_time"  => time()
     );
     $result = saveData("coupon_list", $condition, $data);
     if ($result > 0 || $result === 0) {
