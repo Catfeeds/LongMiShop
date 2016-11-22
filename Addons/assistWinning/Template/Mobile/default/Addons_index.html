@@ -19,7 +19,7 @@
 <body>
     <!-- 头部 -->
 
-    <div id='page'></div>
+    <div id='page' style="height:100%"></div>
 
 
     <script type="text/template" id='index' class='tpl'>
@@ -92,7 +92,7 @@
                                 <li class="clearfix">
                                     <span class="photo"><img src="{:$item['head_pic']}"></span>
                                     <span class="message">
-                                        <span>小心一转，温度上升{:$item['temperature']}℃</span>
+                                        <span>{:$item['temperature']}℃</span>
                                     </span>
                                 </li>
                             </volist>
@@ -131,7 +131,7 @@
     </script>
 
     <script type="text/template" id="fillIn" class='tpl'>
-        <div class='container container-last' >
+        <div class='container container-last'  style="height:100%">
             <div class='cot-bg1'>
                 <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_02.jpg" alt="" />
                 <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_03.jpg" alt="" />
@@ -144,7 +144,7 @@
                     <div>剩余奖品<span>329个</span></div>
                 </div>
                 <div class='last-m'>
-                    <div class='last-m-bg ' style="background: url('__ADDONS__/images/fillBack.png');background-size: 311px 307px;height:307px;">
+                    <div class='last-m-bg ' style="background: url('__ADDONS__/images/fillBack.png') no-repeat;background-size: 100% 307px;height:307px;">
                        <form action="" id="fillFrom" method="post">
                            <p><span>得奖人</span> <input type="text" name="name" class="formName"></p>
                            <p><span>填写手机号</span> <input type="number" class="formPhone" name="phone" onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();"></p>
@@ -159,7 +159,7 @@
                         </div>
                     </div>
                     <div class='last-bt  last-bt-f'>
-                        <img src="__ADDONS__/images/subImg.png" alt=""  onclick="fromSub();"/>
+                        <img src="__ADDONS__/images/subImg.png" alt="" style="margin-top: 5px"  onclick="fromSub();"/>
                     </div>
                 </div>
             </div>
@@ -180,7 +180,7 @@
                     <div>剩余奖品<span>329个</span></div>
                 </div>
                 <div class='last-m'>
-                    <div class='last-m-bg ' style="background: url('__ADDONS__/images/fillBack.png');background-size: 311px 307px;height:307px;">
+                    <div class='last-m-bg ' style="background: url('__ADDONS__/images/fillBack.png') no-repeat;background-size: 100% 307px;height:307px;">
                         <div >
                             <p>领取成功</p>
                         </div>
@@ -261,6 +261,7 @@
                 $('#page').html('').html($('#code').html());
                 return false;
             }
+            return true;
         }
 
         function call(){
@@ -271,34 +272,32 @@
         });
 
         function helps(){
-            var isFollow = "{$isFollow}";
-            if(isFollow == 0){
-                $("#home").hide();
-                $('#page').html('').html($('#code').html());
-                return false;
-            }
-            var kong = true;
-            var Uid = "{$list['user_id']}";
-            if(kong){
-                $.ajax({
-                    type : 'post',
-                    url : "{: U('Mobile/Addons/assistWinning')}",
-                    data : {pluginName:'help',id:Uid},
-                    dataType : 'json',
-                    success : function(res){
-                        kong = false;
-                        if(res.state == 1){
-                            alert(res.msg);
-                            window.location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'index' ))}";
-                        }else{
-                            alert(res.msg);
+
+            if(isFollow()){
+                var kong = true;
+                var Uid = "{$list['user_id']}";
+                if(kong){
+                    $.ajax({
+                        type : 'post',
+                        url : "{: U('Mobile/Addons/assistWinning')}",
+                        data : {pluginName:'help',id:Uid},
+                        dataType : 'json',
+                        success : function(res){
+                            kong = false;
+                            if(res.state == 1){
+                                alert(res.msg);
+                                window.location.href = window.location.href;
+                            }else{
+                                alert(res.msg);
+                            }
+                        },
+                        error : function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert('网络失败，请刷新页面后重试');
                         }
-                    },
-                    error : function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert('网络失败，请刷新页面后重试');
-                    }
-                })
+                    })
+                }
             }
+
 
         }
 
@@ -424,7 +423,10 @@
                         //执行事件
                         t.global();
                         $('.home-m-bt').find('.want').show().click(function(){
-                            location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'index' ))}";
+                            if(isFollow()){
+                                location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'index' ))}";
+                            }
+
 
                         }.bind(this)).siblings('.begin').remove();
 
@@ -543,25 +545,13 @@
     <script type="text/javascript">
 
 
-        var list = {:getShareImages($lmshop_config,$goods[goods_id],$goodsCate,$user)};
-        var ShareLink = "http://{: $_SERVER['HTTP_HOST']}/Mobile/Addons/assistWinning/pluginName/index/id/{: $list['user_id']}/.html";       //分享连接
+//        var list = {:getShareImages($lmshop_config,$goods[goods_id],$goodsCate,$user)};
+        var ShareLink = "http://{: $_SERVER['HTTP_HOST']}/Mobile/Addons/assistWinning/pluginName/index/.html?id={: $list['user_id']}";       //分享连接
         var ShareImgUrl = "http://{: $_SERVER['HTTP_HOST']}/Addons/assistWinning/Static/images/logo.jpg";   //分享图片
         var wx_title = '快帮我抢！烘焙烧烤做菜样样行的电烤箱！';
         var wx_desc = '我想要很久的电烤箱！能不能吃到美味烧烤就靠你了！';
 
 
-
-
-
-        var is_distribut = getCookie('is_distribut'); // 是否分销代理
-        var user_id = getCookie('user_id'); // 当前用户id
-        //alert(is_distribut+'=='+user_id);
-
-        // 如果已经登录了, 并且是分销商
-        if(parseInt(is_distribut) == 1 && parseInt(user_id) > 0)
-        {
-            ShareLink = ShareLink + "&first_leader="+user_id;
-        }
 
 
         // 微信配置
