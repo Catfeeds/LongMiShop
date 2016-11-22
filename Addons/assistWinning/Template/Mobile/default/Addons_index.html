@@ -92,7 +92,7 @@
                                 <li class="clearfix">
                                     <span class="photo"><img src="{:$item['head_pic']}"></span>
                                     <span class="message">
-                                        <span>小心一转，温度上升{:$item['temperature']}℃</span>
+                                        <span>{:$item['temperature']}℃</span>
                                     </span>
                                 </li>
                             </volist>
@@ -261,6 +261,7 @@
                 $('#page').html('').html($('#code').html());
                 return false;
             }
+            return true;
         }
 
         function call(){
@@ -271,34 +272,32 @@
         });
 
         function helps(){
-            var isFollow = "{$isFollow}";
-            if(isFollow == 0){
-                $("#home").hide();
-                $('#page').html('').html($('#code').html());
-                return false;
-            }
-            var kong = true;
-            var Uid = "{$list['user_id']}";
-            if(kong){
-                $.ajax({
-                    type : 'post',
-                    url : "{: U('Mobile/Addons/assistWinning')}",
-                    data : {pluginName:'help',id:Uid},
-                    dataType : 'json',
-                    success : function(res){
-                        kong = false;
-                        if(res.state == 1){
-                            alert(res.msg);
-                            window.location.href = window.location.href;
-                        }else{
-                            alert(res.msg);
+
+            if(isFollow()){
+                var kong = true;
+                var Uid = "{$list['user_id']}";
+                if(kong){
+                    $.ajax({
+                        type : 'post',
+                        url : "{: U('Mobile/Addons/assistWinning')}",
+                        data : {pluginName:'help',id:Uid},
+                        dataType : 'json',
+                        success : function(res){
+                            kong = false;
+                            if(res.state == 1){
+                                alert(res.msg);
+                                window.location.href = window.location.href;
+                            }else{
+                                alert(res.msg);
+                            }
+                        },
+                        error : function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert('网络失败，请刷新页面后重试');
                         }
-                    },
-                    error : function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert('网络失败，请刷新页面后重试');
-                    }
-                })
+                    })
+                }
             }
+
 
         }
 
@@ -424,7 +423,10 @@
                         //执行事件
                         t.global();
                         $('.home-m-bt').find('.want').show().click(function(){
-                            location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'index' ))}";
+                            if(isFollow()){
+                                location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'index' ))}";
+                            }
+
 
                         }.bind(this)).siblings('.begin').remove();
 
