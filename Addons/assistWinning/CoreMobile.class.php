@@ -36,6 +36,7 @@ class assistWinningMobileController {
                 $this -> assignData["prize"] = true;
             }
         }
+        $list = M('users')->where($where)->find();
         if($user_id == $list['user_id']){ //自己给自己加温
             $arrData = array(
                 'help_uid'=>$user_id,
@@ -48,7 +49,6 @@ class assistWinningMobileController {
                 M('addons_assistwinning_help')->add($arrData);
             }
         }
-        $list = M('users')->where($where)->find();
         $arrData = array(
             'help_uid'=>$user_id,
             'user_id'=>$where['user_id'],
