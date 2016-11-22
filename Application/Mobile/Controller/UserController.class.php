@@ -1126,17 +1126,18 @@ class UserController extends MobileBaseController {
         $this->push_message();
         $where .= "is_open = 1 AND  device_type != 1 ";
         $count = M('article') -> where($where)->count();
-        $limit = 1;
+        $limit = 3;
         $Page = new Page($count,$limit);
         $art_list = M('article')->field('article_id,title,content,thumb,publish_time') -> where($where)->order('publish_time DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
         foreach($art_list as $artKey=>$artItem){
             $art_list[$artKey]['desc'] = str_replace(array("&nbsp;",' '),'',subtext(strip_tags(htmlspecialchars_decode($artItem['content'])),60));
         }
+        $p = I('p') != 0 ? I('p') : 1 ;
         $need_top = I('need_top',0);
         $this -> assign('need_top',$need_top);
         $this -> assign('art_list',$art_list);
         $this -> assign('count',$count);
-        $this -> assign('limit',$limit * I('p'));
+        $this -> assign('limit',$limit * $p );
         if($_GET['is_ajax'])
         {
             $this -> display('ajax_message');

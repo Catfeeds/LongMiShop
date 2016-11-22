@@ -2,11 +2,12 @@
 
 <div class="time"><?php if( date('m-d',$item['publish_time']) == date('m-d',time()) ){echo '今天';}else{echo  date('m-d',$item['publish_time']);}?> {$item['publish_time']|date="H:i",###}</div>
 <div class="mui-card">
-    <div class="c"><a href="{: U('Mobile/User/message_details',array('id'=>$item['article_id']))}"></a></div>
-    <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url({$item['thumb']})"></div>
+    <div class="c"><a href="{: !empty($item['link']) ? $item['link'] :  U('Mobile/User/message_details',array('id'=>$item['article_id']))  }"></a></div>
+    <div class="mui-card-header mui-card-media" style="height:40vw;background-image:url({$item['thumb']})">
+        <p class="news_txt">{$item['title']}</p>
+    </div>
     <div class="mui-card-content">
         <div class="mui-card-content-inner">
-            <p class="news_txt">{$item['title']}</p>
             <p style="color: #333;">{$item['content']|htmlspecialchars_decode|strip_tags|subtext=60}</p>
         </div>
     </div>
