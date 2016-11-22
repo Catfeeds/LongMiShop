@@ -20,9 +20,9 @@ class assistWinningMobileController {
         $user_id = $this->user['user_id'];
 //        $user_id = '5823';
         $temArray = array(
-            '1'=>'25',
-            '2'=>'20',
-            '3'=>'15',
+            '1'=>'100',
+            '2'=>'80',
+            '3'=>'30',
             '4'=>'10',
             '5'=>'5',
         );

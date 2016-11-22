@@ -30,6 +30,8 @@
         </div>
     </header>
     <div id='page'></div>
+
+
     <script type="text/template" id='index' class='tpl'>
         <div class='container container-home' style=''>
             <div class='cot-bg1'>
@@ -48,7 +50,7 @@
                 <div class='home-m'>
                     <div class='home-m-b'>
                         <div>
-                            <img src="__ADDONS__/images/jindu.png" alt="" />  
+                            <img src="__ADDONS__/images/jindu.png" alt="" />
                         </div>
                         <div class='t-jindu'>0℃</div>
                     </div>
@@ -61,10 +63,14 @@
                     <div class='f-progress'></div>
                 </div>
                 <div class='home-t'></div>
-                <div class='home-m-bt'>
-                    <img src="__ADDONS__/images/help-her.png" alt="" class='begin'/>
-                    <img src="__ADDONS__/images/want.png" alt="" class='want' />
-                </div>
+                <if condition="$list['sumTem'] EGT 180">
+                    <span onclick="FillIn()">点击领取奖品</span>
+                <else />
+                    <div class='home-m-bt'>
+                        <img src="__ADDONS__/images/help-her.png" alt="" class='begin'/>
+                        <img src="__ADDONS__/images/want.png" alt="" class='want' />
+                    </div>
+                </if>
             </div>
         </div>
         <div class="bottomBtn" id="bottomArea" >
@@ -117,9 +123,44 @@
                 <img src="__ADDONS__/images/rule_04.jpg" alt="">
             </div>
         </div>
+
+
+
+
+
+
     </script>
 
-    
+    <script type="text/template" id="fillIn" class='tpl'>
+        <div class='container container-last' >
+            <div class='cot-bg1'>
+                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_02.jpg" alt="" />
+                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_03.jpg" alt="" />
+                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_04.jpg" alt="" />
+                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_05.jpg" alt="" />
+                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_06.jpg" alt="" />
+            </div>
+            <div id='fillIns'>
+                <div class='home-n'>
+                    <div>剩余奖品<span>329个</span></div>
+                </div>
+                <div class='last-m'>
+                    <div class='last-m-bg'>
+                        <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/friend-last.png" alt="" />
+                    </div>
+                    <div class='last-h'>
+                        <div class='head-box'>
+                            <img src="__ADDONS__/images/0.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class='last-bt  last-bt-f'>
+                        <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/friend-l-bt.png" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
     <script type="text/template" id='last' class='tpl'>
         <div class='container container-last' >
             <div class='cot-bg1'>
@@ -140,7 +181,7 @@
                     <div class='last-h'>
                        <div class='head-box'>
                            <img src="__ADDONS__/images/0.jpg" alt="" />
-                       </div> 
+                       </div>
                     </div>
                     <div class='last-bt  last-bt-f'>
                         <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/friend-l-bt.png" alt="" />
@@ -167,15 +208,18 @@
             </div>
         </div>
     </script>
-    
+
     <script type="text/javascript" src='__ADDONS__/js/underscore.min.js'></script>
     <script type="text/javascript" src='__ADDONS__/js/zepto.min.js'></script>
-    
-     
-    <script src="__ADDONS__/js/public.js" language="javascript" type="text/javascript"></script>
-        
-    <script type="text/javascript">
 
+
+    <script src="__ADDONS__/js/public.js" language="javascript" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        function FillIn(){
+            $("#home").hide();
+            $("#fillIn").show();
+        };
         function history(){
             window.location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'history' ))} ";
         }
@@ -219,7 +263,7 @@
                 setTimeout(function(){
                     t.global();
 
-                },500) 
+                },500)
             },
             global : function(){
                 //底部按钮点击事件
@@ -233,7 +277,7 @@
             reducer : function(action){
                 var t = this;
                 switch(action){
-                    case 'NO_PLAY' : 
+                    case 'NO_PLAY' :
                         $('#page').html('').html($('#index').html());
                         //开始按摩
                         t.contLay();
@@ -248,7 +292,7 @@
                             t.main();
                         });
                         break;
-                    case 'IS_PLAY' : 
+                    case 'IS_PLAY' :
                         $('#page').html('').html($('#index').html());
                         //执行事件
                         t.global();
@@ -258,7 +302,7 @@
 
                         t.contLay();
                         break;
-                    case 'IS_LAST' : 
+                    case 'IS_LAST' :
                         $('#page').html('').html($('#last').html());
                         //执行事件
                         $('.container-last').find('.last-bt').click(function(){
@@ -267,7 +311,7 @@
                         break;
                     default : break;
                 }
-                this.state.pageType =  action ; 
+                this.state.pageType =  action ;
                 console.log(this.state);
             },
             main : function(){
@@ -275,19 +319,19 @@
                 //ajax 执行下面操作  random 数字对应图片  text 话术
                 $.ajax({
                     type: "POST",
-                    url: "get_ajax.php",   
+                    url: "get_ajax.php",
                     data: {
                         action:"get_num",
                         pid:'10692'
                     },
                     dataType: "json",
                     success: function(data){
-                        if( data['state']== 'suc'){  //成功  
+                        if( data['state']== 'suc'){  //成功
                             var random = data['num'],
                                 wenan = data['wenan'];
                             t.state.isAdd = wenan > 5 ? true : false;
                             t.state.target = t.state.isAdd ? t.state.progress + random : t.state.progress - random;
-                            $('.home-t').show().text(content[wenan]+random+"%"); 
+                            $('.home-t').show().text(content[wenan]+random+"%");
                             setTimeout(function(){
                                 $('div.home-t').hide()
                                 t.reducer('IS_PLAY');
@@ -299,7 +343,7 @@
                         alert("网络传输错误，请稍后再试1");
                     }
                 });
-                
+
             },
             //显示选中效果
             contLay : function(){
@@ -320,11 +364,11 @@
                                 return;
                             }
                             t.state.progress--
-                        }   
+                        }
                         requestAnimationFrame(timer);
                     }
                 }
-                timer(); 
+                timer();
             },
             //蒙版生成
             lockW : function(){
@@ -353,10 +397,10 @@
             }
             var user = new User(state);
 
-            
+
         })
 
-          
+
     </script>
 
 
