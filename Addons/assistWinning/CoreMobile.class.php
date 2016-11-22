@@ -30,14 +30,16 @@ class assistWinningMobileController {
             $where['user_id'] = $Uid;
         }else{
             $where['user_id'] = $user_id;
+
+        }
+        $list = M('users')->where($where)->find();
+        if($user_id == $list['user_id']){
             //是否中过奖
             $prizeRes = M('addons_assistwinning_prize')->where($where)->find();
             if(!empty($prizeRes)){
                 $this -> assignData["prize"] = true;
             }
-        }
-        $list = M('users')->where($where)->find();
-        if($user_id == $list['user_id']){ //自己给自己加温
+            //自己给自己加温
             $arrData = array(
                 'help_uid'=>$user_id,
                 'user_id'=>$where['user_id'],
