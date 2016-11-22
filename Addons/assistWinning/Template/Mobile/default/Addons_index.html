@@ -59,9 +59,12 @@
                     </div>
                 <else />
                     <div class='home-m-bt'>
-                        <img src="__ADDONS__/images/help-her.png" alt="" class='begin'/>
-                        <if condition=" $list['visitId'] EQ $list['user_id']">
-                            <img src="__ADDONS__/images/call.png" alt="" class='want' />
+                        <!--<img src="__ADDONS__/images/help-her.png" alt="" class='begin'/>-->
+
+                        <if condition="$list['Ishelp'] eq 1">
+                            <img src="__ADDONS__/images/help-her.png" alt="" class='begin' onclick="helps()" />
+                        <elseif condition="$list['visitId'] EQ $list['user_id'] AND $list['Ishelp'] neq 1" />
+                            <img src="__ADDONS__/images/call.png" alt="" style="display:block" onclick="call()"  />
                         <else />
                             <img src="__ADDONS__/images/want.png" alt="" class='want' />
                         </if>
@@ -94,7 +97,7 @@
                                 </li>
                             </volist>
                         <else/>
-                            邀请好友帮忙加热
+                        <span > 邀请好友帮忙加热 </span>
                     </notempty>
 
                 </ul>
@@ -240,6 +243,9 @@
         </div>
     </script>
 
+    <div id="lock" style="display:none">
+        <img src="__ADDONS__/images/menbang.gif">
+    </div>
     <script type="text/javascript" src='__ADDONS__/js/underscore.min.js'></script>
     <script type="text/javascript" src='__ADDONS__/js/zepto.min.js'></script>
 
@@ -247,6 +253,54 @@
     <script src="__ADDONS__/js/public.js" language="javascript" type="text/javascript"></script>
 
     <script type="text/javascript">
+        //是否关注
+        function isFollow(){
+            var isFollow = "{$list['is_follow']}";
+            if(isFollow == 0){
+                $("#home").hide();
+                $('#page').html('').html($('#code').html());
+                return false;
+            }
+        }
+
+        function call(){
+            $('#lock').show();
+        }
+        $('#lock').click(function(){
+            $(this).hide();
+        });
+
+        function helps(){
+            var isFollow = "{$isFollow}";
+            if(isFollow == 0){
+                $("#home").hide();
+                $('#page').html('').html($('#code').html());
+                return false;
+            }
+            var kong = true;
+            var Uid = "{$list['user_id']}";
+            if(kong){
+                $.ajax({
+                    type : 'post',
+                    url : "{: U('Mobile/Addons/assistWinning')}",
+                    data : {pluginName:'help',id:Uid},
+                    dataType : 'json',
+                    success : function(res){
+                        kong = false;
+                        if(res.state == 1){
+                            alert(res.msg);
+                            window.location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'index' ))}";
+                        }else{
+                            alert(res.msg);
+                        }
+                    },
+                    error : function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert('网络失败，请刷新页面后重试');
+                    }
+                })
+            }
+
+        }
 
         function fromSub(){
             var name = $('.formName').val();
@@ -371,6 +425,7 @@
                         t.global();
                         $('.home-m-bt').find('.want').show().click(function(){
                             location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'index' ))}";
+
                         }.bind(this)).siblings('.begin').remove();
 
                         t.contLay();
@@ -463,18 +518,20 @@
             var state = {
                  //是否关注
                 focusOn : '0',
-                pageType : 'IS_PLAY',//是否中奖
+                pageType : "IS_PLAY",//是否中奖
                 progress : parseInt("{:$list['sumTem']}"),
                 target : 0,
                 isAdd : true,
             }
             var user = new User(state);
 
+
             var isprize = "{$prize}";
             if(isprize){
                 $("#home").hide();
                 $('#page').html('').html($('#isPrize').html());
             }
+
         })
 
 
@@ -487,10 +544,10 @@
 
 
         var list = {:getShareImages($lmshop_config,$goods[goods_id],$goodsCate,$user)};
-        var ShareLink = "{: $_SERVER['HTTP_HOST']}/Mobile/Addons/assistWinning/pluginName/index/id/{: $list['user_id']}/.html";       //分享连接
-        var ShareImgUrl = "{: $_SERVER['HTTP_HOST']}/Addons/assistWinning/Static/images/logo.jpg";   //分享图片
-        var wx_title = '';
-        var wx_desc = '';
+        var ShareLink = "http://{: $_SERVER['HTTP_HOST']}/Mobile/Addons/assistWinning/pluginName/index/id/{: $list['user_id']}/.html";       //分享连接
+        var ShareImgUrl = "http://{: $_SERVER['HTTP_HOST']}/Addons/assistWinning/Static/images/logo.jpg";   //分享图片
+        var wx_title = '快帮我抢！烘焙烧烤做菜样样行的电烤箱！';
+        var wx_desc = '我想要很久的电烤箱！能不能吃到美味烧烤就靠你了！';
 
 
 
