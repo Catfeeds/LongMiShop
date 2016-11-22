@@ -5,7 +5,7 @@
 * @Last Modified time: 2016-10-17 20:25:39
 */
 /* ------------------------ 头部 ---------------------------- */
-body{ background:#F6D561;padding-top:40px; }
+body{ background:#F6D561; }
 .head-box{ overflow:hidden; border-radius:100%; border:2px #fff solid; }
 .head-box img{ display:block; width:100%; }
 .mengban{ background:rgba(0,0,0,0.8); height:100%; width:100%; position:fixed; top:0px; z-index:1000; }
@@ -18,8 +18,8 @@ header { width: 100%;  background: #fff; padding: 7px 0; -webkit-box-sizing: bor
 .zj_con { position: relative; width: 95%; margin: 0 auto; padding-top: 33%; }
 .inner { background: #fff; }
 .h5 { /* height: 3px; */}
-.inner ul { width: 70%; margin: 0 auto; border: 1px solid #ed3b1e; border-radius: 5px; }
-.inner ul li { width: 50%;float: left; text-align: center;padding:0.1rem;}
+.inner ul { width: 37%; margin: 0 auto; border: 1px solid #ed3b1e; border-radius: 5px; }
+.inner ul li { width: 100%;float: left; text-align: center;padding:0.1rem;}
 .inner ul li.current { background: #ed3b1e; color: #fff; }
 
 
@@ -58,11 +58,14 @@ header { width: 100%;  background: #fff; padding: 7px 0; -webkit-box-sizing: bor
 .lucky-f input[name=area]{ background:#fff url('../images/address.png') no-repeat 5% center;background-size:20px; }
 
 /* ---- 已经领奖 ---- */
-#last{ position:absolute;top:0px;width:100%;height:100%; }
-.last-m{ position:absolute;width:83%;top:0px;left:50%;margin-top:67%;-webkit-transform:translateX(-50%); }
-.last-m .last-h{ position:absolute;top:0px;left:-0.5rem;width:2.4rem; }
-.last-m .last-bt{ position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,109%);width:7.0rem; }
-.last-m .last-bt-f{ -webkit-transform:translate(-50%,186%); }
+#isPrize{ position:absolute;top:0px;width:100%;height:100%; }
+#isPrize .last-m{ position:absolute;width:83%;top:0px;left:50%;margin-top:67%;-webkit-transform:translateX(-50%); }
+#isPrize .last-m .last-h{ position:absolute;top:0px;left:-0.5rem;width:2.4rem; }
+#isPrize .last-m .last-bt{ position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,109%);width:7.0rem; }
+#isPrize .last-m .last-bt-f{ -webkit-transform:translate(-50%,186%); }
+#isPrize .last-m-bg{margin-top:-26px;}
+#isPrize .last-m-bg div{margin:0 auto;width:222px;padding-top:105px}
+#isPrize .last-m-bg div p{margin-top:14px;color:#fff;font-size:52px;text-align:center }
 
 /* ---- 填写领奖资料 ---- */
 #fillIn{ position:absolute;top:0px;width:100%;height:100%; }
@@ -70,7 +73,11 @@ header { width: 100%;  background: #fff; padding: 7px 0; -webkit-box-sizing: bor
 #fillIn .last-m .last-h{ position:absolute;top:0px;left:-0.5rem;width:2.4rem; }
 #fillIn .last-m .last-bt{ position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,109%);width:7.0rem; }
 #fillIn .last-m .last-bt-f{ -webkit-transform:translate(-50%,186%); }
-
+#fillIn .last-m-bg{margin-top:-26px;}
+#fillIn .last-m-bg form{margin:0 auto;width:222px;padding-top:105px}
+#fillIn .last-m-bg form p{margin-top:14px}
+#fillIn .last-m-bg form span{display:inline-block;width:60px;color:#fff}
+#fillIn .last-m-bg form input{width:150px}
 /*---- 二维码 ----*/
 .code-b{ position:absolute;top:50%;left:50%;width:8rem;-webkit-transform:translate(-50%,-23%); }
 .code-t{ position:absolute;top:10%;left:10%;width:2rem;height:2rem;border-radius:50%;background:#fa6311;color:#fff;font-size:16px;font-weight:bold;padding-top:.4rem;text-align:center; }
@@ -83,8 +90,8 @@ header { width: 100%;  background: #fff; padding: 7px 0; -webkit-box-sizing: bor
 .bottomCon{ background:#F6D561;padding:0px 0 2rem; }
 .bottomBtn { width: 100%; height: 40px; position: fixed; bottom: 0; left: 0; background: #f5c24a; -webkit-box-shadow: 0 -1px 2px #999;z-index:1000; }
 .bottomBtn ul { width: 98%; height: 30px; padding: 5px 0; margin: 0 auto; }
-.bottomBtn li { width: 29%; height: 30px;  line-height: 30px; text-align: center; float: left; background-color: #f5c047; color: #bc4e0a;font-weight:bold;font-size:16px;border:1px #fff solid; }
-.bottomBtn li:nth-child(2) { width: 40%; margin: 0 1%; }
+.bottomBtn li { width: 33%; height: 30px;  line-height: 30px; text-align: center; float: left; background-color: #f5c047; color: #bc4e0a;font-weight:bold;font-size:16px;border:1px #fff solid; }
+/*.bottomBtn li:nth-child(2) { width: 40%; margin: 0 1%; }*/
 .bottomBtn li.current { background-color: #5ecfd4;color: #fff;  }
 
 
