@@ -421,3 +421,10 @@ MODIFY COLUMN `user_note`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_
 
 
 
+ALTER TABLE `lm_coupon`
+ADD COLUMN `use_type`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '使用类型 0 固定日期  1 动态时间' AFTER `is_discount`,
+ADD COLUMN `limit_day`  int(11) NOT NULL DEFAULT 7 COMMENT '限制天数' AFTER `use_type`;
+
+ALTER TABLE `lm_coupon_list`
+ADD COLUMN `receive_time`  int(11) NOT NULL DEFAULT 0 COMMENT '领取时间' AFTER `send_time`;
+

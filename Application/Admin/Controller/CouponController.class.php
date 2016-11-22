@@ -28,10 +28,11 @@ class CouponController extends BaseController {
     public function coupon_info(){
         if(IS_POST){
         	$data = I('post.');
-            $data['send_start_time'] = strtotime($data['send_start_time']);
-            $data['send_end_time'] = strtotime($data['send_end_time']);
-            $data['use_end_time'] = strtotime($data['use_end_time']);
-            $data['use_start_time'] = strtotime($data['use_start_time']);
+            $data['send_start_time']    = strtotime($data['send_start_time']);
+            $data['send_end_time']      = strtotime($data['send_end_time']);
+            $data['use_end_time']       = strtotime($data['use_end_time']);
+            $data['use_start_time']     = strtotime($data['use_start_time']);
+            $data["limit_day"]          = intval($data["limit_day"]);
 
             if($data['send_start_time'] > $data['send_end_time']){
                 $this->error('发放日期填写有误');
@@ -42,26 +43,29 @@ class CouponController extends BaseController {
             if(empty($data['desc'])){
                 $this->error('请填写优惠券简介');
             }
+
             if(empty($data['id'])){
             	$data['add_time'] = time();
-            	$row = M('coupon')->add($data);
+            	$row = addData( 'coupon' , $data );
             }else{
-            	$row =  M('coupon') -> where(array('id'=>$data['id']))->save($data);
+            	$row = saveData( 'coupon' , array('id'=>$data['id']) , $data );
             }
-            if(!$row)
+
+            if(!$row){
                 $this->error('编辑代金券失败');
+            }
             $this->success('编辑代金券成功',U('Admin/Coupon/index'));
             exit;
         }
         $cid = I('get.id');
         if($cid){
-        	$coupon = M('coupon') -> where(array('id'=>$cid))->find();
+        	$coupon = findDataWithCondition( 'coupon' , array( 'id' => $cid ) );
         	$this -> assign('coupon',$coupon);
         }else{
         	$def['send_start_time'] = strtotime("+1 day");
-        	$def['send_end_time'] = strtotime("+1 month");
-        	$def['use_start_time'] = strtotime("+1 day");
-        	$def['use_end_time'] = strtotime("+2 month");
+        	$def['send_end_time']   = strtotime("+1 month");
+        	$def['use_start_time']  = strtotime("+1 day");
+        	$def['use_end_time']    = strtotime("+2 month");
         	$this -> assign('coupon',$def);
         }     
         $this -> display();

@@ -284,16 +284,20 @@ class UsersLogic extends BaseLogic
         //查询条件
         //    $type = I('get.type',0);           
 
+//
+//        $where = ' AND l.order_id = 0 AND c.use_end_time > '.time(); // 未使用
+//        if($type == 1){
+//            //已使用
+//            $where = ' AND l.order_id > 0 AND l.use_time > 0 ';
+//        }
+//        if($type == 2){
+//            //已过期
+//            $where = ' AND '.time().' > c.use_end_time ';
+//        }
+        //调试使用
+        $where = ' AND l.order_id = 0 AND '; // 未使用
+        $where .= ' ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > "('.time().' + ( c.limit_day * 24 * 60 * 60 ))  " and c.use_type = 1 ) ';
 
-        $where = ' AND l.order_id = 0 AND c.use_end_time > '.time(); // 未使用
-        if($type == 1){
-            //已使用
-            $where = ' AND l.order_id > 0 AND l.use_time > 0 ';
-        }
-        if($type == 2){
-            //已过期
-            $where = ' AND '.time().' > c.use_end_time ';
-        }
         //获取数量
         $sql = "SELECT count(l.id) as total_num FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
@@ -303,7 +307,7 @@ class UsersLogic extends BaseLogic
         $limit = 10;
         $Page = new Page($count,$limit);
 
-        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.desc FROM __PREFIX__coupon_list".
+        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.is_discount,c.use_type,c.desc,c.limit_day  FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
             " c ON l.cid =  c.id WHERE l.uid = {$user_id} {$where}  ORDER BY l.send_time DESC,l.use_time LIMIT {$Page->firstRow},{$Page->listRows}";
 
@@ -319,7 +323,12 @@ class UsersLogic extends BaseLogic
     }
 
 
-
+    /**
+     * 获取可使用的优惠券
+     * @param $userId
+     * @param $sum
+     * @return array
+     */
     public function getCanUseCoupon($userId , $sum){
         $result         = $this -> getCoupon($userId);
         $couponList     = $result['data']['result'];
@@ -344,10 +353,11 @@ class UsersLogic extends BaseLogic
      * @param $userId
      * @return array
      */
-    public function getCoupon($userId){
+    public function getCoupon( $userId ){
         //调试使用
-        $where = ' AND l.order_id = 0 AND c.use_end_time > '.time(); // 未使用
-        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.is_discount,c.desc FROM __PREFIX__coupon_list".
+        $where = ' AND l.order_id = 0 AND '; // 未使用
+        $where .= ' ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > "('.time().' + ( c.limit_day * 24 * 60 * 60 ))  " and c.use_type = 1 ) ';
+        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.is_discount,c.use_type,c.desc,c.limit_day FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
             " c ON l.cid =  c.id WHERE l.uid = '{$userId}' {$where}  ORDER BY l.send_time DESC,l.use_time";
         //"LIMIT {$Page->firstRow},{$Page->listRows}";
@@ -358,6 +368,7 @@ class UsersLogic extends BaseLogic
     /**
      * 获取商品收藏列表
      * @param $user_id  用户id
+     * @return mixed
      */
     public function get_goods_collect($user_id){
         $count = M('goods_collect') -> where(array('user_id'=>$user_id))->count();
