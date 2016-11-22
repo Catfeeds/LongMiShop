@@ -2,5 +2,6 @@
   "title" : "入职苹果",
   "desc"  : "入职苹果，图片生成器",
   "code"  : "entryApple",
-  "author": "呵呵"
+  "author": "呵呵",
+  "icon"  : "logo.jpg"
 }

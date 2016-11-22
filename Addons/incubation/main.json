@@ -2,5 +2,6 @@
   "title" : "孵蛋",
   "desc"  : "孵蛋",
   "code"  : "incubation",
-  "author": "孵蛋"
+  "author": "孵蛋",
+  "icon"  : "logo.jpg"
 }
