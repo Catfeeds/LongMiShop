@@ -53,6 +53,9 @@ class AddonsController extends BaseController {
                 $this -> assign( $dataKey , $dataItem );
             }
         }
+
+        define( "ADDONS_NAME" , ACTION_NAME );
+
         C( "TMPL_PARSE_STRING.__ADDONS__" , '/Addons/' . ACTION_NAME . '/Static' );
         $viewPath = "./Addons/".ACTION_NAME."/Template/" . self::APPOINTED . "/" . self::THEME . "/Addons_" . $this -> pluginName  .".html" ;
 
@@ -70,7 +73,9 @@ class AddonsController extends BaseController {
         echo "<h3 class=\"panel-title\"><i class=\"fa fa-list\"></i>设置</h3>";
         echo "</div>";
         echo "<div class=\"panel-body\">";
+        echo "<div class=\"tab-content\">";
         $this -> view -> display($viewPath);
+        echo "</div>";
         echo "</div>";
         echo "</div>";
         echo "</div>";

@@ -1,0 +1,81 @@
+<div class="navbar navbar-default">
+    <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'shopDetail' ))}" class="btn btn-primary pull-right" style=" margin: 10px 5px 0 0;">
+        <i class="fa fa-plus"></i>添加店铺
+    </a>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td class="text-right">
+                ID
+            </td>
+            <td class="text-left">
+                店铺名称
+            </td>
+            <td class="text-left">
+                店铺地址
+            </td>
+            <td class="text-left">
+                座位数
+            </td>
+            <td class="text-left">
+                状态
+            </td>
+            <td class="text-right">
+                操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="goodsList" id="list">
+            <tr>
+                <td class="text-center">
+                    <!-- <input type="checkbox" name="selected[]" value="6">-->
+                    <input type="hidden" name="shipping_code[]" value="flat.flat">
+                </td>
+                <td class="text-right">{$list.goods_id}</td>
+                <td class="text-left">{$list.goods_name|getSubstr=0,33}</td>
+                <td class="text-left">{$list.goods_sn}</td>
+                <td class="text-left">{$catList[$list[cat_id]][name]}</td>
+                <td class="text-left">{$list.shop_price}</td>
+                <td class="text-left">
+                    <input type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')"  onchange="ajaxUpdateField(this);" name="store_count" size="4" data-table="goods" data-id="{$list.goods_id}" value="{$list.store_count}"/>
+                </td>
+
+                <if condition="!is_supplier()">
+                    <td class="text-center">
+                        <img width="20" height="20" src="__PUBLIC__/images/<if condition='$list[is_on_sale] eq 1'>yes.png<else />cancel.png</if>" onclick="changeTableVal('goods','goods_id','{$list.goods_id}','is_on_sale',this)"/>
+                    </td>
+                    <td class="text-center">
+                        <img width="20" height="20" src="__PUBLIC__/images/<if condition='$list[is_recommend] eq 1'>yes.png<else />cancel.png</if>" onclick="changeTableVal('goods','goods_id','{$list.goods_id}','is_recommend',this)"/>
+                    </td>
+                    <td class="text-center">
+                        <img width="20" height="20" src="__PUBLIC__/images/<if condition='$list[is_new] eq 1'>yes.png<else />cancel.png</if>" onclick="changeTableVal('goods','goods_id','{$list.goods_id}','is_new',this)"/>
+                    </td>
+                    <td class="text-center">
+                        <img width="20" height="20" src="__PUBLIC__/images/<if condition='$list[is_hot] eq 1'>yes.png<else />cancel.png</if>" onclick="changeTableVal('goods','goods_id','{$list.goods_id}','is_hot',this)"/>
+                    </td>
+                    <td class="text-center">
+                        <input type="text" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onchange="updateSort('goods','goods_id','{$list.goods_id}','sort',this)" size="4" value="{$list.sort}" />
+                    </td>
+                    <else />
+                    <td class="text-left">{$list['is_on_sale'] == 1 ? '已上架' : '未上架'}</td>
+                </if>
+
+                <td class="text-right">
+                    <a  target="_blank" href="{:U('Home/Goods/goodsInfo',array('id'=>$list['goods_id']))}" class="btn btn-info" title="查看详情"><i class="fa fa-eye"></i></a>
+                    <a href="{:U('Admin/Goods/addEditGoods',array('id'=>$list['goods_id']))}" class="btn btn-primary" title="编辑"><i class="fa fa-pencil"></i></a>
+                    <!--<a href="javascript:void(0);" onclick="del('{$list[goods_id]}')" class="btn btn-danger" title="删除"><i class="fa fa-trash-o"></i></a>-->
+                    <a href="javascript:void(0);" onclick="ClearGoodsHtml('{$list[goods_id]}')" class="btn btn-default" title="清除静态缓存页面"><i class="fa fa-fw fa-refresh"></i></a>
+                    <a href="javascript:void(0);" onclick="ClearGoodsThumb('{$list[goods_id]}')" class="btn btn-default" title="清除缩略图缓存"><i class="glyphicon glyphicon-picture"></i></a>
+                    <a href="javascript:void(0);" onclick="copyGoodsData('{$list[goods_id]}')" class="btn btn-default" title="复制">复制</a>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-sm-3 text-left"></div>
+    <div class="col-sm-9 text-right">{$page}</div>
+</div>
