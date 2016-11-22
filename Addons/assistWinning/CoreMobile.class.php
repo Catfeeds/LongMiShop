@@ -36,6 +36,18 @@ class assistWinningMobileController {
                 $this -> assignData["prize"] = true;
             }
         }
+        if($user_id == $list['user_id']){ //自己给自己加温
+            $arrData = array(
+                'help_uid'=>$user_id,
+                'user_id'=>$where['user_id'],
+            );
+            $helpRes = M('addons_assistwinning_help')->where($arrData)->find();
+            if(empty($helpRes)){
+                $arrData['temperature'] = $this->temArray[1];
+                $arrData['create_time'] = time();
+                M('addons_assistwinning_help')->add($arrData);
+            }
+        }
         $list = M('users')->where($where)->find();
         $arrData = array(
             'help_uid'=>$user_id,
@@ -57,20 +69,7 @@ class assistWinningMobileController {
         }
 
         $list['visitId'] = $user_id;
-        if($user_id == $list['user_id']){ //自己给自己加温
-            $arrData = array(
-                'help_uid'=>$user_id,
-                'user_id'=>$where['user_id'],
-            );
-            $helpRes = M('addons_assistwinning_help')->where($arrData)->find();
-            if(empty($helpRes)){
-                $arrData['temperature'] = $this->temArray[1];
-                $arrData['create_time'] = time();
-                M('addons_assistwinning_help')->add($arrData);
-            }
 
-
-        }
         $this -> assignData["list"] = $list;
         $isFollow = M('users')->field('is_follow')->where(array("user_id"=>$user_id))->find();
         $this -> assignData['isFollow'] = $isFollow['is_follow'];
