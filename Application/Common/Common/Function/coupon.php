@@ -68,7 +68,7 @@ function getCouponInfo( $couponId ){
     $condition  = array(
         "id" => $couponId,
     );
-    return findDataWithCondition( 'coupon' , $condition , "name" );
+    return findDataWithCondition( 'coupon' , $condition  );
 }
 
 /**
