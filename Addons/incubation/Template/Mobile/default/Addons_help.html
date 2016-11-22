@@ -1,0 +1,469 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,user-scalable=no,maximum-scale=1,initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+
+    <title>好友孵蛋</title>
+    <link rel="stylesheet" href="http://static.resource.weijuju.com/css/mobile/common.css?v=20161110" />
+    <link rel="stylesheet" href="http://static.resource.weijuju.com/css/mobile/fudan/main.css?v=20161110" />
+    <script type="text/javascript" src="http://static.resource.weijuju.com/js/jquery-1.7.2.min.js?v=20161110"></script>
+    <style type="text/css">
+        .container .wrap{
+            height:auto;
+            margin-top:0px;
+        }
+        .container .wrap .photo{
+            margin:0px auto;
+            width: 80%;
+            border-radius:5px;
+            text-align:center;
+            height:auto;
+        }
+        .container .wrap .photo img{
+            border-radius:5px;
+            vertical-align: middle;
+        }
+        .container .wrap .score{
+            margin-bottom:0px;
+            padding-bottom:0px;
+        }
+        .container .wrap .score img{
+            width:8%;
+            margin: 0px -3px;
+        }
+        .container .wrap .line{
+            margin-top:0px;
+            padding-top:0px;
+            margin-bottom:0px;
+            padding-bottom:0px;
+        }
+        .container .wrap .scoreText{
+            color:white;
+            font-size:16px;
+            margin-top:10px;
+            margin-bottom:0px;
+            padding-bottom:0px;
+        }
+        .container .text{
+            text-align:center;
+            padding:10px;
+        }
+        .container .btn{
+            margin-top: 18px;
+            margin-bottom: 35px;
+            height: 40px;
+            line-height: 40px;
+            position: relative;
+            z-index:998;
+        }
+        .container .tip{
+            font-size:15px;
+            color: white;
+            padding: 0px 12%;
+        }
+        .container .list{
+            border-radius: 5px;
+            background-color: rgba(90,177,209,0.34);
+            overflow-y: auto;
+            padding: 3px 13px;
+            margin: 0 auto;
+            max-height: 100px;
+            font-size:14px;
+        }
+        .container .list>div{
+            margin:6px 0px;
+        }
+        .container .list img{
+            border-radius: 14px;
+            vertical-align:middle;
+        }
+        .container .listWrap{
+            width:100%;
+            padding:10px;
+            background-color:#fabc37;
+            padding:10px 0px;
+            text-align:center;
+            font-size:15px;
+            color:#e93c53;
+            margin-bottom:2px;
+        }
+        .container .nickname{
+            color:#e93c53;
+            font-weight:bold;
+        }
+        .text-center{
+            text-align:center;
+            width:50%;
+            height:37px;
+            line-height:37px;
+            background:#fabc37;
+            color:#532900;
+        }
+        .text-center.on{
+            background:#f39438;
+        }
+        .Left{
+            float:left;
+        }
+        .Right{
+            float:right;
+        }
+        #info_mask{
+            position:fixed;
+            z-index:999998;
+            top:0;
+            left:0;
+            height:100%;
+            width:100%;
+            background:black;
+            opacity:0.7;
+            display:none;
+        }
+        #info_wrap{
+            position:fixed;
+            z-index:999998;
+            top:0;
+            left:0;
+            height:100%;
+            width:100%;
+            text-align:center;
+            display:none;
+        }
+        #info_wrap .bg{
+            width:85%;
+            margin-left:11%;
+            margin-top:23%;
+            background-image: url('http://static.resource.weijuju.com/image/mobile/fudan/tmessage.png');
+            background-repeat: no-repeat;
+            background-size:100% 100%;
+            position: relative;
+            text-align: left;
+        }
+        #info_wrap img.ibtn{
+            position:absolute;
+            width:35%;
+        }
+        #info_wrap img.submit{
+            bottom:8%;
+            left:8%;
+        }
+        #info_wrap img.skip{
+            bottom:8%;
+            right:15%;
+        }
+        #info_wrap .textContent{
+            width: 72%;
+            height: 25%;
+            margin-left: 10%;
+            margin-top: 44%;
+            resize:none;
+            border:0px;
+            font-size:15px;
+        }
+    </style>
+</head>
+<body>
+
+<include file="Addons_follow"/>
+
+
+<script type="text/javascript" src="http://static.resource.weijuju.com/js/mobile/football/share.js?v=20161110"></script>
+<script type="text/javascript" src="http://v2.static.resource.weijuju.com/js/mobile/bigdata/sender.js?v=20161110"></script>
+<script>
+    //显示微信中网页右上角按钮
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        WeixinJSBridge.call('showOptionMenu');
+    });
+    $(function(){
+        //设置分享信息
+        var title='求祝福！还有礼物收哦~你你你一定要来！。';
+        var summary='我正在参与“有娱演示_好友孵蛋”活动，小伙伴赶紧给我送上祝福，圆了我的礼物梦吧！';
+        var share_img_url= 'http://static.resource.weijuju.com/image/mobile/fudan/tshare2.jpg';
+        var url='http://www.weijuju.com/mobile/game/fudan/give.jsp?aid=144057&wuid=234964&uid=244271&myopenid=ocOeEjkLjRWU0hzP5PqZ2o2m5WPk';
+        window['initShareInfo'](title,summary,share_img_url,null,function(){
+            try{
+                BigData.sender.saveUserShare({
+                    uid:'244271',
+                    busiPlatform:'2',
+                    busiType:'10007',
+                    busiId:'144057',
+                    openid:'ocOeEjgngjgj7obBV8mdS3YYYFa0',
+                    nickName:'钟瀚涛',
+                    time:'2016-11-21 17:05:09',
+                    fromOpenid:'ocOeEjkLjRWU0hzP5PqZ2o2m5WPk',
+                    headimg:'http://wx.qlogo.cn/mmopen/iclPUlkyyNtcbn1RctNApVfMsZV4iceyZL8d5bmHuSSia214sUEfcL2dUUtyZ2WFO2IM3VoVHtVDMTtsicLNB5vkXDNQpSog6kMT/0'
+                });
+            }catch(e){
+            }
+        });
+    });
+    $('title').html('有娱演示_好友孵蛋');
+    $('a.tofollow').on('click',function(){
+        try{
+
+            BigData.sender.saveFollowClick({
+                uid:'244271',
+                busiPlatform:'2',
+                busiType:'10007',
+                busiId:'144057',
+                openid:'ocOeEjgngjgj7obBV8mdS3YYYFa0',
+                nickName:'钟瀚涛',
+                time:'2016-11-21 17:05:09',
+                fromOpenid:'ocOeEjkLjRWU0hzP5PqZ2o2m5WPk',
+                headimg:'http://wx.qlogo.cn/mmopen/iclPUlkyyNtcbn1RctNApVfMsZV4iceyZL8d5bmHuSSia214sUEfcL2dUUtyZ2WFO2IM3VoVHtVDMTtsicLNB5vkXDNQpSog6kMT/0'
+            });
+            setTimeout(function(){
+                location.href='http://mp.weixin.qq.com/s?__biz=MjM5ODk5OTUwMQ==&mid=207091340&idx=1&sn=a7a452f227e0efb871198025803653fd&scene=1&from=singlemessage&isappinstalled=0#rd';
+            },1);
+
+        }catch(e){
+        }
+    });
+    try{
+        BigData.sender.saveVisit({
+            uid:'244271',
+            busiPlatform:'2',
+            busiType:'10007',
+            busiId:'144057',
+            openid:'ocOeEjgngjgj7obBV8mdS3YYYFa0',
+            nickName:'钟瀚涛',
+            gender:'1',
+            area:'广东 汕尾',
+            time:'2016-11-21 17:05:09',
+            fromOpenid:'ocOeEjkLjRWU0hzP5PqZ2o2m5WPk',
+            headimg:'http://wx.qlogo.cn/mmopen/iclPUlkyyNtcbn1RctNApVfMsZV4iceyZL8d5bmHuSSia214sUEfcL2dUUtyZ2WFO2IM3VoVHtVDMTtsicLNB5vkXDNQpSog6kMT/0'
+        });
+    }catch(e){
+    }
+</script>
+
+
+
+<div id="info_mask"></div>
+<div id="info_wrap">
+    <div class="bg">
+        <textarea class="textContent" placeholder="恭喜您帮TA好友孵蛋了，说点什么祝福的话吧，不能超过20个字哦" maxlength="20"></textarea>
+        <img class="ibtn submit" src="http://static.resource.weijuju.com/image/mobile/fudan/tbtn_submit.png">
+        <img class="ibtn skip" src="http://static.resource.weijuju.com/image/mobile/fudan/tbtn_skip.png">
+    </div>
+</div>
+
+<div class="container" style="background-image:url('http://static.resource.weijuju.com/image/mobile/fudan/tbg.jpg');">
+
+    <div class="wrap" style="position: absolute;left: 19%;margin-top: 147px;width: 53%;">
+        <img src="http://static.resource.weijuju.com/image/mobile/fudan/t1.png" width="100%"/>
+    </div>
+
+    <img style="position: absolute;right: 4%;margin-top: 45px;width: 14%;" src="http://static.resource.weijuju.com/image/mobile/fudan/tp1.png" width=""/>
+
+
+    <div class="tip nickname" style="margin-top: -10px;font-size:15px;font-weight:normal;margin-top:112%;color:#532900;">快来帮 <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLBFsGwwBjrIZAhJ1e41LpJYD3Y8iaoljHExsqx0wh4q3gCMCI5OzY07yQiaH2L8FYXIK2ibUpsT7oLyg/0" width="30px" height="30px" style="vertical-align: -7px;border-radius: 19px;"> <span style="color:#e93c53;">🙈</span> 送上祝福</div>
+    <div class="tip" style="margin-top:13px;padding: 0px 6%;padding-left:10%;">
+        <div style="float:left;font-size:16px;margin-top: 5px;margin-right: 3px;color:#532900;">我想说</div>
+        <div style="float:left;background: white;border-radius:5px;width:69%;height:60px;margin-left:10px;position: relative;padding:10px;">
+            <span style=" width: 0;height: 0; border-top: 8px solid transparent;border-right: 10px solid white;border-bottom: 8px solid transparent;position:absolute;top:10px;left:-8px; "></span>
+            <textarea class="textContent" maxlength="30" style="display:none;width:100%;height:100%;border:none;resize:none;font-size:13px;line-height:18px;">好基友一辈子，明年继续一起基 ！</textarea>
+            <div class="textContent" style="width:100%;height:100%;border:none;resize:none;font-size:13px;line-height:18px;color:black;text-align:left;">好基友一辈子，明年继续一起基 ！ <span style="color:#999999;">[点击可编辑]</span></div>
+        </div>
+    </div>
+    <div class="btn" style="width: 93%;height: 0px;display: inline-block;margin-bottom:58px;">
+        <a class="tohelp"><img src="http://static.resource.weijuju.com/image/mobile/fudan/tbtn_help.png" width="54%"/></a>
+        <a href="index.jsp?aid=144057&wuid=234964&uid=244271"><img src="http://static.resource.weijuju.com/image/mobile/fudan/tbtn_get2.png" width="54%" style="margin-left:-12%;"/></a>
+    </div>
+
+
+    <div class="wrap" style="margin-bottom:3px;padding-top:10px;width:100%;">
+        <div class="Left text-center on">好友孵蛋</div>
+        <div class="Right text-center">祝福墙</div>
+    </div>
+    <div class="wrap wraptolist" style="margin-top:0px;margin-bottom:5px;width:100%;">
+
+
+        <div class="listWrap" style="overflow:hidden;font-size:13px;">
+            <div style="float:left;margin-left:15px;text-align:left;width: 97%;text-align: left;margin: 0 auto;margin-left: 2%;text-align:center;color:#532900;">
+                暂无记录
+            </div>
+        </div>
+
+    </div>
+    <div class="wrap wraptolist msglist" style="margin-top:0px;margin-bottom:5px;width:100%;display:none;">
+
+
+        <div class="listWrap" style="overflow:hidden;font-size:13px;">
+            <div style="float:left;margin-left:15px;text-align:left;width: 97%;text-align: left;margin: 0 auto;margin-left: 2%;text-align:center;color:#532900">
+                暂无记录
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="wrap" style="margin-bottom:15px;text-align:center;padding-bottom:10px;margin-top:25px;">
+        <a href="/mobile/uniquecenter/index.jsp?wuid=234964" style="color: white;text-decoration: none;font-size: 13px;background: black;display: inline-block;padding: 2px 8px;border-radius: 2px;">个人中心</a>
+    </div>
+
+    <script type="text/javascript">
+        $(function(){
+
+            $('.wrap .text-center').click(function(){
+                $('.wrap .text-center').removeClass('on');
+                $(this).addClass('on');
+                var $list=$('.wraptolist');
+                $list.hide();
+                $list.eq($(this).index()).show();
+            });
+
+            function setCaretPosition(tObj, sPos){
+                if(tObj.setSelectionRange){
+                    setTimeout(function(){
+                        tObj.setSelectionRange(sPos, sPos);
+                        tObj.focus();
+                    }, 0);
+                }else if(tObj.createTextRange){
+                    var rng = tObj.createTextRange();
+                    rng.move('character', sPos);
+                    rng.select();
+                }
+            }
+            $('.tip div.textContent').click(function(){
+                var $self=$(this);
+                $self.hide();
+                $self.prev().show().focus();
+                var tObj = $self.prev().get(0);
+                var sPos = tObj.value.length;
+                setCaretPosition(tObj, sPos);
+            });
+
+            $('.tip textarea.textContent').blur(function(){
+                var $self=$(this);
+                $self.hide();
+                $self.next().html($self.val()+' <span style="color:#999999;">[点击可编辑]</span>');
+                $self.next().show();
+            });
+
+
+
+            var ing=false;
+            $('.tohelp').click(function(){
+                if(ing) return;
+                ing=true;
+                var msgContent=$('.tip .textContent').val();
+                if(msgContent.length==0){
+                    alert('内容不能为空哦！');
+                    return;
+                }
+                $.ajax({
+                    url: '/mobile/game/fudan',
+                    data: {
+                        action:'help',
+                        toOpenid:'ocOeEjkLjRWU0hzP5PqZ2o2m5WPk',
+                        byOpenid:'ocOeEjgngjgj7obBV8mdS3YYYFa0',
+                        header:'http://wx.qlogo.cn/mmopen/iclPUlkyyNtcbn1RctNApVfMsZV4iceyZL8d5bmHuSSia214sUEfcL2dUUtyZ2WFO2IM3VoVHtVDMTtsicLNB5vkXDNQpSog6kMT/0',
+                        name:'钟瀚涛',
+                        content:msgContent,
+                        aid:'144057'
+                    },
+                    type: 'POST',
+                    dataType: "json",
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    success: function (data) {
+                        ing=false;
+                        if(data.success==true){
+                            location.reload();
+                        }else{
+                            if(data.msg){
+                                alert(data.msg);
+                            }else{
+                                alert("好友孵蛋操作失败");
+                            }
+                        }
+                    }
+                });
+            });
+
+            $('#info_wrap .submit').click(function(){
+                if(ing) return;
+                var msgContent=$('#info_wrap .textContent').val();
+                if(msgContent.length==0){
+                    alert('内容不能为空哦！');
+                    return;
+                }
+                ing=true;
+                $.ajax({
+                    url: '/mobile/game/fudan',
+                    data: {
+                        action:'msg',
+                        toOpenid:'ocOeEjkLjRWU0hzP5PqZ2o2m5WPk',
+                        byOpenid:'ocOeEjgngjgj7obBV8mdS3YYYFa0',
+                        content:msgContent,
+                        aid:'144057'
+                    },
+                    type: 'POST',
+                    dataType: "json",
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    success: function (data) {
+                        ing=false;
+                        if(data.success==true){
+                            $('#info_mask').fadeOut();
+                            $('#info_wrap').fadeOut();
+                            var html='<div class="listWrap" style="overflow:hidden;font-size:13px;"> '+
+                                    '<div style="float:left;margin-left:15px;text-align:left;width: 97%;text-align: left;margin: 0 auto;margin-left: 2%;"> '+
+                                    '	<img src="http://wx.qlogo.cn/mmopen/iclPUlkyyNtcbn1RctNApVfMsZV4iceyZL8d5bmHuSSia214sUEfcL2dUUtyZ2WFO2IM3VoVHtVDMTtsicLNB5vkXDNQpSog6kMT/96" width="38px" height="38px" style="vertical-align: middle;vertical-align: -13px;border-radius: 19px;"> &nbsp; '+
+                                    '	<span class="nickname">钟瀚涛</span> &nbsp;<span style="color:#532900;">'+msgContent+'</span> '+
+                                    '</div> '+
+                                    '</div>';
+                            $('.msglist').append(html);
+                        }else{
+                            if(data.msg){
+                                alert(data.msg);
+                            }else{
+                                alert("留言失败");
+                            }
+                        }
+                    }
+                });
+            });
+
+            $('#info_wrap .skip').click(function(){
+                $('#info_mask').fadeOut();
+                $('#info_wrap').fadeOut();
+                $.ajax({
+                    url: '/mobile/game/fudan',
+                    data: {
+                        action:'msg',
+                        toOpenid:'ocOeEjkLjRWU0hzP5PqZ2o2m5WPk',
+                        byOpenid:'ocOeEjgngjgj7obBV8mdS3YYYFa0',
+                        content:'',
+                        aid:'144057'
+                    },
+                    type: 'POST',
+                    dataType: "json",
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    success: function (data) {}
+                });
+            });
+
+        });
+    </script>
+
+</div>
+</body>
+</html>
