@@ -15,7 +15,6 @@ class AddonsController extends BaseController {
     public function index(){
         $list = getAddonsList( self::ADDONS_PATH );
         $this -> assign( 'list' , $list );
-
         $this -> display();
     }
 
@@ -56,7 +55,29 @@ class AddonsController extends BaseController {
         }
         C( "TMPL_PARSE_STRING.__ADDONS__" , '/Addons/' . ACTION_NAME . '/Static' );
         $viewPath = "./Addons/".ACTION_NAME."/Template/" . self::APPOINTED . "/" . self::THEME . "/Addons_" . $this -> pluginName  .".html" ;
+
+        $templatePath = C("VIEW_PATH").C("DEFAULT_THEME");
+        $this -> view -> display($templatePath."/Public/min-header.html");
+        echo "<div class=\"wrapper\">";
+        $this -> view -> display($templatePath."/Public/breadcrumb.html");
+        echo "<section class=\"content\">";
+        echo "<div class=\"container-fluid\">";
+        echo "<div class=\"pull-right\">";
+        echo "<a href=\"javascript:history.go(-1)\" data-toggle=\"tooltip\" title=\"\" class=\"btn btn-default\" data-original-title=\"返回\"><i class=\"fa fa-reply\"></i></a>";
+        echo "</div>";
+        echo "<div class=\"panel panel-default\">";
+        echo "<div class=\"panel-heading\">";
+        echo "<h3 class=\"panel-title\"><i class=\"fa fa-list\"></i>设置</h3>";
+        echo "</div>";
+        echo "<div class=\"panel-body\">";
         $this -> view -> display($viewPath);
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
+        echo "</section>";
+        echo "</div>";
+        echo "</body>";
+        echo "</html>";
     }
 
     /**

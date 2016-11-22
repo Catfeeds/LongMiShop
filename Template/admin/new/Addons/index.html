@@ -1,0 +1,45 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+	<include file="Public/breadcrumb"/>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i>插件列表</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <!--支付插件-->
+                        <div class="tab-pane active" id="tab_pay">
+                            <div class="row">
+                                <volist name="list" id="p">
+                                    <div class="col-sm-2">
+                                        <div class="thumbnail">
+                                            <img  style="width:150px; height:60px;" src="/Addons/{$p.code}/{$p.icon}" alt="...">
+                                            <div class="caption">
+                                                <h4>{$p.title}</h4>
+                                                <p>{$p.desc}</p>
+                                                <p>
+                                                    <a href="{:U('Admin/Addons/'.$p['code'])}" class="btn btn-primary" role="button">设置</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </volist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    <!-- /.content -->
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>
