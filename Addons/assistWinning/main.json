@@ -1,1 +1,7 @@
-{}
+{
+  "title" : "烤面包",
+  "desc"  : "烤面包",
+  "code"  : "assistWinning",
+  "author": "烤面包",
+  "icon"  : "logo.jpg"
+}

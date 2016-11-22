@@ -30,7 +30,13 @@ class assistWinningMobileController {
             $where['user_id'] = $Uid;
         }else{
             $where['user_id'] = $user_id;
+            //是否中过奖
+            $prizeRes = M('addons_assistwinning_prize')->where($where)->find();
+            if(!empty($prizeRes)){
+                $this -> assignData["prize"] = true;
+            }
         }
+
 
         //加热
         $count = M('addons_assistwinning_help')->where($where)->count();
@@ -59,10 +65,29 @@ class assistWinningMobileController {
             $list['help'][$key]['temperature'] = $item['temperature'];
             $list['sumTem'] +=  $item['temperature'];
         }
-//        dd($list);
+        if($list['sumTem'] > 180){
+            $list['sumTem'] = 180;
+        }
         $list['visitId'] = $user_id;
         $this -> assignData["list"] = $list;
         return $this -> assignData;
+    }
+
+    public function fillIn(){
+        $data = I('post.');
+        unset($data['pluginName']);
+        $prize = M('addons_assistwinning_prize')->where(array('user_id'=>$this->user['user_id']))->find();
+        if(!empty($prize)){
+            exit(json_encode(callback(false,'您已中过奖了,请不要重复提交')));
+        }
+        $data['prize'] = '烤箱';
+        $data['user_id'] = $this->user['user_id'];
+        $data['create_time'] = time();
+        $res = M('addons_assistwinning_prize')->add($data);
+        if($res){
+            exit(json_encode(callback(true,'资料提交成功')));
+        }
+
     }
 
 
