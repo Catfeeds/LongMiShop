@@ -13,6 +13,12 @@ class lunchFeastMobileController
     //主页
     public function index()
     {
+//        $this -> error(1);
+        return $this->assignData;
+    }
+    //店铺主页
+    public function shopDetail()
+    {
         return $this->assignData;
     }
     //我的宴午
