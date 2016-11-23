@@ -22,3 +22,17 @@ CREATE TABLE `lm_addons_assistwinning_prize` (
   `create_time` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `lm_addons_assistwinning_setprize`;
+CREATE TABLE `lm_addons_assistwinning_setprize` (
+  `id` int(11) NOT NULL,
+  `prize` varchar(255) DEFAULT NULL COMMENT '奖品名称',
+  `sum` varchar(255) DEFAULT NULL,
+  `uptatetime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of lm_addons_assistwinning_setprize
+-- ----------------------------
+INSERT INTO `lm_addons_assistwinning_setprize` VALUES ('0', '烤箱', '22', '1479867913');
+

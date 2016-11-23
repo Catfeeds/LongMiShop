@@ -44,6 +44,7 @@ class assistWinningMobileController {
             //是否中过奖
             $prizeRes = M('addons_assistwinning_prize')->where($where)->find();
             if(!empty($prizeRes)){
+                $this -> assignData['msg'] = '领取成功';
                 $this -> assignData["prize"] = true;
             }
             //自己给自己加温
@@ -66,6 +67,13 @@ class assistWinningMobileController {
         if(empty($helpRes)){
             $list['Ishelp'] = true;
         }
+        //查询奖品表数量
+        $prize = M('addons_assistwinning_setprize')->find();
+        if($prize['sum'] <= 0){
+            $this -> assignData['End'] = true;
+            $this -> assignData['msg'] = '活动结束';
+        }
+
         $helpList = M('addons_assistwinning_help')->where($where)->order('create_time DESC')->limit(5)->select();
         $list['sumTem'] = 0;
         foreach($helpList as $key=>$item){
@@ -82,6 +90,7 @@ class assistWinningMobileController {
         $this -> assignData["list"] = $list;
         $isFollow = M('users')->field('is_follow')->where(array("user_id"=>$user_id))->find();
         $this -> assignData['isFollow'] = $isFollow['is_follow'];
+        $this -> assignData['sum'] = $prize['sum'];
         return $this -> assignData;
     }
 
@@ -92,13 +101,16 @@ class assistWinningMobileController {
         if(!empty($prize)){
             exit(json_encode(callback(false,'您已中过奖了,请不要重复提交')));
         }
-        $data['prize'] = '烤箱';
+        $prizeName = M('addons_assistwinning_setprize')->find();
+        $data['prize'] = $prizeName['prize'];
         $data['user_id'] = $this->user['user_id'];
         $data['create_time'] = time();
         $res = M('addons_assistwinning_prize')->add($data);
         if($res){
+            M('addons_assistwinning_setprize')->where(array('id'=>$prizeName['id']))->setInc('sum');
             exit(json_encode(callback(true,'资料提交成功')));
         }
+        exit(json_encode(callback(false,'提交失败')));
 
     }
 
