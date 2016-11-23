@@ -1,9 +1,11 @@
 <include file="$headerPath"/>
 
 <div class="container">
-2
+    {$shopInfo.content|htmlspecialchars_decode}
 </div>
-
-
+<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderList'))}">我的用餐凭证</a>
+    <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderList'))}">立即预约</a>
+</div>
 
 <include file="$footerPath"/>

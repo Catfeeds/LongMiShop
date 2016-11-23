@@ -1,0 +1,85 @@
+<div class="panel-body table-responsive" style="padding:0;">
+    <form id="setMealForm">
+        <table class="table table-bordered table-condensed">
+            <thead>
+            <tr class="active">
+                <th style="width:80px;">
+                    日期
+                </th>
+                <foreach name="mealList" item="mealItem" >
+                    <th  style="width:120px;">
+                        <div class="">
+                            <div style="padding-bottom:10px;text-align:center;font-size:16px;">
+                                {$mealItem.name}-菜品
+                            </div>
+                        </div>
+                    </th>
+                    <th  style="width:120px;">
+                        <div class="">
+                            <div style="padding-bottom:10px;text-align:center;font-size:16px;">
+                                {$mealItem.name}-总价
+                            </div>
+                        </div>
+                    </th>
+                </foreach>
+            </tr>
+            <tr class="active">
+                <th style="width:80px;">
+                </th>
+                <foreach name="mealList" item="mealItem"  key="mealKey" >
+                    <th  style="width:120px;">
+                        <div class="">
+                            <div class="input-group">
+                                <textarea class="form-control option_content_{$mealKey}_all" style="height: 100px;"></textarea>
+                            </div>
+                            <span class="input-group-addon">
+                            <a href="javascript:;" class="fa fa-hand-o-down" onclick="setCol('option_content_{$mealKey}');"></a>
+                        </span>
+                        </div>
+                    </th>
+                    <th  style="width:120px;">
+                        <div class="">
+                            <div class="input-group">
+                                <input type="text" class="form-control option_money_{$mealKey}_all" value="">
+                            </div>
+                            <span class="input-group-addon">
+                            <a href="javascript:;" class="fa fa-hand-o-down" onclick="setCol('option_money_{$mealKey}');"></a>
+                        </span>
+                        </div>
+                    </th>
+                </foreach>
+            </tr>
+            </thead>
+            <tbody>
+            <for start="$today" end="$lastDay"  step="24*60*60"  >
+                <tr>
+                    <td>
+                        {$i|date='Y-m-d',###}
+                    </td>
+                    <foreach name="mealList" item="mealItem"  key="mealKey" >
+                        <td>
+                            <textarea name="content[{:$i.'_'.$mealItem['id']}]" class="form-control option_content_{$mealKey}_item" style="height: 100px;">{:$goodsList[$i.'_'.$mealItem['id']]['content']}</textarea>
+                        </td>
+                        <td>
+                            <input  name="money[{:$i.'_'.$mealItem['id']}]" type="number" class="form-control option_money_{$mealKey}_item" value="{:$goodsList[$i.'_'.$mealItem['id']]['money']}">
+                        </td>
+                    </foreach>
+                </tr>
+            </for>
+            </tbody>
+        </table>
+        <div class="pull-right">
+            <input type="hidden" name="id" value="{$shop.id}">
+            <input type="hidden" name="pluginName" value="setMeal">
+            <button class="btn btn-primary" onclick="ajaxSubmitForm();" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
+        </div>
+    </form>
+</div>
+<script>
+    function setCol(cls){
+        $("."+cls + "_item").val( $("."+cls+"_all").val());
+    }
+    function ajaxSubmitForm(){
+        ajax_submit_form('setMealForm',"{:U('Admin/Addons/lunchFeast?is_ajax=1')}");
+    }
+</script>
