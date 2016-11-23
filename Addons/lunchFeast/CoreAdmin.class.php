@@ -10,6 +10,7 @@ class lunchFeastAdminController
         define("TB_SHOP", "addons_lunchfeast_shop");
         define("TB_MEAL", "addons_lunchfeast_meal_list");
         define("TB_GOODS", "addons_lunchfeast_shop_goods");
+        define("TB_CONFIG", "addons_lunchfeast_config");
     }
 
     //初始页面
@@ -23,11 +24,47 @@ class lunchFeastAdminController
             array(
                 "title" => "订单列表",
                 "act"   => "orderList"
+            ),
+            array(
+                "title" => "基础设置",
+                "act"   => "config"
             )
         );
         return $this->assignData;
     }
 
+    /**
+     * 系统设置
+     * @return array
+     */
+    public function config(){
+        if (($_GET['is_ajax'] == 1) && IS_POST) {
+            C('TOKEN_ON', false);
+            $data["main"] = I("main");
+            if( isExistenceDataWithCondition( TB_CONFIG ) ){
+                saveData( TB_CONFIG , array() , $data);
+            }else{
+                addData( TB_CONFIG , $data);
+            }
+            $return_arr = array(
+                'status' => 1,
+                'msg'    => '操作成功',
+                'data'   => array('url' => U('Admin/Addons/lunchFeast', array("pluginName" => "config"))),
+            );
+            exit(json_encode($return_arr));
+        }
+        $config = findDataWithCondition( TB_CONFIG );
+        $this->assignData['URL_upload'] = U('Admin/Ueditor/imageUp', array('savepath' => 'goods'));
+        $this->assignData['URL_imageUp'] = U('Admin/Ueditor/imageUp', array('savepath' => 'article'));
+        $this->assignData['URL_fileUp'] = U('Admin/Ueditor/fileUp', array('savepath' => 'article'));
+        $this->assignData['URL_scrawlUp'] = U('Admin/Ueditor/scrawlUp', array('savepath' => 'article'));
+        $this->assignData['URL_getRemoteImage'] = U('Admin/Ueditor/getRemoteImage', array('savepath' => 'article'));
+        $this->assignData['URL_imageManager'] = U('Admin/Ueditor/imageManager', array('savepath' => 'article'));
+        $this->assignData['URL_getMovie'] = U('Admin/Ueditor/getMovie', array('savepath' => 'article'));
+        $this->assignData['URL_Home'] = "";
+        $this->assignData["config"] = $config;
+        return $this->assignData;
+    }
 
     public function mealList(){
 
