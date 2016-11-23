@@ -44,6 +44,9 @@
                 <td class="text-left">{$item.seats}</td>
                 <td class="text-left">{$item.create_time|date='Y-m-d',###}</td>
                 <td class="text-right">
+                    <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'setMeal','id'=>$item['id'] ))}" class="btn btn-info" title="查看详情">
+                        设置菜品
+                    </a>
                     <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'shopDetail','id'=>$item['id'] ))}" class="btn btn-info" title="查看详情">
                         查看详情
                     </a>
