@@ -12,11 +12,11 @@ class lunchFeastMobileController
         $this -> assignData["headerPath"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_header.html";
         $this -> assignData["footerPath"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_footer.html";
         define("TB_SHOP", "addons_lunchfeast_shop");
+        define("TB_MEAL", "addons_lunchfeast_meal_list");
     }
     //主页
     public function index()
     {
-//        $this -> error(1);
         return $this->assignData;
     }
     //店铺主页
@@ -25,7 +25,7 @@ class lunchFeastMobileController
         $id = I( "id" );
         $shopInfo = findDataWithCondition( TB_SHOP , array( "id" => $id ) );
         if( empty( $shopInfo ) ){
-//            return addonsError( "没有此店" );
+            return addonsError( "没有此店" );
         }
         $this -> assignData["shopInfo"] = $shopInfo;
         return $this->assignData;

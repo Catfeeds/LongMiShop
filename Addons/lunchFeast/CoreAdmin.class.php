@@ -8,6 +8,8 @@ class lunchFeastAdminController
     public function __construct()
     {
         define("TB_SHOP", "addons_lunchfeast_shop");
+        define("TB_MEAL", "addons_lunchfeast_meal_list");
+        define("TB_GOODS", "addons_lunchfeast_shop_goods");
     }
 
     //初始页面
@@ -27,6 +29,14 @@ class lunchFeastAdminController
     }
 
 
+    public function mealList(){
+
+    }
+
+    /**
+     * 店铺列表
+     * @return array
+     */
     public function shopList()
     {
         $this->assignData['regionList'] = get_region_list();
@@ -49,12 +59,9 @@ class lunchFeastAdminController
         $type = intval($shopId) > 0 ? 2 : 1; // 标识自动验证时的 场景 1 表示插入 2 表示更新
         if (($_GET['is_ajax'] == 1) && IS_POST) {
             C('TOKEN_ON', false);
-
             $shopModel = M(TB_SHOP);
-
             if (!$shopModel->create(NULL, $type))// 根据表单提交的POST数据创建数据对象
             {
-                //  编辑
                 $return_arr = array(
                     'status' => -1,
                     'msg'    => '操作失败',
@@ -62,10 +69,6 @@ class lunchFeastAdminController
                 );
                 exit(json_encode($return_arr));
             } else {
-
-
-                //  form表单提交
-                // C('TOKEN_ON',true);
                 $shopModel->create_time = time(); // 上架时间
                 if ($type == 2) {
                     $shopModel->save();
@@ -80,9 +83,7 @@ class lunchFeastAdminController
                 exit(json_encode($return_arr));
             }
         }
-
         $shopInfo = findDataWithCondition(TB_SHOP, array("id" => $shopId)) ;
-
         $province = selectDataWithCondition('region', array('parent_id' => 0, 'level' => 1));
         $city = selectDataWithCondition('region', array('parent_id' => $shopInfo['province'], 'level' => 2));
         $area = selectDataWithCondition('region', array('parent_id' => $shopInfo['city'], 'level' => 3));
@@ -99,7 +100,76 @@ class lunchFeastAdminController
         $this->assignData['area'] = $area;
         $this->assignData['shop'] = $shopInfo;
         return $this->assignData;
+    }
 
+
+    /**
+     * 设置菜品
+     * @return array
+     */
+    public function setMeal(){
+        $shopId = I("id");
+        $shopInfo = findDataWithCondition(TB_SHOP, array("id" => $shopId)) ;
+        if( empty( $shopInfo ) ){
+            return addonsError( "没有此店" );
+        }
+        $today = strtotime(date('Y-m-d',strtotime("+1 day")));
+        $lastDay = strtotime(date("Y-m-d",strtotime("+1 month +1 day")));
+        if (($_GET['is_ajax'] == 1) && IS_POST) {
+            C('TOKEN_ON', false);
+            $money = I("money");
+            $content = I("content");
+            if( empty($money) || empty($content) ){
+                $return_arr = array(
+                    'status' => -1,
+                    'msg'    => '参数错误',
+                    'data'   => '',
+                );
+                exit(json_encode($return_arr));
+            }
+            foreach ($money as $key => $moneyItem){
+                $keyArray =  explode("_" , $key);
+                $condition = array(
+                    "shop_id" => $shopId,
+                    "date" =>$keyArray[0],
+                    "meal_id" =>$keyArray[1],
+                );
+
+                $data = array(
+                    "shop_id" => $shopId,
+                    "date" =>$keyArray[0],
+                    "meal_id" =>$keyArray[1],
+                    "content" =>$content[$key],
+                    "money" =>$moneyItem,
+                );
+                if( isExistenceDataWithCondition( TB_GOODS , $condition ) ){
+                    saveData( TB_GOODS , $condition , $data );
+                }else{
+                    $data["create_time"] = time();
+                    addData( TB_GOODS , $data );
+                }
+            }
+            $return_arr = array(
+                'status' => 1,
+                'msg'    => '操作成功',
+                'data'   => array('url' => U('Admin/Addons/lunchFeast', array("pluginName" => "shopList"))),
+            );
+            exit(json_encode($return_arr));
+        }
+        $mealList = selectDataWithCondition( TB_MEAL , array( "is_show" => 1 , "is_delete" => "0" ) );
+        $shopGoods = selectDataWithCondition( TB_GOODS , array( "shop_id" => $shopId ) );
+        $goodsList = array();
+        if( !empty( $shopGoods ) ){
+            foreach ( $shopGoods as $shopGoodsItem ) {
+                $goodsList[$shopGoodsItem["date"]."_".$shopGoodsItem["meal_id"]] = $shopGoodsItem;
+            }
+        }
+        $this -> assignData['shop'] = $shopInfo;
+        $this -> assignData['today'] = $today;
+        $this -> assignData['lastDay'] = $lastDay;
+        $this -> assignData['mealList'] = $mealList;
+        $this -> assignData['goodsList'] = $goodsList;
+        return $this -> assignData;
     }
 
     public function orderList(){

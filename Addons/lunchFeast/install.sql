@@ -22,3 +22,38 @@ CREATE TABLE `lm_addons_lunchfeast_shop` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- ----------------------------
+-- Table structure for lm_addons_lunchfeast_meal_list
+-- ----------------------------
+DROP TABLE IF EXISTS `lm_addons_lunchfeast_meal_list`;
+CREATE TABLE `lm_addons_lunchfeast_meal_list` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `is_show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否显示',
+  `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of lm_addons_lunchfeast_meal_list
+-- ----------------------------
+INSERT INTO `lm_addons_lunchfeast_meal_list` VALUES ('1', '午餐', '1', '0');
+INSERT INTO `lm_addons_lunchfeast_meal_list` VALUES ('2', '晚餐', '0', '0');
+
+
+-- ----------------------------
+-- Table structure for lm_addons_lunchfeast_shop_goods
+-- ----------------------------
+DROP TABLE IF EXISTS `lm_addons_lunchfeast_shop_goods`;
+CREATE TABLE `lm_addons_lunchfeast_shop_goods` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `shop_id` int(11) NOT NULL,
+  `date` int(10) DEFAULT NULL COMMENT '日期',
+  `meal_id` int(11) NOT NULL COMMENT '饭点id',
+  `content` text COMMENT '菜品',
+  `money` float(10,2) NOT NULL DEFAULT '0.00' COMMENT '总价',
+  `create_time` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
