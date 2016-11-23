@@ -36,6 +36,14 @@ class AddonsController extends MobileBaseController {
         $dataList = $this -> addonsLogic -> run() ;
         if( !empty( $dataList ) ){
             foreach ( $dataList as $dataKey => $dataItem ){
+                if( $dataKey == "__success"){
+                    $this -> success( $dataItem["msg"] , $dataItem["url"] , $dataItem["time"]  );
+                    exit;
+                }
+                if( $dataKey == "__error"){
+                    $this -> error( $dataItem["msg"] , $dataItem["url"] , $dataItem["time"]  );
+                    exit;
+                }
                 $this -> assign( $dataKey , $dataItem );
             }
         }

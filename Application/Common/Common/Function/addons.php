@@ -46,3 +46,37 @@ function getAddonsList( $path )
     }
     return $result;
 }
+
+
+/**
+ * 插件错误返回
+ * @param $msg
+ * @param null $url
+ * @param null $time
+ * @return array
+ */
+function addonsError( $msg , $url = null , $time = null){
+    return array(
+        "__error" => array(
+            "msg" => $msg,
+            "url" => $url,
+            "time" => $time
+        ),
+    );
+}
+/**
+ * 插件成功返回
+ * @param $msg
+ * @param null $url
+ * @param null $time
+ * @return array
+ */
+function addonsSuccess( $msg , $url = null , $time = null){
+    return array(
+        "__success" => array(
+            "msg" => $msg,
+            "url" => $url,
+            "time" => $time
+        ),
+    );
+}
