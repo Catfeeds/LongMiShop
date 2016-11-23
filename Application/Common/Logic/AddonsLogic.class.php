@@ -48,7 +48,8 @@ class AddonsLogic extends BaseLogic
         $this -> classPath = 'Addons/'.$addonsName.'/';
 
         @include_once $this -> classPath . 'Core' . $module.'.class.php';
-        $this -> addonsConfig = @include_once $this -> classPath . "config.ini.php";
+        $mainJson = @file_get_contents($this -> classPath . "main.json");
+        $this -> addonsConfig = @json_decode( $mainJson , true );
 
         if( ! file_exists( $this -> classPath . "install.lock" ) ){
             die("Not Install This Addons");

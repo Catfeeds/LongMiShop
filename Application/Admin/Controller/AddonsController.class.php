@@ -70,7 +70,9 @@ class AddonsController extends BaseController {
         echo "</div>";
         echo "<div class=\"panel panel-default\">";
         echo "<div class=\"panel-heading\">";
-        echo "<h3 class=\"panel-title\"><i class=\"fa fa-list\"></i>设置</h3>";
+        echo "<h3 class=\"panel-title\"><i class=\"fa fa-list\"></i>";
+        echo $this -> addonsConfig['title'];
+        echo "</h3>";
         echo "</div>";
         echo "<div class=\"panel-body\">";
         echo "<div class=\"tab-content\">";
