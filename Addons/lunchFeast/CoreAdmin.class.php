@@ -210,6 +210,8 @@ class lunchFeastAdminController
     }
 
     public function orderList(){
+        $List = M('addons_lunchfeast_order')->order('create_time DESC')->select();
+        $this -> assignData['List'] = $List;
         return $this -> assignData;
     }
     public function orderDetail(){
