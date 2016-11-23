@@ -21,6 +21,9 @@ CREATE TABLE `lm_addons_lunchfeast_shop` (
   `seats` int(11) NOT NULL DEFAULT '0' COMMENT '座位数',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `lm_addons_lunchfeast_shop`
+ADD COLUMN `is_online`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否上线' AFTER `seats`;
+
 
 
 -- ----------------------------
@@ -69,5 +72,34 @@ CREATE TABLE `lm_addons_lunchfeast_diningper` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
+CREATE TABLE `lm_addons_lunchfeast_config` (
+  `main` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+
+CREATE TABLE `lm_addons_lunchfeast_order` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL COMMENT '用户id',
+  `order_amount` float(11,2) DEFAULT NULL COMMENT '总价',
+  `pay_amount` float(11,2) DEFAULT NULL COMMENT '实际支付金额',
+  `coupon_price` float(11,2) DEFAULT NULL COMMENT '折扣金额',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态 0 未支付 1 已支付 2 已使用',
+  `create_time` int(10) DEFAULT NULL,
+  `pay_time` int(10) DEFAULT NULL,
+  `date` int(10) DEFAULT NULL COMMENT '就餐时间',
+  `meal_id` int(11) DEFAULT NULL COMMENT '饭点id',
+  `shop_id` int(11) DEFAULT NULL COMMENT '店铺id',
+  `mealContent` text COMMENT '菜品',
+  `transferring` varchar(255) DEFAULT NULL COMMENT '转让历史',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `lm_addons_lunchfeast_order_user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL COMMENT '订单id',
+  `diningper_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
