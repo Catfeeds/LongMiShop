@@ -31,7 +31,7 @@
 </div>
 
 <script>
-
+    var controls = true;
     function subForm(){
         var names =  $("input[name='names']").val();
         var mobile =  $("input[name='mobile']").val();
@@ -45,9 +45,9 @@
             alert('手机格式不正确');
             return false;
         }
-        var controls = true;
+
         if(controls){
-            kong = false;
+            controls = false;
             $.ajax({
                 type : 'post',
                 url : "{: U('Mobile/Addons/lunchFeast')}",

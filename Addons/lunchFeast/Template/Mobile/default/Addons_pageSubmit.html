@@ -23,11 +23,11 @@
     function addper(){
         window.location.href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'aMeal' ))}";
     }
+    var controls = true;
     function delPer(obj){
         var id = $(obj).data('id');
-        var controls = true;
         if(controls){
-            kong = false;
+            controls = false;
             $.ajax({
                 type : 'post',
                 url : "{: U('Mobile/Addons/lunchFeast')}",
