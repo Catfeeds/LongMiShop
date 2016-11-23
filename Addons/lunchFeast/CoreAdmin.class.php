@@ -30,7 +30,11 @@ class lunchFeastAdminController
     public function shopList()
     {
         $this->assignData['regionList'] = get_region_list();
-        $this->assignData['list'] = selectDataWithCondition(TB_SHOP);
+        $count = getCountWithCondition(TB_SHOP);
+        $Page  = new \Think\Page( $count , 10 );
+        $show = $Page -> show();
+        $this->assignData['list'] = M(TB_SHOP)->limit($Page->firstRow,$Page->listRows) -> select();
+        $this->assignData['page'] = $show;
         return $this->assignData;
     }
 

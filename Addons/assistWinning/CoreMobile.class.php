@@ -107,7 +107,7 @@ class assistWinningMobileController {
         $data['create_time'] = time();
         $res = M('addons_assistwinning_prize')->add($data);
         if($res){
-            M('addons_assistwinning_setprize')->where(array('id'=>$prizeName['id']))->setInc('sum');
+            M('addons_assistwinning_setprize')->where(array('id'=>$prizeName['id']))->setDec('sum');
             exit(json_encode(callback(true,'资料提交成功')));
         }
         exit(json_encode(callback(false,'提交失败')));
