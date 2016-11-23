@@ -9,6 +9,8 @@ class lunchFeastMobileController
     public function __construct( $userInfo )
     {
         $this -> userInfo = $userInfo;
+        $this -> assignData["headerPath"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_header.html";
+        $this -> assignData["footerPath"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_footer.html";
     }
     //主页
     public function index()
