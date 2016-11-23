@@ -57,3 +57,17 @@ CREATE TABLE `lm_addons_lunchfeast_shop_goods` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `lm_addons_lunchfeast_diningper`;
+CREATE TABLE `lm_addons_lunchfeast_diningper` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT NULL COMMENT '用户uid',
+  `names` varchar(255) DEFAULT NULL COMMENT '用餐人 名字',
+  `mobile` char(15) DEFAULT NULL COMMENT '用餐人电话',
+  `show` int(1) DEFAULT '1' COMMENT '是否显示',
+  `pitchon` int(1) NOT NULL COMMENT '选中',
+  `add_time` int(11) DEFAULT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+
+
+

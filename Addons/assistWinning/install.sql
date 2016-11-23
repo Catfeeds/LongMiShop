@@ -29,7 +29,7 @@ CREATE TABLE `lm_addons_assistwinning_setprize` (
   `sum` varchar(255) DEFAULT NULL,
   `uptatetime` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lm_addons_assistwinning_setprize

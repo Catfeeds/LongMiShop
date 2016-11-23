@@ -1,2 +1,87 @@
 <include file="$headerPath"/>
+<style>
+    body{
+        height:100%;
+    }
+</style>
+
+<div class="container">
+<form action="" method="post" id="mealForm">
+        <div class="control-group">
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on">姓名</span>
+                    <input class="input-xlarge" type="text" name="names" placeholder="">
+                </div>
+            </div>
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on">手机</span>
+                    <input class="input-xlarge" type="text" name="mobile" placeholder="">
+                    <!--<input class="span2"  type="text">-->
+                </div>
+            </div>
+        </div>
+
+
+</form>
+</div>
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <button class="btn btn-large btn-block btn-primary" type="button" onclick="subForm()">保存</button>
+</div>
+
+<script>
+
+    function subForm(){
+        var names =  $("input[name='names']").val();
+        var mobile =  $("input[name='mobile']").val();
+        if(names == ''){
+            alert('姓名不能为空');
+            return false;
+        }else if(mobile == ''){
+            alert('手机号码不能为空');
+            return false;
+        }else if(!checkMobile(mobile)){
+            alert('手机格式不正确');
+            return false;
+        }
+        var controls = true;
+        if(controls){
+            kong = false;
+            $.ajax({
+                type : 'post',
+                url : "{: U('Mobile/Addons/lunchFeast')}",
+                data : {pluginName:'addAMeal',names:names,mobile:mobile},
+                dataType : 'json',
+                success : function(res){
+                    controls = true;
+                    if(res.state == '1'){
+                        alert(res.msg);
+                        window.location.href = "{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'aMeal' ))}";
+                    }else{
+                        alert(res.msg);
+                    }
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert('网络失败，请刷新页面后重试');
+                }
+            })
+        }
+
+    }
+
+    function checkMobile(tel) {
+        var reg = /(^1[3|4|5|7|8][0-9]{9}$)/;
+        if (reg.test(tel)) {
+            return true;
+        }else{
+            return false;
+        };
+    }
+</script>
+
+
+
+
+
 <include file="$footerPath"/>
