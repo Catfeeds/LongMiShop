@@ -1,2 +1,50 @@
 <include file="$headerPath"/>
+<div class="container">
+    <div class="thumbnail">
+        用餐信息，注意事项显示区
+    </div>
+    <table class="table ">
+        <tr class="info">
+            <td>用餐人:</td>
+            <td>操作</td>
+        </tr>
+        <volist name="list" id="item">
+            <td>{$item.names}</td>
+            <td><span onclick="delPer(this)" data-id="{$item['id']}">移除</span></td>
+            </tr>
+        </volist>
+        <tr >
+            <td><button type="button" class="btn btn-info" onclick="addper()">添加用餐人</button></td>
+        </tr>
+    </table>
+</div>
 <include file="$footerPath"/>
+<script>
+    function addper(){
+        window.location.href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'aMeal' ))}";
+    }
+    function delPer(obj){
+        var id = $(obj).data('id');
+        var controls = true;
+        if(controls){
+            kong = false;
+            $.ajax({
+                type : 'post',
+                url : "{: U('Mobile/Addons/lunchFeast')}",
+                data : {pluginName:'removePer',delPerId:id},
+                dataType : 'json',
+                success : function(res){
+                    controls = true;
+                    if(res.state == '1'){
+                        $(obj).parent().parent().remove();
+                    }else{
+                        alert(res.msg);
+                    }
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert('网络失败，请刷新页面后重试');
+                }
+            })
+        }
+    }
+</script>
