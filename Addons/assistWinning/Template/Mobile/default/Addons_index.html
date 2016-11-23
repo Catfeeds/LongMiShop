@@ -35,7 +35,7 @@
             <!-- 首页 -->
             <div id='home'>
                 <div class='home-n'>
-                    <div>剩余奖品<span>329个</span></div>
+                    <div>剩余奖品<span>{:$sum}个</span></div>
                 </div>
                 <div class='home-m'>
                     <div class='home-m-b'>
@@ -141,7 +141,7 @@
             </div>
             <div id='fillIn'>
                 <div class='home-n'>
-                    <div>剩余奖品<span>329个</span></div>
+                    <div>剩余奖品<span>{:$sum}个</span></div>
                 </div>
                 <div class='last-m'>
                     <div class='last-m-bg ' style="background: url('__ADDONS__/images/fillBack.png') no-repeat;background-size: 100% 307px;height:307px;">
@@ -177,12 +177,12 @@
             </div>
             <div id='isPrize'>
                 <div class='home-n'>
-                    <div>剩余奖品<span>329个</span></div>
+                    <div>剩余奖品<span>{:$sum}个</span></div>
                 </div>
                 <div class='last-m'>
                     <div class='last-m-bg ' style="background: url('__ADDONS__/images/fillBack.png') no-repeat;background-size: 100% 307px;height:307px;">
                         <div >
-                            <p>领取成功</p>
+                            <p>{:$msg}</p>
                         </div>
                     </div>
                     <div class='last-h'>
@@ -206,7 +206,7 @@
             </div>
             <div id='last'>
                 <div class='home-n'>
-                    <div>剩余奖品<span>329个</span></div>
+                    <div>剩余奖品<span>{:$sum}个</span></div>
                 </div>
                 <div class='last-m'>
                     <div class='last-m-bg'>
@@ -235,7 +235,7 @@
                 <img src="__ADDONS__/images/code1_06.jpg" alt="" />
             </div>
             <div class='home-n'>
-                <div>剩余奖品<span>329个</span></div>
+                <div>剩余奖品<span>{:$sum}个</span></div>
             </div>
             <div class='code-b'>
                 <img src="__ADDONS__/images/code.png" alt="" />
@@ -530,6 +530,11 @@
 
             var isprize = "{$prize}";
             if(isprize){
+                $("#home").hide();
+                $('#page').html('').html($('#isPrize').html());
+            }
+            var End = "{$End}";
+            if(End){
                 $("#home").hide();
                 $('#page').html('').html($('#isPrize').html());
             }
