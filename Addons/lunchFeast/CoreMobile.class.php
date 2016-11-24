@@ -22,7 +22,28 @@ class lunchFeastMobileController
     public function index()
     {
         $this -> assignData["config"] = findDataWithCondition( TB_CONFIG );
+        $shopList = getShopList();
+        $mealList = getMealList();
+        if( empty( $shopList ) ){
+            return addonsError( "宴午还没有开始" );
+        }
+        if( empty( $mealList ) ){
+            return addonsError( "还没设置时间" );
+        }
+
+        $this -> assignData["shopList"] = $shopList;
+        $this -> assignData["mealList"] = $mealList;
+        $this -> assignData["shopMealList"] = getShopMealList( $shopList[0]["id"] , $mealList[0]["id"]);
         return $this->assignData;
+    }
+    //ajax菜品列表
+    public function ajaxShopMealList(){
+        $id = I("id");
+        $shopMealList = getShopMealList($id);
+        if( !empty( $shopMealList )){
+            exit(json_encode( callback( true, "",$shopMealList ) ));
+        }
+        exit(json_encode( callback( false, "未找到" ) ));
     }
     //店铺主页
     public function shopDetail()
@@ -77,11 +98,31 @@ class lunchFeastMobileController
     //订单详情 我的二维码
     public function orderDetail()
     {
+        $id = I('id');
+        $orderInfo = findDataWithCondition( TB_ORDER , array("user_id" => $this -> userInfo['user_id'] , "id" => $id) );
+        if( empty( $orderInfo ) ){
+            return addonsError( "没有此店" );
+        }
+        $orderInfo["userList"] = selectDataWithCondition( TB_ORDER_USER , array( "order_id" => $id));
+        foreach ( $orderInfo["userList"] as $userKey => $userItem){
+            $userItem[$userKey]["userInfo"] = findDataWithCondition( "addons_lunchfeast_diningper" , array( "user_id" => $this -> userInfo['user_id'] , "id" => $userItem["diningper_id"]));
+
+
+        }
+        $this->assignData['orderInfo'] = $orderInfo;
         return $this->assignData;
     }
     //菜品结果
     public function foods()
     {
+        $date = I("date");
+        $shopId = I("shopId");
+        $mealId = I("mealId");
+        $shopInfo = findDataWithCondition( TB_SHOP , array( "is_online" => 1 , "id" => $shopId ) );
+        $mealInfo = findDataWithCondition( TB_MEAL , array( "is_show" => 1 , "is_delete" => "0" , "id" => $mealId ) );
+        if( empty( $date ) || empty( $shopId ) || empty( $mealId ) || $date < time() || empty( $shopInfo ) || empty( $mealInfo ) ){
+            return addonsError( "参数错误" );
+        }
         return $this->assignData;
     }
     //提交页面
