@@ -49,7 +49,7 @@ function addonsPayData( $orderId ){
         if (!empty($order)) {
             $payData['goUrl'] = U('Mobile/Addons/lunchFeast', array("pluginName" => "results" , "id" => $id ) );
             $payData['backUrl'] = U('Mobile/Addons/lunchFeast');
-            $payData['notifyUrl'] = U('Api/Addons/lunchFeast', array("pluginName" => "notifyUrl"));
+            $payData['notifyUrl'] = SITE_URL . U('Api/Addons/lunchFeast', array("pluginName" => "notifyUrl"));
         }
     }
     return $payData;
