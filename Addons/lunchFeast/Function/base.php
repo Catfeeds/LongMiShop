@@ -45,7 +45,7 @@ function addonsPayData( $orderId ){
         "notifyUrl" => "",
     );
     if( $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')) {
-        $payData['order'] = $order = findDataWithCondition(TB_ORDER, array("id" => $id));
+        $payData['order'] = $order = findDataWithCondition( "addons_lunchfeast_order" , array("id" => $id));
         if (!empty($order)) {
             $payData['goUrl'] = U('Mobile/Addons/lunchFeast', array("pluginName" => "results"));
             $payData['backUrl'] = U('Mobile/Addons/lunchFeast');
