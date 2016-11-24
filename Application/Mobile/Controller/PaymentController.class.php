@@ -46,11 +46,21 @@ class PaymentController extends MobileBaseController {
      * 提交支付方式
      */
     public function getCode(){
-
         C('TOKEN_ON',false); // 关闭 TOKEN_ON
         header("Content-type:text/html;charset=utf-8");
 
         $order_id = I('order_id'); // 订单id
+        $tempString = (string)$order_id;
+        $tempArray = explode("_",$tempString);
+        if( in_array("addons",$tempArray) && $tempArray[0] =="addons" && count($tempArray) == 3 ){
+            $order_id = $tempArray[2];
+            $addonsName = $tempArray[1];
+            @include "Addons/".$addonsName."/Function/base.php";
+            $payData = addonsPayData( $order_id );
+            $code_str = $this->payment->getJSAPI($payData['order'] ,$payData['goUrl'],$payData['backUrl'] ,"addons",$payData['notifyUrl']);
+            exit($code_str);
+            exit;
+        }
 
         $order = M('order') -> where("order_id = $order_id")->find();
         if($order['pay_status'] == 1){

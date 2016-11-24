@@ -80,3 +80,13 @@ function addonsSuccess( $msg , $url = null , $time = null){
         ),
     );
 }
+
+/**
+ * 插件微信支付跳转
+ * @param $orderId
+ * @param $addonsName
+ */
+function addonsWeChatPay( $orderId , $addonsName ){
+    header("Location: " . U("Mobile/Payment/getCode",array("pay_code"=>"weixin" , "order_id"=>"addons_".$addonsName."_".$orderId)));
+    exit;
+}

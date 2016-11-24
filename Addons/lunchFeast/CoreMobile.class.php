@@ -218,7 +218,7 @@ class lunchFeastMobileController
         $seats = $shopRes['seats'] - $number; //剩余座位
         if($seats >= $countPer){
 
-            $order_sn = time().mt_rand().'_sn';
+            $order_sn = time().mt_rand();
             $order_amount = $ShopData['money'] * $countPer; //总价
             $pay_amount = $ShopData['money'] * $countPer; //实际支付金额
             $OrderData = array(
@@ -247,15 +247,8 @@ class lunchFeastMobileController
         if( $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
             $order = findDataWithCondition( TB_ORDER , array("id"=>$id));
             if( !empty( $order ) ){
-                include_once  "plugins/payment/weixin/weixin.class.php";
-                $code = '\\weixin'; // \alipay
-                $payment = new $code();
-                C('TOKEN_ON',false); // 关闭 TOKEN_ON
-                $goUrl= U('Mobile/Addons/lunchFeast',array("pluginName"=>"results"));
-                $backUrl = U('Mobile/Addons/lunchFeast');
-                $notifyUrl = U('Api/Addons/lunchFeast',array("pluginName"=>"notifyUrl"));
-                $code_str = $payment->getJSAPI($order ,$goUrl,$backUrl ,"addons",$notifyUrl);
-                exit($code_str);
+                addonsWeChatPay( $id , "lunchFeast" );
+                exit;
             }
         }else{
             exit;
