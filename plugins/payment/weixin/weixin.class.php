@@ -92,8 +92,9 @@ class weixin extends RelationModel
         $input->SetNotify_url($notifyUrl);
         $input->SetTrade_type("JSAPI");
         if( !is_null($attach)){
-            $input->SetAttach($attach);
+            $input->SetAttach("".$attach."");
         }
+        $input->SetAttach("addons");
         $input->SetOpenid($openId);
         $order2 = WxPayApi::unifiedOrder($input);
         setLogResult( $order2 , "微信支付input" , "payment" );
