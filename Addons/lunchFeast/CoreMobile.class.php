@@ -122,12 +122,29 @@ class lunchFeastMobileController
         if( empty( $date ) || empty( $shopId ) || empty( $mealId ) || $date < time() || empty( $shopInfo ) || empty( $mealInfo ) ){
             return addonsError( "参数错误" );
         }
+        $where = array(
+            'shop_id'=>$shopId,
+            'date'=>$date,
+            'meal_id'=>$mealId
+        );
+        $shopGoods = M('addons_lunchfeast_shop_goods')->where($where)->find();
+        session('ShopData',$shopGoods);
+        $shopRes = M('addons_lunchfeast_shop')->field('seats')->where(array('id'=>$shopId))->find();
+        $number = M('addons_lunchfeast_order')->where($where)->sum('number');
+        $shopGoods['seats'] = $shopRes['seats'] - $number;
+        $shopGoods['content'] = str_replace("\r\n","<br/>",$shopGoods['content']);
+        $this->assignData['shopGoods'] = $shopGoods;
+
+
         return $this->assignData;
     }
     //提交页面
     public function pageSubmit()
     {
         $list = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1))->select();
+        $ShopData = session('ShopData');
+        $this->assignData['money'] = $ShopData['money'] * count($list);
+        $this->assignData['sum'] = count($list);
         $this->assignData['list'] = $list;
         return $this->assignData;
     }
@@ -189,6 +206,38 @@ class lunchFeastMobileController
     //结算页面
     public function payment()
     {
+        $ShopData = session('ShopData');
+        $OrderWhere = array(
+            'shop_id'=>$ShopData['shop_id'],
+            'date'=>$ShopData['date'],
+            'meal_id'=>$ShopData['meal_id'],
+        );
+        $shopRes = M('addons_lunchfeast_shop')->field('seats')->where(array('id'=>$ShopData['shop_id']))->find();
+        $number = M('addons_lunchfeast_order')->where($OrderWhere)->sum('number');
+        $countPer = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1))->count();
+        $seats = $shopRes['seats'] - $number; //剩余座位
+        if($seats >= $countPer){
+
+            $order_sn = time().mt_rand().'_sn';
+            $order_amount = $ShopData['money'] * $countPer; //总价
+            $pay_amount = $ShopData['money'] * $countPer; //实际支付金额
+            $OrderData = array(
+                'order_sn'=> $order_sn,
+                'order_amount'=>$order_amount,
+                'pay_amount' =>$pay_amount,
+                'status'=>'0', //状态 未支付
+                'create_time'=>time(),
+                'date'=>$ShopData['date'], //就餐时间
+                'meal_id'=>$ShopData['meal_id'], //菜品id
+                'shop_id'=>$ShopData['shop_id'], //店铺id
+                'meal_content'=>$ShopData['meal_content'], //菜品
+                'number'=>$countPer,
+            );
+            $OrderRes = M('addons_lunchfeast_order')->add($OrderData);
+
+        }else{
+            return addonsError( "改店铺的座位数不够" );
+        }
         return $this->assignData;
     }
     //支付页面
