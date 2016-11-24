@@ -12,6 +12,7 @@ class AddonsController extends BaseController {
      */
     public function  __construct() {   
         parent::__construct();
+        setLogResult( "支付33" , "支付33" , "test");
 
     }
 
@@ -21,6 +22,7 @@ class AddonsController extends BaseController {
      */
     public function  _empty(){
 
+        setLogResult( "支324付33" , "2344", "test");
         $pluginName = I( "pluginName" , "index" );
         $addonsLogic = new \Common\Logic\AddonsLogic();
         $addonsLogic -> loadAddons( ACTION_NAME , $pluginName , self::APPOINTED  );
