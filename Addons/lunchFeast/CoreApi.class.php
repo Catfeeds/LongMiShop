@@ -7,7 +7,7 @@ class lunchFeastApiController
     {
     }
     //主页
-    public function index()
+    public function notifyUrl()
     {
         include_once  "plugins/payment/weixin/weixin.class.php";
         $code = '\\weixin'; // \alipay
