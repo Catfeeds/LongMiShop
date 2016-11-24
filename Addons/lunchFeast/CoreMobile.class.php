@@ -234,7 +234,8 @@ class lunchFeastMobileController
                 'number'=>$countPer,
             );
             $OrderRes = M('addons_lunchfeast_order')->add($OrderData);
-
+            header("Location: " . U("Mobile/Addons/lunchFeast",array('pluginName' => "weChatPay" ,"id" => $OrderRes)));
+            exit;
         }else{
             return addonsError( "改店铺的座位数不够" );
         }
@@ -258,7 +259,7 @@ class lunchFeastMobileController
     //结果页
     public function results()
     {
-        $id = 1;
+        $id = I("id");
         $results = M('addons_lunchfeast_order')->where(array('id'=>$id))->find();
         $mealList = selectMealList();
         $shopList = M('addons_lunchfeast_shop')->where(array('id'=>$results['shop_id']))->find();
