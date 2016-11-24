@@ -1,2 +1,19 @@
 <include file="$headerPath"/>
+
+<div class="titel_box">
+    <div class="titel_box_l">用餐凭证</div>
+</div>
+<div class="cp6">
+    <foreach item="userItem" name="orderInfo.userList">
+        <div class="cp1_l">
+            <img src="/Public/upload/goods/thumb/1/goods_thumb_1_100_100.jpeg" width="180" height="180">
+        </div>
+        <div class="cp1_r">
+            <p>{$userItem.code}</p>
+            <span style="color:#666">{$userItem.userInfo.name}  {$userItem.userInfo.mobile}</span>
+        </div>
+    </foreach>
+</div>
+<div class="site_txt">订单编号<span>{$orderInfo.order_sn}</span></div>
+<div class="site_txt">下单时间<span>{$orderInfo.create_time|date="Y-m-d",###}</span></div>
 <include file="$footerPath"/>

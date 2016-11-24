@@ -1,5 +1,6 @@
 <?php
 
+include_once "/Function/base.php";
 class lunchFeastAdminController
 {
 
@@ -193,7 +194,7 @@ class lunchFeastAdminController
             );
             exit(json_encode($return_arr));
         }
-        $mealList = selectDataWithCondition( TB_MEAL , array( "is_show" => 1 , "is_delete" => "0" ) );
+        $mealList = getMealList();
         $shopGoods = selectDataWithCondition( TB_GOODS , array( "shop_id" => $shopId ) );
         $goodsList = array();
         if( !empty( $shopGoods ) ){
