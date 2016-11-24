@@ -13,10 +13,15 @@ class lunchFeastMobileController
         $this -> assignData["footerPath"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_footer.html";
         define("TB_SHOP", "addons_lunchfeast_shop");
         define("TB_MEAL", "addons_lunchfeast_meal_list");
+        define("TB_GOODS", "addons_lunchfeast_shop_goods");
+        define("TB_CONFIG", "addons_lunchfeast_config");
+        define("TB_ORDER", "addons_lunchfeast_order");
+        define("TB_ORDER_USER", "addons_lunchfeast_order_user");
     }
     //主页
     public function index()
     {
+        $this -> assignData["config"] = findDataWithCondition( TB_CONFIG );
         return $this->assignData;
     }
     //店铺主页
@@ -35,6 +40,40 @@ class lunchFeastMobileController
     {
         return $this->assignData;
     }
+    //ajax我的宴午
+    public function ajaxOrderList()
+    {
+        $where = array();
+        $type = I('type');
+        $type = intval($type);
+        if ($type == 1) {
+            $where['status'] = $type;
+        }
+        if ($type == 2) {
+            $where['status'] = array("in","2,3");
+        }
+        $where['user_id'] = $this->userInfo ['user_id'];
+        $count = getCountWithCondition(TB_ORDER, $where);
+        $limit = 10;
+        $Page = new \Think\Page($count, $limit);
+        $show = $Page->show();
+        $order_str = "pay_time DESC";
+        $orderList = M( TB_ORDER )->order($order_str)->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        if( !empty( $orderList ) ){
+            foreach ( $orderList as $orderKey => $orderItem ){
+                $orderList[$orderKey]["shopData"] = findDataWithCondition( TB_SHOP , array( "id" => $orderItem["shop_id"] ) );
+            }
+        }
+        $this->assignData['show'] = $show;
+        $this->assignData['lists'] = $orderList;
+        $this->assignData['p'] = I('p');
+        $this->assignData['number'] = I('number');
+        $this->assignData['count'] = $count;
+        $this->assignData['type'] = $type;
+        $this->assignData['limit'] = $limit * I('p');
+        return $this->assignData;
+    }
+
     //订单详情 我的二维码
     public function orderDetail()
     {

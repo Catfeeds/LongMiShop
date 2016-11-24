@@ -1,33 +1,21 @@
 <include file="$headerPath"/>
-<style>
-    body{
-        height:100%;
-    }
-</style>
 
-<div class="container">
-<form action="" method="post" id="mealForm">
-        <div class="control-group">
-            <div class="controls">
-                <div class="input-prepend">
-                    <span class="add-on">姓名</span>
-                    <input class="input-xlarge" type="text" name="names" placeholder="">
-                </div>
+<div class="mui-content">
+    <div class="mui-content-padded" style="margin: 0px;">
+        <form class="mui-input-group" id="mealForm">
+            <div class="mui-input-row line">
+                <label>姓名</label>
+                <input type="text" placeholder="请输入" name="names">
             </div>
-            <div class="controls">
-                <div class="input-prepend">
-                    <span class="add-on">手机</span>
-                    <input class="input-xlarge" type="text" name="mobile" placeholder="">
-                    <!--<input class="span2"  type="text">-->
-                </div>
+            <div class="mui-input-row line">
+                <label>手机</label>
+                <input type="text" placeholder="请输入" name="mobile">
             </div>
-        </div>
-
-
-</form>
+        </form>
+    </div>
 </div>
-<div class="navbar navbar-default navbar-fixed-bottom">
-    <button class="btn btn-large btn-block btn-primary" type="button" onclick="subForm()">保存</button>
+<div class="login_btn">
+    <a href="javascript:void(0);" onclick="subForm()">保存</a>
 </div>
 
 <script>
