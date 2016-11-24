@@ -71,12 +71,15 @@ class weixin extends RelationModel
         // 微信扫码支付这里没有页面返回
     }
 
-    function getJSAPI($order , $go_url , $back_url , $attach = null, $notifyUrl = SITE_URL.'/index.php/Mobile/Payment/notifyUrl/pay_code/weixin'){
+    function getJSAPI($order , $go_url , $back_url , $attach = null, $notifyUrl = null){
         //①、获取用户openid
         $tools = new JsApiPay();
         //$openId = $tools->GetOpenid();
         $openId = $_SESSION['openid'];
         //②、统一下单
+        if( is_null($attach)){
+            $notifyUrl = SITE_URL.'/index.php/Mobile/Payment/notifyUrl/pay_code/weixin';
+        }
 
         $input = new WxPayUnifiedOrder();
         $input->SetBody("支付订单：".$order['order_sn']);
