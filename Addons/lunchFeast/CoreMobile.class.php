@@ -191,7 +191,7 @@ class lunchFeastMobileController
     {
         return $this->assignData;
     }
-    //结算页面
+    //支付页面
     public function weChatPay()
     {
         $id = I("id");
@@ -205,7 +205,7 @@ class lunchFeastMobileController
                 $goUrl= U('Mobile/Addons/lunchFeast',array("pluginName"=>"results"));
                 $backUrl = U('Mobile/Addons/lunchFeast');
                 $notifyUrl = U('Api/Addons/lunchFeast',array("pluginName"=>"notifyUrl"));
-                $code_str = $payment->getJSAPI($order ,$goUrl,$backUrl ,$notifyUrl);
+                $code_str = $payment->getJSAPI($order ,$goUrl,$backUrl ,"addons",$notifyUrl);
                 exit($code_str);
             }
         }else{

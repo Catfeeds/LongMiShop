@@ -120,3 +120,19 @@ ALTER TABLE `lm_addons_lunchfeast_order_user`
 ADD COLUMN `code`  varchar(30) NULL COMMENT '编号' AFTER `id`;
 
 
+-- ----------------------------
+-- Table structure for lm_addons_lunchfeast_order_pay_log
+-- ----------------------------
+DROP TABLE IF EXISTS `lm_addons_lunchfeast_order_pay_log`;
+CREATE TABLE `lm_addons_lunchfeast_order_pay_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL COMMENT '订单id',
+  `user_id` int(11) DEFAULT NULL,
+  `openid` varchar(100) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  `tag` text COMMENT '微信tag',
+  `money` float(11,2) DEFAULT NULL COMMENT '支付金额',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态 0 未支付 1 已支付 2 异常',
+  `pay_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
