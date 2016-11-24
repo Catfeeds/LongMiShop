@@ -47,6 +47,7 @@ class AddonsLogic extends BaseLogic
         $this -> actionName = $actionName;
         $this -> classPath = 'Addons/'.$addonsName.'/';
 
+        @include $this -> classPath .'function/base.php';
         @include_once $this -> classPath . 'Core' . $module.'.class.php';
         $mainJson = @file_get_contents($this -> classPath . "main.json");
         $this -> addonsConfig = @json_decode( $mainJson , true );
