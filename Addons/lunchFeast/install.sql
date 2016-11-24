@@ -103,3 +103,6 @@ CREATE TABLE `lm_addons_lunchfeast_order_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+ALTER TABLE `lm_addons_lunchfeast_order`
+ADD COLUMN `numbre`  int(11) NULL COMMENT '人数' AFTER `mealContent`;
+
