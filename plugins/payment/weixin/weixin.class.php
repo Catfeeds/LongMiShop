@@ -77,7 +77,7 @@ class weixin extends RelationModel
         //$openId = $tools->GetOpenid();
         $openId = $_SESSION['openid'];
         //②、统一下单
-        if( is_null($attach)){
+        if( is_null( $notifyUrl )){
             $notifyUrl = SITE_URL.'/index.php/Mobile/Payment/notifyUrl/pay_code/weixin';
         }
 

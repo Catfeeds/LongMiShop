@@ -47,6 +47,7 @@ class PayNotifyCallBack extends WxPayNotify
         $appid = $data['appid']; //公众账号ID
         $order_sn = $out_trade_no = $data['out_trade_no']; //商户系统的订单号，与请求一致。
         $attach = $data['attach']; //商家数据包，原样返回
+        setLogResult( $data , "支付" , "test");
         if( $attach == "addons"){
             addonsPayNotify($order_sn , $data);
         }else{    //file_put_contents('/web/tpshop2/c.html',print_r($data,true),FILE_APPEND);
