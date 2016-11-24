@@ -253,7 +253,7 @@ class lunchFeastMobileController
         }else{
             exit;
         }
-        return $this->assignData;
+        exit;
     }
     //结果页
     public function results()
