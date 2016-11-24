@@ -240,6 +240,28 @@ class lunchFeastMobileController
         }
         return $this->assignData;
     }
+    //支付页面
+    public function weChatPay()
+    {
+        $id = I("id");
+        if( $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
+            $order = findDataWithCondition( TB_ORDER , array("id"=>$id));
+            if( !empty( $order ) ){
+                include_once  "plugins/payment/weixin/weixin.class.php";
+                $code = '\\weixin'; // \alipay
+                $payment = new $code();
+                C('TOKEN_ON',false); // 关闭 TOKEN_ON
+                $goUrl= U('Mobile/Addons/lunchFeast',array("pluginName"=>"results"));
+                $backUrl = U('Mobile/Addons/lunchFeast');
+                $notifyUrl = U('Api/Addons/lunchFeast',array("pluginName"=>"notifyUrl"));
+                $code_str = $payment->getJSAPI($order ,$goUrl,$backUrl ,"addons",$notifyUrl);
+                exit($code_str);
+            }
+        }else{
+            exit;
+        }
+        return $this->assignData;
+    }
     //结果页
     public function results()
     {

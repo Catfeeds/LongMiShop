@@ -71,12 +71,16 @@ class weixin extends RelationModel
         // 微信扫码支付这里没有页面返回
     }
 
-    function getJSAPI($order , $go_url , $back_url){
+    function getJSAPI($order , $go_url , $back_url , $attach = null, $notifyUrl = null){
         //①、获取用户openid
         $tools = new JsApiPay();
         //$openId = $tools->GetOpenid();
         $openId = $_SESSION['openid'];
         //②、统一下单
+        if( is_null($attach)){
+            $notifyUrl = SITE_URL.'/index.php/Mobile/Payment/notifyUrl/pay_code/weixin';
+        }
+
         $input = new WxPayUnifiedOrder();
         $input->SetBody("支付订单：".$order['order_sn']);
         $input->SetAttach("weixin");
@@ -85,8 +89,11 @@ class weixin extends RelationModel
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
         $input->SetGoods_tag("tp_wx_pay");
-        $input->SetNotify_url(SITE_URL.'/index.php/Mobile/Payment/notifyUrl/pay_code/weixin');
+        $input->SetNotify_url($notifyUrl);
         $input->SetTrade_type("JSAPI");
+        if( !is_null($attach)){
+            $input->SetAttach($attach);
+        }
         $input->SetOpenid($openId);
         setLogResult( $input , "微信支付input" , "payment" );
         $order2 = WxPayApi::unifiedOrder($input);
