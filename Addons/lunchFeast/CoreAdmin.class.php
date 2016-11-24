@@ -1,5 +1,5 @@
 <?php
-
+@include 'Addons/lunchFeast/Function/base.php';
 class lunchFeastAdminController
 {
 
