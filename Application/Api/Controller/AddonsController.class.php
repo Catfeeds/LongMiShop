@@ -22,7 +22,6 @@ class AddonsController extends BaseController {
     public function  _empty(){
 
         $pluginName = I( "pluginName" , "index" );
-        setLogResult( $pluginName , "2344", "test");
         $addonsLogic = new \Common\Logic\AddonsLogic();
         $addonsLogic -> loadAddons( ACTION_NAME , $pluginName , self::APPOINTED  );
         $addonsLogic -> run() ;
