@@ -28,16 +28,28 @@
         <div style="height:100px"></div>
         <div class="foot" id="foot" style="margin-bottom:0px;">
             <div class="fr closing">
-                <a  onclick="" style="color:#FFF">微信安全支付</a>
+                <a  onclick="payment()" style="color:#FFF">微信安全支付</a>
             </div>
             <div class="fr total">
-                预定总金额:￥<span id="cart_amount_desc">111</span>
+                预定总金额:￥<span id="cart_amount_desc">{$money}</span>
             </div>
         </div>
 
 
 
 <script type="text/javascript">
+
+    function payment(){
+        var sum = "{$sum}";
+        if(sum <=  0){
+            alert('请选择用餐人');
+            return false;
+        }
+        window.location.href = "{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'payment' ))}";
+    }
+
+
+
     var controls = true;
     // ajax 删除联系人
     function ajax_del_cart(obj)

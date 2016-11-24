@@ -1,17 +1,29 @@
 <include file="$headerPath"/>
+<style>
+    #footButton{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        background: #ff6091;
+        clear:both;
+        color:white;
+    }
+</style>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <img src="__ADDONS__/images/11-23.png" alt="" style="width:100%">
     </div>
 </nav>
-<div class="container">
-
+<div  style="text-align:center;">
+    <p>菜单</p>
+   {$shopGoods['content']}
 </div>
-
-<div class="navbar-fixed-bottom">
-    <button class="btn btn-large btn-block btn-success" type="button" onclick="addition()">立即预约(剩余：10位)</button>
-</div>
-
-
-
+    <button  type="button" onclick="{$shopGoods['seats'] > 0 ? 'addition()'  : ''}"  id="footButton" style="background:{$shopGoods['seats'] > 0 ? '#ff6091' : 'gray'}">{$shopGoods['seats'] > 0 ? '立即预约(剩余：10位)' : '没有更多座位了' }</button>
 <include file="$footerPath"/>
+
+<script>
+    function addition(){
+        window.location.href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'pageSubmit' ))}";
+    }
+</script>

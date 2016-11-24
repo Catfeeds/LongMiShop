@@ -30,7 +30,7 @@
     <ul class="mui-table-view">
         <volist name="shopList" id="shopItem">
             <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;">
+                <a href="javascript:;" onclick="chooseShop(this)" data-id="{$shopItem['id']}" data-name="{$shopItem['shop_name']}">
                     <img class="mui-media-object mui-pull-left" src="{$shopItem['icon']}">
                     <div class="mui-media-body" style="text-align: left;">
                         <p class='mui-ellipsis'>
@@ -56,10 +56,13 @@
         </div>
 
     </div>
+    <form method="post" action="{: U('Mobile/Addons/lunchFeast')}" id="refForm">
     <div class="my_nav" style="margin-top: 0px;border-top-width: 1px;border-top-style: solid;border-top-color: #E3E3E3;">
         <ul>
             <li>
-                <a href="#address">{$shopList.0.shop_name}</a>
+                <a href="#address" id="chooseName" >{$shopList.0.shop_name}</a>
+                <input name="shopId" id="shop_id" value="{$shopList.0.id}" type="hidden">
+                <input type="hidden" name="pluginName" value="foods">
             </li>
         </ul>
     </div>
@@ -68,7 +71,7 @@
     </div>
     <div class="my33">
         <div id="ajaxShopMealList">
-            <select>
+            <select name="date">
                 <foreach item="shopMealItem" name="shopMealList">
                     <option value="{$shopMealItem['date']}">{$shopMealItem['date']|date="Y-m-d",###}</option>
                 </foreach>
@@ -89,7 +92,7 @@
         <div class="cp2_titel">进餐时间</div>
     </div>
     <div class="my33">
-        <select>
+        <select name="mealId">
             <foreach item="mealItem" name="mealList">
                 <option value="{$mealItem['id']}">{$mealItem['name']}</option>
             </foreach>
@@ -108,6 +111,7 @@
     <div class="m33_btn nav_d" id="next1">
         <a href="javascript:void(0);"  onclick="newSubmit();">查看当日菜品</a>
     </div>
+    </form>
 </div>
 
 
@@ -124,7 +128,7 @@
         get_goods_price();
     }
     function newSubmit(){
-
+        $('#refForm').submit();
     }
     $(function(){
         $("#closeBuy").click(function(){
@@ -135,5 +139,14 @@
             mui('#buy').popover('toggle');
         });
     });
+
+    //选择用餐地点
+    function chooseShop(obj){
+        var name = $(obj).data('name');
+        var id = $(obj).data('id');
+        $('#chooseName').text(name);
+        $('#shop_id').val(id);
+        $("#closeAddress").trigger("click");
+    }
 </script>
 <include file="$footerPath"/>
