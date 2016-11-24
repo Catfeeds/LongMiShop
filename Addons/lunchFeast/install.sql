@@ -72,6 +72,7 @@ CREATE TABLE `lm_addons_lunchfeast_diningper` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `lm_addons_lunchfeast_config`;
 CREATE TABLE `lm_addons_lunchfeast_config` (
   `main` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -79,6 +80,7 @@ CREATE TABLE `lm_addons_lunchfeast_config` (
 
 
 
+DROP TABLE IF EXISTS `lm_addons_lunchfeast_order`;
 CREATE TABLE `lm_addons_lunchfeast_order` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL COMMENT '用户id',
@@ -96,6 +98,7 @@ CREATE TABLE `lm_addons_lunchfeast_order` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `lm_addons_lunchfeast_order_user`;
 CREATE TABLE `lm_addons_lunchfeast_order_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `order_id` int(11) DEFAULT NULL COMMENT '订单id',
@@ -103,6 +106,7 @@ CREATE TABLE `lm_addons_lunchfeast_order_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+;
 ALTER TABLE `lm_addons_lunchfeast_order`
 ADD COLUMN `number`  int(11) NULL COMMENT '人数' AFTER `mealContent`;
 
@@ -110,7 +114,7 @@ ALTER TABLE `lm_addons_lunchfeast_order`
 CHANGE COLUMN `mealContent` `meal_content`  text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '菜品' AFTER `shop_id`;
 
 ALTER TABLE `lm_addons_lunchfeast_order`
-MODIFY COLUMN `order_sn`  varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单编号' AFTER `user_id`;
+ADD COLUMN `order_sn`  varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单编号' AFTER `user_id`;
 
 ALTER TABLE `lm_addons_lunchfeast_order_user`
 ADD COLUMN `code`  varchar(30) NULL COMMENT '编号' AFTER `id`;
