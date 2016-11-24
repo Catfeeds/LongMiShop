@@ -30,6 +30,30 @@ function addonsPayNotify( $orderSn , $data ){
         }
     }
 }
+
+/**
+ * 获取支付数据
+ * @param $orderId
+ * @return array
+ */
+function addonsPayData( $orderId ){
+    $id = $orderId;
+    $payData = array(
+        "order" => "",
+        "goUrl" => "",
+        "backUrl" => "",
+        "notifyUrl" => "",
+    );
+    if( $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')) {
+        $payData['order'] = $order = findDataWithCondition(TB_ORDER, array("id" => $id));
+        if (!empty($order)) {
+            $payData['goUrl'] = U('Mobile/Addons/lunchFeast', array("pluginName" => "results"));
+            $payData['backUrl'] = U('Mobile/Addons/lunchFeast');
+            $payData['notifyUrl'] = U('Api/Addons/lunchFeast', array("pluginName" => "notifyUrl"));
+        }
+    }
+    return $payData;
+}
 /**
  * 用餐人置空
  */
