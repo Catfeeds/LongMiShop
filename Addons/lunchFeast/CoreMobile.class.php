@@ -31,6 +31,7 @@ class lunchFeastMobileController
             return addonsError( "还没设置时间" );
         }
 
+        $this -> assignData['regionList'] = get_region_list();
         $this -> assignData["shopList"] = $shopList;
         $this -> assignData["mealList"] = $mealList;
         $this -> assignData["shopMealList"] = getShopMealList( $shopList[0]["id"] , $mealList[0]["id"]);
