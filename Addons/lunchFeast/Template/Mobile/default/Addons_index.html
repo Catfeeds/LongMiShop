@@ -20,8 +20,36 @@
         </li>
     </ul>
 </div>
-<!--<div id="buy" class="mui-popover mui-popover-action mui-popover-bottom" style="height:100%;">-->
-<div id="buy" class="mui-popover mui-popover-action mui-popover-bottom mui-active" style="height:100%;display: block;">
+<div id="address" class="mui-popover mui-popover-bottom mui-popover-action" style="height:100%;background-color: #FFF;">
+    <div class="m33">
+        <div class="cp2_titel">用餐地点
+            <div class="titel_box_r" id="closeAddress" >关闭</div>
+        </div>
+
+    </div>
+    <ul class="mui-table-view">
+        <volist name="shopList" id="shopItem">
+            <li class="mui-table-view-cell mui-media">
+                <a href="javascript:;">
+                    <img class="mui-media-object mui-pull-left" src="{$shopItem['icon']}">
+                    <div class="mui-media-body" style="text-align: left;">
+                        <p class='mui-ellipsis'>
+                            {$shopItem['shop_name']}
+                        </p>
+                        <p class='mui-ellipsis'>
+                            {$regionList[$shopItem['province']]['name']}
+                            {$regionList[$shopItem['city']]['name']}
+                            {$regionList[$shopItem['district']]['name']}
+                            {$shopItem['address']}
+                        </p>
+                    </div>
+                </a>
+            </li>
+        </volist>
+    </ul>
+</div>
+<div id="buy" class="mui-popover mui-popover-action mui-popover-bottom" style="height:100%;background-color: #FFF;">
+<!--<div id="buy" class="mui-popover mui-popover-action mui-popover-bottom mui-active" style="height:100%;display: block;background-color: #FFF;">-->
     <div class="m33">
         <div class="cp2_titel">用餐地点
             <div class="titel_box_r" id="closeBuy" >关闭</div>
@@ -31,7 +59,7 @@
     <div class="my_nav" style="margin-top: 0px;border-top-width: 1px;border-top-style: solid;border-top-color: #E3E3E3;">
         <ul>
             <li>
-                <a>{$shopList.0.shop_name}</a>
+                <a href="#address">{$shopList.0.shop_name}</a>
             </li>
         </ul>
     </div>
@@ -40,34 +68,45 @@
     </div>
     <div class="my33">
         <div id="ajaxShopMealList">
-            
-            <ul >
+            <select>
                 <foreach item="shopMealItem" name="shopMealList">
-                    <li onclick="switch_spec(this);">
-                        <p>
-                            <a href="javascript:;" >{$shopMealItem['date']|date="Y-m-d",###}</a>
-                        </p>
-                        <!--<input type="radio" style="display:none;" name="" value="{$mealItem['id']}" />-->
-                    </li>
+                    <option value="{$shopMealItem['date']}">{$shopMealItem['date']|date="Y-m-d",###}</option>
                 </foreach>
-            </ul>
+            </select>
+            <!--<ul >-->
+            <!--<foreach item="shopMealItem" name="shopMealList">-->
+            <!--<li onclick="switch_spec(this);">-->
+            <!--<p>-->
+            <!--<a href="javascript:;" >{$shopMealItem['date']|date="Y-m-d",###}</a>-->
+            <!--</p>-->
+            <!--&lt;!&ndash;<input type="radio" style="display:none;" name="" value="{$mealItem['id']}" />&ndash;&gt;-->
+            <!--</li>-->
+            <!--</foreach>-->
+            <!--</ul>-->
         </div>
     </div>
     <div class="m33">
         <div class="cp2_titel">进餐时间</div>
-        <ul>
+    </div>
+    <div class="my33">
+        <select>
             <foreach item="mealItem" name="mealList">
-                <li onclick="switch_spec(this);">
-                    <p>
-                        <a href="javascript:;"  title="{$mealItem['name']}" >{$mealItem['name']}</a>
-                    </p>
-                    <input type="radio" style="display:none;" name="" value="{$mealItem['id']}" />
-                </li>
+                <option value="{$mealItem['id']}">{$mealItem['name']}</option>
             </foreach>
-        </ul>
-        <div class="m33_btn" id="next1">
-            <a href="javascript:void(0);"  onclick="newSubmit();">查看当日菜品</a>
-        </div>
+        </select>
+        <!--<ul>-->
+            <!--<foreach item="mealItem" name="mealList">-->
+                <!--<li onclick="switch_spec(this);">-->
+                    <!--<p>-->
+                        <!--<a href="javascript:;"  title="{$mealItem['name']}" >{$mealItem['name']}</a>-->
+                    <!--</p>-->
+                    <!--<input type="radio" style="display:none;" name="" value="{$mealItem['id']}" />-->
+                <!--</li>-->
+            <!--</foreach>-->
+        <!--</ul>-->
+    </div>
+    <div class="m33_btn nav_d" id="next1">
+        <a href="javascript:void(0);"  onclick="newSubmit();">查看当日菜品</a>
     </div>
 </div>
 
@@ -89,8 +128,11 @@
     }
     $(function(){
         $("#closeBuy").click(function(){
-            $("#buy").removeClass("mui-active");
-            $(".mui-backdrop").remove();
+            mui('#buy').popover('toggle');
+        });
+        $("#closeAddress").click(function(){
+            mui('#address').popover('toggle');
+            mui('#buy').popover('toggle');
         });
     });
 </script>
