@@ -1,0 +1,89 @@
+
+        <!--新订单列表 基本信息-->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">订单基本信息</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td>订单 ID:</td>
+                        <td>订单号:</td>
+                        <td>会员昵称:</td>
+                        <td>总价:</td>
+                        <td>实际支付金额:</td>
+                        <td>折扣金额:</td>
+                        <td>订单 状态:</td>
+                        <td>下单时间:</td>
+                        <td>支付时间:</td>
+                        <td>就餐时间:</td>
+                        <td>就餐店铺:</td>
+                        <td>饭点:</td>
+                    </tr>
+                    <tr>
+                        <td>{$details.id}</td>
+                        <td>{$details.order_sn}</td>
+                        <td>{$details.nickname}</td>
+                        <td>{$details.order_amount}</td>
+                        <td>{$details.pay_amount}</td>
+                        <td>{$details.coupon_price}</td>
+                        <td>
+                            <if condition="$details['status'] eq 0">
+                                未支付
+                            <elseif condition="$details['status'] eq 1" />
+                                已支付
+                            <else />
+                                已使用
+                            </if>
+                        </td>
+                    	<td>{$details.create_time|date='Y-m-d H:i',###}</td>
+                    	<td><if condition="$order.pay_time neq 0">
+                                {$details.pay_time|date='Y-m-d H:i',###}
+                         <else/>
+                            N
+                         </if>
+                        </td>             
+                        <td >
+                            {$details.date|date='Y-m-d H:i',###}
+                        </td>
+                        <td >{$details.shopName}</td>
+                        <td >{$details.meal}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--新订单列表 费用信息-->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">用餐人信息
+                    <!--<a class="btn btn-primary btn-xs" data-original-title="修改费用" title="" data-toggle="tooltip" href="{:U('Admin/Order/editprice',array('order_id'=>$order['order_id']))}">-->
+                        <!--<i class="fa fa-pencil"></i>-->
+                    <!--</a>-->
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td class="text-right">名字:</td>
+                        <td class="text-right">电话:</td>
+                    </tr>
+                    <volist name="details['perList']" id="perList">
+                        <tr>
+                            <td class="text-right">{$perList.names}</td>
+                            <td class="text-right">{$perList.mobile}</td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+
+
