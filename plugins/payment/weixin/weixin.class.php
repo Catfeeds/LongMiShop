@@ -95,8 +95,8 @@ class weixin extends RelationModel
             $input->SetAttach($attach);
         }
         $input->SetOpenid($openId);
-        setLogResult( $input , "微信支付input" , "payment" );
         $order2 = WxPayApi::unifiedOrder($input);
+        setLogResult( $order2 , "微信支付input" , "payment" );
         //echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
         //printf_info($order);exit;
         $jsApiParameters = $tools->GetJsApiParameters($order2);
