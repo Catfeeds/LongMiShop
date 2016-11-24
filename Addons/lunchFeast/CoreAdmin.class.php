@@ -1,6 +1,6 @@
 <?php
-
 include_once "/Function/base.php";
+use Think\AjaxPage;
 class lunchFeastAdminController
 {
 
@@ -194,7 +194,7 @@ class lunchFeastAdminController
             );
             exit(json_encode($return_arr));
         }
-        $mealList = getMealList();
+        $mealList = selectDataWithCondition( TB_MEAL , array( "is_show" => 1 , "is_delete" => "0" ) );
         $shopGoods = selectDataWithCondition( TB_GOODS , array( "shop_id" => $shopId ) );
         $goodsList = array();
         if( !empty( $shopGoods ) ){
@@ -210,9 +210,36 @@ class lunchFeastAdminController
         return $this -> assignData;
     }
 
+    //订单列表
     public function orderList(){
-        $List = M('addons_lunchfeast_order')->order('create_time DESC')->select();
+        $count = M('addons_lunchfeast_order')->count();
+        $Page  = new AjaxPage($count,10);
+        $List = M('addons_lunchfeast_order')->limit($Page->firstRow.','.$Page->listRows)->order('create_time DESC')->select();
+        $mealList = selectMealList();
+        $shopList = selectShopList();
+        foreach($List as $key=>$item){
+            $List[$key]['meal'] = $mealList[$item['meal_id']];
+            $List[$key]['shopName'] = $shopList[$item['shop_id']];
+        }
+        $this -> assignData['page'] = $Page -> show();
         $this -> assignData['List'] = $List;
+        return $this -> assignData;
+    }
+    //订单详情
+    public function orderDetails(){
+        $id = I('id');
+        $mealList = selectMealList();
+        $shopList = selectShopList();
+        $details = M('addons_lunchfeast_order')->where(array('id'=>$id))->find();
+        $details['meal'] = $mealList[$details['meal_id']];
+        $details['shopName'] = $shopList[$details['shop_id']];
+        $userList = M('addons_lunchfeast_order_user')->where(array('order_id'=>$id))->select();
+        $nickname = M('users')->field('nickname')->where(array('user_id'=>$details['user_id']))->find();
+        $details['nickname'] = $nickname['nickname'];
+        foreach($userList as $key=>$item){
+            $details['perList'][$key] = M('addons_lunchfeast_diningper')->where(array('id'=>$item['diningper_id']))->find();
+        }
+        $this -> assignData['details'] = $details;
         return $this -> assignData;
     }
     public function orderDetail(){

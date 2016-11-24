@@ -1,72 +1,106 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<meta charset="utf-8">-->
+    <!--<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
+    <!--<title>购物车</title>-->
+    <!--<script src="__STATIC__/js/mui.min.js"></script>-->
+    <!--<script src="__STATIC__/js/TouchSlide.js"></script>-->
+    <!--<script src="__STATIC__/js/jquery.min.js"></script>-->
+    <!--<script src="__STATIC__/js/function.js"></script>-->
+    <!--<link href="__STATIC__/css/css.css?42368" rel="stylesheet" />-->
+    <!--<link href="__STATIC__/css/mui.min.css" rel="stylesheet" />-->
+    <!--<link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />-->
+    <!--<script src="__STATIC__/js/common.js"></script>-->
+<!--</head>-->
+<!--<body style=" background-color:#f5f5f5">-->
 <include file="$headerPath"/>
+<link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
+<!--<div class="top_box3">-->
+    <!--&lt;!&ndash;<div class="edit"><a href="#">编辑</a></div>&ndash;&gt;-->
+    <!--<include file="Public/news"/>-->
+<!--</div>-->
+<form id="cart_form" name="formCart" action="{:U('Mobile/Cart/ajaxCartList')}" method="post">
 
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+        ajax_cart_list(); // ajax 请求获取购物车列表
+    });
 
-<div class=".navbar-fixed-top">
-    <button type="button" class="btn btn-info" onclick='location.href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'addAMeal' ))}"'>添加新用餐人</button>
-</div>
-<div class="container">
-    <table class="table ">
-        <tr class="error">
-            <td>#</td>
-            <td>用餐人</td>
-            <td>手机号码</td>
-            <td>选择</td>
-        </tr>
-        <!--<form action="{:U('Mobile/Addons/lunchFeast')}" method="post" id="Perform">-->
-        <volist name="list"  key="key" id="item">
-            <tr >
-                <td>{$key}</td>
-                <td>{$item.names}</td>
-                <td>{$item.mobile}</td>
-                <td><div class="checkbox"><input type="checkbox" name="pitchOn" value="{$item.id}"></div></td>
-            </tr>
-        </volist>
-            <!--<input type="hidden" name="pluginName" value="pageSubmit">-->
-        <!--</form>-->
-    </table>
-</div>
+    // ajax 提交购物车
+    var before_request = 1; // 上一次请求是否已经有返回来, 有才可以进行下一次请求
+    function ajax_cart_list(){
 
-<div class="navbar navbar-default navbar-fixed-bottom">
-    <button class="btn btn-large btn-block btn-primary" type="button" onclick="addition()">确定添加</button>
-</div>
-
-<include file="$footerPath"/>
-
-<script>
-    var controls = true
-    function addition(){
-        var chk_value =[];
-        $('input[name="pitchOn"]:checked').each(function(){
-            chk_value.push($(this).val());
-        });
-        if(chk_value.length == 0){
-            alert('请选择用餐人');
+        if(before_request == 0) // 上一次请求没回来 不进行下一次请求
             return false;
-        }
-//        $('#Perform').submit();
+        before_request = 0;
 
-        ;
-        if(controls){
-            controls = false;
-            $.ajax({
-                type : 'post',
-                url : "{: U('Mobile/Addons/lunchFeast')}",
-                data : {pluginName:'aMeal',list:chk_value},
-                dataType : 'json',
-                success : function(res){
-                    controls = true;
-                    if(res.state == '1'){
-                        window.location.href = "{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'pageSubmit' ))}";
-                    }else{
-                        alert(res.msg);
-                    }
-                },
-                error : function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert('网络失败，请刷新页面后重试');
-                }
-            })
+        var ajaxData=  $('#cart_form').serialize();
+        var html = '<div class="mui-loading" style=" text-align:center"><img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important"></div>';
+        $("#cart_form").html(html);
+        $.ajax({
+            type : "POST",
+            url:"{:U('Mobile/Cart/ajaxCartList')}",//+tab,
+            data : ajaxData,// 你的formid
+            success: function(data){
+                $("#cart_form").html('');
+                $("#cart_form").append(data);
+//                imgErrorEvent();
+                before_request = 1;
+            }
+        });
+    }
+
+    /**
+     * 购买商品数量加加减减
+     * 购买数量 , 购物车id , 库存数量
+     */
+    function switch_num(num,cart_id,store_count)
+    {
+        var num2 = parseInt($("input[name='goods_num["+cart_id+"]']").val());
+        num2 += num;
+        if(num2 < 1) num2 = 1; // 保证购买数量不能少于 1
+        if(num2 > store_count)
+        {   alert("库存只有 "+store_count+" 件, 你只能买 "+store_count+" 件");
+            num2 = store_count; // 保证购买数量不能多余库存数量
         }
 
+        $("input[name='goods_num["+cart_id+"]']").val(num2);
+
+        ajax_cart_list(); // ajax 更新商品价格 和数量
+    }
+
+    // ajax 删除购物车的商品
+    function ajax_del_cart(ids)
+    {
+        $.ajax({
+            type : "POST",
+            url:"{:U('Mobile/Cart/ajaxDelCart')}",
+            data:{ids:ids},
+            dataType:'json',
+            success: function(data){
+                alert(data.msg);
+                ajax_cart_list(); //ajax 请求获取购物车列表
+            }
+        });
+    }
+
+    // 批量删除购物车的商品
+    function del_cart_more()
+    {
+//        if(!confirm('确定要删除吗?'))return false;
+        // 循环获取复选框选中的值
+        var chk_value = [];
+        $('input[name^="cart_select"]:checked').each(function(){
+            var s_name = $(this).attr('name');
+            var id = s_name.replace('cart_select[','').replace(']','');
+            chk_value.push(id);
+        });
+        // ajax调用删除
+        if(chk_value.length > 0)
+            ajax_del_cart(chk_value.join(','));
     }
 </script>
 
+<include file="$footerPath"/>
