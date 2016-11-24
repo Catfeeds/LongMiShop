@@ -105,9 +105,7 @@ class lunchFeastMobileController
         }
         $orderInfo["userList"] = selectDataWithCondition( TB_ORDER_USER , array( "order_id" => $id));
         foreach ( $orderInfo["userList"] as $userKey => $userItem){
-            $userItem[$userKey]["userInfo"] = findDataWithCondition( "addons_lunchfeast_diningper" , array( "user_id" => $this -> userInfo['user_id'] , "id" => $userItem["diningper_id"]));
-
-
+            $orderInfo["userList"][$userKey]["userInfo"] = findDataWithCondition( "addons_lunchfeast_diningper" , array( "uid" => $this -> userInfo['user_id'] , "id" => $userItem["diningper_id"]));
         }
         $this->assignData['orderInfo'] = $orderInfo;
         return $this->assignData;
