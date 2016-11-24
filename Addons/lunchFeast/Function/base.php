@@ -1,6 +1,12 @@
 <?php
 
 /**
+ * @param $orderSn
+ */
+function addonsPayNotify( $orderSn ){
+    setLogResult( $orderSn , "支付" , "test");
+}
+/**
  * 用餐人置空
  */
 function setPitchon($userId){
