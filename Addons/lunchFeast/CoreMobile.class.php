@@ -148,16 +148,28 @@ class lunchFeastMobileController
             $data = I('post.');
             unset($data['pluginName']);
             $where["id"] = array('in',$data['list']);
+            setPitchon($this -> userInfo['user_id']);
             $res[] = M('addons_lunchfeast_diningper')->where($where)->save(array('pitchon'=>1));
             if($res >= 1){
                 exit(json_encode(callback(true)));
             }
             exit(json_encode(callback(false)));
         }
-        $list = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>0))->order('add_time DESC')->select();
+        $list = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'show'=>'1'))->order('add_time DESC')->select();
         $this->assignData['list'] = $list;
         return $this->assignData;
     }
+
+    //删除用餐人
+    public function ajaxDelMeal(){
+        $id = I('ids');
+        $res = M('addons_lunchfeast_diningper')->where(array('id'=>$id))->save(array('show'=>0));
+        if($res){
+            exit(json_encode(callback(true)));
+        }
+        exit(json_encode(callback(false,'删除失败')));
+    }
+
     //新增用餐人
     public function addAMeal()
     {
