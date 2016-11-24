@@ -41,8 +41,8 @@ CREATE TABLE `lm_addons_lunchfeast_meal_list` (
 -- ----------------------------
 -- Records of lm_addons_lunchfeast_meal_list
 -- ----------------------------
-INSERT INTO `lm_addons_lunchfeast_meal_list` VALUES ('1', '午餐', '1', '0');
-INSERT INTO `lm_addons_lunchfeast_meal_list` VALUES ('2', '晚餐', '0', '0');
+INSERT INTO `lm_addons_lunchfeast_meal_list` VALUES ('1', '中午', '1', '0');
+INSERT INTO `lm_addons_lunchfeast_meal_list` VALUES ('2', '晚上', '0', '0');
 
 
 -- ----------------------------
