@@ -12,6 +12,16 @@ function is_supplier(){
     }
     return false;
 }
+/**
+ * 是否为插件管理员
+ * @return bool
+ */
+function is_pluginManager(){
+    if(session('admin_role_id') == 4){
+        return true;
+    }
+    return false;
+}
 
 
 /**

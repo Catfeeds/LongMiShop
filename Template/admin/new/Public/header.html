@@ -38,16 +38,16 @@
                             <!--</a>-->
 
                             <!--<a href="{:U('Admin/Admin/admin_info');}"  target="RightMain">-->
-                                <!--<li style="background-image:url(__STATIC__/SVG/a-11.svg)">设置</li>-->
+                            <!--<li style="background-image:url(__STATIC__/SVG/a-11.svg)">设置</li>-->
                             <!--</a>-->
                             <!--<a href="{:U('Admin/Admin/logout');}"  target="RightMain">-->
                             <!--<li style="background-image:url(__STATIC__/SVG/a-11.svg)">账号</li>-->
                             <!--</a>-->
-                            <if condition="!is_supplier()">
-                            <a href="{:U('Admin/System/cleanCache');}"  target="RightMain">
-                                <li style="background-image:url(__STATIC__/SVG/a-12.svg)">清理</li>
-                            </a>
-                             </if>
+                            <if condition="!is_supplier() and !is_pluginManager()">
+                                <a href="{:U('Admin/System/cleanCache');}"  target="RightMain">
+                                    <li style="background-image:url(__STATIC__/SVG/a-12.svg)">清理</li>
+                                </a>
+                            </if>
                             <a href="{:U('Admin/Admin/logout');}">
                                 <li style="background-image:url(__STATIC__/SVG/a-13.svg)">登出</li>
                             </a>
@@ -61,7 +61,7 @@
                 <ul class="m33">
                     <div class="titel">{$vo.title}</div>
                     <foreach name="vo.subMenu" item="vv" key="kk">
-                        <a href="{:U('Admin/'.$vv['ctl'].'/'.$vv['act'])}" target="RightMain"><li>{$vv.title}</li></a>
+                        <a href="{:$vv['url']?$vv['url']:U('Admin/'.$vv['ctl'].'/'.$vv['act'])}" target="RightMain"><li>{$vv.title}</li></a>
                     </foreach>
                 </ul>
             </foreach>
