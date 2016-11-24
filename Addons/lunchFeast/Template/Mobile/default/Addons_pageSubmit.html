@@ -1,42 +1,89 @@
 <include file="$headerPath"/>
-<div class="container">
-    <div class="thumbnail">
-        用餐信息，注意事项显示区
-    </div>
-    <table class="table ">
-        <tr class="info">
-            <td>用餐人:</td>
-            <td>操作</td>
-        </tr>
-        <volist name="list" id="item">
-            <td>{$item.names}</td>
-            <td><span onclick="delPer(this)" data-id="{$item['id']}">移除</span></td>
-            </tr>
-        </volist>
-        <tr >
-            <td><button type="button" class="btn btn-info" onclick="addper()">添加用餐人</button></td>
-        </tr>
-    </table>
+<link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
+
+<img src="__ADDONS__/images/11-24.png" alt="" style="width:100%;margin:10px 0;">
+
+<div class="mui-content">
+    <ul class="mui-table-view">
+        <foreach name="list" item="v" key="k" >
+            <li class="mui-table-view-cell">
+                <div class="mui-slider-right mui-disabled">
+                    <a onclick="ajax_del_cart(this)" data-ids="{$v.id}" class="mui-btn mui-btn-red">删除</a>
+                </div>
+                <div class="mui-slider-handle">
+                    <div class="cp7" style="padding-top:0px;padding-bottom:0px;">
+                        <div class="cp1_r" style="padding-left:0;">
+                            <p >名字：<span style="display: inline-block;float:none;width:63px;">{$v.names}</span>   电话：{$v.mobile}</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </foreach>
+    </ul>
+    <div class="empty_btn" style="float: right;margin:8px 5px 0 0;"><a href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'aMeal' ))}">添加用餐人</a></div>
 </div>
-<include file="$footerPath"/>
-<script>
-    function addper(){
-        window.location.href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'aMeal' ))}";
-    }
+
+
+
+        <div style="height:100px"></div>
+        <div class="foot" id="foot" style="margin-bottom:0px;">
+            <div class="fr closing">
+                <a  onclick="" style="color:#FFF">微信安全支付</a>
+            </div>
+            <div class="fr total">
+                预定总金额:￥<span id="cart_amount_desc">111</span>
+            </div>
+        </div>
+
+
+
+<script type="text/javascript">
     var controls = true;
-    function delPer(obj){
-        var id = $(obj).data('id');
+    // ajax 删除联系人
+    function ajax_del_cart(obj)
+    {
+        var ids = $(obj).data('ids');
         if(controls){
             controls = false;
             $.ajax({
+                type : "POST",
+                url:"{:U('Mobile/Addons/lunchFeast')}",
+                data:{pluginName:'ajaxDelMeal',ids:ids},
+                dataType:'json',
+                success: function(data){
+                    controls = true;
+                    if(data.state == '1'){
+                        $(obj).parent().parent().remove();
+                    }else{
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+    }
+
+    var controlss = true;
+    function addition(){
+        var chk_value =[];
+        $('input[name="cart_select"]:checked').each(function(){
+            chk_value.push($(this).val());
+        });
+        if(chk_value.length == 0){
+            alert('请选择用餐人');
+            return false;
+        }
+        if(controlss){
+            controlss = false;
+            $.ajax({
                 type : 'post',
                 url : "{: U('Mobile/Addons/lunchFeast')}",
-                data : {pluginName:'removePer',delPerId:id},
+                data : {pluginName:'aMeal',list:chk_value},
                 dataType : 'json',
                 success : function(res){
-                    controls = true;
+                    controlss = true;
+                    console.log(res);return false;
                     if(res.state == '1'){
-                        $(obj).parent().parent().remove();
+                        window.location.href = "{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'pageSubmit' ))}";
                     }else{
                         alert(res.msg);
                     }
@@ -46,5 +93,9 @@
                 }
             })
         }
+
     }
+
+
 </script>
+<include file="$footerPath"/>

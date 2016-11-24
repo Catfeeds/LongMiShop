@@ -195,6 +195,13 @@ class lunchFeastMobileController
     //结果页
     public function results()
     {
+        $id = 1;
+        $results = M('addons_lunchfeast_order')->where(array('id'=>$id))->find();
+        $mealList = selectMealList();
+        $shopList = M('addons_lunchfeast_shop')->where(array('id'=>$results['shop_id']))->find();
+        $results['meal'] = date('Y-m-d',$results['date']).' '.$mealList[$results['meal_id']];
+        $results['shopName'] = $shopList['shop_name'];
+        $this->assignData['results'] = $results;
         return $this->assignData;
     }
 }

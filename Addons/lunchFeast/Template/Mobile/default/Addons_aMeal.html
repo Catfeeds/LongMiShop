@@ -2,9 +2,8 @@
 <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
 
     <empty name ="list">
-        <div class="empty"><img src="__STATIC__/SVG/d5.svg?42368"></div>
-        <div class="empty_txt" style="color: #b2b2b2;">购物车空空如也~</div>
-        <div class="empty_btn"><a href="{:U('Index/index')}">去逛逛</a></div>
+        <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
+        <div class="empty_txt" style="color: #b2b2b2;">没有用餐人信息~</div>
         <else/>
         <div class="mui-content">
             <ul class="mui-table-view">
@@ -34,23 +33,7 @@
         </div>
 
 
-        <div style="height:100px"></div>
-        <div class="foot" id="foot" style="margin-bottom:0px;">
-            <label class="fl select-all" style="width:100px !important">
-            <span class="mui-input-row mui-checkbox mui-left" >
-                <input type="checkbox" class="check-all check-one check checked_longmi"   id="quanxuan" style="margin-top:-6px" onclick="chkAll_onclick()">
-            </span>
-                <span style="margin-left:50px">全选</span>
-            </label>
-            <div class="fr closing">
-                <a  onclick="return addition();" style="color:#FFF">选择用餐人</a>
 
-            </div>
-            <div class="fr closing" style="margin-right:15px">
-                <a  href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'addAMeal' ))}" style="color:#FFF">添加用餐人</a>
-            </div>
-
-        </div>
 
         <script type="text/javascript">
             $(".check-wrapper .cart-checkbox").click(function(){
@@ -105,6 +88,26 @@
         </script>
     </empty>
 
+    <div style="height:100px"></div>
+    <div class="foot" id="foot" style="margin-bottom:0px;">
+        <notempty name ="list">
+            <label class="fl select-all" style="width:100px !important">
+                    <span class="mui-input-row mui-checkbox mui-left" >
+                        <input type="checkbox" class="check-all check-one check checked_longmi"   id="quanxuan" style="margin-top:-6px" onclick="chkAll_onclick()">
+                    </span>
+                <span style="margin-left:50px">全选</span>
+            </label>
+        </notempty>
+        <div class="fr closing">
+            <a  onclick="return addition();" style="color:#FFF">选择用餐人</a>
+
+        </div>
+        <div class="fr closing" style="margin-right:15px">
+            <a  href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'addAMeal' ))}" style="color:#FFF">去添加</a>
+        </div>
+
+    </div>
+
 <script type="text/javascript">
     var controls = true;
     // ajax 删除联系人
@@ -148,8 +151,6 @@
                 data : {pluginName:'aMeal',list:chk_value},
                 dataType : 'json',
                 success : function(res){
-                    controlss = true;
-                    console.log(res);return false;
                     if(res.state == '1'){
                         window.location.href = "{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'pageSubmit' ))}";
                     }else{
