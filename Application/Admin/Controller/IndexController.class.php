@@ -14,7 +14,7 @@ class IndexController extends BaseController {
 		$this -> assign('admin_info',$admin_info);
         $this -> display();
     }
-   
+
     public function welcome(){
         $where = "1 = 1";
         $whereOrder = "";
@@ -104,13 +104,13 @@ class IndexController extends BaseController {
     	$this -> assign('all_menu',$all_menu);
     	$this -> display();
     }
-    
+
     public function get_sys_info(){
 		$sys_info['os']             = PHP_OS;
 		$sys_info['zlib']           = function_exists('gzclose') ? 'YES' : 'NO';//zlib
-		$sys_info['safe_mode']      = (boolean) ini_get('safe_mode') ? 'YES' : 'NO';//safe_mode = Off		
+		$sys_info['safe_mode']      = (boolean) ini_get('safe_mode') ? 'YES' : 'NO';//safe_mode = Off
 		$sys_info['timezone']       = function_exists("date_default_timezone_get") ? date_default_timezone_get() : "no_timezone";
-		$sys_info['curl']			= function_exists('curl_init') ? 'YES' : 'NO';	
+		$sys_info['curl']			= function_exists('curl_init') ? 'YES' : 'NO';
 		$sys_info['web_server']     = $_SERVER['SERVER_SOFTWARE'];
 		$sys_info['phpv']           = phpversion();
 		$sys_info['ip'] 			= GetHostByName($_SERVER['SERVER_NAME']);
@@ -118,7 +118,7 @@ class IndexController extends BaseController {
 		$sys_info['max_ex_time'] 	= @ini_get("max_execution_time").'s'; //脚本最大执行时间
 		$sys_info['set_time_limit'] = function_exists("set_time_limit") ? true : false;
 		$sys_info['domain'] 		= $_SERVER['HTTP_HOST'];
-		$sys_info['memory_limit']   = ini_get('memory_limit');		
+		$sys_info['memory_limit']   = ini_get('memory_limit');
         $sys_info['version']   	    = file_get_contents('./Application/Admin/Conf/version.txt');
 		$mysqlinfo = M()->query("SELECT VERSION() as version");
 		$sys_info['mysql_version']  = $mysqlinfo['version'];
@@ -130,13 +130,13 @@ class IndexController extends BaseController {
 		}
 		return $sys_info;
     }
-    
-    
+
+
     public function pushVersion()
-    {            
+    {
         if(!empty($_SESSION['isset_push']))
-            return false;    
-        $_SESSION['isset_push'] = 1;    
+            return false;
+        $_SESSION['isset_push'] = 1;
 //        error_reporting(0);//关闭所有错误报告
 //        $app_path = dirname($_SERVER['SCRIPT_FILENAME']).'/';
 //        $version_txt_path = $app_path.'/Application/Admin/Conf/version.txt';
@@ -153,8 +153,8 @@ class IndexController extends BaseController {
 //         stream_context_set_default(array('http' => array('timeout' => 3)));
 //         file_get_contents($url);
     }
-    
-    
+
+
     public function getRoleMenu($act_list)
     {
     	$modules = $roleMenu = array();
@@ -197,18 +197,18 @@ class IndexController extends BaseController {
 //        $roleMenu = $roleMenu['admin'];
     	return $roleMenu;
     }
-    
+
     /**
      * ajax 修改指定表数据字段  一般修改状态 比如 是否推荐 是否开启 等 图标切换的
      * table,id_name,id_value,field,value
      */
-    public function changeTableVal(){  
+    public function changeTableVal(){
             $table = I('table'); // 表名
             $id_name = I('id_name'); // 表主键id名
             $id_value = I('id_value'); // 表主键id值
             $field  = I('field'); // 修改哪个字段
-            $value  = I('value'); // 修改字段值                        
+            $value  = I('value'); // 修改字段值
             M($table) -> where("$id_name = $id_value")->save(array($field=>$value)); // 根据条件保存修改的数据
-    }	    
+    }
 
 }

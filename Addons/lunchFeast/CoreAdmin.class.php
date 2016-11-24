@@ -1,6 +1,5 @@
 <?php
-include_once "/Function/base.php";
-use Think\AjaxPage;
+
 class lunchFeastAdminController
 {
 
@@ -213,7 +212,7 @@ class lunchFeastAdminController
     //订单列表
     public function orderList(){
         $count = M('addons_lunchfeast_order')->count();
-        $Page  = new AjaxPage($count,10);
+        $Page  = new Think\AjaxPage($count,10);
         $List = M('addons_lunchfeast_order')->limit($Page->firstRow.','.$Page->listRows)->order('create_time DESC')->select();
         $mealList = selectMealList();
         $shopList = selectShopList();

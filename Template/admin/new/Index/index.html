@@ -1,5 +1,8 @@
 <include file="Public/header" />
 
-<iframe frameborder="0"  height="99%" src="{:U('Admin/Index/welcome')}" name="RightMain" id="RightMain"  style=" margin-left:190px;"></iframe>
-
+<if condition = "!is_pluginManager()">
+    <iframe frameborder="0"  height="99%" src="{:U('Admin/Index/welcome')}" name="RightMain" id="RightMain"  style=" margin-left:190px;"></iframe>
+    <else/>
+    <iframe frameborder="0"  height="99%" src="{:U('Admin/Addons/lunchFeast')}" name="RightMain" id="RightMain"  style=" margin-left:190px;"></iframe>
+</if>
 <include file="Public:footer" />
