@@ -157,6 +157,10 @@ class IndexController extends BaseController {
 
     public function getRoleMenu($act_list)
     {
+        if( is_pluginManager() ){
+            $roleMenu = include_once 'Application/Admin/Conf/addonsMenu.php';
+            return $roleMenu['lunchFeast'];
+        }
     	$modules = $roleMenu = array();
     	$rs = M('system_module') -> where('level>1 AND visible=1')->order('mod_id ASC') ->select();
 //dd($rs);
