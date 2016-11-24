@@ -6,6 +6,12 @@ class lunchFeastApiController
     public function __construct()
     {
     }
+
+
+    //主页
+    public function index(){
+        $this -> notifyUrl();
+    }
     //主页
     public function notifyUrl()
     {
