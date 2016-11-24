@@ -1,2 +1,126 @@
 <include file="$headerPath"/>
+
+<div class="mui-content">
+    <div id="slider" class="mui-slider">
+        <div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+            <a class="mui-control-item" href="#item1mobile"> 可使用 </a>
+            <a class="mui-control-item" href="#item2mobile"> 待付款 </a>
+            <a class="mui-control-item" href="#item3mobile"> 已使用/已过期 </a>
+        </div>
+        <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+        <div class="mui-slider-group">
+            <div id="item1mobile" class="mui-slider-item mui-control-content mui-active ">
+                <div id="scroll1" class="mui-scroll-wrapper">
+
+                    <div class="mui-scroll">
+                        <div class="mui-loading" style=" text-align:center">
+                            <img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="item2mobile" class="mui-slider-item mui-control-content ">
+                <div id="scroll2" class="mui-scroll-wrapper">
+
+                    <div class="mui-scroll">
+                        <div class="mui-loading" style=" text-align:center">
+                            <img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="item3mobile" class="mui-slider-item mui-control-content">
+                <div id="scroll3" class="mui-scroll-wrapper">
+
+                    <div class="mui-scroll">
+                        <div class="mui-loading" style=" text-align:center">
+                            <img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        var windowHeight = $(window).height();
+        windowHeight = windowHeight - 40;
+        $('.mui-control-content').css("height",windowHeight+"px");
+
+    });
+    mui.init({
+        swipeBack: false
+    });
+    (function($) {
+        $('.mui-scroll-wrapper').scroll({
+            indicators: true //是否显示滚动条
+        });
+
+        var item1 = document.getElementById('item1mobile');
+        var item2 = document.getElementById('item2mobile');
+        var item3 = document.getElementById('item3mobile');
+        document.getElementById('slider').addEventListener('slide', function(e) {
+            if (e.detail.slideNumber === 0) {
+                if (item1.querySelector('.mui-loading')) {
+                    ajax_sourch_submit(0, "item1mobile", true);
+                }
+            }
+            if (e.detail.slideNumber === 1) {
+                if (item2.querySelector('.mui-loading')) {
+                    ajax_sourch_submit(1, "item2mobile", true);
+                }
+            }
+            if (e.detail.slideNumber === 2) {
+                if (item3.querySelector('.mui-loading')) {
+                    ajax_sourch_submit(2, "item3mobile", true);
+                }
+            }
+        });
+        var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
+        $('.mui-input-group').on('change', 'input', function() {
+            if (this.checked) {
+                sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
+                //force repaint
+                sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
+            }
+        });
+    })(mui);
+
+    var  page = [1,1,1];
+    var  url  = [
+        "{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'ajaxOrderList','type'=>'0'))}",
+        "{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'ajaxOrderList','type'=>'1'))}",
+        "{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'ajaxOrderList','type'=>'2'))}"
+    ];
+    function ajax_sourch_submit( number , obj_name , is_first)
+    {
+        $.ajax({
+            type : "GET",
+            url:url[number] + "&p="+page[number]+"&number="+number,
+            success: function(data)
+            {
+
+                if( is_first == true ){
+                    $("#"+obj_name+" .mui-scroll").html(data);
+                }else{
+                    if($.trim(data) == ''){
+                        $('#getmore'+number).hide();
+                    }else{
+                        $("#"+obj_name+" .ajax_return").append(data);
+                    }
+                }
+//                imgErrorEvent();
+            }
+        });
+        page[number] += 1;
+    }
+    $(function(){
+        ajax_sourch_submit( 0 , "item1mobile" , true);
+    });
+</script>
+
 <include file="$footerPath"/>

@@ -1,2 +1,63 @@
 <include file="$headerPath"/>
+<style>
+    .container img{ width: 100% !important;}
+</style>
+<div class="container">
+    {$config.main|htmlspecialchars_decode}
+</div>
+<div style="height: 51px;"></div>
+<div class="nav_d">
+    <ul>
+        <li>
+            <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderList'))}">
+                <span>我的用餐凭证</span>
+            </a>
+        </li>
+        <li class="h">
+            <a href="#buy">
+                <span>立即预约</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="buy" class="mui-popover mui-popover-action mui-popover-bottom">
+    <div class="cp2">
+        <div class="cp2_l">
+            <img src="{$goods.goods_id|goods_thum_images=400,400}" width="92" height="92">
+        </div>
+        <div class="cp2_r">
+            <p>{$goods.goods_name}</p>
+            <span id="goods_price">￥{$goods.shop_price}</span>
+            <div class="mui-numbox z-index" data-numbox-min="1" data-numbox-max="999999">
+                <button class="mui-btn mui-btn-numbox-minus" type="button" disabled=""  >-</button>
+                <input id="goods_num"  name="goods_num"   class="mui-input-numbox" type="text" value="1">
+                <input type="hidden" name="goods_id" value="{$goods.goods_id}"/>
+                <button class="mui-btn mui-btn-numbox-plus" type="button"  >+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="m33">
+        <php> $number = 0 ;</php>
+        <foreach item="spec" key="key" name="filter_spec">
+            <div class="optionsDiv optionsDivNumber{$number}" data-spec = "{$number}" style=" <if condition='$number neq 0 '> display: none;</if> " >
+                <div class="cp2_titel">{$key}</div>
+                <ul>
+                    <foreach name="spec" item="v2" key="k2">
+                        <li onclick="switch_spec(this);">
+                            <p>
+                                <a href="javascript:;"  title="{$v2[item]}" >{$v2[item]}</a>
+                            </p>
+                            <input type="radio" style="display:none;" name="goods_spec[{$key}]" value="{$v2[item_id]}" />
+                        </li>
+                    </foreach>
+                </ul>
+            </div>
+            <php> $number ++ ;</php>
+        </foreach>
+        <div class="m33_btn" id="next1">
+            <a href="javascript:void(0);"  onclick="newSubmit();">下一步</a>
+        </div>
+    </div>
+</div>
 <include file="$footerPath"/>

@@ -85,7 +85,7 @@ CREATE TABLE `lm_addons_lunchfeast_order` (
   `order_amount` float(11,2) DEFAULT NULL COMMENT '总价',
   `pay_amount` float(11,2) DEFAULT NULL COMMENT '实际支付金额',
   `coupon_price` float(11,2) DEFAULT NULL COMMENT '折扣金额',
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态 0 未支付 1 已支付 2 已使用',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态 0 未支付 1 已支付 2 已使用 3 已过期',
   `create_time` int(10) DEFAULT NULL,
   `pay_time` int(10) DEFAULT NULL,
   `date` int(10) DEFAULT NULL COMMENT '就餐时间',
