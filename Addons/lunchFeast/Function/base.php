@@ -2,9 +2,33 @@
 
 /**
  * @param $orderSn
+ * @param $data
  */
-function addonsPayNotify( $orderSn ){
-    setLogResult( $orderSn , "支付" , "test");
+function addonsPayNotify( $orderSn , $data ){
+    setLogResult( $data , "支付" , "test");
+    $orderInfo = findDataWithCondition( "addons_lunchfeast_order" , array( "order_sn" => $orderSn ) );
+    if( !empty( $orderInfo ) ){
+        $add = array(
+            "order_id" => $orderInfo["id"],
+            "user_id" => $orderInfo["user_id"],
+//            "openid" => $orderInfo["id"],
+            "create_time" => time(),
+            "pay_time" => time(),
+//            "money" =>
+// ;
+            "tag" => serialize( $data ),
+            "status" => 1,
+        );
+        addData( "addons_lunchfeast_order_pay_log" , $add );
+        $payLogList =selectDataWithCondition( "addons_lunchfeast_order_pay_log" , array('order_id' =>$orderInfo["id"] , "status" => 1 )  , "money");
+        $money = 0;
+        foreach ($payLogList as $payLogItem){
+            $money += $payLogItem["money"];
+        }
+        if( $orderInfo["order_amount"] <= $money ){
+            saveData( "addons_lunchfeast_order" ,  array( "order_sn" => $orderSn ) , array( 'status' => 1 ,"pay_time" => time()));
+        }
+    }
 }
 /**
  * 用餐人置空
