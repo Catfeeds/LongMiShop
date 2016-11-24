@@ -1128,7 +1128,6 @@ body {
 .m33_hover {
 	background-color: #b02f4b!important;
 	color: #FFF !important;
-	border: 1px solid #b02f4b !important;
 }
 .m33_hover a {
 	color: #FFF !important;
@@ -1139,6 +1138,62 @@ body {
 	margin-left: 5px;
 }
 .m33_btn a {
+	border: 1px solid #B02F4B;
+	border-radius: 4px;
+	color: #FFF;
+	font-size: 16px;
+	display: block;
+	line-height: 45px;
+	background-color: #b02f4b;
+	text-align: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.my33 {
+	background-color: #FFF;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.my33 li {
+	display: block;
+	font-size: 12px;
+	float: left;
+	line-height: 20px;
+	margin-right: 5px;
+	margin-left: 5px;
+	margin-top: 0px !important;
+	margin-bottom: 5px !important;
+	border-radius: 4px;
+	background-color: #eaeaea;
+	overflow: hidden;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.my33 a {
+	color: #666;
+}
+.my33 ul {
+	margin: 0px !important;
+	padding: 0px !important;
+	background-color: #FFF;
+	display: block;
+	overflow: hidden;
+}
+.my33_hover {
+	background-color: #b02f4b!important;
+	color: #FFF !important;
+	border: 1px solid #b02f4b !important;
+}
+.my33_hover a {
+	color: #FFF !important;
+	text-decoration: none;
+}
+.my33_btn {
+	margin-right: 5px;
+	margin-left: 5px;
+}
+.my33_btn a {
 	border: 1px solid #B02F4B;
 	border-radius: 4px;
 	color: #FFF;
