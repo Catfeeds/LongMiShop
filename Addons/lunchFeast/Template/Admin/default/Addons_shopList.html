@@ -1,4 +1,7 @@
 <div class="navbar navbar-default">
+    <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'adminList' ))}" class="btn btn-primary pull-right" style=" margin: 10px 5px 0 0;">
+        <i class="fa fa-plus"></i>超级核销员列表
+    </a>
     <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'shopDetail' ))}" class="btn btn-primary pull-right" style=" margin: 10px 5px 0 0;">
         <i class="fa fa-plus"></i>添加店铺
     </a>
@@ -44,6 +47,9 @@
                 <td class="text-left">{$item.seats}</td>
                 <td class="text-left">{$item.create_time|date='Y-m-d',###}</td>
                 <td class="text-right">
+                    <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'adminList','id'=>$item['id'] ))}" class="btn btn-info" title="核销员列表">
+                        核销员列表
+                    </a>
                     <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'setMeal','id'=>$item['id'] ))}" class="btn btn-info" title="查看详情">
                         设置菜品
                     </a>

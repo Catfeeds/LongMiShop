@@ -136,3 +136,9 @@ CREATE TABLE `lm_addons_lunchfeast_order_pay_log` (
   `pay_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `lm_addons_lunchfeast_order_user`
+ADD COLUMN `use_time`  int(11) NULL COMMENT '核销时间' AFTER `is_use`,
+ADD COLUMN `admin_id`  int(11) NULL COMMENT '核销员id' AFTER `use_time`;
+
