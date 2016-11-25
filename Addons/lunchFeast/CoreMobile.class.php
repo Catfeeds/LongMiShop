@@ -30,7 +30,10 @@ class lunchFeastMobileController
         if( empty( $mealList ) ){
             return addonsError( "还没设置时间" );
         }
-
+        $today = strtotime(date('Y-m-d',strtotime("+1 day")));
+        $lastDay = strtotime(date("Y-m-d",strtotime("+1 month +1 day")));
+        $this -> assignData['today'] = $today;
+        $this -> assignData['lastDay'] = $lastDay;
         $this -> assignData['regionList'] = get_region_list();
         $this -> assignData["shopList"] = $shopList;
         $this -> assignData["mealList"] = $mealList;
@@ -237,7 +240,7 @@ class lunchFeastMobileController
             header("Location: " . U("Mobile/Addons/lunchFeast",array('pluginName' => "weChatPay" ,"id" => $OrderRes)));
             exit;
         }else{
-            return addonsError( "改店铺的座位数不够" );
+            return addonsError( "该店铺的座位数不够" );
         }
         return $this->assignData;
     }
