@@ -69,6 +69,35 @@ class lunchFeastApiController
         if( !lunchFeastApiUserToken(I("token")) ){
             exit(json_encode(callback(false, "签名错误")));
         }
+        $userInfo = findDataWithCondition( "addons_lunchfeast_admin" , array('token' => I("token") ));
+
+        $code = I("code");
+        $condition = array(
+            "code" => $code,
+            "is_use" => 0,
+            "use_time" => array("eq",""),
+            "admin_id" => array("eq",""),
+        );
+        $codeInfo =  findDataWithCondition( "addons_lunchfeast_order_user" ,$condition );
+        if( empty( $codeInfo ) ){
+            exit(json_encode(callback(false, "未找到相应的核销码")));
+        }
+        $condition2 = array(
+            "id" => $codeInfo["order_id"]
+        );
+        $orderInfo =  findDataWithCondition( "addons_lunchfeast_order" ,$condition2  );
+        if( empty( $orderInfo ) ){
+            exit(json_encode(callback(false, "未找到相应的订单")));
+        }
+        if( $userInfo["shop_id"] > 0  && $orderInfo['shop_id'] != $userInfo["shop_id"] ){
+            exit(json_encode(callback(false, "你不能核销其他店的核销码")));
+        }
+        $save = array(
+            "use_time" => time(),
+            "admin_id" => $userInfo["id"],
+            "is_use" => 1
+        );
+        saveData( "addons_lunchfeast_order_user", $condition ,$save );
         exit(json_encode(callback(true)));
     }
 }
