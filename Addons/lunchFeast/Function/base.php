@@ -50,7 +50,7 @@ function addonsPayData( $orderId ){
         $payData['order'] = $order = findDataWithCondition( "addons_lunchfeast_order" , array("id" => $id));
         if (!empty($order)) {
             $payData['goUrl'] = U('Mobile/Addons/lunchFeast', array("pluginName" => "results" , "id" => $id ) );
-            $payData['backUrl'] = U('Mobile/Addons/lunchFeast');
+            $payData['backUrl'] = U('Mobile/Addons/lunchFeast', array("pluginName" => "payBack" , "id" => $id ));
             $payData['notifyUrl'] =  SITE_URL.'/index.php/Api/Addons/lunchFeast/pluginName/notifyUrl';
         }
     }
