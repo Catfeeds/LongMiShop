@@ -8,7 +8,7 @@
         <foreach name="list" item="v" key="k" >
             <li class="mui-table-view-cell">
                 <div class="mui-slider-right mui-disabled">
-                    <a onclick="ajax_del_cart(this)" data-ids="{$v.id}" class="mui-btn mui-btn-red">删除</a>
+                    <a onclick="ajax_del_cart(this)" data-ids="{$v.id}" class="mui-btn mui-btn-red">取消选择</a>
                 </div>
                 <div class="mui-slider-handle">
                     <div class="cp7" style="padding-top:0px;padding-bottom:0px;">
@@ -60,7 +60,7 @@
             $.ajax({
                 type : "POST",
                 url:"{:U('Mobile/Addons/lunchFeast')}",
-                data:{pluginName:'ajaxDelMeal',ids:ids},
+                data:{pluginName:'removePer',delPerId:ids},
                 dataType:'json',
                 success: function(data){
                     controls = true;
