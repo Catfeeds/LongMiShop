@@ -2,7 +2,7 @@
 
 namespace Api\Controller;
 
-class AddonsController extends BaseController {
+class AddonsController  {
 
 
     const APPOINTED = "Api";
@@ -11,7 +11,7 @@ class AddonsController extends BaseController {
      * 析构流函数
      */
     public function  __construct() {   
-        parent::__construct();
+//        parent::__construct();
 
     }
 
