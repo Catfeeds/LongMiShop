@@ -27,7 +27,18 @@ class lunchFeastApiController
     }
     //验证核销码
     public function verification(){
-        exit(json_encode(callback(true)));
+        $code = I("code");
+        $condition = array(
+            "code" => $code,
+            "is_use" => 0,
+            "use_time" => array("eq",""),
+            "admin_id" => array("eq",""),
+        );
+        if( isExistenceDataWithCondition( "addons_lunchfeast_order_user" ,$condition ) ){
+            exit(json_encode(callback(true)));
+        }
+        exit(json_encode(callback(false, "未找到相应的核销码")));
+
     }
     //验证核销码
     public function useCode(){
