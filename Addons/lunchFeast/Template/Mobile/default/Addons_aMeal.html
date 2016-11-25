@@ -8,7 +8,7 @@
         <div class="mui-content">
             <ul class="mui-table-view">
                 <foreach name="list" item="v" key="k" >
-                    <li class="mui-table-view-cell">
+                    <li class="mui-table-view-cell" onclick="signal(this)">
                         <div class="mui-slider-right mui-disabled">
                             <a onclick="ajax_del_cart(this)" data-ids="{$v.id}" class="mui-btn mui-btn-red">删除</a>
                         </div>
@@ -93,7 +93,7 @@
         <notempty name ="list">
             <label class="fl select-all" style="width:100px !important">
                     <span class="mui-input-row mui-checkbox mui-left" >
-                        <input type="checkbox" class="check-all check-one check checked_longmi"   id="quanxuan" style="margin-top:-6px" onclick="chkAll_onclick()">
+                        <input type="checkbox" class="check-all check-one check checked_longmi"   id="quanxuan" style="margin-top:-6px;left: 17px;" onclick="chkAll_onclick()">
                     </span>
                 <span style="margin-left:50px">全选</span>
             </label>
@@ -165,6 +165,11 @@
 
     }
 
+    function signal(obj){
+        $(obj).find('input').trigger("click");
+    }
+
 
 </script>
 <include file="$footerPath"/>
+
