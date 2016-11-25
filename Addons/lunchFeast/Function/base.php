@@ -13,11 +13,10 @@ function addonsPayNotify( $orderSn , $data ){
         $add = array(
             "order_id" => $orderInfo["id"],
             "user_id" => $orderInfo["user_id"],
-//            "openid" => $orderInfo["id"],
+            "openid" => $data["openid"],
             "create_time" => time(),
             "pay_time" => time(),
-//            "money" =>
-// ;
+            "money" => $data["total_fee"]/100,
             "tag" => serialize( $data ),
             "status" => 1,
         );
