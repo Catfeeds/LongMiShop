@@ -221,7 +221,7 @@ class lunchFeastMobileController
         $seats = $shopRes['seats'] - $number; //剩余座位
         if($seats >= $countPer){
 
-            $order_sn = time().mt_rand();
+            $order_sn = date('YmdHis').rand(1000,9999);
             $order_amount = $ShopData['money'] * $countPer; //总价
             $pay_amount = $ShopData['money'] * $countPer; //实际支付金额
             $OrderData = array(
