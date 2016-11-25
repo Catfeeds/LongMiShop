@@ -72,9 +72,9 @@
     <div class="my33">
         <div id="ajaxShopMealList">
             <select name="date">
-                <foreach item="shopMealItem" name="shopMealList">
-                    <option value="{$shopMealItem['date']}">{$shopMealItem['date']|date="Y-m-d",###}</option>
-                </foreach>
+                <for start="$today" end="$lastDay"  step="24*60*60"  >
+                    <option value="{$i}">{$i|date="Y-m-d",###}</option>
+                </for>
             </select>
             <!--<ul >-->
             <!--<foreach item="shopMealItem" name="shopMealList">-->

@@ -1,7 +1,7 @@
 <include file="$headerPath"/>
 <div class="pay">
     <div class="pay-OK" style="background-image: url('__STATIC__/SVG/order.svg')">预定成功！</div>
-    <div class="pay-money">99.00元</div>
+    <div class="pay-money">{$results.pay_amount}元</div>
     <div class="pay-order">
         <p>用餐时间：{$results['meal']}</p>
         <p>用餐地点：{$results['shopName']}</p>
