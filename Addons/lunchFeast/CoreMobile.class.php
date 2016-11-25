@@ -172,8 +172,9 @@ class lunchFeastMobileController
     public function removePer(){
         $id = I('delPerId');
         $res = M('addons_lunchfeast_diningper')->where(array('id'=>$id))->save(array('pitchon'=>0));
+        $count = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1))->count();
         if($res){
-            exit(json_encode(callback(true)));
+            exit(json_encode(callback(true,'',array('count'=>$count))));
         }
         exit(json_encode(callback(false,'移除失败')));
     }
@@ -269,6 +270,8 @@ class lunchFeastMobileController
                 M('addons_lunchfeast_order_user')->add($dataData);
             }
             setPitchon($userId);
+            //清除session
+
             header("Location: " . U("Mobile/Addons/lunchFeast",array('pluginName' => "weChatPay" ,"id" => $OrderRes)));
             exit;
         }else{
