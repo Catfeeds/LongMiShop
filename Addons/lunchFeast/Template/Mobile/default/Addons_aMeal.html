@@ -1,10 +1,25 @@
 <include file="$headerPath"/>
 <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
+<style>
+    #footButton{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        background: #b02f4b;
+        clear:both;
+        color:white;
+        z-index: 9999999999;
+    }
+</style>
 
+    
     <empty name ="list">
         <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
         <div class="empty_txt" style="color: #b2b2b2;">没有用餐人信息~</div>
         <else/>
+
+        <p class="mui-input-row" style="font-size:20px;padding:12px 0 1px 5px;color:#a9a9a9;background-color:white;">选择用餐人:</p>
         <div class="mui-content">
             <ul class="mui-table-view">
                 <foreach name="list" item="v" key="k" >
@@ -23,7 +38,7 @@
                                     </label>
                                 </div>
                                 <div class="cp1_r" >
-                                    <p >名字：<span style="display: inline-block;float:none;width:63px;">{$v.names|subtext = 4}</span>   电话：{$v.mobile}</p>
+                                    <p ><span style="display: inline-block;float:none;width:110px;">{$v.names|subtext = 5}</span>   {$v.mobile}</p>
                                 </div>
                             </div>
                         </div>
@@ -32,81 +47,29 @@
             </ul>
         </div>
 
-
-
-
-        <script type="text/javascript">
-            $(".check-wrapper .cart-checkbox").click(function(){
-                if($(this).hasClass('checked')){
-                    $(this).removeClass('checked');
-                    $(this).find('input').attr('checked',false);
-                }else{
-                    $(this).addClass('checked');
-                    $(this).find('input').attr('checked',true);
-                }
-                ajax_cart_list();
-            })
-
-            var is_checked = true;
-            $('.mui-table-view .mui-checkbox input').each(function(){
-                if(!$(this).attr('checked'))
-                {
-                    is_checked = false;
-                    return false;
-                }
-            });
-            if(is_checked){
-                $('#quanxuan').attr('checked',true);
-                $('#quanxuan').addClass('checked_longmi');
-            }else
-            {
-                $('#quanxuan').attr('checked',false);
-                $('#quanxuan').removeClass('checked_longmi');
-            }
-
-            function chkAll_onclick()
-            {
-                if($('#quanxuan').hasClass('checked_longmi')){
-                    $('#quanxuan').removeClass('checked_longmi');
-                    $('#quanxuan').attr('checked',false);
-                    $('.cp_box .cart-checkbox').removeClass('checked');
-                    $("input[name^='cart_select']").prop('checked',false);
-                    is_checked = false;
-                }
-                else{
-                    $('#quanxuan').addClass('checked_longmi');
-                    $('#quanxuan').attr('checked',true);
-                    $('.cp_box .cart-checkbox').addClass('checked');
-                    $("input[name^='cart_select']").prop('checked',true);
-                    is_checked = true;
-                }
-
-            }
-
-
-
-        </script>
     </empty>
+    <div class="empty_btn" style="margin-top:16px;"><a href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'addAMeal' ))}" >添加新朋友</a></div>
 
     <div style="height:100px"></div>
-    <div class="foot" id="foot" style="margin-bottom:0px;z-index:99;">
-        <notempty name ="list">
-            <label class="fl select-all" style="width:100px !important">
-                    <span class="mui-input-row mui-checkbox mui-left" >
-                        <input type="checkbox" class="check-all check-one check checked_longmi"   id="quanxuan" style="margin-top:-6px;left: 17px;" onclick="chkAll_onclick()">
-                    </span>
-                <span style="margin-left:50px">全选</span>
-            </label>
-        </notempty>
-        <div class="fr closing">
-            <a  onclick="return addition();" style="color:#FFF">选择用餐人</a>
+    <button  type="button"   id="footButton" onclick="return addition();">确定用餐人</button>
+    <!--<div class="foot" id="foot" style="margin-bottom:0px;z-index:99;">-->
+        <!--<notempty name ="list">-->
+            <!--<label class="fl select-all" style="width:100px !important">-->
+                    <!--<span class="mui-input-row mui-checkbox mui-left" >-->
+                        <!--<input type="checkbox" class="check-all check-one check checked_longmi"   id="quanxuan" style="margin-top:-6px;left: 17px;" onclick="chkAll_onclick()">-->
+                    <!--</span>-->
+                <!--<span style="margin-left:50px">全选</span>-->
+            <!--</label>-->
+        <!--</notempty>-->
+        <!--<div class="fr closing">-->
+            <!--<a  onclick="return addition();" style="color:#FFF">选择用餐人</a>-->
 
-        </div>
-        <div class="fr closing" style="margin-right:15px">
-            <a  href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'addAMeal' ))}" style="color:#FFF">去添加</a>
-        </div>
+        <!--</div>-->
+        <!--<div class="fr closing" style="margin-right:15px">-->
+            <!--<a  href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'addAMeal' ))}" style="color:#FFF">去添加</a>-->
+        <!--</div>-->
 
-    </div>
+    <!--</div>-->
 
 <script type="text/javascript">
     var controls = true;
