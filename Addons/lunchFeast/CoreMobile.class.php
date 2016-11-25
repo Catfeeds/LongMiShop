@@ -257,7 +257,10 @@ class lunchFeastMobileController
             $OrderRes = M('addons_lunchfeast_order')->add($OrderData);
             $perList = M('addons_lunchfeast_diningper')->where(array('uid'=>$userId,'pitchon'=>1))->select();
             foreach($perList as $perItem){
-                $code = get_rand_str(8,0,1);//获取随机8位字符串
+                do{
+                    $code = get_rand_str(8,0,1);//获取随机8位字符串
+                    $check_exist = findDataWithCondition('addons_lunchfeast_order_user',array('code'=>$code),"code");
+                }while($check_exist);
                 $dataData = array(
                     'order_id'=>$OrderRes,
                     'diningper_id'=>$perItem['id'],
