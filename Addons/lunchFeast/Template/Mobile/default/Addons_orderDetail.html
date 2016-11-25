@@ -6,7 +6,7 @@
 <foreach item="userItem" name="orderInfo.userList">
     <div class="cp6">
         <div class="cp1_l" style="float:none;margin:0 auto;width:200px;">
-            <img src="/Public/upload/goods/thumb/1/goods_thumb_1_100_100.jpeg" width="180" height="180">
+            <img src="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'qrCode','url' =>$userItem['code'] ))}" width="180" height="180">
             <p style="text-align:center">{$userItem.code}</p>
             <span style="color:#666;text-align:center;display: block;" >{$userItem.userInfo.names}  {$userItem.userInfo.mobile}</span>
         </div>
