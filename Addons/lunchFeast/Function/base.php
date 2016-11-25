@@ -1,12 +1,16 @@
 <?php
 
 /**
+ * 支付返回
  * @param $orderSn
  * @param $data
  */
 function addonsPayNotify( $orderSn , $data ){
     $orderInfo = findDataWithCondition( "addons_lunchfeast_order" , array( "order_sn" => $orderSn ) );
     if( !empty( $orderInfo ) ){
+        if( $orderInfo["status"] != 0 ){
+            return;
+        }
         $add = array(
             "order_id" => $orderInfo["id"],
             "user_id" => $orderInfo["user_id"],
