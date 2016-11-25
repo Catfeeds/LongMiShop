@@ -320,7 +320,7 @@ class lunchFeastMobileController
         if(!empty($res)){
             M('addons_lunchfeast_order')->where($where)->delete();
             M('addons_lunchfeast_order_user')->where(array('order_id'=>$res['id']))->delete();
-            header('Location : '.U('Mobile/Addons/lunchFeast',array('pluginName'=>'pageSubmit')).'');
+            header("Location: " . U("Mobile/Addons/lunchFeast",array('pluginName' => "pageSubmit")));
         }
         exit;
     }
