@@ -23,6 +23,19 @@ class lunchFeastApiController
     }
     //登录api
     public function login(){
+        $username = I("username");
+        $password = I("password");
+        $condition = array(
+            "username" => $username,
+            "password" => $password
+        );
+        $userInfo = findDataWithCondition("addons_lunchfeast_admin",$condition , "is_lock");
+        if( empty( $userInfo ) ){
+            exit(json_encode(callback(false,"没有此用户")));
+        }
+        if( !empty( $userInfo['is_lock'] ) && $userInfo['is_lock'] == 1 ){
+            exit(json_encode(callback(false,"账号已被锁定，请联系管理员")));
+        }
         exit(json_encode(callback(true)));
     }
     //验证核销码
