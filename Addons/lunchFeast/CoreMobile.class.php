@@ -269,8 +269,7 @@ class lunchFeastMobileController
                 );
                 M('addons_lunchfeast_order_user')->add($dataData);
             }
-            setPitchon($userId);
-            //清除session
+
 
             header("Location: " . U("Mobile/Addons/lunchFeast",array('pluginName' => "weChatPay" ,"id" => $OrderRes)));
             exit;
@@ -299,6 +298,9 @@ class lunchFeastMobileController
     {
         $id = I("id");
         $results = M('addons_lunchfeast_order')->where(array('id'=>$id))->find();
+        setPitchon($results['user_id']);
+        //清除session
+        session('ShopData',null);
         $mealList = selectMealList();
         $shopList = M('addons_lunchfeast_shop')->where(array('id'=>$results['shop_id']))->find();
         $results['meal'] = date('Y-m-d',$results['date']).' '.$mealList[$results['meal_id']];
@@ -309,6 +311,17 @@ class lunchFeastMobileController
     //支付回调
     public function payBack(){
         $id = I("id");
+        $where  = array(
+            'user_id'=>$this -> userInfo['user_id'],
+            'status'=>'0',
+            'id'=>$id,
+        );
+        $res = M('addons_lunchfeast_order')->where($where)->find();
+        if(!empty($res)){
+            M('addons_lunchfeast_order')->where($where)->delete();
+            M('addons_lunchfeast_order_user')->where(array('order_id'=>$res['id']))->delete();
+            header('Location : '.U('Mobile/Addons/lunchFeast',array('pluginName'=>'pageSubmit')).'');
+        }
         exit;
     }
 }
