@@ -274,7 +274,7 @@ class lunchFeastMobileController
             header("Location: " . U("Mobile/Addons/lunchFeast",array('pluginName' => "weChatPay" ,"id" => $OrderRes)));
             exit;
         }else{
-            return addonsError( "该店铺的座位数不够" );
+            return addonsError( "该店铺的座位数不够" , U("Mobile/Addons/lunchFeast",array('pluginName' => "pageSubmit")));
         }
         return $this->assignData;
     }
@@ -320,7 +320,7 @@ class lunchFeastMobileController
         if(!empty($res)){
             M('addons_lunchfeast_order')->where($where)->delete();
             M('addons_lunchfeast_order_user')->where(array('order_id'=>$res['id']))->delete();
-            header('Location : '.U('Mobile/Addons/lunchFeast',array('pluginName'=>'pageSubmit')).'');
+            header("Location: " . U("Mobile/Addons/lunchFeast",array('pluginName' => "pageSubmit")));
         }
         exit;
     }
