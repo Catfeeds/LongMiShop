@@ -1,10 +1,11 @@
 <include file="$headerPath"/>
 <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
-
 <img src="__ADDONS__/images/11-24.png" alt="" style="width:100%;margin:10px 0;">
 
+<p style="font-size:20px;padding:12px 0 1px 5px;color:#a9a9a9">用餐人:</p>
 <div class="mui-content">
     <ul class="mui-table-view">
+
         <foreach name="list" item="v" key="k" >
             <li class="mui-table-view-cell">
                 <div class="mui-slider-right mui-disabled">
@@ -13,7 +14,7 @@
                 <div class="mui-slider-handle">
                     <div class="cp7" style="padding-top:0px;padding-bottom:0px;">
                         <div class="cp1_r" style="padding-left:0;">
-                            <p >名字：<span style="display: inline-block;float:none;width:63px;">{$v.names|subtext = 4}</span>   电话：{$v.mobile}</p>
+                            <p ><span style="display: inline-block;float:none;width:110px;">{$v.names|subtext = 5}</span>{$v.mobile}</p>
                         </div>
                     </div>
                 </div>
@@ -27,11 +28,11 @@
 
         <div style="height:100px"></div>
         <div class="foot" id="foot" style="margin-bottom:0px;z-index:99;">
-            <div class="fr closing">
+            <div class="fr closing " style="width:117px;">
                 <a  onclick="payment()" style="color:#FFF">微信安全支付</a>
             </div>
-            <div class="fr total">
-                预定总金额:￥<span id="cart_amount_desc">{$money}</span>
+            <div class="fr total"  style="float: left;margin-left:20px;">
+                {$sum}人用餐，预定总金额:￥<span id="cart_amount_desc">{$money}</span>
             </div>
         </div>
 
