@@ -104,7 +104,7 @@ CREATE TABLE `lm_addons_lunchfeast_order_user` (
   `order_id` int(11) DEFAULT NULL COMMENT '订单id',
   `diningper_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ;
 ALTER TABLE `lm_addons_lunchfeast_order`
