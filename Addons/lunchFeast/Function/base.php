@@ -5,8 +5,10 @@
  * @param $data
  */
 function addonsPayNotify( $orderSn , $data ){
-    setLogResult( $data , "支付" , "test");
+    setLogResult( $orderSn , "支付1" , "test");
+    setLogResult( $data , "支付2" , "test");
     $orderInfo = findDataWithCondition( "addons_lunchfeast_order" , array( "order_sn" => $orderSn ) );
+    setLogResult( $orderInfo , "支付3" , "test");
     if( !empty( $orderInfo ) ){
         $add = array(
             "order_id" => $orderInfo["id"],
@@ -19,6 +21,7 @@ function addonsPayNotify( $orderSn , $data ){
             "tag" => serialize( $data ),
             "status" => 1,
         );
+        setLogResult( $add , "支付4" , "test");
         addData( "addons_lunchfeast_order_pay_log" , $add );
         $payLogList =selectDataWithCondition( "addons_lunchfeast_order_pay_log" , array('order_id' =>$orderInfo["id"] , "status" => 1 )  , "money");
         $money = 0;

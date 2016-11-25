@@ -75,8 +75,12 @@ class AddonsLogic extends BaseLogic
     public function run(){
 
         $actionName = $this -> actionName;
-        $data = $this -> classController -> $actionName();
-        return is_array($data) ? $data : array();
+        $cls_methods = get_class_methods( $this -> classController );
+        if( in_array( $actionName , $cls_methods )){
+            $data = $this -> classController -> $actionName();
+            return is_array($data) ? $data : array();
+        }
+        die("Not Find This Addons Action");
     }
 
     public function install(){
