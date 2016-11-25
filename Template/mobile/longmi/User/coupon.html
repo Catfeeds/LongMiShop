@@ -19,12 +19,12 @@
 			</div>
 		</volist>
 
-		<if condition="$count gt $limit">
-			<div class="Load—more" id="getmore">
-				<a  href="javascript:void(0)" onClick="ajax_sourch_submit()">点击加载更多</a>
-			</div>
-		</if>
 	</div>
+	<if condition="$count gt $limit">
+		<div class="Load—more" id="getmore">
+			<a  href="javascript:void(0)" onClick="ajax_sourch_submit()">点击加载更多</a>
+		</div>
+	</if>
 	<script>
 		var  page = 1;
 		/*** ajax 提交表单 查询订单列表结果*/
