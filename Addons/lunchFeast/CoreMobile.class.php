@@ -220,7 +220,7 @@ class lunchFeastMobileController
         $countPer = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1))->count();
         $seats = $shopRes['seats'] - $number; //剩余座位
         if($seats >= $countPer){
-
+            $userId = $this -> userInfo['user_id'];
             $order_sn = date('YmdHis').rand(1000,9999);
             $order_amount = $ShopData['money'] * $countPer; //总价
             $pay_amount = $ShopData['money'] * $countPer; //实际支付金额
@@ -235,8 +235,20 @@ class lunchFeastMobileController
                 'shop_id'=>$ShopData['shop_id'], //店铺id
                 'meal_content'=>$ShopData['meal_content'], //菜品
                 'number'=>$countPer,
+                'user_id'=>$userId, //用户id
             );
             $OrderRes = M('addons_lunchfeast_order')->add($OrderData);
+            $perList = M('addons_lunchfeast_diningper')->where(array('uid'=>$userId,'pitchon'=>1))->select();
+            foreach($perList as $perItem){
+                $code = get_rand_str(8,0,1);//获取随机8位字符串
+                $dataData = array(
+                    'order_id'=>$OrderRes,
+                    'diningper_id'=>$perItem['id'],
+                    'code'=>$code
+                );
+                M('addons_lunchfeast_order_user')->add($dataData);
+            }
+            setPitchon($userId);
             header("Location: " . U("Mobile/Addons/lunchFeast",array('pluginName' => "weChatPay" ,"id" => $OrderRes)));
             exit;
         }else{
