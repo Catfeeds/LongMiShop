@@ -71,10 +71,13 @@ class lunchFeastMobileController
         $where = array();
         $type = I('type');
         $type = intval($type);
-        if ($type == 1) {
-            $where['status'] = $type;
+        if ($type == "0") {
+            $where['status'] = "1";
         }
-        if ($type == 2) {
+        if ($type == "1") {
+            $where['status'] = "0";
+        }
+        if ($type == "2") {
             $where['status'] = array("in","2,3");
         }
         $where['user_id'] = $this->userInfo ['user_id'];
