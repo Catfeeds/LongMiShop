@@ -269,6 +269,8 @@ class lunchFeastMobileController
                 M('addons_lunchfeast_order_user')->add($dataData);
             }
             setPitchon($userId);
+            //清除session
+
             header("Location: " . U("Mobile/Addons/lunchFeast",array('pluginName' => "weChatPay" ,"id" => $OrderRes)));
             exit;
         }else{
