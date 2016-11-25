@@ -11,14 +11,36 @@
         color:white;
         z-index: 9999999999;
     }
-</style>
 
-    
+    #head{
+        width: 100%;
+        height: 50px;
+        background-color: #fff;
+        text-align: center;
+        line-height: 50px;
+        margin: 10px auto;
+        border: 1px solid gray;
+        color: #DA7289;
+    }
+    #head span{
+        display:inline-block;
+        width: 33%;
+        padding-left: 8px;
+        background:url('__ADDONS__/images/11-25.png' ) no-repeat -11% 49% ;
+  }
+    #triangle-down {
+        width: 0;
+        height: 0;
+        border-left: 50px solid transparent;
+        border-right: 50px solid transparent;
+        border-top: 50px solid red;
+    }
+</style>
+    <div id="head" onclick="window.location.href='{: U("Mobile/Addons/lunchFeast",array("pluginName" => "addAMeal" ))}' "><span >添加新用餐人</span></div>
     <empty name ="list">
         <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
         <div class="empty_txt" style="color: #b2b2b2;">没有用餐人信息~</div>
         <else/>
-
         <p class="mui-input-row" style="font-size:20px;padding:12px 0 1px 5px;color:#a9a9a9;background-color:white;">选择用餐人:</p>
         <div class="mui-content">
             <ul class="mui-table-view">
@@ -48,7 +70,7 @@
         </div>
 
     </empty>
-    <div class="empty_btn" style="margin-top:16px;"><a href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'addAMeal' ))}" >添加新朋友</a></div>
+    <!--<div class="empty_btn" style="margin-top:16px;"><a href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'addAMeal' ))}" >添加新朋友</a></div>-->
 
     <div style="height:100px"></div>
     <button  type="button"   id="footButton" onclick="return addition();">确定用餐人</button>
