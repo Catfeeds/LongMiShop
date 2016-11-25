@@ -306,4 +306,9 @@ class lunchFeastMobileController
         $this->assignData['results'] = $results;
         return $this->assignData;
     }
+    //支付回调
+    public function payBack(){
+        $id = I("id");
+        exit;
+    }
 }
