@@ -92,7 +92,7 @@ class UserController extends MobileBaseController {
         $this -> assign('page',$data['show']);
         $this -> assign('count',$data['count']);
         $this -> assign('p',I('p'));
-        $this -> assign('limit',$data['limit'] * I('p'));
+        $this -> assign('limit',$data['limit'] * I('p', 1));
         if($_GET['is_ajax'])
         {
             $this -> display('ajax_coupon_list');
