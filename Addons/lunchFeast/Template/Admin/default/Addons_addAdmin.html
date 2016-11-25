@@ -1,0 +1,49 @@
+<form id="shopForm">
+    <div class="tab-content">
+
+        <div class="tab-pane active" >
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td>账号:</td>
+                    <td>
+                        <input type="text" value="{$adminInfo.username}" name="username" class="form-control" style="width:350px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>密码:</td>
+                    <td>
+                        <input type="text" value="{$adminInfo.password}" name="password" class="form-control" style="width:350px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>备注:</td>
+                    <td>
+                        <textarea class="span12" name="desc" style="width: 400px; height: 200px;">{$adminInfo.desc}</textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pull-right">
+            <input type="hidden" name="id" value="{$adminInfo.id}">
+            <input type="hidden" name="pluginName" value="addAdmin">
+            <input type="hidden" name="shopId" value="{$shopId}">
+            <button class="btn btn-primary" onclick="ajaxSubmitForm();" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
+        </div>
+    </div>
+</form>
+<script>
+
+    function ajaxSubmitForm(){
+        if( $("input[name='username']").val() == ""){
+            alert("用户名不能为空！");
+            return;
+        }
+        if( $("input[name='password']").val() == ""){
+            alert("密码不能为空！");
+            return;
+        }
+        ajax_submit_form('shopForm',"{:U('Admin/Addons/lunchFeast?is_ajax=1')}");
+    }
+</script>

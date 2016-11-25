@@ -11,6 +11,7 @@ class lunchFeastAdminController
         define("TB_MEAL", "addons_lunchfeast_meal_list");
         define("TB_GOODS", "addons_lunchfeast_shop_goods");
         define("TB_CONFIG", "addons_lunchfeast_config");
+        define("TB_ADMIN", "addons_lunchfeast_admin");
     }
 
     //初始页面
@@ -243,5 +244,89 @@ class lunchFeastAdminController
     }
     public function orderDetail(){
         return $this -> assignData;
+    }
+    public function adminList(){
+        $shopId = I('id');
+        $isAdmin = 0;
+        $condition = array("shop_id" => $shopId,"level" => "0");
+        $shopInfo = findDataWithCondition(TB_SHOP, array("id" => $shopId)) ;
+        if( empty( $shopInfo ) ){
+            $condition = array("level" => "1");
+            $isAdmin = 1;
+        }
+        $condition["is_delete"] = 0 ;
+        $count = getCountWithCondition( TB_ADMIN , $condition );
+        $Page  = new Think\AjaxPage($count,10);
+        $list = M( TB_ADMIN ) -> where($condition) ->limit($Page->firstRow.','.$Page->listRows) -> order('create_time DESC')->select();
+
+        $this -> assignData['page'] = $Page -> show();
+        $this -> assignData['shopId'] = $shopId;
+        $this -> assignData['list'] = $list;
+        $this -> assignData['isAdmin'] = $isAdmin;
+        return $this -> assignData;
+    }
+    public function addAdmin(){
+        $adminId = I('id');
+        $shopId = I('shopId');
+        $condition = array("id" => $adminId);
+        if( !empty( $shopId ) ){
+            $condition["shop_id"] = $shopId;
+        }
+        $adminInfo = findDataWithCondition( TB_ADMIN, $condition ) ;
+        if (($_GET['is_ajax'] == 1) && IS_POST) {
+            C('TOKEN_ON', false);
+            $username = I("username");
+            $password = I("password");
+            $desc = I("desc");
+            if( empty($username) || empty($password) ){
+                $return_arr = array(
+                    'status' => -1,
+                    'msg'    => '参数错误',
+                    'data'   => '',
+                );
+                exit(json_encode($return_arr));
+            }
+            if( empty( $adminInfo ) ){
+                $add = array(
+                    "username" => $username,
+                    "password" => $password,
+                    "create_time" => time(),
+                    "desc" => $desc
+                );
+                if( !empty( $shopId ) ){
+                    $add["shop_id"] = $shopId;
+                }else{
+                    $add["shop_id"] = "0";
+                    $add["level"] = "1";
+                }
+                addData( TB_ADMIN , $add);
+            }else{
+                $save = array(
+                    "username" => $username,
+                    "password" => $password,
+                    "desc" => $desc
+                );
+                saveData( TB_ADMIN , $condition , $save );
+            }
+            $return_arr = array(
+                'status' => 1,
+                'msg'    => '操作成功',
+                'data'   => array('url' => U('Admin/Addons/lunchFeast', array("pluginName" => "adminList" , "id" => $shopId ))),
+            );
+            exit(json_encode($return_arr));
+        }
+        $this -> assignData['shopId'] = $shopId;
+        $this -> assignData['adminInfo'] = $adminInfo;
+        return $this -> assignData;
+
+
+    }
+
+    public function deleteAdmin(){
+        $adminId = I('id');
+        $condition = array("id" => $adminId);
+        $save = array( "is_delete"=>"1");
+        saveData( TB_ADMIN , $condition ,  $save);
+        return addonsSuccess( "删除成功" );
     }
 }
