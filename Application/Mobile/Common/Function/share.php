@@ -31,7 +31,8 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$us
     //默认连接
     $link = "http://".$_SERVER['HTTP_HOST']."/index.php?m=Mobile&c=Index&a=index";
 
-    if( CONTROLLER_NAME =="Recommend" && ACTION_NAME  == "index"){
+    if( CONTROLLER_NAME =="Recommend" ){
+//        if( CONTROLLER_NAME =="Recommend" && ACTION_NAME  == "index"){
         $link = "http://".$_SERVER['HTTP_HOST'].U('Mobile/Recommend/share',array('inviteUserId' => $user['user_id']));
         if($dift_img == 1){
             //是否微信头像
