@@ -9,7 +9,11 @@
         mui.toast( msg );
     }
 
+    setInterval("getMsg()", 1000);
     $(function(){
+        getMsg();
+    });
+    function getMsg(){
         var time = Date.parse(new Date());
         time = time * 123465;
         $.ajax({
@@ -22,7 +26,7 @@
                 }
             }
         });
-    });
+    }
 </script>
 </body>
 </html>
