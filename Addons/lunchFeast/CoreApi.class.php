@@ -18,7 +18,6 @@ class lunchFeastApiController
         include  "plugins/payment/weixin/weixin.class.php";
         $code = '\\weixin'; // \alipay
         $payment = new $code();
-        setLogResult( $payment , "支付22" , "test");
         $payment -> response();
         exit();
     }
