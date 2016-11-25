@@ -105,3 +105,19 @@ function getShopMealList( $shopId , $mealId = null ){
     }
     return M("addons_lunchfeast_shop_goods") -> where( $condition ) -> order("date") -> select();
 }
+
+
+/**
+ * 检查用户token
+ * @param $token
+ * @return bool
+ */
+function lunchFeastApiUserToken( $token ){
+    $condition = array(
+        "token" => $token,
+    );
+    if( isExistenceDataWithCondition("addons_lunchfeast_admin",$condition)){
+        return true;
+    }
+    return false;
+}
