@@ -1,0 +1,62 @@
+<div class="navbar navbar-default">
+    <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'addAdmin','shopId'=>$shopId ))}" class="btn btn-primary pull-right" style=" margin: 10px 5px 0 0;">
+        <i class="fa fa-plus"></i>添加{:$isAdmin?"超级":""}核销员
+    </a>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td class="text-right">
+                ID
+            </td>
+            <td class="text-left">
+                账号
+            </td>
+            <td class="text-left">
+                密码
+            </td>
+            <td class="text-left">
+                最后一次登录时间
+            </td>
+            <td class="text-left">
+                创建时间
+            </td>
+            <td class="text-right">
+                操作
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="item">
+            <tr>
+                <td class="text-right">{$item.id}</td>
+                <td class="text-left">
+                    {$item.username}
+                </td>
+                <td class="text-left">
+                    {$item.password}
+                </td>
+                <td class="text-left">
+                    {:$item['last_time']?date('Y-m-d',$item['last_time']):"NULL"}
+                </td>
+                <td class="text-left">
+                    {$item.create_time|date='Y-m-d',###}
+                </td>
+                <td class="text-right">
+                    <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'addAdmin','id'=>$item['id'],'shop_id' => $item['shop_id'] ))}" class="btn btn-info" title="核销员列表">
+                        编辑
+                    </a>
+                    <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'deleteAdmin','id'=>$item['id'] ))}" class="btn btn-info" title="删除核销员">
+                        删除
+                    </a>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-sm-3 text-left"></div>
+    <div class="col-sm-9 text-right">{$page}</div>
+</div>

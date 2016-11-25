@@ -2,7 +2,8 @@
 
 namespace Api\Controller;
 
-class AddonsController extends BaseController {
+use Think\Controller;
+class AddonsController extends Controller {
 
 
     const APPOINTED = "Api";
