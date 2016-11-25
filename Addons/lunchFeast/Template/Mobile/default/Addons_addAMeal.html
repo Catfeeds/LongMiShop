@@ -10,9 +10,13 @@
             <div class="mui-input-row line">
                 <label>手机</label>
                 <input type="text" placeholder="请输入" name="mobile">
+
             </div>
         </form>
     </div>
+</div>
+<div  style=" padding: 4px 10%;">
+    <p style="color:#a9a9a9;text-align: center">温馨提示：手机号码为选填项目，建议填写，方便我们联系到您</p>
 </div>
 <div class="login_btn">
     <a href="javascript:void(0);" onclick="subForm()">保存</a>
@@ -26,12 +30,11 @@
         if(names == ''){
             alert('姓名不能为空');
             return false;
-        }else if(mobile == ''){
-            alert('手机号码不能为空');
-            return false;
-        }else if(!checkMobile(mobile)){
-            alert('手机格式不正确');
-            return false;
+        }else if(mobile != ''){
+            if(!checkMobile(mobile)){
+                alert('手机格式不正确');
+                return false;
+            }
         }
 
         if(controls){

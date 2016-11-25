@@ -1,6 +1,20 @@
 <include file="$headerPath"/>
 <style>
     .container img{ width: 100% !important;}
+    .nav_d li{}
+    .nav_d a{
+        color:white;
+        text-align: center;
+        margin: 0 auto;
+        width: 100%;
+        height: 100%;
+        line-height: 33px;
+        font-size:15px;
+        border-right:1px white solid;
+        background-color: #b02f4b;
+    }
+    .nav_d
+
 </style>
 <div class="container">
     {$config.main|htmlspecialchars_decode}
@@ -10,13 +24,11 @@
     <ul>
         <li>
             <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderList'))}">
-                <span>我的用餐凭证</span>
+                我的用餐凭证
             </a>
         </li>
         <li class="h">
-            <a href="#buy">
-                <span>立即预约</span>
-            </a>
+            <a href="#buy">立即预定</a>
         </li>
     </ul>
 </div>

@@ -49,6 +49,25 @@ class lunchFeastMobileController
         }
         exit(json_encode( callback( false, "未找到" ) ));
     }
+    //ajax用餐店铺 时间 价格
+    public function ajaxShopGoods(){
+        $mealId = I('mealId');
+        $shopGoodsList = M('addons_lunchfeast_shop_goods')->where(array('meal_id'=>$mealId))->select();
+        $shop = M('addons_lunchfeast_shop')->field('seats')->where(array('id'=>$mealId))->find();
+        foreach($shopGoodsList as $goodsKey=>$goodsItem){
+            $dataArrat = array(
+                'date'=>$goodsItem['date'],
+                'shop_id'=>$mealId,
+                'meal_id'=>$goodsItem['meal_id']
+            );
+            //剩余座位数
+            $number = M('addons_lunchfeast_order')->where($dataArrat)->sum('number');
+            $seats = $shop['seats'] - $number;
+            $shopGoodsList[$goodsKey]['seats'] = $seats > 0 ? $seats : '0';
+        }
+        exit(json_encode(callback(true,'',array('timeList'=>$shopGoodsList))));
+
+    }
     //店铺主页
     public function shopDetail()
     {
