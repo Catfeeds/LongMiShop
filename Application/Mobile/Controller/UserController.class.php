@@ -825,8 +825,8 @@ class UserController extends MobileBaseController {
         $showpage = $Page -> show();
     	$this -> assign('account_log',$account_log);
         $this -> assign('page',$showpage);
-        $thi->assign('count',$count);
-        $thi->assign('limit',$limit);
+        $this -> assign('count',$count);
+        $this -> assign('limit',$limit);
         if($_GET['is_ajax'])
         {
             $this -> display('ajax_points');

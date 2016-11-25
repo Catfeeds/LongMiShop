@@ -65,6 +65,20 @@ class lunchFeastMobileController
     {
         return $this->assignData;
     }
+    //获取二维码
+    public function qrCode(){
+        $url = I("url");
+        if( empty( $url ) ){
+            die( "Not Find The Url !");
+        }
+        vendor("Poster.phpqrcode");
+        // 纠错级别：L、M、Q、H
+        $level = 'L';
+        // 点的大小：1到10,用于手机端4就可以了
+        $size = 8;
+        QRcode::png("$url", false, $level, $size);
+        exit;
+    }
     //ajax我的宴午
     public function ajaxOrderList()
     {
