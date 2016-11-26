@@ -1944,3 +1944,20 @@ Load—more a{
 .er1 li {
 	position: relative;
 }
+
+
+.cp2_title {
+	line-height: 30px;
+	padding-right: 5px;
+	font-size: 16px;
+	padding-left: 10px;
+	margin-left: 10px;
+	border-left: 5px solid #DEDEDE;
+}
+.cp2_title.cp2_title_h {
+	border-left-color:#b02f4b;
+}
+.myGray, .myGray a{
+    background-color: #eaeaea !important;
+    color: #898989 !important;
+}
