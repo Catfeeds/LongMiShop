@@ -30,14 +30,9 @@ class lunchFeastMobileController
         if( empty( $mealList ) ){
             return addonsError( "还没设置时间" );
         }
-        $today = strtotime(date('Y-m-d',strtotime("+1 day")));
-        $lastDay = strtotime(date("Y-m-d",strtotime("+1 month +1 day")));
-        $this -> assignData['today'] = $today;
-        $this -> assignData['lastDay'] = $lastDay;
         $this -> assignData['regionList'] = get_region_list();
         $this -> assignData["shopList"] = $shopList;
         $this -> assignData["mealList"] = $mealList;
-        $this -> assignData["shopMealList"] = getShopMealList( $shopList[0]["id"] , $mealList[0]["id"]);
         return $this->assignData;
     }
     //ajax菜品列表
@@ -104,14 +99,14 @@ class lunchFeastMobileController
         $where = array();
         $type = I('type');
         $type = intval($type);
+        $today = strtotime(date('Y-m-d',strtotime("+1 day")));
         if ($type == "0") {
             $where['status'] = "1";
+            $where['date'] = array("egt",$today);
         }
         if ($type == "1") {
-            $where['status'] = "0";
-        }
-        if ($type == "2") {
             $where['status'] = array("in","2,3");
+            $where['date'] = array("lt",$today);
         }
         $where['user_id'] = $this->userInfo ['user_id'];
         $count = getCountWithCondition(TB_ORDER, $where);
@@ -295,7 +290,6 @@ class lunchFeastMobileController
         }else{
             return addonsError( "该店铺的座位数不够" , U("Mobile/Addons/lunchFeast",array('pluginName' => "pageSubmit")));
         }
-        return $this->assignData;
     }
     //支付页面
     public function weChatPay()
@@ -344,7 +338,7 @@ class lunchFeastMobileController
         exit;
     }
 
-
+    //获取日期列表
     public function getDateList(){
         $shopId = I("shopId");
         $returnArray = array();
