@@ -73,7 +73,7 @@ class lunchFeastApiController
             "shopName" => $shopInfo['shop_name'],
             "dateTime" => date("Y-m-d",$date['orderInfo']['date']),
             "mealTime" => $mealList[$date['orderInfo']['meal_id']],
-            "userData" => $diningperInfo['names'] . ($diningperInfo['mobile']?$diningperInfo['mobile']:""),
+            "userData" => $diningperInfo['names'] . ($diningperInfo['mobile']?"[".$diningperInfo['mobile']."]":""),
         );
         exit(json_encode(callback(true, "" , $returnData)));
     }
