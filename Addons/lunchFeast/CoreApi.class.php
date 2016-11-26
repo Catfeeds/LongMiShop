@@ -63,12 +63,17 @@ class lunchFeastApiController
         if( empty( $shopInfo ) ){
             exit(json_encode(callback(false, "未找到相应的店铺")));
         }
+        $diningperInfo = findDataWithCondition( "addons_lunchfeast_diningper" , array("id" => $date['codeInfo']["diningper_id"]) );
+        if( empty( $diningperInfo ) ){
+            exit(json_encode(callback(false, "未找到相应的用餐人")));
+        }
         $mealList = selectMealList();
         $returnData = array(
             "code" => $code,
             "shopName" => $shopInfo['shop_name'],
             "dateTime" => date("Y-m-d",$date['orderInfo']['date']),
             "mealTime" => $mealList[$date['orderInfo']['meal_id']],
+            "userData" => $diningperInfo['names'] . ($diningperInfo['mobile']?$diningperInfo['mobile']:""),
         );
         exit(json_encode(callback(true, "" , $returnData)));
     }
