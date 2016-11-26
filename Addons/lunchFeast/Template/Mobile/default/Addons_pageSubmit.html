@@ -2,7 +2,19 @@
 <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
 <img src="__ADDONS__/images/11-24.png" alt="" style="width:100%;margin:10px 0;">
 
-<p style="font-size:20px;padding:12px 0 1px 5px;color:#a9a9a9">用餐人:</p>
+<!--<div class="tip_b">-->
+    <!--<div>-->
+        <!--<div>-->
+            <!--<strong>兑换码是什么？</strong>:-->
+        <!--</div>-->
+        <!--<div style="margin-bottom:6px">-->
+            <!--龙米印制的实体礼品卡上，会有一个兑换码，做了保密处理，需要刮开查看，在此输入即可马上兑换。兑换成功后，礼品直接寄往持卡人所填收货地址。礼品卡兑换的礼品可以定制。<br>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+<div class="m33" style="background: none;">
+    <div class="cp2_title cp2_title_h">用餐人</div>
+</div>
 <div class="mui-content">
     <ul class="mui-table-view">
 
@@ -21,7 +33,9 @@
             </li>
         </foreach>
     </ul>
-    <div class="empty_btn" style="float: right;margin:8px 5px 0 0;"><a href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'aMeal' ))}">添加用餐人</a></div>
+    <div class="empty_btn" style="float: right;margin:8px 5px 0 0;">
+        <a href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'aMeal' ))}" style="background: #b02f4b">添加用餐人</a>
+    </div>
 </div>
 
 

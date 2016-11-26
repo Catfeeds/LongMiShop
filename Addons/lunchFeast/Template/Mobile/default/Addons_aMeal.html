@@ -26,7 +26,7 @@
         display:inline-block;
         width: 33%;
         padding-left: 8px;
-        background:url('__ADDONS__/images/11-25.png' ) no-repeat -11% 49% ;
+        /*background:url('__ADDONS__/images/11-25.png' ) no-repeat -11% 49% ;*/
   }
     #triangle-down {
         width: 0;
@@ -37,11 +37,14 @@
     }
 </style>
     <div id="head" onclick="window.location.href='{: U("Mobile/Addons/lunchFeast",array("pluginName" => "addAMeal" ))}' "><span >添加新用餐人</span></div>
+
     <empty name ="list">
         <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
         <div class="empty_txt" style="color: #b2b2b2;">没有用餐人信息~</div>
         <else/>
-        <p class="mui-input-row" style="font-size:20px;padding:12px 0 1px 5px;color:#a9a9a9;background-color:white;">选择用餐人:</p>
+        <div class="m33" style="background: none;">
+            <div class="cp2_title cp2_title_h">用餐人</div>
+        </div>
         <div class="mui-content">
             <ul class="mui-table-view">
                 <foreach name="list" item="v" key="k" >

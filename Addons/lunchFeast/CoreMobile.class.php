@@ -106,11 +106,11 @@ class lunchFeastMobileController
         $today = strtotime(date('Y-m-d',strtotime("+1 day")));
         if ($type == "0") {
             $where['status'] = "1";
-            $where['date'] = array("egt",$today);
+//            $where['date'] = array("egt",$today);
         }
         if ($type == "1") {
             $where['status'] = array("in","2,3");
-            $where['date'] = array("lt",$today);
+//            $where['date'] = array("lt",$today);
         }
         $where['user_id'] = $this->userInfo ['user_id'];
         $count = getCountWithCondition(TB_ORDER, $where);
