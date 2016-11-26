@@ -1,4 +1,5 @@
 <include file="$headerPath"/>
+<link href="__ADDONS__/css/dateSelect.css" rel="stylesheet" />
 <style>
     .container img{ width: 100% !important;}
     .nav_d li{}
@@ -13,7 +14,10 @@
         border-right:1px white solid;
         background-color: #b02f4b;
     }
-    .nav_d
+    .my33 li{
+        height: 30px; line-height: 30px;
+        background: none;
+    }
 
 </style>
 <div class="container">
@@ -34,10 +38,12 @@
 </div>
 <div id="address" class="mui-popover mui-popover-bottom mui-popover-action" style="height:100%;background-color: #FFF;">
     <div class="m33">
-        <div class="cp2_titel">用餐地点
-            <div class="titel_box_r" id="closeAddress" >关闭</div>
+        <div class="titel_box_r" id="closeAddress" >
+            <img src="__STATIC__/SVG/padlockImg.svg" alt="">
         </div>
-
+    </div>
+    <div class="m33">
+        <div class="cp2_titel">用餐地点</div>
     </div>
     <ul class="mui-table-view">
         <volist name="shopList" id="shopItem">
@@ -60,86 +66,145 @@
         </volist>
     </ul>
 </div>
-<div id="buy" class="mui-popover mui-popover-action mui-popover-bottom" style="height:100%;background-color: #FFF;">
-<!--<div id="buy" class="mui-popover mui-popover-action mui-popover-bottom mui-active" style="height:100%;display: block;background-color: #FFF;">-->
+<div id="buy" class="mui-popover mui-popover-action mui-popover-bottom mui-active" style="height:100%;background-color: #FFF;">
+    <!--<div id="buy" class="mui-popover mui-popover-action mui-popover-bottom mui-active" style="height:100%;display: block;background-color: #FFF;">-->
     <div class="m33">
-        <div class="cp2_titel">用餐地点
-            <div class="titel_box_r" id="closeBuy" >关闭</div>
+        <div class="titel_box_r" id="closeBuy" >
+            <img src="__STATIC__/SVG/padlockImg.svg" alt="">
         </div>
-
+    </div>
+    <div class="m33">
+        <div class="cp2_title cp2_title_h" >用餐地点</div>
     </div>
     <form method="post" action="{: U('Mobile/Addons/lunchFeast')}" id="refForm">
-    <div class="my_nav" style="margin-top: 0px;border-top-width: 1px;border-top-style: solid;border-top-color: #E3E3E3;">
-        <ul>
-            <li>
-                <a href="#address" id="chooseName" >{$shopList.0.shop_name}</a>
-                <input name="shopId" id="shop_id" value="{$shopList.0.id}" type="hidden">
-                <input type="hidden" name="pluginName" value="foods">
-            </li>
-        </ul>
-    </div>
-    <div class="m33">
-        <div class="cp2_titel">预约时间</div>
-    </div>
-    <div class="my33">
-        <div id="ajaxShopMealList">
-            <select name="date">
-                <for start="$today" end="$lastDay"  step="24*60*60"  >
-                    <option value="{$i}">{$i|date="Y-m-d",###}</option>
-                </for>
-            </select>
-            <!--<ul >-->
-            <!--<foreach item="shopMealItem" name="shopMealList">-->
-            <!--<li onclick="switch_spec(this);">-->
-            <!--<p>-->
-            <!--<a href="javascript:;" >{$shopMealItem['date']|date="Y-m-d",###}</a>-->
-            <!--</p>-->
-            <!--&lt;!&ndash;<input type="radio" style="display:none;" name="" value="{$mealItem['id']}" />&ndash;&gt;-->
-            <!--</li>-->
-            <!--</foreach>-->
-            <!--</ul>-->
+        <div class="my_nav" style="margin-top: 0px;border-top-width: 1px;border-top-style: solid;border-top-color: #E3E3E3;">
+            <ul>
+                <li>
+                    <a href="#address" id="chooseName" >{$shopList.0.shop_name}</a>
+                    <input name="shopId" id="shop_id" value="{$shopList.0.id}" type="hidden">
+                    <input type="hidden" name="pluginName" value="foods">
+                </li>
+            </ul>
         </div>
-    </div>
-    <div class="m33">
-        <div class="cp2_titel">进餐时间</div>
-    </div>
-    <div class="my33">
-        <select name="mealId">
-            <foreach item="mealItem" name="mealList">
-                <option value="{$mealItem['id']}">{$mealItem['name']}</option>
-            </foreach>
-        </select>
-        <!--<ul>-->
-            <!--<foreach item="mealItem" name="mealList">-->
-                <!--<li onclick="switch_spec(this);">-->
-                    <!--<p>-->
-                        <!--<a href="javascript:;"  title="{$mealItem['name']}" >{$mealItem['name']}</a>-->
-                    <!--</p>-->
-                    <!--<input type="radio" style="display:none;" name="" value="{$mealItem['id']}" />-->
-                <!--</li>-->
-            <!--</foreach>-->
-        <!--</ul>-->
-    </div>
-    <div class="m33_btn nav_d" id="next1">
-        <a href="javascript:void(0);"  onclick="newSubmit();">查看当日菜品</a>
-    </div>
+        <div class="m33">
+            <div class="cp2_title" id="sp1">预约时间</div>
+        </div>
+        <div class="my33">
+            <div id="ajaxShopMealList">
+                <select name="date" style="display:none;" id="date">
+                    <for start="$today" end="$lastDay"  step="24*60*60"  >
+                        <option value="{$i}">{$i|date="Y-m-d",###}</option>
+                    </for>
+                </select>
+                <div class="tz-datepicker" id="datepicker_date" >
+                    <div class="week" style="height: 30px; margin-bottom: 5px;">
+                        <ul>
+                            <li>日</li>
+                            <li>一</li>
+                            <li>二</li>
+                            <li>三</li>
+                            <li>四</li>
+                            <li>五</li>
+                            <li>六</li>
+                        </ul>
+                    </div>
+                    <div class="day">
+                        <ul id="myDay">
+                            <img src="__STATIC__/images/loading.gif" style=" margin:0px auto;width:90px !important; height:90px !important">
+                        </ul>
+                    </div>
+                    <p id="dateView" style="text-align: center;width: 100%; color: #666;"></p>
+                </div>
+            </div>
+        </div>
+        <div class="m33">
+            <div class="cp2_title" id="sp2">进餐时间</div>
+        </div>
+        <div class="my33">
+            <select name="mealid" style="display: none;">
+                <foreach item="mealItem" name="mealList">
+                    <option value="{$mealItem['id']}">{$mealItem['name']}</option>
+                </foreach>
+            </select>
+            <div class="tz-datepicker" >
+                <ul id="myMeal">
+                    <foreach item="mealItem" name="mealList">
+                        <li onclick="switch_spec(this);" data-mealid = "{$mealItem['id']}">
+                            <p>
+                                <a href="javascript:;"  title="{$mealItem['name']}" >{$mealItem['name']}</a>
+                            </p>
+                        </li>
+                    </foreach>
+                </ul>
+            </div>
+            <p id="mealView" style="text-align: center;width: 100%; color: #666;"></p>
+        </div>
+        <div class=" nav_d" >
+            <a href="javascript:void(0);"  onclick="newSubmit();">查看当日菜品</a>
+        </div>
     </form>
 </div>
 
 
 <script>
+
+    var _w = {};
+    function switch_date(spec)
+    {
+        if( $(spec).hasClass("myGray") ){
+            return;
+        }
+        $("#mealView").html("");
+        $("#sp2").removeClass("cp2_title_h");
+        $("#sp1").addClass("cp2_title_h");
+        $(".m33_hover").removeClass('m33_hover');
+        $(spec).siblings().removeClass('active');
+        $(spec).addClass('active');
+        var date = $(spec).data("id");
+        var dateView = $(spec).data("view");
+        $("#date").val(date);
+        $("#dateView").html(dateView);
+        myGrayMeal();
+    }
+
     function switch_spec(spec)
     {
-        if( $(spec).hasClass("gray") ){
+        if( !$("#sp1").hasClass("cp2_title_h") ){
+            alert("请先选择预约时间");
+            return;
+        }
+        if( $(spec).hasClass("myGray") ){
             return;
         }
         $(spec).siblings().removeClass('m33_hover');
         $(spec).addClass('m33_hover');
-        $(spec).siblings().children('input').prop('checked',false);
-        $(spec).find('input').prop('checked',true);
-        get_goods_price();
+        var mealid = $(spec).data("mealid");
+        $("#mealList").val(mealid);
+        $("#sp2").addClass("cp2_title_h");
+        var date = $("#date").val();
+        $("#mealView").html(_w["date"][date][mealid]["money"]+"/人");
+
+    }
+    function myGrayMeal(){
+        $("#myMeal li").each(function(){
+            var id = $(this).data("mealid");
+            var date = $("#date").val();
+            if(_w["date"][date][id]["is_null"]  == true){
+                $(this).addClass("myGray");
+            }else{
+                $(this).removeClass("myGray");
+            }
+        });
     }
     function newSubmit(){
+        if( !$("#sp1").hasClass("cp2_title_h") ){
+            alert("请选择预约时间");
+            return;
+        }
+        if( !$("#sp2").hasClass("cp2_title_h") ){
+            alert("请选择用餐时间");
+            return;
+        }
         $('#refForm').submit();
     }
     $(function(){
@@ -150,6 +215,7 @@
             mui('#address').popover('toggle');
             mui('#buy').popover('toggle');
         });
+        getDateList();
     });
 
     //选择用餐地点
@@ -159,6 +225,63 @@
         $('#chooseName').text(name);
         $('#shop_id').val(id);
         $("#closeAddress").trigger("click");
+        getDateList();
+    }
+    
+    function getDateList() {
+        $("#sp1").removeClass("cp2_title_h");
+        $("#sp2").removeClass("cp2_title_h");
+        $(".m33_hover").removeClass('m33_hover');
+        $("#mealView").html("");
+        var shop_id = $("#shop_id").val();
+        var loadHtml = '<img src="__STATIC__/images/loading.gif" style=" margin:0px auto;width:90px !important; height:90px !important">';
+        $("#myDay").html(loadHtml);
+        $("#dateView").html("");
+        $.ajax({
+            type: "get",
+            url: "{:U('Mobile/Addons/lunchFeast')}",
+            data:{pluginName:"getDateList",shopId:shop_id},
+            dataType:"json",
+            success: function (data) {
+                if( data.state == 1){
+                    _w = data.data;
+                    var list = data.data.date;
+                    var html = "";
+                    var is_one = true;
+                    for( var key in list){
+                        html += '<li data-id="';
+                        html += list[key]['date'];
+                        html += '" data-view="';
+                        html += list[key]['dateView'];
+                        html += '" class="';
+                        if(list[key]["is_null"] == true ){
+                            html += ' myGray ';
+                        }
+                        html += '" ';
+                        if(list[key]["is_null"] != true ){
+                            html += ' onclick="switch_date(this);" ';
+                        }
+
+                        if( is_one == true ){
+                            is_one = false;
+                            html += ' style="margin-left:';
+                            html += data['data']['marginLeft'];
+                            html += 'px"';
+                        }
+                        html += ' data-meal="" data-money"';
+                        html += '" ';
+                        html += '>';
+                        html += list[key]['htmlView'];
+                        html += '</li>';
+                    }
+                    $("#myDay").html(html);
+//                    $("#dateView").html("请选择时间");
+                }
+            },
+            error:function(){
+                alert("网络错误");
+            }
+        });
     }
 </script>
 <include file="$footerPath"/>

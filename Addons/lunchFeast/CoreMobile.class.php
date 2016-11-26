@@ -343,4 +343,42 @@ class lunchFeastMobileController
         }
         exit;
     }
+
+
+    public function getDateList(){
+        $shopId = I("shopId");
+        $returnArray = array();
+        $mealList = selectMealList();
+        $today = strtotime(date('Y-m-d',strtotime("+1 day")));
+        $lastDay = strtotime(date("Y-m-d",strtotime("+1 month +1 day")));
+        for( $i =$today ;$i < $lastDay; $i+=24*60*60 ){
+            $returnArray[$i] = array(
+                "is_null" => true,
+                "date" => $i,
+                "dateView" => date("Y-m-d", $i),
+                "htmlView" => date("d", $i),
+            );
+            foreach ($mealList as $mealKey => $mealItem){
+                $returnArray[$i][$mealKey] = array("is_null"=>true);
+            }
+        }
+        $condition = array(
+            "shop_id" => $shopId
+        );
+        $goodsList = selectDataWithCondition( TB_GOODS , $condition );
+        if( !empty( $goodsList ) ){
+            foreach ( $goodsList as $goodsItem  ){
+                if( !empty( $goodsItem["content"] ) && !empty( $goodsItem["money"] ) && $goodsItem["money"] > 0 && !empty($returnArray[$goodsItem['date']])){
+                    $returnArray[$goodsItem['date']][$goodsItem['meal_id']] = $goodsItem;
+                    $returnArray[$goodsItem['date']][$goodsItem['is_null']] = false;
+                    $returnArray[$goodsItem['date']]["is_null"] = false;
+                }
+            }
+        }
+        $return = array(
+            "marginLeft" =>( (date("w",$today) * 40) + 5),
+            "date" => $returnArray,
+        );
+        exit(json_encode(callback(true,"",$return)));
+    }
 }
