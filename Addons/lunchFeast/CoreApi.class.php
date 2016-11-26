@@ -49,55 +49,43 @@ class lunchFeastApiController
     }
     //验证核销码
     public function verification(){
-        if( !lunchFeastApiUserToken(I("token")) ){
-            exit(json_encode(callback(false, "签名错误")));
-        }
+        $token = I("token");
         $code = I("code");
-        $condition = array(
-            "code" => $code,
-            "is_use" => 0,
-            "use_time" => "0",
-            "admin_id" => "0",
-        );
-        if( isExistenceDataWithCondition( "addons_lunchfeast_order_user" ,$condition ) ){
-            exit(json_encode(callback(true)));
+        lunchFeastApiVerificationCode( $code , $token );
+        exit(json_encode(callback(true)));
+    }
+    //获取信息
+    public function getCodeInfo(){
+        $token = I("token");
+        $code = I("code");
+        $date = lunchFeastApiVerificationCode( $code , $token );
+        $shopInfo = findDataWithCondition( "addons_lunchfeast_shop" , array("id" => $date['orderInfo']["shop_id"]) );
+        if( empty( $shopInfo ) ){
+            exit(json_encode(callback(false, "未找到相应的店铺")));
         }
-        exit(json_encode(callback(false, "未找到相应的核销码")));
+        $mealList = selectMealList();
+        $returnData = array(
+            "code" => $code,
+            "shopName" => $shopInfo['shop_name'],
+            "dateTime" => date("Y-m-d",$date['orderInfo']['date']),
+            "mealTime" => $mealList[$date['orderInfo']['meal_id']],
+        );
+        exit(json_encode(callback(true, "" , $returnData)));
     }
     //使用核销码
     public function useCode(){
-        if( !lunchFeastApiUserToken(I("token")) ){
-            exit(json_encode(callback(false, "签名错误")));
-        }
-        $userInfo = findDataWithCondition( "addons_lunchfeast_admin" , array('token' => I("token") ));
-
+        $token = I("token");
         $code = I("code");
-        $condition = array(
-            "code" => $code,
-            "is_use" => 0,
-            "use_time" => "0",
-            "admin_id" => "0",
-        );
-        $codeInfo =  findDataWithCondition( "addons_lunchfeast_order_user" ,$condition );
-        if( empty( $codeInfo ) ){
-            exit(json_encode(callback(false, "未找到相应的核销码")));
-        }
-        $condition2 = array(
-            "id" => $codeInfo["order_id"]
-        );
-        $orderInfo =  findDataWithCondition( "addons_lunchfeast_order" ,$condition2  );
-        if( empty( $orderInfo ) ){
-            exit(json_encode(callback(false, "未找到相应的订单")));
-        }
-        if( $userInfo["shop_id"] > 0  && $orderInfo['shop_id'] != $userInfo["shop_id"] ){
+        $date = lunchFeastApiVerificationCode( $code , $token );
+        if( $date['userInfo']["shop_id"] > 0  && $date['orderInfo']['shop_id'] != $date['userInfo']["shop_id"] ){
             exit(json_encode(callback(false, "你不能核销其他店的核销码")));
         }
         $save = array(
             "use_time" => time(),
-            "admin_id" => $userInfo["id"],
+            "admin_id" => $date['userInfo']["id"],
             "is_use" => 1
         );
-        saveData( "addons_lunchfeast_order_user", $condition ,$save );
+        saveData( "addons_lunchfeast_order_user", array("id"=>$date['codeInfo']["id"]) ,$save );
         exit(json_encode(callback(true)));
     }
 }

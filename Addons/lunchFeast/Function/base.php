@@ -121,3 +121,35 @@ function lunchFeastApiUserToken( $token ){
     }
     return false;
 }
+
+/**
+ * 核销码验证
+ * @param $code
+ * @param $token
+ * @return array
+ */
+function lunchFeastApiVerificationCode( $code , $token ){
+    $userInfo = findDataWithCondition( "addons_lunchfeast_admin" , array('token' => $token ));
+    if( empty($userInfo) ){
+        exit(json_encode(callback(false, "用户不存在")));
+    }
+    $codeInfo = findDataWithCondition( "addons_lunchfeast_order_user" ,array( "code" => $code ) );
+    if( empty($codeInfo) ){
+        exit(json_encode(callback(false, "核销码不存在")));
+    }
+    if( $codeInfo["is_use"] == 1 ){
+        exit(json_encode(callback(false, "核销码已使用")));
+    }
+    $orderInfo =  findDataWithCondition( "addons_lunchfeast_order" , array("id" => $codeInfo["order_id"])  );
+    if( empty( $orderInfo ) ){
+        exit(json_encode(callback(false, "订单不存在")));
+    }
+    if( $orderInfo["date"] <  strtotime(date("Y-m-d",time())) ){
+        exit(json_encode(callback(false, "订单已过期")));
+    }
+    return array(
+        "userInfo" => $userInfo,
+        "codeInfo" => $codeInfo,
+        "orderInfo" => $orderInfo,
+    );
+}
