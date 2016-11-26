@@ -91,6 +91,10 @@ class lunchFeastApiController
             "is_use" => 1
         );
         saveData( "addons_lunchfeast_order_user", array("id"=>$date['codeInfo']["id"]) ,$save );
+        $useNumber = getCountWithCondition( "addons_lunchfeast_order_user" , array("is_use"=>1,"order_id" =>$date['orderInfo']["id"] ));
+        if( $useNumber == $date['orderInfo']["number"]){
+            saveData( "addons_lunchfeast_order", array("id" => $date['orderInfo']["id"] ) ,array("status"=>2) );
+        }
         exit(json_encode(callback(true)));
     }
 }
