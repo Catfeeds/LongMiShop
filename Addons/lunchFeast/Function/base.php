@@ -52,6 +52,8 @@ function addonsPayData( $orderId ){
             $payData['goUrl'] = U('Mobile/Addons/lunchFeast', array("pluginName" => "results" , "id" => $id ) );
             $payData['backUrl'] = U('Mobile/Addons/lunchFeast', array("pluginName" => "payBack" , "id" => $id ));
             $payData['notifyUrl'] =  SITE_URL.'/index.php/Api/Addons/lunchFeast/pluginName/notifyUrl';
+        }else{
+            die("<script>history.go(-1);</script>");
         }
     }
     return $payData;
