@@ -30,6 +30,10 @@ class lunchFeastMobileController
         if( empty( $mealList ) ){
             return addonsError( "还没设置时间" );
         }
+        $today = strtotime(date('Y-m-d',strtotime("+1 day")));
+        $lastDay = strtotime(date("Y-m-d",strtotime("+1 month +1 day")));
+        $this -> assignData['today'] = $today;
+        $this -> assignData['lastDay'] = $lastDay;
         $this -> assignData['regionList'] = get_region_list();
         $this -> assignData["shopList"] = $shopList;
         $this -> assignData["mealList"] = $mealList;
@@ -120,6 +124,7 @@ class lunchFeastMobileController
                 $orderList[$orderKey]["shopData"] = findDataWithCondition( TB_SHOP , array( "id" => $orderItem["shop_id"] ) );
             }
         }
+        $this->assignData['today'] = $today;
         $this->assignData['show'] = $show;
         $this->assignData['lists'] = $orderList;
         $this->assignData['p'] = I('p');
@@ -265,7 +270,7 @@ class lunchFeastMobileController
                 'date'=>$ShopData['date'], //就餐时间
                 'meal_id'=>$ShopData['meal_id'], //菜品id
                 'shop_id'=>$ShopData['shop_id'], //店铺id
-                'meal_content'=>$ShopData['meal_content'], //菜品
+                'meal_content'=>$ShopData['content'], //菜品
                 'number'=>$countPer,
                 'user_id'=>$userId, //用户id
             );

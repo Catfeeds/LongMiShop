@@ -121,7 +121,7 @@
             <div class="cp2_title" id="sp2">进餐时间</div>
         </div>
         <div class="my33">
-            <select name="mealid" style="display: none;">
+                <select name="mealId" id="mealList" style="display: none;">
                 <foreach item="mealItem" name="mealList">
                     <option value="{$mealItem['id']}">{$mealItem['name']}</option>
                 </foreach>
