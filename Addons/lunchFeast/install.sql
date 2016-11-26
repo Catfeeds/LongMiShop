@@ -92,8 +92,8 @@ CREATE TABLE `lm_addons_lunchfeast_order_user` (
   `order_id` int(11) DEFAULT NULL COMMENT '订单id',
   `diningper_id` int(11) DEFAULT NULL,
   `is_use` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否核销',
-  `use_time` int(11) DEFAULT NULL COMMENT '核销时间',
-  `admin_id` int(11) DEFAULT NULL COMMENT '核销员id',
+  `use_time` int(11) DEFAULT '0' COMMENT '核销时间',
+  `admin_id` int(11) DEFAULT '0' COMMENT '核销员id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

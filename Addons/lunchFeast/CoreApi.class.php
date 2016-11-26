@@ -56,8 +56,8 @@ class lunchFeastApiController
         $condition = array(
             "code" => $code,
             "is_use" => 0,
-            "use_time" => array("eq",""),
-            "admin_id" => array("eq",""),
+            "use_time" => "0",
+            "admin_id" => "0",
         );
         if( isExistenceDataWithCondition( "addons_lunchfeast_order_user" ,$condition ) ){
             exit(json_encode(callback(true)));
@@ -75,8 +75,8 @@ class lunchFeastApiController
         $condition = array(
             "code" => $code,
             "is_use" => 0,
-            "use_time" => array("eq",""),
-            "admin_id" => array("eq",""),
+            "use_time" => "0",
+            "admin_id" => "0",
         );
         $codeInfo =  findDataWithCondition( "addons_lunchfeast_order_user" ,$condition );
         if( empty( $codeInfo ) ){
