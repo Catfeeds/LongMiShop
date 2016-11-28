@@ -442,7 +442,7 @@ class lunchFeastMobileController
         $this->assignData['noNeedCss'] = true;
         $this->assignData['inviteData'] = getCallbackData($inviteData);
         $this->assignData['beInviteData'] = getCallbackData($beInviteData);
-        $this->assignData['number'] = getCallbackData($this ->userInfo['user_id']);
+        $this->assignData['number'] = lunchFeastGetInviteNumber($this ->userInfo['user_id']);
         return $this->assignData;
     }
 

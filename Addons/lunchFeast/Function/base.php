@@ -121,6 +121,39 @@ function lunchFeastGiveGift( $userID = null , $value = null , $type = 1 , $isInv
 
 
 /**
+ * 获取邀请人列表
+ * @param $userId
+ * @return mixed
+ */
+function lunchFeastGetInviteList( $userId ){
+    $list = M('addons_lunchfeast_invite_list') -> where(array("parent_user_id" => $userId)) -> order('create_time desc') -> select();
+    if( !empty( $list ) ){
+        foreach ( $list as $key => $item){
+            $list[$key]['userInfo'] = findDataWithCondition( "users" , array( "user_id" => $item['user_id'] ) );
+        }
+    }
+    return $list;
+}
+
+/**
+ * 获取邀请人数量
+ * @param $userId
+ * @return mixed
+ */
+function lunchFeastGetInviteNumber( $userId ){
+    return M('addons_lunchfeast_invite_list') -> where(array("parent_user_id" => $userId)) -> count();
+}
+
+/**
+ * 获取邀请人id
+ * @param $userId
+ * @return mixed
+ */
+function lunchFeastGetInvitedUserId( $userId ){
+    $invitedUserInfo = findDataWithCondition( "addons_lunchfeast_invite_list" , array("user_id" => $userId) , "parent_user_id" );
+    return $invitedUserInfo['parent_user_id'];
+}
+/**
  * 获取礼品情况
  * @param null $value
  * @param int $type
