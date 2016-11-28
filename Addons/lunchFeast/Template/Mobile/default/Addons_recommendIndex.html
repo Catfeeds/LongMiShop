@@ -1,0 +1,14 @@
+<include file="$headerPath"/>
+<link href="__ADDONS__/css/activity.css" rel="stylesheet" type="text/css">
+<div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
+<div class="main">
+    <div class="logo"><img src="__STATIC__/SVG/logo.svg" width="70" height="100"></div>
+    <div class="t1"><img src="__STATIC__/images/cd.png" width="464" height="502"></div>
+    <div class="t2">送给朋友{$beInviteData.point}{$beInviteData.balance}{$beInviteData.coupon.money}元，TA购买成功后</div>
+    <div class="t3">你赚{$inviteData.point}{$inviteData.balance}{$inviteData.coupon.money}元</div>
+    <div class="t4"><a href="{:U('Mobile/Recommend/rule')}">分享有礼规则</a></div>
+    <div class="t5"><a href="javascript:share();">邀请好友</a></div>
+    <div class="t6"><a href="{:U('Mobile/Recommend/recommendList')}">我推荐了<span>{$number}</span>人</a></div>
+    <div class="t7"></div>
+</div>
+<include file="$footerPath"/>
