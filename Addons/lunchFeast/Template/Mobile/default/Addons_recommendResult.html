@@ -1,0 +1,66 @@
+<include file="$headerPath"/>
+<link href="__ADDONS__/css/activity.css" rel="stylesheet" type="text/css">
+
+<if condition ="$isNewUser">
+    <div class="main">
+        <div class="logo">
+            <img src="__ADDONS__/images/addons_logo.png" >
+        </div>
+        <div class="t1">
+            <img src="__ADDONS__/images/recommend_banner.jpg" style=" width: 200px;">
+        </div>
+        <div class="t2" style="margin: 10px 0;">
+            恭喜你，成功领取新用户红包<br>
+            快去宴午预定吧
+        </div>
+        <div class="t11">
+            <div class="e1">
+                <div class="e1_left">234 {$beInviteData['coupon']['name']}<br>
+                    <span>满{$beInviteData['coupon']['condition']}元可用</span> </div>
+                <div class="e1_right">{$beInviteData['coupon']['money']}</div>
+            </div>
+            <div class="e2">有效期至：{:date("Y-m-d",$beInviteData['coupon']['use_end_time']);}</div>
+        </div>
+        <div class="t5">
+            <a href="{:U('Mobile/Addons/lunchFeast')}">立即使用</a>
+        </div>
+        <div class="t12">
+            <p style=" font-size:16px;text-align:center; line-height:30px">活动说明</p>
+            <ul >
+                <li>您的朋友若从未在宴午进行过消费，可以通过您分享的链接领取“新人券”；</li>
+                <li>您的朋友只要在完成领券行为后进行首次消费，则您就可获得返利奖励，返利现金会立即存入您的账户余额；</li>
+                <li>每个新人只能领取一次“新人券”；</li>
+                <li>您若获得现金奖励，可在公众号商城的“个人中心-余额“中查询，余额可用于支付买米费用，暂不支持余额+微信的混合支付模式。</li>
+            </ul>
+        </div>
+        <div class="t13">
+            <img src="__STATIC__/images/xx2.jpg" width="84" height="84">
+            <p>
+                长按二维码码关注龙米<br>
+                首次消费后即可废朋友送券<br>
+                与朋友一通分享
+            </p>
+        </div>
+    </div>
+    <else/>
+    <div class="main">
+        <div class="logo">
+            <img src="__ADDONS__/images/addons_logo.png" >
+        </div>
+        <div class="t1">
+            <img src="__ADDONS__/images/recommend_banner.jpg">
+        </div>
+        <div class="t2" style="margin: 10px 0;">
+            您已经是宴午的老朋友啦<br>
+            仅限新用户参与
+        </div>
+        <div class="t6" style="text-align: center;">
+            <a>邀请好友，可以赢大红包哦</a>
+        </div>
+        <div class="t5">
+            <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendIndex'));}">送好友红包，奖励拿不停</a>
+        </div>
+    </div>
+</if>
+
+<include file="$footerPath"/>

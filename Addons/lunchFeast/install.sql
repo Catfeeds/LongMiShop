@@ -1,5 +1,16 @@
 SET FOREIGN_KEY_CHECKS=0;
 
+DROP TABLE IF EXISTS `lm_addons_lunchfeast_invite_list`;
+CREATE TABLE `lm_addons_lunchfeast_invite_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `parent_user_id` int(11) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  `update_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 DROP TABLE IF EXISTS `lm_addons_lunchfeast_shop`;
 CREATE TABLE `lm_addons_lunchfeast_shop` (

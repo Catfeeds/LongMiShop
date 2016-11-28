@@ -439,21 +439,26 @@ class lunchFeastMobileController
     }
 
     public function recommendList(){
-        $list = getInviteList($this ->user_id);
-        $this -> assign('list',$list);
-        $this -> display();
+        $list = getInviteList($this ->userInfo['user_id']);
+        $this->assignData['list'] = $list;
+        $this->assignData['noNeedCss'] = true;
+        return $this->assignData;
     }
 
 
     public function recommendRule(){
-        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
-        $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );
-        $this -> assign('inviteData',getCallbackData($inviteData));
-        $this -> assign('beInviteData',getCallbackData($beInviteData));
-        $this -> display();
+        $shopConfig = getShopConfig();
+        $inviteData = getGiftInfo( $shopConfig['prize_invite_value'] , $shopConfig['prize_invite'] );
+        $beInviteData = getGiftInfo( $shopConfig['prize_invited_to_value'] , $shopConfig['prize_invited_to'] );
+        $this->assignData['noNeedCss'] = true;
+        $this->assignData['inviteData'] = getCallbackData($inviteData);
+        $this->assignData['beInviteData'] = getCallbackData($beInviteData);
+        return $this->assignData;
     }
 
     public function recommendShare(){
+        $this->assignData['noNeedCss'] = true;
+        return $this->assignData;
         if(IS_POST){
             $inviteUserId  = I('inviteUserId');
             $mobile  = I('new_mobile');
@@ -481,38 +486,42 @@ class lunchFeastMobileController
 
         $inviteUserId = I('inviteUserId');
         if( empty($inviteUserId) ){
-            header("Location: ".U('Mobile/Index/index'));
+            header("Location: ".U('Mobile/Addons/lunchFeast'));
             exit;
         }
-        if( $this -> user_id == $inviteUserId){
-            header("Location: ".U('Mobile/Recommend/index'));
+        if( $this ->userInfo['user_id'] == $inviteUserId){
+            header("Location: ".U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendIndex')));
             exit;
         }
 
         if(
-            !empty($this ->user) &&
+            !empty($this ->userInfo) &&
             isExistenceDataWithCondition("users",array("user_id"=>$inviteUserId)) &&
-            !isExistenceDataWithCondition("invite_list",array( "user_id" =>$this ->user_id)) &&
-            !isExistenceDataWithCondition('order',array("user_id" => $this ->user_id,"pay_status" => 1))
+            !isExistenceDataWithCondition("invite_list",array( "user_id" =>$this ->userInfo['user_id']))
+//            &&!isExistenceDataWithCondition('order',array("user_id" =>$this ->userInfo['user_id'],"pay_status" => 1))
         ){
-            if( !empty($this ->user['mobile']) ){
-                header("Location: ".U('Mobile/Recommend/result',array("inviteUserId"=>$inviteUserId)));
+            if( !empty($this ->userInfo['mobile']) ){
+                header("Location: ".U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendResult',"inviteUserId"=>$inviteUserId)));
                 exit;
             }
-            $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
-            $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );
-            $this -> assign('inviteData',getCallbackData($inviteData));
-            $this -> assign('beInviteData',getCallbackData($beInviteData));
-            $this -> assign('sms_time_out',tpCache('sms.sms_time_out'));
-            $this -> assign('inviteUserId',$inviteUserId);
-            $this -> display();
+            $shopConfig = getShopConfig();
+            $inviteData = getGiftInfo( $shopConfig['prize_invite_value'] , $shopConfig['prize_invite'] );
+            $beInviteData = getGiftInfo( $shopConfig['prize_invited_to_value'] , $shopConfig['prize_invited_to'] );
+            $this->assignData['noNeedCss'] = true;
+            $this->assignData['inviteData'] = getCallbackData($inviteData);
+            $this->assignData['beInviteData'] = getCallbackData($beInviteData);
+            $this->assignData['inviteUserId'] = $inviteUserId;
+            $this->assignData['sms_time_out'] = tpCache('sms.sms_time_out');
+            return $this->assignData;
             exit;
         }
-        header("Location: ".U('Mobile/Recommend/result' ,array('inviteUserId'=>$inviteUserId)));
+        header("Location: ".U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendResult','inviteUserId'=>$inviteUserId)));
         exit;
     }
 
     public function recommendResult(){
+        $this->assignData['noNeedCss'] = true;
+        return $this->assignData;
         $inviteUserId = I('inviteUserId');
         if( empty($inviteUserId) ){
             header("Location: ".U('Mobile/Index/index'));
