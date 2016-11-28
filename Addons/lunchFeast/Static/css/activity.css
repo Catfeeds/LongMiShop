@@ -10,10 +10,7 @@ a {
 html {
 	font-size: 100%;
 	height: 100%;
-	background-image: url(../images/f-bg.jpg);
-	background-repeat: repeat-y;
-	background-position: center;
-	background-size: auto 100%;
+	background-color: #fff;
 }
 body {
 	font-family: "微软雅黑";
@@ -21,19 +18,20 @@ body {
 	height: 100%;
 	line-height: 1.5;
 	min-height: 100%;
-	padding: 10px;
-	background: #c62143;
-	position: relative;
+	/*position: relative;*/
 	width: 100%;
 	max-width: 800px;
 	margin-top: 0;
 	margin-right: auto;
 	margin-left: auto;
 	text-align: justify;
+	background-color: #fff;
 }
 .main {
-	padding-bottom: 50px;
-	margin-bottom: 60px;
+	background: #c62143;
+	padding-bottom: 20px;
+	margin: 10px;
+	min-height: 100%;
 }
 p {
 	margin-bottom: 10px;
@@ -63,61 +61,77 @@ li {
 }
 
 .logo {
-	text-align: right;
-	padding-top: 10px;
-	padding-right: 10px;
+	text-align: center;
+	padding-top: 21px;
+	width: 100%;
+}
+.logo img {
+	width: 68px;
+	height: 91px;
+	margin: 0 auto;
 }
 .t1 {
 	text-align: center;
-	margin-top: -50px;
 }
 .t1 img {
-	max-width: 160px;
+	margin-top: 30px;
+	max-width: 244px;
 	height: auto;
 	width: 100%;
 }
+.t1 img.index {
+	margin-top: 0px;
+	max-width: 180px;
+}
 .t2 {
-	font-size: 16px;
+	font-size: 14px;
+	line-height: 20px;
 	text-align: center;
+	color: #fef0ee;
 }
 .t3 {
 	font-size: 24px;
 	line-height: 50px;
 	text-align: center;
+	color: #fef0ee;
 }
 .t4 {
 	text-align: center;
-	background-image: url(../images/right.png);
-	background-repeat: no-repeat;
-	background-position: right center;
 	width: 120px;
 	margin-right: auto;
 	margin-left: auto;
+	color: #fef0ee;
 }
 .t4 a {
-	color: #999;
+	font-size: 12px;
+	color: #fff;
 }
 .t5 {
 	margin-top: 15px;
 	margin-bottom: 15px;
 }
 .t5 a {
-	border-radius: 6px;
+	border-radius: 15px;
 	line-height: 40px;
 	width: 90%;
 	display: block;
-	background-color: #f0491f;
+	background-color: #eaff02;
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
-	color: #FFF;
+	color: #c02e2e;
+	font-weight: bold;
 	font-size: 18px;
 }
 .t6 {
-	text-align: center;
+	width: 98%;
+	margin: 0 1%;
+	border: #DEDEDE 1px solid;
+	padding: 2px 1%;
+	text-align: right;
 }
 .t6 a {
-	color: #999;
+	color: #fef0ee;
 }
 .t6 span {
 	color: #F0491F;
@@ -146,7 +160,7 @@ li {
 
 
 .activity{
-	color: #858585;
+	color: #fff;
 	line-height: 24px;
 	font-weight: normal;
 }
@@ -158,12 +172,144 @@ li {
 strong{
 	border-left-width: 3px;
 	border-left-style: solid;
-	border-left-color: #F63;
+	border-left-color: #e7ff04;
 	line-height: 40px;
 	padding-left: 5px;
 	font-size: 18px;
 	font-weight: normal;
 }
 .activity span{
-	color: #F60;
+	color: #e7ff04;
+}
+
+
+.my_form{
+	position: relative;
+}
+
+.my_form .t1{
+ 	position: relative; top: 0px;
+}
+
+
+.my_form .g1{
+	position: absolute; top: 140px;
+	width: 100%;
+	text-align: center;
+}
+.my_form .g1 p{
+	color: #c62143;
+	font-size: 12px;
+	line-height: 16px;
+	margin-bottom: 0px;
+}
+.my_form .g1_b{
+	position: absolute;
+	top: 177px;
+	width: 100%;
+	text-align: center;
+}
+.my_form .g1_b input{
+	width: 188px;
+	text-align: center;
+	color: #c62143;
+	font-size: 14px;
+}
+
+
+.t11 {
+	background: url(../images/r4.png) no-repeat center;
+	height: 113px;
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	text-align: center;
+	background-size: 90% 113px;
+}
+.e1 {
+	overflow: hidden;
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-left: 20px;
+}
+.e1_left {
+	width: 100%;
+	text-align: center;
+	color: #EB481E;
+	float: left;
+	font-size: 18px;
+}
+.e1_left span {
+	color: #333;
+	font-size: 14px;
+}
+.e2 {
+	font-size: 12px;
+	margin-right: 20px;
+	margin-left: 20px;
+	border-top-width: 1px;
+	border-top-style: dashed;
+	border-top-color: #CCC;
+	text-align: center;
+	color: #999;
+	line-height: 30px;
+}
+.t12 {
+	border:1px solid #fff;
+	line-height: 20px;
+	padding: 10px;
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+	color: #fff;
+}
+.t12 span,.t12 p {
+	color: #fff;
+}
+.t12 li{
+	list-style: none;
+	margin-bottom: 20px;
+	font-size: 12px;
+}
+
+
+.t13{
+	overflow: hidden;
+	width: 90%;
+	margin: 20px 5% 0 5%;
+	height: 84px;
+}
+.t13 img{
+	float: left;
+}
+.t13 p{
+	float: right;
+	color: #fff;
+	line-height: 14px;
+	font-size: 12px;
+	margin: 36px 10px 0 0;
+}
+
+
+.code_btn{
+	width: 188px;
+	margin: 0 auto;
+}
+.code_btn #phone_code{
+	width: 92px;
+	float: left;
+}
+.code_btn a{
+	margin-left: 10px;
+	width: 80px;
+	float: left;
+	display: block;
+	background-color: #eaff02;
+	text-align: center;
+	height: 40px;
+	font-size: 12px;
+	line-height: 40px;
+	border-radius: 5px;
 }
