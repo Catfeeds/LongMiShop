@@ -6,8 +6,8 @@
 
     var ShareLink = "http://{: $_SERVER[HTTP_HOST].U('Mobile/Addons/lunchFeast',array('pluginName'=>'index'))}"; //默认分享链接
     var ShareImgUrl = "http://{$_SERVER[HTTP_HOST]}{$config['shareimg']}"; // 分享图标
-    var configTitle = "{$config['title']}";
-    var configDesc = "{$config['desc']}";
+    var ShareTitle = "{$config['title']}";
+    var ShareDesc = "{$config['desc']}";
 
 
 // 微信配置
@@ -24,29 +24,29 @@ wx.config({
 wx.ready(function(){
     // 获取"分享到朋友圈"按钮点击状态及自定义分享内容接口
     wx.onMenuShareTimeline({
-        title: title, // 分享标题
+        title: ShareTitle, // 分享标题
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
     });
 
     // 获取"分享给朋友"按钮点击状态及自定义分享内容接口
     wx.onMenuShareAppMessage({
-        title: configTitle, // 分享标题
-        desc: configDesc, // 分享描述
+        title: ShareTitle, // 分享标题
+        desc: ShareDesc, // 分享描述
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
     });
 	// 分享到QQ
 	wx.onMenuShareQQ({
-        title: configTitle, // 分享标题
-        desc: configDesc, // 分享描述
+        title: ShareTitle, // 分享标题
+        desc: ShareDesc, // 分享描述
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
 	});	
 	// 分享到QQ空间
 	wx.onMenuShareQZone({
-        title: configTitle, // 分享标题
-        desc: configDesc, // 分享描述
+        title: ShareTitle, // 分享标题
+        desc: ShareDesc, // 分享描述
         link:ShareLink,
         imgUrl:ShareImgUrl // 分享图标
 	});
