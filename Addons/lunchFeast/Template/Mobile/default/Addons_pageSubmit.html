@@ -158,7 +158,7 @@
                 success:function(res){
 //                    console.log(res);return false;
                     if(res.state == 1){
-                        $('#cart_amount_desc').text(res.data.money);
+                        $('#cart_amount_desc').text(res.data.money.toFixed(2));
                     }else{
                         alert(res.msg);
                         $('#cart_amount_desc').text(money);
