@@ -187,8 +187,13 @@ function addonsPayData( $orderId ){
         "notifyUrl" => "",
     );
     if( $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')) {
-        $payData['order'] = $order = findDataWithCondition( "addons_lunchfeast_order" , array("id" => $id));
+        $order = findDataWithCondition( "addons_lunchfeast_order" , array("id" => $id));
         if (!empty($order)) {
+            if($order['status'] != 0){
+                die("<script>history.go(-1);</script>");
+            }
+            $order["order_amount"] = $order["pay_amount"];
+            $payData['order'] = $order;
             $payData['goUrl'] = U('Mobile/Addons/lunchFeast', array("pluginName" => "results" , "id" => $id ) );
             $payData['backUrl'] = U('Mobile/Addons/lunchFeast', array("pluginName" => "payBack" , "id" => $id ));
             $payData['notifyUrl'] =  SITE_URL.'/index.php/Api/Addons/lunchFeast/pluginName/notifyUrl';

@@ -15,6 +15,7 @@ class lunchFeastMobileController
         $this -> assignData["config"] = M('addons_lunchfeast_config')->select();
         $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
         $this -> assignData["signPackage"] = $this -> weChatLogic -> getSignPackage();
+        $this -> assignData['userId'] = $this -> userInfo['user_id'];
         define("TB_SHOP", "addons_lunchfeast_shop");
         define("TB_MEAL", "addons_lunchfeast_meal_list");
         define("TB_GOODS", "addons_lunchfeast_shop_goods");
@@ -189,9 +190,15 @@ class lunchFeastMobileController
     {
         $list = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1))->select();
         $ShopData = session('ShopData');
-        $this->assignData['money'] = $ShopData['money'] * count($list);
+        $sum = $ShopData['money'] * count($list);
+        $this->assignData['money'] = $sum;
         $this->assignData['sum'] = count($list);
         $this->assignData['list'] = $list;
+        //优惠券
+        $usersLogic = new \Common\Logic\UsersLogic();
+        $result = $usersLogic -> getCanUseCoupon( $this -> userInfo['user_id'] , $sum );
+        $this->assignData['couponList'] = $result['data']['result'];
+
         return $this->assignData;
     }
     //移除用餐人
@@ -264,14 +271,40 @@ class lunchFeastMobileController
         $countPer = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1))->count();
         $seats = $shopRes['seats'] - $number; //剩余座位
         if($seats >= $countPer){
+            //总价
+            $money = $ShopData['money'] * $countPer;
+            //优惠券id
+            $couponId = I('couId');
+            $moneyRes  = $money;
+            $privilege = 0;
+            if(!empty($couponId)){
+                $where['id'] = $couponId;
+                $where['uid'] = $this -> userInfo['user_id'];
+                $couponListRes = M('coupon_list') -> where($where)->find();
+                if(!empty($couponListRes)){
+                    $wheres['id'] = $couponListRes['cid'];
+                    $couRes =  M('coupon') -> where($wheres)->find();
+                    $moneyRes = $money - intval($couRes['money']);
+                    $privilege = $money - $moneyRes;
+                }else{
+                    return addonsError( "没有此优惠券" );
+                }
+
+                //支付金额不能小于零
+                if($moneyRes <= 0){
+                    return addonsError( "支付金额不能小于零" );
+                }
+            }
             $userId = $this -> userInfo['user_id'];
             $order_sn = date('YmdHis').rand(1000,9999);
-            $order_amount = $ShopData['money'] * $countPer; //总价
-            $pay_amount = $ShopData['money'] * $countPer; //实际支付金额
+            $order_amount = $money; //总价
+            $pay_amount = $moneyRes; //实际支付金额
+            $coupon_price = $privilege; //折扣金额
             $OrderData = array(
                 'order_sn'=> $order_sn,
-                'order_amount'=>$order_amount,
-                'pay_amount' =>$pay_amount,
+                'order_amount'=> $order_amount,
+                'pay_amount' => $pay_amount,
+                'coupon_price'=> $coupon_price,
                 'status'=>'0', //状态 未支付
                 'create_time'=>time(),
                 'date'=>$ShopData['date'], //就餐时间
@@ -293,7 +326,11 @@ class lunchFeastMobileController
                     'diningper_id'=>$perItem['id'],
                     'code'=>$code
                 );
-                M('addons_lunchfeast_order_user')->add($dataData);
+                $res = M('addons_lunchfeast_order_user')->add($dataData);
+                //优惠券使用
+                if(!empty($couponId)){
+                    M('coupon_list') -> where($where)->save(array('use_time'=>time(),'plugin_name'=>ACTION_NAME,'plugin_order_id'=>$res));
+                }
             }
 
 
@@ -343,6 +380,12 @@ class lunchFeastMobileController
         );
         $res = M('addons_lunchfeast_order')->where($where)->find();
         if(!empty($res)){
+            $upData = array(
+                'plugin_order_id'=>'',
+                'use_time'=>'',
+                'plugin_name'=>'',
+            );
+            M('coupon_list') -> where(array('uid'=>$this -> userInfo['user_id'],'plugin_order_id'=>$id))->save($upData);
             M('addons_lunchfeast_order')->where($where)->delete();
             M('addons_lunchfeast_order_user')->where(array('order_id'=>$res['id']))->delete();
             header("Location: " . U("Mobile/Addons/lunchFeast",array('pluginName' => "pageSubmit")));
