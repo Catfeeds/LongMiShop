@@ -4,7 +4,8 @@
 <script type="text/javascript">
 
 
-    var ShareLink = "http://{: $_SERVER[HTTP_HOST].U('Mobile/Addons/lunchFeast',array('pluginName'=>'index'))}"; //默认分享链接
+//    var ShareLink = "http://{: $_SERVER[HTTP_HOST].U('Mobile/Addons/lunchFeast',array('pluginName'=>'index'))}"; //默认分享链接
+    var ShareLink = "http://{: $_SERVER['HTTP_HOST'].U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendShare','inviteUserId' => $userId)) }"; //默认分享链接
     var ShareImgUrl = "http://{$_SERVER[HTTP_HOST]}{$config['shareimg']}"; // 分享图标
     var ShareTitle = "{$config['title']}";
     var ShareDesc = "{$config['desc']}";
