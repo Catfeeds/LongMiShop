@@ -45,6 +45,9 @@
                         <a href="javascript:sort('mobile');">折扣金额</a>
                     </td>
                     <td class="text-left">
+                        <a href="javascript:sort('level');">店铺名字</a>
+                    </td>
+                    <td class="text-left">
                         <a href="javascript:sort('openid');">状态</a>
                     </td>
                     <td class="text-left">
@@ -77,7 +80,8 @@
                         <td class="text-right">{$list.id}</td>
                         <td class="text-left">{$list.order_amount}</td>
                         <td class="text-left">{$list.pay_amount}</td>
-                        <td class="text-left">{$list.coupon_price}
+                        <td class="text-left">{$list.coupon_price}</td>
+                        <td class="text-left">{$list.shopName}</td>
                         <td class="text-left">
                             <if condition="$list['status'] eq 0">
                                 未支付
@@ -108,7 +112,7 @@
     $('.paginate_button').each(function(){
         $(this).click(function(){
             var data = $(this).find('a').attr('data-p');
-            window.location.href = "admin/Addons/lunchFeast/pluginName/orderList/p/"+data;
+            window.location.href = "/index.php?m=Admin&c=Addons&a=lunchFeast&pluginName=orderList&p="+data;
         });
     });
 </script>
