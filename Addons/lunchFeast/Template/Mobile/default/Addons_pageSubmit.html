@@ -69,7 +69,7 @@
                 <a  onclick="payment()" style="color:#FFF">微信安全支付</a>
             </div>
             <div class="fr total"  style="float: left;margin-left:20px;">
-                {$sum}人,共:￥<span id="cart_amount_desc">{$money}</span>
+                <span id="cartSum">{$sum}</span>人,共:￥<span id="cart_amount_desc">{$price * $sum}</span>
             </div>
         </div>
 
@@ -77,6 +77,7 @@
 
 <script type="text/javascript">
     var sum = "{$sum}";
+    var price = "{$price}";
     function payment(){
         if(sum <=  0){
             alert('请选择用餐人');
@@ -100,9 +101,21 @@
                 success: function(data){
                     controls = true;
                     if(data.state == '1'){
-                        window.location.href = window.location.href;
-//                        sum = data.data.count;
-//                        $(obj).parent().parent().remove();
+//                        window.location.href = window.location.href;
+                        sum = data.data.count;
+                        $(obj).parent().parent().remove();
+                        if(sum != 0){
+                            var couponId = $("input[name='coupon']:checked").val();
+                            var moneys = sum * price;
+                            ajaxCoupon(couponId,moneys);
+                            $('#cartSum').text(sum);
+                        }else{
+                            $('#cart_amount_desc').text(0);
+                            $('#cartSum').text(0);
+                        }
+
+
+
                     }else{
                         alert(data.msg);
                     }
@@ -112,51 +125,13 @@
     }
 
     var controlss = true;
-    function addition(){
-        var chk_value =[];
-        $('input[name="cart_select"]:checked').each(function(){
-            chk_value.push($(this).val());
-        });
-        if(chk_value.length == 0){
-            alert('请选择用餐人');
-            return false;
-        }
-        if(controlss){
-            controlss = false;
-            $.ajax({
-                type : 'post',
-                url : "{: U('Mobile/Addons/lunchFeast')}",
-                data : {pluginName:'aMeal',list:chk_value},
-                dataType : 'json',
-                success : function(res){
-                    controlss = true;
-                    console.log(res);return false;
-                    if(res.state == '1'){
-                        window.location.href = "{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'pageSubmit' ))}";
-                    }else{
-                        alert(res.msg);
-                    }
-                },
-                error : function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert('网络失败，请刷新页面后重试');
-                }
-            })
-        }
 
-    }
-
-    function ajaxCoupon(){
-
-    }
-
-    $(".couponClass").change(['Data'],function(){
-        var couponId = $(this).val();
-        var money = "{$money}";
-        if(couponId != 0){
+    function ajaxCoupon(CouponId,Money){
+        if(CouponId != 0){
             $.ajax({
                 type:'post',
                 url:'/index.php?m=Mobile&c=Cart&a=ajaxCoupon',
-                data:{couponId:couponId,money:money},
+                data:{couponId:CouponId,money:Money},
                 dataType:'json',
                 success:function(res){
 //                    console.log(res);return false;
@@ -164,7 +139,7 @@
                         $('#cart_amount_desc').text(res.data.money.toFixed(2));
                     }else{
                         alert(res.msg);
-                        $('#cart_amount_desc').text(money);
+                        $('#cart_amount_desc').text(Money);
                     }
                 },
                 error:function(){
@@ -173,8 +148,22 @@
 
             });
         }else{
-            $('#cart_amount_desc').text(money);
+            $('#cart_amount_desc').text(Money);
         }
+
+    }
+
+    $(".couponClass").change(['Data'],function(){
+        var couponId = $(this).val();
+        var money = price * sum;
+        if(sum ==0){
+            alert('请选择用餐人');
+            return false;
+        }
+        ajaxCoupon(couponId,money);
+
+
+
     });
 
 
