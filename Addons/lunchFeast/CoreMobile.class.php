@@ -190,7 +190,10 @@ class lunchFeastMobileController
     {
         $list = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1))->select();
         $ShopData = session('ShopData');
+        //总价
         $sum = $ShopData['money'] * count($list);
+        //单价
+        $this->assignData['price'] = $ShopData['money'];
         $this->assignData['money'] = $sum;
         $this->assignData['sum'] = count($list);
         $this->assignData['list'] = $list;
