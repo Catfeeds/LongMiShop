@@ -83,8 +83,6 @@
             return false;
         }
         var coupon = $("input[name='coupon']:checked").val();
-//        console.log(coupon);return false;
-//        window.location.href = "{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'payment' ))}";
         window.location.href = "/index.php?m=Mobile&c=Addons&a=lunchFeast&pluginName=payment&couId="+coupon;
     }
     var controls = true;
@@ -102,8 +100,9 @@
                 success: function(data){
                     controls = true;
                     if(data.state == '1'){
-                        sum = data.data.count;
-                        $(obj).parent().parent().remove();
+                        window.location.href = window.location.href;
+//                        sum = data.data.count;
+//                        $(obj).parent().parent().remove();
                     }else{
                         alert(data.msg);
                     }
@@ -143,6 +142,10 @@
                 }
             })
         }
+
+    }
+
+    function ajaxCoupon(){
 
     }
 
