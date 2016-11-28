@@ -69,13 +69,25 @@
                 <table class="table table-bordered">
                     <tbody>
                     <tr>
+                        <td class="text-right">核销码:</td>
                         <td class="text-right">名字:</td>
                         <td class="text-right">电话:</td>
+                        <td class="text-right">状态:</td>
+                        <td class="text-right">核销时间:</td>
                     </tr>
                     <volist name="details['perList']" id="perList">
                         <tr>
+                            <td class="text-right">{$perList.code}</td>
                             <td class="text-right">{$perList.names}</td>
                             <td class="text-right">{$perList.mobile}</td>
+                            <td class="text-right">
+                                <if condition="$perList['is_use'] eq 0">
+                                    未核销
+                                    <else />
+                                    已核销
+                                </if>
+                            </td>
+                            <td class="text-right">{$perList.use_time|date='Y-m-d H:i:s',###}</td>
                         </tr>
                     </volist>
                     </tbody>

@@ -35,7 +35,7 @@
                                                 <option value="3"<if condition="$config['invite'] eq 3">selected="selected"</if>>积分</option>
                                             </select>
                                             
-                                                <select name="invite_value_select" id="invite_select" >
+                                                <select name="invite_value_select" id="invite_select" <if condition="$config['invite'] neq 1">style="display:none"</if> >
                                                     <option value="0">请选择</option>
                                                     <volist name="coupon_list" id="coupon_item">
                                                         <option value="{$coupon_item.id}" {$config['invite_value'] ==  $coupon_item['id'] ? 'selected' : ''}>{$coupon_item.name}</option>
@@ -43,7 +43,7 @@
                                                 </select>
                                             
                                             
-                                                <input type="text" name="invite_value_input" id="invite_input" style="display:none" value="{$config['invite_value']}">
+                                                <input type="text" name="invite_value_input" id="invite_input" <if condition="$config['invite'] eq 1">style="display:none"</if> value="{$config['invite_value']}">
                                             
                                             
                                         </td>
@@ -57,7 +57,7 @@
                                                 <option value="3"<if condition="$config['invited_to'] eq 3">selected="selected"</if>>积分</option>
                                             </select>
                                             
-                                            <select name="invited_to_value_select" id="invited_to_select" >
+                                            <select name="invited_to_value_select" id="invited_to_select" <if condition="$config['invited_to'] neq 1">style="display:none"</if> >
                                                 <option value="0">请选择</option>
                                                 <volist name="coupon_list" id="coupon_item">
                                                     <option value="{$coupon_item.id}" {$config['invited_to_value'] ==  $coupon_item['id'] ? 'selected' : ''}>{$coupon_item.name}</option>
@@ -66,7 +66,7 @@
                                             
                                             
                                             
-                                            <input type="text" name="invited_to_value_input" id="invite_to_input" style="display:none" value="{$config['invited_to_value']}">  
+                                            <input type="text" name="invited_to_value_input" id="invite_to_input" <if condition="$config['invited_to'] eq 1">style="display:none"</if>  value="{$config['invited_to_value']}">
                                             
                                             
                                         </td>

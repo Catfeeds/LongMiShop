@@ -29,7 +29,8 @@ class lunchFeastAdminController
             array(
                 "title" => "基础设置",
                 "act"   => "config"
-            )
+            ),
+
         );
         return $this->assignData;
     }
@@ -42,11 +43,19 @@ class lunchFeastAdminController
         if (($_GET['is_ajax'] == 1) && IS_POST) {
             C('TOKEN_ON', false);
             $data["main"] = I("main");
+            $data['title'] = I('title');
+            $data['desc'] = I('desc');
+            $data['shareimg'] = I('shareimg');
+            $data['invite'] = I('invite');
+            $data['invited_to'] = I('invited_to');
+            $data['invited_value'] = $data['invite'] == 1 ?   I('invite_value_select') :  I('invite_value_input');
+            $data['invited_to_value'] =  $data['invited_to'] == 1 ?  I('invited_to_value_select') : I('invited_to_value_input');
             if( isExistenceDataWithCondition( TB_CONFIG ) ){
                 saveData( TB_CONFIG , array() , $data);
             }else{
                 addData( TB_CONFIG , $data);
             }
+
             $return_arr = array(
                 'status' => 1,
                 'msg'    => '操作成功',
@@ -63,6 +72,8 @@ class lunchFeastAdminController
         $this->assignData['URL_imageManager'] = U('Admin/Ueditor/imageManager', array('savepath' => 'article'));
         $this->assignData['URL_getMovie'] = U('Admin/Ueditor/getMovie', array('savepath' => 'article'));
         $this->assignData['URL_Home'] = "";
+        $coupon_list = M('coupon')->select();
+        $this->assignData["coupon_list"] = $coupon_list;
         $this->assignData["config"] = $config;
         return $this->assignData;
     }
@@ -329,4 +340,5 @@ class lunchFeastAdminController
         saveData( TB_ADMIN , $condition ,  $save);
         return addonsSuccess( "删除成功" );
     }
+
 }

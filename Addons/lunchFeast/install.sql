@@ -72,7 +72,14 @@ CREATE TABLE `lm_addons_lunchfeast_diningper` (
 
 DROP TABLE IF EXISTS `lm_addons_lunchfeast_config`;
 CREATE TABLE `lm_addons_lunchfeast_config` (
-  `main` text
+  `main` text,
+  `title` varchar(255) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  `shareimg` varchar(255) DEFAULT NULL,
+  `invite` int(2) DEFAULT NULL,
+  `invited_value` varchar(255) DEFAULT NULL,
+  `invited_to` int(2) DEFAULT NULL,
+  `invited_to_value` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `lm_addons_lunchfeast_order`;

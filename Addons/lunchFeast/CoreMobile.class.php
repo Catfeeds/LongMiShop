@@ -11,6 +11,10 @@ class lunchFeastMobileController
         $this -> userInfo = $userInfo;
         $this -> assignData["headerPath"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_header.html";
         $this -> assignData["footerPath"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_footer.html";
+        $this -> assignData["share"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_share.html";
+        $this -> assignData["config"] = M('addons_lunchfeast_config')->select();
+        $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
+        $this -> assignData["signPackage"] = $this -> weChatLogic -> getSignPackage();
         define("TB_SHOP", "addons_lunchfeast_shop");
         define("TB_MEAL", "addons_lunchfeast_meal_list");
         define("TB_GOODS", "addons_lunchfeast_shop_goods");

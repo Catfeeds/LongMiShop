@@ -17,6 +17,7 @@
 <script type="text/javascript" charset="utf-8" src="__ROOT__/Public/plugins/Ueditor/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="__ROOT__/Public/plugins/Ueditor/ueditor.all.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="__ROOT__/Public/plugins/Ueditor/lang/zh-cn/zh-cn.js"></script>
+
 <script type="text/javascript">
 
     var editor;
@@ -79,7 +80,7 @@
 </script>
 <!--以上是在线编辑器 代码  end-->
 
-<form id="configForm">
+<form id="configForm" enctype="multipart/form-data">
     <div class="tab-content">
 
         <div class="tab-pane active">
@@ -89,6 +90,76 @@
                     <td>首页描述:</td>
                     <td width="85%">
                         <textarea class="span12 ckeditor" id="main" name="main" title="">{$config.main}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>分享标题:</td>
+                    <td width="85%">
+                        <input name="title" class="form-control"  value="{$config.title}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>desc:</td>
+                    <td width="85%">
+                        <textarea name="desc" class="form-control">{$config.desc}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>分享图片：</td>
+                    <td >
+                        <input type="button" value="上传图片"  onclick="GetUploadify(1,'','configImg','call_back');"/>
+                        <input type="text" class="input-sm"  name="shareimg" id="shareimg" value="{$config.shareimg}"/>
+                        <if condition="$shop['icon'] neq null">
+                            <a target="_blank" href="{$shop.shareimg}" id="shareimg2">
+                                <img width="150" height="150" src="{$shop.shareimg}">
+                            </a>
+                        </if>
+                        <span id="err_original_img" style="color:#F00; display:none;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>邀请人奖品：</td>
+                    <td>
+                        <select name="invite" id="invite">
+                            <option value="1" <if condition="$config['invite'] eq 1">selected="selected"</if>>卡券</option>
+                            <option value="2"<if condition="$config['invite'] eq 2">selected="selected"</if>>余额</option>
+                            <option value="3"<if condition="$config['invite'] eq 3">selected="selected"</if>>积分</option>
+                        </select>
+
+                        <select name="invite_value_select" id="invite_select" <if condition="$config['invite'] neq 1">style="display:none"</if> >
+                            <option value="0">请选择</option>
+                            <volist name="coupon_list" id="coupon_item"  >
+                                <option value="{$coupon_item.id}" {$config['invited_value'] ==  $coupon_item['id'] ? 'selected' : ''}>{$coupon_item.name}</option>
+                            </volist>
+                        </select>
+                        <input type="text" name="invite_value_input" id="invite_input"  value="{$config['invited_value']}" <if condition="$config['invite'] eq 1">style="display:none"</if> >
+
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>被邀请人奖品：</td>
+                    <td>
+                        <select name="invited_to" id="invited_to">
+                            <option value="1" <if condition="$config['invited_to'] eq 1">selected="selected"</if>>卡券</option>
+                            <option value="2"<if condition="$config['invited_to'] eq 2">selected="selected"</if>>余额</option>
+                            <option value="3"<if condition="$config['invited_to'] eq 3">selected="selected"</if>>积分</option>
+                        </select>
+
+                        <select name="invited_to_value_select" id="invited_to_select" <if condition="$config['invited_to'] neq 1">style="display:none"</if> >
+                            <option value="0">请选择</option>
+                            <volist name="coupon_list" id="coupon_item">
+                                <option value="{$coupon_item.id}" {$config['invited_to_value'] ==  $coupon_item['id'] ? 'selected' : ''}>{$coupon_item.name}</option>
+                            </volist>
+                        </select>
+
+
+
+                        <input type="text" name="invited_to_value_input" id="invite_to_input" <if condition="$config['invited_to'] eq 1">style="display:none"</if> value="{$config['invited_to_value']}">
+
+
                     </td>
                 </tr>
                 </tbody>
@@ -103,5 +174,46 @@
 <script>
     function ajaxSubmitForm(){
         ajax_submit_form('configForm',"{:U('Admin/Addons/lunchFeast?is_ajax=1')}");
+    }
+    // 上传商品图片成功回调函数
+    function call_back(file_url_tmp){
+        $("#shareimg").val(file_url_tmp);
+        $("#shareimg2").attr('href', file_url_tmp);
+        $("#shareimg2 img").attr('src', file_url_tmp);
+    }
+    $(document).ready(function(){
+        invite('invite');
+        invited_to('invited_to');
+    });
+    $('#invite').change(['Data'],function(){
+        invite('invite');
+    });
+
+    $('#invited_to').change(['Data'],function(){
+        invited_to('invited_to');
+    });
+
+    function invite(obj){
+        var  inviteVlaue = $("#"+obj).val();
+        if(inviteVlaue == 1){
+            $('#invite_select').show();
+            $('#invite_input').hide();
+
+        }else if(inviteVlaue == 2 || inviteVlaue == 3){
+            $('#invite_select').hide();
+            $('#invite_input').show();
+        }
+    }
+
+    function invited_to(obj){
+        var  inviteVlaue = $("#"+obj).val();
+        if(inviteVlaue == 1){
+            $('#invited_to_select').show();
+            $('#invite_to_input').hide();
+
+        }else if(inviteVlaue == 2 || inviteVlaue == 3){
+            $('#invited_to_select').hide();
+            $('#invite_to_input').show();
+        }
     }
 </script>
