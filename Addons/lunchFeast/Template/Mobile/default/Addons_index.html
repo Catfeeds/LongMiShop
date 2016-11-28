@@ -43,12 +43,21 @@
         </div>
     </div>
     <div class="m33">
-        <div class="cp2_titel">用餐地点</div>
+        <div class="cp2_title cp2_title_h" >用餐地点</div>
     </div>
     <ul class="mui-table-view">
         <volist name="shopList" id="shopItem">
             <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;" onclick="chooseShop(this)" data-id="{$shopItem['id']}" data-name="{$shopItem['shop_name']}">
+                <a href="javascript:;" onclick="chooseShop(this ,'{$shopItem.is_online}')" data-id="{$shopItem['id']}" data-name="{$shopItem['shop_name']}">
+
+                    <if condition="$shopItem['is_go']">
+                        <div class="go_and_online is_go">我去过</div>
+                    </if>
+                    <if condition="$shopItem['is_online'] neq 1">
+                        <div class="go_and_online is_online">休息中</div>
+                    </if>
+
+
                     <img class="mui-media-object mui-pull-left" src="{$shopItem['icon']}">
                     <div class="mui-media-body" style="text-align: left;">
                         <p class='mui-ellipsis'>
@@ -67,7 +76,6 @@
     </ul>
 </div>
 <div id="buy" class="mui-popover mui-popover-action mui-popover-bottom" style="height:100%;background-color: #FFF;">
-    <!--<div id="buy" class="mui-popover mui-popover-action mui-popover-bottom mui-active" style="height:100%;display: block;background-color: #FFF;">-->
     <div class="m33">
         <div class="titel_box_r" id="closeBuy" >
             <img src="__STATIC__/SVG/padlockImg.svg" alt="">
@@ -219,7 +227,11 @@
     });
 
     //选择用餐地点
-    function chooseShop(obj){
+    function chooseShop(obj,isOnline){
+        if( isOnline != 1 ){
+            alert("店铺休息中");
+            return;
+        }
         var name = $(obj).data('name');
         var id = $(obj).data('id');
         $('#chooseName').text(name);

@@ -22,7 +22,7 @@ class lunchFeastMobileController
     public function index()
     {
         $this -> assignData["config"] = findDataWithCondition( TB_CONFIG );
-        $shopList = getShopList();
+        $shopList = getShopList( $this -> userInfo["user_id"] );
         $mealList = getMealList();
         if( empty( $shopList ) ){
             return addonsError( "宴午还没有开始" );

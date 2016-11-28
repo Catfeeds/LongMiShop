@@ -1961,3 +1961,22 @@ Load—more a{
     background-color: #eaeaea !important;
     color: #898989 !important;
 }
+
+.go_and_online{
+	position: absolute;
+	right: 10px;
+	top: 0px;
+	padding:2px 5px;
+	font-size: 12px;
+}
+
+.is_go{
+	background: #ff8400;
+	color:#eee ;
+}
+.is_online{
+	color: #717171;
+	top:2px;
+	border: 1px #717171 solid;
+}
+
