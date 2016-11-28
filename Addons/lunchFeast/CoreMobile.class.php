@@ -22,7 +22,10 @@ class lunchFeastMobileController
         define("TB_CONFIG", "addons_lunchfeast_config");
         define("TB_ORDER", "addons_lunchfeast_order");
         define("TB_ORDER_USER", "addons_lunchfeast_order_user");
+        define("TB_INVITE", "addons_lunchfeast_invite_list");
+        define("TB_USER", "users");
     }
+
     //主页
     public function index()
     {
@@ -436,13 +439,13 @@ class lunchFeastMobileController
 
 
     public function recommendIndex(){
-        $shopConfig = getShopConfig();
-        $inviteData = getGiftInfo( $shopConfig['prize_invite_value'] , $shopConfig['prize_invite'] );
-        $beInviteData = getGiftInfo( $shopConfig['prize_invited_to_value'] , $shopConfig['prize_invited_to'] );
+        $shopConfig = getLunchFeastConfig();
+        $inviteData = lunchFeastGetGiftInfo( $shopConfig['invite_value'] , $shopConfig['invite'] );
+        $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
         $this->assignData['noNeedCss'] = true;
         $this->assignData['inviteData'] = getCallbackData($inviteData);
         $this->assignData['beInviteData'] = getCallbackData($beInviteData);
-        $this->assignData['number'] = getCallbackData($this ->userInfo['user_id']);
+        $this->assignData['number'] = lunchFeastGetInviteNumber($this ->userInfo['user_id']);
         return $this->assignData;
     }
 
@@ -455,9 +458,9 @@ class lunchFeastMobileController
 
 
     public function recommendRule(){
-        $shopConfig = getShopConfig();
-        $inviteData = getGiftInfo( $shopConfig['prize_invite_value'] , $shopConfig['prize_invite'] );
-        $beInviteData = getGiftInfo( $shopConfig['prize_invited_to_value'] , $shopConfig['prize_invited_to'] );
+        $shopConfig = getLunchFeastConfig();
+        $inviteData = lunchFeastGetGiftInfo( $shopConfig['invite_value'] , $shopConfig['invite'] );
+        $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
         $this->assignData['noNeedCss'] = true;
         $this->assignData['inviteData'] = getCallbackData($inviteData);
         $this->assignData['beInviteData'] = getCallbackData($beInviteData);
@@ -465,28 +468,26 @@ class lunchFeastMobileController
     }
 
     public function recommendShare(){
-        $this->assignData['noNeedCss'] = true;
-        return $this->assignData;
         if(IS_POST){
             $inviteUserId  = I('inviteUserId');
             $mobile  = I('new_mobile');
             $code = I('phone_code');
             $userLogic = new \Common\Logic\UsersLogic();
-            $info = $userLogic -> sms_code_verify($mobile,$code,$this->session_id);
+            $info = $userLogic -> sms_code_verify($mobile,$code,session_id());
             if($info['status'] == 1){
                 $where['mobile'] = $mobile;
                 $where['mobile_validated'] = 1;
-                $where['user_id'] =  $this -> user_id;
+                $where['user_id'] =  $this -> userInfo["user_id"];
                 $res = M('users')->save($where);
                 if($res){
-                    header("Location: ".U('Mobile/Recommend/result',array("inviteUserId"=>$inviteUserId)));
+                    header("Location: ".U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendResult',"inviteUserId"=>$inviteUserId)));
                     exit;
                 }else{
-                    header("Location: ".U('Mobile/Recommend/share',array("inviteUserId"=>$inviteUserId)));
+                    header("Location: ".U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendShare',"inviteUserId"=>$inviteUserId)));
                     exit;
                 }
             }else{
-                header("Location: ".U('Mobile/Recommend/share',array("inviteUserId"=>$inviteUserId)));
+                header("Location: ".U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendShare',"inviteUserId"=>$inviteUserId)));
                 exit;
             }
             exit;
@@ -504,17 +505,17 @@ class lunchFeastMobileController
 
         if(
             !empty($this ->userInfo) &&
-            isExistenceDataWithCondition("users",array("user_id"=>$inviteUserId)) &&
-            !isExistenceDataWithCondition("invite_list",array( "user_id" =>$this ->userInfo['user_id']))
-//            &&!isExistenceDataWithCondition('order',array("user_id" =>$this ->userInfo['user_id'],"pay_status" => 1))
+            isExistenceDataWithCondition(TB_USER,array("user_id"=>$inviteUserId)) &&
+            !isExistenceDataWithCondition( TB_INVITE ,array( "user_id" =>$this ->userInfo['user_id'])) &&
+            !isExistenceDataWithCondition(TB_ORDER,array("user_id" =>$this ->userInfo['user_id'],"status" => array("neq" => "0")))
         ){
             if( !empty($this ->userInfo['mobile']) ){
                 header("Location: ".U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendResult',"inviteUserId"=>$inviteUserId)));
                 exit;
             }
-            $shopConfig = getShopConfig();
-            $inviteData = getGiftInfo( $shopConfig['prize_invite_value'] , $shopConfig['prize_invite'] );
-            $beInviteData = getGiftInfo( $shopConfig['prize_invited_to_value'] , $shopConfig['prize_invited_to'] );
+            $shopConfig = getLunchFeastConfig();
+            $inviteData = lunchFeastGetGiftInfo( $shopConfig['invite_value'] , $shopConfig['invite'] );
+            $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
             $this->assignData['noNeedCss'] = true;
             $this->assignData['inviteData'] = getCallbackData($inviteData);
             $this->assignData['beInviteData'] = getCallbackData($beInviteData);
@@ -528,49 +529,46 @@ class lunchFeastMobileController
     }
 
     public function recommendResult(){
-        $this->assignData['noNeedCss'] = true;
-        return $this->assignData;
         $inviteUserId = I('inviteUserId');
         if( empty($inviteUserId) ){
-            header("Location: ".U('Mobile/Index/index'));
+            header("Location: ".U('Mobile/Addons/lunchFeast'));
             exit;
         }
+        $shopConfig = getLunchFeastConfig();
         $isNewUser = false;
-
-        if( createInviteRelationship($this ->user_id,$inviteUserId,$this ->user['nickname'],$this -> shopConfig) == true ){
+        if( lunchFeastCreateInviteRelationship($this ->userInfo["user_id"],$inviteUserId,$this ->userInfo['nickname'],$shopConfig) == true ){
             $inviteUserInfo = findDataWithCondition( "users",array("user_id"=>$inviteUserId) , " nickname" );
-            $this -> assign('inviteUserInfo',$inviteUserInfo);
+            $this->assignData['inviteUserInfo'] = $inviteUserInfo;
             $isNewUser = true;
         }
-
-
-        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
-        $beInviteData = getGiftInfo( $this -> shopConfig['prize_invited_to_value'] , $this -> shopConfig['prize_invited_to'] );
-        $this -> assign('inviteData',getCallbackData($inviteData));
-        $this -> assign('beInviteData',getCallbackData($beInviteData));
-        $this -> assign('isNewUser',$isNewUser);
-        $this -> display();
+        $inviteData = lunchFeastGetGiftInfo( $shopConfig['invite_value'] , $shopConfig['invite'] );
+        $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
+        $this->assignData['noNeedCss'] = true;
+        $this->assignData['isNewUser'] = $isNewUser;
+        $this->assignData['inviteData'] =getCallbackData($inviteData);
+        $this->assignData['beInviteData'] = getCallbackData($beInviteData);
+        return $this->assignData;
     }
 
 
 
     public function recommendSendSms(){
-        if(empty($this -> user_id)){
+        if(empty($this ->userInfo['user_id'])){
             exit( json_encode(callback( false , "用户信息有误" ) ) );
         }
         $mobile = I('send');
         if(!check_mobile($mobile)){
             exit( json_encode(callback( false , "手机号码格式有误" ) ) );
         }
-        if( isExistenceDataWithCondition("users",array('mobile'=>$mobile,'user_id'=>array('neq',$this -> user_id))) ){
+        if( isExistenceDataWithCondition("users",array('mobile'=>$mobile,'user_id'=>array('neq',$this ->userInfo['user_id']))) ){
             exit( json_encode(callback( false , "这个手机号码已经绑定了另外一个龙米账户<br>请换个手机号码" ) ) );
         }
-        if( isExistenceDataWithCondition("users",array('mobile'=>$mobile,'user_id'=>$this -> user_id)) ){
+        if( isExistenceDataWithCondition("users",array('mobile'=>$mobile,'user_id'=>$this ->userInfo['user_id'])) ){
             exit( json_encode(callback( false , "系统错误" ) ) );
         }
         $userLogic = new \Common\Logic\UsersLogic();
         $code =  rand(1000,9999);
-        $send = $userLogic -> sms_log($mobile,$code,$this->session_id);
+        $send = $userLogic -> sms_log($mobile,$code,session_id());
         if( $send['status'] != 1 ){
             exit( json_encode(callback( false , $send['msg'] ) ) );
         }

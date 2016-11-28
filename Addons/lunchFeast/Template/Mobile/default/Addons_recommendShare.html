@@ -3,6 +3,7 @@
 <div class="main">
     <form method="post" id="form">
         <input name="inviteUserId" type="hidden" value="{$inviteUserId}">
+        <input name="pluginName" type="hidden" value="recommendShare">
         <div class="logo">
             <img src="__ADDONS__/images/addons_logo.png" >
         </div>
@@ -19,8 +20,8 @@
                     <input name="new_mobile" id="new_mobile" type="text" class="g_text" placeholder="请输入手机号码">
                 </div>
                 <div class="g1_c code_btn" >
-                    <input name="phone_code" id="phone_code" type="text" class="g_text" placeholder="验证码">
-                    <a  class="g_text" >获取验证码</a>
+                    <input name="phone_code" id="phone_code"  type="text" class="g_text" placeholder="验证码">
+                    <a  class="g_text"  onClick="sendCode(this,'new_mobile')" id="cide" intervaltime="{$sms_time_out}">获取验证码</a>
                 </div>
             </div>
         </div>
@@ -35,14 +36,13 @@
 
 <script>
     var kong = true;
-//    function showTip( string ){
-//        $("#tip").html(string);
-//    }
+
     $(function(){
         $("#my_btn").click(function(){
             submit_form();
         });
     });
+
     function submit_form(){
         var new_mobile = $('#new_mobile').val();
         if(!checkMobile(new_mobile)){
@@ -51,19 +51,13 @@
         }
         if($.trim($('#phone_code').val()) == '')
         {
-            if($('#codeDiv').is(":hidden")){
-                $('#codeDiv').show();
-                return false;
-            }
             alert('验证码不能为空');
             return false;
         }
         $('#form').submit();
     }
 
-    function a_code(){
-        $('#new_code').trigger('click');
-    }
+
 
     function sendCode(obj,input_id){
         var id = $(obj).attr('id');
@@ -76,10 +70,10 @@
         if(kong){
             $.ajax({
                 type : "get",
-                url  : "/index.php?m=Mobile&c=Recommend&a=sendSms&send="+input,
+                url  : "{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendSendSms'))}?send="+input,
                 dataType : 'json',
                 error: function(request) {
-                    showTip('服务器繁忙, 请联系管理员!');
+                    alert('服务器繁忙, 请联系管理员!');
                     return;
                 },
                 success: function(res) {
@@ -87,7 +81,7 @@
                         jsInnerTimeout(id);
                         kong = false;
                     }else{
-                        showTip(res.msg);
+                        alert(res.msg);
                     }
                 }
             });
@@ -108,12 +102,12 @@
         {
             codeObj.removeAttr("disabled");
             codeObj.attr("intervaltime","{$sms_time_out}");
-            codeObj.val("获取验证码");
+            codeObj.html("获取验证码");
             kong = true;
             return true;
         }
 
-        codeObj.val(intAs+'s后再次获取');
+        codeObj.html(intAs+'s后再次获取');
         codeObj.attr("intervaltime",intAs);
 
         setTimeout("jsInnerTimeout('"+id+"')",1000);
