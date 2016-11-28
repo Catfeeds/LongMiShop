@@ -91,8 +91,21 @@ function getMealList(){
  * 获取 店铺列表
  * @return mixed
  */
-function getShopList(){
-    return selectDataWithCondition( "addons_lunchfeast_shop" , array( "is_online" => 1 ) );
+function getShopList( $userId ){
+    $shopList = selectDataWithCondition( "addons_lunchfeast_shop"  );
+    if( !empty( $shopList ) ){
+        foreach ( $shopList as $shopKey => $shopItem ){
+            $condition = array(
+                "user_id" => $userId,
+                "status" => 2,
+                "shop_id" => $shopItem['id']
+            );
+            if( isExistenceDataWithCondition( "addons_lunchfeast_order" , $condition ) ){
+                $shopList[$shopKey]["is_go"] = true;
+            }
+        }
+    }
+    return $shopList;
 }
 /**
  * 获取 店铺菜品列表
