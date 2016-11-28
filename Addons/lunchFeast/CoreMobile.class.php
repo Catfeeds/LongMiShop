@@ -286,6 +286,11 @@ class lunchFeastMobileController
                 }else{
                     return addonsError( "没有此优惠券" );
                 }
+
+                //支付金额不能小于零
+                if($moneyRes <= 0){
+                    return addonsError( "支付金额不能小于零" );
+                }
             }
             $userId = $this -> userInfo['user_id'];
             $order_sn = date('YmdHis').rand(1000,9999);
