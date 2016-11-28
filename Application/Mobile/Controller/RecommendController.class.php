@@ -7,7 +7,7 @@ class RecommendController extends MobileBaseController {
     function exceptAuthActions()
     {
         return array(
-            'share',
+//            'share',
         );
     }
     public function  _initialize() {
