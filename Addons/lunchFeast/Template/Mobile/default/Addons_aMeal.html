@@ -154,7 +154,12 @@
     }
 
     function signal(obj){
-        $(obj).find('input').trigger("click");
+        var check = $(obj).find('input').attr('checked');
+        if(check == 'checked'){
+            $(obj).find('input').attr('checked',false);
+        }else{
+            $(obj).find('input').attr('checked',true);
+        }
     }
 
 
