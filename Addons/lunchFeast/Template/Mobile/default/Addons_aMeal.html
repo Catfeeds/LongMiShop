@@ -37,11 +37,9 @@
         border-top: 50px solid red;
     }
 </style>
-<div   id="head">
-    <a  >添加新用餐人</a>
-    <!--<a  ></a>-->
+<div   id="head" onclick="window.location.href='{: U("Mobile/Addons/lunchFeast",array("pluginName" => "addAMeal" ))}' ">
+    <a >添加新用餐人</a>
 </div>
-    <!--<div id="head" onclick="window.location.href='{: U("Mobile/Addons/lunchFeast",array("pluginName" => "addAMeal" ))}' "><span >添加新用餐人</span></div>-->
 
     <empty name ="list">
         <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
