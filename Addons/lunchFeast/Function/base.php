@@ -64,6 +64,7 @@ function lunchFeastGiveInviteGift( $userId ){
         "user_id" => $userId,
         "status" => array("neq" => "0")
     );
+    setLogResult($condition,"ces4","test");
     $orderCount = getCountWithCondition( 'addons_lunchfeast_order' , $condition );
     setLogResult($orderCount,"ces","test");
     if( $orderCount == 1){
