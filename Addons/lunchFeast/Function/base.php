@@ -16,7 +16,7 @@ function lunchFeastCreateInviteRelationship( $userID , $inviteUserId , $nickname
         $userID != $inviteUserId &&
         isExistenceDataWithCondition("users",array("user_id"=>$inviteUserId)) &&
         !isExistenceDataWithCondition("addons_lunchfeast_invite_list",array( "user_id" =>$userID)) &&
-        !isExistenceDataWithCondition('addons_lunchfeast_order',array("user_id" => $userID,"status" => array("neq" => "0")))
+        !isExistenceDataWithCondition('addons_lunchfeast_order',array("user_id" => $userID,"status" => array("gt","0")))
     ){
         if( is_null( $shopConfig ) ){
             $shopConfig = getLunchFeastConfig();
@@ -62,7 +62,7 @@ function lunchFeastGiveBeInviteGift( $userId ){
 function lunchFeastGiveInviteGift( $userId ){
     $condition = array(
         "user_id" => $userId,
-        "status" => array("neq" => "0")
+        "status" => array("gt","0")
     );
     $orderCount = getCountWithCondition( 'addons_lunchfeast_order' , $condition );
     if( $orderCount == 1){
