@@ -34,7 +34,7 @@ function lunchFeastCreateInviteRelationship( $userID , $inviteUserId , $nickname
             sendWeChatMessageUseUserId( $userID , "送券" , array("couponId" => $shopConfig['invited_to_value']) );
         }
         if(  $shopConfig['invite'] == 2 ){
-            sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array( "userName" => $nickname ,"money" => $shopConfig['invite_value'] ) );
+            sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array( "userName" => $nickname ,"money" => $shopConfig['invited_value'] ) );
         }
         return true;
     }
@@ -68,11 +68,11 @@ function lunchFeastGiveInviteGift( $userId ){
     if( $orderCount == 1){
         $shopConfig = getLunchFeastConfig();
         $invitedUserId = getInvitedUserId( $userId );
-        lunchFeastGiveGift( $invitedUserId , $shopConfig['invite_value'] , $shopConfig['invite'] , 1);
+        lunchFeastGiveGift( $invitedUserId , $shopConfig['invited_value'] , $shopConfig['invite'] , 1);
         $userInfo = findDataWithCondition( "users" , array( "user_id" => $userId ) ,"nickname" );
         $shopConfig = getLunchFeastConfig( );
         if(  $shopConfig['invite'] == 2 ){
-            sendWeChatMessageUseUserId( $invitedUserId , "邀请奖励" , array("userName" => $userInfo['nickname'],"money" => $shopConfig['invite_value']) );
+            sendWeChatMessageUseUserId( $invitedUserId , "邀请奖励" , array("userName" => $userInfo['nickname'],"money" => $shopConfig['invited_value']) );
         }
         return true;
     }
@@ -105,6 +105,7 @@ function lunchFeastGiveGift( $userID = null , $value = null , $type = 1 , $isInv
         $add['type'] = 3;
         $add['uid'] = $userID;
         $add['send_time'] = time();
+        $add['receive_time'] = time();
         do{
             $code = get_rand_str(8,0,1);//获取随机8位字符串
             $check_exist = findDataWithCondition('coupon_list',array('code'=>$code),"code");
