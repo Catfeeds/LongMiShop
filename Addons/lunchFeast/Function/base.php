@@ -226,7 +226,7 @@ function addonsPayData( $orderId ){
         $order = findDataWithCondition( "addons_lunchfeast_order" , array("id" => $id));
         if (!empty($order)) {
             if($order['status'] != 0){
-                header('Location: '.U('Mobile/Addons/lunchFeast',array('pluginName','orderList')));
+                header('Location: '.U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderList')));
                 exit;
             }
             $order["order_amount"] = $order["pay_amount"];
