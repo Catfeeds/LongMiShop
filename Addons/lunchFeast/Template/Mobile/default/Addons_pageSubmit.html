@@ -1,34 +1,35 @@
 <include file="$headerPath"/>
 <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
-<!--<img src="__ADDONS__/images/11-24.png" alt="" style="width:100%;margin:10px 0;">-->
-
 <div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
     <div>
         <div>
             <strong>温馨提醒</strong>
         </div>
-        <div style="margin-bottom:6px">
-            用餐时段：中午12：30分开始；
+        <div style="  width:86%;margin: 3px 7%;">
+            ● 用餐时段：中午12：30分开始；
         </div>
-        <div style="margin-bottom:6px">
-            请在预订日期赴宴，本产品不支持过期退款；
+        <div style="  width:86%;margin: 3px 7%;">
+            ● 请在预订日期赴宴，本产品不支持过期退款；
         </div>
-        <div style="margin-bottom:6px">
-            如需开具发票，请当日到场咨询；
+        <div style="  width:86%;margin: 3px 7%;">
+            ● 如需开具发票，请当日到场咨询；
         </div>
-        <div style="margin-bottom:6px">
-            甜品，小吃品种季节性较强，以当日店家安排为准；
+        <div style="  width:86%;margin: 3px 7%;">
+            ● 甜品，小吃品种季节性较强，以当日店家安排为准；
         </div>
-        <div style="margin-bottom:6px">
-            如有疑问，请联系宴午客服。电话：4000-78-7725，微信：龙米
+        <div style="  width:86%;margin: 3px 7%;">
+            ● 如有疑问，请联系宴午客服。电话：4000-78-7725，微信：龙米
         </div>
-        <div style="margin-bottom:6px" class="my_help">
+        <div style="margin-top:15px" class="my_help">
             <a href="tel:4000787725" >需要帮助</a>
         </div>
     </div>
 </div>
-<div class="m33" style="background: none;">
-    <div class="cp2_title cp2_title_h">用餐人</div>
+<div class="m33" style="background: none;overflow: hidden;">
+    <div class="cp2_title cp2_title_h" style="width: 50%; float: left; ">用餐人</div>
+    <div class="empty_btn" style="margin:0 5px 0 0;float: right;">
+        <a href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'aMeal' ))}" style="background: #b02f4b">选择用餐人</a>
+    </div>
 </div>
 <div class="mui-content">
     <ul class="mui-table-view">
@@ -39,7 +40,7 @@
                     <a onclick="ajax_del_cart(this)" data-ids="{$v.id}" class="mui-btn mui-btn-red">取消选择</a>
                 </div>
                 <div class="mui-slider-handle">
-                    <div class="cp7" style="padding-top:0px;padding-bottom:0px;">
+                    <div class="cp7" style="padding:0px;">
                         <div class="cp1_r" style="padding-left:0;">
                             <p ><span style="display: inline-block;float:none;width:110px;">{$v.names|subtext = 5}</span>{$v.mobile}</p>
                         </div>
@@ -48,17 +49,20 @@
             </li>
         </foreach>
     </ul>
-    <div class="empty_btn" style="float: right;margin:8px 5px 5px 0;">
-        <a href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'aMeal' ))}" style="background: #b02f4b">添加用餐人</a>
-    </div>
+    <div style="clear:both;"></div>
+</div>
+
+<div class="m33" style="background: none;overflow: hidden;">
+    <div class="cp2_title cp2_title_h" style="width: 50%; float: left; ">优惠券</div>
+</div>
+<div class="mui-content">
     <div style="clear:both;"></div>
 
     <div id="CouponDiv">
-
+        <img src="__ADDONS__/images/loading.gif" style=" margin:0px auto;width:32px !important; height:32px !important">
     </div>
 
 </div>
-
 
 
         <div style="height:100px"></div>
@@ -79,6 +83,7 @@
     var cost = sum * price;
 //    console.log(price);
 
+    var loadHtml = '<img src="__ADDONS__/images/loading.gif" style=" margin:0px auto;width:32px !important; height:32px !important">';
     $(document).ready(function(){
         CouponAjaxList(cost);
 
@@ -98,13 +103,13 @@
 
 
     function CouponAjaxList(moneySum){
+        $("#CouponDiv").html(loadHtml);
         $.ajax({
             type : "post",
             url:"{: U('Mobile/Addons/lunchFeast')}",
             data :{pluginName:'ajaxCoupon',money:moneySum},// 你的formid
             success: function(data){
-                $("#CouponDiv").html('');
-                $("#CouponDiv").append(data);
+                $("#CouponDiv").html(data);
             }
         });
     }
