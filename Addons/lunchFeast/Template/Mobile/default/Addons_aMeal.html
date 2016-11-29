@@ -15,18 +15,19 @@
     #head{
         width: 100%;
         height: 50px;
-        background-color: #fff;
+        background-color: #efeff4;
         text-align: center;
         line-height: 50px;
         margin: 10px auto;
-        border: 1px solid gray;
+        border: 1px solid #b02f4b;
+        border-radius: 5px;
         color: #DA7289;
     }
-    #head span{
+    #head a{
         display:inline-block;
-        width: 33%;
+        width: 130px;
         padding-left: 8px;
-        /*background:url('__ADDONS__/images/11-25.png' ) no-repeat -11% 49% ;*/
+        background:url('__ADDONS__/images/11-25.png' ) no-repeat -11% 49% ;
   }
     #triangle-down {
         width: 0;
@@ -36,7 +37,11 @@
         border-top: 50px solid red;
     }
 </style>
-    <div id="head" onclick="window.location.href='{: U("Mobile/Addons/lunchFeast",array("pluginName" => "addAMeal" ))}' "><span >添加新用餐人</span></div>
+<div   id="head">
+    <a  >添加新用餐人</a>
+    <!--<a  ></a>-->
+</div>
+    <!--<div id="head" onclick="window.location.href='{: U("Mobile/Addons/lunchFeast",array("pluginName" => "addAMeal" ))}' "><span >添加新用餐人</span></div>-->
 
     <empty name ="list">
         <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
