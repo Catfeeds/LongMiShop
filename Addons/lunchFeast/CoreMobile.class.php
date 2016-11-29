@@ -38,6 +38,17 @@ class lunchFeastMobileController
         if( empty( $mealList ) ){
             return addonsError( "还没设置时间" );
         }
+        //默认选中店铺
+        $prefix = C('DB_PREFIX');
+        $where = $prefix."addons_lunchfeast_order.user_id = ".$this -> userInfo["user_id"]." AND ".$prefix."addons_lunchfeast_shop.is_online = 1  ";
+        $join =  $prefix."addons_lunchfeast_shop ON ".$prefix."addons_lunchfeast_order.shop_id = ".$prefix."addons_lunchfeast_shop.id";
+        $order = $prefix."addons_lunchfeast_order.create_time DESC";
+        $field = $prefix."addons_lunchfeast_shop.id,".$prefix."addons_lunchfeast_shop.shop_name";
+        $lately = M('addons_lunchfeast_order')->field($field)->join($join)->where($where)->order($order)->find();
+        if(empty($lately)){
+            $lately =  M('addons_lunchfeast_shop')->field('id,shop_name')->where(array('is_online'=>1))->order('create_time DESC')->find();
+        }
+        $this -> assignData['lately'] = $lately;
         $today = strtotime(date('Y-m-d',strtotime("+1 day")));
         $lastDay = strtotime(date("Y-m-d",strtotime("+1 month +1 day")));
         $this -> assignData['today'] = $today;
