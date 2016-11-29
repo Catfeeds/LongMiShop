@@ -15,10 +15,10 @@
             ● 如需开具发票，请当日到场咨询；
         </div>
         <div style="  width:86%;margin: 3px 7%;">
-            ● 甜品，小吃品种季节性较强，以当日店家安排为准；
+            ● 甜品，小吃品种季节性较强，<br>&nbsp;&nbsp;&nbsp;以当日店家安排为准；
         </div>
         <div style="  width:86%;margin: 3px 7%;">
-            ● 如有疑问，请联系宴午客服。电话：4000-78-7725，微信：龙米
+            ● 如有疑问，请联系宴午客服。<br>&nbsp;&nbsp;&nbsp;电话：4000-78-7725，微信：龙米
         </div>
         <div style="margin-top:15px" class="my_help">
             <a href="tel:4000787725" >需要帮助</a>
@@ -28,19 +28,19 @@
 <div class="m33" style="background: none;overflow: hidden;">
     <div class="cp2_title cp2_title_h" style="width: 50%; float: left; ">用餐人</div>
     <div class="empty_btn" style="margin:0 5px 0 0;float: right;">
-        <a href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'aMeal' ))}" style="background: #b02f4b">选择用餐人</a>
+        <a href="{: U('Mobile/Addons/lunchFeast',array('pluginName' => 'aMeal' ))}" style="line-height:30px;background: #b02f4b">选择用餐人</a>
     </div>
 </div>
 <div class="mui-content">
     <ul class="mui-table-view">
 
         <foreach name="list" item="v" key="k" >
-            <li class="mui-table-view-cell">
+            <li class="mui-table-view-cell" style="padding: 0px;">
                 <div class="mui-slider-right mui-disabled">
                     <a onclick="ajax_del_cart(this)" data-ids="{$v.id}" class="mui-btn mui-btn-red">取消选择</a>
                 </div>
                 <div class="mui-slider-handle">
-                    <div class="cp7" style="padding:0px;">
+                    <div class="cp7" style="padding:0 0 0 10px;">
                         <div class="cp1_r" style="padding-left:0;">
                             <p ><span style="display: inline-block;float:none;width:110px;">{$v.names|subtext = 5}</span>{$v.mobile}</p>
                         </div>
@@ -52,14 +52,11 @@
     <div style="clear:both;"></div>
 </div>
 
-<div class="m33" style="background: none;overflow: hidden;">
-    <div class="cp2_title cp2_title_h" style="width: 50%; float: left; ">优惠券</div>
-</div>
-<div class="mui-content">
+<div class="mui-content" style="margin-top: 50px;">
     <div style="clear:both;"></div>
 
     <div id="CouponDiv">
-        <img src="__ADDONS__/images/loading.gif" style=" margin:0px auto;width:32px !important; height:32px !important">
+        <!--<img src="__ADDONS__/images/loading.gif" style=" margin:0px auto;width:32px !important; height:32px !important">-->
     </div>
 
 </div>
@@ -103,7 +100,7 @@
 
 
     function CouponAjaxList(moneySum){
-        $("#CouponDiv").html(loadHtml);
+//        $("#CouponDiv").html(loadHtml);
         $.ajax({
             type : "post",
             url:"{: U('Mobile/Addons/lunchFeast')}",
