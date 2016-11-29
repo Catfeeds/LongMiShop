@@ -67,7 +67,7 @@ function lunchFeastGiveInviteGift( $userId ){
     $orderCount = getCountWithCondition( 'addons_lunchfeast_order' , $condition );
     if( $orderCount == 1){
         $shopConfig = getLunchFeastConfig();
-        $invitedUserId = lunchFeasTgetInvitedUserId( $userId );
+        $invitedUserId = lunchFeastGetInvitedUserId( $userId );
         lunchFeastGiveGift( $invitedUserId , $shopConfig['invited_value'] , $shopConfig['invite'] , 1);
         $userInfo = findDataWithCondition( "users" , array( "user_id" => $userId ) ,"nickname" );
         $shopConfig = getLunchFeastConfig( );
