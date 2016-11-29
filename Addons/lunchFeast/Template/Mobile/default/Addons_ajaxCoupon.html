@@ -1,0 +1,45 @@
+<div class="site_txt1">
+    <a href="javascript:void(0);">优惠券 <span  class="coupon_span">{: !empty($couponList) ?  count($couponList).'张可用' : '无可用'}</span></a>
+    <div class="mui-input-group" style="display:none">
+        <notempty name="couponList">
+            <div class="mui-input-row mui-radio mui-left">
+                <label>不使用优惠券</label>
+                <input name="coupon" type="radio" value="0" checked class="couponClass" />
+            </div>
+            <foreach name="couponList" item="v"  key="k">
+                <div class="mui-input-row mui-radio mui-left">
+                    <label>{$v['name']}</label>
+                    <input name="coupon" type="radio" value="{$v['id']}" class="couponClass" />
+                </div>
+            </foreach>
+            <else/>
+            <div class="mui-input-row mui-radio mui-left">
+                <label>暂无可使用的优惠券</label>
+            </div>
+        </notempty>
+    </div>
+</div>
+
+<script>
+    $('.site_txt1').click(function(){
+        var sta = $('.mui-input-group').css('display');
+        if(sta == 'block'){
+            $('.mui-input-group').css('display','none');
+        }else{
+            $('.mui-input-group').css('display','block');
+        }
+    });
+
+    $(".couponClass").change(['Data'],function(){
+        var couponId = $(this).val();
+        var money = price * sum;
+        if(sum ==0){
+            alert('请选择用餐人');
+            return false;
+        }
+            ajaxCoupon(couponId,money);
+
+
+
+    });
+</script>

@@ -197,11 +197,15 @@ class lunchFeastMobileController
         $this->assignData['money'] = $sum;
         $this->assignData['sum'] = count($list);
         $this->assignData['list'] = $list;
-        //优惠券
-        $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCanUseCoupon( $this -> userInfo['user_id'] , $sum );
-        $this->assignData['couponList'] = $result['data']['result'];
+        return $this->assignData;
+    }
 
+    //ajax优惠券
+    public function ajaxCoupon(){
+        $money = I('money');
+        $usersLogic = new \Common\Logic\UsersLogic();
+        $result = $usersLogic -> getCanUseCoupon( $this -> userInfo['user_id'] , $money );
+        $this->assignData['couponList'] = $result['data']['result'];
         return $this->assignData;
     }
     //移除用餐人
