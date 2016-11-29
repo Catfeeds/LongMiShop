@@ -1980,3 +1980,17 @@ Load—more a{
 	border: 1px #717171 solid;
 }
 
+
+.my_help{
+	text-align: center;
+	width: 100%;
+}
+.my_help a{
+	display: block;
+	padding: 5px 20px;
+	border: 1px solid #b02f4b;
+	border-radius: 5px;
+	margin: 0 auto;
+	width: 100px;
+
+}
