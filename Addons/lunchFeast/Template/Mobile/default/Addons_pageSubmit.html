@@ -53,27 +53,10 @@
     </div>
     <div style="clear:both;"></div>
 
-    <div class="site_txt1">
-        <a href="javascript:void(0);">优惠券 <span  class="coupon_span">{: !empty($couponList) ?  count($couponList).'张可用' : '无可用'}</span></a>
-        <div class="mui-input-group" style="display:none">
-            <notempty name="couponList">
-                <div class="mui-input-row mui-radio mui-left">
-                    <label>不使用优惠券</label>
-                    <input name="coupon" type="radio" value="0" checked class="couponClass" />
-                </div>
-                <foreach name="couponList" item="v"  key="k">
-                    <div class="mui-input-row mui-radio mui-left">
-                        <label>{$v['name']}</label>
-                        <input name="coupon" type="radio" value="{$v['id']}" class="couponClass" />
-                    </div>
-                </foreach>
-                <else/>
-                <div class="mui-input-row mui-radio mui-left">
-                    <label>暂无可使用的优惠券</label>
-                </div>
-            </notempty>
-        </div>
+    <div id="CouponDiv">
+
     </div>
+
 </div>
 
 
@@ -93,6 +76,13 @@
 <script type="text/javascript">
     var sum = "{$sum}";
     var price = "{$price}";
+    var cost = sum * price;
+//    console.log(price);
+
+    $(document).ready(function(){
+        CouponAjaxList(cost);
+
+    });
     function payment(){
         if(sum <=  0){
             alert('请选择用餐人');
@@ -101,6 +91,20 @@
         var coupon = $("input[name='coupon']:checked").val();
         window.location.href = "/index.php?m=Mobile&c=Addons&a=lunchFeast&pluginName=payment&couId="+coupon;
     }
+
+
+    function CouponAjaxList(moneySum){
+        $.ajax({
+            type : "post",
+            url:"{: U('Mobile/Addons/lunchFeast')}",
+            data :{pluginName:'ajaxCoupon',money:moneySum},// 你的formid
+            success: function(data){
+                $("#CouponDiv").html('');
+                $("#CouponDiv").append(data);
+            }
+        });
+    }
+
     var controls = true;
     // ajax 删除联系人
     function ajax_del_cart(obj)
@@ -123,6 +127,7 @@
                             var couponId = $("input[name='coupon']:checked").val();
                             var moneys = sum * price;
                             ajaxCoupon(couponId,moneys);
+                            CouponAjaxList(moneys);
                             $('#cartSum').text(sum);
                         }else{
                             $('#cart_amount_desc').text(0);
@@ -168,29 +173,11 @@
 
     }
 
-    $(".couponClass").change(['Data'],function(){
-        var couponId = $(this).val();
-        var money = price * sum;
-        if(sum ==0){
-            alert('请选择用餐人');
-            return false;
-        }
-        ajaxCoupon(couponId,money);
 
 
 
-    });
 
 
-
-    $('.site_txt1').click(function(){
-        var sta = $('.mui-input-group').css('display');
-        if(sta == 'block'){
-            $('.mui-input-group').css('display','none');
-        }else{
-            $('.mui-input-group').css('display','block');
-        }
-    })
 
 
 </script>
