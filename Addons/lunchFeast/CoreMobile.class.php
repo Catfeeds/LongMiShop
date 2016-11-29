@@ -437,7 +437,7 @@ class lunchFeastMobileController
 
     public function recommendIndex(){
         $shopConfig = getLunchFeastConfig();
-        $inviteData = lunchFeastGetGiftInfo( $shopConfig['invite_value'] , $shopConfig['invite'] );
+        $inviteData = lunchFeastGetGiftInfo( $shopConfig['invited_value'] , $shopConfig['invite'] );
         $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
         $this->assignData['noNeedCss'] = true;
         $this->assignData['inviteData'] = getCallbackData($inviteData);
@@ -456,7 +456,7 @@ class lunchFeastMobileController
 
     public function recommendRule(){
         $shopConfig = getLunchFeastConfig();
-        $inviteData = lunchFeastGetGiftInfo( $shopConfig['invite_value'] , $shopConfig['invite'] );
+        $inviteData = lunchFeastGetGiftInfo( $shopConfig['invited_value'] , $shopConfig['invite'] );
         $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
         $this->assignData['noNeedCss'] = true;
         $this->assignData['inviteData'] = getCallbackData($inviteData);
@@ -511,7 +511,7 @@ class lunchFeastMobileController
                 exit;
             }
             $shopConfig = getLunchFeastConfig();
-            $inviteData = lunchFeastGetGiftInfo( $shopConfig['invite_value'] , $shopConfig['invite'] );
+            $inviteData = lunchFeastGetGiftInfo( $shopConfig['invited_value'] , $shopConfig['invite'] );
             $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
             $this->assignData['noNeedCss'] = true;
             $this->assignData['inviteData'] = getCallbackData($inviteData);
@@ -538,7 +538,7 @@ class lunchFeastMobileController
             $this->assignData['inviteUserInfo'] = $inviteUserInfo;
             $isNewUser = true;
         }
-        $inviteData = lunchFeastGetGiftInfo( $shopConfig['invite_value'] , $shopConfig['invite'] );
+        $inviteData = lunchFeastGetGiftInfo( $shopConfig['invited_value'] , $shopConfig['invite'] );
         $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
         $this->assignData['noNeedCss'] = true;
         $this->assignData['isNewUser'] = $isNewUser;
