@@ -124,10 +124,11 @@
                         sum = data.data.count;
                         $(obj).parent().parent().remove();
                         if(sum != 0){
-                            var couponId = $("input[name='coupon']:checked").val();
                             var moneys = sum * price;
-                            ajaxCoupon(couponId,moneys);
                             CouponAjaxList(moneys);
+                            var couponId = $("input[name='coupon']:checked").val();
+                            ajaxCoupon(couponId,moneys);
+
                             $('#cartSum').text(sum);
                         }else{
                             $('#cart_amount_desc').text(0);
