@@ -49,11 +49,13 @@
             <li class="mui-table-view-cell mui-media">
                 <a href="javascript:;" onclick="chooseShop(this ,'{$shopItem.is_online}')" data-id="{$shopItem['id']}" data-name="{$shopItem['shop_name']}">
 
-                    <if condition="$shopItem['is_go']">
-                        <div class="go_and_online is_go">我去过</div>
-                    </if>
+
                     <if condition="$shopItem['is_online'] neq 1">
                         <div class="go_and_online is_online">休息中</div>
+                        <else/>
+                        <if condition="$shopItem['is_go']">
+                            <div class="go_and_online is_go">我去过</div>
+                        </if>
                     </if>
 
 
