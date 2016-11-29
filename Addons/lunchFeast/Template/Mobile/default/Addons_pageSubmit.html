@@ -123,12 +123,11 @@
 //                        window.location.href = window.location.href;
                         sum = data.data.count;
                         $(obj).parent().parent().remove();
+                        var moneys = sum * price;
+                        CouponAjaxList(moneys);
                         if(sum != 0){
-                            var moneys = sum * price;
-                            CouponAjaxList(moneys);
-                            var couponId = $("input[name='coupon']:checked").val();
-                            ajaxCoupon(couponId,moneys);
-
+//                            var couponId = $("input[name='coupon']:checked").val();
+//                            ajaxCoupon(couponId,moneys);
                             $('#cartSum').text(sum);
                         }else{
                             $('#cart_amount_desc').text(0);
