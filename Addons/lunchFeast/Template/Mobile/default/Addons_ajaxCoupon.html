@@ -1,5 +1,5 @@
 <div class="site_txt1">
-    <a href="javascript:void(0);">优惠券 <span  class="coupon_span">{: !empty($couponList) ?  count($couponList).'张可用' : '无可用'}</span></a>
+    <a href="javascript:void(0);" style="line-height: 70px;">优惠券 <span  class="coupon_span">{: !empty($couponList) ?  count($couponList).'张可用' : '无可用'}</span></a>
     <div class="mui-input-group" style="display:none">
         <notempty name="couponList">
             <div class="mui-input-row mui-radio mui-left">
@@ -21,7 +21,7 @@
 </div>
 
 <script>
-    $('.site_txt1').click(function(){
+    $('.site_txt1 a').click(function(){
         var sta = $('.mui-input-group').css('display');
         if(sta == 'block'){
             $('.mui-input-group').css('display','none');
@@ -37,9 +37,6 @@
             alert('请选择用餐人');
             return false;
         }
-            ajaxCoupon(couponId,money);
-
-
-
+        ajaxCoupon(couponId,money);
     });
 </script>
