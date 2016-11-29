@@ -51,7 +51,7 @@
 
 
                     <if condition="$shopItem['is_online'] neq 1">
-                        <div class="go_and_online is_online">休息中</div>
+                        <!--<div class="go_and_online is_online">休息中</div>-->
                         <else/>
                         <if condition="$shopItem['is_go']">
                             <div class="go_and_online is_go">我去过</div>
@@ -59,12 +59,12 @@
                     </if>
 
 
-                    <img class="mui-media-object mui-pull-left" src="{$shopItem['icon']}">
+                    <img class="mui-media-object mui-pull-left" src="{$shopItem['icon']}" style="width:42px;">
                     <div class="mui-media-body" style="text-align: left;">
-                        <p class='mui-ellipsis'>
+                        <p class='mui-ellipsis' >
                             {$shopItem['shop_name']}
                         </p>
-                        <p class='mui-ellipsis'>
+                        <p class='mui-ellipsis'style="font-size: 12px;">
                             {$regionList[$shopItem['province']]['name']}
                             {$regionList[$shopItem['city']]['name']}
                             {$regionList[$shopItem['district']]['name']}
