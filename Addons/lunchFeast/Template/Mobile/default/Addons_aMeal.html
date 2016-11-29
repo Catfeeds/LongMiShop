@@ -1,5 +1,18 @@
 <include file="$headerPath"/>
 <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
+<div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
+    <div>
+        <div>
+            <strong>说明</strong>
+        </div>
+        <div style="  width:86%;margin: 3px 7%;">
+            ● 选择中列表中的参加本次宴午的人，<br>&nbsp;&nbsp;&nbsp;点击确定即可预约；
+        </div>
+        <div style="  width:86%;margin: 3px 7%;">
+            ● 如果列表中没有找到参加的人，<br>&nbsp;&nbsp;&nbsp;可以点击添加新用餐人进行添加
+        </div>
+    </div>
+</div>
 <style>
     #footButton{
         position: fixed;
@@ -44,12 +57,12 @@
     <!--<div id="head" onclick="window.location.href='{: U("Mobile/Addons/lunchFeast",array("pluginName" => "addAMeal" ))}' "><span >添加新用餐人</span></div>-->
 
     <empty name ="list">
-        <div class="empty"><img src="__STATIC__/SVG/d4.svg"></div>
+        <div class="empty"><img src="__ADDONS__/images/yanwu.png" style="width: 150px !important;margin: 0 auto;"></div>
         <div class="empty_txt" style="color: #b2b2b2;">没有用餐人信息~</div>
         <else/>
-        <div class="m33" style="background: none;">
-            <div class="cp2_title cp2_title_h">用餐人</div>
-        </div>
+        <!--<div class="m33" style="background: none;">-->
+            <!--<div class="cp2_title cp2_title_h">用餐人</div>-->
+        <!--</div>-->
         <div class="mui-content">
             <ul class="mui-table-view">
                 <foreach name="list" item="v" key="k" >
