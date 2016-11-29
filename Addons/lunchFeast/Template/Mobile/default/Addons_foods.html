@@ -1,5 +1,8 @@
 <include file="$headerPath"/>
 <style>
+    body{
+        background: #fbf5eb;
+    }
     #footButton{
         position: fixed;
         bottom: 0;
@@ -13,11 +16,11 @@
 </style>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-        <img src="__ADDONS__/images/11-23.png" alt="" style="width:100%">
+        <img src="__ADDONS__/images/menu.png" alt="" style="width:100%">
     </div>
 </nav>
 <div  style="text-align:center; font-family:'微软雅黑' !important;">
-    <p style="font-size: 20px; margin: 20px auto;">--菜单--</p>
+    <p style="font-size: 20px; margin:5px auto 20px auto;">--菜单--</p>
    {$shopGoods['content']}
 </div>
     <button  type="button" onclick="{$shopGoods['seats'] > 0 ? 'addition()'  : ''}"  id="footButton" style="background:{$shopGoods['seats'] > 0 ? '#b02f4b' : 'gray'}">{: $shopGoods['seats'] > 0 ? '立即预约(剩余：'.$shopGoods['seats'].'位)' : '没有更多座位了' }</button>
