@@ -201,8 +201,10 @@ function addonsPayNotify( $orderSn , $data ){
         foreach ($payLogList as $payLogItem){
             $money += $payLogItem["money"];
         }
-        if( $orderInfo["order_amount"] <= $money ){
+        if( $orderInfo["pay_amount"] <= $money ){
             saveData( "addons_lunchfeast_order" ,  array( "order_sn" => $orderSn ) , array( 'status' => 1 ,"pay_time" => time()));
+            //邀请人奖励
+            lunchFeastGiveInviteGift( $orderInfo['user_id'] );
         }
     }
 }
