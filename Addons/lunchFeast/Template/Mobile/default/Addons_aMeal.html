@@ -58,7 +58,7 @@
                                 <div class="checkbox_s" style="z-index: 1;">
                                     <label class="fl select-all" style="width:50px !important">
                                     <span class="mui-input-row mui-checkbox mui-left" >
-                                        <input  name="cart_select" class="check-all check-one check" type="checkbox" <if condition="$v[pitchon] eq 1" >checked="checked"</if> value="{$v.id}"  style="top:6px;">
+                                        <input  name="cart_select" onclick="optInput(this)" class="check-all check-one check" type="checkbox" <if condition="$v[pitchon] eq 1" >checked="checked"</if> value="{$v.id}"  style="top:6px;">
                                     </span>
                                     </label>
                                 </div>
@@ -161,6 +161,17 @@
             $(obj).find('input').attr('checked',true);
         }
     }
+
+    function optInput(obj){
+        var check = $(obj).attr('checked');
+        if(check == 'checked'){
+            $(obj).attr('checked',false);
+        }else{
+            $(obj).attr('checked',true);
+        }
+    }
+
+
 
 
 </script>
