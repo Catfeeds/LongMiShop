@@ -153,8 +153,8 @@
                     <td>是否上线:</td>
                     <td>
                         <select name="is_online" >
-                            <option value="0">休息</option>
-                            <option value="1">上线</option>
+                            <option value="0"  <if condition="$shop['is_online'] eq 0">selected </if> >休息</option>
+                            <option value="1" <if condition="$shop['is_online'] eq 1">selected </if> >上线</option>
                         </select>
 
                     </td>
