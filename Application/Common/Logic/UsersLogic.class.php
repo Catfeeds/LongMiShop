@@ -355,7 +355,7 @@ class UsersLogic extends BaseLogic
      */
     public function getCoupon( $userId ){
         //调试使用
-        $where = ' AND l.order_id = 0 AND '; // 未使用
+        $where = ' AND (l.order_id = 0 and l.use_time = 0) AND '; // 未使用
         $where .= ' ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > "('.time().' + ( c.limit_day * 24 * 60 * 60 ))  " and c.use_type = 1 ) ';
         $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.is_discount,c.use_type,c.desc,c.limit_day FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
