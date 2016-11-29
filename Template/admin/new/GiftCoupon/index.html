@@ -34,7 +34,7 @@
                                     <td class="text-center">发放结束时间</td>
                                     <td class="text-center">使用开始时间</td>
                                     <td class="text-center">使用结束时间</td>
-                                    <td class="text-center">发放数量</td>
+                                    <td class="text-center">已用量/发行数</td>
                                     <td class="text-center">操作</td>
                                 </tr>
                                 </thead>
@@ -50,7 +50,7 @@
                                         <td class="text-center">{$list['send_end_time']|date='Y-m-d',###}</td>
                                         <td class="text-center">{$list['use_start_time']|date='Y-m-d',###}</td>
                                         <td class="text-center">{$list['use_end_time']|date='Y-m-d',###}</td>
-                                        <td class="text-center">{$list.create_num}</td>
+                                        <td class="text-center">{: intval($list['use_num']).'/'.$list['create_num']}</td>
                                         <td class="text-center">
                                             <!--<if condition="$list[type] eq 4">-->
                                                 <!--<a href="{:U('Admin/Coupon/make_coupon',array('id'=>$list['id'],'type'=>$list['type']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="发放"><i class="fa fa-send"></i></a>-->
