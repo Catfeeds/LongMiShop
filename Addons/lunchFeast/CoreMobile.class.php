@@ -200,7 +200,7 @@ class lunchFeastMobileController
     //提交页面
     public function pageSubmit()
     {
-        $list = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1))->select();
+        $list = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1,'show'=>1))->select();
         $ShopData = session('ShopData');
         //总价
         $sum = $ShopData['money'] * count($list);
@@ -223,7 +223,7 @@ class lunchFeastMobileController
     //移除用餐人
     public function removePer(){
         $id = I('delPerId');
-        $res = M('addons_lunchfeast_diningper')->where(array('id'=>$id))->save(array('pitchon'=>0));
+        $res = M('addons_lunchfeast_diningper')->where(array('id'=>$id,'uid'=>$this -> userInfo['user_id']))->save(array('pitchon'=>0));
         $count = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1))->count();
         if($res){
             exit(json_encode(callback(true,'',array('count'=>$count))));
@@ -252,7 +252,7 @@ class lunchFeastMobileController
     //删除用餐人
     public function ajaxDelMeal(){
         $id = I('ids');
-        $res = M('addons_lunchfeast_diningper')->where(array('id'=>$id))->save(array('show'=>0));
+        $res = M('addons_lunchfeast_diningper')->where(array('id'=>$id,'uid'=>$this -> userInfo['user_id']))->save(array('show'=>0));
         if($res){
             exit(json_encode(callback(true)));
         }
@@ -287,7 +287,7 @@ class lunchFeastMobileController
         );
         $shopRes = M('addons_lunchfeast_shop')->field('seats')->where(array('id'=>$ShopData['shop_id']))->find();
         $number = M('addons_lunchfeast_order')->where($OrderWhere)->sum('number');
-        $countPer = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1))->count();
+        $countPer = M('addons_lunchfeast_diningper')->where(array('uid'=>$this -> userInfo['user_id'],'pitchon'=>1,'show'=>1))->count();
         $seats = $shopRes['seats'] - $number; //剩余座位
         if($seats >= $countPer){
             //总价
