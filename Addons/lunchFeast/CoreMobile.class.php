@@ -6,14 +6,16 @@ class lunchFeastMobileController
     public $assignData = array();
     public $userInfo = array();
 
+    public $weChatLogic = null;
+
     public function __construct( $userInfo )
     {
         $this -> userInfo = $userInfo;
         $this -> assignData["headerPath"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_header.html";
         $this -> assignData["footerPath"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_footer.html";
         $this -> assignData["share"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_share.html";
-        $this -> assignData["config"] = M('addons_lunchfeast_config')->select();
-        $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
+        $this -> assignData["config"] = getLunchFeastConfig();
+        $this -> weChatLogic= new \Common\Logic\WeChatLogic();
         $this -> assignData["signPackage"] = $this -> weChatLogic -> getSignPackage();
         $this -> assignData['userId'] = $this -> userInfo['user_id'];
         define("TB_SHOP", "addons_lunchfeast_shop");
@@ -29,7 +31,6 @@ class lunchFeastMobileController
     //主页
     public function index()
     {
-        $this -> assignData["config"] = findDataWithCondition( TB_CONFIG );
         $shopList = getShopList( $this -> userInfo["user_id"] );
         $mealList = getMealList();
         if( empty( $shopList ) ){
