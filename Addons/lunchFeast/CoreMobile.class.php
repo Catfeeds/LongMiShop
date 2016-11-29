@@ -523,7 +523,7 @@ class lunchFeastMobileController
             !empty($this ->userInfo) &&
             isExistenceDataWithCondition(TB_USER,array("user_id"=>$inviteUserId)) &&
             !isExistenceDataWithCondition( TB_INVITE ,array( "user_id" =>$this ->userInfo['user_id'])) &&
-            !isExistenceDataWithCondition(TB_ORDER,array("user_id" =>$this ->userInfo['user_id'],"status" => array("neq" => "0")))
+            !isExistenceDataWithCondition(TB_ORDER,array("user_id" =>$this ->userInfo['user_id'],"status" => array("gt","0")))
         ){
             if( !empty($this ->userInfo['mobile']) ){
                 header("Location: ".U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendResult',"inviteUserId"=>$inviteUserId)));
