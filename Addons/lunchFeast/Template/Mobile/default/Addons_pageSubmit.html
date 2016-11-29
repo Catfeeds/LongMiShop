@@ -90,7 +90,7 @@
         }
 
         var coupon = $("input[name='coupon']:checked").val();
-        if(coupon == ''){
+        if(coupon == undefined){
             coupon = 0;
         }
         window.location.href = "/index.php?m=Mobile&c=Addons&a=lunchFeast&pluginName=payment&couId="+coupon;
