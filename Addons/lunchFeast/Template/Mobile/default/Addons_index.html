@@ -45,7 +45,7 @@
     <div class="m33">
         <div class="cp2_title cp2_title_h" >用餐地点</div>
     </div>
-    <ul class="mui-table-view">
+    <ul class="mui-table-view" style="max-height: 100%; ">
         <volist name="shopList" id="shopItem">
             <li class="mui-table-view-cell mui-media">
                 <a href="javascript:;" onclick="chooseShop(this ,'{$shopItem.is_online}')" data-id="{$shopItem['id']}" data-name="{$shopItem['shop_name']}">
