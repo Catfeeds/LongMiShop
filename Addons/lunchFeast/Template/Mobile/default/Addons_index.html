@@ -46,7 +46,7 @@
     </div>
     <!--<div class="mui-scroll-wrapper">-->
         <!--<div class="mui-scroll">-->
-            <ul class="mui-table-view" id="addressUl" style="max-height: 100%; ">
+            <ul class="mui-table-view" id="addressUl" style="max-height: 550px; ">
 
                 <volist name="shopList" id="shopItem">
                     <li class="mui-table-view-cell mui-media">
@@ -279,9 +279,7 @@
         });
         getDateList();
         touchScroll("refForm");
-        $('.mui-table-view').get(0).addEventListener("touchmove", function (e){
-            e.stopPropagation();
-        }, false);
+        touchScroll("addressUl");
     });
 
 
