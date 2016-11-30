@@ -384,8 +384,19 @@ class lunchFeastMobileController
         session('ShopData',null);
         $mealList = selectMealList();
         $shopList = M('addons_lunchfeast_shop')->where(array('id'=>$results['shop_id']))->find();
+        //查询用餐人
+        $userList = M('addons_lunchfeast_order_user')->field('diningper_id')->where(array('order_id'=>$id))->select();
+        foreach($userList as $key=>$item){
+            $userRes = M('addons_lunchfeast_diningper')->field('names')->where(array('id'=>$item['diningper_id']))->find();
+            if( $key == 0 ){
+                $userName = $userRes['names'];
+            }else{
+                $userName .= ','.$userRes['names'];
+            }
+        }
         $results['meal'] = date('Y-m-d',$results['date']).' '.$mealList[$results['meal_id']];
         $results['shopName'] = $shopList['shop_name'];
+        $results['userName'] = $userName;
         $this->assignData['results'] = $results;
         return $this->assignData;
     }

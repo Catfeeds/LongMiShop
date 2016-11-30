@@ -1,17 +1,27 @@
 <include file="$headerPath"/>
+<style>
+    body{
+        background: #fff;
+    }
+    .pay-order span{
+        display:inline-block;
+        width:90px;
+    }
+</style>
 <div class="pay">
     <div class="pay-OK" style="background-image: url('__STATIC__/SVG/order.svg')">预定成功！</div>
     <div class="pay-money">{$results.pay_amount}元</div>
     <div class="pay-order">
-        <p>用餐时间：{$results['meal']}</p>
-        <p>用餐地点：{$results['shopName']}</p>
-        <p>用餐人数：{:$results['number']}</p>
+        <p><span>用餐时间：</span>{$results['meal']}</p>
+        <p><span>用餐地点：</span>{$results['shopName']}</p>
+        <p><span>用餐人数：</span>{:$results['number']}</p>
+        <p><span>用餐人姓名：</span>{:$results['userName']}</p>
     </div>
 </div>
 <div class="l_btn3 ">
     <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderDetail','id' =>$results['id'] ))}">查看用餐凭证</a>
 </div>
 <div class=" login_btn9" style="width: 134px; margin: 10px auto;">
-    <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendIndex' ))}">发红包</a>
+    <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendIndex' ))}" style="line-height: 40px;">发红包</a>
 </div>
 <include file="$footerPath"/>
