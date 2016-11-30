@@ -13,7 +13,7 @@
 
                     <div class="mui-scroll">
                         <div class="mui-loading" style=" text-align:center">
-                            <img src="__ADDONS__/images/heart.gif" width="90" height="90" style="width:90px !important; height:90px !important">
+                            <img src="__ADDONS__/images/heart.gif" width="90" height="90" style="margin-top:60px;width:90px !important; height:90px !important">
                         </div>
                     </div>
 
@@ -24,7 +24,7 @@
 
                     <div class="mui-scroll">
                         <div class="mui-loading" style=" text-align:center">
-                            <img src="__ADDONS__/images/heart.gif" width="90" height="90" style="width:90px !important; height:90px !important">
+                            <img src="__ADDONS__/images/heart.gif" width="90" height="90" style="margin-top:60px;width:90px !important; height:90px !important">
                         </div>
                     </div>
 
@@ -77,26 +77,44 @@
         "{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'ajaxOrderList','type'=>'0'))}",
         "{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'ajaxOrderList','type'=>'1'))}"
     ];
+    var w_number = null ;
+    var w_obj_name = null ;
+    var w_is_first = null ;
+    var w_data = null ;
     function ajax_sourch_submit( number , obj_name , is_first)
     {
+        w_number = number;
+        w_obj_name = obj_name;
+        w_is_first = is_first;
         $.ajax({
             type : "GET",
             url:url[number] + "&p="+page[number]+"&number="+number,
             success: function(data)
             {
-
-                if( is_first == true ){
-                    $("#"+obj_name+" .mui-scroll").html(data);
-                }else{
-                    if($.trim(data) == ''){
-                        $('#getmore'+number).hide();
-                    }else{
-                        $("#"+obj_name+" .ajax_return").append(data);
-                    }
-                }
+                w_data = data;
+                setTimeout("ajaxAction()", 1500);
             }
         });
         page[number] += 1;
+    }
+    function ajaxAction(){
+        var number = w_number;
+        var obj_name = w_obj_name;
+        var is_first = w_is_first;
+        var data = w_data;
+        w_number = null ;
+        w_obj_name = null ;
+        w_is_first = null ;
+        w_data = null ;
+        if( is_first == true ){
+            $("#"+obj_name+" .mui-scroll").html(data);
+        }else{
+            if($.trim(data) == ''){
+                $('#getmore'+number).hide();
+            }else{
+                $("#"+obj_name+" .ajax_return").append(data);
+            }
+        }
     }
     $(function(){
         ajax_sourch_submit( 0 , "item1mobile" , true);
