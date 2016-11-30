@@ -125,10 +125,10 @@ class lunchFeastAdminController
                 );
                 exit(json_encode($return_arr));
             } else {
-                $shopModel->create_time = time(); // 上架时间
                 if ($type == 2) {
                     $shopModel->save();
                 } else {
+                    $shopModel->create_time = time(); // 上架时间
                     $insert_id = $shopModel->add(); // 写入数据到数据库
                 }
                 $return_arr = array(
