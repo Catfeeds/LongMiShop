@@ -38,6 +38,11 @@ class lunchFeastAdminController
                 "title" => "概况",
                 "act"   => "statistical"
             ),
+            array(
+                "title" => "店铺排行",
+                "act"   => "ranking"
+            ),
+
         );
         return $this->assignData;
     }
@@ -391,9 +396,11 @@ class lunchFeastAdminController
         $count['amount'] = '["'.$count['amount'].'"]';
         $count['tnum'] = implode('","' , $count['tnum']);
         $count['tnum'] = '["'.$count['tnum'].'"]';
+        $this -> assignData['count'] = $count;
+        return $this -> assignData;
+    }
 
-
-
+    public function ranking(){
         //人次
         $prefix = C('DB_PREFIX');
         $join = "LEFT JOIN ".$prefix."addons_lunchfeast_order ON ".$prefix."addons_lunchfeast_shop.id = ".$prefix."addons_lunchfeast_order.shop_id";
@@ -424,9 +431,6 @@ class lunchFeastAdminController
         }
 
         dd($ranking);
-
-        $this -> assignData['count'] = $count;
-        return $this -> assignData;
     }
 
 }
