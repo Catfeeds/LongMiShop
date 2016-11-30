@@ -5,20 +5,20 @@
         bottom: 0;
         width: 100%;
         height: 60px;
-        background: #ff6091;
+        background: #b02f4b;
         clear:both;
         color:white;
     }
 </style>
-<div class="titel_box">
-    <div class="titel_box_l">用餐凭证</div>
+<div class="m33">
+    <div class="cp2_title cp2_title_h" >用餐凭证</div>
 </div>
 <foreach item="userItem" name="orderInfo.userList">
-    <div class="cp6">
+    <div class="cp6" >
         <div class="cp1_l" style="float:none;margin:0 auto;width:200px;">
             <img src="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'qrCode','url' =>$userItem['code'] ))}" width="180" height="180">
-            <p style="text-align:center">{$userItem.code}</p>
-            <span style="color:#666;text-align:center;display: block;" >{$userItem.userInfo.names}  {$userItem.userInfo.mobile}</span>
+            <p style="text-align:center;font-weight: bold;font-size: 18px;">{$userItem.code}</p>
+            <span style="color:#666;text-align:center;display: block;" >用餐人 : {$userItem.userInfo.names}  </span>
         </div>
 
     </div>
@@ -28,7 +28,7 @@
 
 <div style="height:100px"></div>
 <div class="foot" id="foot" style="margin-bottom:0px;">
-    <button  type="button"   id="footButton" style="background:#ff6091;" onclick="window.location.href='{: U("Mobile/Addons/lunchFeast/")}'">回到首页</button>
+    <button  type="button"   id="footButton" style="background:#b02f4b;" onclick="window.location.href='{: U("Mobile/Addons/lunchFeast/",array("pluginName"=>"index") )}'">回到首页</button>
 
 </div>
 
