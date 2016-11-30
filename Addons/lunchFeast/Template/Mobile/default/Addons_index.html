@@ -187,12 +187,12 @@
 
             document.getElementById(id).addEventListener("touchstart", function(event) {
                 scrollStartPos=this.scrollTop+event.touches[0].pageY;
-                event.preventDefault();
+//                event.preventDefault();
             },false);
 
             document.getElementById(id).addEventListener("touchmove", function(event) {
                 this.scrollTop=scrollStartPos-event.touches[0].pageY;
-                event.preventDefault();
+//                event.preventDefault();
             },false);
         }
     }
@@ -285,7 +285,6 @@
 
     //选择用餐地点
     function chooseShop(obj,isOnline){
-        console.log(obj);
         if( isOnline != 1 ){
             alert("店铺休息中");
             return;
