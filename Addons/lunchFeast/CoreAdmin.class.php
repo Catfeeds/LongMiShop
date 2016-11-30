@@ -408,12 +408,15 @@ class lunchFeastAdminController
         $getField = $prefix."addons_lunchfeast_shop.id,sum(".$prefix."addons_lunchfeast_order.number) as numbers";
         $ranking = M('addons_lunchfeast_shop')->join($join)->group($group)->getField($getField);
         //用户
-        $join .= " LEFT JOIN ".$prefix."addons_lunchfeast_order_user ON ".$prefix."addons_lunchfeast_order.id = ".$prefix."addons_lunchfeast_order_user.order_id";
-        $group = $prefix."addons_lunchfeast_order_user.diningper_id";
-        $getField = $prefix."addons_lunchfeast_shop.id,count(".$prefix."addons_lunchfeast_order.number) as numbers";
-        $userList = M('addons_lunchfeast_shop')->join($join)->field($getField)->fetchsql(true)->group($group)->select();
-
-        dd($userList);
+        $sql = "SELECT s.id ,os.d_num FROM 
+lm_addons_lunchfeast_shop s 
+LEFT JOIN (
+ SELECT o.shop_id,count(distinct ou.diningper_id) as d_num  
+FROM lm_addons_lunchfeast_order_user ou LEFT JOIN lm_addons_lunchfeast_order o on ou.order_id = o.id  
+GROUP BY o.shop_id
+) os
+on  s.id = os.shop_id ORDER BY os.d_num desc";
+        $userList =  M()->query($sql);
         //销售额
         $rankingMoney = M('addons_lunchfeast_order')->group('shop_id')->order("pay_amount desc")->getField("shop_id,sum(pay_amount) as sumMoney,sum(number) as number ", true);
         foreach ($rankingMoney as $shop_id => $item) {
