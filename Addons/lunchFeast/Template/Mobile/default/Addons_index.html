@@ -46,7 +46,7 @@
     </div>
     <!--<div class="mui-scroll-wrapper">-->
         <!--<div class="mui-scroll">-->
-            <ul class="mui-table-view" id="addressUl" style="max-height: 550px; ">
+            <ul class="mui-table-view" id="addressUl" style="height: 550px; ">
 
                 <volist name="shopList" id="shopItem">
                     <li class="mui-table-view-cell mui-media">
@@ -162,10 +162,10 @@
                 <p id="mealView" style="text-align: left;width: 100%; color: #666;"></p>
             </div>
         </div>
-        <div class=" nav_d" >
-            <a href="javascript:void(0);"  onclick="newSubmit();">查看当日菜品</a>
-        </div>
     </form>
+    <div class=" nav_d" >
+        <a href="javascript:void(0);"  onclick="newSubmit();">查看当日菜品</a>
+    </div>
 </div>
 
 
@@ -285,6 +285,7 @@
 
     //选择用餐地点
     function chooseShop(obj,isOnline){
+        console.log(obj);
         if( isOnline != 1 ){
             alert("店铺休息中");
             return;
