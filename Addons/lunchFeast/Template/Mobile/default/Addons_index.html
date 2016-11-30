@@ -45,37 +45,43 @@
     <div class="m33">
         <div class="cp2_title cp2_title_h" >用餐地点</div>
     </div>
-    <ul class="mui-table-view">
-        <volist name="shopList" id="shopItem">
-            <li class="mui-table-view-cell mui-media">
-                <a href="javascript:;" onclick="chooseShop(this ,'{$shopItem.is_online}')" data-id="{$shopItem['id']}" data-name="{$shopItem['shop_name']}">
+    <div class="mui-scroll-wrapper">
+        <div class="mui-scroll">
+            <ul class="mui-table-view">
+
+                <volist name="shopList" id="shopItem">
+                    <li class="mui-table-view-cell mui-media">
+                        <a href="javascript:;" onclick="chooseShop(this ,'{$shopItem.is_online}')" data-id="{$shopItem['id']}" data-name="{$shopItem['shop_name']}">
 
 
-                    <if condition="$shopItem['is_online'] neq 1">
-                        <!--<div class="go_and_online is_online">休息中</div>-->
-                        <else/>
-                        <if condition="$shopItem['is_go']">
-                            <div class="go_and_online is_go">我去过</div>
-                        </if>
-                    </if>
+                            <if condition="$shopItem['is_online'] neq 1">
+                                <!--<div class="go_and_online is_online">休息中</div>-->
+                                <else/>
+                                <if condition="$shopItem['is_go']">
+                                    <div class="go_and_online is_go">我去过</div>
+                                </if>
+                            </if>
 
 
-                    <img class="mui-media-object mui-pull-left" src="{$shopItem['icon']}" style="width:42px;">
-                    <div class="mui-media-body" style="text-align: left;">
-                        <p class='mui-ellipsis' >
-                            {$shopItem['shop_name']}
-                        </p>
-                        <p class='mui-ellipsis'style="font-size: 12px;">
-                            {$regionList[$shopItem['province']]['name']}
-                            {$regionList[$shopItem['city']]['name']}
-                            {$regionList[$shopItem['district']]['name']}
-                            {$shopItem['address']}
-                        </p>
-                    </div>
-                </a>
-            </li>
-        </volist>
-    </ul>
+                            <img class="mui-media-object mui-pull-left" src="{$shopItem['icon']}" style="width:42px;">
+                            <div class="mui-media-body" style="text-align: left;">
+                                <p class='mui-ellipsis' >
+                                    {$shopItem['shop_name']}
+                                </p>
+                                <p class='mui-ellipsis'style="font-size: 12px;">
+                                    {$regionList[$shopItem['province']]['name']}
+                                    {$regionList[$shopItem['city']]['name']}
+                                    {$regionList[$shopItem['district']]['name']}
+                                    {$shopItem['address']}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+
 </div>
 <div id="buy" class="mui-popover mui-popover-action mui-popover-bottom" style="height:100%;background-color: #FFF;">
     <div class="m33">
