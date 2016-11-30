@@ -164,11 +164,13 @@
             return;
         }
         $("#mealView").html("");
-        $("#sp2").removeClass("cp2_title_h");
         $("#sp1").addClass("cp2_title_h");
+        $("#sp2").removeClass("cp2_title_h");
         $(".m33_hover").removeClass('m33_hover');
+
         $(spec).siblings().removeClass('active');
         $(spec).addClass('active');
+
         var date = $(spec).data("id");
         var dateView = $(spec).data("view");
         $("#date").val(date);
@@ -185,12 +187,14 @@
         if( $(spec).hasClass("myGray") ){
             return;
         }
+        $("#sp2").addClass("cp2_title_h");
+
         $(spec).siblings().removeClass('m33_hover');
         $(spec).addClass('m33_hover');
+
         var mealid = $(spec).data("mealid");
-        $("#mealList").val(mealid);
-        $("#sp2").addClass("cp2_title_h");
         var date = $("#date").val();
+        $("#mealList").val(mealid);
         $("#mealView").html(_w["date"][date][mealid]["money"]+"/人");
 
     }

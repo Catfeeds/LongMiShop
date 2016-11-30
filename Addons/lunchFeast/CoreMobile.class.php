@@ -423,7 +423,7 @@ class lunchFeastMobileController
             $returnArray[$i] = array(
                 "is_null" => true,
                 "date" => $i,
-                "dateView" => date("Y-m-d", $i),
+                "dateView" => date("Y年m月d日", $i),
                 "htmlView" => date("d", $i),
             );
             foreach ($mealList as $mealKey => $mealItem){
