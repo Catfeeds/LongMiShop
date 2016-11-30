@@ -46,9 +46,8 @@ class lunchFeastMobileController
         $order = $prefix."addons_lunchfeast_order.create_time DESC";
         $field = $prefix."addons_lunchfeast_shop.id,".$prefix."addons_lunchfeast_shop.shop_name";
         $lately = M('addons_lunchfeast_order')->field($field)->join($join)->where($where)->order($order)->find();
-        $lately = '';
         if(empty($lately)){
-            $lately =  M('addons_lunchfeast_shop')->field('id,shop_name')->where(array('is_online'=>1))->order('id ASC')->find();
+            $lately =  M('addons_lunchfeast_shop')->field('id,shop_name')->where(array('is_online'=>1))->order('create_time ASC')->find();
         }
         $this -> assignData['lately'] = $lately;
         $today = strtotime(date('Y-m-d',strtotime("+1 day")));
