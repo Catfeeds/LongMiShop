@@ -32,6 +32,13 @@ class lunchFeastAdminController
             ),
 
         );
+
+        $this->assignData['statistical'] = array(
+            array(
+                "title" => "概况",
+                "act"   => "statistical"
+            ),
+        );
         return $this->assignData;
     }
 
@@ -339,6 +346,87 @@ class lunchFeastAdminController
         $save = array( "is_delete"=>"1");
         saveData( TB_ADMIN , $condition ,  $save);
         return addonsSuccess( "删除成功" );
+    }
+
+    public function statistical(){
+        $yesterdayTime = strtotime(date('Y-m-d',strtotime("-1 day")));
+        $today = date('Y-m-d ')."00:00:00";
+        $todayTime = strtotime($today);
+        $where = "  create_time > ".$yesterdayTime." AND create_time < ".$todayTime." AND status != 0";
+        $count['yesterdayCount'] = M('addons_lunchfeast_order')->where($where)->count(); //昨日订单
+        $count['yesterdayMoney'] = M('addons_lunchfeast_order')->where($where)->sum('pay_amount'); //昨日成交额
+        $count['count'] = M('addons_lunchfeast_order')->where("status != 0")->count(); //累计宴午订单
+        $count['countMoney'] = M('addons_lunchfeast_order')->where("status != 0")->sum('pay_amount'); //累计宴午成交额
+
+        $end =  date('Y-m-d H:i:s');
+        $this->begin = strtotime("$end -1 year");
+        $this->end = strtotime($end);
+
+        //统计订单
+        $sql = "SELECT COUNT(*) as tnum,sum(pay_amount) as amount, FROM_UNIXTIME(create_time,'%Y-%m') as gap from  __PREFIX__addons_lunchfeast_order ";
+        $sql .= " where create_time >= $this->begin and create_time <= $this->end AND status != 0    ";
+        $sql .= "group by gap ORDER BY create_time";
+        $res = M()->query($sql); //订单数
+        $variate = date('Y-m-d',$this->begin);
+
+        for($i=12;$i>=0;$i--){
+            $timestamp =  date('Y M', strtotime('midnight first day of -'.$i.' month'));
+            $time = date('Y-m',strtotime($timestamp));
+            $listArray[$i] = $time;
+        }
+
+        foreach($listArray as $key=>$item ){
+            $count['amount'][$key] = 0;
+            $count['tnum'][$key] = 0;
+            foreach($res as $items){
+                if($items['gap'] == $item){
+                    $count['amount'][$key] = $items['amount'];
+                    $count['tnum'][$key] = $items['tnum'];
+                }
+            }
+        }
+        $count['year'] = implode('","' , $listArray);
+        $count['year'] = '["'.$count['year'].'"]';
+        $count['amount'] = implode('","' , $count['amount']);
+        $count['amount'] = '["'.$count['amount'].'"]';
+        $count['tnum'] = implode('","' , $count['tnum']);
+        $count['tnum'] = '["'.$count['tnum'].'"]';
+
+
+
+        //人次
+        $prefix = C('DB_PREFIX');
+        $join = "LEFT JOIN ".$prefix."addons_lunchfeast_order ON ".$prefix."addons_lunchfeast_shop.id = ".$prefix."addons_lunchfeast_order.shop_id";
+        $group = $prefix."addons_lunchfeast_shop.id";
+        $getField = $prefix."addons_lunchfeast_shop.id,sum(".$prefix."addons_lunchfeast_order.number) as numbers";
+        $ranking = M('addons_lunchfeast_shop')->join($join)->group($group)->getField($getField);
+        //用户
+        $join .= " LEFT JOIN ".$prefix."addons_lunchfeast_order_user ON ".$prefix."addons_lunchfeast_order.id = ".$prefix."addons_lunchfeast_order_user.order_id";
+        $group = $prefix."addons_lunchfeast_order_user.diningper_id";
+        $getField = $prefix."addons_lunchfeast_shop.id,count(".$prefix."addons_lunchfeast_order.number) as numbers";
+        $userList = M('addons_lunchfeast_shop')->join($join)->field($getField)->group($group)->select();
+        dd($userList);
+        //销售额
+        $rankingMoney = M('addons_lunchfeast_order')->group('shop_id')->order("pay_amount desc")->getField("shop_id,sum(pay_amount) as sumMoney,sum(number) as number ", true);
+        foreach ($rankingMoney as $shop_id => $item) {
+            $Condition = array(
+                "id" => $shop_id
+            );
+
+            $resShop = findDataWithCondition( 'addons_lunchfeast_shop' , $Condition , "shop_name" );
+            if( !empty( $resShop ) ){
+                $Ranking[$shop_id] = array(
+                    "money"   => $item['summoney'],
+                    "name" => $resShop['shop_name'],
+                    'number'=> $item['number'],
+                );
+            }
+        }
+
+        dd($ranking);
+
+        $this -> assignData['count'] = $count;
+        return $this -> assignData;
     }
 
 }
