@@ -14,6 +14,23 @@
         </volist>
     </div>
 </div>
+<div class="tab-pane active" >
+    <h3>统计</h3>
+    <div class="row">
+        <volist name="statistical" id="p">
+            <div class="col-sm-2">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h4>{$p.title}</h4>
+                        <p>
+                            <a href="{:U('Admin/Addons/'.ADDONS_NAME , array('pluginName' => $p['act']))}" class="btn btn-primary" role="button">查看</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </volist>
+    </div>
+</div>
 <div style="width: 100%; text-align: right;">
     <a href="/Addons/lunchFeast/yanwu.apk" target="_blank">【  核销app下载（安卓版）】</a>
 </div>
