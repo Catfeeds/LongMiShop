@@ -17,8 +17,7 @@
         height: 30px; line-height: 30px;
         background: none;
     }
-    #refForm{overflow-y: auto;  height: 500px; width: 100%;}
-
+    #refForm{overflow-y: auto;  height: 500px; padding-bottom: 54px; width: 100%;}
 </style>
 <div class="container">
     {$config.main|htmlspecialchars_decode}
@@ -47,7 +46,7 @@
     </div>
     <!--<div class="mui-scroll-wrapper">-->
         <!--<div class="mui-scroll">-->
-            <ul class="mui-table-view"  style="max-height: 100%; ">
+            <ul class="mui-table-view" id="addressUl" style="max-height: 100%; ">
 
                 <volist name="shopList" id="shopItem">
                     <li class="mui-table-view-cell mui-media">
@@ -173,6 +172,30 @@
 <script>
 
     var _w = {};
+    function isTouchDevice(){
+        try{
+            document.createEvent("TouchEvent");
+            return true;
+        }catch(e){
+            return false;
+        }
+    }
+    function touchScroll(id){
+        if(isTouchDevice()){ //if touch events exist...
+            var el=document.getElementById(id);
+            var scrollStartPos=0;
+
+            document.getElementById(id).addEventListener("touchstart", function(event) {
+                scrollStartPos=this.scrollTop+event.touches[0].pageY;
+                event.preventDefault();
+            },false);
+
+            document.getElementById(id).addEventListener("touchmove", function(event) {
+                this.scrollTop=scrollStartPos-event.touches[0].pageY;
+                event.preventDefault();
+            },false);
+        }
+    }
     function switch_date(spec)
     {
         if( $(spec).hasClass("myGray") ){
@@ -255,7 +278,12 @@
             mui('#buy').popover('toggle');
         });
         getDateList();
+        touchScroll("refForm");
+        $('.mui-table-view').get(0).addEventListener("touchmove", function (e){
+            e.stopPropagation();
+        }, false);
     });
+
 
     //选择用餐地点
     function chooseShop(obj,isOnline){
