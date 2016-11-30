@@ -1,0 +1,21 @@
+<div class="more-box">
+    <div class="more-box-l">7日浏览排行榜</div>
+</div>
+<div class="k">
+    <dl class="dl_box4">
+        <dt> 店铺名称</dt>
+        <dd>销售额</dd>
+    </dl>
+    <notempty name="Ranking">
+        <volist name="Ranking" id="item">
+            <dl class="dl_box3">
+                <dt> <a href="#">{$item.shop_name}</a> </dt>
+                <dd>
+                    <p>{$item.money}</p>
+                </dd>
+            </dl>
+        </volist>
+        <else />
+        <div class="none">还没有相关数据</div>
+    </notempty>
+</div>
