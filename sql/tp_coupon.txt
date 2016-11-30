@@ -428,3 +428,21 @@ ADD COLUMN `limit_day`  int(11) NOT NULL DEFAULT 7 COMMENT '限制天数' AFTER `use
 ALTER TABLE `lm_coupon_list`
 ADD COLUMN `receive_time`  int(11) NOT NULL DEFAULT 0 COMMENT '领取时间' AFTER `send_time`;
 
+
+-- ----------------------------
+-- Table structure for lm_cron_list
+-- ----------------------------
+DROP TABLE IF EXISTS `lm_cron_list`;
+CREATE TABLE `lm_cron_list` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `key` varchar(100) DEFAULT NULL,
+  `value` int(11) NOT NULL DEFAULT '0' COMMENT '值 时间戳',
+  `name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of lm_cron_list
+-- ----------------------------
+INSERT INTO `lm_cron_list` VALUES ('1', 'min', '0', 'Order');
+INSERT INTO `lm_cron_list` VALUES ('2', 'min', '0', 'Supplier');
