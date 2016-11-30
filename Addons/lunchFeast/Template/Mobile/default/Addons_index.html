@@ -18,7 +18,7 @@
         background: none;
     }
     #refForm{overflow-y: auto;  height: 500px; padding-bottom:70px; width: 100%;}
-    #addressUl{height: 650px;}
+    #addressUl{    max-height: none;}
 </style>
 <div class="container">
     {$config.main|htmlspecialchars_decode}
@@ -172,6 +172,13 @@
 
 <script>
 
+    var screenHeight =  window.screen.height;
+    var addressUl = screenHeight - 80 ;
+    var refForm = screenHeight-110;
+    console.log(addressUl);
+    $('#addressUl').css('height',addressUl+ 'px');
+    $('#refForm').css('height',refForm+ 'px');
+
     var _w = {};
     function isTouchDevice(){
         try{
@@ -181,6 +188,8 @@
             return false;
         }
     }
+
+
     function touchScroll(id){
         if(isTouchDevice()){ //if touch events exist...
             var el=document.getElementById(id);

@@ -411,7 +411,8 @@ class lunchFeastAdminController
         $join .= " LEFT JOIN ".$prefix."addons_lunchfeast_order_user ON ".$prefix."addons_lunchfeast_order.id = ".$prefix."addons_lunchfeast_order_user.order_id";
         $group = $prefix."addons_lunchfeast_order_user.diningper_id";
         $getField = $prefix."addons_lunchfeast_shop.id,count(".$prefix."addons_lunchfeast_order.number) as numbers";
-        $userList = M('addons_lunchfeast_shop')->join($join)->field($getField)->group($group)->select();
+        $userList = M('addons_lunchfeast_shop')->join($join)->field($getField)->fetchsql(true)->group($group)->select();
+
         dd($userList);
         //销售额
         $rankingMoney = M('addons_lunchfeast_order')->group('shop_id')->order("pay_amount desc")->getField("shop_id,sum(pay_amount) as sumMoney,sum(number) as number ", true);
