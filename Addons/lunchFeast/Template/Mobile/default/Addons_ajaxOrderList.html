@@ -3,23 +3,25 @@
         <div class="ajax_return my_nav">
     </if>
     <volist name="lists" id="list">
-        <div class="titel_box">
-            <div class="titel_box_l">{$list.shopData.shop_name}</div>
+        <div class="titel_box" style="border-top: 2px #a0a0a0 dashed;margin-top: 9px">
+            <div class="titel_box_l" style="font-weight: bold;font-size: 17px;text-indent: 13px;">
+                {$list.shopData.shop_name}
+            </div>
         </div>
         <div class="cp_box" style="margin:0px">
             <div class="c">
                 <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderDetail','id'=>$list['id']))}"></a>
             </div>
-            <li class="cp6">
+            <li class="cp6" style="padding-top: 0px;padding-bottom: 0px;">
                 <div class="cp1_l">
-                    <img src="{$list.shopData.icon}" style=" width: 92px !important; height: 92px !important; ">
+                    <img src="{$list.shopData.icon}" style=" width: 85px !important; height: 85px !important; ">
                     <if condition="$list.status eq 3 ">
                         <div class="cj">已过期</div>
                     </if>
                 </div>
                 <div class="cp1_r">
                     <p>{$list.number}位 | 共支付 ￥ {$list.order_amount}</p>
-                    <span style="font-size: 12px;">有效日期：{$list.date|date='Y-m-d',###} 中午</span>
+                    <span style="font-size: 12px;">用餐日期：{$list.date|date='Y-m-d',###} 中午</span>
                 </div>
             </li>
         </div>
