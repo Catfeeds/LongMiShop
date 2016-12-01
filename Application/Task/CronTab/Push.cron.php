@@ -15,7 +15,7 @@ class PushCronClass
         $this->thisTime = date("Y-m-d",time());
         $this->nineItem = date("H",$this->thisTime);
 
-        if($this->nineItem == '17'){
+        if($this->nineItem == '19'){
             setLogResult(  $this->nineItem );
             $orderInfo = M('addons_lunchfeast_order')->where(array('status'=>1))->select();
             foreach($orderInfo as $item){
