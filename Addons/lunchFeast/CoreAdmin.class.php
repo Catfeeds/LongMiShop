@@ -405,10 +405,10 @@ class lunchFeastAdminController
         $prefix = C('DB_PREFIX');
         $join = "LEFT JOIN ".$prefix."addons_lunchfeast_order ON ".$prefix."addons_lunchfeast_shop.id = ".$prefix."addons_lunchfeast_order.shop_id";
         $group = $prefix."addons_lunchfeast_shop.id";
-        $getField = $prefix."addons_lunchfeast_shop.id,sum(".$prefix."addons_lunchfeast_order.number) as numbers";
+        $getField = $prefix."addons_lunchfeast_shop.id,".$prefix."addons_lunchfeast_shop.shop_name,sum(".$prefix."addons_lunchfeast_order.number) as numbers,".$prefix."addons_lunchfeast_shop.shop_name,sum(".$prefix."addons_lunchfeast_order.pay_amount) as summoney";
         $ranking = M('addons_lunchfeast_shop')->join($join)->group($group)->getField($getField);
         //用户
-        $sql = "SELECT s.id ,os.d_num FROM 
+        $sql = "SELECT s.shop_name ,os.d_num,s.id FROM 
 lm_addons_lunchfeast_shop s 
 LEFT JOIN (
  SELECT o.shop_id,count(distinct ou.diningper_id) as d_num  
@@ -417,16 +417,20 @@ GROUP BY o.shop_id
 ) os
 on  s.id = os.shop_id ORDER BY os.d_num desc";
         $userList =  M()->query($sql);
+
         //销售额
-        $rankingMoney = M('addons_lunchfeast_order')->group('shop_id')->order("pay_amount desc")->getField("shop_id,sum(pay_amount) as sumMoney,sum(number) as number ", true);
+        $group = $prefix."addons_lunchfeast_shop.id";
+        $order = $prefix."addons_lunchfeast_order.pay_amount desc";
+        $getfield =  $prefix."addons_lunchfeast_shop.id,".$prefix."addons_lunchfeast_shop.shop_name,sum(".$prefix."addons_lunchfeast_order.pay_amount) as summoney,sum(".$prefix."addons_lunchfeast_order.number) as number ";
+        $rankingMoney = M('addons_lunchfeast_shop')->join($join)->group($group)->order($order)->getField($getfield);
+
         foreach ($rankingMoney as $shop_id => $item) {
             $Condition = array(
                 "id" => $shop_id
             );
-
             $resShop = findDataWithCondition( 'addons_lunchfeast_shop' , $Condition , "shop_name" );
             if( !empty( $resShop ) ){
-                $Ranking[$shop_id] = array(
+                $RankingMoney[$shop_id] = array(
                     "money"   => $item['summoney'],
                     "name" => $resShop['shop_name'],
                     'number'=> $item['number'],
@@ -434,7 +438,13 @@ on  s.id = os.shop_id ORDER BY os.d_num desc";
             }
         }
 
-        dd($ranking);
+        $this -> assignData['RankingMoney'] = $RankingMoney;
+        $this -> assignData['userList'] = $userList;
+        $this -> assignData['ranking'] = $ranking;
+//        dd($RankingMoney);
+
+        return $this -> assignData;
+
     }
 
 }
