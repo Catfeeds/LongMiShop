@@ -226,7 +226,7 @@ function addonsPayNotify( $orderSn , $data ){
             lunchFeastGiveInviteGift( $orderInfo['user_id'] );
             //宴午推送
             $user = findDataWithCondition( 'users',array( "user_id" => $orderInfo['user_id'] ), 'openid' );
-            lunchFeastWeChatSend($user['$user'],$orderInfo);
+            lunchFeastWeChatSend($user['openid'],$orderInfo);
         }
     }
 }
