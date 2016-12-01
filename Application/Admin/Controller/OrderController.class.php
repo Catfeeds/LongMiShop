@@ -139,14 +139,36 @@ class OrderController extends BaseController {
         $order_id   = I("order_id");
         $orderLogic = new OrderLogic();
         $order = $orderLogic -> getOrderInfo($order_id);
+
         if( empty( $order )){
             $this -> error('没有此订单');
             exit;
         }
 
         $button     = $orderLogic -> getOrderButton( $order );
-        $orderGoods = $orderLogic -> getOrderGoods( $order_id );
-
+        $sql = "SELECT g.*,o.*,(o.goods_num * o.member_goods_price) AS goods_total FROM __PREFIX__order_goods o ".
+            "LEFT JOIN __PREFIX__goods g ON o.goods_id = g.goods_id  WHERE o.order_id = $order_id ORDER BY o.delivery_id ASC";
+        $orderGoods = M()->query($sql);
+        $isexist = array();
+        foreach($orderGoods as $key=>$item){
+            if( empty($isexist[$item['delivery_id']] ) ){
+                $isexist[$item['delivery_id']] = $item['delivery_id'];
+                $orderGoods[$key]['logistics'] = $item['delivery_id'];
+                $shipping_name = M('delivery_doc')->field('shipping_name,invoice_no')->where(array('id'=>$item['delivery_id']))->find();
+                $orderGoods[$key]['shipping_name'] = $shipping_name['shipping_name'];
+                $orderGoods[$key]['invoice_no'] = $shipping_name['invoice_no'];
+            }
+            if($item['is_send'] == 0){
+                $existSat = '未发货';
+            }elseif ($item['is_send'] == 1){
+                $existSat = '已发货';
+            }elseif ($item['is_send'] == 2){
+                $existSat = '已换货';
+            }elseif ($item['is_send'] == 3){
+                $existSat = '已退货';
+            }
+            $orderGoods[$key]['existSat']  = $existSat ;
+        }
         // 获取操作记录
         $action_log = M('order_action') -> where(array('order_id'=>$order_id))->order('log_time desc')->select();
         $this -> assign('order',$order);
@@ -162,6 +184,63 @@ class OrderController extends BaseController {
         $this -> assign('button',$button);
         $this -> display();
     }
+
+    /**
+     * 物流信息
+     */
+    public function express(){
+        $orderId = I('get.order_id','','int'); //订单id
+        $id = I('get.id','','int'); //物流表id
+        !empty($id) ? $where['id'] = $id : $where['order_id'] =  $orderId;
+        $delivery = M('delivery_doc') -> where($where)->limit(1)->find();
+        if(empty($delivery)){
+            $this -> assign('expressMessage', '查询物流失败' );
+        }
+        $result = kuaidi($delivery['invoice_no'],$delivery['shipping_name']);
+
+        if( $result == false ){
+            $dataList = array(
+                '安能小包' => 'http://www.ane66.com/',
+                '安能快递' => 'http://www.ane56.com/',
+                'aae全球专递' => 'http://cn.aaeweb.com/',
+                '安捷快递' => 'http://www.anjelex.com/',
+                '凤凰快递' => 'phoenixexp.com',
+                '民航快递' => 'http://www.cae.com.cn/',
+                '配思货运' => 'http://www.peisiwuliu.com/',
+                '文捷航空速递' => 'http://www.wjexpress.com/',
+                '伍圆' => 'http://www.f5xm.com/',
+                '中铁快运' => 'http://www.cre.cn/',
+            );
+            $notFind = true;
+            foreach($dataList as $key=>$item){
+                if($delivery['shipping_name'] == $key){
+                    $queryUrl = $item;
+                    $notFind = false;
+                }
+            }
+            $this -> assign('invoice_no', $delivery['invoice_no']);
+            $this -> assign('shipping_name', $delivery['shipping_name']);
+            $this -> assign('queryUrl',$queryUrl);
+            $this -> assign('notFind',$notFind);
+            $this -> assign('isNoFindApi',true);
+            $this -> display();
+            exit;
+        }
+
+        if( $result['status'] == 200  ){
+//            dd($result['data']);
+            //支付时间
+            $pay_time = M('order')->field('pay_time') -> where($where)->find();
+            $this -> assign('pay_time',$pay_time['pay_time']);
+            $this -> assign('expressData', $result);
+            $this -> assign('odd_numbers',$delivery['invoice_no']);
+        }else{
+            $this -> assign('expressMessage', $result['message'] );
+        }
+        $this -> display();
+    }
+
+
     /**
      * 快速发货 手机端页面
      */
