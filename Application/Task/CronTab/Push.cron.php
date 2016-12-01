@@ -12,8 +12,10 @@ class PushCronClass
 
     public function init()
     {
-        $this->thisTime = date("Y-m-d",time());
-        $this->nineItem = date("H",$this->thisTime);
+
+        $current = time();
+        $this->thisTime = date("Y-m-d",$current);
+        $this->nineItem = date("H",$current);
 
         if($this->nineItem == '19'){
             setLogResult(  $this->nineItem );
