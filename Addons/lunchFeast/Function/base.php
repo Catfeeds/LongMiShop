@@ -14,7 +14,8 @@ function lunchFeastWeChatSend( $openid , $orderInfo ){
     $shopInfo = findDataWithCondition("addons_lunchfeast_shop",array('id'=>$orderInfo['shop_id']),'shop_name');
     $mealInfo = findDataWithCondition("addons_lunchfeast_meal_list",array('id'=>$orderInfo['meal_id']),'name');
     $date = date("Y",$orderInfo['date'])."年".date("m",$orderInfo['date'])."月".date("d",$orderInfo['date'])."日".$mealInfo['name'];
-    $text = "感谢您预订了宴午！时间：".$date."；".$orderInfo['number']."人；".$shopInfo['shop_name']."<a href = '".U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderDetail','id'=>$orderInfo['id']))."'>点击查看凭证</a>";
+    $url = $_SERVER['SERVER_NAME'].U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderDetail','id'=>$orderInfo['id']));
+    $text = "感谢您预订了宴午！时间：".$date."；".$orderInfo['number']."人；".$shopInfo['shop_name']."<a href = '".$url."'>点击查看凭证</a>";
 
     $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
     $jsSdkLogic -> push_msg( $openid , $text );
