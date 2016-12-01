@@ -174,12 +174,7 @@
 
 <script>
 
-    var screenHeight =  window.screen.height;
-    var addressUl = screenHeight - 80 ;
-    var refForm = screenHeight-110;
-    console.log(addressUl);
-    $('#addressUl').css('height',addressUl+ 'px');
-    $('#refForm').css('height',refForm+ 'px');
+
 
     var _w = {};
     function isTouchDevice(){
@@ -290,8 +285,14 @@
             mui('#buy').popover('toggle');
         });
         getDateList();
+        var screenHeight =  window.screen.height;
+        var addressUl = screenHeight - 90 ;
+        var refForm = screenHeight-110;
+        $('#addressUl').css('height',addressUl+ 'px');
+        $('#refForm').css('height',refForm+ 'px');
         touchScroll("refForm");
         touchScroll("addressUl");
+
     });
 
 
