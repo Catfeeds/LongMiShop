@@ -69,9 +69,9 @@ class WeChatLogic extends BaseLogic
             $code = $_GET['code'];
             $data = $this -> getOpenidFromMp($code);
             $data2 = $this -> getUserInfo( $data['access_token'],$data['openid']);
-            $data['nickname'] = $data2['nickname'];
+            !empty($data2['nickname']) ? $data['nickname'] = $data2['nickname'] : false;
             $data['sex'] = empty($data2['sex']) ? 1 : $data2['sex'] ;
-            $data['headimgurl'] = $data2['headimgurl'];
+            !empty($data2['headimgurl']) ? $data['headimgurl'] = $data2['headimgurl'] : false;
             $data['subscribe'] = $data2['subscribe'];
             $this -> weChatInfo = $data;
             session("openid",$data['openid']);
@@ -166,7 +166,7 @@ class WeChatLogic extends BaseLogic
         }else{
             $urlObj["scope"] = "snsapi_userinfo";
         }
-//        $urlObj["scope"] = "snsapi_base";
+        $urlObj["scope"] = "snsapi_base";
         $urlObj["state"] = "STATE"."#wechat_redirect";
         $bizString = $this -> _toUrlParams($urlObj);
         return self::AUTHORIZATION_URL . $bizString;
@@ -296,7 +296,13 @@ class WeChatLogic extends BaseLogic
                     }
                 }
             }else{
-                registerFromOpenid( $this -> openid , $this -> weChatInfo );
+                registerFromOpenid( $this -> openid , $this -> weChatInfo , "WeChat" , false );
+                weChatPullingMessage( $this -> openid  );
+                $openid = session('openid');
+                session(null);
+                session('openid',$openid);
+                echo "<script language=JavaScript> location.replace(location.href);</script>";
+                exit;
             }
             return;
         }
