@@ -4,5 +4,6 @@ return array(
     'DEFAULT_THEME'    =>'new',
     'TMPL_PARSE_STRING'  =>array(
         '__STATIC__'     => '/Template/admin/new/Static',
+        '__INDEX__'     => '/Public/index',
     ),
 );
