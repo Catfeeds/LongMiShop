@@ -13,8 +13,16 @@ class JsSdkLogic extends BaseLogic
     private $appId;
     private $appSecret;
 
-    public function __construct($appId, $appSecret) {
+    public function __construct($appId = null, $appSecret = null) {
         parent::__construct("config");
+        if( is_null($appId) || is_null($appSecret) ){
+            $weChatConfig  = findDataWithCondition("wx_user");
+            if( empty( $weChatConfig ) ){
+                die("sym error");
+            }
+            $appId = $weChatConfig['appid'];
+            $appSecret = $weChatConfig['appsecret'];
+        }
         $this->appId = $appId;
         $this->appSecret = $appSecret;
     }
