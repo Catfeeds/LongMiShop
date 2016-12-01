@@ -1,21 +1,122 @@
-<div class="more-box">
-    <div class="more-box-l">7日浏览排行榜</div>
+
+    <link href="__STATIC__/CSS/css.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/CSS/longmi.css" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/date/mobiscroll_002.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/date/mobiscroll.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/date/mobiscroll_003.css" rel="stylesheet" type="text/css">
+
+
+        <div class="slideTxtBox1">
+            <div class="hd">
+                <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
+                <span class="arrow"><a class="next"></a><a class="prev"></a></span>
+                <ul id="shouUl">
+                    <li>用餐人次</li>
+                    <li>累计用户</li>
+                    <li>累计销售额</li>
+                </ul>
+            </div>
+            <div class="bd"  id="showView">
+                <ul >
+                    <notempty name="ranking" >
+                        <dl class="dl_box">
+                            <dd>&nbsp;店铺id</dd>
+                            <dd>用餐人次</dd>
+                        </dl>
+
+                        <volist name="ranking" id="list">
+                            <dl class="dl_box1">
+                                <dt>店铺名字：{$list.shop_name}</dt>
+                            </dl>
+                            <dl class="dl_box2">
+                                <dd>
+                                    {$list.id}
+                                </dd>
+                                <dd>
+                                    {: intval($list['numbers'])}
+                                </dd>
+                            </dl>
+                        </volist>
+                        {$page}
+
+
+                        <else />
+
+                        <div class="none">还没有相关数据</div>
+
+                    </notempty>
+                </ul>
+                <ul >
+                    <notempty name="userList" >
+                        <dl class="dl_box">
+                            <dd>&nbsp;店铺id</dd>
+                            <dd>累计用户</dd>
+                        </dl>
+
+                        <volist name="userList" id="list">
+                            <dl class="dl_box1">
+                                <dt>店铺名字：{$list.shop_name}</dt>
+                            </dl>
+                            <dl class="dl_box2">
+                                <dd>
+                                    {$list.id}
+                                </dd>
+                                <dd>
+                                    {: intval($list['d_num'])}
+                                </dd>
+                            </dl>
+                        </volist>
+                        {$page}
+
+
+                        <else />
+
+                        <div class="none">还没有相关数据</div>
+
+                    </notempty>
+                </ul>
+                <ul >
+                    <notempty name="RankingMoney" >
+                        <dl class="dl_box">
+                            <dd>&nbsp;店铺id</dd>
+                            <dd>累计销售额</dd>
+                        </dl>
+                        <volist name="RankingMoney" id="list" key="key">
+                            <dl class="dl_box1">
+                                <dt>店铺名字：{$list.name}</dt>
+                            </dl>
+                            <dl class="dl_box2">
+                                <dd>
+                                    {$key}
+                                </dd>
+                                <dd>
+                                    {: intval($list['money'])}
+                                </dd>
+                            </dl>
+                        </volist>
+                        {$page}
+
+
+                        <else />
+
+                        <div class="none">还没有相关数据</div>
+
+                    </notempty>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="k">
-    <dl class="dl_box4">
-        <dt> 店铺名称</dt>
-        <dd>销售额</dd>
-    </dl>
-    <notempty name="Ranking">
-        <volist name="Ranking" id="item">
-            <dl class="dl_box3">
-                <dt> <a href="#">{$item.shop_name}</a> </dt>
-                <dd>
-                    <p>{$item.money}</p>
-                </dd>
-            </dl>
-        </volist>
-        <else />
-        <div class="none">还没有相关数据</div>
-    </notempty>
-</div>
+
+
+
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__STATIC__/js/SuperSlide.js"></script>
+<script src="__STATIC__/js/function.js"></script>
+<script src="__STATIC__/date/mobiscroll_002.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_004.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_003.js" type="text/javascript"></script>
+<script src="__STATIC__/date/mobiscroll_005.js" type="text/javascript"></script>
+<script src="__PUBLIC__/js/layer/layer-min.js"></script>
+
