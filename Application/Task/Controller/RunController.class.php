@@ -12,13 +12,6 @@ class RunController extends BaseTaskController {
 
     protected $startTime;
 
-
-
-    function exceptAuthActions()
-    {
-        return null;
-    }
-
     public function _initialize() {
         parent::_initialize();
         define('CRON_PATH', APP_PATH."Task/CronTab/");
