@@ -477,9 +477,8 @@ class lunchFeastMobileController
     }
 
     public function recommendList(){
-        $list = getInviteList($this ->userInfo['user_id']);
+        $list = lunchFeastGetInviteList($this ->userInfo['user_id']);
         $this->assignData['list'] = $list;
-        $this->assignData['noNeedCss'] = true;
         return $this->assignData;
     }
 
