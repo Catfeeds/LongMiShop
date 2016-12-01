@@ -281,6 +281,7 @@ function getMealList(){
  * @return mixed
  */
 function getShopList( $userId ){
+    $today = strtotime(date('Y-m-d',strtotime("+1 day")));
     $shopList = selectDataWithCondition( "addons_lunchfeast_shop"  );
     if( !empty( $shopList ) ){
         foreach ( $shopList as $shopKey => $shopItem ){
@@ -291,6 +292,15 @@ function getShopList( $userId ){
             );
             if( isExistenceDataWithCondition( "addons_lunchfeast_order" , $condition ) ){
                 $shopList[$shopKey]["is_go"] = true;
+            }
+            $condition = array(
+                "shop_id" => $shopItem['id'],
+                "date" => array("egt",$today),
+                "content" => array("neq",""),
+                "money" => array("gt","0"),
+            );
+            if(  !isExistenceDataWithCondition( "addons_lunchfeast_shop_goods" , $condition ) ){
+                $shopList[$shopKey]["is_online"] = false;
             }
         }
     }
