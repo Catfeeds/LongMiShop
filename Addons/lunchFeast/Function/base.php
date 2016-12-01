@@ -11,8 +11,10 @@ function lunchFeastWeChatSend( $openid , $orderInfo ){
     if( empty( $weChatConfig ) ){
         return false;
     }
-
-    $text = "感谢您预订了宴午！时间：2016年12月10日中午；2人；环球都会2708<a href = ''>点击查看凭证</a>";
+    $shopInfo = findDataWithCondition("addons_lunchfeast_shop",array('id'=>$orderInfo['shop_id']),'shop_name');
+    $mealInfo = findDataWithCondition("addons_lunchfeast_meal_list",array('id'=>$orderInfo['meal_id']),'name');
+    $date = date("Y",$orderInfo['date'])."年".date("m",$orderInfo['date'])."月".date("d",$orderInfo['date'])."日".$mealInfo['name'];
+    $text = "感谢您预订了宴午！时间：".$date."；".$orderInfo['number']."人；".$shopInfo['shop_name']."<a href = '".U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderDetail','id'=>$orderInfo['id']))."'>点击查看凭证</a>";
 
     $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
     $jsSdkLogic -> push_msg( $openid , $text );
@@ -222,6 +224,9 @@ function addonsPayNotify( $orderSn , $data ){
             saveData( "addons_lunchfeast_order" ,  array( "order_sn" => $orderSn ) , array( 'status' => 1 ,"pay_time" => time()));
             //邀请人奖励
             lunchFeastGiveInviteGift( $orderInfo['user_id'] );
+            //宴午推送
+            $user = findDataWithCondition( 'users',array( "user_id" => $orderInfo['user_id'] ), 'openid' );
+            lunchFeastWeChatSend($user['$user'],$orderInfo);
         }
     }
 }
