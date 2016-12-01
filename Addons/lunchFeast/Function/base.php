@@ -6,11 +6,6 @@
  * @return bool
  */
 function lunchFeastWeChatSend( $orderInfo ){
-
-    $weChatConfig = M('wx_user')->find();
-    if( empty( $weChatConfig ) ){
-        return false;
-    }
     $user = findDataWithCondition( 'users',array( "user_id" => $orderInfo['user_id'] ), 'openid' );
     $shopInfo = findDataWithCondition("addons_lunchfeast_shop",array('id'=>$orderInfo['shop_id']),'shop_name');
     $mealInfo = findDataWithCondition("addons_lunchfeast_meal_list",array('id'=>$orderInfo['meal_id']),'name');
@@ -18,7 +13,7 @@ function lunchFeastWeChatSend( $orderInfo ){
     $url = $_SERVER['SERVER_NAME'].U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderDetail','id'=>$orderInfo['id']));
     $text = "感谢您预订了宴午！时间：".$date."；".$orderInfo['number']."人；".$shopInfo['shop_name']."<a href = '".$url."'>点击查看凭证</a>";
 
-    $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
+    $jsSdkLogic = new \Common\Logic\JsSdkLogic();
     $jsSdkLogic -> push_msg( $user['openid'] , $text );
 }
 /**
