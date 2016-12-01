@@ -1,6 +1,23 @@
 <?php
 
 /**
+ * 宴午推送
+ * @param $openid
+ * @return bool
+ */
+function lunchFeastWeChatSend( $openid , $orderInfo ){
+
+    $weChatConfig = M('wx_user')->find();
+    if( empty( $weChatConfig ) ){
+        return false;
+    }
+
+    $text = "感谢您预订了宴午！时间：2016年12月10日中午；2人；环球都会2708<a href = ''>点击查看凭证</a>";
+
+    $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
+    $jsSdkLogic -> push_msg( $openid , $text );
+}
+/**
  * 生成推荐关系
  * @param $userID
  * @param $inviteUserId
