@@ -148,6 +148,4 @@ CREATE TABLE `lm_addons_lunchfeast_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-ALTER TABLE `lm_coupon_list`
-ADD COLUMN `plugin_name`  varchar(255) NULL COMMENT '插件名字' AFTER `receive_time`,
-ADD COLUMN `plugin_order_id`  int(11) NULL COMMENT '插件order表id' AFTER `plugin_name`;
+
