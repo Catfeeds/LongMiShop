@@ -86,9 +86,14 @@ function registerFromOpenid( $openid , $info = array() , $fromTo = "WeChat" , $n
     if( $needJs ){
 //    if($result['status'] == 1){
         $openid = session('openid');
+        $redirectedUrl = session("redirectedUrl");
         session(null);
         session('openid',$openid);
 
+        if( !empty( $redirectedUrl ) ){
+            header("Location: ".$redirectedUrl);
+            exit;
+        }
         echo "<script language=JavaScript> location.replace(location.href);</script>";
         exit;
 //    }
