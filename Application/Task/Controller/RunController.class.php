@@ -51,9 +51,13 @@ class RunController extends BaseTaskController {
                     break;
             }
             if( $run ==  true ){
-                @include_once  CRON_PATH . $name . ".cron.php";
-                saveData( self::CRON_TB , array("id"=>$id),array("value" => $this -> startTime));
-                setLogResult(  $cronItem , $name , "cron" );
+                try{
+                    @include_once  CRON_PATH . $name . ".cron.php";
+                    saveData( self::CRON_TB , array("id"=>$id),array("value" => $this -> startTime));
+                    setLogResult(  $cronItem , $name , "cron" );
+                } catch (\Exception $e){
+                    setLogResult(  $e -> getMessage() , $name."_ERROR" , "cron" );
+                }
             }
         }
     }
