@@ -54,12 +54,13 @@ class lunchFeastAdminController
     public function config(){
         if (($_GET['is_ajax'] == 1) && IS_POST) {
             C('TOKEN_ON', false);
-            $data["main"] = I("main");
-            $data['title'] = I('title');
-            $data['desc'] = I('desc');
-            $data['shareimg'] = I('shareimg');
-            $data['invite'] = I('invite');
-            $data['invited_to'] = I('invited_to');
+            $data = I('post.');
+//            $data["main"] = I("main");
+//            $data['title'] = I('title');
+//            $data['desc'] = I('desc');
+//            $data['shareimg'] = I('shareimg');
+//            $data['invite'] = I('invite');
+//            $data['invited_to'] = I('invited_to');
             $data['invited_value'] = $data['invite'] == 1 ?   I('invite_value_select') :  I('invite_value_input');
             $data['invited_to_value'] =  $data['invited_to'] == 1 ?  I('invited_to_value_select') : I('invited_to_value_input');
             if( isExistenceDataWithCondition( TB_CONFIG ) ){
