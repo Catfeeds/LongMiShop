@@ -166,7 +166,7 @@ class WeChatLogic extends BaseLogic
         }else{
             $urlObj["scope"] = "snsapi_userinfo";
         }
-        $urlObj["scope"] = "snsapi_base";
+//        $urlObj["scope"] = "snsapi_base";
         $urlObj["state"] = "STATE"."#wechat_redirect";
         $bizString = $this -> _toUrlParams($urlObj);
         return self::AUTHORIZATION_URL . $bizString;
@@ -296,12 +296,13 @@ class WeChatLogic extends BaseLogic
                     }
                 }
             }else{
-                registerFromOpenid( $this -> openid , $this -> weChatInfo , "WeChat" , false );
-                weChatPullingMessage( $this -> openid  );
-                $openid = session('openid');
-                session(null);
-                session('openid',$openid);
-                echo "<script language=JavaScript> location.replace(location.href);</script>";
+                registerFromOpenid( $this -> openid , $this -> weChatInfo  );
+//                registerFromOpenid( $this -> openid , $this -> weChatInfo , "WeChat" , false );
+//                weChatPullingMessage( $this -> openid  );
+//                $openid = session('openid');
+//                session(null);
+//                session('openid',$openid);
+//                echo "<script language=JavaScript> location.replace(location.href);</script>";
                 exit;
             }
             return;
