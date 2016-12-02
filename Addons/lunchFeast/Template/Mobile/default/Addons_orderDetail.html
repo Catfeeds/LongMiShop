@@ -16,7 +16,7 @@
 <foreach item="userItem" name="orderInfo.userList">
     <div class="cp6" >
         <div class="cp1_l" style="float:none;margin:0 auto;width:200px;">
-            <img src="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'qrCode','url' =>$userItem['code'] ))}" width="180" height="180">
+            <img src="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'qrCode','url' =>$userItem['code'] ))}" width="180" height="180" style="margin:0 auto;">
             <p style="text-align:center;font-weight: bold;font-size: 18px;">{$userItem.code}</p>
         </div>
 
