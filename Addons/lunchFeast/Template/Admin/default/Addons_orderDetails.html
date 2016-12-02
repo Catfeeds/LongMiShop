@@ -75,11 +75,11 @@
                         <td class="text-right">状态:</td>
                         <td class="text-right">核销时间:</td>
                     </tr>
-                    <volist name="details['perList']" id="perList">
+                    <volist name="details" id="perList">
                         <tr>
                             <td class="text-right">{$perList.code}</td>
-                            <td class="text-right">{$perList.names}</td>
-                            <td class="text-right">{$perList.mobile}</td>
+                            <td class="text-right">{$perList.perList.names}</td>
+                            <td class="text-right">{$perList.perList.mobile}</td>
                             <td class="text-right">
                                 <if condition="$perList['is_use'] eq 0">
                                     未核销
@@ -87,7 +87,7 @@
                                     已核销
                                 </if>
                             </td>
-                            <td class="text-right">{$perList.use_time|date='Y-m-d H:i:s',###}</td>
+                            <td class="text-right">{:$perList['use_time']?date('Y-m-d H:i:s',$perList['use_time']):""}</td>
                         </tr>
                     </volist>
                     </tbody>
