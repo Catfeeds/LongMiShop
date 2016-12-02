@@ -1,14 +1,12 @@
-<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
-<script src="__PUBLIC__/js/global.js"></script>
+<!--<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>-->
+<!--<script src="__PUBLIC__/js/global.js"></script>-->
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
 
-
-//    var ShareLink = "http://{: $_SERVER[HTTP_HOST].U('Mobile/Addons/lunchFeast',array('pluginName'=>'index'))}"; //默认分享链接
-    var ShareLink = "http://{: $_SERVER['HTTP_HOST'].U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendShare','inviteUserId' => $userId)) }"; //默认分享链接
-    var ShareImgUrl = "http://{$_SERVER[HTTP_HOST]}{$config['shareimg']}"; // 分享图标
-    var ShareTitle = "{$config['title']}";
-    var ShareDesc = "{$config['desc']}";
+    var ShareLink = "{$config['share_url']}";
+    var ShareImgUrl = "{$config['share_img']}";
+    var ShareTitle = "{$config['share_title']}";
+    var ShareDesc = "{$config['share_desc']}";
 
 
 // 微信配置

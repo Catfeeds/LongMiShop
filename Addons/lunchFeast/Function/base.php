@@ -259,6 +259,45 @@ function addonsPayData( $orderId ){
 }
 
 /**
+ * 是否关闭推荐
+ * @param $config
+ */
+function isNeedRecommend($config){
+    if(empty($config["need_recommend"])||$config["need_recommend"] == 0){
+        header("Location: ".U('Mobile/Addons/lunchFeast'));
+        exit;
+    }
+}
+/**
+ * 分享获取
+ * @param $config
+ * @param $userId
+ * @return mixed
+ */
+function lunchFeastSetShareData($config,$userId){
+    $pluginName = I("pluginName","index");
+    $nameList = array(
+        "recommendSendSms",
+        "recommendResult",
+        "recommendShare",
+        "recommendRule",
+        "recommendList",
+        "recommendIndex",
+    );
+    if( !in_array( $pluginName , $nameList )){
+        $config["share_img"] ="http://".$_SERVER["HTTP_HOST"].$config['shareimg'];
+        $config["share_url"] ="http://".$_SERVER["HTTP_HOST"].U('Mobile/Addons/lunchFeast');
+        $config["share_title"] =$config['title'];
+        $config["share_desc"] =$config['desc'];
+    }else{
+        $config["share_img"] ="http://".$_SERVER["HTTP_HOST"].$config['recommend_shareimg'];
+        $config["share_url"] ="http://".$_SERVER["HTTP_HOST"].U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendShare','inviteUserId' => $userId));
+        $config["share_title"] =$config['recommend_title'];
+        $config["share_desc"] =$config['recommend_desc'];
+    }
+    return $config;
+}
+/**
  * 获取配置
  * @return mixed
  */
