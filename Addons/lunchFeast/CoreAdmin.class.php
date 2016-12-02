@@ -267,6 +267,28 @@ class lunchFeastAdminController
         $this -> assignData['details'] = $details;
         return $this -> assignData;
     }
+    //手动核销
+    public function manual(){
+        $oId = I('oId',null);
+        $id = I('id',null);
+        $sta = M('addons_lunchfeast_order_user')->where(array('id'=>$oId))->find();
+        if(empty($sta) || $sta['is_use'] ==1 ){
+            exit(json_encode(callback(false,'该状态异常')));
+        }
+        $res = M('addons_lunchfeast_order_user')->where(array('id'=>$oId))->save(array('is_use'=>1,'use_time'=>time(),'admin_id'=>'0'));
+        if($res){
+            $useNumber = getCountWithCondition( "addons_lunchfeast_order_user" , array("is_use"=>1,"order_id" =>$sta["order_id"] ));
+            $codeInfo = findDataWithCondition( "addons_lunchfeast_order" ,array( "id" => $sta["order_id"] ),'number' );
+            if($codeInfo['number'] == $useNumber ){
+                saveData( "addons_lunchfeast_order", array("id" => $sta["order_id"] ) ,array("status"=>2) );
+            }
+            exit(json_encode(callback(true,'核销成功')));
+        }else{
+            exit(json_encode(callback(false,'核销失败')));
+        }
+    }
+
+
     public function orderDetail(){
         return $this -> assignData;
     }
