@@ -5,6 +5,7 @@ class lunchFeastMobileController
 
     public $assignData = array();
     public $userInfo = array();
+    public $config = array();
 
     public $weChatLogic = null;
 
@@ -14,7 +15,8 @@ class lunchFeastMobileController
         $this -> assignData["headerPath"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_header.html";
         $this -> assignData["footerPath"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_footer.html";
         $this -> assignData["share"] = "./Addons/lunchFeast/Template/Mobile/default/Addons_share.html";
-        $this -> assignData["config"] = getLunchFeastConfig();
+        $config =  getLunchFeastConfig();
+        $this -> assignData["config"] = $this -> config = lunchFeastSetShareData($config,$this -> userInfo["user_id"]);
         $this -> weChatLogic= new \Common\Logic\WeChatLogic();
         $this -> assignData["signPackage"] = $this -> weChatLogic -> getSignPackage();
         $this -> assignData['userId'] = $this -> userInfo['user_id'];
@@ -464,8 +466,9 @@ class lunchFeastMobileController
 
 
 
-
+    //分享有礼主要
     public function recommendIndex(){
+        isNeedRecommend($this -> config["need_recommend"]);
         $shopConfig = getLunchFeastConfig();
         $inviteData = lunchFeastGetGiftInfo( $shopConfig['invited_value'] , $shopConfig['invite'] );
         $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
@@ -475,15 +478,17 @@ class lunchFeastMobileController
         $this->assignData['number'] = lunchFeastGetInviteNumber($this ->userInfo['user_id']);
         return $this->assignData;
     }
-
+    //分享有礼推荐列表
     public function recommendList(){
+        isNeedRecommend($this -> config["need_recommend"]);
         $list = lunchFeastGetInviteList($this ->userInfo['user_id']);
         $this->assignData['list'] = $list;
         return $this->assignData;
     }
 
-
+    //分享有礼规则
     public function recommendRule(){
+        isNeedRecommend($this -> config["need_recommend"]);
         $shopConfig = getLunchFeastConfig();
         $inviteData = lunchFeastGetGiftInfo( $shopConfig['invited_value'] , $shopConfig['invite'] );
         $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
@@ -492,8 +497,9 @@ class lunchFeastMobileController
         $this->assignData['beInviteData'] = getCallbackData($beInviteData);
         return $this->assignData;
     }
-
+    //分享有礼分享页面
     public function recommendShare(){
+        isNeedRecommend($this -> config["need_recommend"]);
         if(IS_POST){
             $inviteUserId  = I('inviteUserId');
             $mobile  = I('new_mobile');
@@ -516,7 +522,6 @@ class lunchFeastMobileController
                 header("Location: ".U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendShare',"inviteUserId"=>$inviteUserId)));
                 exit;
             }
-            exit;
         }
 
         $inviteUserId = I('inviteUserId');
@@ -553,8 +558,9 @@ class lunchFeastMobileController
         header("Location: ".U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendResult','inviteUserId'=>$inviteUserId)));
         exit;
     }
-
+    //分享有礼结果
     public function recommendResult(){
+        isNeedRecommend($this -> config["need_recommend"]);
         $inviteUserId = I('inviteUserId');
         if( empty($inviteUserId) ){
             header("Location: ".U('Mobile/Addons/lunchFeast'));
@@ -577,8 +583,9 @@ class lunchFeastMobileController
     }
 
 
-
+    //分享有礼短信页面
     public function recommendSendSms(){
+        isNeedRecommend($this -> config["need_recommend"]);
         if(empty($this ->userInfo['user_id'])){
             exit( json_encode(callback( false , "用户信息有误" ) ) );
         }
