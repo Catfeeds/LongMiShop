@@ -439,10 +439,12 @@ CREATE TABLE `lm_cron_list` (
   `value` int(11) NOT NULL DEFAULT '0' COMMENT 'Öµ Ê±¼ä´Á',
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lm_cron_list
 -- ----------------------------
 INSERT INTO `lm_cron_list` VALUES ('1', 'min', '0', 'Order');
 INSERT INTO `lm_cron_list` VALUES ('2', 'min', '0', 'Supplier');
+INSERT INTO `lm_cron_list` VALUES ('3', 'hour', '0', 'Push');
+
