@@ -291,7 +291,7 @@ class WeChatLogic extends BaseLogic
                             header("Location: ".$redirectedUrl);
                             exit;
                         }
-                        echo "<script language=JavaScript> location.replace(location.href);</script>";
+                        echo "<script language=JavaScript> location.href='".session("redirectedUrl")."';</script>";
                         exit;
                     }
                 }
