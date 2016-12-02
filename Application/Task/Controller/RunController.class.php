@@ -23,40 +23,42 @@ class RunController extends BaseTaskController {
 
     public function index(){
         $cronList = selectDataWithCondition( self::CRON_TB );
-        foreach ( $cronList as $cronItem) {
-            $id = $cronItem["id"];
-            $name = $cronItem["name"];
-            $runTime = $cronItem["value"];
-            $run = false;
-            switch ( $cronItem['key']){
-                case "min":
-                    $runTime + 60 <= $this -> startTime ? $run = true : false ;
-                    break;
-                case "hour":
-                    $runTime + ( 60 * 60 ) <= $this -> startTime ? $run = true : false ;
-                    break;
-                case "day":
-                    $runTime + ( 60 * 60 * 24 ) <= $this -> startTime ? $run = true : false ;
-                    break;
-                case "week":
-                    $runTime + ( 60 * 60 * 24 * 7 ) <= $this -> startTime ? $run = true : false ;
-                    break;
-                case "month":
-                    $runTime <= strtotime("-1 month") ? $run = true : false ;
-                    break;
-                case "year":
-                    $runTime <= strtotime("-1 year") ? $run = true : false ;
-                    break;
-                default:
-                    break;
-            }
-            if( $run ==  true ){
-                try{
-                    @include_once  CRON_PATH . $name . ".cron.php";
-                    saveData( self::CRON_TB , array("id"=>$id),array("value" => $this -> startTime));
-                    setLogResult(  $cronItem , $name , "cron" );
-                } catch (\Exception $e){
-                    setLogResult(  $e -> getMessage() , $name."_ERROR" , "cron" );
+        if( !empty( $cronList) ){
+            foreach ( $cronList as $cronItem) {
+                $id = $cronItem["id"];
+                $name = $cronItem["name"];
+                $runTime = $cronItem["value"];
+                $run = false;
+                switch ( $cronItem['key']){
+                    case "min":
+                        $runTime + 60 <= $this -> startTime ? $run = true : false ;
+                        break;
+                    case "hour":
+                        $runTime + ( 60 * 60 ) <= $this -> startTime ? $run = true : false ;
+                        break;
+                    case "day":
+                        $runTime + ( 60 * 60 * 24 ) <= $this -> startTime ? $run = true : false ;
+                        break;
+                    case "week":
+                        $runTime + ( 60 * 60 * 24 * 7 ) <= $this -> startTime ? $run = true : false ;
+                        break;
+                    case "month":
+                        $runTime <= strtotime("-1 month") ? $run = true : false ;
+                        break;
+                    case "year":
+                        $runTime <= strtotime("-1 year") ? $run = true : false ;
+                        break;
+                    default:
+                        break;
+                }
+                if( $run ==  true ){
+                    try{
+                        @include_once  CRON_PATH . $name . ".cron.php";
+                        saveData( self::CRON_TB , array("id"=>$id),array("value" => $this -> startTime));
+                        setLogResult(  $cronItem , $name , "cron" );
+                    } catch (\Exception $e){
+                        setLogResult(  $e -> getMessage() , $name."_ERROR" , "cron" );
+                    }
                 }
             }
         }
