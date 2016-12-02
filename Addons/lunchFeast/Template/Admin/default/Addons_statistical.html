@@ -44,6 +44,9 @@
         </div>
 
         <script src="__STATIC__/js/echarts-all.js"></script>
+        <script>
+            var echarteHeight = '60px';
+        </script>
             <script type="text/javascript">
                 // 基于准备好的dom，初始化echarts实例
                 var myChart = echarts.init(document.getElementById('lineChart'));
@@ -61,9 +64,10 @@
                         data:['订单数']
                     },
                     grid: {
-                        left: '0%',
-                        right: '0%',
-                        bottom: '0%',
+//                        left: '0%',
+//                        right: '0%',
+//                        bottom: '0%',
+                        height:echarteHeight,
                         containLabel: true
                     },
                     toolbox: {
@@ -110,9 +114,10 @@
                         data:['销售额']
                     },
                     grid: {
-                        left: '0%',
-                        right: '0%',
-                        bottom: '0%',
+//                        left: '0%',
+//                        right: '0%',
+//                        bottom: '0%',
+                        height:echarteHeight,
                         containLabel: true
                     },
                     toolbox: {
