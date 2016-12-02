@@ -448,3 +448,6 @@ INSERT INTO `lm_cron_list` VALUES ('1', 'min', '0', 'Order');
 INSERT INTO `lm_cron_list` VALUES ('2', 'min', '0', 'Supplier');
 INSERT INTO `lm_cron_list` VALUES ('3', 'hour', '0', 'Push');
 
+ALTER TABLE `lm_coupon_list`
+ADD COLUMN `plugin_name`  varchar(255) NULL COMMENT '插件名字' AFTER `receive_time`,
+ADD COLUMN `plugin_order_id`  int(11) NULL COMMENT '插件order表id' AFTER `plugin_name`;
