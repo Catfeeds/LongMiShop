@@ -468,7 +468,7 @@ class lunchFeastMobileController
 
     //分享有礼主要
     public function recommendIndex(){
-        isNeedRecommend($this -> config["need_recommend"]);
+        isNeedRecommend($this -> config);
         $shopConfig = getLunchFeastConfig();
         $inviteData = lunchFeastGetGiftInfo( $shopConfig['invited_value'] , $shopConfig['invite'] );
         $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
@@ -480,7 +480,7 @@ class lunchFeastMobileController
     }
     //分享有礼推荐列表
     public function recommendList(){
-        isNeedRecommend($this -> config["need_recommend"]);
+        isNeedRecommend($this -> config);
         $list = lunchFeastGetInviteList($this ->userInfo['user_id']);
         $this->assignData['list'] = $list;
         return $this->assignData;
@@ -488,7 +488,7 @@ class lunchFeastMobileController
 
     //分享有礼规则
     public function recommendRule(){
-        isNeedRecommend($this -> config["need_recommend"]);
+        isNeedRecommend($this -> config);
         $shopConfig = getLunchFeastConfig();
         $inviteData = lunchFeastGetGiftInfo( $shopConfig['invited_value'] , $shopConfig['invite'] );
         $beInviteData = lunchFeastGetGiftInfo( $shopConfig['invited_to_value'] , $shopConfig['invited_to'] );
@@ -499,7 +499,7 @@ class lunchFeastMobileController
     }
     //分享有礼分享页面
     public function recommendShare(){
-        isNeedRecommend($this -> config["need_recommend"]);
+        isNeedRecommend($this -> config);
         if(IS_POST){
             $inviteUserId  = I('inviteUserId');
             $mobile  = I('new_mobile');
@@ -560,7 +560,7 @@ class lunchFeastMobileController
     }
     //分享有礼结果
     public function recommendResult(){
-        isNeedRecommend($this -> config["need_recommend"]);
+        isNeedRecommend($this -> config);
         $inviteUserId = I('inviteUserId');
         if( empty($inviteUserId) ){
             header("Location: ".U('Mobile/Addons/lunchFeast'));
@@ -585,7 +585,7 @@ class lunchFeastMobileController
 
     //分享有礼短信页面
     public function recommendSendSms(){
-        isNeedRecommend($this -> config["need_recommend"]);
+        isNeedRecommend($this -> config);
         if(empty($this ->userInfo['user_id'])){
             exit( json_encode(callback( false , "用户信息有误" ) ) );
         }
