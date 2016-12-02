@@ -260,7 +260,7 @@ class lunchFeastAdminController
         $nickname = M('users')->field('nickname')->where(array('user_id'=>$details['user_id']))->find();
         $details['nickname'] = $nickname['nickname'];
         foreach($userList as $key=>$item){
-            $details[$key]['perList'] = M('addons_lunchfeast_diningper')->where(array('id'=>$item['diningper_id']))->find();
+            $details['user'][$key]['perList'] = M('addons_lunchfeast_diningper')->where(array('id'=>$item['diningper_id']))->find();
         }
         $this -> assignData['details'] = $details;
         return $this -> assignData;
