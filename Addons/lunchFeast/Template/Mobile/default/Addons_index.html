@@ -29,6 +29,7 @@
         <li>
             <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderList'))}" style="background: #fff;color:#b02f4b; ">
                 我的用餐凭证
+
             </a>
         </li>
         <li class="h">
@@ -44,6 +45,7 @@
     </div>
     <div class="m33">
         <div class="cp2_title cp2_title_h" >用餐地点</div>
+
     </div>
     <!--<div class="mui-scroll-wrapper">-->
         <!--<div class="mui-scroll">-->
@@ -285,8 +287,9 @@
             mui('#buy').popover('toggle');
         });
         getDateList();
-        var screenHeight =  window.screen.height;
-        var addressUl = screenHeight - 90 ;
+        var screenHeight =  $('#address').height();
+
+        var addressUl = screenHeight - 80 ;
         var refForm = screenHeight-110;
         $('#addressUl').css('height',addressUl+ 'px');
         $('#refForm').css('height',refForm+ 'px');

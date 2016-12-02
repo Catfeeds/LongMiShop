@@ -2,23 +2,19 @@
 
 /**
  * 宴午推送
- * @param $openid
+ * @param $orderInfo
  * @return bool
  */
-function lunchFeastWeChatSend( $openid , $orderInfo ){
-
-    $weChatConfig = M('wx_user')->find();
-    if( empty( $weChatConfig ) ){
-        return false;
-    }
+function lunchFeastWeChatSend( $orderInfo ){
+    $user = findDataWithCondition( 'users',array( "user_id" => $orderInfo['user_id'] ), 'openid' );
     $shopInfo = findDataWithCondition("addons_lunchfeast_shop",array('id'=>$orderInfo['shop_id']),'shop_name');
     $mealInfo = findDataWithCondition("addons_lunchfeast_meal_list",array('id'=>$orderInfo['meal_id']),'name');
     $date = date("Y",$orderInfo['date'])."年".date("m",$orderInfo['date'])."月".date("d",$orderInfo['date'])."日".$mealInfo['name'];
     $url = $_SERVER['SERVER_NAME'].U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderDetail','id'=>$orderInfo['id']));
     $text = "感谢您预订了宴午！时间：".$date."；".$orderInfo['number']."人；".$shopInfo['shop_name']."<a href = '".$url."'>点击查看凭证</a>";
 
-    $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
-    $jsSdkLogic -> push_msg( $openid , $text );
+    $jsSdkLogic = new \Common\Logic\JsSdkLogic();
+    $jsSdkLogic -> push_msg( $user['openid'] , $text );
 }
 /**
  * 生成推荐关系
@@ -226,8 +222,7 @@ function addonsPayNotify( $orderSn , $data ){
             //邀请人奖励
             lunchFeastGiveInviteGift( $orderInfo['user_id'] );
             //宴午推送
-            $user = findDataWithCondition( 'users',array( "user_id" => $orderInfo['user_id'] ), 'openid' );
-            lunchFeastWeChatSend($user['openid'],$orderInfo);
+            lunchFeastWeChatSend($orderInfo);
         }
     }
 }
