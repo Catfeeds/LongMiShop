@@ -83,9 +83,9 @@
 <form id="configForm" enctype="multipart/form-data">
     <div class="tab-content">
 
-        <div class="tab-pane active">
+        < class="tab-pane active">
             <table class="table table-bordered">
-                <tbody>
+
                 <tr>
                     <td>首页描述:</td>
                     <td width="85%">
@@ -119,50 +119,91 @@
                 </tr>
 
                 <tr>
-                    <td>邀请人奖品：</td>
+                    <td>分享有礼</td>
                     <td>
-                        <select name="invite" id="invite">
-                            <option value="1" <if condition="$config['invite'] eq 1">selected="selected"</if>>卡券</option>
-                            <option value="2"<if condition="$config['invite'] eq 2">selected="selected"</if>>余额</option>
-                            <option value="3"<if condition="$config['invite'] eq 3">selected="selected"</if>>积分</option>
+                        <select name="need_recommend" id="need_recommend">
+                            <option value="0" {: $config['need_recommend'] == 0 ? 'selected' : ''}>关闭</option>
+                            <option value="1" {: $config['need_recommend'] == 1 ? 'selected' : ''}>开启</option>
                         </select>
+                    </td>
+                </tr>
 
-                        <select name="invite_value_select" id="invite_select" <if condition="$config['invite'] neq 1">style="display:none"</if> >
+                    <tr class="recommendDiv">
+                        <td>分享有礼 分享标题:</td>
+                        <td width="85%">
+                            <input name="recommend_title" class="form-control"  value="{$config.recommend_title}">
+                        </td>
+                    </tr>
+
+                    <tr class="recommendDiv">
+                        <td>分享有礼 desc:</td>
+                        <td width="85%">
+                            <textarea name="recommend_desc" class="form-control">{$config.recommend_desc}</textarea>
+                        </td>
+                    </tr>
+
+                    <tr class="recommendDiv">
+                        <td>分享有礼 分享图片：</td>
+                        <td >
+                            <input type="button" value="上传图片"  onclick="GetUploadify(1,'','recommend_shareimg','call_backs');"/>
+                            <input type="text" class="input-sm"  name="recommend_shareimg" id="recommend_shareimg" value="{$config.recommend_shareimg}"/>
+                            <if condition="$shop['icon'] neq null">
+                                <a target="_blank" href="{$shop.recommend_shareimg}" id="recommend_shareimg2">
+                                    <img width="150" height="150" src="{$shop.recommend_shareimg}">
+                                </a>
+                            </if>
+                            <!--<span id="err_original_img" style="color:#F00; display:none;"></span>-->
+                        </td>
+                    </tr>
+
+
+                    <tr class="recommendDiv">
+                        <td>邀请人奖品：</td>
+                        <td>
+                            <select name="invite" id="invite">
+                                <option value="1" <if condition="$config['invite'] eq 1">selected="selected"</if>>卡券</option>
+                                <option value="2"<if condition="$config['invite'] eq 2">selected="selected"</if>>余额</option>
+                                <option value="3"<if condition="$config['invite'] eq 3">selected="selected"</if>>积分</option>
+                            </select>
+
+                            <select name="invite_value_select" id="invite_select" <if condition="$config['invite'] neq 1">style="display:none"</if> >
                             <option value="0">请选择</option>
                             <volist name="coupon_list" id="coupon_item"  >
                                 <option value="{$coupon_item.id}" {$config['invited_value'] ==  $coupon_item['id'] ? 'selected' : ''}>{$coupon_item.name}</option>
                             </volist>
-                        </select>
-                        <input type="text" name="invite_value_input" id="invite_input"  value="{$config['invited_value']}" <if condition="$config['invite'] eq 1">style="display:none"</if> >
+                            </select>
+                            <input type="text" name="invite_value_input" id="invite_input"  value="{$config['invited_value']}" <if condition="$config['invite'] eq 1">style="display:none"</if> >
 
 
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td>被邀请人奖品：</td>
-                    <td>
-                        <select name="invited_to" id="invited_to">
-                            <option value="1" <if condition="$config['invited_to'] eq 1">selected="selected"</if>>卡券</option>
-                            <option value="2"<if condition="$config['invited_to'] eq 2">selected="selected"</if>>余额</option>
-                            <option value="3"<if condition="$config['invited_to'] eq 3">selected="selected"</if>>积分</option>
-                        </select>
+                    <tr class="recommendDiv">
+                        <td>被邀请人奖品：</td>
+                        <td>
+                            <select name="invited_to" id="invited_to">
+                                <option value="1" <if condition="$config['invited_to'] eq 1">selected="selected"</if>>卡券</option>
+                                <option value="2"<if condition="$config['invited_to'] eq 2">selected="selected"</if>>余额</option>
+                                <option value="3"<if condition="$config['invited_to'] eq 3">selected="selected"</if>>积分</option>
+                            </select>
 
-                        <select name="invited_to_value_select" id="invited_to_select" <if condition="$config['invited_to'] neq 1">style="display:none"</if> >
+                            <select name="invited_to_value_select" id="invited_to_select" <if condition="$config['invited_to'] neq 1">style="display:none"</if> >
                             <option value="0">请选择</option>
                             <volist name="coupon_list" id="coupon_item">
                                 <option value="{$coupon_item.id}" {$config['invited_to_value'] ==  $coupon_item['id'] ? 'selected' : ''}>{$coupon_item.name}</option>
                             </volist>
-                        </select>
+                            </select>
 
 
 
-                        <input type="text" name="invited_to_value_input" id="invite_to_input" <if condition="$config['invited_to'] eq 1">style="display:none"</if> value="{$config['invited_to_value']}">
+                            <input type="text" name="invited_to_value_input" id="invite_to_input" <if condition="$config['invited_to'] eq 1">style="display:none"</if> value="{$config['invited_to_value']}">
 
 
-                    </td>
-                </tr>
-                </tbody>
+                        </td>
+                    </tr>
+
+
+
             </table>
         </div>
         <div class="pull-right">
@@ -175,11 +216,27 @@
     function ajaxSubmitForm(){
         ajax_submit_form('configForm',"{:U('Admin/Addons/lunchFeast?is_ajax=1')}");
     }
-    // 上传商品图片成功回调函数
+
+    $(document).ready(function(){
+        var values = "{: $config['need_recommend']}";
+        if( values == 1){
+            $('.recommendDiv').show();
+        }else{
+            $('.recommendDiv').hide();
+        }
+    });
+    // 上传分享图片成功回调函数
     function call_back(file_url_tmp){
         $("#shareimg").val(file_url_tmp);
         $("#shareimg2").attr('href', file_url_tmp);
         $("#shareimg2 img").attr('src', file_url_tmp);
+    }
+
+    //分享有礼 分享图片
+    function call_backs(file_url_tmp){
+        $("#recommend_shareimg").val(file_url_tmp);
+        $("#recommend_shareimg2").attr('href', file_url_tmp);
+        $("#recommend_shareimg2 img").attr('src', file_url_tmp);
     }
     $(document).ready(function(){
         invite('invite');
@@ -216,4 +273,13 @@
             $('#invite_to_input').show();
         }
     }
+
+    //是否开启设置
+    $('#need_recommend').change('Data',function(){
+        if( $(this).val() == 1){
+            $('.recommendDiv').show();
+        }else{
+            $('.recommendDiv').hide();
+        }
+    });
 </script>

@@ -148,4 +148,13 @@ CREATE TABLE `lm_addons_lunchfeast_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+ALTER TABLE `lm_addons_lunchfeast_config`
+ADD COLUMN `recommend_title`  varchar(255) NULL AFTER `shareimg`,
+ADD COLUMN `recommend_desc`  varchar(255) NULL AFTER `recommend_title`,
+ADD COLUMN `recommend_shareimg`  varchar(255) NULL AFTER `recommend_desc`,
+ADD COLUMN `need_recommend`  int(1) UNSIGNED NOT NULL DEFAULT 1 AFTER `recommend_shareimg`;
+
+
+
+
 
