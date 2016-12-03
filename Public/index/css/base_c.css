@@ -15,8 +15,8 @@ a, a:hover, ins {
 }
 @font-face {
 	font-family: SmartisanIconFont;
-	src: url(../img/font/SmartisanIconFont.eot);
-	src: url(../img/font/SmartisanIconFont.eot?#iefix) format('embedded-opentype'), url(../img/font/SmartisanIconFont.woff) format('woff'), url(../img/font/SmartisanIconFont.ttf) format('truetype'), url(../img/font/SmartisanIconFont.svg#SmartisanIconFont) format('svg');
+	src: url(../font/SmartisanIconFont.eot);
+	src: url(../font/SmartisanIconFont.eot?#iefix) format('embedded-opentype'), url(../font/SmartisanIconFont.woff) format('woff'), url(../font/SmartisanIconFont.ttf) format('truetype'), url(../font/SmartisanIconFont.svg#SmartisanIconFont) format('svg');
 	font-style: normal;
 	font-weight: 400;
 	text-rendering: optimizeLegibility

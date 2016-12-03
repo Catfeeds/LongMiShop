@@ -10,7 +10,7 @@ html {
 
 @media screen and (min-width:737px) {
     .container {
-        width: 1220px
+        width: 1120px
     }
 }
 
@@ -1068,7 +1068,7 @@ body.no-scroll {
 
 .main-join .job-list .job-name {
     color: #8d8d8d;
-    width: 497px;
+    width: 397px;
     padding-left: 29px;
     float: left;
     -webkit-box-sizing: border-box;
