@@ -2589,7 +2589,7 @@ body.no-scroll {
     margin-left: 17px
 }
 
-.about .about-content .img-box {
+/*.about .about-content .img-box {
     text-align: center;
     height: 366px;
     margin-bottom: 21px;
@@ -2598,7 +2598,7 @@ body.no-scroll {
     background-position: 50% 47%;
     background-repeat: no-repeat;
     position: relative
-}
+}*/
 
 .about .about-content .img-box:after {
     border-top: 1px solid #ebebeb;
