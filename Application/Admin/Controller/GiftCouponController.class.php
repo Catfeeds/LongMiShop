@@ -12,10 +12,20 @@ class GiftCouponController extends BaseController {
     public function index(){
         //获取优惠券列表
 
-        $count =  M('coupon')->count();
+        $count =  M('gift_coupon')->count();
         $Page = new \Think\Page($count,10);
         $show = $Page -> show();
         $lists = M('gift_coupon')->order('create_time desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        if( !empty($lists)){
+            foreach ($lists as $key =>$item){
+                $condition = array(
+                    'state' => "2",
+                    'user_id'=>array("neq",0),
+                    'gift_coupon_id'=>$item['id'],
+                );
+                $lists[$key]["use_num"] = getCountWithCondition( 'coupon_code' , $condition );
+            }
+        }
         $this -> assign('lists',$lists);
         $this -> assign('page',$show);// 赋值分页输出
         $this -> assign('coupons',C('COUPON_TYPE'));
