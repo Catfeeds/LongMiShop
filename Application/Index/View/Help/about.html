@@ -1,10 +1,82 @@
 <include file="Public/header"/>
+<link  href="__INDEX__/css/base_acb6cb588b.css"rel="stylesheet" type="text/css" />
+<link  href="__INDEX__/css/main_dcf2887007.css"rel="stylesheet" type="text/css" />
+
+<style>
+    .about .headquarters-img {
+        height: 800px;
+        background-image: url(__INDEX__/images/headquarters_img.jpg);
+        background-size: 2560px 800px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .about .img-box {
+        text-align: center;
+        height: 366px;
+        margin-bottom: 21px;
+        background-image: url(__INDEX__/images/smart-artisan_img.png);
+        background-size: 650px 66px;
+        background-position: 50% 47%;
+        background-repeat: no-repeat;
+        position: relative;
+    }
+</style>
 <div class="BreadcrumbNavigation">
     <span class="hover"><a href="{:U('Index/Help/about')}">公司简介</a></span>
     <!--<span><a href="{:U('Index/Help/join')}">加入我们</a></span>-->
     <span><a href="{:U('Index/Help/contact')}">联系我们</a></span>
 </div>
 
+<div class="main about">
+
+    <!-- ngView: -->
+    <div ng-view="" autoscroll="true" class="ng-scope">
+        <div class="wrap ng-scope">
+            <div class="headquarters-img">
+
+            </div>
+            <div class="container">
+
+                <div class="about-content ng-scope" ng-if=" lang!=&#39;jp&#39;">
+                    <p class="ng-binding">
+                        锤子科技 （北京） 股份有限公司是一家制造移动互联网终端设备的公司；北京锤子数码科技有限公司（“锤子数码”）是锤子科技（北京）股份有限公司的全资子公司，以销售数码产品及提供相关服务为主营业务。锤子科技（北京）股份有限公司成立于
+                        2012 年 5 月，北京锤子数码科技有限公司成立于 2014 年 6 月。
+                    </p>
+                    <p class="our-mission ng-binding">
+                        我们的使命是用完美主义的工匠精神，打造用户体验一流的数码消费类产品（智能手机为主），改善人们的生活质量。
+                    </p>
+                    <div class="img-box">
+                    </div>
+                    <div class="name-origin ng-binding" ng-bind-html="&#39;about.aboutContent.text3&#39; | translate">
+                                <span>
+                                    *
+                                </span>
+                        <p>
+                            英文名
+                            <strong>
+                                “Smartisan”
+                            </strong>
+                            ，是由
+                            <strong>
+                                “smart”
+                            </strong>
+                            和
+                            <strong>
+                                “artisan”
+                            </strong>
+                            组合成的词，意思是
+                            <strong>
+                                “智能手机时代的工匠”
+                            </strong>
+                            。在缺乏创新精神和创新能力的安卓手机阵营里，我们的团队格外擅长软件的图形界面和用户体验设计，并精通硬件的工业设计。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <include file="Public/footer"/>
 </body>
 </html>
