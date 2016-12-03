@@ -5,20 +5,19 @@
     <title>{$shopConfig['shop_info_store_title']}</title>
     <meta http-equiv="keywords" content="{$shopConfig['shop_info_store_keyword']}" />
     <meta name="description" content="{$shopConfig['shop_info_store_desc']}" />
-    <link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
-    <link  href="__PUBLIC__/css/base_c.css"rel="stylesheet" type="text/css" />
-    <link href="__PUBLIC__/css/mui.min.css" rel="stylesheet" type="text/css" />
-    <link href="__PUBLIC__/css/mui.min.css" rel="stylesheet" type="text/css" />
-    <link href="__PUBLIC__/css/jquery.fullPage.css" rel="stylesheet" type="text/css" />
-    <script src="__PUBLIC__/js/jquery.min.js"></script>
-    <script src="__PUBLIC__/js/jquery.fullPage.min.js"></script>
-    <script src="__PUBLIC__/js/function.js"></script>
-    <script src="__PUBLIC__/js/PCASClass.js"></script>
-    <script src="__PUBLIC__/js/jquery.SuperSlide.js"></script>
+    <link href="__INDEX__/css/css.css" rel="stylesheet" type="text/css" />
+    <link  href="__INDEX__/css/base_c.css"rel="stylesheet" type="text/css" />
+    <link href="__INDEX__/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="__INDEX__/css/jquery.fullPage.css" rel="stylesheet" type="text/css" />
+    <script src="__INDEX__/js/jquery.min.js"></script>
+    <script src="__INDEX__/js/jquery.fullPage.min.js"></script>
+    <script src="__INDEX__/js/function.js"></script>
+    <script src="__INDEX__/js/PCASClass.js"></script>
+    <script src="__INDEX__/js/jquery.SuperSlide.js"></script>
     <!--<script src="__STATIC__/js/jquery-1.10.2.min.js"></script>-->
-    <!--<script src="__MAIN__/js/slider.js"></script>-->
-    <script src="__MAIN__/js/global.js"></script>
-    <script src="__MAIN__/js/layer/layer.js"></script>
+    <!--<script src="__PUBLIC__/js/slider.js"></script>-->
+    <script src="__PUBLIC__/js/global.js"></script>
+    <script src="__PUBLIC__/js/layer/layer.js"></script>
     <script language="javascript">
         $(function () {
             if ((screen.width >= 1920) && (screen.height >= 1080)) {
@@ -31,7 +30,7 @@
 <header class="hd">
     <div class="inner">
         <a href="{:U('Index/index')}" class="logo">
-            <img src="__PUBLIC__/img/logo.svg" width="75" height="50">
+            <img src="__INDEX__/img/logo.svg" width="75" height="50">
         </a>
         <include file="Public/nav"/>
         <if condition=" $auth eq ture " >
@@ -39,27 +38,27 @@
                 <a href="{:U('Order/orderList')}">个人中心</a>
                 <div class="show">
                     <div class="show_ul">
-                        <div class="show_user"><img src="{$user.head_pic|default='__PUBLIC__/img/user.png'}" width="133" height="133" class="user_img">
+                        <div class="show_user"><img src="{$user.head_pic|default='__INDEX__/img/user.png'}" width="133" height="133" class="user_img">
                             <p>{$user.nickname}</p>
                         </div>
                         <ul>
                             <li>
-                                <a href="{:U('Order/orderList')}" style="background-image:url(__PUBLIC__/img/b1.png)">我的订单</a>
+                                <a href="{:U('Order/orderList')}" style="background-image:url(__INDEX__/img/b1.png)">我的订单</a>
                             </li>
                             <li>
-                                <a href="{:U('Service/returnGoodsList')}" style="background-image:url(__PUBLIC__/img/b2.png)">售后服务</a>
+                                <a href="{:U('Service/returnGoodsList')}" style="background-image:url(__INDEX__/img/b2.png)">售后服务</a>
                             </li>
                             <li>
-                                <a href="{:U('User/coupon')}" style="background-image:url(__PUBLIC__/img/b3.png)">我的优惠</a>
+                                <a href="{:U('User/coupon')}" style="background-image:url(__INDEX__/img/b3.png)">我的优惠</a>
                             </li>
                             <li>
-                                <a href="{:U('User/info')}" style="background-image:url(__PUBLIC__/img/b4.png)">账户资料</a>
+                                <a href="{:U('User/info')}" style="background-image:url(__INDEX__/img/b4.png)">账户资料</a>
                             </li>
                             <li>
-                                <a href="{:U('User/addressList')}" style="background-image:url(__PUBLIC__/img/b5.png)">收货地址</a>
+                                <a href="{:U('User/addressList')}" style="background-image:url(__INDEX__/img/b5.png)">收货地址</a>
                             </li>
                             <li>
-                                <a href="{:U('User/logout')}" style="background-image:url(__PUBLIC__/img/b6.png)">退出</a>
+                                <a href="{:U('User/logout')}" style="background-image:url(__INDEX__/img/b6.png)">退出</a>
                             </li>
                         </ul>
                     </div>
