@@ -9,6 +9,9 @@ class HelpController extends IndexBaseController {
             "buy",
             "pay",
             "postage",
+            "about",
+            "contact",
+            "join",
         );
     }
 
@@ -25,6 +28,15 @@ class HelpController extends IndexBaseController {
         $this -> display();
     }
     public function postage(){
+        $this -> display();
+    }
+    public function about(){
+        $this -> display();
+    }
+    public function contact(){
+        $this -> display();
+    }
+    public function join(){
         $this -> display();
     }
 

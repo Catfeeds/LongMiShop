@@ -14,7 +14,7 @@
                         <div class="box-inner js-account-info">
                             <div class="status-box account-avatar-box fn-clear">
                                 <div class="account-avatar-image">
-                                    <img src="{$user.head_pic|default='__PUBLIC__/img/user.png'}" alt="" class="user_img">
+                                    <img src="{$user.head_pic|default='__INDEX__/img/user.png'}" alt="" class="user_img">
                                 </div>
                                 <input type="hidden" name="head_pic" id="head_pic" value="{$user.head_pic}">
                                 <div class="safe-center-title" onClick="GetUploadify2(1,'head_pic','head_pic','add_img');">
@@ -97,12 +97,12 @@
     <div class="pop">
         <div class="in2">
             <div class="in2_l">设置头像</div>
-            <div class="in2_r"><a href="javascript:closeDiv()"><img src="__PUBLIC__/img/close.png" width="22" height="21"></a></div>
+            <div class="in2_r"><a href="javascript:closeDiv()"><img src="__INDEX__/img/close.png" width="22" height="21"></a></div>
         </div>
 
         <div class="Favicon">
             <div class="Favicon_l">
-                <p><img src="{$user.head_pic|default='__PUBLIC__/img/user.png'}" width="133" height="133"></p>
+                <p><img src="{$user.head_pic|default='__INDEX__/img/user.png'}" width="133" height="133"></p>
                 <p>
                 <form id="myuploads" action="{:U('Index/User/upload_lcon')}" method="post" enctype="multipart/form-data">
                     <a href="javascript:void(0);" class="a-upload">
@@ -138,8 +138,8 @@
 <div id="bg" class="bg" style="display:none;"></div>
 <iframe id='popIframe' class='popIframe' frameborder='0' ></iframe>
 
-<!-- <script type="text/javascript" src='__PUBLIC__/js/jquery-2.0.3.min.js'></script> -->
-<script type="text/javascript" src="__PUBLIC__/js/jquery-form.js"></script>
+<!-- <script type="text/javascript" src='__INDEX__/js/jquery-2.0.3.min.js'></script> -->
+<script type="text/javascript" src="__INDEX__/js/jquery-form.js"></script>
 <script type="text/javascript">
 
     function getObjectURL(file) {

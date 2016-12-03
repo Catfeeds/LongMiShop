@@ -2,8 +2,8 @@
 return array(
 
     'TMPL_PARSE_STRING'=>array(
-        '__PUBLIC__'        => '/Public/index',
-        '__MAIN__'        => '/Public',
+        '__INDEX__'        => '/Public/index',
+        '__PUBLIC__'        => '/Public',
     ),
     'URL_HTML_SUFFIX'       =>  'html',
     'HTML_CACHE_ON'     =>    false, // 开启静态缓存

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>龙米</title>
-<link href="__PUBLIC__/css/css.css" rel="stylesheet" type="text/css" />
-<link href="__PUBLIC__/css/mui.min.css" rel="stylesheet" type="text/css" />
+<link href="__INDEX__/css/css.css" rel="stylesheet" type="text/css" />
+<link href="__INDEX__/css/mui.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="mydiv1">
@@ -13,8 +13,8 @@
     <div class="pop_main"> </div>
     <form method="post" action="{: U('Index/Forget/index')}" id="forget_from">
       <div class="tab_box2" style="border-radius:0 0 6px 6px!important">
-        <input name="genre" type="text" class="pop_text1 icon_bg" placeholder="手机号/邮箱" style="width:100%; margin-bottom:10px; background-image:url(__PUBLIC__/img/icon-a.png)" >
-        <input name="verify" type="text" class="pop_text1 icon_bg" placeholder="请输入验证码" style="width:60%; margin-top:0px; float:left; background-image:url(__PUBLIC__/img/icon-b.png)">
+        <input name="genre" type="text" class="pop_text1 icon_bg" placeholder="手机号/邮箱" style="width:100%; margin-bottom:10px; background-image:url(__INDEX__/img/icon-a.png)" >
+        <input name="verify" type="text" class="pop_text1 icon_bg" placeholder="请输入验证码" style="width:60%; margin-top:0px; float:left; background-image:url(__INDEX__/img/icon-b.png)">
         <div class="code_box"><img src="{: U('Index/Verify/verify')}" width="125" height="52" onclick="this.src=this.src"></div>
         <div style="clear:both"></div>
         <div class="m5_btn"><a href="javascript:forget_from()">下一步</a></div>
@@ -24,7 +24,7 @@
 </div>
 </body>
 </html>
-<script src="__MAIN__/js/jquery-1.8.2.min.js"></script>
+<script src="__PUBLIC__/js/jquery-1.8.2.min.js"></script>
 <script>
   function forget_from(){
     var genre = $('input[name="genre"]').val();
