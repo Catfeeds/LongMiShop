@@ -77,8 +77,9 @@
                                 <div class="checkbox_s" style="z-index: 1;">
                                     <label class="fl select-all" style="width:50px !important">
                                     <span class="mui-input-row mui-checkbox mui-left" >
-                                        <input  name="cart_select" onclick="optInput(this)" class="check-all check-one check" type="checkbox" <if condition="$v[pitchon] eq 1" >checked="checked"</if> value="{$v.id}"  style="top:6px;">
+                                        <input  name="cart_select" class="check-all check-one check" type="checkbox" <if condition="$v[pitchon] eq 1" >checked="checked"</if> value="{$v.id}"  style="top:6px;">
                                     </span>
+                                        <!--onclick="optInput(this)"-->
                                     </label>
                                 </div>
                                 <div class="cp1_r" >
@@ -173,20 +174,30 @@
     }
 
     function signal(obj){
-        var check = $(obj).find('input').attr('checked');
-        if(check == 'checked'){
-            $(obj).find('input').attr('checked',false);
-        }else{
-            $(obj).find('input').attr('checked',true);
-        }
+//        var check = $(obj).find('input').attr('checked');
+//        if(check == 'checked'){
+//            $(obj).find('input').attr('checked',false);
+//        }else{
+//            $(obj).find('input').attr('checked',true);
+//        }
+        $(obj).find('input').trigger("click");
+//        var check = $(obj).find('input').trigger("click");
+//        console.log(check);
+//        if(check == 'checked'){
+//            $(obj).find('input').attr('checked',false);
+//            $(obj).find('input').removeAttr("checked");
+//        }else{
+//            $(obj).find('input').attr('checked','checked');
+//        }
     }
 
     function optInput(obj){
         var check = $(obj).attr('checked');
         if(check == 'checked'){
             $(obj).attr('checked',false);
+            $(obj).removeAttr("checked");
         }else{
-            $(obj).attr('checked',true);
+            $(obj).attr('checked','checked');
         }
     }
 
