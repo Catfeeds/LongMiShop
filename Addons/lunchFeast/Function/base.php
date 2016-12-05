@@ -49,7 +49,9 @@ function lunchFeastCreateInviteRelationship( $userID , $inviteUserId , $nickname
         if(  $shopConfig['invited_to'] == 1 ){
             sendWeChatMessageUseUserId( $userID , "送券" , array("couponId" => $shopConfig['invited_to_value']) );
         }
-        if(  $shopConfig['invite'] == 2 ){
+        if(  $shopConfig['invite'] == 1 ){
+            sendWeChatMessageUseUserId( $inviteUserId , "送券" , array("couponId" => $shopConfig['invited_value']) );
+        }else if(  $shopConfig['invite'] == 2 ){
             sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array( "userName" => $nickname ,"money" => $shopConfig['invited_value'] ) );
         }
         return true;
