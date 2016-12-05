@@ -326,7 +326,7 @@ class UserController extends BaseController {
         $condition = array();
         I('nickname') ? $condition['nickname'] = I('nickname') : false;
         I('user_id') ? $condition['user_id'] = I('user_id') : false;
-        $sort_order = I('order_by','user_id').' '.I('sort','desc');
+        $sort_order = I('order_by','application_time').' '.I('sort','desc');
 
         $model = M('withdraw_deposit');
         $count = $model->where($condition)->count();
