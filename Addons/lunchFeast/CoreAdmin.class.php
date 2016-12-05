@@ -236,9 +236,10 @@ class lunchFeastAdminController
 
     //订单列表
     public function orderList(){
-        $count = M('addons_lunchfeast_order')->count();
+        $condition = array();
+        $count = M('addons_lunchfeast_order')->where($condition)->count();
         $Page  = new Think\AjaxPage($count,10);
-        $List = M('addons_lunchfeast_order')->limit($Page->firstRow.','.$Page->listRows)->order('create_time DESC')->select();
+        $List = M('addons_lunchfeast_order')->where($condition)->limit($Page->firstRow.','.$Page->listRows)->order('create_time DESC')->select();
         $mealList = selectMealList();
         $shopList = selectShopList();
         foreach($List as $key=>$item){
