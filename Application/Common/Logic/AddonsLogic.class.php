@@ -64,7 +64,7 @@ class AddonsLogic extends BaseLogic
                 die("Not Find This Addons");
             }
         }catch (\Exception $e) {
-            die("Not Find This Addons");
+            die($e->getMessage());
         }
     }
 

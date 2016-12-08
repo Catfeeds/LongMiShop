@@ -53,9 +53,9 @@ header { width: 100%;  background: #fff; padding: 7px 0; -webkit-box-sizing: bor
 .lucky-f .f-g{ margin:0.4rem 0; }
 .lucky-f .input-submit{ width:5.5rem;-webkit-transform:translateX(20%); }
 .lucky-f input{ width:100%;outline:none;border:0px;border-radius:20px;padding:0.4rem 0 0.4rem 1.2rem;font-size:14px; }
-.lucky-f input[name=user]{ background:#fff url('../images/name.png') no-repeat 5% center;background-size:20px; }
-.lucky-f input[name=tel]{ background:#fff url('../images/phone.png') no-repeat 5% center;background-size:20px; }
-.lucky-f input[name=area]{ background:#fff url('../images/address.png') no-repeat 5% center;background-size:20px; }
+/*.lucky-f input[name=user]{ background:#fff url('../images/name.png') no-repeat 5% center;background-size:20px; }*/
+/*.lucky-f input[name=tel]{ background:#fff url('../images/phone.png') no-repeat 5% center;background-size:20px; }*/
+/*.lucky-f input[name=area]{ background:#fff url('../images/address.png') no-repeat 5% center;background-size:20px; }*/
 
 /* ---- 已经领奖 ---- */
 #isPrize{ position:absolute;top:0px;width:100%;height:100%; }
@@ -125,4 +125,4 @@ p.explain{ width:80%; margin:0 auto; text-align:center; font-size:21px; color:#f
 
 /* ---------------- 动画 ------------------------------ */
 @-webkit-keyframes bigSmall{ from{ -webkit-transform:scale(1,1);} to{ -webkit-transform:scale(.7,.7) } }
-@keyframes bigSmall{ from{ transform:scale(1,1);}to{ transform:scale(.7,.7) }
+@keyframes bigSmall{ from{ transform:scale(1,1);}to{ transform:scale(.7,.7) }}
