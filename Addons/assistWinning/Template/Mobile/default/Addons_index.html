@@ -1,638 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>全自动烤箱带回家</title>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" name="viewport" />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <meta content="telephone=no" name="format-detection" />
-    <meta property="wb:webmaster" content="ff73a1b1dc1d3c2d" />
-    <meta property="qc:admins" content="21162256266751016416375" />
-    <meta name="baidu-site-verification" content="00Ba64V77BzhXpxs" />
-    <meta name="360-site-verification" content="b57c9f7cf9a06ad3cab7306dd4ae4ea4" />
-    <meta name="ujianVerification" content="6b6ff258fe95bdc9623f0d2131e989bc" />
-    <script type="text/javascript" src='__ADDONS__/js/adapt_css.min.js'></script>
-    <script type="text/javascript" src='__ADDONS__/js/adapt.min.js'></script>
-    <link rel="stylesheet" type="text/css" href="__ADDONS__/css/main.css" />
-</head>
-<body>
-    <!-- 头部 -->
+<include file="$headerPath"/>
 
-    <div id='page' style="height:100%"></div>
-
-
-    <script type="text/template" id='index' class='tpl'>
-        <div class='container container-home' style=''>
-            <div class='cot-bg1'>
-                <img src='__ADDONS__/images/bg1_02.jpg'  alt="" />
-                <img src='__ADDONS__/images/bg1_03.jpg'  alt="" />
-                <img src="__ADDONS__/images/bg1_04.jpg" alt="" />
-                <img src="__ADDONS__/images/bg1_05.jpg" alt="" />
-                <img src="__ADDONS__/images/bg1_06.jpg" alt="" />
-            </div>
-
-            <!-- 首页 -->
-            <div id='home'>
-                <div class='home-n'>
-                    <div>剩余奖品<span>{:$sum}个</span></div>
-                </div>
-                <div class='home-m'>
-                    <div class='home-m-b'>
-                        <div>
-                            <img src="__ADDONS__/images/jindu.png" alt="" />
-                        </div>
-                        <div class='t-jindu'>0℃</div>
-                    </div>
-                    <div class='home-m-h'>
-                        <div class='head-box'>
-                            <img src="{$list['head_pic']}" alt="" />
-                        </div>
-                    </div>
-                    <div class='progress'></div>
-                    <div class='f-progress'></div>
-                </div>
-                <div class='home-t'></div>
-                <if condition="$list['sumTem'] EGT 180 AND $list['visitId'] EQ $list['user_id']">
-                    <div class='home-m-bt'>
-                        <img src="__ADDONS__/images/fillin.png" alt="" class=''  onclick="fillinImg()"/>
-                    </div>
-                <else />
-                    <div class='home-m-bt'>
-                        <!--<img src="__ADDONS__/images/help-her.png" alt="" class='begin'/>-->
-
-                        <if condition="$list['Ishelp'] eq 1">
-                            <img src="__ADDONS__/images/help-her.png" alt="" class='begin' onclick="helps()" />
-                        <elseif condition="$list['visitId'] EQ $list['user_id'] AND $list['Ishelp'] neq 1" />
-                            <img src="__ADDONS__/images/call.png" alt="" style="display:block" onclick="call()"  />
-                        <else />
-                            <img src="__ADDONS__/images/want.png" alt="" class='want' />
-                        </if>
-                    </div>
-                </if>
-            </div>
+<div class="main">
+    <!--tab 1-->
+    <div id="tab_1" class="f_tab">
+        <div class="bg">
+            <img src="__ADDONS__/images/f_bg.jpg" >
         </div>
-        <div class="bottomBtn" id="bottomArea" >
-            <a href="#bottomCon">
-                <ul class="clearfix">
-                    <li class="current">专业烤师</li>
-                    <li>全自动烤箱</li>
-                    <li>烘焙秘籍</li>
-                </ul>
+        <p class="f_tip">{$tip}</p>
+        <if condition = "$status neq 5 and $status neq 6">
+            <div class="f_content">
+                <div class="f_progress">
+                    <span class="f_progress_l">0°</span>
+                    <span class="f_progress_r">100°</span>
+                </div>
+            </div>
+        </if>
+        <if condition = "$status eq 5">
+            <div class="f_application">
+                <form action="" method="post" class="form">
+                    <input type="text" placeholder="得奖人：">
+                    <input type="text" placeholder="手机号：">
+                    <input type="text" placeholder="邮寄地址：">
+                </form>
+            </div>
+        </if>
+        <if condition = "$status eq 6">
+            <div class="f_application">
+                <div class="form">
+                    <span class="f_application_tip">领取成功</span>
+                </div>
+            </div>
+        </if>
+        <if condition = "$status eq 1">
+            <a href="javascript:void(0);" class="f_c_button">
+                我也要煮饭
             </a>
-        </div>
-        <div class="bottomCon" id='bottomCon' style='padding-top:40px;'>
-            <!-- 好友助攻 -->
-            <!-- 好友助攻 -->
-            <div class="friendHelp" style="display: block;">
-                <p class="helpP">以下为最近帮助的5位好友</p>
-                <ul class="people clearfix">
-                    <notempty name="list['help']">
-                            <volist name="list['help']" id="item">
-                                <li class="clearfix">
-                                    <span class="photo"><img src="{:$item['head_pic']}"></span>
-                                    <span class="message">
-                                        <span>{:$item['temperature']}℃</span>
-                                    </span>
-                                </li>
-                            </volist>
-                        <else/>
-                        <span > 邀请好友帮忙加热 </span>
-                    </notempty>
-
-                </ul>
-            </div>
-            <!-- 礼品介绍 -->
-            <div class="lipin" style="display:none;style='padding-top:40px;'">
-                <img src="__ADDONS__/images/product_02.jpg">
-                <img src="__ADDONS__/images/product_03.jpg">
-                <img src="__ADDONS__/images/product_04.jpg">
-                <img src="__ADDONS__/images/product_05.jpg">
-                <img src="__ADDONS__/images/product_06.jpg">
-                <img src="__ADDONS__/images/product_07.jpg">
-                <img src="__ADDONS__/images/product_08.jpg">
-                <img src="__ADDONS__/images/product_09.jpg">
-                <img src="__ADDONS__/images/product_10.jpg">
-                <img src="__ADDONS__/images/product_11.jpg">
-                <img src="__ADDONS__/images/product_12.jpg">
-                <img src="__ADDONS__/images/product_13.jpg">
-            </div>
-            <!-- 活动规则 -->
-            <div class="rule" style="display: none;style='padding-top:40px;'">
-                <img src="__ADDONS__/images/rule_04.jpg" alt="">
-            </div>
-        </div>
-
-
-
-
-
-
-    </script>
-
-    <script type="text/template" id="fillIn" class='tpl'>
-        <div class='container container-last'  style="height:100%">
-            <div class='cot-bg1'>
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_02.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_03.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_04.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_05.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_06.jpg" alt="" />
-            </div>
-            <div id='fillIn'>
-                <div class='home-n'>
-                    <div>剩余奖品<span>{:$sum}个</span></div>
-                </div>
-                <div class='last-m'>
-                    <div class='last-m-bg ' style="background: url('__ADDONS__/images/fillBack.png') no-repeat;background-size: 100% 307px;height:307px;">
-                       <form action="" id="fillFrom" method="post">
-                           <p><span>得奖人</span> <input type="text" name="name" class="formName"></p>
-                           <p><span>填写手机号</span> <input type="number" class="formPhone" name="phone" onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();"></p>
-                           <p><span>邮寄地址</span> <input type="text" name="site" class="formSite"></p>
-
-                       </form>
-
-                    </div>
-                    <div class='last-h'>
-                        <div class='head-box'>
-                            <img src="{$list['head_pic']}" alt="" />
-                        </div>
-                    </div>
-                    <div class='last-bt  last-bt-f'>
-                        <img src="__ADDONS__/images/subImg.png" alt="" style="margin-top: 5px"  onclick="fromSub();"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
-
-    <script type="text/template" id="isPrize" class='tpl'>
-        <div class='container container-last' >
-            <div class='cot-bg1'>
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_02.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_03.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_04.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_05.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_06.jpg" alt="" />
-            </div>
-            <div id='isPrize'>
-                <div class='home-n'>
-                    <div>剩余奖品<span>{:$sum}个</span></div>
-                </div>
-                <div class='last-m'>
-                    <div class='last-m-bg ' style="background: url('__ADDONS__/images/fillBack.png') no-repeat;background-size: 100% 307px;height:307px;">
-                        <div >
-                            <p>{:$msg}</p>
-                        </div>
-                    </div>
-                    <div class='last-h'>
-                        <div class='head-box'>
-                            <img src="{$list['head_pic']}" alt="" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
-
-    <script type="text/template" id='last' class='tpl'>
-        <div class='container container-last' >
-            <div class='cot-bg1'>
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_02.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_03.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_04.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_05.jpg" alt="" />
-                <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/code1_06.jpg" alt="" />
-            </div>
-            <div id='last'>
-                <div class='home-n'>
-                    <div>剩余奖品<span>{:$sum}个</span></div>
-                </div>
-                <div class='last-m'>
-                    <div class='last-m-bg'>
-                        <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/friend-last.png" alt="" />
-                    </div>
-                    <div class='last-h'>
-                       <div class='head-box'>
-                           <img src="__ADDONS__/images/0.jpg" alt="" />
-                       </div>
-                    </div>
-                    <div class='last-bt  last-bt-f'>
-                        <img src="http://img.wayes.cn/wayes_sys/weixin/2016_action/20161013kaoxiang_public/images/friend-l-bt.png" alt="" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
-
-    <script type="text/template" id='code'>
-        <div class='container container-code' >
-            <div class='cot-bg1'>
-                <img src="__ADDONS__/images/code1_02.jpg" alt="" />
-                <img src="__ADDONS__/images/code1_03.jpg" alt="" />
-                <img src="__ADDONS__/images/code1_04.jpg" alt="" />
-                <img src="__ADDONS__/images/code1_05.jpg" alt="" />
-                <img src="__ADDONS__/images/code1_06.jpg" alt="" />
-            </div>
-            <div class='home-n'>
-                <div>剩余奖品<span>{:$sum}个</span></div>
-            </div>
-            <div class='code-b'>
-                <img src="__ADDONS__/images/code.png" alt="" />
-            </div>
-        </div>
-    </script>
-
-    <div id="lock" style="display:none">
-        <img src="__ADDONS__/images/menbang.gif">
+        </if>
+        <if condition = "$status eq 2">
+            <a href="javascript:void(0);" class="f_c_button">
+                叫朋友帮忙煮饭
+            </a>
+        </if>
+        <if condition = "$status eq 3">
+            <a href="javascript:void(0);" class="f_c_button">
+                帮ta煮饭
+            </a>
+        </if>
+        <if condition = "$status eq 4">
+            <a href="javascript:void(0);" class="f_c_button">
+                点击领取奖品
+            </a>
+        </if>
+        <if condition = "$status eq 5">
+            <a href="javascript:void(0);" class="f_c_button">
+                提交资料
+            </a>
+        </if>
     </div>
-    <script type="text/javascript" src='__ADDONS__/js/underscore.min.js'></script>
-    <script type="text/javascript" src='__ADDONS__/js/zepto.min.js'></script>
+    <!--tab 1 end-->
+
+    <!--tab 2-->
+    <div id="tab_2" class="f_tab">
+        <div class="f_pic">
+            <img src="__ADDONS__/images/f_introduce_1.jpg">
+            <img src="__ADDONS__/images/f_introduce_2.jpg">
+        </div>
+    </div>
+    <!--tab 2 end-->
+
+    <!--tab 3-->
+    <div id="tab_3" class="f_tab">
+        <div class="f_describe_top"></div>
+        <div class="f_describe">
+            <p>《活动时间》</p>
+            <span>巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</span>
+            <br><br><br>
+            <p>《活动时间》</p>
+            <span>巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</span>
+            <br><br><br>
+            <p>《活动时间》</p>
+            <span>巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</span>
+            <br><br><br>
+            <p>《活动时间》</p>
+            <span>巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</span>
+            <br><br><br>
+        </div>
+    </div>
+    <!--tab 3 end-->
 
 
-    <script src="__ADDONS__/js/public.js" language="javascript" type="text/javascript"></script>
 
-    <script type="text/javascript">
-        //是否关注
-        function isFollow(){
-            var isFollow = "{$list['is_follow']}";
-            if(isFollow == 0){
-                $("#home").hide();
-                $('#page').html('').html($('#code').html());
-                return false;
-            }
-            return true;
-        }
+    <div class="f_bottom">
+        <a href="javascript:void(0);" data-number = "1">
+            专业煮饭>
+        </a>
+        <a href="javascript:void(0);" data-number = "2">
+            飘香龙米>
+        </a>
+        <a href="javascript:void(0);" data-number = "3">
+            煮饭秘诀>
+        </a>
+    </div>
 
-        function call(){
-            $('#lock').show();
-        }
-        $('#lock').click(function(){
-            $(this).hide();
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $("#tab_{$tabNumber}").show();
+
+        $('.f_bottom a').on('click',function(){
+            $(".f_tab").hide();
+            var number = $(this).data("number");
+            $("#tab_" + number).show();
         });
-
-        function helps(){
-
-            if(isFollow()){
-                var kong = true;
-                var Uid = "{$list['user_id']}";
-                if(kong){
-                    $.ajax({
-                        type : 'post',
-                        url : "{: U('Mobile/Addons/assistWinning')}",
-                        data : {pluginName:'help',id:Uid},
-                        dataType : 'json',
-                        success : function(res){
-                            kong = false;
-                            if(res.state == 1){
-                                alert(res.msg);
-                                window.location.href = window.location.href;
-                            }else{
-                                alert(res.msg);
-                            }
-                        },
-                        error : function(XMLHttpRequest, textStatus, errorThrown) {
-                            alert('网络失败，请刷新页面后重试');
-                        }
-                    })
-                }
-            }
-
-
-        }
-
-        function fromSub(){
-            var name = $('.formName').val();
-            var phone = $('.formPhone').val();
-            var site = $('.formSite').val();
-            if(name == ''){
-                alert('请填写姓名');
-                return false;
-            }else if(!checkMobile(phone)){
-                alert('手机格式不正确');
-                return false;
-            }else if(site == ''){
-                alert('请填写奖品发放地址');
-                return false;
-            }
-            $.ajax({
-                type : 'post',
-                url : "{: U('Mobile/Addons/assistWinning')}",
-                data : {pluginName:'fillIn',name:name,phone:phone,site:site},
-                dataType : 'json',
-                success : function(res){
-                    if(res.state == 1){
-                        alert(res.msg);
-                        window.location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'index' ))}";
-                    }else{
-                        alert(res.msg);
-                    }
-                },
-                error : function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert('网络失败，请刷新页面后重试');
-                }
-            })
-        }
-
-        function checkMobile(tel) {
-            var reg = /(^1[3|4|5|7|8][0-9]{9}$)/;
-            if (reg.test(tel)) {
-                return true;
-            }else{
-                return false;
-            };
-        }
-        function fillinImg(){
-            $("#home").hide();
-            $('#page').html('').html($('#fillIn').html());
-        };
-        function history(){
-            window.location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'history' ))} ";
-        }
-        var content = new Array();
-                    content[0] = '';
-                    content[1] = '煽了个风，温度下降';
-                    content[2] = '前来捣乱，温度下降';
-                    content[3] = '胡乱一掰，温度下降';
-                    content[4] = '随意一转，温度下降';
-                    content[5] = '好奇打开门，温度下降';
-                    content[6] = '小心一转，温度上升';
-                    content[7] = '用力一扭，温度上升';
-                    content[8] = '轻轻一动，温度上升';
-                    content[9] = '自信一调，温度上升';
-                    content[10] = '努力控温，温度上升';
-                console.log(content);
-
-        window.User = function(initState){
-
-            this.state = initState;
-
-            //测试数据  上线注释
-//             this.state = {
-//                 focusOn : false,
-//                 pageType : 'IS_LAST',
-//                 //当前进度
-//                 progress : parseInt('80'),
-//                 //目标值
-//                 target : 0,
-//                 //判断增减
-//                 isAdd : true
-//             }
-            this.init();
-        }
-        User.prototype = {
-            init : function(){
-                var t = this;
-                //路由配置
-                t.reducer(t.state.pageType);
-                //全局函数
-                setTimeout(function(){
-                    t.global();
-
-                },500)
-            },
-            global : function(){
-                //底部按钮点击事件
-                $('#bottomArea li').on('click',function(){
-                    $(this).siblings().removeClass('current');
-                    $('div.bottomCon').children('div').hide();
-                    $(this).addClass('current');
-                    $('div.bottomCon').children().eq($(this).index()).show();
-                });
-            },
-            reducer : function(action){
-                var t = this;
-                switch(action){
-                    case 'NO_PLAY' :
-                        $('#page').html('').html($('#index').html());
-                        //开始按摩
-                        t.contLay();
-                        t.global();
-                        //开始按摩
-                        $('.begin').one('click',function(){
-                            //判断是否关注
-                            if(t.state.focusOn == '0'){
-                                $('#page').html('').html($('#code').html());
-                                return;
-                            }
-                            t.main();
-                        });
-                        break;
-                    case 'IS_PLAY' :
-                        $('#page').html('').html($('#index').html());
-                        //执行事件
-                        t.global();
-                        $('.home-m-bt').find('.want').show().click(function(){
-                            if(isFollow()){
-                                location.href = "{: U('Mobile/Addons/assistWinning',array('pluginName' => 'index' ))}";
-                            }
-
-
-                        }.bind(this)).siblings('.begin').remove();
-
-                        t.contLay();
-                        break;
-                    case 'IS_LAST' :
-                        $('#page').html('').html($('#last').html());
-                        //执行事件
-                        $('.container-last').find('.last-bt').click(function(){
-                            location.href = 'index.php';
-                        });
-                        break;
-                    default : break;
-                }
-                this.state.pageType =  action ;
-                console.log(this.state);
-            },
-            main : function(){
-                var t = this;
-                //ajax 执行下面操作  random 数字对应图片  text 话术
-                $.ajax({
-                    type: "POST",
-                    url: "get_ajax.php",
-                    data: {
-                        action:"get_num",
-                        pid:'10692'
-                    },
-                    dataType: "json",
-                    success: function(data){
-                        if( data['state']== 'suc'){  //成功
-                            var random = data['num'],
-                                wenan = data['wenan'];
-                            t.state.isAdd = wenan > 5 ? true : false;
-                            t.state.target = t.state.isAdd ? t.state.progress + random : t.state.progress - random;
-                            $('.home-t').show().text(content[wenan]+random+"%");
-                            setTimeout(function(){
-                                $('div.home-t').hide()
-                                t.reducer('IS_PLAY');
-                                post_ajax(random, wenan);
-                            },2500);
-                        }
-                    },
-                    error:function(){
-                        alert("网络传输错误，请稍后再试1");
-                    }
-                });
-
-            },
-            //显示选中效果
-            contLay : function(){
-                var t = this;
-
-                var timer = function(){
-                    $('#home .t-jindu').text(t.state.progress+'℃').css('-webkit-transform','translate3d('+(t.state.progress)/1.8+'%,0,0);');
-                    $('#home .progress').css('-webkit-transform','scale3d('+(t.state.progress/10)/1.8+',1,1);');
-                    $('#home .f-progress').css('-webkit-transform','scale3d('+(18-(t.state.progress/10))/1.8+',1,1);');
-                    if(typeof t.state.target != 0){
-                        if(t.state.isAdd){
-                            if(t.state.progress >= t.state.target){
-                                return;
-                            }
-                            t.state.progress++;
-                        }else{
-                            if(t.state.progress <= t.state.target){
-                                return;
-                            }
-                            t.state.progress--
-                        }
-                        requestAnimationFrame(timer);
-                    }
-                }
-                timer();
-            },
-            //蒙版生成
-            lockW : function(){
-                $(document).on('touchmove',function(e){
-                    e.preventDefault();
-                    return false;
-                })
-                if(d == 'a') var img = $('<img />',{ src:'__ADDONS__/images/menbang.gif' });
-                if(d == 'b' ) var img = $('<img />',{ src:'__ADDONS__/images/menbang.png' });
-                var div = $('<div />',{ id:'lock' }).append(img).on('click',function(){
-                    $(this).remove();
-                    $(document).off('touchmove');
-                });
-                $('body').append(div);
-            }
-        }
-
-        $(function(){
-            var state = {
-                 //是否关注
-                focusOn : '0',
-                pageType : "IS_PLAY",//是否中奖
-                progress : parseInt("{:$list['sumTem']}"),
-                target : 0,
-                isAdd : true,
-            }
-            var user = new User(state);
-
-
-            var isprize = "{$prize}";
-            if(isprize){
-                $("#home").hide();
-                $('#page').html('').html($('#isPrize').html());
-            }
-            var End = "{$End}";
-            if(End){
-                $("#home").hide();
-                $('#page').html('').html($('#isPrize').html());
-            }
-
-        })
-
-
-    </script>
-
-    <!--<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>-->
-    <script src="__PUBLIC__/js/global.js"></script>
-    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script type="text/javascript">
-
-
-//        var list = {:getShareImages($lmshop_config,$goods[goods_id],$goodsCate,$user)};
-        var ShareLink = "http://{: $_SERVER['HTTP_HOST']}/Mobile/Addons/assistWinning/pluginName/index/.html?id={: $list['user_id']}";       //分享连接
-        var ShareImgUrl = "http://{: $_SERVER['HTTP_HOST']}/Addons/assistWinning/Static/images/logo.jpg";   //分享图片
-        var wx_title = '快帮我抢！烘焙烧烤做菜样样行的电烤箱！';
-        var wx_desc = '我想要很久的电烤箱！能不能吃到美味烧烤就靠你了！';
-
-
-
-
-        // 微信配置
-        wx.config({
-            debug: false,
-            appId: "{$signPackage['appId']}",
-            timestamp: '{$signPackage["timestamp"]}',
-            nonceStr: '{$signPackage["nonceStr"]}',
-            signature: '{$signPackage["signature"]}',
-            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone','hideOptionMenu'] // 功能列表，我们要使用JS-SDK的什么功能
+        $(".f_c_button").click(function(){
+            assistWinningButtonClick("{$f_c_button}");
         });
-
-        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在 页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready 函数中。
-        wx.ready(function(){
-            // 获取"分享到朋友圈"按钮点击状态及自定义分享内容接口
-            wx.onMenuShareTimeline({
-                title: wx_title, // 分享标题
-                link:ShareLink,
-                imgUrl:ShareImgUrl // 分享图标
-            });
-
-            // 获取"分享给朋友"按钮点击状态及自定义分享内容接口
-            wx.onMenuShareAppMessage({
-                title: wx_title, // 分享标题
-                desc: wx_desc, // 分享描述
-                link:ShareLink,
-                imgUrl:ShareImgUrl // 分享图标
-            });
-            // 分享到QQ
-            wx.onMenuShareQQ({
-                title: wx_title, // 分享标题
-                desc: wx_desc, // 分享描述
-                link:ShareLink,
-                imgUrl:ShareImgUrl // 分享图标
-            });
-            // 分享到QQ空间
-            wx.onMenuShareQZone({
-                title: wx_title, // 分享标题
-                desc: wx_desc, // 分享描述
-                link:ShareLink,
-                imgUrl:ShareImgUrl // 分享图标
-            });
-
-        });
-    </script>
+    });
+</script>
 
 
-    <!--微信关注提醒 start-->
-    <if condition=" 1 != 1 && $Think.session.subscribe eq 0">
-        <button class="guide" onclick="follow_wx()">关注公众号</button>
-        <style type="text/css">
-            .guide{width:20px;height:100px;text-align: center;border-radius: 8px ;font-size:12px;padding:8px 0;border:1px solid #adadab;color:#000000;background-color: #fff;position: fixed;right: 6px;bottom: 200px;}
-            #cover{display:none;position:absolute;left:0;top:0;z-index:18888;background-color:#000000;opacity:0.7;}
-            #guide{display:none;position:absolute;top:5px;z-index:19999;}
-            #guide img{width: 70%;height: auto;display: block;margin: 0 auto;margin-top: 10px;}
-        </style>
-        <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
-        <script type="text/javascript">
-
-            // 关注微信公众号二维码
-            function follow_wx()
-            {
-                layer.open({
-                    type : 1,
-                    title: '关注公众号',
-                    content: '<img src="{$wechat_config['qr']}" width="200">',
-                    style: ''
-                });
-            }
-
-        </script>
-    </if>
-    <!--微信关注提醒  end-->
-
-
-
-
-</body>
-</html>
+<include file="$footerPath"/>

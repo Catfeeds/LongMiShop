@@ -1,45 +1,98 @@
 <?php
+@include 'Addons/assistWinning/Function/base.php';
+
 class assistWinningMobileController {
+
+    const TB_PRIZE = "addons_assistwinning_prize";
+    const TB_HELP  = "addons_assistwinning_help";
+    const TB_SET_PRIZE = "addons_assistwinning_setprize";
+
+
 
     public $assignData = array();
     public $user = array();
 
-    public $key = null;
-    public $temArray = array(
-        '1'=>'29',
-        '2'=>'18',
-        '3'=>'10',
-        '4'=>'-16',
-        '5'=>'5',
+//    public $temArray = array(
+//        '1'=>'29',
+//        '2'=>'18',
+//        '3'=>'10',
+//        '4'=>'-16',
+//        '5'=>'5',
+//    );
+//    public $hints = array(
+//        '29' => "自信一调，温度上升29",
+//        '18' => '小心一转，温度上升18',
+//        '10' => '努力控温，温度上升10',
+//        '-16'=> '好奇打开门，温度下降16',
+//        '5'=>'煽了个风，温度下降5',
+//    );
+
+    public $edition = null;
+
+    public $temperature = array(
+        "-8",
+        "-5",
+        "-14",
+        "4",
+        "10",
+        "12",
+        "13",
+        "15",
+        "20",
+        "21",
     );
-    public $hints = array(
-        '29' => "自信一调，温度上升29",
-        '18' => '小心一转，温度上升18',
-        '10' => '努力控温，温度上升10',
-        '-16'=> '好奇打开门，温度下降16',
-        '5'=>'煽了个风，温度下降5',
+
+    public $tip = array(
+        "加温至100摄氏度，成功煮饭即可中奖",
+        "即便不在父母身边&nbsp;也可感受家的味道"
     );
 
     public function __construct($userInfo)
     {
         $this->user = $userInfo;
-        $this -> key = md5("42368");
+        $this -> assignData["share"] = "./Addons/assistWinning/Template/Mobile/default/Addons_share.html";
+        $this -> assignData["headerPath"] = "./Addons/assistWinning/Template/Mobile/default/Addons_header.html";
+        $this -> assignData["footerPath"] = "./Addons/assistWinning/Template/Mobile/default/Addons_footer.html";
+        $edition = getActivityId();
     }
 
     //初始页面
     public function index(){
-        $Uid = I('id');
-//        $Uid = '5823';
-        $user_id = $this->user['user_id'];
-//        $user_id = '5823';
+        $userId = $this->user['user_id'];
+        $helpUserId = I("userId");
+        $activityID = $this -> edition;
 
-        if( !empty($Uid) ){
-            $where['user_id'] = $Uid;
-        }else{
-            $where['user_id'] = $user_id;
+        $tip = 0;
+        $isReceive = 0;
+        $tabNumber = 1;
+        $status = 1;
+
+        if( $userId == $helpUserId ){
+            if( !isExistenceDataWithCondition( self::TB_HELP ,array("user_id"=>$userId,"help_uid"=>$userId)) ){
+                $status = 1;
+            }
+
 
         }
-        $list = M('users')->where($where)->find();
+        $this -> assignData['tip'] = $this -> tip[$tip];
+        $this -> assignData['status'] = $status;
+        $this -> assignData['isReceive'] = $isReceive;
+        $this -> assignData['tabNumber'] = $tabNumber;
+        return $this -> assignData;
+        exit;
+        /**
+         * old
+         */
+        $uId = I('id');
+//        $Uid = '1';
+        $user_id = $this->user['user_id'];
+        $user_id = '12';
+
+        $where  = array();
+        $where['user_id'] = !empty($Uid) ? $uId : $user_id;
+
+
+        $list = get_user_info($where['user_id']);
         if($user_id == $list['user_id']){
             //是否中过奖
             $prizeRes = M('addons_assistwinning_prize')->where($where)->find();
