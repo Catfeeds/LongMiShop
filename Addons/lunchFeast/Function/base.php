@@ -198,7 +198,6 @@ function lunchFeastGetGiftInfo( $value = null , $type = 1  ){
  * @param $data
  */
 function addonsPayNotify( $orderSn , $data ){
-    setLogResult("123","ss","test");
     $orderInfo = findDataWithCondition( "addons_lunchfeast_order" , array( "order_sn" => $orderSn ) );
     if( !empty( $orderInfo ) ){
         if( $orderInfo["status"] != 0 ){
