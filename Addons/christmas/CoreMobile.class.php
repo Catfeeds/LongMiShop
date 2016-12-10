@@ -115,6 +115,9 @@ class christmasMobileController
         if( !$this->assignData["orderInfo"] = addonsGetOrderInfo( $id  ) ){
             return addonsError("未找到该订单");
         }
+        if( $this->assignData["orderInfo"]['user_id'] != $this->userInfo ['user_id'] ){
+            return addonsError("未找到该订单");
+        }
         return $this->assignData;
     }
 
@@ -161,6 +164,9 @@ class christmasMobileController
     {
         $id = I("order_id");
         if( !$this->assignData["orderInfo"] = addonsGetOrderInfo( $id ) ){
+            return addonsError("未找到该订单");
+        }
+        if( $this->assignData["orderInfo"]['user_id'] != $this->userInfo ['user_id'] ){
             return addonsError("未找到该订单");
         }
         return $this->assignData;
