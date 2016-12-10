@@ -9,13 +9,12 @@
  */
 function addonsPayNotify( $orderSn , $data )
 {
-    setLogResult("321","ss","test");
     $orderInfo = findDataWithCondition("addons_christmas_order", array("order_sn" => $orderSn));
     if (!empty($orderInfo)) {
         if ($orderInfo["status"] != 0) {
             return;
         }
-        saveData("addons_lunchfeast_order", array("order_sn" => $orderSn), array('status' => 1, "pay_time" => time(), "pay_tag" => serialize($data)));
+        saveData("addons_christmas_order", array("order_sn" => $orderSn), array('status' => 1, "pay_time" => time(), "pay_tag" => serialize($data)));
     }
 }
 
