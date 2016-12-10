@@ -1,2 +1,19 @@
 <include file="$headerPath"/>
+<div class="pay">
+    <div class="pay-OK">领取成功</div>
+    <div class="pay-order">
+        <div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
+            <strong>{$orderInfo.money}元圣诞大礼包</strong>
+            <volist name="orderInfo.goods" id="goodsItem">
+                <p>{$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}</p>
+            </volist>
+        </div>
+    </div>
+</div>
+<div class="l_btn3 ">
+    <a href="{:U('Mobile/Order/order_detail',array('order_id' =>$orderInfo['order_id'] ))}">查看详情</a>
+</div>
+<div class=" login_btn9" style="width: 134px; margin: 10px auto;">
+    <a style="line-height: 40px;"  href="{:U('Mobile/Addons/christmas')}" >我也要送</a>
+</div>
 <include file="$footerPath"/>

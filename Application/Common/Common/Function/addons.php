@@ -56,6 +56,9 @@ function getAddonsList( $path )
  * @return array
  */
 function addonsError( $msg , $url = null , $time = null){
+    if( is_null( $url ) ){
+        $url = $_SERVER['HTTP_REFERER'];
+    }
     return array(
         "__error" => array(
             "msg" => $msg,

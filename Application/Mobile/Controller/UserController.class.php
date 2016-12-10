@@ -314,7 +314,7 @@ class UserController extends MobileBaseController {
      //    if(is_null(cookie('skip_url'))){
     	// 	cookie('skip_url','User/edit_details');
     	// }
-        $skip_url = AddressTheJump();
+        $skip_url = addressTheJump();
         $address_lists = get_user_address_list($this->user_id);
         $region_list = get_region_list();
         $this -> assign('region_list',$region_list);
@@ -363,7 +363,7 @@ class UserController extends MobileBaseController {
             M('user_address') -> where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
         }
         $skip_url = addressTheJump();
-        $url = U('Mobile/'.$skip_url);
+        $url = $skip_url;
         $address = getCurrentAddress( $this->user_id);
         if( empty($address) ){
             $data['is_default'] = 1;
@@ -515,7 +515,7 @@ class UserController extends MobileBaseController {
 
     //修改个人信息
     public function edit_details(){
-        AddressTheJump(ACTION_NAME);
+        addressTheJump(ACTION_NAME);
         $userLogic = new \Common\Logic\UsersLogic();
         $user_info = $userLogic->get_info($this->user_id); // 获取用户信息
         $this -> assign('user_info',$user_info['result']);
@@ -1124,6 +1124,7 @@ class UserController extends MobileBaseController {
     {
         //记录访问时间
         $this->push_message();
+        $where = "";
         $where .= "is_open = 1 AND  device_type != 1 ";
         $count = M('article') -> where($where)->count();
         $limit = 3;

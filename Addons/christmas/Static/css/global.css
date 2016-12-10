@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* CSS reset */
+html{color:#494949;background:#f2f2f2;font-family:Helvetica;}
+html,body{-moz-user-select: none; -khtml-user-select: none; user-select: none;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td,strong{padding:0;margin:0;}
+table{border-collapse:collapse;border-spacing:0;}
+em,i,strong {font-style: normal;}
+li{list-style:none;}
+fieldset,img{border:0;}
+input {border: none;}
+h1,h2,h3,h4,h5,h6{font-weight: normal;}
+input,textarea {border: 0;outline: none;background: none;color:#898989;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-modify:read-write-plaintext-only;}
+*{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+a{text-decoration:none; color:#494949; outline:none;}/*此处待添加默认链接颜色*/
+.clearfix:after {content: "\200B";display: block;height: 0;overflow: hidden;clear: both;}
+.clearfix {*zoom: 1;}
+/*自定义*/
+a{ text-decoration: none; outline: none; }
+.fr{float: right;}
+.fl{float: left;}
+input[type=button], input[type=submit], input[type=file], button { cursor: pointer; -webkit-appearance: none; }
+.wxb span{
+    color: #ff7714!important;
+    border-color: #ff7714!important;
+}

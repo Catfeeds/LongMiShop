@@ -12,7 +12,7 @@ class christmasApiController
     public function index(){
         $this -> notifyUrl();
     }
-    //主页
+    //微信异步返回
     public function notifyUrl()
     {
         include  "plugins/payment/weixin/weixin.class.php";

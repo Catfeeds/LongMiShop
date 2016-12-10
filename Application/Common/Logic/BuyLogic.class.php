@@ -19,6 +19,41 @@ class BuyLogic extends BaseLogic
 
 
 
+    /**
+     * 插件的兑换订单生成
+     * @param $addonsName
+     * @return array
+     */
+    public function createAddonsOrder($addonsName)
+    {
+        try {
+            $this -> status = "inCreateAddonsOrder";
+
+            $this -> model  -> startTrans();
+
+            //第1步 验证数据初始化
+            $this -> _createAddonsOrderStep1();
+
+            //第2步  得到购买商品信息
+            $this -> _createAddonsOrderStep2();
+
+            //第3步 生成订单
+            $this -> _createAddonsOrderStep3();
+
+            //第4步 订单后续处理
+            $this -> _createAddonsOrderStep4();
+
+//            throw new \Exception('我是断点！');
+            $this -> model  -> commit();
+
+            return callback(true,'领取成功',$this -> _post_data['order_id']);
+
+        } catch (\Exception $e){
+            $this -> model  -> rollback();
+
+            return callback(false, $e->getMessage());
+        }
+    }
 
     /**
      * 兑换订单生成
@@ -132,6 +167,98 @@ class BuyLogic extends BaseLogic
     /***
      * 以下是步骤
      */
+
+    //插件兑换订单生成第1步 验证数据初始化
+    private function _createAddonsOrderStep1(){
+
+        $this -> _post_data['address_id']   = $this -> _post_data['addressId'];
+        if( is_null($this -> userId) ){
+            throw new \Exception('登录超时请重新登录');
+        }
+        $this -> user = findDataWithCondition('users',array("user_id" => $this->userId));
+        if( empty($this -> user) ){
+            throw new \Exception('用户信息出错！');
+        }
+        $this -> _post_data['order_id'] = $this -> _post_data['orderId'];
+        $result = findDataWithCondition("addons_christmas_order", array("id" => $this -> _post_data['order_id']));
+        if( empty($result)){
+            throw new \Exception( "未找到该礼包" );
+        }
+        if( $result["user_id"] == $this->userId ){
+            throw new \Exception( "不能领取自己的礼包" );
+        }
+        if( $result["status"] == 0 ){
+            throw new \Exception( "礼包还未付款" );
+        }
+        if( $result["status"] == 2 ){
+            if( $result["get_user_id"] == $this->userId){
+                throw new \Exception( "礼物已被您领取过" );
+            }else{
+                throw new \Exception( "礼物已被他人领取" );
+            }
+        }
+    }
+
+    //插件兑换订单生成第2步 得到购买商品信息
+    private function _createAddonsOrderStep2(){
+        $goodsList = selectDataWithCondition("addons_christmas_order_goods", array("order_id" => $this -> _post_data['order_id']));
+        if( !empty($goodsList) ){
+            foreach ( $goodsList as $key => $goodsItem ){
+                $goodsInfo = findDataWithCondition( "goods" , array( 'goods_id' => $goodsItem['goods_id'] ) ) ;
+                if( empty($goodsInfo) ){
+                    unset( $goodsList[$key] );
+                }
+                $goodsList[$key]['market_price'] = $goodsInfo['market_price'];
+                $goodsList[$key]['goods_price'] = $goodsInfo['shop_price'];
+                $goodsList[$key]['member_goods_price'] = $goodsInfo['shop_price'];
+            }
+        }
+
+        $this -> _post_data['orderGoods'] = $goodsList;
+        if( empty($this -> _post_data['orderGoods']) ){
+            throw new \Exception('商品获取失败');
+        }
+    }
+
+    //插件兑换订单生成第3步 生成订单
+    private function _createAddonsOrderStep3(){
+        //第1步 验证数据初始化
+        $this -> _createOrderStep1();
+
+        //第2步 得到购买商品信息
+        $this -> _createOrderStep2();
+
+        //第3步 得到购买相关金额计算等信息
+        $this -> _createOrderStep3();
+
+        //第4步 生成订单
+        $this -> _createOrderStep4();
+
+        //第5步 订单后续处理
+        $this -> _createOrderStep5();
+    }
+
+    //插件兑换订单生成第4步 订单后续处理
+    private function _createAddonsOrderStep4(){
+        $orderSn = $this -> _post_data['orderData']['order_sn'];
+        if(! update_pay_status( $orderSn ) ){
+            throw new \Exception('修改订单支付状态失败');
+        }
+        $result = setOrderPayCode( $this -> _post_data['orderData']['order_id'] , "addons_christmas" , "圣诞礼包" );
+        if( !callbackIsTrue($result)){
+            throw new \Exception( getCallbackMessage($result) );
+        }
+        $save = array(
+            "status" => 2,
+            "get_time" => time(),
+            "get_user_id"=>$this ->userId,
+            "order_id"=>$this -> _post_data['orderData']['order_id']
+        );
+
+        if( saveData( "addons_christmas_order", array("id" => $this -> _post_data['order_id']),$save) == false){
+            throw new \Exception( "礼包状态修改失败" );
+        }
+    }
 
 
     //商品兑换订单生成第1步 验证数据初始化

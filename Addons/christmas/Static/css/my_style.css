@@ -1,0 +1,39 @@
+
+
+
+
+body{
+    background: #fff;
+    background: url("../images/bg.jpg") repeat;
+}
+.c_get_banner{
+    margin: 100px auto 0 auto;
+    width: 50%;
+}
+.pay-order span{
+    display:inline-block;
+    width:90px;
+}
+
+#guide{
+    position: fixed;
+    z-index: 99999;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.8;
+    top:0;
+    right: 0;
+    display: none;
+}
+#guide img{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 70%;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+    color: #c5a339;
+    border-bottom: 2px solid #c5a339;
+    background: 0 0;
+}

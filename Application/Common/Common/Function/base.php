@@ -786,21 +786,27 @@ function mobileJumpToast( $jumpUrl , $message = null , $error = null ){
 
 /**
  * 地址跳转
- *
+ * @param null $way
+ * @return mixed
  */
-function addressTheJump($way = null){
-    if(empty($way)){
+function addressTheJump( $way = null){
+    if( is_null($way) ){
         return cookie('skip_url');
     }
+    $urlJump = null;
     if($way == 'cart2'){
-        $urlJump = 'Cart/'.$way;
+        $urlJump = U("Mobile/Cart/cart2");
     }else if($way == 'edit_details'){
-        $urlJump ='User/'.$way;
+        $urlJump = U("Mobile/User/edit_details");
     }else if($way == 'exchangeInfo' ){
 
-        $urlJump = 'Exchange/'.$way;
+        $urlJump = U("Mobile/Exchange/exchangeInfo");
+    }else if($way == 'addons_christmas' ){
+        $urlJump = U("Mobile/Addons/christmas",array("pluginName"=>"get","order_id" => session("addons_christmas_order_id")));
     }
-    cookie('skip_url',$urlJump);
+    if( !is_null($urlJump) ){
+        cookie('skip_url',$urlJump);
+    }
 }
 
 /**

@@ -1,2 +1,15 @@
 <include file="$headerPath"/>
+<div class="c_get_banner ">
+    <img src="__ADDONS__/images/lihe.png" class="c_banner"/>
+</div>
+<div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
+    <div>
+        <div style="  width:86%;margin: 3px 7%;">
+            {$orderInfo.message}
+        </div>
+    </div>
+</div>
+<div class="login_btn">
+    <a href="{:U('Mobile/Addons/christmas',array('pluginName' => 'getResults','order_id'=>$orderInfo['id']))}">拆开礼包</a>
+</div>
 <include file="$footerPath"/>

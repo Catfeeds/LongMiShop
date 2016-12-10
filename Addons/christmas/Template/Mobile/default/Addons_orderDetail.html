@@ -1,2 +1,39 @@
 <include file="$headerPath"/>
+
+
+<div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
+    <strong>订单号</strong>
+        <p>{$orderInfo.order_sn}</p>
+</div>
+<div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
+    <strong>圣诞大礼包</strong>
+    <volist name="orderInfo.goods" id="goodsItem">
+        <p>{$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}</p>
+    </volist>
+</div>
+
+
+
+<div class="l_btn3 " style="width: 134px; margin: 10px auto;">
+    <a href="{:U('Mobile/Addons/christmas',array('pluginName'=>'rule'))}">购买</a>
+</div>
+
+<if condition="$orderInfo['status'] == 1">
+    <div class=" login_btn9" style="width: 134px; margin: 10px auto;">
+        <a style="line-height: 40px;" id="showGuide">送给朋友</a>
+    </div>
+
+    <script>
+        $(function () {
+            $("#showGuide").click(function(){
+                show_guide();
+            });
+        });
+    </script>
+</if>
+<if condition="$orderInfo['status'] == 0">
+    <div class="l_btn3 ">
+        <a href="{:U('Mobile/Addons/christmas',array('pluginName'=>'weChatPay','order_id' =>$orderInfo['id'] ))}">去支付</a>
+    </div>
+</if>
 <include file="$footerPath"/>
