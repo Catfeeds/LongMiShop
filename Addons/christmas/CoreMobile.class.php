@@ -18,7 +18,7 @@ class christmasMobileController
     public function __construct($userInfo)
     {
         $this->assignData["userInfo"] =$this->userInfo = $userInfo;
-        $this->assignData["share"] = "./Addons/christmas/Template/Mobile/default/Addons_share.html";
+        $this->assignData["sharePath"] = "./Addons/christmas/Template/Mobile/default/Addons_share.html";
         $this->assignData["headerPath"] = "./Addons/christmas/Template/Mobile/default/Addons_header.html";
         $this->assignData["footerPath"] = "./Addons/christmas/Template/Mobile/default/Addons_footer.html";
         $this->assignData["activity"] = $this -> activityInfo = addonsGetActivityInfo();
