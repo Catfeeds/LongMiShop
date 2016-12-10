@@ -79,13 +79,13 @@ function addonsGetShareArray( $info , $order_id = null  )
         "title" => "圣诞活动",
         "desc"  => "圣诞活动",
         "img"   => "圣诞活动",
-        "url"   => U("Mobile/Addons/christmas", array("pluginName" => "index", "activity_id" => $info["id"])),
+        "url"   => "http://".$_SERVER["HTTP_HOST"].U("Mobile/Addons/christmas", array("pluginName" => "index", "activity_id" => $info["id"])),
     );
     !empty($info["wx_title"]) ? $array["title"] = $info["wx_title"] : false;
     !empty($info["wx_desc"]) ? $array["desc"] = $info["wx_desc"] : false;
-    !empty($info["wx_shareimg"]) ? $array["img"] = $info["wx_shareimg"] : false;
+    !empty($info["wx_shareimg"]) ? $array["img"] = "http://".$_SERVER["HTTP_HOST"].$info["wx_shareimg"] : false;
     if (!is_null($order_id) && $order_id > 0) {
-        $array["url"] = U("Mobile/Addons/christmas", array("pluginName" => "shareInfo", "activity_id" => $info["id"], "order_id" => $order_id));
+        $array["url"] = "http://".$_SERVER["HTTP_HOST"].U("Mobile/Addons/christmas", array("pluginName" => "shareInfo", "activity_id" => $info["id"], "order_id" => $order_id));
     }
     return $array;
 
