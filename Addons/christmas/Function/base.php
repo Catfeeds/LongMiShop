@@ -9,6 +9,7 @@
  */
 function addonsPayNotify( $orderSn , $data )
 {
+    setLogResult("321","ss","test");
     $orderInfo = findDataWithCondition("addons_christmas_order", array("order_sn" => $orderSn));
     if (!empty($orderInfo)) {
         if ($orderInfo["status"] != 0) {

@@ -15,7 +15,6 @@ class christmasApiController
     //微信异步返回
     public function notifyUrl()
     {
-        setLogResult("123","ss","test");
         include  "plugins/payment/weixin/weixin.class.php";
         $code = '\\weixin'; // \alipay
         $payment = new $code();
