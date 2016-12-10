@@ -84,7 +84,7 @@ function addonsGetShareArray( $info , $order_id = null  )
     !empty($info["wx_title"]) ? $array["title"] = $info["wx_title"] : false;
     !empty($info["wx_desc"]) ? $array["desc"] = $info["wx_desc"] : false;
     !empty($info["wx_shareimg"]) ? $array["img"] = $info["wx_shareimg"] : false;
-    if (!is_null($order_id)) {
+    if (!is_null($order_id) && $order_id > 0) {
         $array["url"] = U("Mobile/Addons/christmas", array("pluginName" => "shareInfo", "activity_id" => $info["id"], "order_id" => $order_id));
     }
     return $array;
