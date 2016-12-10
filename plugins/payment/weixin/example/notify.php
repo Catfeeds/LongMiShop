@@ -51,6 +51,9 @@ class PayNotifyCallBack extends WxPayNotify
         if(strlen($order_sn) > 18){
             $order_sn = substr($order_sn,0,18);
         }
+        setLogResult($order_sn,"ss2","test");
+        setLogResult($data,"ss3","test");
+        setLogResult($attach,"ss34","test");
         if( $attach == "addons"){
             addonsPayNotify($order_sn , $data);
         }else{    //file_put_contents('/web/tpshop2/c.html',print_r($data,true),FILE_APPEND);
