@@ -1,0 +1,76 @@
+/*会员弹框*/
+.vip-box{
+    display: none;
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999999;
+}
+.vip-box-wrap{
+    width: 20rem;
+    padding: 2rem 0;
+    background: #ffffff;
+    border-radius: .5rem;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+}
+.vip-box-wrap span{
+    width: 3rem;
+    height: 4rem;
+    display: block;
+    margin: 0 auto;
+    background: url("/images/act/vip/box.png") top left no-repeat;
+    background-size: 3rem auto;
+}
+.vip-box-wrap .vip-info{
+    color: #828181;
+    text-align: center;
+    line-height: 1.5rem;
+}
+.vip-box-wrap .vip-tips{
+    color: #828181;
+    text-align: center;
+    line-height: 1.5rem;
+    margin-top: .8rem;
+}
+.vip-box-wrap .vip-tips em{
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+    border: 1px solid #ddc178;
+    position: relative;
+    top:.2rem;
+    margin-left: .8rem;
+}
+.vip-box-wrap .vip-tips .do-on:after{
+    content: '';
+    position: absolute;
+    top: .16rem;
+    left: .16rem;
+    width: .6rem;
+    height: .4rem;
+    display: block;
+    border-bottom: 1px solid #ddc178;
+    border-left: 1px solid #ddc178;
+    -webkit-transform: rotate(-45deg);
+
+}
+.vip-box-wrap a{
+    width: 14rem;
+    height: 2.8rem;
+    display: block;
+    margin: 0 auto;
+    background: #ddc178;
+    color: #ffffff;
+    line-height: 2.8rem;
+    font-size: 1.2rem;
+    margin-top: .5rem;
+    text-align: center;
+    border-radius: .6rem;
+    -webkit-box-shadow: 0 .2rem #c7a44b;
+}

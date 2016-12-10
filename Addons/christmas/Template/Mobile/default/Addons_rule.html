@@ -1,2 +1,73 @@
 <include file="$headerPath"/>
+<div class="pay">
+    <div class="pay-OK" style="background: url('__ADDONS__/images/lihe.png') no-repeat center;"></div>
+
+    <div class="pay-order">
+        <div class="tip_b" style=" border: 0px; margin-top:0px; margin-left: 0px; margin-bottom: 0px; ">
+            <strong>{$activity.money}元圣诞大礼包</strong>
+            <volist name="activity.goods" id="goodsItem">
+                <p style="text-align:center">
+                    {$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}
+                </p>
+            </volist>
+        </div>
+    </div>
+</div>
+
+<div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
+    <strong>活动时间</strong>
+    <p style="text-align:center">
+        {$activity.start_time|date='Y-m-d H:i:s',###} ~ {$activity.end_time|date='Y-m-d H:i:s',###}
+    </p>
+</div>
+<div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
+    <strong>注意</strong>
+    <div style="  width:86%;margin: 3px 7%;">
+        {$activity.desc|htmlspecialchars_decode}
+    </div>
+</div>
+
+<div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
+    <strong>写祝福</strong>
+    <div class="site_txt" style="height:150px; ">
+        <textarea  name="message" cols="" rows="" id="myMessage"  style="height:150px; " placeholder="点击给朋友留言"></textarea>
+    </div>
+</div>
+<div class="login_btn">
+    <a href="javascript:void(0);" id="next">支付（￥{$activity.money}）</a>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#next").click(function(){
+            christmasSubmit()
+        });
+    });
+    var lock = false;
+    function christmasSubmit(){
+        if(lock){return;}
+        var message = $('#myMessage').val();
+        if( message == ""){
+            alert("请输入祝福");
+            return;
+        }
+        lock = true;
+        $.ajax({
+            type:'post',
+            url:"{:U('Mobile/Addons/christmas')}",
+            data:{message:message,pluginName:"pay"},
+            dataType:'json',
+            success:function(res){
+                if(res.state == 1){
+                    window.location.href = "{:U('Mobile/Addons/christmas',array('pluginName'=>'weChatPay'))}?order_id="+ res.data;
+                }else{
+                    alert(res.msg);
+                }
+                lock = false;
+            },
+            error:function(){
+                alert('网络超时');
+            }
+        });
+    }
+</script>
 <include file="$footerPath"/>

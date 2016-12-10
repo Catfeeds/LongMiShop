@@ -1,2 +1,51 @@
 <include file="$headerPath"/>
+<div class="pay">
+    <div class="pay-OK"></div>
+    <div class="pay-order">
+        <volist name="orderInfo.goods" id="goodsItem">
+            <p style="text-align:center">
+                {$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}
+            </p>
+        </volist>
+    </div>
+</div>
+<div class="mui-content">
+    <div class="site1">
+        <div class="c">
+            <a href="{:U('Mobile/User/address_list',array('source'=>'christmas'))}"></a>
+        </div>
+        <div class="consignee">
+            <p>收货人：{$address.consignee} {$address.mobile}</p>
+            <p>地址：{$region_list[$address['province']]['name']} {$region_list[$address['city']]['name']} {$region_list[$address['district']]['name']} {$address.address}</p>
+        </div>
+    </div>
+</div>
+<div class="login_btn">
+    <a href="#" onclick="christmasSubmit()">领取礼物</a>
+</div>
+<input type="hidden" id="orderId" value="{$orderInfo.id}" />
+<input type="hidden" id="addressId" value="{$address.address_id}" />
+<script>
+    function christmasSubmit(){
+        var orderId = $('#orderId').val();
+        var addressId = $('#addressId').val();
+        $.ajax({
+            type:'post',
+            url:"{:U('Mobile/Addons/christmas')}",
+            data:{orderId:orderId,addressId:addressId,pluginName:"createOrder"},
+            dataType:'json',
+            success:function(res){
+                if(res.state == 1){
+                    alert(res.msg);
+                    window.location.href = "{:U('Mobile/Addons/christmas',array('pluginName'=>'getResults'))}?order_id="+ res.data;
+                }else{
+                    alert(res.msg);
+                }
+            },
+            error:function(){
+                alert('网络超时');
+            }
+        });
+    }
+</script>
 <include file="$footerPath"/>

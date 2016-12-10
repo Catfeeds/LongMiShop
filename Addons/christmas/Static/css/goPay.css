@@ -1,0 +1,387 @@
+body {
+    font-family: SimHei, Helvetica, "microsoft yahei", Verdana, Arial, sans-serif;
+}
+
+.input_box {
+    position: relative;
+    width: 100%;
+    background: url("../../images/act/please/goPay/big_bg.jpg") no-repeat;
+    background-size: 100% 100%;
+    height: 4.45rem;
+}
+.input_cent {
+    padding: 1rem 0 ;
+    /*box-sizing: border-box;*/
+    width: 2rem;
+    margin: 0 auto;
+}
+
+img.neme_bg {
+    width: 1.375rem;
+}
+
+.input_box > img {
+    position: absolute;
+    left: 0.6rem;
+    width: 1.975rem;
+}
+
+.name_text {
+    font-size: 0.1rem;
+    border: 0;
+    background: none;
+    position: absolute;
+    top: 1.05rem;
+    left: 1.3rem;
+    color: #525151;
+}
+
+.Myname_text {
+    float: right;
+    font-size: 0.11rem;
+    border: 0;
+    font-weight: 600;
+    color: #525151;
+    background-size: 0.095rem;
+    line-height: 0.1rem;
+    height: 0.1rem;
+}
+
+.xiaolian {
+    clear: both;
+    margin-top: 0.3rem;
+}
+
+.xiaolian img {
+    width: 0.095rem;
+    margin: 0rem 0.1rem 0 0;
+    float: right;
+}
+.txta{
+    margin-top: 0.03rem;
+}
+.input_box form textarea {
+    margin-top: 0.08rem;
+    font-size: 0.116rem;
+    resize: none;
+    width: 1.975rem;
+    background: none;
+    border: none;
+    color: #525151;
+    text-align: justify;
+    line-height: 0.3rem;
+    overflow-x: hidden;
+}
+
+ul li {
+    position: absolute;
+    width: 1.99rem;
+}
+
+ul li:nth-of-type(1) {
+    top: 1.58rem;
+    /*height: 0.05rem;*/
+    background: #f8f8f8;
+}
+
+ul li:nth-of-type(2) {
+    top: 1.62rem;
+    /*height: 0.11rem;*/
+    border-top: 1px solid #d7d7d7;
+    background: #f8f8f8;
+}
+
+ul li:nth-of-type(3) {
+    top: 1.9rem;
+    /*height: 0.05rem;*/
+    background: #f8f8f8;
+}
+
+ul li:nth-of-type(4) {
+    top: 1.909rem;
+    /*height: 0.11rem;*/
+    border-top: 1px solid #d7d7d7;
+    background: #f8f8f8;
+    z-index: 1;
+}
+
+ul li:nth-of-type(5) {
+    top: 1.89rem;
+    /*height: 0.05rem;*/
+    background: #f8f8f8;
+}
+
+ul li:nth-of-type(6) {
+    top: 2.21rem;
+    /*height: 0.1rem;*/
+    border-top: 1px solid #d7d7d7;
+    background: #f8f8f8;
+}
+
+.foot_pay {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background: #ffffff;
+}
+.foot_pay .go_pay {
+    position: absolute;
+    z-index: -999;
+}
+
+.foot_pay .go_pay img {
+    position: absolute;
+    width: 0.2rem;
+    height: 0.2rem;
+    top: 0;
+    left: 0.25rem;
+}
+
+.foot_pay .go_pay span {
+    font-size: 0.155rem;
+    /*float: left;*/
+}
+
+.foot_pay .go_pay span.span1 {
+    margin-left: 0.525rem;
+    font-weight: 600;
+    color: #525151;
+}
+
+.foot_pay .go_pay span.span2 {
+    float: right;
+    margin-top: -0.01rem;
+    margin-right: 0.22rem;
+    font-size: 0.18rem;
+    color: #f1bb05;
+}
+
+.foot_pay .go_pay span.span3 {
+    margin-left: 0.05rem;
+    color: #525151;
+    font-size: 0.15rem;
+    font-weight: 600;
+}
+
+.foot_pay .go_pay span.span3 i {
+    font-size: 0.17rem;
+}
+
+.foot_pay .go_pay span.span2 i {
+    display: inline-block;
+    margin-top: 0.01rem;
+    font-weight: 600;
+}
+
+.foot_pay .go_pay span.span2 small {
+    font-size: 0.14rem;
+    font-weight: 600;
+}
+
+.foot_pay .card {
+    text-align: center;
+}
+
+.foot_pay .card img {
+    width: 2.85rem;
+    margin: 0.15rem 0 0.075rem;
+}
+
+.input_cent .focus {
+    position: absolute;
+    top: 1.558rem;
+    left: 0.59rem;
+    animation: zoomIn 1s infinite ease;
+    -webkit-animation: zoomIn 1s infinite ease;
+}
+
+@-webkit-keyframes zoomIn {
+    from {
+        opacity: 0;
+
+    }
+    30% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+    }
+    30% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@media screen and (max-width: 320px)and (max-height: 480px) {
+    .input_box {
+        position: relative;
+        width: 100%;
+        background-size: 100% 95%;
+        padding: 0.35rem 0.2rem;
+        box-sizing: border-box;
+    }
+
+    .input_cent {
+        padding: 0.675rem 0.4rem 0.7rem;
+        box-sizing: border-box;
+        width: 100%;
+        background-size: 100%;
+    }
+
+    ul li:nth-of-type(1) {
+        top: 1.68rem;
+        height: 0.05rem;
+        background: none;
+    }
+
+    ul li:nth-of-type(3) {
+        top: 2rem;
+        height: 0.05rem;
+        background: none;
+    }
+
+    ul li:nth-of-type(5) {
+        top: 1.99rem;
+        height: 0.05rem;
+        background: none;
+    }
+
+    .input_box form textarea {
+        font-size: 0.08rem;
+    }
+
+    .foot_pay .go_pay {
+        position: relative;
+        top: 0rem;
+    }
+
+    .foot_pay .card img {
+        width: 2.85rem;
+        margin: 0.2rem 0 0;
+    }
+}
+
+/*����*/
+/*#div {*/
+    /*display: none;*/
+    /*width: 2.5rem;*/
+    /*margin: 0.2rem auto 0;*/
+    /*font-size: 0.15rem;*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*z-index: 99999;*/
+    /*left: 50%;*/
+    /*margin-left: -1.25rem;*/
+/*}*/
+
+/*#div span {*/
+    /*color: #fff;*/
+    /*display: inline-block;*/
+    /*width: 0.7rem;*/
+    /*margin: 0.05rem 0.05rem;*/
+    /*text-align: center;*/
+    /*border: 1px solid #fff;*/
+/*}*/
+
+/*#div p {*/
+    /*font-size: 0.13rem;*/
+    /*color: #fff;*/
+    /*text-align: center;*/
+    /*margin-bottom: 0.1rem;*/
+/*}*/
+
+.bg_00 {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    z-index: 9999;
+    display: none;
+}
+
+.bg_00 img {
+    width: 100%;
+    height: 100%;
+}
+
+.foot_pay .aler {
+    width: 2.85rem;
+    height: 0.3rem;
+    background: #000;
+    margin: 0.35rem 0 0.075rem;
+}
+.alert_share{
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background:url("/images/act/please/success/share1.png") no-repeat;
+    background-size: 100% 100%;
+    height: 100%;
+    z-index: 9999;
+}
+.alert_share22{
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background:url("/images/act/please/success/succ.png") no-repeat;
+    background-size: 100% 100%;
+    height: 100%;
+    z-index: 9999;
+}
+.alert_share1{
+    display: block;
+    -webkit-animation: zoomIn .3s  both;
+    animation: zoomIn .3s  both;
+}
+@-webkit-keyframes zoomIn {
+    from {
+        opacity: 0;
+
+    }
+    40% {
+        opacity: 0.4;
+    }
+    80% {
+        opacity: 0.8;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0.4;
+    }
+    80% {
+        opacity: 0.8;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

@@ -1,8 +1,4 @@
 <?php
-/**
- * 供应商结算定时任务部分
- * 2016.10.27
- */
 
 class PushCronClass
 {

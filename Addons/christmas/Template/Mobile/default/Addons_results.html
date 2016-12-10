@@ -1,7 +1,27 @@
 <include file="$headerPath"/>
-
-
-
-
-
+<div class="pay">
+    <div class="pay-OK">支付成功</div>
+    <div class="pay-money">￥{$orderInfo.money}元</div>
+    <div class="pay-order">
+        <div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
+            <strong>圣诞大礼包</strong>
+            <volist name="orderInfo.goods" id="goodsItem">
+                <p>{$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}</p>
+            </volist>
+        </div>
+    </div>
+</div>
+<div class="l_btn3 ">
+    <a href="{:U('Mobile/Addons/christmas',array('pluginName'=>'orderDetail','order_id' =>$orderInfo['id'] ))}">查看详情</a>
+</div>
+<div class=" login_btn9" style="width: 134px; margin: 10px auto;">
+    <a style="line-height: 40px;" id="showGuide">送给朋友</a>
+</div>
+<script>
+    $(function () {
+        $("#showGuide").click(function(){
+            show_guide();
+        });
+    });
+</script>
 <include file="$footerPath"/>
