@@ -173,6 +173,10 @@ class christmasMobileController
         if( !$this->assignData["orderInfo"] = addonsGetOrderInfo( $id ) ){
             return addonsError("未找到该订单");
         }
+        if( $this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id'] ){
+            header("Location: ".U("Mobile/Addons/christmas", array("pluginName" => "orderDetail","order_id"=>$id)));
+            exit;
+        }
         return $this->assignData;
     }
 
@@ -182,6 +186,10 @@ class christmasMobileController
         $id = I("order_id");
         if( !$this->assignData["orderInfo"] = addonsGetOrderInfo( $id  ) ){
             return addonsError("未找到该订单");
+        }
+        if( $this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id'] ){
+            header("Location: ".U("Mobile/Addons/christmas", array("pluginName" => "orderDetail","order_id"=>$id)));
+            exit;
         }
         $address = getCurrentAddress( $this->userInfo["user_id"] , I('address_id',null) );
         $this -> assignData["address"] = $address ;
@@ -199,6 +207,10 @@ class christmasMobileController
         $id = I("order_id");
         if( !$this->assignData["orderInfo"] = addonsGetOrderInfo( $id  ) ){
             return addonsError("未找到该订单");
+        }
+        if( $this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id'] ){
+            header("Location: ".U("Mobile/Addons/christmas", array("pluginName" => "orderDetail","order_id"=>$id)));
+            exit;
         }
         return $this->assignData;
     }
