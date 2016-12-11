@@ -101,7 +101,9 @@ function addonsGetShareArray( $info , $order_id = null  )
     !empty($info["wx_desc"]) ? $array["desc"] = $info["wx_desc"] : false;
     !empty($info["wx_shareimg"]) ? $array["img"] = "http://".$_SERVER["HTTP_HOST"].$info["wx_shareimg"] : false;
     if (!is_null($order_id) && $order_id > 0) {
-        $array["url"] = "http://".$_SERVER["HTTP_HOST"].U("Mobile/Addons/christmas", array("pluginName" => "shareInfo", "activity_id" => $info["id"], "order_id" => $order_id));
+        if(isExistenceDataWithCondition("addons_christmas_order",array("id"=>$order_id,"status"=>array("neq","0")))){
+            $array["url"] = "http://".$_SERVER["HTTP_HOST"].U("Mobile/Addons/christmas", array("pluginName" => "shareInfo", "activity_id" => $info["id"], "order_id" => $order_id));
+        }
     }
     return $array;
 

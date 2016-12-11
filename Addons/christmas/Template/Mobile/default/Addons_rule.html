@@ -1,4 +1,7 @@
 <include file="$headerPath"/>
+<a href='{:U("Mobile/Addons/christmas", array("pluginName" => "order"))}' class="c_my_order_in">
+    我的订单 >
+</a>
 <div class="pay">
     <div class="pay-OK" style="background: url('__ADDONS__/images/lihe.png') no-repeat center;"></div>
 
@@ -16,16 +19,16 @@
 
 <div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
     <strong>活动时间</strong>
-    <p style="text-align:center">
+    <div style="  width:86%;margin: 3px 7%;">
         {$activity.start_time|date='Y-m-d H:i:s',###} ~ {$activity.end_time|date='Y-m-d H:i:s',###}
-    </p>
+    </div>
 </div>
 
 <div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
     <strong>礼品数量</strong>
-    <p style="text-align:center">
+    <div style="  width:86%;margin: 3px 7%;">
         {$activity.number}份
-    </p>
+    </div>
 </div>
 <div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
     <strong>注意</strong>
