@@ -9,8 +9,8 @@ class christmasMobileController
     const TB_ORDER_GOODS = "addons_christmas_order_goods";
     const TB_ACTIVITY_GOODS = "addons_christmas_activity_goods";
 
-    public $userInfo = null;
     public $edition = null;
+    public $userInfo = null;
     public $assignData = array();
     public $activityInfo = array();
 
@@ -24,6 +24,7 @@ class christmasMobileController
         $this->assignData["footerPath"] = "./Addons/christmas/Template/Mobile/default/Addons_footer.html";
         $this->assignData["activity"] = $this->activityInfo = addonsGetActivityInfo();
         $this->assignData["share"] = addonsGetShareArray($this->assignData["activity"], I("order_id", 0));
+        $this->assignData["isFollow"] = $this->userInfo["is_follow"];
         $this->edition = $this->assignData["activity"]["id"];
         if (isWeChatBrowser()) {
             $weChatLogic = new \Common\Logic\WeChatLogic();
@@ -66,9 +67,9 @@ class christmasMobileController
                     "id" => $notPayOrderInfo["id"]
                 );
                 $data = array(
-                    "message"     => I("message", "")
+                    "message" => I("message", "")
                 );
-                saveData(self::TB_ORDER, $save , $data);
+                saveData(self::TB_ORDER, $save, $data);
                 exit(json_encode(callback(true, "", $notPayOrderInfo["id"])));
             }
             $data = array(
@@ -215,7 +216,6 @@ class christmasMobileController
         if (empty($address)) {
             header("Location: " . U('Mobile/User/edit_address', array('source' => 'addons_christmas')));
         }
-        $this->assignData["isFollow"] = $this->userInfo["is_follow"];
         return $this->assignData;
     }
 
