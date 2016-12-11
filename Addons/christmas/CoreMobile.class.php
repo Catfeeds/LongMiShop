@@ -1,11 +1,12 @@
 <?php
 @include 'Addons/christmas/Function/base.php';
+
 class christmasMobileController
 {
 
     const TB_ORDER = "addons_christmas_order";
-    const TB_ORDER_GOODS = "addons_christmas_order_goods";
     const TB_ACTIVITY = "addons_christmas_activity";
+    const TB_ORDER_GOODS = "addons_christmas_order_goods";
     const TB_ACTIVITY_GOODS = "addons_christmas_activity_goods";
 
     public $userInfo = null;
@@ -17,15 +18,17 @@ class christmasMobileController
     //初始化
     public function __construct($userInfo)
     {
-        $this->assignData["userInfo"] =$this->userInfo = $userInfo;
+        $this->assignData["userInfo"] = $this->userInfo = $userInfo;
         $this->assignData["sharePath"] = "./Addons/christmas/Template/Mobile/default/Addons_share.html";
         $this->assignData["headerPath"] = "./Addons/christmas/Template/Mobile/default/Addons_header.html";
         $this->assignData["footerPath"] = "./Addons/christmas/Template/Mobile/default/Addons_footer.html";
-        $this->assignData["activity"] = $this -> activityInfo = addonsGetActivityInfo();
+        $this->assignData["activity"] = $this->activityInfo = addonsGetActivityInfo();
         $this->assignData["share"] = addonsGetShareArray($this->assignData["activity"], I("order_id", 0));
         $this->edition = $this->assignData["activity"]["id"];
-        $weChatLogic = new \Common\Logic\WeChatLogic();
-        $this->assignData["signPackage"] = $weChatLogic->getSignPackage();
+        if (isWeChatBrowser()) {
+            $weChatLogic = new \Common\Logic\WeChatLogic();
+            $this->assignData["signPackage"] = $weChatLogic->getSignPackage();
+        }
     }
 
     //圣诞故事
@@ -44,22 +47,22 @@ class christmasMobileController
     //支付页面
     public function pay()
     {
-        if ( IS_POST ) {
+        if (IS_POST) {
             $start_time = $this->activityInfo["start_time"];
             $end_time = $this->activityInfo["end_time"];
             if (time() < $start_time) {
-                exit(json_encode(callback(false,"活动还未开始")));
+                exit(json_encode(callback(false, "活动还未开始")));
             }
             if ($end_time > time()) {
-                exit(json_encode(callback(false,"活动已经结束")));
+                exit(json_encode(callback(false, "活动已经结束")));
             }
-            $number = getCountWithCondition(self::TB_ORDER, array("activity_id" => $this->activityInfo['id'],"status"=>array("neq","0")));
+            $number = getCountWithCondition(self::TB_ORDER, array("activity_id" => $this->edition, "status" => array("neq", "0")));
             if ($number >= $this->activityInfo['number']) {
-                exit(json_encode(callback(false,"礼包名额已满")));
+                exit(json_encode(callback(false, "礼包名额已满")));
             }
-            $notPayOrderInfo = findDataWithCondition( self::TB_ORDER, array("user_id"=> $this->userInfo["user_id"],"status"=>"0"),"id");
-            if( !empty($notPayOrderInfo)){
-                exit(json_encode(callback(true,"",$notPayOrderInfo["id"])));
+            $notPayOrderInfo = findDataWithCondition(self::TB_ORDER, array("user_id" => $this->userInfo["user_id"], "status" => "0"), "id");
+            if (!empty($notPayOrderInfo)) {
+                exit(json_encode(callback(true, "", $notPayOrderInfo["id"])));
             }
             $data = array(
                 "user_id"     => $this->userInfo["user_id"],
@@ -73,7 +76,7 @@ class christmasMobileController
             $orderId = addData(self::TB_ORDER, $data);
             foreach ($this->activityInfo["goods"] as $goodsItem) {
                 $goods = array(
-                    "activity_id"   => $this->activityInfo['id'],
+                    "activity_id"   => $this->edition,
                     "order_id"      => $orderId,
                     "admin_id"      => $goodsItem['admin_id'],
                     "goods_id"      => $goodsItem['goods_id'],
@@ -88,16 +91,17 @@ class christmasMobileController
 
                 addData(self::TB_ORDER_GOODS, $goods);
             }
-            exit(json_encode(callback(true,"",$orderId)));
+            exit(json_encode(callback(true, "", $orderId)));
         }
-        exit(json_encode(callback(false,"ERROR")));
+        exit(json_encode(callback(false, "ERROR")));
     }
+
     //支付页面
     public function weChatPay()
     {
         $id = I("order_id");
         if ($_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger')) {
-            $order = findDataWithCondition(self::TB_ORDER, array("id" => $id,"user_id"=>$this->userInfo["user_id"]));
+            $order = findDataWithCondition(self::TB_ORDER, array("id" => $id, "user_id" => $this->userInfo["user_id"]));
             if (!empty($order)) {
                 addonsWeChatPay($id, "christmas");
                 exit;
@@ -112,10 +116,10 @@ class christmasMobileController
     public function results()
     {
         $id = I("order_id");
-        if( !$this->assignData["orderInfo"] = addonsGetOrderInfo( $id  ) ){
+        if (!$this->assignData["orderInfo"] = addonsGetOrderInfo($id)) {
             return addonsError("未找到该订单");
         }
-        if( $this->assignData["orderInfo"]['user_id'] != $this->userInfo ['user_id'] ){
+        if ($this->assignData["orderInfo"]['user_id'] != $this->userInfo ['user_id'] || $this->assignData["orderInfo"]['status'] == 0) {
             return addonsError("未找到该订单");
         }
         return $this->assignData;
@@ -141,14 +145,14 @@ class christmasMobileController
         $where = array();
         $type = I('type');
         $type = intval($type);
-        $where['status'] = array("eq",$type);
+        $where['status'] = array("eq", $type);
         $where['user_id'] = $this->userInfo ['user_id'];
         $count = getCountWithCondition(self::TB_ORDER, $where);
         $limit = 10;
         $Page = new \Think\Page($count, $limit);
         $show = $Page->show();
         $order_str = "pay_time DESC";
-        $orderList = M( self::TB_ORDER )->order($order_str)->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        $orderList = M(self::TB_ORDER)->order($order_str)->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->select();
         $this->assignData['show'] = $show;
         $this->assignData['lists'] = $orderList;
         $this->assignData['p'] = I('p');
@@ -163,10 +167,10 @@ class christmasMobileController
     public function orderDetail()
     {
         $id = I("order_id");
-        if( !$this->assignData["orderInfo"] = addonsGetOrderInfo( $id ) ){
+        if (!$this->assignData["orderInfo"] = addonsGetOrderInfo($id)) {
             return addonsError("未找到该订单");
         }
-        if( $this->assignData["orderInfo"]['user_id'] != $this->userInfo ['user_id'] ){
+        if ($this->assignData["orderInfo"]['user_id'] != $this->userInfo ['user_id']) {
             return addonsError("未找到该订单");
         }
         return $this->assignData;
@@ -176,11 +180,11 @@ class christmasMobileController
     public function shareInfo()
     {
         $id = I("order_id");
-        if( !$this->assignData["orderInfo"] = addonsGetOrderInfo( $id ) ){
+        if (!$this->assignData["orderInfo"] = addonsGetOrderInfo($id)) {
             return addonsError("未找到该订单");
         }
-        if( $this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id'] ){
-            header("Location: ".U("Mobile/Addons/christmas", array("pluginName" => "orderDetail","order_id"=>$id)));
+        if ($this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id']) {
+            header("Location: " . U("Mobile/Addons/christmas", array("pluginName" => "orderDetail", "order_id" => $id)));
             exit;
         }
         return $this->assignData;
@@ -190,20 +194,21 @@ class christmasMobileController
     public function get()
     {
         $id = I("order_id");
-        if( !$this->assignData["orderInfo"] = addonsGetOrderInfo( $id  ) ){
+        if (!$this->assignData["orderInfo"] = addonsGetOrderInfo($id)) {
             return addonsError("未找到该订单");
         }
-        if( $this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id'] ){
-            header("Location: ".U("Mobile/Addons/christmas", array("pluginName" => "orderDetail","order_id"=>$id)));
+        if ($this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id']) {
+            header("Location: " . U("Mobile/Addons/christmas", array("pluginName" => "orderDetail", "order_id" => $id)));
             exit;
         }
-        $address = getCurrentAddress( $this->userInfo["user_id"] , I('address_id',null) );
-        $this -> assignData["address"] = $address ;
-        $this -> assignData["region_list"] = get_region_list() ;
-        addressTheJump( "addons_christmas");
-        if( empty($address) ){
-            header("Location: ".U('Mobile/User/edit_address',array('source'=>'addons_christmas')));
+        $address = getCurrentAddress($this->userInfo["user_id"], I('address_id', null));
+        $this->assignData["address"] = $address;
+        $this->assignData["region_list"] = get_region_list();
+        addressTheJump("addons_christmas");
+        if (empty($address)) {
+            header("Location: " . U('Mobile/User/edit_address', array('source' => 'addons_christmas')));
         }
+        $this->assignData["isFollow"] = $this->userInfo["is_follow"];
         return $this->assignData;
     }
 
@@ -211,11 +216,11 @@ class christmasMobileController
     public function getResults()
     {
         $id = I("order_id");
-        if( !$this->assignData["orderInfo"] = addonsGetOrderInfo( $id  ) ){
+        if (!$this->assignData["orderInfo"] = addonsGetOrderInfo($id)) {
             return addonsError("未找到该订单");
         }
-        if( $this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id'] ){
-            header("Location: ".U("Mobile/Addons/christmas", array("pluginName" => "orderDetail","order_id"=>$id)));
+        if ($this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id']) {
+            header("Location: " . U("Mobile/Addons/christmas", array("pluginName" => "orderDetail", "order_id" => $id)));
             exit;
         }
         return $this->assignData;
@@ -226,7 +231,7 @@ class christmasMobileController
     public function createOrder()
     {
         $buyLogic = new \Common\Logic\BuyLogic();
-        exit(json_encode($buyLogic -> createAddonsOrder("christmas")));
+        exit(json_encode($buyLogic->createAddonsOrder("christmas")));
     }
 
 }

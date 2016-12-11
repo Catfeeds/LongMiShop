@@ -13,6 +13,9 @@ class PushCronClass
         $this->thisTime = date("Y-m-d", $current);
         $this->nineItem = date("H", $current);
 
+        //设置过期订单
+        saveData("addons_lunchfeast_order", array("date" => array("lt", $this->thisTime)), array("status" => 3));
+
         if ($this->nineItem == '09') {
             $orderInfo = M('addons_lunchfeast_order')->where(array('status' => 1))->select();
             foreach ($orderInfo as $item) {

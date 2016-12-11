@@ -37,3 +37,40 @@ body{
     border-bottom: 2px solid #c5a339;
     background: 0 0;
 }
+
+.c_my_order_in{
+    color: #858585;
+    position: absolute;
+    right: 10px;
+    top:10px;
+}
+
+
+#followMask{
+    z-index:9999999999999999999999;
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    right:0px;
+    margin-top:0;
+    background: #000;
+    /*background-size:50%;*/
+    opacity: 0.9;
+}
+#followMask .padlockImg{
+    position: relative;
+    left: 95%;
+    top: -27%;
+    width: 45px;
+    height: 40px;
+    margin: -50px 0 0 -50px;
+}
+#followMask .follow{
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 240px;
+    height: 452px;
+    margin: -226px 0 0 -120px;
+}

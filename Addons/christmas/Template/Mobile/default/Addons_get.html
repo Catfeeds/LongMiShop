@@ -25,27 +25,43 @@
 </div>
 <input type="hidden" id="orderId" value="{$orderInfo.id}" />
 <input type="hidden" id="addressId" value="{$address.address_id}" />
-<script>
-    function christmasSubmit(){
-        var orderId = $('#orderId').val();
-        var addressId = $('#addressId').val();
-        $.ajax({
-            type:'post',
-            url:"{:U('Mobile/Addons/christmas')}",
-            data:{orderId:orderId,addressId:addressId,pluginName:"createOrder"},
-            dataType:'json',
-            success:function(res){
-                if(res.state == 1){
-                    alert(res.msg);
-                    window.location.href = "{:U('Mobile/Addons/christmas',array('pluginName'=>'getResults'))}?order_id="+ res.data;
-                }else{
-                    alert(res.msg);
+<if condition="$isFollow == 1">
+    <script>
+        var lock = false;
+        function christmasSubmit(){
+            if(lock){return; }
+            lock = true;
+            var orderId = $('#orderId').val();
+            var addressId = $('#addressId').val();
+            $.ajax({
+                type:'post',
+                url:"{:U('Mobile/Addons/christmas')}",
+                data:{orderId:orderId,addressId:addressId,pluginName:"createOrder"},
+                dataType:'json',
+                success:function(res){
+                    if(res.state == 1){
+                        alert(res.msg);
+                        window.location.href = "{:U('Mobile/Addons/christmas',array('pluginName'=>'getResults'))}?order_id="+ res.data;
+                    }else{
+                        alert(res.msg);
+                    }
+                    lock = false;
+                },
+                error:function(){
+                    alert('网络超时');
                 }
-            },
-            error:function(){
-                alert('网络超时');
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
+    <else/>
+    <script>
+        function christmasSubmit(){
+            $('#followMask').show();
+        }
+    </script>
+    <div id="followMask" style="display:none ;" onclick="$(this).css('display','none');">
+        <img src="__STATIC__/SVG/padlockImg.svg" class="padlockImg">
+        <img src="__STATIC__/images/follow.png" class="follow">
+    </div>
+</if>
 <include file="$footerPath"/>
