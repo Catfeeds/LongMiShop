@@ -62,6 +62,13 @@ class christmasMobileController
             }
             $notPayOrderInfo = findDataWithCondition(self::TB_ORDER, array("user_id" => $this->userInfo["user_id"], "status" => "0"), "id");
             if (!empty($notPayOrderInfo)) {
+                $save = array(
+                    "id" => $notPayOrderInfo["id"]
+                );
+                $data = array(
+                    "message"     => I("message", "")
+                );
+                saveData(self::TB_ORDER, $save , $data);
                 exit(json_encode(callback(true, "", $notPayOrderInfo["id"])));
             }
             $data = array(

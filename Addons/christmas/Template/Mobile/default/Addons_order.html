@@ -2,9 +2,9 @@
 <div class="mui-content">
     <div id="slider" class="mui-slider">
         <div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-            <a class="mui-control-item mui-active" href="#item1mobile"> 未支付 </a>
-            <a class="mui-control-item" href="#item2mobile"> 已使用 </a>
-            <a class="mui-control-item" href="#item3mobile"> 已送出 </a>
+            <a class="mui-control-item mui-active" href="#item1mobile"> 未送出 </a>
+            <a class="mui-control-item" href="#item2mobile"> 已送出 </a>
+            <!--<a class="mui-control-item" href="#item3mobile"> 已送出 </a>-->
         </div>
         <div class="mui-slider-group">
             <div id="item1mobile" class="mui-slider-item mui-control-content mui-active ">
@@ -31,18 +31,18 @@
 
                 </div>
             </div>
-            <div id="item3mobile" class="mui-slider-item mui-control-content ">
-                <div id="scroll3" class="mui-scroll-wrapper">
+            <!--<div id="item3mobile" class="mui-slider-item mui-control-content ">-->
+                <!--<div id="scroll3" class="mui-scroll-wrapper">-->
 
-                    <div class="mui-scroll">
-                        <div class="mui-loading" style=" text-align:center">
-                            <!--<img src="__ADDONS__/images/lihe.png" width="90" height="90" style="margin-top:150px;width:60px !important; height:60px !important;">-->
-                            loading...
-                        </div>
-                    </div>
+                    <!--<div class="mui-scroll">-->
+                        <!--<div class="mui-loading" style=" text-align:center">-->
+                            <!--&lt;!&ndash;<img src="__ADDONS__/images/lihe.png" width="90" height="90" style="margin-top:150px;width:60px !important; height:60px !important;">&ndash;&gt;-->
+                            <!--loading...-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                </div>
-            </div>
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 </div>
@@ -62,6 +62,7 @@
 
         var item1 = document.getElementById('item1mobile');
         var item2 = document.getElementById('item2mobile');
+//        var item3 = document.getElementById('item3mobile');
         document.getElementById('slider').addEventListener('slide', function(e) {
             if (e.detail.slideNumber === 0) {
                 if (item1.querySelector('.mui-loading')) {
@@ -73,11 +74,11 @@
                     ajax_sourch_submit(1, "item2mobile", true);
                 }
             }
-            if (e.detail.slideNumber === 2) {
-                if (item2.querySelector('.mui-loading')) {
-                    ajax_sourch_submit(2, "item3mobile", true);
-                }
-            }
+//            if (e.detail.slideNumber === 2) {
+//                if (item3.querySelector('.mui-loading')) {
+//                    ajax_sourch_submit(2, "item3mobile", true);
+//                }
+//            }
         });
         var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
         $('.mui-input-group').on('change', 'input', function() {
@@ -91,8 +92,8 @@
 
     var  page = [1,1,1,1];
     var  url  = [
-        "{:U('Mobile/Addons/christmas',array('pluginName'=>'ajaxOrderList','type'=>'0'))}",
         "{:U('Mobile/Addons/christmas',array('pluginName'=>'ajaxOrderList','type'=>'1'))}",
+        "{:U('Mobile/Addons/christmas',array('pluginName'=>'ajaxOrderList','type'=>'2'))}",
         "{:U('Mobile/Addons/christmas',array('pluginName'=>'ajaxOrderList','type'=>'2'))}"
     ];
     var w_number = null ;
