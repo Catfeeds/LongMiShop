@@ -2159,25 +2159,31 @@ transform: translateZ(0) translateX(0);
 }
 
 .pt-page-moveAircraftCloud{
-	-webkit-animation: moveAircraftCloud .4s ease both;
-	animation:moveAircraftCloud .4s ease both;
+	-webkit-animation: moveAircraftCloud .8s ease both;
+	animation:moveAircraftCloud .8s ease both;
 	animation-delay:1.2s;
 	-webkit-animation-delay:1.2s;
 }
 @-webkit-keyframes moveAircraftCloud {
-	from {
+	0% {
 		opacity: 0;
 	}
-	to {
+	99% {
 		opacity: 1;
+	}
+	100% {
+		opacity: 0;
 	}
 }
 @keyframes moveAircraftCloud {
-	from {
+	0% {
 		opacity: 0;
 	}
-	to {
+	99% {
 		opacity: 1;
+	}
+	100% {
+		opacity: 0;
 	}
 }
 
