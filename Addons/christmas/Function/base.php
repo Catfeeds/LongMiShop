@@ -126,3 +126,26 @@ function addonsGetOrderInfo( $id)
     }
     return $data;
 }
+
+
+function addonsGetReward( $total=1000)
+{
+    $win1 = floor((0.1*$total)/100);
+    $win2 = floor((0.05*$total)/100);
+    $other = $total-$win1-$win2;
+    $return = array();
+    for ($i=0;$i<$win1;$i++)
+    {
+        $return[] = 1;
+    }
+    for ($j=0;$j<$win2;$j++)
+    {
+        $return[] = 2;
+    }
+    for ($n=0;$n<$other;$n++)
+    {
+        $return[] = 3;
+    }
+    shuffle($return);
+    return $return[array_rand($return)];
+}

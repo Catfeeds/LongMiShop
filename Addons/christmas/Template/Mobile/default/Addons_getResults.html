@@ -4,14 +4,22 @@
     <div class="pay-order">
         <div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
             <strong>圣诞大礼包</strong>
-            <volist name="orderInfo.goods" id="goodsItem">
-                <p>{$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}</p>
-            </volist>
+            <if  condition="$orderInfo['gift_type'] neq 2 ">
+                <p>优惠券</p>
+                <else/>
+                <volist name="orderInfo.goods" id="goodsItem">
+                    <p>{$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}</p>
+                </volist>
+            </if>
         </div>
     </div>
 </div>
 <div class="l_btn3 ">
-    <a href="{:U('Mobile/Order/order_detail',array('order_id' =>$orderInfo['order_id'] ))}">查看详情</a>
+    <if  condition="$orderInfo['gift_type'] neq 2 ">
+        <a href="{:U('Mobile/User/coupon')}">查看详情</a>
+        <else/>
+        <a href="{:U('Mobile/Order/order_detail',array('order_id' =>$orderInfo['order_id'] ))}">查看详情</a>
+    </if>
 </div>
 <div class=" login_btn9" style="width: 134px; margin: 10px auto;">
     <a style="line-height: 40px;"  href="{:U('Mobile/Addons/christmas')}" >我也要送</a>
