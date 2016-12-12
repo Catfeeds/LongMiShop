@@ -8,11 +8,7 @@
     <div class="pay-order">
         <div class="tip_b" style=" border: 0px; margin-top:0px; margin-left: 0px; margin-bottom: 0px; ">
             <strong>圣诞大礼包</strong>
-            <volist name="activity.goods" id="goodsItem">
-                <p style="text-align:center">
-                    {$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}
-                </p>
-            </volist>
+            <p style="text-align:center">神秘大礼包</p>
         </div>
     </div>
 </div>
@@ -40,7 +36,7 @@
 <div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
     <strong>写祝福</strong>
     <div class="site_txt" style="height:150px; ">
-        <textarea  name="message" cols="" rows="" id="myMessage"  style="height:150px; " placeholder="点击给朋友留言"></textarea>
+        <textarea  name="message" cols="" rows="" id="myMessage"  style="height:150px; " placeholder="你是不是正等待着圣诞老人钻烟囱给你送圣诞节礼物啊?别再傻等了，今年他不会来了，因为去年他被你的臭袜子熏昏了!哈哈…圣诞快乐!"></textarea>
     </div>
 </div>
 <div class="login_btn">
@@ -60,7 +56,12 @@
             if(lock){return;}
             var message = $('#myMessage').val();
             if( message == ""){
-                alert("请输入祝福");
+                message ="你是不是正等待着圣诞老人钻烟囱给你送圣诞节礼物啊?别再傻等了，今年他不会来了，因为去年他被你的臭袜子熏昏了!哈哈…圣诞快乐!";
+//                alert("请输入祝福");
+//                return;
+            }
+            if( message.length > 60){
+                alert("祝福最多输入60个字");
                 return;
             }
             lock = true;

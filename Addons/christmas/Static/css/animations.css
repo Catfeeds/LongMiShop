@@ -2083,3 +2083,130 @@ transform: translateZ(0) translateX(0);
 	-webkit-animation-delay: 1s;
 	animation-delay: 1s;
 }
+
+
+
+
+
+
+
+
+
+.pt-page-moveAircraftFlying {
+	-webkit-animation: moveAircraftFlying 1s ease both;
+	animation: moveAircraftFlying 1s ease both;
+}
+@-webkit-keyframes moveAircraftFlying {
+	from {
+		opacity: 1;
+		-webkit-transform: rotate(-20deg) translateX(100%) translateY(0);
+		transform: rotate(-20deg) translateX(100%) translateY(0);
+	}
+	to {
+		opacity: 0;
+		-webkit-transform: rotate(0deg) translateX(-100%) translateY(60%);
+		transform: rotate(0deg) translateX(-100%) translateY(60%);
+	}
+}
+@keyframes moveAircraftFlying {
+	from {
+		opacity: 1;
+		-webkit-transform: rotate(-20deg) translateX(100%) translateY(0);
+		transform: rotate(-20deg) translateX(100%) translateY(0);
+	}
+	to {
+		opacity: 0;
+		-webkit-transform: rotate(0deg) translateX(-100%) translateY(60%);
+		transform: rotate(0deg) translateX(-100%) translateY(60%);
+	}
+}
+
+.pt-page-moveAircraftFlying2 {
+	-webkit-animation: moveAircraftFlying2 1s ease both;
+	animation: moveAircraftFlying2 1s ease both;
+	animation-delay:1s;
+	-webkit-animation-delay:1s;
+}
+@-webkit-keyframes moveAircraftFlying2 {
+	0% {
+		opacity: 0;
+		-webkit-transform: rotate(20deg) translateX(-100%) translateY(-10%);
+		transform: rotate(20deg) translateX(-100%) translateY(-10%);
+	}
+	99% {
+		opacity: 1;
+		-webkit-transform: rotate(0deg) translateX(0%) translateY(0);
+		transform: rotate(0deg) translateX(0%) translateY(0);
+	}
+	100% {
+		opacity: 0;
+	}
+}
+@keyframes moveAircraftFlying2 {
+	0% {
+		opacity: 0;
+		-webkit-transform: rotate(20deg) translateX(-100%) translateY(-10%);
+		transform: rotate(20deg) translateX(-100%) translateY(-10%);
+	}
+	99% {
+		opacity: 1;
+		-webkit-transform: rotate(0deg) translateX(0%) translateY(0);
+		transform: rotate(0deg) translateX(0%) translateY(0);
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.pt-page-moveAircraftCloud{
+	-webkit-animation: moveAircraftCloud .4s ease both;
+	animation:moveAircraftCloud .4s ease both;
+	animation-delay:1.2s;
+	-webkit-animation-delay:1.2s;
+}
+@-webkit-keyframes moveAircraftCloud {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes moveAircraftCloud {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+
+
+.pt-page-moveFromTop2 {
+	-webkit-animation: moveFromTop2 .6s ease both;
+	animation: moveFromTop2 .6s ease both;
+}
+@-webkit-keyframes moveFromTop2 {
+	from {
+		opacity: 0;
+		-webkit-transform: translateY(-100%);
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes moveFromTop2 {
+	from {
+		opacity: 0;
+		-webkit-transform: translateY(-100%);
+		transform: translateY(-100%);
+	}
+	to {
+		opacity: 1;
+	}
+}
+.delay_2_s{
+	animation-delay:2s;
+	-webkit-animation-delay:2s;
+}

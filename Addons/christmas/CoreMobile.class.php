@@ -15,6 +15,7 @@ class christmasMobileController
     public $activityInfo = array();
 
 
+
     //初始化
     public function __construct($userInfo)
     {
@@ -82,23 +83,23 @@ class christmasMobileController
                 "create_time" => time(),
             );
             $orderId = addData(self::TB_ORDER, $data);
-            foreach ($this->activityInfo["goods"] as $goodsItem) {
-                $goods = array(
-                    "activity_id"   => $this->edition,
-                    "order_id"      => $orderId,
-                    "admin_id"      => $goodsItem['admin_id'],
-                    "goods_id"      => $goodsItem['goods_id'],
-                    "goods_sn"      => $goodsItem['goods_sn'],
-                    "goods_name"    => $goodsItem['goods_name'],
-                    "spec_key"      => $goodsItem['spec_key'],
-                    "spec_key_name" => $goodsItem['spec_key_name'],
-                    "goods_num"     => $goodsItem['goods_num'],
-                    "goods_money"   => $goodsItem['goods_money'],
-                    "create_time"   => time()
-                );
-
-                addData(self::TB_ORDER_GOODS, $goods);
-            }
+//            foreach ($this->activityInfo["goods"] as $goodsItem) {
+//                $goods = array(
+//                    "activity_id"   => $this->edition,
+//                    "order_id"      => $orderId,
+//                    "admin_id"      => $goodsItem['admin_id'],
+//                    "goods_id"      => $goodsItem['goods_id'],
+//                    "goods_sn"      => $goodsItem['goods_sn'],
+//                    "goods_name"    => $goodsItem['goods_name'],
+//                    "spec_key"      => $goodsItem['spec_key'],
+//                    "spec_key_name" => $goodsItem['spec_key_name'],
+//                    "goods_num"     => $goodsItem['goods_num'],
+//                    "goods_money"   => $goodsItem['goods_money'],
+//                    "create_time"   => time()
+//                );
+//
+//                addData(self::TB_ORDER_GOODS, $goods);
+//            }
             exit(json_encode(callback(true, "", $orderId)));
         }
         exit(json_encode(callback(false, "ERROR")));
@@ -178,7 +179,7 @@ class christmasMobileController
         if (!$this->assignData["orderInfo"] = addonsGetOrderInfo($id)) {
             return addonsError("未找到该订单");
         }
-        if ($this->assignData["orderInfo"]['user_id'] != $this->userInfo ['user_id']) {
+        if ($this->assignData["orderInfo"]['user_id'] != $this->userInfo['user_id']) {
             return addonsError("未找到该订单");
         }
         return $this->assignData;
@@ -191,12 +192,14 @@ class christmasMobileController
         if (!$this->assignData["orderInfo"] = addonsGetOrderInfo($id)) {
             return addonsError("未找到该订单");
         }
-        if ($this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id']) {
+        if ($this->assignData["orderInfo"]['user_id'] == $this->userInfo['user_id']) {
             header("Location: " . U("Mobile/Addons/christmas", array("pluginName" => "orderDetail", "order_id" => $id)));
             exit;
         }
         return $this->assignData;
     }
+
+
 
     //领取礼包
     public function get()
@@ -205,19 +208,41 @@ class christmasMobileController
         if (!$this->assignData["orderInfo"] = addonsGetOrderInfo($id)) {
             return addonsError("未找到该订单");
         }
-        if ($this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id']) {
+        if ($this->assignData["orderInfo"]['user_id'] == $this->userInfo['user_id']) {
             header("Location: " . U("Mobile/Addons/christmas", array("pluginName" => "orderDetail", "order_id" => $id)));
             exit;
         }
+        if ($this->assignData["orderInfo"]['get_user_id'] == $this->userInfo['user_id']) {
+            header("Location: " . U("Mobile/Addons/christmas", array("pluginName" => "getResults", "order_id" => $id)));
+            exit;
+        }
+
+        /**
+         * 随机部分
+         */
+        if( $this->assignData["orderInfo"]["gift_type"] == 0 || empty( $this->assignData["orderInfo"]["gift_type"] )){
+            $this->assignData["orderInfo"]["gift_type"] = $giftType = addonsGetReward();
+            saveData( self::TB_ORDER , array("id"=>$this->assignData["orderInfo"]["id"]),array("gift_type" => $giftType));
+        }
+
+        if( $this->assignData["orderInfo"]["gift_type"] != 2 ){
+            header("Location: " .U("Mobile/Addons/christmas", array("pluginName" => "getResults", "order_id" => $id)));
+            exit;
+        }
+
+
+
         $address = getCurrentAddress($this->userInfo["user_id"], I('address_id', null));
         $this->assignData["address"] = $address;
         $this->assignData["region_list"] = get_region_list();
         addressTheJump("addons_christmas");
         if (empty($address)) {
             header("Location: " . U('Mobile/User/edit_address', array('source' => 'addons_christmas')));
+            exit;
         }
         return $this->assignData;
     }
+
 
     //领取成功页面
     public function getResults()
@@ -226,9 +251,30 @@ class christmasMobileController
         if (!$this->assignData["orderInfo"] = addonsGetOrderInfo($id)) {
             return addonsError("未找到该订单");
         }
-        if ($this->assignData["orderInfo"]['user_id'] == $this->userInfo ['user_id']) {
+        if ($this->assignData["orderInfo"]['user_id'] == $this->userInfo['user_id']) {
             header("Location: " . U("Mobile/Addons/christmas", array("pluginName" => "orderDetail", "order_id" => $id)));
             exit;
+        }
+        if ($this->assignData["orderInfo"]['get_user_id'] != $this->userInfo['user_id']) {
+            return addonsError("未找到该订单");
+        }
+        if( $this->assignData["orderInfo"]["gift_type"] != 2 &&  $this->assignData["orderInfo"]["get_user_id"] == 0    ){
+            $add['cid'] = 1;
+            $add['type'] = 3;
+            $add['uid'] = $this->userInfo['user_id'];
+            $add['send_time'] = time();
+            $add['receive_time'] = time();
+            do{
+                $code = get_rand_str(8,0,1);//获取随机8位字符串
+                $check_exist = findDataWithCondition('coupon_list',array('code'=>$code),"code");
+                if( empty( $check_exist ) ){
+                    $check_exist = findDataWithCondition('coupon_code',array('code'=>$code),"code");
+                }
+            }while($check_exist);
+            $add['code'] = $code;
+            M('coupon_list')->add($add);
+            saveData( self::TB_ORDER , array("id"=>$this->assignData["orderInfo"]["id"]),array("get_time"=>time(),"get_user_id" => $this->userInfo['user_id']));
+            $this->assignData["orderInfo"] = addonsGetOrderInfo($id);
         }
         return $this->assignData;
     }
