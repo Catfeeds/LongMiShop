@@ -104,10 +104,10 @@ $(function(){
 		}
 		if(reCat.test(myWidth)){
 			var newWidth = screenWidth * toPoint(myWidth);
-			var newHeight =newWidth *(screenHeight/screenWidth);
 			// var newHeight = myHeight * toPoint(myWidth);
 			$(this).css('width',newWidth+ 'px');
-			$(this).css('height',newHeight+ 'px');
+			// var newHeight =newWidth *(screenHeight/screenWidth);
+			// $(this).css('height',newHeight+ 'px');
 		}
 	});
 	$(".page_div .page ").each(function(){
