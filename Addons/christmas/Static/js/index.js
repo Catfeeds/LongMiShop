@@ -109,7 +109,9 @@ $(function(){
 			$(this).css('width',newWidth+ 'px');
 			$(this).css('height',newHeight+ 'px');
 		}
-
+	});
+	$(".wrap").each(function(){
+		$(this).css('background-size',screenWidth+ 'px,'+screenHeight+ 'px');
 	});
 });
 function toPoint(percent){
