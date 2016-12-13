@@ -369,7 +369,6 @@ body {
 	top: 47%;
 }
 
-
 .page-7-1 .img_1 {
 	height: auto;
 	width: 56%;
@@ -432,6 +431,13 @@ body {
 	position: absolute;
 	left: 20%;
 	top: 80%;
+}
+.page-7-1 .img_10 {
+	height: auto;
+	width: 17%;
+	position: absolute;
+	left: 28%;
+	top: 58%;
 }
 
 .page-8-1 .img_1 {
