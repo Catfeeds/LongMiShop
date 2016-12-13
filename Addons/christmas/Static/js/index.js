@@ -1,93 +1,101 @@
 (function(){
 
-var now = { row:1, col:1 }, last = { row:0, col:0};
-const towards = { up:1, right:2, down:3, left:4};
-var isAnimating = false;
+	var now = { row:1, col:1 }, last = { row:0, col:0};
+	const towards = { up:1, right:2, down:3, left:4};
+	var isAnimating = false;
+	var page_limit = 7;
+	s=window.innerHeight/500;
+	ss=250*(1-s);
 
-s=window.innerHeight/500;
-ss=250*(1-s);
+	$('.wrap').css('-webkit-transform','scale('+s+','+s+') translate(0px,-'+ss+'px)');
 
-$('.wrap').css('-webkit-transform','scale('+s+','+s+') translate(0px,-'+ss+'px)');
+	document.addEventListener('touchmove',function(event){
+		event.preventDefault(); },false);
 
-document.addEventListener('touchmove',function(event){
-	event.preventDefault(); },false);
+	$(document).swipeUp(function(){
+		if (isAnimating) return;
+		last.row = now.row;
+		last.col = now.col;
+		if (last.row != page_limit) { now.row = last.row+1; now.col = 1; pageMove(towards.up);}
+	});
 
-$(document).swipeUp(function(){
-	if (isAnimating) return;
-	last.row = now.row;
-	last.col = now.col;
-	if (last.row != 9) { now.row = last.row+1; now.col = 1; pageMove(towards.up);}
-})
+	$(document).swipeDown(function(){
+		if (isAnimating) return;
+		last.row = now.row;
+		last.col = now.col;
+		if (last.row!=1) { now.row = last.row-1; now.col = 1; pageMove(towards.down);}
+	});
 
-$(document).swipeDown(function(){
-	if (isAnimating) return;
-	last.row = now.row;
-	last.col = now.col;
-	if (last.row!=1) { now.row = last.row-1; now.col = 1; pageMove(towards.down);}	
-})
+	$(document).swipeLeft(function(){
+		if (isAnimating) return;
+		last.row = now.row;
+		last.col = now.col;
+		if (last.row!=1) { now.row = last.row-1; now.col = 1; pageMove(towards.down);}
+	});
 
-$(document).swipeLeft(function(){
-	if (isAnimating) return;
-	last.row = now.row;
-	last.col = now.col;
-	if (last.row!=1) { now.row = last.row-1; now.col = 1; pageMove(towards.down);}
-})
+	$(document).swipeRight(function(){
+		if (isAnimating) return;
+		last.row = now.row;
+		last.col = now.col;
+		if (last.row!=1) { now.row = last.row-1; now.col = 1; pageMove(towards.down);}
+	});
+	$(document).swipeRight(function(){
+		if (isAnimating) return;
+		last.row = now.row;
+		last.col = now.col;
+		if (last.row!=1) { now.row = last.row-1; now.col = 1; pageMove(towards.down);}
+	});
 
-$(document).swipeRight(function(){
-	if (isAnimating) return;
-	last.row = now.row;
-	last.col = now.col;
-	if (last.row!=1) { now.row = last.row-1; now.col = 1; pageMove(towards.down);}
-})
-$(document).swipeRight(function(){
-	if (isAnimating) return;
-	last.row = now.row;
-	last.col = now.col;
-	if (last.row!=1) { now.row = last.row-1; now.col = 1; pageMove(towards.down);}
-})
-function pageMove(tw){
-	var lastPage = ".page-"+last.row+"-"+last.col,
-		nowPage = ".page-"+now.row+"-"+now.col;
-	
-	switch(tw) {
-		case towards.up:
-			outClass = 'pt-page-moveToTop';
-			inClass = 'pt-page-moveFromBottom';
-			break;
-		case towards.right:
-			outClass = 'pt-page-moveToRight';
-			inClass = 'pt-page-moveFromLeft';
-			break;
-		case towards.down:
-			outClass = 'pt-page-moveToBottom';
-			inClass = 'pt-page-moveFromTop';
-			break;
-		case towards.left:
-			outClass = 'pt-page-moveToLeft';
-			inClass = 'pt-page-moveFromRight';
-			break;
+	function pageMove(tw){
+		var lastPage = ".page-"+last.row+"-"+last.col,
+			nowPage = ".page-"+now.row+"-"+now.col;
+
+		switch(tw) {
+			case towards.up:
+				outClass = 'pt-page-moveToTop';
+				inClass = 'pt-page-moveFromBottom';
+				break;
+			case towards.right:
+				outClass = 'pt-page-moveToRight';
+				inClass = 'pt-page-moveFromLeft';
+				break;
+			case towards.down:
+				outClass = 'pt-page-moveToBottom';
+				inClass = 'pt-page-moveFromTop';
+				break;
+			case towards.left:
+				outClass = 'pt-page-moveToLeft';
+				inClass = 'pt-page-moveFromRight';
+				break;
+		}
+		isAnimating = true;
+		$(nowPage).removeClass("hide");
+
+		$(lastPage).addClass(outClass);
+		$(nowPage).addClass(inClass);
+
+		setTimeout(function(){
+			$(lastPage).removeClass('page-current');
+			$(lastPage).removeClass(outClass);
+			$(lastPage).addClass("hide");
+			$(lastPage).find("img").addClass("hide");
+
+			$(nowPage).addClass('page-current');
+			$(nowPage).removeClass(inClass);
+			$(nowPage).find("img").removeClass("hide");
+
+			isAnimating = false;
+		},600);
 	}
-	isAnimating = true;
-	$(nowPage).removeClass("hide");
-	
-	$(lastPage).addClass(outClass);
-	$(nowPage).addClass(inClass);
-	
-	setTimeout(function(){
-		$(lastPage).removeClass('page-current');
-		$(lastPage).removeClass(outClass);
-		$(lastPage).addClass("hide");
-		$(lastPage).find("img").addClass("hide");
-		
-		$(nowPage).addClass('page-current');
-		$(nowPage).removeClass(inClass);
-		$(nowPage).find("img").removeClass("hide");
-		
-		isAnimating = false;
-	},600);
-}
-
+	$(".page-7-1 a").click(function(){
+		page_limit = 9;
+		if (isAnimating) return;
+		last.row = now.row;
+		last.col = now.col;
+		now.row = last.row+1; now.col = 1; pageMove(towards.up);
+	});
 })();
+
 
 /**
  * 兼容
@@ -124,13 +132,23 @@ $(function(){
 		}
 
 		var flash_name = $(this).data("flash");
-		$(this).addClass(flash_name);
+		if( flash_name != undefined && flash_name != ""){
+			$(this).addClass(flash_name);
+		}
+		var touch_flash_name = $(this).attr("touch-flash");
+		if( touch_flash_name != undefined && touch_flash_name != ""){
+			$(this).bind("touchstart",function(event){
+				my_touch_flash(this);
+				// setTimeout(function(){
+				// 	$(this).removeClass($(this).attr("touch-flash"));
+				// },1500);
+			});
+		}
 	});
 	$(".page_div .page ").each(function(){
 		$(this).addClass("hide");
 		$(this).css('background-size',screenWidth+ 'px '+screenHeight+ 'px');
 	});
-	$(".page-1-1").removeClass("hide");
 });
 function toPoint(percent){
 	var str=percent.replace("%","");
@@ -138,6 +156,15 @@ function toPoint(percent){
 	return str;
 }
 
+function my_touch_flash(obj){
+	var touch_flash_name = $(obj).attr("touch-flash");
+	$(obj).addClass(touch_flash_name);
+	setTimeout( function () {$(obj).removeClass(touch_flash_name);},500);
+}
+
+/**
+ * loading
+ */
 $(function(){
 	var t_img; // 定时器
 	var isLoad = true; // 控制变量
@@ -147,6 +174,7 @@ $(function(){
 	isImgLoad(function(){
 		// 加载完成
 		$("#loading").hide();
+		$(".page-1-1").removeClass("hide");
 	});
 
 // 判断图片加载的函数
@@ -179,3 +207,4 @@ $(function(){
 		}
 	}
 });
+
