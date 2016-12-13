@@ -2140,6 +2140,7 @@ transform: translateZ(0) translateX(0);
 	}
 	100% {
 		opacity: 0;
+		-webkit-animation:yanjing .8s infinite linear ;
 	}
 }
 @keyframes moveAircraftFlying2 {
@@ -2155,6 +2156,7 @@ transform: translateZ(0) translateX(0);
 	}
 	100% {
 		opacity: 0;
+		-webkit-animation:yanjing .8s infinite linear ;
 	}
 }
 
@@ -2218,3 +2220,54 @@ transform: translateZ(0) translateX(0);
 	animation-delay:2s;
 	-webkit-animation-delay:2s;
 }
+
+@-webkit-keyframes yanjing {
+	0%{
+		-webkit-transform: rotate(0deg);
+	}
+	15%{
+		-webkit-transform: rotate(15deg);
+	}
+	30%{
+		-webkit-transform: rotate(0deg);
+	}
+	45%{
+		-webkit-transform: rotate(-15deg);
+	}
+	60%{
+		-webkit-transform: rotate(0deg);
+	}
+	100%{
+		-webkit-transform: rotate(0deg);
+	}
+
+}
+
+.pt-page-yanjing{
+	-webkit-animation:yanjing .8s infinite linear ;
+}
+
+
+
+
+.pt-page-myScale{
+	opacity: 0;
+	-webkit-animation:myScale 2s infinite linear ;
+	animation-delay:3s;
+	-webkit-animation-delay:3s;
+}
+
+@-webkit-keyframes myScale{
+	0%{
+		opacity: 1;
+		-webkit-transform:scale(1.2,1.2);
+	}
+	50%{
+		-webkit-transform:scale(1,1);
+	}
+	100%{
+		-webkit-transform:scale(1.2,1.2);
+	}
+}
+
+
