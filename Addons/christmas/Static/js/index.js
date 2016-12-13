@@ -100,7 +100,7 @@
 /**
  * 兼容
  */
-$(function(){
+function __pic_init(){
 	var screenHeight = $(".page-1-1").height();
 	var screenWidth = $(".page-1-1").width();
 	var blHeight = screenWidth * 568/320;
@@ -149,7 +149,7 @@ $(function(){
 		$(this).addClass("hide");
 		$(this).css('background-size',screenWidth+ 'px '+screenHeight+ 'px');
 	});
-});
+};
 function toPoint(percent){
 	var str=percent.replace("%","");
 	str= str/100;
@@ -173,6 +173,7 @@ $(function(){
 // 判断图片加载状况，加载完成后回调
 	isImgLoad(function(){
 		// 加载完成
+		__pic_init();
 		$("#loading").hide();
 		$(".page-1-1").removeClass("hide");
 	});
@@ -189,7 +190,7 @@ $(function(){
 			}
 			if( index - 1 >= imgNumNow){
 				imgNumNow = index+1;
-				var load_number = (imgNumNow/imgNum).toFixed(2) * 100;
+				var load_number = ((imgNumNow/imgNum).toFixed(2) * 100).toFixed(0);
 				$("#loadingNumber").html(load_number+"%");
 			}
 		});
