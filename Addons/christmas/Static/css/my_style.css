@@ -4,6 +4,7 @@
 
 body{
     /*background: #fff;*/
+    background: url("../images/bg1.jpg") no-repeat;
     background: url("../images/bg.jpg") no-repeat;
     -moz-background-size:cover;
     -webkit-background-size:cover;

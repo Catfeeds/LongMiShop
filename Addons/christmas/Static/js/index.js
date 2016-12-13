@@ -16,7 +16,7 @@ $(document).swipeUp(function(){
 	if (isAnimating) return;
 	last.row = now.row;
 	last.col = now.col;
-	if (last.row != 6) { now.row = last.row+1; now.col = 1; pageMove(towards.up);}	
+	if (last.row != 9) { now.row = last.row+1; now.col = 1; pageMove(towards.up);}
 })
 
 $(document).swipeDown(function(){
@@ -88,3 +88,21 @@ function pageMove(tw){
 }
 
 })();
+
+$(function(){
+	var screenHeight = $(".page-1-1").height();
+	$(".wrap img").each(function(){
+		var myTop = $(this).css("top");
+		var reCat = /^((\d+\.?\d*)|(\d*\.\d+))\%$/;
+		if(reCat.test(myTop)){
+			var newTop = screenHeight * toPoint(myTop);
+			$(this).css('top',newTop+ 'px');
+		}
+
+	});
+});
+function toPoint(percent){
+	var str=percent.replace("%","");
+	str= str/100;
+	return str;
+}
