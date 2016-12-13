@@ -91,12 +91,23 @@ function pageMove(tw){
 
 $(function(){
 	var screenHeight = $(".page-1-1").height();
+	var screenWidth = $(".page-1-1").width();
 	$(".wrap img").each(function(){
 		var myTop = $(this).css("top");
+		var myWidth = $(this).css("width");
+		var myWidth2 = $(this).width();
+		var myHeight = $(this).height();
 		var reCat = /^((\d+\.?\d*)|(\d*\.\d+))\%$/;
 		if(reCat.test(myTop)){
 			var newTop = screenHeight * toPoint(myTop);
 			$(this).css('top',newTop+ 'px');
+		}
+		if(reCat.test(myWidth)){
+			var newWidth = screenWidth * toPoint(myWidth);
+			var newHeight =newWidth *(myHeight/myWidth2);
+			// var newHeight = myHeight * toPoint(myWidth);
+			$(this).css('width',newWidth+ 'px');
+			$(this).css('height',newHeight+ 'px');
 		}
 
 	});
