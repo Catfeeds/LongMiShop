@@ -162,7 +162,7 @@ $(function(){
 			if( index - 1 >= imgNumNow){
 				imgNumNow = index+1;
 				var load_number = (imgNumNow/imgNum).toFixed(2) * 100;
-				$("#loadingNumber").html(load_number);
+				$("#loadingNumber").html(load_number+"%");
 			}
 		});
 		// 为true，没有发现为0的。加载完毕
