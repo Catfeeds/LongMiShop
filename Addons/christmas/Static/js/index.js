@@ -88,16 +88,17 @@ function pageMove(tw){
 }
 
 })();
-
 $(function(){
 	var screenHeight = $(".page-1-1").height();
 	var screenWidth = $(".page-1-1").width();
-	$(".page_div .page .wrap img").each(function(){
+	var blHeight = screenWidth * 568/320;
+	$(".page_div img").each(function(){
 		var myTop = $(this).css("top");
 		var myWidth = $(this).css("width");
 		var myWidth2 = $(this).width();
 		var myHeight = $(this).height();
 		var reCat = /^((\d+\.?\d*)|(\d*\.\d+))\%$/;
+		console.log(myWidth);
 		if(reCat.test(myTop)){
 			var newTop = screenHeight * toPoint(myTop);
 			$(this).css('top',newTop+ 'px');
@@ -106,13 +107,24 @@ $(function(){
 			var newWidth = screenWidth * toPoint(myWidth);
 			// var newHeight = myHeight * toPoint(myWidth);
 			$(this).css('width',newWidth+ 'px');
-			var newHeight =newWidth *(myHeight/myWidth2);
+			console.log(screenHeight);
+			console.log(blHeight);
+			console.log(myHeight);
+			console.log("23333333333");
+			var newHeight = myHeight *(screenHeight/blHeight);
 			$(this).css('height',newHeight+ 'px');
+		}else{
+			if( myHeight >0){
+				var newHeight = myHeight *(screenHeight/blHeight);
+				$(this).css('height',newHeight+ 'px');
+			}
 		}
 	});
 	$(".page_div .page ").each(function(){
+		$(this).addClass("hide");
 		$(this).css('background-size',screenWidth+ 'px '+screenHeight+ 'px');
 	});
+	$(".page-1-1").removeClass("hide");
 });
 function toPoint(percent){
 	var str=percent.replace("%","");
