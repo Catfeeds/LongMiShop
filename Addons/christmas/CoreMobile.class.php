@@ -42,6 +42,7 @@ class christmasMobileController
     //礼包内容
     public function rule()
     {
+        $this->assignData["message"] = I("message", "");
         return $this->assignData;
     }
 
