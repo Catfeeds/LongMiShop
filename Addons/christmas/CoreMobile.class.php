@@ -256,9 +256,6 @@ class christmasMobileController
             header("Location: " . U("Mobile/Addons/christmas", array("pluginName" => "orderDetail", "order_id" => $id)));
             exit;
         }
-        if ($this->assignData["orderInfo"]['get_user_id'] != $this->userInfo['user_id']) {
-            return addonsError("未找到该订单");
-        }
         if( $this->assignData["orderInfo"]["gift_type"] != 2 &&  $this->assignData["orderInfo"]["get_user_id"] == 0    ){
             $add['cid'] = 1;
             $add['type'] = 3;
@@ -276,6 +273,9 @@ class christmasMobileController
             M('coupon_list')->add($add);
             saveData( self::TB_ORDER , array("id"=>$this->assignData["orderInfo"]["id"]),array("get_time"=>time(),"get_user_id" => $this->userInfo['user_id']));
             $this->assignData["orderInfo"] = addonsGetOrderInfo($id);
+        }
+        if ($this->assignData["orderInfo"]['get_user_id'] != $this->userInfo['user_id']) {
+            return addonsError("未找到该订单");
         }
         return $this->assignData;
     }
