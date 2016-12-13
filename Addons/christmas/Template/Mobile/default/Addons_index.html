@@ -117,13 +117,19 @@
     <div class="page page-9-1  ">
         <div class="wrap">
             <img class="img_8  " data-flash="pt-page-9-8" src="__ADDONS__/images/page9_10.png"  />
-            <img class="img_1  " data-flash="pt-page-9-1" src="__ADDONS__/images/page9_1.png"   />
-            <img class="img_2  " data-flash="pt-page-9-2" src="__ADDONS__/images/page9_2.png"   />
+            <!--<img class="img_1  " data-flash="pt-page-9-1" src="__ADDONS__/images/page9_1.png"   />-->
+            <!--<img class="img_2  " data-flash="pt-page-9-2" src="__ADDONS__/images/page9_2.png"   />-->
             <img class="img_3  " data-flash="pt-page-9-3" src="__ADDONS__/images/page9_9.png"   />
             <img class="img_4  " data-flash="pt-page-9-4" src="__ADDONS__/images/page9_11.png"  />
-            <img class="img_5  " data-flash="pt-page-9-5" src="__ADDONS__/images/page9_14.png"  />
-            <img class="img_6  " data-flash="pt-page-9-6" src="__ADDONS__/images/page9_13.png"  />
-            <img class="img_7  " data-flash="pt-page-9-7" src="__ADDONS__/images/page9_12.png"  />
+            <!--<img class="img_5  " data-flash="pt-page-9-5" src="__ADDONS__/images/page9_14.png"  />-->
+            <!--<img class="img_6  " data-flash="pt-page-9-6" src="__ADDONS__/images/page9_13.png"  />-->
+            <form action="{:U('Mobile/Addons/christmas')}" method="post" id="form">
+                <input value="rule" type="hidden" name="pluginName">
+                <textarea name="message" cols="" rows=""  class="img_9" id="myMessage"  placeholder="你是不是正等待着圣诞老人钻烟囱给你送圣诞节礼物啊?别再傻等了，今年他不会来了，因为去年他被你的臭袜子熏昏了!哈哈…圣诞快乐!"></textarea>
+                <a href="javascript:christmasSubmit();">
+                    <img class="img_7  " data-flash="pt-page-9-7" src="__ADDONS__/images/page9_12.png"  />
+                </a>
+            </form>
         </div>
     </div>
 </div>
@@ -142,5 +148,24 @@
 <script type="text/javascript" src="__ADDONS__/js/touch.js"></script>
 <script type="text/javascript" src="__ADDONS__/js/index.js?v={:time()}"></script>
 <script type="text/javascript" src="__ADDONS__/js/addons.js" ></script>
+<script>
+    var lock = false;
+    function christmasSubmit(){
+        if(lock){return;}
+        var message = $('#myMessage').val();
+        if( message == ""){
+            message ="你是不是正等待着圣诞老人钻烟囱给你送圣诞节礼物啊?别再傻等了，今年他不会来了，因为去年他被你的臭袜子熏昏了!哈哈…圣诞快乐!";
+//                alert("请输入祝福");
+//                return;
+        }
+        if( message.length > 60){
+//            alert("祝福最多输入60个字");
+//            return;
+        }
+        lock = true;
+        $('#myMessage').val(message);
+        $("#form").submit();
+    }
+</script>
 
 <include file="$footerPath"/>

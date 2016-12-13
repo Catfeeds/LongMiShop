@@ -12,9 +12,9 @@ body {
 }
 .page {
 	width: 100%;
-	margin: 0 auto;
-	max-height: 732px;
-	max-width: 412px;
+	/*margin: 0 auto;*/
+	/*max-height: 732px;*/
+	/*max-width: 412px;*/
 
 	height: 100%;
 	position: absolute;
@@ -539,6 +539,18 @@ body {
 	position: absolute;
 	left: 5%;
 	top: 15%;
+}
+
+.page-9-1 .img_9 {
+	height: 300px;
+	width: 80%;
+	line-height: 30px;
+	font-size: 16px;
+	color: #000;
+	position: absolute;
+	left: 5%;
+	top: 30%;
+	padding: 10px 5%;
 }
 
 
