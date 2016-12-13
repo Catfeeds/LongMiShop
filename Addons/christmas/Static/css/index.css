@@ -21,14 +21,14 @@ body {
 	text-align: center;
 }
 .page .wrap {
-	height: 500px;
 }
 .page-1-1 {
 	background: url("../images/page1_bg.png") no-repeat;
 	-moz-background-size:cover;
 	-webkit-background-size:cover;
 	-o-background-size:cover;
-	background-size:cover;
+	background-size:cover ;
+	background－size:container;
 }
 .page-2-1 {
 	background: url("../images/bg.jpg") no-repeat;
