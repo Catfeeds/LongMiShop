@@ -119,6 +119,9 @@ $(function(){
 				$(this).css('height',newHeight+ 'px');
 			}
 		}
+
+		var flash_name = $(this).data("flash");
+		$(this).addClass(flash_name);
 	});
 	$(".page_div .page ").each(function(){
 		$(this).addClass("hide");
