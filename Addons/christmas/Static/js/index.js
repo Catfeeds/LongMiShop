@@ -92,7 +92,7 @@ function pageMove(tw){
 $(function(){
 	var screenHeight = $(".page-1-1").height();
 	var screenWidth = $(".page-1-1").width();
-	$(".wrap img").each(function(){
+	$(".page_div .page .wrap img").each(function(){
 		var myTop = $(this).css("top");
 		var myWidth = $(this).css("width");
 		var myWidth2 = $(this).width();
@@ -110,7 +110,7 @@ $(function(){
 			$(this).css('height',newHeight+ 'px');
 		}
 	});
-	$(".wrap").each(function(){
+	$(".page_div .page ").each(function(){
 		$(this).css('background-size',screenWidth+ 'px,'+screenHeight+ 'px');
 	});
 });
