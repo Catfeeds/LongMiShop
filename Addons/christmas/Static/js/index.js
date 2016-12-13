@@ -88,6 +88,10 @@ function pageMove(tw){
 }
 
 })();
+
+/**
+ * 兼容
+ */
 $(function(){
 	var screenHeight = $(".page-1-1").height();
 	var screenWidth = $(".page-1-1").width();
@@ -95,22 +99,15 @@ $(function(){
 	$(".page_div img").each(function(){
 		var myTop = $(this).css("top");
 		var myWidth = $(this).css("width");
-		var myWidth2 = $(this).width();
 		var myHeight = $(this).height();
 		var reCat = /^((\d+\.?\d*)|(\d*\.\d+))\%$/;
-		console.log(myWidth);
 		if(reCat.test(myTop)){
 			var newTop = screenHeight * toPoint(myTop);
 			$(this).css('top',newTop+ 'px');
 		}
 		if(reCat.test(myWidth)){
 			var newWidth = screenWidth * toPoint(myWidth);
-			// var newHeight = myHeight * toPoint(myWidth);
 			$(this).css('width',newWidth+ 'px');
-			console.log(screenHeight);
-			console.log(blHeight);
-			console.log(myHeight);
-			console.log("23333333333");
 			var newHeight = myHeight *(screenHeight/blHeight);
 			$(this).css('height',newHeight+ 'px');
 		}else{
