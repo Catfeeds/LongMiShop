@@ -141,7 +141,8 @@ function toPoint(percent){
 $(function(){
 	var t_img; // 定时器
 	var isLoad = true; // 控制变量
-	// var imgNum=$('img').length;
+	var imgNum=$('img').length;
+	var imgNumNow = 0;
 // 判断图片加载状况，加载完成后回调
 	isImgLoad(function(){
 		// 加载完成
@@ -152,11 +153,16 @@ $(function(){
 	function isImgLoad(callback){
 		// 注意我的图片类名都是cover，因为我只需要处理cover。其它图片可以不管。
 		// 查找所有封面图，迭代处理
-		$('img').each(function(){
+		$('img').each(function(index,element){
 			// 找到为0就将isLoad设为false，并退出each
 			if(this.height === 0){
 				isLoad = false;
 				return false;
+			}
+			if( index - 1 >= imgNumNow){
+				imgNumNow = index+1;
+				var load_number = (imgNumNow/imgNum).toFixed(2) * 100;
+				$("#loadingNumber").html(load_number);
 			}
 		});
 		// 为true，没有发现为0的。加载完毕
