@@ -106,12 +106,12 @@ $(function(){
 			var newWidth = screenWidth * toPoint(myWidth);
 			// var newHeight = myHeight * toPoint(myWidth);
 			$(this).css('width',newWidth+ 'px');
-			// var newHeight =newWidth *(screenHeight/screenWidth);
-			// $(this).css('height',newHeight+ 'px');
+			var newHeight =newWidth *(myHeight/myWidth2);
+			$(this).css('height',newHeight+ 'px');
 		}
 	});
 	$(".page_div .page ").each(function(){
-		$(this).css('background-size',screenWidth+ 'px,'+screenHeight+ 'px');
+		$(this).css('background-size',screenWidth+ 'px '+screenHeight+ 'px');
 	});
 });
 function toPoint(percent){
