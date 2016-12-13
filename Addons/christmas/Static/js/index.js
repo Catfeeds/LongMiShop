@@ -106,7 +106,7 @@ function __pic_init(){
 	var blHeight = screenWidth * 568/320;
 	$(".page_div img").each(function(){
 		var myTop = $(this).css("top");
-		var myLeft = $(this).css("left");
+		// var myLeft = $(this).css("left");
 		var myWidth = $(this).css("width");
 		var myHeight = $(this).height();
 		var myWidth2 = $(this).width();
@@ -115,10 +115,10 @@ function __pic_init(){
 			var newTop = screenHeight * toPoint(myTop);
 			$(this).css('top',newTop+ 'px');
 		}
-		if(reCat.test(myLeft)){
-			var newLeft = myWidth2 * toPoint(myLeft);
-			$(this).css('left',newLeft+ 'px');
-		}
+		// if(reCat.test(myLeft)){
+		// 	var newLeft = myWidth2 * toPoint(myLeft);
+		// 	$(this).css('left',newLeft+ 'px');
+		// }
 		if(reCat.test(myWidth)){
 			var newWidth = screenWidth * toPoint(myWidth);
 			$(this).css('width',newWidth+ 'px');
