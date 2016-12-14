@@ -72,9 +72,9 @@ class assistWinningMobileController {
             $status = 1;
         }else{
             if( $activityInfo["user_id"] == $this->user['user_id'] ){
-                if(){
-
-                }
+//                if(){
+//
+//                }
                 $status = 2;
             }
         }
