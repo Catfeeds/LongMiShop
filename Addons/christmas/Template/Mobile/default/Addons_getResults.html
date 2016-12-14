@@ -5,10 +5,10 @@
         <div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
             <strong>圣诞大礼包</strong>
             <if  condition="$orderInfo['gift_type'] neq 2 ">
-                <p>优惠券</p>
+                <p style="text-align: center;">优惠券</p>
                 <else/>
                 <volist name="orderInfo.goods" id="goodsItem">
-                    <p>{$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}</p>
+                    <p style="text-align: center;">{$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}</p>
                 </volist>
             </if>
         </div>
