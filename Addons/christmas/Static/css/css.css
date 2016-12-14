@@ -1434,6 +1434,7 @@ body {
 }
 .pay {
     background:url("../images/bgtop.jpg")  no-repeat center top;
+    min-height: 50px;
     margin-bottom: 20px;
 }
 .pay-OK {
