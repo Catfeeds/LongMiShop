@@ -238,6 +238,13 @@ body {
 
 .page-3-1 .img_1 {
 	height: auto;
+	width: 85%;
+	position: absolute;
+	left: 10%;
+	top: 10%;
+}
+.page-3-1 .img_2 {
+	height: auto;
 	width: 100%;
 	position: absolute;
 	left: 0%;
