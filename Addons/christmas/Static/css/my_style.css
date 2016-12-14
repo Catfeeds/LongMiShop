@@ -5,12 +5,12 @@
 body{
     /*background: #fff;*/
     background: url("../images/bg1.jpg") no-repeat;
-    background: url("../images/bg.jpg") no-repeat;
-    -moz-background-size:cover;
-    -webkit-background-size:cover;
-    -o-background-size:cover;
-    background-attachment: fixed;
-    background-size:cover;
+    background: url("../images/newbg.jpg") repeat center ;
+    /*-moz-background-size:cover;*/
+    /*-webkit-background-size:cover;*/
+    /*-o-background-size:cover;*/
+    /*background-attachment: fixed;*/
+    /*background-size:cover;*/
     /*padding-top: 30px;*/
 }
 .c_get_banner{
@@ -92,4 +92,28 @@ body{
     text-align: center;
     width: 60%;
     margin: 10px auto;
+}
+input::-webkit-input-placeholder {
+    color: #000 !important; /* WebKit browsers */
+}
+input:-moz-placeholder {
+　　color: #000 !important; /* Mozilla Firefox 4 to 18 */
+}
+input::-moz-placeholder {
+　　color: #000 !important; /* Mozilla Firefox 19+ */
+}
+input:-ms-input-placeholder {
+　　color: #000 !important; /* Internet Explorer 10+ */
+}
+textarea::-webkit-input-placeholder {
+    color: #000 !important; /* WebKit browsers */
+}
+textarea:-moz-placeholder {
+    　　color: #000 !important; /* Mozilla Firefox 4 to 18 */
+}
+textarea::-moz-placeholder {
+    　　color: #000 !important; /* Mozilla Firefox 19+ */
+}
+textarea:-ms-input-placeholder {
+    　　color: #000 !important; /* Internet Explorer 10+ */
 }
