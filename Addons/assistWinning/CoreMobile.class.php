@@ -67,13 +67,39 @@ class assistWinningMobileController {
         $tabNumber = 1;
         $status = 1;
 
-        if( $userId == $helpUserId ){
-            if( !isExistenceDataWithCondition( self::TB_HELP ,array("user_id"=>$userId,"help_uid"=>$userId)) ){
-                $status = 1;
+        $activityInfo = findDataWithCondition(self::TB_HELP ,array("user_id"=>$userId,"help_uid"=>$helpUserId));
+        if( empty($activityInfo) ){
+            $status = 1;
+        }else{
+            if( $activityInfo["user_id"] == $this->user['user_id'] ){
+                if(){
+
+                }
+                $status = 2;
             }
-
-
         }
+        if ( empty($helpUserId) ){
+            if( !isExistenceDataWithCondition( self::TB_HELP ,array("user_id"=>$userId)) ){
+                $status = 1;
+            }else{
+                if( $activityInfo ){
+
+                }
+                $status = 2;
+            }
+        }else{
+            if( $userId == $helpUserId ){
+                if( !isExistenceDataWithCondition( self::TB_HELP ,array("user_id"=>$userId,"help_uid"=>$userId)) ){
+                    $status = 1;
+                }else{
+                    $activityInfo = findDataWithCondition(self::TB_HELP ,array("user_id"=>$userId,"help_uid"=>$userId));
+                    $status = 2;
+                }
+            }else{
+                $status = 3;
+            }
+        }
+
         $this -> assignData['tip'] = $this -> tip[$tip];
         $this -> assignData['status'] = $status;
         $this -> assignData['isReceive'] = $isReceive;
