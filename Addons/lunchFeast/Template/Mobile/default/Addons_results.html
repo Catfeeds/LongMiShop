@@ -21,7 +21,7 @@
 <div class="l_btn3 ">
     <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderDetail','id' =>$results['id'] ))}">查看用餐凭证</a>
 </div>
-<if condition='$config["need_recommend"] eq 0'>
+<if condition='$config["need_recommend"] neq 0'>
     <div class=" login_btn9" style="width: 134px; margin: 10px auto;">
         <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendIndex' ))}" style="line-height: 40px;">发红包</a>
     </div>

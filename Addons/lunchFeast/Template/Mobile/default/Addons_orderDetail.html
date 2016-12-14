@@ -11,7 +11,11 @@
     }
 </style>
 <div class="m33">
-    <div class="cp2_title cp2_title_h" >用餐凭证</div>
+    <div class="cp2_title cp2_title_h" >用餐凭证
+        <if condition='$config["need_recommend"] neq 0'>
+            <a href="{:U('Mobile/Addons/lunchFeast',array('pluginName'=>'recommendIndex' ))}" style="float: right;">发红包></a>
+        </if>
+    </div>
 </div>
 <foreach item="userItem" name="orderInfo.userList">
     <div class="cp6" >
