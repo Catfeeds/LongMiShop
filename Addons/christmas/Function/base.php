@@ -128,11 +128,31 @@ function addonsGetOrderInfo( $id)
 }
 
 
+/**
+ * 中将部分
+ * @param int $total
+ * @return mixed
+ */
 function addonsGetReward( $total=1000)
 {
-    $win1 = floor((0.1*$total)/$total);
-    $win2 = floor((0.05*$total)/$total);
+
+
+    $win1 = 0.1*$total;
+    $win2 = 0.05*$total;
     $other = $total-$win1-$win2;
+
+    $count =  getCountWithCondition("addons_christmas_order_goods",array("status"=>"2","gift_type"=>1));
+    $count = intval($count);
+    $win1 -= $count;
+
+    $count =  getCountWithCondition("addons_christmas_order_goods",array("status"=>"2","gift_type"=>2));
+    $count = intval($count);
+    $win2 -= $count;
+
+    $count =  getCountWithCondition("addons_christmas_order_goods",array("status"=>"2","gift_type"=>3));
+    $count = intval($count);
+    $other -= $count;
+
     $return = array();
     for ($i=0;$i<$win1;$i++)
     {
