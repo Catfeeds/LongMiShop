@@ -46,10 +46,10 @@ body{
 }
 
 .c_my_order_in{
-    color: #858585;
+    color: #333;
     position: absolute;
     right: 10px;
-    top:10px;
+    top: 50px;
 }
 
 

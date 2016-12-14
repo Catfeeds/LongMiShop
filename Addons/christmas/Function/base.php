@@ -130,8 +130,8 @@ function addonsGetOrderInfo( $id)
 
 function addonsGetReward( $total=1000)
 {
-    $win1 = floor((0.1*$total)/100);
-    $win2 = floor((0.05*$total)/100);
+    $win1 = floor((0.1*$total)/$total);
+    $win2 = floor((0.05*$total)/$total);
     $other = $total-$win1-$win2;
     $return = array();
     for ($i=0;$i<$win1;$i++)
