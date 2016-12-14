@@ -12,15 +12,12 @@
 
 
 
-<div class="l_btn3 " style="width: 134px; margin: 10px auto;">
-    <a href="{:U('Mobile/Addons/christmas',array('pluginName'=>'rule'))}">购买</a>
-</div>
-
 <if condition="$orderInfo['status'] == 1">
-    <div class=" login_btn9" style="width: 134px; margin: 10px auto;">
-        <a style="line-height: 40px;" id="showGuide">送给朋友</a>
+    <div class="new_btn">
+        <a href="javascript:void(0);" id="showGuide">
+            <img src="__ADDONS__/images/btn/send_friend.png" style="width: 100%"/>
+        </a>
     </div>
-
     <script>
         $(function () {
             $("#showGuide").click(function(){
@@ -29,6 +26,13 @@
         });
     </script>
 </if>
+
+<div class="new_btn">
+    <a href="{:U('Mobile/Addons/christmas',array('pluginName'=>'rule'))}">
+        <!--<img src="__ADDONS__/images/btn/send_friend.png" style="width: 100%"/>-->
+        去购买...
+    </a>
+</div>
 <if condition="$orderInfo['status'] == 0">
     <div class="l_btn3 ">
         <a href="{:U('Mobile/Addons/christmas',array('pluginName'=>'weChatPay','order_id' =>$orderInfo['id'] ))}">去支付</a>

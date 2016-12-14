@@ -14,14 +14,22 @@
         </div>
     </div>
 </div>
-<div class="l_btn3 ">
+
+<div class="new_btn">
     <if  condition="$orderInfo['gift_type'] neq 2 ">
-        <a href="{:U('Mobile/User/coupon')}">查看详情</a>
+        <a href="{:U('Mobile/User/coupon')}">
+            <img src="__ADDONS__/images/btn/look_detail.png" style="width: 100%"/>
+        </a>
         <else/>
-        <a href="{:U('Mobile/Order/order_detail',array('order_id' =>$orderInfo['order_id'] ))}">查看详情</a>
+        <a href="{:U('Mobile/Order/order_detail',array('order_id' =>$orderInfo['order_id'] ))}">
+            <img src="__ADDONS__/images/btn/look_detail.png" style="width: 100%"/>
+        </a>
     </if>
 </div>
-<div class=" login_btn9" style="width: 134px; margin: 10px auto;">
-    <a style="line-height: 40px;"  href="{:U('Mobile/Addons/christmas')}" >我也要送</a>
+
+<div class="new_btn">
+    <a href="{:U('Mobile/Addons/christmas')}">
+        <img src="__ADDONS__/images/btn/want_send.png" style="width: 100%"/>
+    </a>
 </div>
 <include file="$footerPath"/>
