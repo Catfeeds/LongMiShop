@@ -46,7 +46,7 @@ function addonsPayData( $orderId )
                 mobileJumpToast( U('Mobile/Addons/christmas', array('pluginName' => 'rule')) , null , "活动还未开始" );
                 exit;
             }
-            if ($end_time > time()) {
+            if ($end_time < time()) {
                 mobileJumpToast( U('Mobile/Addons/christmas', array('pluginName' => 'rule')) , null , "活动已经结束" );
                 exit;
             }

@@ -1433,7 +1433,7 @@ body {
     margin-bottom: 20px;
 }
 .pay {
-    /*background-color: #FFF;*/
+    background:url("../images/bgtop.jpg")  no-repeat center top;
     margin-bottom: 20px;
 }
 .pay-OK {
