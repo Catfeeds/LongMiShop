@@ -2,7 +2,7 @@
 <div class="pay">
     <div class="pay-OK"></div>
     <div class="pay-order">
-        <volist name="activity.goods" id="goodsItem">
+        <volist name="orderInfo.goods" id="goodsItem">
             <p style="text-align:center">
                 {$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}
             </p>

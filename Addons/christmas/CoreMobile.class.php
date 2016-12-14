@@ -84,23 +84,23 @@ class christmasMobileController
                 "create_time" => time(),
             );
             $orderId = addData(self::TB_ORDER, $data);
-//            foreach ($this->activityInfo["goods"] as $goodsItem) {
-//                $goods = array(
-//                    "activity_id"   => $this->edition,
-//                    "order_id"      => $orderId,
-//                    "admin_id"      => $goodsItem['admin_id'],
-//                    "goods_id"      => $goodsItem['goods_id'],
-//                    "goods_sn"      => $goodsItem['goods_sn'],
-//                    "goods_name"    => $goodsItem['goods_name'],
-//                    "spec_key"      => $goodsItem['spec_key'],
-//                    "spec_key_name" => $goodsItem['spec_key_name'],
-//                    "goods_num"     => $goodsItem['goods_num'],
-//                    "goods_money"   => $goodsItem['goods_money'],
-//                    "create_time"   => time()
-//                );
-//
-//                addData(self::TB_ORDER_GOODS, $goods);
-//            }
+            foreach ($this->activityInfo["goods"] as $goodsItem) {
+                $goods = array(
+                    "activity_id"   => $this->edition,
+                    "order_id"      => $orderId,
+                    "admin_id"      => $goodsItem['admin_id'],
+                    "goods_id"      => $goodsItem['goods_id'],
+                    "goods_sn"      => $goodsItem['goods_sn'],
+                    "goods_name"    => $goodsItem['goods_name'],
+                    "spec_key"      => $goodsItem['spec_key'],
+                    "spec_key_name" => $goodsItem['spec_key_name'],
+                    "goods_num"     => $goodsItem['goods_num'],
+                    "goods_money"   => $goodsItem['goods_money'],
+                    "create_time"   => time()
+                );
+
+                addData(self::TB_ORDER_GOODS, $goods);
+            }
             exit(json_encode(callback(true, "", $orderId)));
         }
         exit(json_encode(callback(false, "ERROR")));
