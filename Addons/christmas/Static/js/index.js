@@ -70,7 +70,14 @@
 		}
 		isAnimating = true;
 		$(nowPage).removeClass("hide");
-
+		$(nowPage+" img").each(function(){
+			var flash_name = $(this).data("flash");
+			var after_flash_name = $(this).attr("after-flash");
+			if( flash_name != undefined && flash_name != "" && after_flash_name != undefined && after_flash_name != ""){
+				$(this).removeClass(after_flash_name);
+				$(this).addClass(flash_name);
+			}
+		});
 		$(lastPage).addClass(outClass);
 		$(nowPage).addClass(inClass);
 
@@ -133,17 +140,22 @@ function __pic_init(){
 
 		var flash_name = $(this).data("flash");
 		if( flash_name != undefined && flash_name != ""){
+			var after_flash_name = $(this).attr("after-flash");
+			if( after_flash_name != undefined && after_flash_name != ""){
+				$(this).bind("webkitAnimationEnd",function(){
+					$(this).removeClass(flash_name);
+					$(this).addClass(after_flash_name);
+				});
+			}
 			$(this).addClass(flash_name);
 		}
 		var touch_flash_name = $(this).attr("touch-flash");
 		if( touch_flash_name != undefined && touch_flash_name != ""){
-			$(this).bind("touchstart",function(event){
+			$(this).bind("touchstart",function(){
 				my_touch_flash(this);
-				// setTimeout(function(){
-				// 	$(this).removeClass($(this).attr("touch-flash"));
-				// },1500);
 			});
 		}
+
 	});
 	$(".page_div .page ").each(function(){
 		$(this).addClass("hide");

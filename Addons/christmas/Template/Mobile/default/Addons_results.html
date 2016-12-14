@@ -9,12 +9,22 @@
         </div>
     </div>
 </div>
-<div class="l_btn3 ">
-    <a href="{:U('Mobile/Addons/christmas',array('pluginName'=>'orderDetail','order_id' =>$orderInfo['id'] ))}">查看详情</a>
+<div class="new_btn">
+    <a href="{:U('Mobile/Addons/christmas',array('pluginName'=>'orderDetail','order_id' =>$orderInfo['id'] ))}">
+        <img src="__ADDONS__/images/btn/look_detail.png" style="width: 100%"/>
+    </a>
 </div>
-<div class=" login_btn9" style="width: 134px; margin: 10px auto;">
-    <a style="line-height: 40px;" id="showGuide">送给朋友</a>
+<div class="new_btn">
+    <a href="javascript:void(0);" id="showGuide">
+        <img src="__ADDONS__/images/btn/send_friend.png" style="width: 100%"/>
+    </a>
 </div>
+<!--<div class="l_btn3 ">-->
+    <!--<a href="{:U('Mobile/Addons/christmas',array('pluginName'=>'orderDetail','order_id' =>$orderInfo['id'] ))}">查看详情</a>-->
+<!--</div>-->
+<!--<div class=" login_btn9" style="width: 134px; margin: 10px auto;">-->
+    <!--<a style="line-height: 40px;" id="showGuide">送给朋友</a>-->
+<!--</div>-->
 <script>
     $(function () {
         $("#showGuide").click(function(){

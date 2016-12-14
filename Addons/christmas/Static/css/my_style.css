@@ -11,6 +11,7 @@ body{
     -o-background-size:cover;
     background-attachment: fixed;
     background-size:cover;
+    /*padding-top: 30px;*/
 }
 .c_get_banner{
     margin: 100px auto 0 auto;
@@ -79,4 +80,16 @@ body{
     width: 240px;
     height: 452px;
     margin: -226px 0 0 -120px;
+}
+
+.new_btn{
+    margin-bottom: 20px;
+}
+.new_btn a {
+    font-size: 18px;
+    display: block;
+    line-height: 36px;
+    text-align: center;
+    width: 60%;
+    margin: 10px auto;
 }
