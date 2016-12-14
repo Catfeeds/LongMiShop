@@ -56,7 +56,7 @@ class christmasMobileController
             if (time() < $start_time) {
                 exit(json_encode(callback(false, "活动还未开始")));
             }
-            if ($end_time > time()) {
+            if ($end_time < time()) {
                 exit(json_encode(callback(false, "活动已经结束")));
             }
             $number = getCountWithCondition(self::TB_ORDER, array("activity_id" => $this->edition, "status" => array("neq", "0")));
