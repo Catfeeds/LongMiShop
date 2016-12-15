@@ -342,10 +342,10 @@ body {
 }
 .page-6-1 .img_3 {
 	height: auto;
-	width:50%;
+	width: 40%;
 	position: absolute;
-	left: 25%;
-	top: 75%;
+	left: 30%;
+	top: 72%;
 }
 .page-6-1 .img_4 {
 	height: auto;
@@ -374,6 +374,28 @@ body {
 	position: absolute;
 	left: 62%;
 	top: 47%;
+}
+.page-6-1 .img_8 {
+	height: auto;
+	width: 30%;
+	position: absolute;
+	left: 45%;
+	top: 62%;
+}
+.page-6-1 .img_9 {
+	height: auto;
+	width: 20%;
+	position: absolute;
+	left: 30%;
+	top: 27%;
+
+}
+.page-6-1 .img_10 {
+	height: auto;
+	width: 15%;
+	position: absolute;
+	left: 55%;
+	top: 18%;
 }
 
 .page-7-1 .img_1 {
@@ -434,10 +456,10 @@ body {
 }
 .page-7-1 .img_9 {
 	height: auto;
-	width: 60%;
+	width: 40%;
 	position: absolute;
-	left: 20%;
-	top: 80%;
+	left: 30%;
+	top: 76%;
 }
 .page-7-1 .img_10 {
 	height: auto;

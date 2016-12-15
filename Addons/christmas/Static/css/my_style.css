@@ -117,3 +117,48 @@ textarea::-moz-placeholder {
 textarea:-ms-input-placeholder {
     　　color: #000 !important; /* Internet Explorer 10+ */
 }
+
+
+#mask{
+    width: 100%;
+    height: 100%;
+    top:0px;
+    left: 0px;
+    z-index: 99999999;
+    display: none;
+    position: fixed;
+}
+#mask p{
+    margin: 0 10%;
+    padding: 40px 5%;
+    width: 70%;
+    text-align: center;
+    background: url("../images/mask_div.png") no-repeat;
+    color: #000;
+}
+
+#page6_mask{
+    width: 100%;
+    height: 100%;
+    top:0px;
+    left: 0px;
+    z-index: 99999999;
+    /*display: none;*/
+    font-size: 14px;
+    position: fixed;
+}
+#page6_mask p{
+    margin: 0 10%;
+    padding: 40px 5%;
+    width: 70%;
+    text-align: center;
+    background: url("../images/mask_div.png") no-repeat;
+    color: #000;
+}
+#page6_mask span{
+    width: 100%;
+    position: absolute;
+    bottom: 80px;
+    left: 0px;
+    text-align: center;
+}
