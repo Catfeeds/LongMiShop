@@ -21,7 +21,8 @@
         (<b id="loadingNumber">0%</b>)
     </p>
 </div>
-
+<audio src="__ADDONS__/music/bg.mp3" autoplay="autoplay" id="audio" hidden="hidden"></audio>
+<div id="audioPlay"></div>
 
 <div class="page_div">
     <div class="page page-1-1  page-current">
@@ -151,10 +152,10 @@
 <img style="display: none;" src="__ADDONS__/images/page1_bg.png" />
 <img style="display: none;" src="__ADDONS__/images/bg.jpg" />
 
-<audio  autoplay="autoplay"  loop="loop">
-    <source src="__ADDONS__/music/bg.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
+<!--<audio  autoplay="autoplay"  loop="loop">-->
+    <!--<source src="__ADDONS__/music/bg.mp3" type="audio/mpeg">-->
+    <!--Your browser does not support the audio element.-->
+<!--</audio>-->
 
 <!--<embed src="__ADDONS__/music/bg.mp3" autostart="true" loop="true" hidden="true" id="music"></embed>-->
 
@@ -180,6 +181,20 @@
         $('#myMessage').val(message);
         $("#form").submit();
     }
+
+    var audio;
+    $(function(){
+        audio =  document.getElementById("audio");
+        $("#audioPlay").on('click',function(){
+            if(audio.paused){
+                audio.play();
+                this.style.backgroundImage="url(__ADDONS__/images/m_open.png)";
+            }else{
+                audio.pause();
+                this.style.backgroundImage="url(__ADDONS__/images/m_close.png)";
+            }
+        });
+    });
 </script>
 
 <include file="$footerPath"/>
