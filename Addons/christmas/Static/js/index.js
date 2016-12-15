@@ -3,7 +3,7 @@ var isAnimating = true;
 
 var now = { row:1, col:1 }, last = { row:0, col:0};
 const towards = { up:1, right:2, down:3, left:4};
-var page_limit = 7;
+var page_limit = 6;
 
 
 var page6_click_number1 = 0;
@@ -98,7 +98,7 @@ var page_6_go = false;
 			page6_click_number1 = 0;
 			page6_click_number2 = 0;
 			page6_click_number3 = 0;
-			// page_limit = 6;
+			page_limit = 6;
 			$(".page-6-1 .img_1").show();
 			$(".page-6-1 .img_2").show();
 			$(".page-6-1 .img_3").show();
@@ -306,7 +306,7 @@ function showMask( text ){
 	if( text == "好漂亮的叶子~" ){
 		page6_click_number1 = 1;
 	}
-	if( text == "我就知道圣诞奶奶忽悠我，这是个空盒子~" ){
+	if( text == "我就知道圣诞奶奶忽悠我，<br>这是个空盒子~" ){
 		page6_click_number2 = 1;
 	}
 	if( text == "叮叮当~叮叮当~" ){
@@ -334,7 +334,7 @@ function hideMask(){
 	 * 特殊情况特殊处理
 	 */
 	if( page6_click_number1 == 1 && page6_click_number2 == 1 && page6_click_number3 == 1){
-		// page_limit = 7;
+		page_limit = 7;
 		$(".page-6-1 .img_1").hide();
 		$(".page-6-1 .img_2").hide();
 		$(".page-6-1 .img_3").hide();
