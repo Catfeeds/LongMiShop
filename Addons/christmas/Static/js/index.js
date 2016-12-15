@@ -1,9 +1,20 @@
+
+var isAnimating = true;
+
+var now = { row:1, col:1 }, last = { row:0, col:0};
+const towards = { up:1, right:2, down:3, left:4};
+var page_limit = 7;
+
+
+var page6_click_number1 = 0;
+var page6_click_number2 = 0;
+var page6_click_number3 = 0;
+
+var page_6_go = false;
+
+
 (function(){
 
-	var now = { row:1, col:1 }, last = { row:0, col:0};
-	const towards = { up:1, right:2, down:3, left:4};
-	var isAnimating = false;
-	var page_limit = 7;
 	s=window.innerHeight/500;
 	ss=250*(1-s);
 
@@ -78,6 +89,30 @@
 				$(this).addClass(flash_name);
 			}
 		});
+
+
+		/**
+		 * 特殊页面特殊处理
+         */
+		if(  now.row == 6 ){
+			page6_click_number1 = 0;
+			page6_click_number2 = 0;
+			page6_click_number3 = 0;
+			// page_limit = 6;
+			$(".page-6-1 .img_1").show();
+			$(".page-6-1 .img_2").show();
+			$(".page-6-1 .img_3").show();
+			$(".page-6-1 .img_4").show();
+			$(".page-6-1 .img_5").show();
+			$(".page-6-1 .img_6").show();
+			$(".page-6-1 .img_7").show();
+			$("#page6_mask").hide();
+			page_6_go = false;
+		}
+
+
+
+
 		$(lastPage).addClass(outClass);
 		$(nowPage).addClass(inClass);
 
@@ -101,14 +136,25 @@
 		last.col = now.col;
 		now.row = last.row+1; now.col = 1; pageMove(towards.up);
 	});
+
+
+	$("#page6_mask").click(function(){
+		if (isAnimating) return;
+		last.row = now.row;
+		last.col = now.col;
+		now.row = last.row+1; now.col = 1; pageMove(towards.up);
+	});
 })();
 
+
+
+var screenHeight = 0;
 
 /**
  * 兼容
  */
 function __pic_init(){
-	var screenHeight = $(".page-1-1").height();
+	screenHeight = $(".page-1-1").height();
 	var screenWidth = $(".page-1-1").width();
 	var blHeight = screenWidth * 568/320;
 	$(".page_div img").each(function(){
@@ -156,18 +202,33 @@ function __pic_init(){
 			});
 		}
 
+		var touch_mask_text = $(this).attr("touch-mask");
+		if( touch_mask_text != undefined && touch_mask_text != ""){
+			$(this).bind("click",function(){
+				showMask(touch_mask_text);
+			});
+		}
 	});
 	$(".page_div .page ").each(function(){
 		$(this).addClass("hide");
 		$(this).css('background-size',screenWidth+ 'px '+screenHeight+ 'px');
 	});
 };
+/**
+ * 百分比点
+ * @param percent
+ * @returns {string|*|XML|void}
+ */
 function toPoint(percent){
 	var str=percent.replace("%","");
 	str= str/100;
 	return str;
 }
 
+/**
+ * 点击的动画
+ * @param obj
+ */
 function my_touch_flash(obj){
 	var touch_flash_name = $(obj).attr("touch-flash");
 	$(obj).addClass(touch_flash_name);
@@ -187,10 +248,21 @@ $(function(){
 		// 加载完成
 		__pic_init();
 		$("#loading").hide();
+		isAnimating = false;
 		$(".page-1-1").removeClass("hide");
 	});
 
-// 判断图片加载的函数
+	/**
+	 * 事件定义
+	 */
+	$("#mask").click(function(){
+		hideMask();
+	});
+	$("#mask p").click(function(){
+		hideMask();
+	});
+
+	// 判断图片加载的函数
 	function isImgLoad(callback){
 		// 注意我的图片类名都是cover，因为我只需要处理cover。其它图片可以不管。
 		// 查找所有封面图，迭代处理
@@ -220,4 +292,80 @@ $(function(){
 		}
 	}
 });
+
+
+/**
+ * 弹框显示
+ * @param text
+ */
+function showMask( text ){
+
+	/**
+	 * 特殊情况特殊处理
+     */
+	if( text == "好漂亮的叶子~" ){
+		page6_click_number1 = 1;
+	}
+	if( text == "我就知道圣诞奶奶忽悠我，这是个空盒子~" ){
+		page6_click_number2 = 1;
+	}
+	if( text == "叮叮当~叮叮当~" ){
+		page6_click_number3 = 1;
+	}
+
+	$("#mask p").html("");
+	$("#mask").show();
+	isAnimating = true;
+	$("#mask p").html(text);
+	var mask_p_w =$("#mask p").width();
+	var mask_p_h =$("#mask p").height();
+	$("#mask p").css("margin-top",((screenHeight-mask_p_h)/2)+"px");
+	$("#mask p").css('background-size',mask_p_w+ 'px '+mask_p_h+ 'px');
+}
+
+/**
+ * 弹框隐藏
+ */
+function hideMask(){
+	isAnimating = false;
+	$("#mask").hide();
+
+	/**
+	 * 特殊情况特殊处理
+	 */
+	if( page6_click_number1 == 1 && page6_click_number2 == 1 && page6_click_number3 == 1){
+		// page_limit = 7;
+		$(".page-6-1 .img_1").hide();
+		$(".page-6-1 .img_2").hide();
+		$(".page-6-1 .img_3").hide();
+		$(".page-6-1 .img_4").hide();
+		$(".page-6-1 .img_5").hide();
+		$(".page-6-1 .img_6").hide();
+		$(".page-6-1 .img_7").hide();
+		$("#page6_mask").show();
+		$("#page6_mask img").each(function(){
+			var mask_flash_name = $(this).attr("mask-flash");
+			if( mask_flash_name != undefined && mask_flash_name != ""){
+				$(this).removeClass(mask_flash_name);
+				$(this).addClass(mask_flash_name);
+			}
+		});
+		$("#page6_mask span").each(function(){
+			var mask_flash_name = $(this).attr("mask-flash");
+			if( mask_flash_name != undefined && mask_flash_name != ""){
+				$(this).removeClass(mask_flash_name);
+				$(this).addClass(mask_flash_name);
+				$(this).bind("webkitAnimationEnd",function(){
+					$(this).removeClass(mask_flash_name);
+					$(this).addClass("pt-page-4-1");
+				});
+			}
+		});
+		var mask_p_w =$("#page6_mask p").width();
+		var mask_p_h =$("#page6_mask p").height();
+		$("#page6_mask p").css("margin-top",((screenHeight-mask_p_h)/2)+"px");
+		$("#page6_mask p").css('background-size',mask_p_w+ 'px '+mask_p_h+ 'px');
+	}
+}
+
 

@@ -15,15 +15,25 @@
     <link rel="stylesheet" type="text/css" href="__ADDONS__/css/my_style.css?v=1" />
 </head>
 <body>
+<!--加载-->
 <div id="loading">
     <p>
         loading...
         (<b id="loadingNumber">0%</b>)
     </p>
 </div>
+
+<!--遮罩-->
+<div id="mask"><p></p></div>
+
+
+<!--声音按钮-->
 <audio src="__ADDONS__/music/bg.mp3" autoplay="autoplay" id="audio" hidden="hidden"></audio>
 <div id="audioPlay"></div>
 
+
+
+<!--内容-->
 <div class="page_div">
     <div class="page page-1-1  page-current">
         <div class="wrap">
@@ -96,24 +106,33 @@
             <img class="img_1  " data-flash="pt-page-6-1" src="__ADDONS__/images/page6_1.png"  />
             <img class="img_2  " data-flash="pt-page-6-2" src="__ADDONS__/images/page6_3.png"  />
             <img class="img_3  " data-flash="pt-page-6-3" src="__ADDONS__/images/page6_6.png"  />
-            <img class="img_4  " touch-flash="pt-page-6-4" src="__ADDONS__/images/page6_2.png"  />
-            <img class="img_5  " touch-flash="pt-page-6-5" src="__ADDONS__/images/page6_4.png"  />
-            <img class="img_6  " touch-flash="pt-page-6-6" src="__ADDONS__/images/page6_5.png"  />
+            <img class="img_4  " touch-flash="pt-page-6-4" src="__ADDONS__/images/page6_2.png"  touch-mask ="好漂亮的叶子~" />
+            <img class="img_5  " touch-flash="pt-page-6-5" src="__ADDONS__/images/page6_4.png"  touch-mask ="我就知道圣诞奶奶忽悠我，这是个空盒子~" />
+            <img class="img_6  " touch-flash="pt-page-6-6" src="__ADDONS__/images/page6_5.png"  touch-mask ="叮叮当~叮叮当~" />
             <img class="img_7  " touch-flash="pt-page-6-7" src="__ADDONS__/images/page6_7.png"  />
-            <img class="iconUp " data-flash="pt-page-moveIconUp" src="__ADDONS__/images/icon_up.png"/>
+
+            <div id="page6_mask">
+                <p>圣诞奶奶忽了个悠！<br>我带你去下个房间</p>
+                <img class="img_8  " src="__ADDONS__/images/footprint.png" mask-flash="pt-page-6-m-1" />
+                <img class="img_9  " src="__ADDONS__/images/footprint.png" mask-flash="pt-page-6-m-2" />
+                <img class="img_10 " src="__ADDONS__/images/footprint.png" mask-flash="pt-page-6-m-3" />
+                <span mask-flash="pt-page-6-m-4" >点击屏幕任意位置去下个房间</span>
+            </div>
+
+            <!--<img class="iconUp " data-flash="pt-page-moveIconUp" src="__ADDONS__/images/icon_up.png"/>-->
         </div>
     </div>
     <div class="page page-7-1  ">
         <div class="wrap">
-            <img class="img_1  " data-flash="pt-page-7-1" src="__ADDONS__/images/page7_1.png"  />
-            <img class="img_3  " data-flash="pt-page-7-3" src="__ADDONS__/images/page7_3.png"  />
-            <img class="img_2  " data-flash="pt-page-7-2" src="__ADDONS__/images/page7_2.png"  />
+            <img class="img_1  " data-flash="pt-page-7-1"  src="__ADDONS__/images/page7_1.png"  />
+            <img class="img_3  " data-flash="pt-page-7-3"  src="__ADDONS__/images/page7_3.png"  />
+            <img class="img_2  " data-flash="pt-page-7-2"  src="__ADDONS__/images/page7_2.png"  />
             <img class="img_4  " touch-flash="pt-page-7-4" src="__ADDONS__/images/page7_4.png"  />
-            <img class="img_5  " touch-flash="pt-page-7-5" src="__ADDONS__/images/page7_5.png"  />
-            <img class="img_6  " touch-flash="pt-page-7-6" src="__ADDONS__/images/page7_6.png"  />
-            <img class="img_7  " touch-flash="pt-page-7-7" src="__ADDONS__/images/page7_7.png"  />
-            <img class="img_8  " touch-flash="pt-page-7-8" src="__ADDONS__/images/page7_8.png"  />
-            <img class="img_9  " data-flash="pt-page-7-9" src="__ADDONS__/images/page7_9.png"  />
+            <img class="img_5  " touch-flash="pt-page-7-5" src="__ADDONS__/images/page7_5.png"  touch-mask ="热热的咖啡，喝一口先~" />
+            <img class="img_6  " touch-flash="pt-page-7-6" src="__ADDONS__/images/page7_6.png"  touch-mask ="别玩火~好好找礼物行么、" />
+            <img class="img_7  " touch-flash="pt-page-7-7" src="__ADDONS__/images/page7_7.png"  touch-mask ="好重的树啊。" />
+            <img class="img_8  " touch-flash="pt-page-7-8" src="__ADDONS__/images/page7_8.png"  touch-mask ="去年袜子这么臭，果然今年礼物不在这~" />
+            <img class="img_9  " data-flash="pt-page-7-9"  src="__ADDONS__/images/page7_9.png"  />
             <a href="javascript:void(0);"><img class="img_10" src="__ADDONS__/images/kongbai.png" /></a>
 
             <!--<img class="iconUp " data-flash="pt-page-moveIconUp" src="__ADDONS__/images/icon_up.png"/>-->
@@ -152,12 +171,6 @@
 <img style="display: none;" src="__ADDONS__/images/page1_bg.png" />
 <img style="display: none;" src="__ADDONS__/images/bg.jpg" />
 
-<!--<audio  autoplay="autoplay"  loop="loop">-->
-    <!--<source src="__ADDONS__/music/bg.mp3" type="audio/mpeg">-->
-    <!--Your browser does not support the audio element.-->
-<!--</audio>-->
-
-<!--<embed src="__ADDONS__/music/bg.mp3" autostart="true" loop="true" hidden="true" id="music"></embed>-->
 
 <script type="text/javascript" src="__ADDONS__/js/zepto.min.js"></script>
 <script type="text/javascript" src="__ADDONS__/js/touch.js"></script>
@@ -185,6 +198,7 @@
     var audio;
     $(function(){
         audio =  document.getElementById("audio");
+        audio.play();
         $("#audioPlay").on('click',function(){
             if(audio.paused){
                 audio.play();
