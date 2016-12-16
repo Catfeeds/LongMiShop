@@ -1,10 +1,6 @@
 <?php
 return array(
-
-    'TMPL_PARSE_STRING'=>array(
-        '__INDEX__'        => '/Public/index',
-        '__PUBLIC__'        => '/Public',
-    ),
+    'LOAD_EXT_CONFIG' => 'html',	// 加载其他自定义配置文件 html.php
     'URL_HTML_SUFFIX'       =>  'html',
     'HTML_CACHE_ON'     =>    false, // 开启静态缓存
     'HTML_CACHE_TIME'   =>    0,   // 全局静态缓存有效期（秒）
