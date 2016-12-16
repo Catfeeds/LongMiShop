@@ -46,4 +46,12 @@ abstract class IndexBaseController extends BaseController {
         return true;
     }
 
+
+    /**
+     * 跳过报错
+     */
+    public function  _empty(){
+        header("Location: ".U("Index/Index/index"));
+        exit;
+    }
 }

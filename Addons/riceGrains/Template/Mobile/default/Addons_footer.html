@@ -1,0 +1,21 @@
+
+
+<!-- 微信浏览器 调用微信 分享js-->
+<if condition="$signPackage neq null">
+    <include file="$sharePath"/>
+</if>
+<!-- 微信浏览器 调用微信 分享js  end-->
+<div id="guide">
+    <img src="__ADDONS__/images/guide1.png">
+</div>
+
+<script>
+    $(function(){
+        var bodyWidth = $("body").width();
+        var bodyHeight = $("body").height();
+        $(".pay").css("background-size",bodyWidth+"px ");
+    });
+</script>
+
+</body>
+</html>

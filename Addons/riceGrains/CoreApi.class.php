@@ -1,0 +1,24 @@
+<?php
+@include 'Addons/christmas/Function/base.php';
+class riceGrainsApiController
+{
+
+    public function __construct()
+    {
+    }
+
+
+    //主页
+    public function index(){
+        $this -> notifyUrl();
+    }
+    //微信异步返回
+    public function notifyUrl()
+    {
+        include  "plugins/payment/weixin/weixin.class.php";
+        $code = '\\weixin'; // \alipay
+        $payment = new $code();
+        $payment -> response();
+        exit();
+    }
+}
