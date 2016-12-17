@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,8 +34,8 @@
             var ctx=ca.getContext("2d");
             var bj1=new Image();
 
-            var player=new Image();
-            var tu=new Array();
+            var player = new Image();
+            var tu = new Array();
 
             bj1.src="__ADDONS__/images/bj.jpg";
             player.src="__ADDONS__/images/ren.png";
@@ -68,9 +67,10 @@
             sprite.image=player;
 
             addListener(ca,"mousemove",m);
-
+//            addListener(ca,"onMouseMove",m);
+            addListener(ca,"touchmove",m);
             var beginTime = new Date();
-            var gameTime = 15;
+            var gameTime = 1500;
             var remainTime;
             function checkTime()
             {

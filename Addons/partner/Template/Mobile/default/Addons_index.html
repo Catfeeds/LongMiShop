@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>龙米</title>
+    <meta http-equiv="keywords" content="龙米" />
+    <meta name="description" content="龙米" />
+    <script src="__STATIC__/js/mui.min.js"></script>
+    <script src="__STATIC__/js/TouchSlide.js"></script>
+    <script src="__STATIC__/js/jquery.js"></script>
+    <link href="__STATIC__/css/css.css" rel="stylesheet" />
+    <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
+</head>
+<body>
+<div class="tip_b">
+    <div>
+        <div>
+            <strong>加入合伙人条件</strong>:
+        </div>
+        <div style="margin-bottom:6px">
+            认可龙米的产品、理念及商业运营思维。<br>
+            有激情，有态度，对成功有强烈渴望。<br>
+            对互联网营销了解，并有极大兴趣及较强的社群营销和客户管理能力。<br>
+            具有较强的人脉资源，积极拓展潜在用户。<br>
+        </div>
+        <div>
+            <strong>加入流程</strong>：
+        </div>
+        <div style="margin-bottom:6px">
+            您提交申请后，龙米相关负责小伙伴将在3个工作日内联系您，为您进行一对一的合伙人服务。
+        </div>
+        <div>
+            <strong>合伙人名片</strong>：
+        </div>
+        <div style="margin-bottom:6px">
+            龙米为喜爱并志同道合的小伙伴量身定制了更加人性的会员代理方式，分别有三个不同等级，您可以根据自身优势选择适合您的加盟代理方式。
+        </div>
+    </div>
+</div>
+<div class="mui-content">
+    <form id='partner-form'  action="{:U('Mobile/Addons/partner')}" method="post">
+        <input type="hidden" name="pluginName" value="save">
+        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入姓名">
+        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入城市">
+        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入性别">
+        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入手机">
+        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入微信">
+        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入E-mail">
+        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入个人优势">
+    </form>
+    <div class="login_btn">
+        <a href="#" id="mySubmit">提交申请</a>
+    </div>
+</div>
+</body>
+<style>
+    .tip_b{
+        color: #858585;
+        line-height: 24px;
+        font-weight: normal;
+        font-size: 12px;
+        margin-top: 20px;
+        border:0px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        margin-left: 10px;
+        padding-top: 10px;
+    }
+    .tip_b strong{
+        border-left-width: 3px;
+        border-left-style: solid;
+        border-left-color: #B02F4B;
+        line-height: 32px;
+        padding-left: 5px;
+        font-size: 14px;
+        font-weight: normal;
+        color: #333;
+    }
+    .tip_b span{
+        color: #B02F4B;
+    }
+    .tip_text{
+        width: 90% !important;
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+        background-image: -moz-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
+        background-image: -webkit-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
+        background-image: -ms-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
+    }
+
+</style>
+<script>
+    var lock = false;
+    function exchangeSubmit(){
+        $("#partner-form").submit();
+        return;
+        if( lock == true ){
+            return;
+        }
+        var exchangeCodeValue = $('#exchangeCode').val();
+        if( exchangeCodeValue == "" ){
+            alert("请输入密码");
+            return;
+        }
+        lock = true;
+        $.ajax({
+            type:'post',
+            url:"/Mobile/exchange/checkExchangeCode.html",
+            data:{code:exchangeCodeValue},
+            dataType:'json',
+            success:function(res){
+                lock = false;
+                if(res.state == 1){
+                    window.location.href = "/Mobile/Exchange/exchangeInfo.html";
+                }else{
+                    alert(res.msg);
+                }
+            },
+            error:function(){
+                lock = true;
+                alert('网络超时');
+            }
+
+        });
+    }
+</script>
+
+<script>
+    $(function(){
+        $("#mySubmit").click(function(){
+            exchangeSubmit();
+        });
+    });
+</script>
+<script src="__PUBLIC__/js/publicFunctionMobile.js" type="text/javascript"></script>
+<link href="__STATIC__/css/longmi.css" rel="stylesheet" />
+
+<script>
+    $(function(){
+        imgErrorEvent();
+    });
+    function imgErrorEvent(){
+        $('img').each(function(){
+            if($(this).attr('src') == ''){
+                $(this).attr('src',"/Public/images/default/goodsimg.jpg");
+            }
+        });
+        $('img').unbind("error");
+        $('img').error(function(){
+            $(this).attr('src',"/Public/images/default/goodsimg.jpg");
+        });
+    }
+</script>
+<!-- 微信浏览器 调用微信 分享js-->
+<!-- 微信浏览器 调用微信 分享js  end-->
+</html>
