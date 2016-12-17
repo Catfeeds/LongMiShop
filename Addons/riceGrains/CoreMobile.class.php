@@ -4,15 +4,8 @@
 class riceGrainsMobileController
 {
 
-    const TB_ORDER = "addons_christmas_order";
-    const TB_ACTIVITY = "addons_christmas_activity";
-    const TB_ORDER_GOODS = "addons_christmas_order_goods";
-    const TB_ACTIVITY_GOODS = "addons_christmas_activity_goods";
-
-    public $edition = null;
     public $userInfo = null;
     public $assignData = array();
-    public $activityInfo = array();
 
 
 
@@ -24,18 +17,33 @@ class riceGrainsMobileController
         $this->assignData["headerPath"] = "./Addons/riceGrains/Template/Mobile/default/Addons_header.html";
         $this->assignData["footerPath"] = "./Addons/riceGrains/Template/Mobile/default/Addons_footer.html";
         $this->assignData["isFollow"] = $this -> userInfo["is_follow"];
-        $this->edition = $this->assignData["activity"]["id"];
         if ( isWeChatBrowser() ) {
             $weChatLogic = new \Common\Logic\WeChatLogic();
             $this->assignData["signPackage"] = $weChatLogic->getSignPackage();
         }
     }
 
-    //圣诞故事
     public function index()
     {
         return $this->assignData;
     }
+    public function game()
+    {
+        return $this->assignData;
+    }
+    public function detail()
+    {
+        return $this->assignData;
+    }
+    public function shareInfo()
+    {
+        return $this->assignData;
+    }
+    public function getGift(){
+        return $this->assignData;
+    }
+//    public function
+
 
 
 }
