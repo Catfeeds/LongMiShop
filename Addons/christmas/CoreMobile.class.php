@@ -26,6 +26,7 @@ class christmasMobileController
         $this->assignData["activity"] = $this->activityInfo = addonsGetActivityInfo();
         $this->assignData["share"] = addonsGetShareArray($this->assignData["activity"], I("order_id", 0));
         $this->assignData["isFollow"] = $this->userInfo["is_follow"];
+        $this->assignData["v"] = 1;
         $this->edition = $this->assignData["activity"]["id"];
         if (isWeChatBrowser()) {
             $weChatLogic = new \Common\Logic\WeChatLogic();
