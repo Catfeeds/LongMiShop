@@ -8,23 +8,26 @@
         <div class="m333"  id="ajax_address">
         </div>
       </div>
-      <div class="inventory_box">
-        <div class="in1">优惠券</div>
-        <div class="mo1">
-          <notempty name = "couponList">
-            <div class="mui-input-row mui-radio mui-left">
-              <input name="coupon" type="radio" value="0"  checked>
-              不使用优惠券<br>
-              <volist name="couponList" id="coupon">
-                <input name="coupon" type="radio" data-type="{$coupon.is_discount}"  data-money="{$coupon.money}" value="{$coupon.id}" class="coupon_redio">
-                {$coupon.name}<br>
-              </volist>
-            </div>
-            <else/>
-            <p>暂无可使用的优惠券</p>
-          </notempty>
+      <input name="coupon" type="hidden" value="0" >
+      <if condition="1 eq 2">
+        <div class="inventory_box">
+          <div class="in1">优惠券</div>
+          <div class="mo1">
+            <notempty name = "couponList">
+              <div class="mui-input-row mui-radio mui-left">
+                <input name="coupon" type="radio" value="0"  checked>
+                不使用优惠券<br>
+                <volist name="couponList" id="coupon">
+                  <input name="coupon" type="radio" data-type="{$coupon.is_discount}"  data-money="{$coupon.money}" value="{$coupon.id}" class="coupon_redio">
+                  {$coupon.name}<br>
+                </volist>
+              </div>
+              <else/>
+              <p>暂无可使用的优惠券</p>
+            </notempty>
+          </div>
         </div>
-      </div>
+      </if>
       <div class="inventory_box">
         <div class="in1">发票信息</div>
         <div class="mo1">
