@@ -9,8 +9,11 @@
 				<div class="cp1_r">
 					<div class="m9">{$coupon.name}</div>
 					<div class="m10">{$coupon.desc}&nbsp;</div>
-					<if condition="$coupon['is_discount'] eq '0' or $coupon['is_discount'] eq '1'">
+					<if condition="$coupon['is_discount'] eq '0' ">
 						<div class="m11">￥{$coupon.money}</div>
+					</if>
+					<if condition="$coupon['is_discount'] eq '1'">
+						<div class="m11">-{$coupon.money}%</div>
 					</if>
 					<if condition = "$coupon['use_type'] == 1">
 						<div class="m12">有效期至：{:date('Y-m-d',($coupon['limit_day']*24*60*60 + $coupon['receive_time']))}</div>
