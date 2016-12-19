@@ -11,8 +11,46 @@
     </div>
 </div>
 <div class="new_btn">
-    <a href="{:U('Mobile/Addons/christmas',array('pluginName' => 'get','order_id'=>$orderInfo['id']))}">
+    <a href="javascript:christmasSubmit()">
+    <!--<a href="{:U('Mobile/Addons/christmas',array('pluginName' => 'get','order_id'=>$orderInfo['id']))}">-->
         <img src="__ADDONS__/images/btn/package.png" style="width: 100%"/>
     </a>
 </div>
+<if condition="$isFollow == 1">
+    <script type="text/javascript">
+        var lock = false;
+        function christmasSubmit(){
+            if(lock){return; }
+            lock = true;
+            var orderId = {$orderInfo.id};
+            $.ajax({
+                type:'post',
+                url:"{:U('Mobile/Addons/christmas')}",
+                data:{orderId:orderId,pluginName:"getGift"},
+                dataType:'json',
+                success:function(res){
+                    if(res.state == 1){
+                        window.location.href = res.data;
+                    }else{
+                        alert(res.msg);
+                    }
+                    lock = false;
+                },
+                error:function(){
+                    alert('网络超时');
+                }
+            });
+        }
+    </script>
+    <else/>
+    <script>
+        function christmasSubmit(){
+            $('#followMask').show();
+        }
+    </script>
+    <div id="followMask" style="display:none ;" onclick="$(this).css('display','none');">
+        <img src="__STATIC__/SVG/padlockImg.svg" class="padlockImg">
+        <img src="__STATIC__/images/follow.png" class="follow">
+    </div>
+</if>
 <include file="$footerPath"/>
