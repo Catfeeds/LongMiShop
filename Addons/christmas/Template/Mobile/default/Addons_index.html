@@ -32,7 +32,7 @@
 
 
 <!--声音按钮-->
-<div id="audioPlay" datanumber="0"></div>
+<div id="audioPlay" datanumber="1"></div>
 <audio id="audio" src="__ADDONS__/music/bg.mp3" preload="true" style="width:0px;height:0px;" autoplay="true" loop></audio>
 
 
@@ -174,13 +174,17 @@
 </div>
 
 
-
+<script>
+    var loadind_ending = false;
+    var lock = false;
+    var is_one = true;
+</script>
 <script type="text/javascript" src="__ADDONS__/js/zepto.min.js"></script>
 <script type="text/javascript" src="__ADDONS__/js/touch.js"></script>
 <script type="text/javascript" src="__ADDONS__/js/index.js?v={:time()}"></script>
 <script type="text/javascript" src="__ADDONS__/js/addons.js" ></script>
+
 <script>
-    var lock = false;
     function christmasSubmit(){
         if(lock){return;}
         var message = $('#myMessage').val();
@@ -207,20 +211,19 @@
                 stopPlayAudioBg();
             }
         });
-        stopPlayAudioBg();
-        $('#audioPlay').trigger('click');
+        document.addEventListener('touchstart', function(){
+            if( is_one ){
+                is_one = false;
+                PlayAudioBg();
+            }
+        }, false);
     });
-//    setInterval( "audioInspect()", 2000);
-//
-//    //音乐检测
-//    function audioInspect(){
-//        var num = $('#audioPlay').attr('datanumber');
-//        if( num=='1' ){
-//            stopPlayAudioBg();
-//        }else{
-//            PlayAudioBg();
-//        }
-//    }
+
+
+    var shakeAudio = $('#audio');
+    $(document).on('touchstart', function() {
+        shakeAudio.load()
+    });
     //开启音乐
     function PlayAudioBg()
     {
@@ -237,5 +240,4 @@
         document.getElementById('audio').pause();
     }
 </script>
-
 <include file="$footerPath"/>

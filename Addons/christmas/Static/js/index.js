@@ -247,8 +247,9 @@ $(function(){
 	isImgLoad(function(){
 		// 加载完成
 		__pic_init();
-		$("#loading").hide();
+		loadind_ending = true;
 		isAnimating = false;
+		$("#loading p").html("轻触屏幕任意位置开始！");
 		$(".page-1-1").removeClass("hide");
 	});
 
@@ -260,6 +261,16 @@ $(function(){
 	});
 	$("#mask p").click(function(){
 		hideMask();
+	});
+	$("#loading").bind("touchstart",function(){
+		if(loadind_ending){
+			$(this).hide();
+		}
+	});
+	$("#loading p").bind("touchstart",function(){
+		if(loadind_ending){
+			$(this).hide();
+		}
 	});
 
 	// 判断图片加载的函数
