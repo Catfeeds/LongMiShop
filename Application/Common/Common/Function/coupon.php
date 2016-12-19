@@ -135,9 +135,9 @@ function gainCouponWithCode( $code , $userId ){
  * @param $userId
  * @param $money
  * @param array $goodsData
+ * @return array
  */
 function cardDiscountAmountCalculation( $couponId , $userId , $money ,  $goodsData = array()){
-
     $where['id'] = $couponId;
     $where['uid'] = $userId;
     $goods_data = array();
@@ -147,7 +147,9 @@ function cardDiscountAmountCalculation( $couponId , $userId , $money ,  $goodsDa
         $couRes =  M('coupon') -> where($wheres)->find();
         if(!empty($couRes)){
             if( empty($goodsData) ){
-                $result = $this -> cartLogic -> cartList($this->user, $this->session_id,1,1); // 获取购物车商品
+                $cartLogic = new \Common\Logic\CartLogic();
+                $user = get_user_info($userId);
+                $result = $cartLogic -> cartList($user, session_id(),1,1); // 获取购物车商品
                 $cartList = $result['cartList'];
                 foreach( $cartList  as $key => $item){
                     if($item['selected'] == 1){
@@ -173,22 +175,22 @@ function cardDiscountAmountCalculation( $couponId , $userId , $money ,  $goodsDa
                         foreach ( $goods_data as $goods_data_item){
                             if( $goods_data_item["goods_id"] == $couRes['goods_id']){
                                 $haveGoodsId = true;
-                                $goodsSum += $goods_data_item['goods_price'];
+                                $goodsSum += $goods_data_item['goods_price'] * $goods_data_item['goods_num'];
                             }
                         }
                         if(!$haveGoodsId){
                             $moneyRes = $money ;
                             $privilege = 0;
                         }else{
-                            $couResMoney = intval($goodsSum) / 100;
-                            $moneyRes = $money * $couResMoney;
-                            $privilege = $money - $moneyRes;
+                            $couResMoney = intval($couRes['money']) / 100;
+                            $privilege = $goodsSum * $couResMoney;
+                            $moneyRes = $money - $privilege;
                         }
                     }
                 }else{
                     $couResMoney = intval($couRes['money']) / 100;
-                    $moneyRes = $money * $couResMoney;
-                    $privilege = $money - $moneyRes;
+                    $privilege = $money * $couResMoney;
+                    $moneyRes = $money - $privilege;
                 }
             }elseif($couRes['is_discount'] == 2){ //买一送一券
                 if( empty($goods_data)){
@@ -205,8 +207,8 @@ function cardDiscountAmountCalculation( $couponId , $userId , $money ,  $goodsDa
                             }
                         }
                     }
-                    if( $goodsSum <= 1){
-                        $moneyRes = $money - intval($goodsPrice);
+                    if( $goodsSum > 1){
+                        $moneyRes = $money - $goodsPrice;
                         $privilege = $goodsPrice;
                     }else{
                         $moneyRes = $money ;
@@ -227,32 +229,32 @@ function cardDiscountAmountCalculation( $couponId , $userId , $money ,  $goodsDa
                         foreach ( $goods_data as $goods_data_item){
                             if( $goods_data_item["goods_id"] == $couRes['goods_id']){
                                 $haveGoodsId = true;
-                                $goodsSum += $goods_data_item['goods_price'];
+                                $goodsSum += $goods_data_item['goods_price'] * $goods_data_item['goods_num'];
                             }
                         }
                         if(!$haveGoodsId){
                             $moneyRes = $money ;
                             $privilege = 0;
                         }else{
-                            $moneyRes = $money - intval($goodsSum);
-                            $privilege = $money - $moneyRes;
+                            $privilege = $couRes['money'];
+                            $moneyRes = $money - $privilege;
                         }
                     }
                 }else{
-                    $moneyRes = $money - intval($couRes['money']);
-                    $privilege = $money - $moneyRes;
+                    $privilege = $couRes['money'];
+                    $moneyRes = $money - $privilege;
                 }
             }
         }else{
-            $moneyRes = 0;
+            $moneyRes = $money;
             $privilege = 0;
         }
         if( $moneyRes < 0){
             $moneyRes = 0;
             $privilege = $money;
         }
-        exit(json_encode(callback(true,"计算成功",array('moneyRes'=>$moneyRes,'privilege'=>$privilege))));
+        return callback(true,"计算成功",array('moneyRes'=>$moneyRes,'privilege'=>$privilege));
     }else{
-        exit(json_encode(callback(false,"没有此优惠券",array('couponListRes'=>$couponListRes))));
+        return callback(false,"没有此优惠券",array('couponListRes'=>$couponListRes));
     }
 }
