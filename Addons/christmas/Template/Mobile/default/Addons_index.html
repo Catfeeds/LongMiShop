@@ -207,19 +207,20 @@
                 stopPlayAudioBg();
             }
         });
-
+        stopPlayAudioBg();
+        $('#audioPlay').trigger('click');
     });
-    setInterval( "audioInspect()", 2000);
-
-    //音乐检测
-    function audioInspect(){
-        var num = $('#audioPlay').attr('datanumber');
-        if( num=='1' ){
-            stopPlayAudioBg();
-        }else{
-            PlayAudioBg();
-        }
-    }
+//    setInterval( "audioInspect()", 2000);
+//
+//    //音乐检测
+//    function audioInspect(){
+//        var num = $('#audioPlay').attr('datanumber');
+//        if( num=='1' ){
+//            stopPlayAudioBg();
+//        }else{
+//            PlayAudioBg();
+//        }
+//    }
     //开启音乐
     function PlayAudioBg()
     {
