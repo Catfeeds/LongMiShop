@@ -32,7 +32,7 @@
 
 
 <!--声音按钮-->
-<div id="audioPlay"></div>
+<div id="audioPlay" datanumber="0"></div>
 <audio id="audio" src="__ADDONS__/music/bg.mp3" preload="true" style="width:0px;height:0px;" autoplay="true" loop></audio>
 
 
@@ -41,11 +41,12 @@
 <div class="page_div">
     <div class="page page-1-1  page-current">
         <div class="wrap">
-            <img class="img_1  " data-flash="pt-page-1-1"  src="__ADDONS__/images/page1_1.png" />
+            <!--<img class="img_1  " data-flash="pt-page-1-1"  src="__ADDONS__/images/page1_1.png" />-->
             <img class="img_2  " data-flash="pt-page-1-2"  src="__ADDONS__/images/page1_2.png" />
-            <img class="img_3  " data-flash="pt-page-1-3"  src="__ADDONS__/images/page1_3.png" />
+            <!--<img class="img_3  " data-flash="pt-page-1-3"  src="__ADDONS__/images/page1_3.png" />-->
             <img class="img_4  " data-flash="pt-page-1-4"  src="__ADDONS__/images/page1_4.png" />
-            <img class="img_5  " data-flash="pt-page-1-5"  src="__ADDONS__/images/page1_5.png" />
+            <!--<img class="img_5  " data-flash="pt-page-1-5"  src="__ADDONS__/images/page1_5.png" />-->
+            <img class="img_6  " data-flash="pt-page-1-4"  src="__ADDONS__/images/page1_6.png" />
             <img class="iconUp " data-flash="pt-page-moveIconUp" src="__ADDONS__/images/icon_up.png"/>
         </div>
     </div>
@@ -197,20 +198,34 @@
         $("#form").submit();
     }
 
-    var audio;
     $(function(){
-        audio =  document.getElementById("audio");
-        audio.play();
-        $("#audioPlay").on('click',function(){
-            if(audio.paused){
-                audio.play();
-                this.style.backgroundImage="url(__ADDONS__/images/m_open.png)";
+        $('#audioPlay').bind('click', function(){
+            var num = $('#audioPlay').attr('datanumber');
+            if(num=='1'){
+                PlayAudioBg();
             }else{
-                audio.pause();
-                this.style.backgroundImage="url(__ADDONS__/images/m_close.png)";
+                stopPlayAudioBg();
             }
         });
+        PlayAudioBg();
+//        $('#audioPlay').trigger('click');
     });
+
+    //开启音乐
+    function PlayAudioBg()
+    {
+        $('#audioPlay').css('backgroundImage', 'url(__ADDONS__/images/m_open.png)');
+        $('#audioPlay').attr('datanumber', '0');
+        document.getElementById('audio').play();
+    }
+
+    //关闭音乐
+    function stopPlayAudioBg()
+    {
+        $('#audioPlay').css('backgroundImage', 'url(__ADDONS__/images/m_close.png)');
+        $('#audioPlay').attr('datanumber', '1');
+        document.getElementById('audio').pause();
+    }
 </script>
 
 <include file="$footerPath"/>
