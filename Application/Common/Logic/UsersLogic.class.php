@@ -372,7 +372,7 @@ class UsersLogic extends BaseLogic
                         foreach ( $goods_data as $goods_data_item){
                             if( $goods_data_item["goods_id"] == $couponItem['goods_id']){
                                 $haveGoodsId = true;
-                                $goodsSum += $goods_data_item['goods_price'];
+                                $goodsSum += $goods_data_item['goods_price'] * $goods_data_item['goods_num'];
                             }
                         }
                         if(!$haveGoodsId){
