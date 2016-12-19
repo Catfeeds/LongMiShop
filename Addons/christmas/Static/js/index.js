@@ -265,11 +265,13 @@ $(function(){
 	$("#loading").bind("touchstart",function(){
 		if(loadind_ending){
 			$(this).hide();
+			// PlayAudioBg();
 		}
 	});
 	$("#loading p").bind("touchstart",function(){
 		if(loadind_ending){
 			$(this).hide();
+			// PlayAudioBg();
 		}
 	});
 

@@ -181,8 +181,6 @@
 </script>
 <script type="text/javascript" src="__ADDONS__/js/zepto.min.js"></script>
 <script type="text/javascript" src="__ADDONS__/js/touch.js"></script>
-<script type="text/javascript" src="__ADDONS__/js/index.js?v={:time()}"></script>
-<script type="text/javascript" src="__ADDONS__/js/addons.js" ></script>
 
 <script>
     function christmasSubmit(){
@@ -219,11 +217,6 @@
         }, false);
     });
 
-
-    var shakeAudio = $('#audio');
-    $(document).on('touchstart', function() {
-        shakeAudio.load()
-    });
     //开启音乐
     function PlayAudioBg()
     {
@@ -240,4 +233,6 @@
         document.getElementById('audio').pause();
     }
 </script>
+<script type="text/javascript" src="__ADDONS__/js/index.js?v={:time()}"></script>
+<script type="text/javascript" src="__ADDONS__/js/addons.js" ></script>
 <include file="$footerPath"/>
