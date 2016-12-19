@@ -116,7 +116,7 @@
         if(couponId != 0){
             $.ajax({
                 type:'post',
-                url:'/index.php?m=Mobile&c=Cart&a=ajaxCoupon',
+                url:'{:U("Mobile/Cart/ajaxCoupon")}',
                 data:{couponId:couponId,money:money},
                 dataType:'json',
                 success:function(res){

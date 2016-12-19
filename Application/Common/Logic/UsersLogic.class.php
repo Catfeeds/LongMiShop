@@ -307,7 +307,7 @@ class UsersLogic extends BaseLogic
         $limit = 10;
         $Page = new Page($count,$limit);
 
-        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.is_discount,c.use_type,c.desc,c.limit_day  FROM __PREFIX__coupon_list".
+        $sql = "SELECT l.*,c.name,c.is_appoint,c.money,c.use_end_time,c.condition,c.is_discount,c.goods_id,c.use_type,c.desc,c.limit_day  FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
             " c ON l.cid =  c.id WHERE l.uid = {$user_id} {$where}  ORDER BY l.send_time DESC,l.use_time LIMIT {$Page->firstRow},{$Page->listRows}";
 
@@ -327,21 +327,68 @@ class UsersLogic extends BaseLogic
      * 获取可使用的优惠券
      * @param $userId
      * @param $sum
+     * @param array $goods_data
      * @return array
      */
-    public function getCanUseCoupon($userId , $sum){
+    public function getCanUseCoupon($userId , $sum ,$goods_data = array()){
         $result         = $this -> getCoupon($userId);
         $couponList     = $result['data']['result'];
         $couponCount    = $result['data']['count'];
         if( !empty( $couponList ) ){
             foreach ( $couponList as $couponKey => $couponItem ){
-                if( $sum < $couponList[$couponKey]['condition'] ){
-                    unset($couponList[$couponKey]);
-                    continue;
-                }
                 if( $couponList[$couponKey]['order_id'] != 0 ){
                     unset($couponList[$couponKey]);
                     continue;
+                }
+                if($couponItem['is_discount'] == 3){
+                    unset($couponList[$couponKey]);
+                    continue;
+                }
+                if($couponItem['is_discount'] == 2){
+                    if( empty($goods_data)){
+                        unset($couponList[$couponKey]);
+                        continue;
+                    }
+                    $goodsSum = 0;
+                    foreach ( $goods_data as $goods_data_item){
+                        if( $goods_data_item["goods_id"] == $couponItem['goods_id']){
+                            $goodsSum += $goods_data_item['goods_num'];
+                        }
+                    }
+                    if( $goodsSum <= 1){
+                        unset($couponList[$couponKey]);
+                        continue;
+                    }
+
+                }
+                if($couponItem['is_discount'] == 0 || $couponItem['is_discount'] == 1 ){
+                    if($couponItem['is_appoint'] == 1){
+                        if( empty($goods_data)){
+                            unset($couponList[$couponKey]);
+                            continue;
+                        }
+                        $haveGoodsId = false;
+                        $goodsSum = 0;
+                        foreach ( $goods_data as $goods_data_item){
+                            if( $goods_data_item["goods_id"] == $couponItem['goods_id']){
+                                $haveGoodsId = true;
+                                $goodsSum += $goods_data_item['goods_price'];
+                            }
+                        }
+                        if(!$haveGoodsId){
+                            unset($couponList[$couponKey]);
+                            continue;
+                        }
+                        if( $goodsSum < $couponList[$couponKey]['condition'] ){
+                            unset($couponList[$couponKey]);
+                            continue;
+                        }
+                    }else{
+                        if( $sum < $couponList[$couponKey]['condition'] ){
+                            unset($couponList[$couponKey]);
+                            continue;
+                        }
+                    }
                 }
             }
         }
@@ -357,7 +404,7 @@ class UsersLogic extends BaseLogic
         //调试使用
         $where = ' AND (l.order_id = 0 and l.use_time = 0) AND '; // 未使用
         $where .= ' ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > "('.time().' + ( c.limit_day * 24 * 60 * 60 ))  " and c.use_type = 1 ) ';
-        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.is_discount,c.use_type,c.desc,c.limit_day FROM __PREFIX__coupon_list".
+        $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.goods_id,c.is_discount,c.use_type,c.desc,c.is_appoint,c.limit_day FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
             " c ON l.cid =  c.id WHERE l.uid = '{$userId}' {$where}  ORDER BY l.send_time DESC,l.use_time";
         //"LIMIT {$Page->firstRow},{$Page->listRows}";

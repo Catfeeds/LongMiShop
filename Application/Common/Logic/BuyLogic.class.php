@@ -487,7 +487,7 @@ class BuyLogic extends BaseLogic
                 $this -> user['discount'] = $this -> user['discount'] ? $this -> user['discount'] : 1; // 会员折扣 不能为 0
                 $order_goods[$key]['member_goods_price'] = $val['member_goods_price'] = $val['goods_price'] * $this -> user['discount'];
             }
-            $goods_weight = 0;
+//            $goods_weight = 0;
             //如果商品不是包邮的
 
 //            if($goods_arr[$val['goods_id']]['is_free_shipping'] == 0) {
@@ -500,15 +500,12 @@ class BuyLogic extends BaseLogic
             $num        += $val['goods_num']; // 购买数量
         }
 
-        if($couponInfo_list['is_discount'] == 1){ //判断优惠券类型  1折扣券  0代金券
-            $coupon_price = $goods_price - ( ( intval($couponInfo_list['money']) / 100 ) * $goods_price );
-        }else{
-            $coupon_price = $goods_price - ($goods_price - $couponInfo_list['money'] );
-        }
+
+        $address = $this -> _post_data['address'];
 
         //计算邮费
         $region_list = get_region_list();
-        $addRess = $this -> _post_data['address'];
+        $goods_data = array();
         foreach($order_goods as $key => $item){
                 $goods_res = M('goods')->field('weight,delivery_way') -> where("goods_id = '".$item['goods_id']."'")->find();
                 $goods_data[$key]['spec_key'] = $item['spec_key']; //商品规格
@@ -523,6 +520,16 @@ class BuyLogic extends BaseLogic
         $count_postage = count_postage($goods_data);
         $this -> _post_data['count_postage']  = $count_postage['data']['result'];
         $shipping_price = $count_postage['data']['count'];//运费
+
+
+        //优惠金额计算
+        $result = cardDiscountAmountCalculation( $couponInfo_list['id'] , $this->userId , $goods_price , $goods_data);
+        if( callbackIsTrue($result) ){
+            $coupon_price = $result['data']['privilege'];
+        }else{
+            $coupon_price = 0;
+        }
+
 
         $order_amount = $goods_price + $shipping_price - $coupon_price; // 应付金额 = 商品价格 + 物流费 - 优惠券
         $total_amount = $goods_price + $shipping_price;

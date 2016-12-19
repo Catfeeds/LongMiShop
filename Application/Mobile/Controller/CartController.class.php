@@ -152,7 +152,8 @@ class CartController extends MobileBaseController {
          $shippingList = M('Plugin') -> where("`type` = 'shipping' and status = 1")->select();// 物流公司
 
         $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum );
+        $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum ,$goods_data);
+
         $this -> assign('couponList',$result['data']['result']);
         $this -> assign('shippingList', $shippingList); // 物流公司
         $this -> assign('cartList', $cartList); // 购物车的商品
@@ -278,37 +279,20 @@ class CartController extends MobileBaseController {
         exit(json_encode(callback(true,"删除成功")));
     }
 
-    /*
+    /**
      *ajax计算优惠券
-     *
      */
     public function ajaxCoupon(){
         if(IS_AJAX){
             $money = I('money'); //总金额
-            $where['id'] = I('couponId');
-            $where['uid'] = $this->user_id;
-            $couponListRes = M('coupon_list') -> where($where)->find();
-            if(!empty($couponListRes)){
-                $wheres['id'] = $couponListRes['cid'];
-                $couRes =  M('coupon') -> where($wheres)->find();
-                if($couRes['is_discount'] == 1){ //折扣券
-                    $couResMoney = intval($couRes['money']) / 100;
-                    $moneyRes = $money * $couResMoney;
-                    $privilege = $money - $moneyRes;
-                }else{
-                   $moneyRes = $money - intval($couRes['money']);
-                   $privilege = $money - $moneyRes;
-                }
-                if($moneyRes < 0){
-                    $moneyRes = 0;
-                }
-                exit(json_encode(callback(true,"计算成功",array('money'=>$moneyRes,'privilege'=>$privilege))));
+            $couponId = I('couponId');
+            $result = cardDiscountAmountCalculation( $couponId , $this->user_id , $money);
+            if( callbackIsTrue($result) ){
+                exit(json_encode(callback(true,"计算成功",array('money'=>$result['data']['moneyRes'],'privilege'=>$result['data']['privilege']))));
             }else{
-               exit(json_encode(callback(false,"没有此优惠券",array('res'=>$couponListRes)))); 
+                exit(json_encode(callback(false,"没有此优惠券",array('res'=>$result['data']['couponListRes']))));
             }
-            
         }
-        // 
         
     }
 
