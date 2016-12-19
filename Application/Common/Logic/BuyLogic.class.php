@@ -524,7 +524,7 @@ class BuyLogic extends BaseLogic
 
         $total_amount = $goods_price + $shipping_price;
         //优惠金额计算
-        $result = cardDiscountAmountCalculation( $couponInfo_list['id'] , $this->userId , $total_amount , $goods_data);
+        $result = cardDiscountAmountCalculation( $this -> _post_data['coupon'] , $this->userId , $total_amount , $goods_data);
         if( callbackIsTrue($result) ){
             $coupon_price = $result['data']['privilege'];
         }else{
