@@ -109,9 +109,9 @@ class ShopController extends IndexBaseController {
         }
 //        dd($cartList);
         $this -> assign('cartList', $cartList); // 购物车的商品
-        $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum);
-        $this -> assign('couponList',$result['data']['result']);
+//        $usersLogic = new \Common\Logic\UsersLogic();
+//        $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum);
+//        $this -> assign('couponList',$result['data']['result']);
         $this -> assign('total_price', $sum); // 总计
         $this -> display();
     }
