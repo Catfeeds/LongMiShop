@@ -213,10 +213,11 @@
 
     //音乐检测
     function audioInspect(){
-        if(document.getElementById('audio').paused){
-            document.getElementById('audio').pause();
+        var num = $('#audioPlay').attr('datanumber');
+        if( num=='1' ){
+            stopPlayAudioBg();
         }else{
-            document.getElementById('audio').play();
+            PlayAudioBg();
         }
     }
     //开启音乐
