@@ -522,8 +522,9 @@ class BuyLogic extends BaseLogic
         $shipping_price = $count_postage['data']['count'];//运费
 
 
+        $total_amount = $goods_price + $shipping_price;
         //优惠金额计算
-        $result = cardDiscountAmountCalculation( $couponInfo_list['id'] , $this->userId , $goods_price , $goods_data);
+        $result = cardDiscountAmountCalculation( $couponInfo_list['id'] , $this->userId , $total_amount , $goods_data);
         if( callbackIsTrue($result) ){
             $coupon_price = $result['data']['privilege'];
         }else{
@@ -532,7 +533,6 @@ class BuyLogic extends BaseLogic
 
 
         $order_amount = $goods_price + $shipping_price - $coupon_price; // 应付金额 = 商品价格 + 物流费 - 优惠券
-        $total_amount = $goods_price + $shipping_price;
         $pay_points = 0;
         $user_money =0 ;
         //订单总价  应付金额  物流费  商品总价 节约金额 共多少件商品 积分  余额  优惠券
