@@ -271,11 +271,11 @@ class christmasMobileController
             }while($check_exist);
             $add['code'] = $code;
             M('coupon_list')->add($add);
-            saveData( self::TB_ORDER , array("id"=>$this->assignData["orderInfo"]["id"]),array("get_time"=>time(),"get_user_id" => $this->userInfo['user_id']));
+            saveData( self::TB_ORDER , array("id"=>$this->assignData["orderInfo"]["id"]),array("get_time"=>time(),"status"=>2,"get_user_id" => $this->userInfo['user_id']));
             $this->assignData["orderInfo"] = addonsGetOrderInfo($id);
         }
         if ($this->assignData["orderInfo"]['get_user_id'] != $this->userInfo['user_id']) {
-            return addonsError("未找到该订单");
+            return addonsError("该礼包已经被别人领取了");
         }
         return $this->assignData;
     }
