@@ -22,36 +22,57 @@
                         <div class="tab-pane active" id="tab_tongyong">                           
                             <table class="table table-bordered">
                                 <tbody>
+
                                 <tr>
                                     <td class="col-sm-2">券类型</td>
                                     <td class="col-sm-4">
-                                       <select name="is_discount" style="width:100px" id="is_discount" {: isset($coupon['id'])?'disabled':''}>
-                                           <option value="0"  {: empty($coupon['is_discount'])?'selected':''}>优惠券</option>
-                                           <option value="1" {: !empty($coupon['is_discount'])==1?'selected':'' }>折扣券</option>
+                                       <select name="is_discount" id="is_discount" {: isset($coupon['id'])?'disabled':''}>
+                                           	<option value="0" {: empty($coupon['is_discount'])?'selected':''}>优惠券</option>
+											<option value="1" {: $coupon['is_discount']==1?'selected':'' }>折扣券</option>
+											<option value="2" {: $coupon['is_discount']==2?'selected':'' }>买一送一券</option>
+											<option value="3" {: $coupon['is_discount']==3?'selected':'' }>第三方展示券</option>
                                        </select> 
                                     </td>
                                     <td>请选择券类型</td>
                                 </tr>
-                                <tr id="coupon">
-                                    <td class="col-sm-2">优惠券名称：</td>
+                                <tr>
+                                    <td class="col-sm-2">券名称：</td>
                                     <td class="col-sm-4">
                                         <input type="text" value="{$coupon.name}" class="form-control" id="name" name="name" >
                                         <span id="err_attr_name" style="color:#F00; display:none;"></span>                                        
                                     </td>
-                                    <td class="col-sm-4">请填写优惠券名称
-                                    </td>
+                                    <td class="col-sm-4">请填写券名称</td>
                                 </tr>  
                                 <tr>
                                     <td class="col-sm-2">优惠券简介：</td>
                                     <td class="col-sm-4">
                                         <textarea name="desc" id="" cols="68" rows="10">{$coupon.desc}</textarea>
-                                                                                
                                     </td>
-                                    <td class="col-sm-4">请填写优惠券简介
-                                    </td>
-                                </tr> 
+                                    <td class="col-sm-4">请填写券简介</td>
+                                </tr>
 
-                                <tr >
+
+
+								<tr class="coupon_tr coupon_type_0 coupon_type_1  my_is_appoint">
+									<td>是否指定商品:</td>
+									<td id="isAppoint">
+										<select name="is_appoint" id="is_appoint" >
+											<option value="0" {: empty($coupon['is_appoint'])?'selected':''}>否</option>
+											<option value="1" {: $coupon['is_appoint']==1?'selected':'' }>是</option>
+										</select>
+									</td>
+									<td class="col-sm-4"></td>
+								</tr>
+								<tr class="coupon_tr my_goods_id">
+									<td> 商品 id ：</td>
+									<td >
+										<input type="text" value="{$coupon.goods_id}" class="form-control" id="goods_id" name="goods_id" />
+									</td>
+									<td class="col-sm-4"></td>
+								</tr>
+
+
+								<tr class="coupon_tr coupon_type_0 coupon_type_1">
                                     <td> <span id="discount">优惠券</span>面额：</td>
                                     <td >
                                         <input type="text" value="{$coupon.money}" class="form-control" id="money" name="money"  onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"/>
@@ -60,13 +81,16 @@
                                 </tr>   
                                 
                                   
-                                <tr>
+                                <tr class="coupon_tr coupon_type_0 coupon_type_1">
                                     <td>消费金额：</td>
                                     <td>
                       					<input type="text" value="{$coupon.condition}" class="form-control active" id="condition" name="condition"  onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" />
                                     </td>
                                     <td class="col-sm-4">订单需满足的最低消费金额(必需为整数)才能使用</td>
                                 </tr>
+
+
+
                                 <tr>
 			                        <td>发放类型:</td>
 			                        <td id="order-status">
@@ -95,7 +119,6 @@
 			                        </td>
 			                        <td class="col-sm-4"></td>
 			                    </tr>
-			
 			                    <tr class="timed">
 			                        <td>发放结束日期:</td>
 			                        <td>
@@ -185,6 +208,15 @@
 				$('.useTimed2').show();
 			}
 		});
+		$('#is_appoint').change(function(){
+			if($(this).val() == 0){
+				$('.my_goods_id').hide();
+			}else{
+				$('.my_goods_id').show();
+			}
+		});
+
+
 	});
 
 
@@ -193,8 +225,10 @@ $(function(){
     data_pick('send_end_time');
     data_pick('use_start_time');
     data_pick('use_end_time');
+	$('#is_discount input[type="radio"]:checked').trigger('click');
 	$('#order-status input[type="radio"]:checked').trigger('click');
 	$('#useType input[type="radio"]:checked').trigger('click');
+	$('#is_appoint').trigger('change');
 })
     
 function data_pick(id){
@@ -221,25 +255,27 @@ function data_pick(id){
 //选择类型
 $('#is_discount').change(['Data'],function(){
     var values = $(this).val();
+
+	$(".coupon_tr").hide();
+	$(".coupon_type_"+values).show();
+
     if(values==1){
         $('#discount').text('折扣券');
         $('#discount_span').text('可折扣百分比');
-        $('#coupon').hide();
-    }else{
-        $('#discount').text('优惠券');
-        $('#discount_span').text('优惠券可抵扣金额');
-        $('#coupon').show();
-    }
+    }else if(values==2){
+		$('#is_appoint').val(1);
+	}else if(values==3){
+
+	}else{
+		$('#discount').text('优惠券');
+		$('#discount_span').text('优惠券可抵扣金额');
+	}
+	$('#is_appoint').trigger('change');
 });
 
 $('#money').change(['Data'],function(){
     var values = $(this).val();
     var is_discount = $('#is_discount').val();
-    if(is_discount==1){
-       var text = '百分之'+values+'折扣券';
-       $('#name').val(text); 
-    }
-    
 });
 </script>
 </body>

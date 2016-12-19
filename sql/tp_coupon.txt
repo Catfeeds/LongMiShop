@@ -451,3 +451,21 @@ INSERT INTO `lm_cron_list` VALUES ('3', 'hour', '0', 'Push');
 ALTER TABLE `lm_coupon_list`
 ADD COLUMN `plugin_name`  varchar(255) NULL COMMENT '插件名字' AFTER `receive_time`,
 ADD COLUMN `plugin_order_id`  int(11) NULL COMMENT '插件order表id' AFTER `plugin_name`;
+
+
+
+
+ALTER TABLE `lm_coupon`
+MODIFY COLUMN `is_discount`  tinyint(1) NOT NULL COMMENT '券类型 0 优惠券 1 折扣券 2 买一送一券 3 第三方展示券' AFTER `use_code`;
+
+
+
+ALTER TABLE `lm_coupon`
+ADD COLUMN `goods_id`  int(11) NOT NULL DEFAULT 0 COMMENT '商品id' AFTER `add_time`,
+ADD COLUMN `is_appoint`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否制定商品' AFTER `goods_id`;
+
+
+
+
+
+
