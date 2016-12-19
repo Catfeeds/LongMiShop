@@ -202,6 +202,36 @@ class christmasMobileController
     }
 
 
+    //礼物检测ajax
+    public function getGift(){
+        $id = I("orderId");
+        if (!$this->assignData["orderInfo"] = addonsGetOrderInfo($id)) {
+            exit(json_encode(callback(false,"未找到该订单")));
+        }
+        if ($this->assignData["orderInfo"]['user_id'] == $this->userInfo['user_id']) {
+            exit(json_encode(callback(true,"", U("Mobile/Addons/christmas", array("pluginName" => "orderDetail", "order_id" => $id)))));
+        }
+        if ($this->assignData["orderInfo"]['get_user_id'] == $this->userInfo['user_id']) {
+            exit(json_encode(callback(true,"", U("Mobile/Addons/christmas", array("pluginName" => "getResults", "order_id" => $id)))));
+        }
+        if ($this->assignData["orderInfo"]['get_user_id'] != $this->userInfo['user_id']) {
+            exit(json_encode(callback(false,"该礼包已经被别人领取了")));
+        }
+        /**
+         * 随机部分
+         */
+        if( $this->assignData["orderInfo"]["gift_type"] == 0 || empty( $this->assignData["orderInfo"]["gift_type"] )){
+            $this->assignData["orderInfo"]["gift_type"] = $giftType = addonsGetReward();
+            saveData( self::TB_ORDER , array("id"=>$this->assignData["orderInfo"]["id"]),array("gift_type" => $giftType));
+        }
+
+        if( $this->assignData["orderInfo"]["gift_type"] != 2 ){
+            exit(json_encode(callback(true,"", U("Mobile/Addons/christmas", array("pluginName" => "getResults", "order_id" => $id)))));
+        }
+
+        exit(json_encode(callback(true,"", U("Mobile/Addons/christmas", array("pluginName" => "get", "order_id" => $id)))));
+
+    }
 
     //领取礼包
     public function get()
