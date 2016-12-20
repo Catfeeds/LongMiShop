@@ -1,5 +1,5 @@
 <?php
-@include 'Addons/riceGrains/Function/base.php';
+@include 'Addons/partner/Function/base.php';
 
 class partnerMobileController
 {
