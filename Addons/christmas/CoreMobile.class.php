@@ -372,7 +372,7 @@ class christmasMobileController
                     $weChatConfig = findDataWithCondition('wx_user');
                     $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
                     $userInfo = findDataWithCondition("users",array("user_id"=>$this->assignData["orderInfo"]['user_id']),"openid");
-                    $jsSdkLogic -> push_msg( $userInfo['openid'] , "【".$this->userInfo['nickname']."】领取了你的礼物！" );
+                    $jsSdkLogic -> push_msg( $userInfo['openid'] , "【".$this->userInfo['nickname']."】么么哒，领取了你的礼物！" );
                 }catch (\Exception $e){
                     setLogResult($e->getMessage(),"圣诞活动推送错误","error");
                 }
