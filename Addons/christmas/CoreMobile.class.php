@@ -31,7 +31,7 @@ class christmasMobileController
                     "chance" => "59",
                     "number" => "0",
                     "type" =>"coupon",
-                    "id" => "4",
+                    "id" => "13",
                 ),
                 array(//25元抵扣券
                     "chance" => "40",
