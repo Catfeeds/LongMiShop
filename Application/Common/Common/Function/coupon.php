@@ -258,3 +258,38 @@ function cardDiscountAmountCalculation( $couponId , $userId , $money ,  $goodsDa
         return callback(false,"没有此优惠券",array('couponListRes'=>$couponListRes));
     }
 }
+
+
+/**
+ * 新增优惠券
+ * @param null $cid
+ * @param null $userId
+ * @param int $type
+ * @return bool|mixed
+ */
+function addNewCoupon($cid = null  ,$userId = null,$type =3)
+{
+    if (is_null($cid) || is_null($userId)) {
+        return false;
+    }
+
+    $add = array(
+        "cid"          => $cid,
+        "type"         => $type,
+        "uid"          => $userId,
+        "send_time"    => time(),
+        "receive_time" => time(),
+    );
+
+    do {
+        $code = get_rand_str(8, 0, 1);//获取随机8位字符串
+        $check_exist = findDataWithCondition('coupon_list', array('code' => $code), "code");
+        if (empty($check_exist)) {
+            $check_exist = findDataWithCondition('coupon_code', array('code' => $code), "code");
+        }
+    } while ($check_exist);
+
+    $add['code'] = $code;
+    return addData('coupon_list', $add);
+
+}

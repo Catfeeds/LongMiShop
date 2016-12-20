@@ -7,6 +7,13 @@
                 {$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}
             </p>
         </volist>
+        <volist name="orderInfo.getList" id="goodsItem2">
+            <if condition ='$goodsItem2["type"] neq 2'>
+                <p style="text-align:center">
+                    {$goodsItem2['coupon_name']}
+                </p>
+            </if>
+        </volist>
     </div>
 </div>
 <div class="mui-content">

@@ -249,13 +249,10 @@ class BuyLogic extends BaseLogic
             throw new \Exception( getCallbackMessage($result) );
         }
         $save = array(
-            "status" => 2,
-            "get_time" => time(),
-            "get_user_id"=>$this ->userId,
             "order_id"=>$this -> _post_data['orderData']['order_id']
         );
 
-        if( saveData( "addons_christmas_order", array("id" => $this -> _post_data['order_id']),$save) == false){
+        if( saveData( "addons_christmas_order_get_list", array("c_order_id" => $this -> _post_data['order_id'],"get_user_id"=>$this ->userId),$save) == false){
             throw new \Exception( "礼包状态修改失败" );
         }
     }
