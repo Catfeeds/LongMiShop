@@ -33,7 +33,7 @@
 
 <!--声音按钮-->
 <div id="audioPlay" datanumber="1"></div>
-<audio id="audio" src="__ADDONS__/music/bg.mp3?v={$v}" preload="true" style="width:0px;height:0px;" autoplay="true" loop></audio>
+<audio id="audio"   style="width:0px;height:0px;"  loop></audio>
 
 
 
@@ -212,6 +212,7 @@
         document.addEventListener('touchstart', function(){
             if( is_one ){
                 is_one = false;
+                $("#audio").attr("src","__ADDONS__/music/bg.mp3?v={$v}");
                 PlayAudioBg();
             }
         }, false);

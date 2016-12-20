@@ -17,47 +17,77 @@ class christmasMobileController
 
 
     public $odds = array(
-        array(//龙米商城优惠券
+//        array(//龙米商城优惠券
+//            "chance" => "100",
+//            "number" => "0",
+//            "in_odds" => array(
+////                array(//商城千元优惠券
+////                    "chance" => "3",
+////                    "number" => "0",
+////                    "type" =>"coupon",
+////                    "id" => "1",
+////                ),
+//                array(//20元现金券
+//                    "chance" => "59",
+//                    "number" => "0",
+//                    "type" =>"coupon",
+//                    "id" => "13",
+//                ),
+//                array(//25元抵扣券
+//                    "chance" => "40",
+//                    "number" => "0",
+//                    "type" =>"coupon",
+//                    "id" => "7",
+//                ),
+////                array(//188元季度满减券
+////                    "chance" => "10",
+////                    "number" => "0",
+////                    "type" =>"coupon",
+////                    "id" => "1",
+////                ),
+////                array(//688元年卡优惠券
+////                    "chance" => "6",
+////                    "number" => "0",
+////                    "type" =>"coupon",
+////                    "id" => "1",
+////                ),
+//                array(//龙米买一送一券
+//                    "chance" => "1",
+//                    "number" => "50",
+//                    "type" =>"coupon",
+//                    "id" => "8",
+//                )
+//            )
+//        ),
+        array(//20元现金券
             "chance" => "100",
             "number" => "0",
-            "in_odds" => array(
-//                array(//商城千元优惠券
-//                    "chance" => "3",
-//                    "number" => "0",
-//                    "type" =>"coupon",
-//                    "id" => "1",
-//                ),
-                array(//20元现金券
-                    "chance" => "59",
-                    "number" => "0",
-                    "type" =>"coupon",
-                    "id" => "4",
-                ),
-                array(//25元抵扣券
-                    "chance" => "40",
-                    "number" => "0",
-                    "type" =>"coupon",
-                    "id" => "7",
-                ),
-//                array(//188元季度满减券
-//                    "chance" => "10",
-//                    "number" => "0",
-//                    "type" =>"coupon",
-//                    "id" => "1",
-//                ),
-//                array(//688元年卡优惠券
-//                    "chance" => "6",
-//                    "number" => "0",
-//                    "type" =>"coupon",
-//                    "id" => "1",
-//                ),
-                array(//龙米买一送一券
-                    "chance" => "1",
-                    "number" => "50",
-                    "type" =>"coupon",
-                    "id" => "8",
-                )
-            )
+            "type" =>"coupon",
+            "id" => "13",
+        ),
+        array(//25元抵扣券
+            "chance" => "100",
+            "number" => "0",
+            "type" =>"coupon",
+            "id" => "7",
+        ),
+        array(//188元季度满减券
+            "chance" => "100",
+            "number" => "0",
+            "type" =>"coupon",
+            "id" => "14",
+        ),
+        array(//688元年卡优惠券
+            "chance" => "100",
+            "number" => "0",
+            "type" =>"coupon",
+            "id" => "15",
+        ),
+        array(//龙米买一送一券
+            "chance" => "1",
+            "number" => "50",
+            "type" =>"coupon",
+            "id" => "8",
         ),
         array(//宴午体验券
             "chance" => "100",
@@ -307,7 +337,6 @@ class christmasMobileController
             $rewardList = addonsNewGetReward($this -> odds);
             $have_goods = false;
             if( !empty($rewardList)) {
-                saveData( self::TB_ORDER , array("id"=>$this->assignData["orderInfo"]["id"]),array("get_time"=>time(),"status"=>2,"get_user_id" => $this->userInfo['user_id']));
                 foreach ($rewardList as $rewardItem) {
                     if( $rewardItem["isGet"] == true){
                         $key_id1 = $this->odds[$rewardItem['key']]['id'];
@@ -337,6 +366,15 @@ class christmasMobileController
 
                         }
                     }
+                }
+                saveData( self::TB_ORDER , array("id"=>$this->assignData["orderInfo"]["id"]),array("get_time"=>time(),"status"=>2,"get_user_id" => $this->userInfo['user_id']));
+                try{
+                    $weChatConfig = findDataWithCondition('wx_user');
+                    $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
+                    $userInfo = findDataWithCondition("users",array("user_id"=>$this->assignData["orderInfo"]['user_id']),"openid");
+                    $jsSdkLogic -> push_msg( $userInfo['openid'] , "【".$this->userInfo['nickname']."】么么哒，领取了你的礼物！" );
+                }catch (\Exception $e){
+                    setLogResult($e->getMessage(),"圣诞活动推送错误","error");
                 }
             }
             if( $have_goods == true ){
