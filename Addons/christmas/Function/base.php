@@ -125,10 +125,10 @@ function addonsGetOrderInfo( $id)
         $data["status"] == 2 ? $data["getUserInfo"] = get_user_info($data["get_user_id"]) : false;
         $data["getList"] = selectDataWithCondition("addons_christmas_order_get_list", array("order_id" => $id));
         if (!empty($data["getList"])) {
-            foreach ($data["getList"] as $getItem) {
+            foreach ($data["getList"] as $getKey => $getItem) {
                 if ($getItem["type"] == 2) {
                     $couponInfo = findDataWithCondition("coupon",array("id"=>$getItem['get_id']),"name");
-                    $getItem["coupon_name"] = $couponInfo["name"];
+                    $data["getList"][$getKey]["coupon_name"] = $couponInfo["name"];
                 } elseif ($getItem["type"] == 1) {
 
                 } else {
