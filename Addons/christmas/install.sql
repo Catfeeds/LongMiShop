@@ -70,3 +70,17 @@ CREATE TABLE `lm_addons_christmas_order_goods` (
 ALTER TABLE `lm_addons_christmas_order`
 ADD COLUMN `gift_type`  tinyint(2) NOT NULL DEFAULT 0 COMMENT '0 还没分类 ' AFTER `order_id`;
 
+CREATE TABLE `lm_addons_christmas_order_get_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `c_order_id` int(11) DEFAULT NULL COMMENT '插件订单id',
+  `user_id` int(11) DEFAULT NULL COMMENT '订单所有者id',
+  `get_key` int(11) DEFAULT '0' COMMENT 'key',
+  `get_key2` int(11) DEFAULT '0',
+  `create_time` int(10) DEFAULT NULL,
+  `order_id` int(10) NOT NULL DEFAULT '0' COMMENT '商城订单id',
+  `type` tinyint(3) NOT NULL DEFAULT '1' COMMENT '类型 1 卡券 2 商品 ',
+  `get_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品或卡券id',
+  `get_user_id` int(11) DEFAULT NULL COMMENT '得到者id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

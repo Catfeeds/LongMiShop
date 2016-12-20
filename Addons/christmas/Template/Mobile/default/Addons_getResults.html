@@ -4,27 +4,24 @@
     <div class="pay-order">
         <div class="tip_b" style=" border: 0px; margin-top:0px; margin-bottom: 30px; ">
             <strong>圣诞大礼包</strong>
-            <if  condition="$orderInfo['gift_type'] neq 2 ">
-                <p style="text-align: center;">优惠券</p>
-                <else/>
-                <volist name="orderInfo.goods" id="goodsItem">
-                    <p style="text-align: center;">{$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}</p>
-                </volist>
-            </if>
+            <volist name="orderInfo.goods" id="goodsItem">
+                <p style="text-align: center;">{$goodsItem['goods_name']}{:empty($goodsItem['spec_key_name'])?"":"【".$goodsItem['spec_key_name']."】"} X {$goodsItem['goods_num']}</p>
+            </volist>
+            <volist name="orderInfo.getList" id="goodsItem2">
+                <if condition ='$goodsItem2["type"] neq 2'>
+                    <p style="text-align:center">
+                        {$goodsItem2['coupon_name']}
+                    </p>
+                </if>
+            </volist>
         </div>
     </div>
 </div>
 
 <div class="new_btn">
-    <if  condition="$orderInfo['gift_type'] neq 2 ">
-        <a href="{:U('Mobile/User/coupon')}">
-            <img src="__ADDONS__/images/btn/look_detail.png" style="width: 100%"/>
-        </a>
-        <else/>
-        <a href="{:U('Mobile/Order/order_detail',array('order_id' =>$orderInfo['order_id'] ))}">
-            <img src="__ADDONS__/images/btn/look_detail.png" style="width: 100%"/>
-        </a>
-    </if>
+    <a href="{:U('Mobile/User/index')}">
+        <img src="__ADDONS__/images/btn/look_detail.png" style="width: 100%"/>
+    </a>
 </div>
 
 <div class="new_btn">

@@ -118,54 +118,136 @@ function addonsGetShareArray( $info , $order_id = null  )
 function addonsGetOrderInfo( $id)
 {
     $data = findDataWithCondition("addons_christmas_order", array("id" => $id));
-    if( !empty($data)){
-        session("addons_christmas_order_id",$id);
-        $data["goods"] = selectDataWithCondition("addons_christmas_order_goods",array("order_id"=>$id));
-        $data["status"] == 1 ? $data["tag"] = unserialize($data["wx_tag"]) : false ;
-        $data["status"] == 2 ? $data["getUserInfo"] = get_user_info( $data["get_user_id"] ) : false ;
+    if( !empty($data)) {
+        session("addons_christmas_order_id", $id);
+        $data["goods"] = selectDataWithCondition("addons_christmas_order_goods", array("order_id" => $id));
+        $data["status"] == 1 ? $data["tag"] = unserialize($data["wx_tag"]) : false;
+        $data["status"] == 2 ? $data["getUserInfo"] = get_user_info($data["get_user_id"]) : false;
+        $data["getList"] = selectDataWithCondition("addons_christmas_order_get_list", array("order_id" => $id));
+        if (!empty($data["getList"])) {
+            foreach ($data["getList"] as $getItem) {
+                if ($getItem["type"] == 2) {
+                    $couponInfo = findDataWithCondition("coupon",array("id"=>$getItem['get_id']),"name");
+                    $getItem["coupon_name"] = $couponInfo["name"];
+                } elseif ($getItem["type"] == 1) {
+
+                } else {
+
+                }
+            }
+        }
+
     }
     return $data;
 }
 
+//
+///**
+// * 中将部分
+// * @param int $total
+// * @return mixed
+// */
+//function addonsGetReward( $total=1000)
+//{
+//
+//
+//    $win1 = 0.1*$total;
+//    $win2 = 0.05*$total;
+//    $other = $total-$win1-$win2;
+//
+//    $count =  getCountWithCondition("addons_christmas_order_goods",array("status"=>"2","gift_type"=>1));
+//    $count = intval($count);
+//    $win1 -= $count;
+//
+//    $count =  getCountWithCondition("addons_christmas_order_goods",array("status"=>"2","gift_type"=>2));
+//    $count = intval($count);
+//    $win2 -= $count;
+//
+//    $count =  getCountWithCondition("addons_christmas_order_goods",array("status"=>"2","gift_type"=>3));
+//    $count = intval($count);
+//    $other -= $count;
+//
+//    $return = array();
+//    for ($i=0;$i<$win1;$i++)
+//    {
+//        $return[] = 1;
+//    }
+//    for ($j=0;$j<$win2;$j++)
+//    {
+//        $return[] = 2;
+//    }
+//    for ($n=0;$n<$other;$n++)
+//    {
+//        $return[] = 3;
+//    }
+//    shuffle($return);
+//    return $return[array_rand($return)];
+//}
 
-/**
- * 中将部分
- * @param int $total
- * @return mixed
- */
-function addonsGetReward( $total=1000)
-{
 
+function  addonsNewGetReward($odds){
+    $returnData = array();
+    foreach ( $odds as $oddsKey => $oddsItem){
+        $node = $oddsItem["chance"];
+        $other = 100;
+        $return = array();
 
-    $win1 = 0.1*$total;
-    $win2 = 0.05*$total;
-    $other = $total-$win1-$win2;
-
-    $count =  getCountWithCondition("addons_christmas_order_goods",array("status"=>"2","gift_type"=>1));
-    $count = intval($count);
-    $win1 -= $count;
-
-    $count =  getCountWithCondition("addons_christmas_order_goods",array("status"=>"2","gift_type"=>2));
-    $count = intval($count);
-    $win2 -= $count;
-
-    $count =  getCountWithCondition("addons_christmas_order_goods",array("status"=>"2","gift_type"=>3));
-    $count = intval($count);
-    $other -= $count;
-
-    $return = array();
-    for ($i=0;$i<$win1;$i++)
-    {
-        $return[] = 1;
+        if(
+            $oddsItem["number"] == 0 ||
+            empty( $oddsItem["number"]) ||
+            $oddsItem["number"] > getCountWithCondition("addons_christmas_order_get_list" ,array("get_key"=>$oddsKey))
+        ){
+            for ($i=0;$i<$node;$i++)
+            {
+                $other -- ;
+                $return[] = array(
+                    "isGet" => true,
+                    "key" => intval($oddsKey),
+                );
+            }
+        }
+        for ($j=0;$j<$other;$j++)
+        {
+            $return[] = array(
+                "isGet" => false,
+                "key" => intval($oddsKey),
+            );
+            $return[] = false;
+        }
+        shuffle($return);
+        $res =  $return[array_rand($return)]["isGet"];
+        $key = null;
+        $res2 = null;
+        if( $res == true ){
+            $key =  $return[array_rand($return)]["key"];
+            if( !empty($oddsItem['in_odds'])){
+                $return2 = array();
+                foreach ($oddsItem['in_odds'] as $minOddsKey =>  $minOddsItem){
+                    if(
+                        $minOddsItem["number"] == 0 ||
+                        empty( $minOddsItem["number"]) ||
+                        $minOddsItem["number"] > getCountWithCondition("addons_christmas_order_get_list" ,array("get_key"=>$oddsKey,"get_key2"=>$minOddsKey))
+                    ){
+                        for ($j=0;$j<$minOddsItem["chance"];$j++)
+                        {
+                            $return2[] = intval($minOddsKey);
+                        }
+                    }
+                }
+                if( empty($return2)){
+                    $res2 = null;
+                    $res = false;
+                }else{
+                    shuffle($return2);
+                    $res2 =  $return2[array_rand($return2)];
+                }
+            }
+        }
+        $returnData[$oddsKey]=array(
+            "isGet" => $res,
+            "key"=> $key,
+            "key2"=> $res2,
+        );
     }
-    for ($j=0;$j<$win2;$j++)
-    {
-        $return[] = 2;
-    }
-    for ($n=0;$n<$other;$n++)
-    {
-        $return[] = 3;
-    }
-    shuffle($return);
-    return $return[array_rand($return)];
+    return $returnData;
 }
