@@ -66,9 +66,9 @@ CREATE TABLE `lm_addons_christmas_order_goods` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-ALTER TABLE `lm_addons_christmas_order`
-ADD COLUMN `gift_type`  tinyint(2) NOT NULL DEFAULT 0 COMMENT '0 还没分类 ' AFTER `order_id`;
+--
+-- ALTER TABLE `lm_addons_christmas_order`
+-- ADD COLUMN `gift_type`  tinyint(2) NOT NULL DEFAULT 0 COMMENT '0 还没分类 ' AFTER `order_id`;
 
 CREATE TABLE `lm_addons_christmas_order_get_list` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

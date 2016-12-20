@@ -320,8 +320,8 @@ class christmasMobileController
                         $newData = array(
                             "c_order_id"  => $this->assignData["orderInfo"]["id"],
                             "user_id"     => $this->assignData["orderInfo"]['user_id'],
-                            "get_key"     => $rewardItem['key'],
-                            "get_key2"    => $rewardItem['key2'],
+                            "get_key"     => intval($rewardItem['key']),
+                            "get_key2"    => intval($rewardItem['key2']),
                             "create_time" => time(),
                             "order_id"    => 0,
                             "type"        => $key_type,
