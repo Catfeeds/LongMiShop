@@ -337,7 +337,6 @@ class christmasMobileController
             $rewardList = addonsNewGetReward($this -> odds);
             $have_goods = false;
             if( !empty($rewardList)) {
-                saveData( self::TB_ORDER , array("id"=>$this->assignData["orderInfo"]["id"]),array("get_time"=>time(),"status"=>2,"get_user_id" => $this->userInfo['user_id']));
                 foreach ($rewardList as $rewardItem) {
                     if( $rewardItem["isGet"] == true){
                         $key_id1 = $this->odds[$rewardItem['key']]['id'];
@@ -367,6 +366,15 @@ class christmasMobileController
 
                         }
                     }
+                }
+                saveData( self::TB_ORDER , array("id"=>$this->assignData["orderInfo"]["id"]),array("get_time"=>time(),"status"=>2,"get_user_id" => $this->userInfo['user_id']));
+                try{
+                    $weChatConfig = findDataWithCondition('wx_user');
+                    $jsSdkLogic = new \Common\Logic\JsSdkLogic($weChatConfig['appid'], $weChatConfig['appsecret']);
+                    $userInfo = findDataWithCondition("users",array("user_id"=>$this->assignData["orderInfo"]['user_id']),"openid");
+                    $jsSdkLogic -> push_msg( $userInfo['openid'] , "【".$this->userInfo['nickname']."】领取了你的礼物！" );
+                }catch (\Exception $e){
+                    setLogResult($e->getMessage(),"圣诞活动推送错误","error");
                 }
             }
             if( $have_goods == true ){
