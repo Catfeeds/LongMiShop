@@ -66,9 +66,6 @@
 
             sprite.image=player;
 
-            addListener(ca,"mousemove",m);
-//            addListener(ca,"onMouseMove",m);
-            addListener(ca,"touchmove",m);
             var beginTime = new Date();
             var gameTime = 1500;
             var remainTime;
@@ -196,6 +193,13 @@
                 checkTime();
                 if(remainTime==0) {stop()}
             },100);
+
+            $(function(){
+                addListener(ca,"mousemove",m);
+//            addListener(ca,"onMouseMove",m);
+                addListener(ca,"touchstart",m);
+                addListener(ca,"touchmove",m);
+            });
         </script>
     </canvas>
     <div id="f" style="font-size:20px; width:10%;height:5%;position:absolute; top:4.2%; left: 25%;text-align:right" ></div>
