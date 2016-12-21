@@ -1,36 +1,17 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>首页-{$lmshop_config['shop_info_store_title']}</title>
-    <meta http-equiv="keywords" content="{$lmshop_config['shop_info_store_keyword']}" />
-    <meta name="description" content="{$lmshop_config['shop_info_store_desc']}" />
-    <script src="__STATIC__/js/mui.min.js"></script>
-    <script src="__STATIC__/js/TouchSlide.js"></script>
-    <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
-    <link href="__STATIC__/css/css.css?42368" rel="stylesheet" />
-    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
-</head>
+<include file="Public/42368_header"/>
 <body>
-<div id="slider" class="mui-slider" >
-    <div class="top_box">
-        <!--<div class="top_left">-->
-        <!--<form name="sourch_form" id="sourch_form" method="post" action="{:U('Goods/search')}">-->
-        <!--<div class="t1">-->
-        <!--<input name="q" id="q"  class="t1_text" type="text" value="<?php echo I('q'); ?>" placeholder="搜索"  style="color:#333;border:0px;background-color:transparent;outline:none;">-->
-        <!--</div>-->
-        <!--<div class="t2" width="24" height="24">-->
-        <!--<a href="javascript:if($.trim($('#q').val()) != '') $('#sourch_form').submit();" >-->
-        <!--<img src="__STATIC__/SVG/search.svg">-->
-        <!--</a>-->
-        <!--</div>-->
-        <!--</form>-->
-        <!--</div>-->
-        <include file="Public/news"/>
+<div class="top_nav">
+    <div class="top_nav_left">
+        <a href="#">全部</a>
+        <a href="#">新品</a>
+        <a href="#">推荐好礼</a>
+        <a href="#">销量</a>
     </div>
+    <div class="top_nav_right">
+
+    </div>
+</div>
+<div id="slider" class="mui-slider" >
     <php>$adv_array =array();</php>
     <adv pid ="2" limit="5" item="v">
         <php>$adv_array[] = $v;</php>
@@ -66,76 +47,91 @@
         </div>
     </notempty>
 </div>
-<script>
-    var gallery = mui('.mui-slider');
-    gallery.slider({
-        interval:2000//自动轮播周期，若为0则不自动播放，默认为0；
-    })
-</script>
-<div class="titel_box">
-    <div class="titel_box_l"><img src="__STATIC__/SVG/vg2.svg" /></div>
-</div>
-<div id="picScroll" class="picScroll">
-    <div class="hd" style="display:none">
-        <ul>
-        </ul>
-    </div>
-    <div class="bd">
-        <ul>
-            <assign name="fl" value="1"/>
-            <foreach name="newGoods" key ="k" item="v" >
-                <li>
-                    <div class="cp">
-                        <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}"></a></div>
-                        <div class="cp_l"><img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
-                        <div class="cp_r">
-                            <p>{$v.goods_name}</p>
-                            <span>￥{$v.shop_price}</span> </div>
-                    </div>
-                </li>
-                <if condition="($fl++%2 eq 0) && (($fl -1) != $newGoodsNumber)"></ul><ul></if>
-        </foreach>
+
+
+<div class="top_menu">
+    <ul>
+        <li>
+            <p>
+                <a href="/Mobile/Order/order_list/type/WAITPAY.html">钱包</a>
+            </p>
+        </li>
+        <li style="background-image:url('/Template/mobile/longmi/Static/SVG/a2.svg')">
+            <p>
+                <a href="/Mobile/Order/order_list/type/WAITSEND.html">优惠券</a>
+            </p>
+        </li>
+        <li style="background-image:url('/Template/mobile/longmi/Static/SVG/a3.svg')">
+            <p>
+                <a href="/Mobile/Order/order_list/type/WAITRECEIVE.html">活动</a>
+            </p>
+        </li>
+        <li style="background-image:url('/Template/mobile/longmi/Static/SVG/a4.svg')">
+            <p>
+                <a href="/Mobile/Order/order_list/type/WAITCCOMMENT.html">赚米</a>
+            </p>
+        </li>
     </ul>
-    </div>
+
 </div>
-<script type="text/javascript">
-    TouchSlide({
-        slideCell:"#picScroll",
-        titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
-        autoPage:true, //自动分页
-        pnLoop:"false", // 前后按钮不循环
-        switchLoad:"_src", //切换加载，真实图片路径为"_src"
-        autoPlay:true
-    });
-</script>
-<div class="titel_box">
-    <div class="titel_box_l"><img src="__STATIC__/SVG/vg1.svg" /></div>
-</div>
-<div class="cp_box myLongMiFlash_1">
-    <foreach name="hotGoods" key ="k" item="v" >
-        <div class="cp1 noAnimated">
-            <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}"></a></div>
-            <div class="cp1_l"><img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92"></div>
-            <div class="cp1_r">
-                <p class="lm_t">{$v.goods_name}</p>
-                <p class="lm_z" style="font-size: 12px !important;">已销售：{: !empty($v['virtual_sales']) ? $v['virtual_sales'] : $v['sales_sum'] }</p>
-                <span class="lm_x">￥{$v.shop_price}</span>
+
+<div class="mui-content">
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell">
+            <div class="mui-slider-right mui-disabled">
+                <a onclick="del_cart_goods('{$v.id}')" class="mui-btn mui-btn-red">删除</a>
             </div>
-        </div>
-    </foreach>
-</div>
-<div class="copyright">
-    <p></p>
-    <img src="__STATIC__/SVG/bottom_logo.svg" alt="">
-</div>
-<include file="Public/nav"/>
-<if condition="$signPackage neq null && $user['is_follow'] neq 1">
-    <include file="Public/wx_button"/>
-</if>
+            <div class="mui-slider-handle">
+                <div class="cp7">
+                    <div class="cp1_l">
+                        <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}">
+                            <img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92">
+                        </a>
+                    </div>
+                    <div class="cp1_r">
+                        <p class="<if condition='$v[store_count] eq 0' >cj1</if>">{$v.goods_name}</p>
+                        <span class="<if condition='$v[store_count] eq 0' >cj1</if>">￥{$v.member_goods_price}</span>
 
+
+                            <div class="mui-numbox z-index" data-numbox-min='1' data-numbox-max='99'>
+                                <button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,{$v.id},{$v.store_count});" type="button">-</button>
+                                <input id="goods_num[{$v.id}]" class="mui-input-numbox" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{$v.goods_num}"  name="goods_num[{$v.id}]" onblur="ajax_cart_list()"/>
+                                <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,{$v.id},{$v.store_count});" type="button">+</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+<include file="Public/42368_nav"/>
 </body>
-<script>
 
+
+<include file="Public/42368_footer"/>
+
+
+<script type="text/javascript">
+
+    $(function(){
+        TouchSlide({
+            slideCell:"#picScroll",
+            titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+            autoPage:true, //自动分页
+            pnLoop:"false", // 前后按钮不循环
+            switchLoad:"_src", //切换加载，真实图片路径为"_src"
+            autoPlay:true
+        });
+    });
+
+    $(function() {
+        var gallery = mui('.mui-slider');
+        gallery.slider({
+            interval: 2000//自动轮播周期，若为0则不自动播放，默认为0；
+        })
+    });
     $(function(){
         $(window).scroll(function () {
             myCss();
@@ -163,19 +159,4 @@
         });
     }
 </script>
-<style>
-    .titel_box_l img{
-        margin-top: 7px;
-    }
-    .myLongMiFlash_1{
-        margin-left: 0px !important;
-        margin-right: 0px !important;
-    }
-    .myLongMiFlash_1 .cp1{
-        border-radius: 0px !important;
-        margin-bottom: 0px !important;
-        border-top:0px !important;
-    }
-</style>
-<include file="Public/footer"/>
 </html>
