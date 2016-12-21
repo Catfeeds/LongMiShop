@@ -61,6 +61,10 @@ class WeChatLogic extends BaseLogic
         if ( !isset($_GET['code']) ){  //触发微信返回code码
             $baseUrl = urlencode( $this -> _getUrl() );
             $url = $this -> __createOauthUrlForCode($baseUrl); // 获取 code地址
+            $redirectedUrl = session("redirectedUrl");
+            if( empty( $redirectedUrl ) ){
+                session("redirectedUrl",$_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]) ;
+            }
             header("Location: $url"); // 跳转到微信授权页面 需要用户确认登录的页面
             exit();
         } else {

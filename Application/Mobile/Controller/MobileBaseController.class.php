@@ -24,15 +24,17 @@ abstract class MobileBaseController extends BaseController {
     public function _initialize() {
         parent::_initialize();
         //验证部分
-        if ( !isLoginState() ) {
-            if( $this -> needAuth() ){
-                $redirectedUrl = session("redirectedUrl");
-                if( empty( $redirectedUrl ) ){
-                    session("redirectedUrl",$_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]) ;
-                }
+        if( !isWeChatBrowser() ){
+            if ( !isLoginState() ) {
+                if( $this -> needAuth() ){
+                    $redirectedUrl = session("redirectedUrl");
+                    if( empty( $redirectedUrl ) ){
+                        session("redirectedUrl",$_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]) ;
+                    }
 //                echo "请在微信端访问！";exit;
-                header("location:".U('Mobile/User/login'));
-                exit;
+                    header("location:".U('Mobile/User/login'));
+                    exit;
+                }
             }
         }
 
