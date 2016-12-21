@@ -18,20 +18,21 @@ class IndexController extends MobileBaseController {
     public function index(){
 
 
-//        $newGoods = M("goods") -> where(array("is_new"=>1)) -> order("sort" ) -> limit('10') -> select();
-//        $this -> assign('newGoodsNumber',count($newGoods));
-//        $this -> assign('newGoods',$newGoods);
-//
-//        $hotGoods = M("goods") -> where(array("is_hot"=>1)) -> order("sort" ) -> limit('6') -> select();
-//        $this -> assign('hotGoods',$hotGoods);
-//
-//        $hot_goods = M('goods') -> where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,MY_CACHE_TIME)->select();//首页热卖商品
-//        $thems = M('goods_category') -> where('level=1')->order('sort_order')->limit(9)->cache(true,MY_CACHE_TIME)->select();
-//        $this -> assign('thems',$thems);
-//        $this -> assign('hot_goods',$hot_goods);
-//        $favourite_goods = M('goods') -> where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,MY_CACHE_TIME)->select();//首页推荐商品
-//        $this -> assign('favourite_goods',$favourite_goods);
-        $this -> display("index2");
+        $newGoods = M("goods") -> where(array("is_new"=>1)) -> order("sort" ) -> limit('10') -> select();
+        $this -> assign('newGoodsNumber',count($newGoods));
+        $this -> assign('newGoods',$newGoods);
+
+        $hotGoods = M("goods") -> where(array("is_hot"=>1)) -> order("sort" ) -> limit('6') -> select();
+        $this -> assign('hotGoods',$hotGoods);
+
+        $hot_goods = M('goods') -> where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,MY_CACHE_TIME)->select();//首页热卖商品
+        $thems = M('goods_category') -> where('level=1')->order('sort_order')->limit(9)->cache(true,MY_CACHE_TIME)->select();
+        $this -> assign('thems',$thems);
+        $this -> assign('hot_goods',$hot_goods);
+        $favourite_goods = M('goods') -> where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,MY_CACHE_TIME)->select();//首页推荐商品
+        $this -> assign('favourite_goods',$favourite_goods);
+//        $this -> display("index2");
+        $this -> display();
     }
 
     public function index2(){
