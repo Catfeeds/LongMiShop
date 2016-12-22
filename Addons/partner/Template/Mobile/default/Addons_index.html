@@ -13,12 +13,14 @@
     <link   href="__STATIC__/css/mui.min.css"   rel="stylesheet" />
 </head>
 <body>
+<p style="text-align: center; margin-top: 20px;"><span style="font-size: 16px;"><strong><span style="font-family:宋体"><span style="color: rgb(0, 0, 0);">龙米合伙人招募</span></span></strong></span></p>
+<p style="font-size: 13px; line-height: normal; font-family: 'Helvetica Neue'; text-align: center;">▔▔</p>
 <div class="tip_b">
     <div>
         <div>
             <strong>加入合伙人条件</strong>:
         </div>
-        <div style="margin-bottom:6px">
+        <div class="tip_b_div">
             认可龙米的产品、理念及商业运营思维。<br>
             有激情，有态度，对成功有强烈渴望。<br>
             对互联网营销了解，并有极大兴趣及较强的社群营销和客户管理能力。<br>
@@ -27,26 +29,29 @@
         <div>
             <strong>加入流程</strong>：
         </div>
-        <div style="margin-bottom:6px">
+        <div class="tip_b_div">
             您提交申请后，龙米相关负责小伙伴将在<b>3个工作日</b>内联系您，为您进行一对一的合伙人服务。
         </div>
         <div>
             <strong>合伙人名片</strong>：
         </div>
-        <div style="margin-bottom:6px">
+        <div class="tip_b_div">
             龙米为喜爱并志同道合的小伙伴量身定制了更加人性的会员代理方式，分别有三个不同等级，您可以根据自身优势选择适合您的加盟代理方式。
+        </div>
+        <div>
+            <strong>想要申请</strong>:
         </div>
     </div>
 </div>
 <div class="mui-content">
     <form id='partner-form'>
         <input type="hidden" name="pluginName" value="save"/>
-        <input type="text"   name="p_name"    class="login_text tip_text" placeholder="输入姓名"/>
-        <input type="text"   name="p_city"    class="login_text tip_text" placeholder="输入城市"/>
-        <input type="text"   name="p_sex"     class="login_text tip_text" placeholder="输入性别"/>
-        <input type="text"   name="p_phone"   class="login_text tip_text" placeholder="输入手机"/>
-        <input type="text"   name="p_wechat"  class="login_text tip_text" placeholder="输入微信"/>
-        <input type="text"   name="p_email"   class="login_text tip_text" placeholder="输入E-mail"/>
+        <input type="text"   name="p_name"    class="tip_text" placeholder="输入姓名"/>
+        <input type="text"   name="p_city"    class="tip_text" placeholder="输入城市"/>
+        <input type="text"   name="p_sex"     class="tip_text" placeholder="输入性别"/>
+        <input type="text"   name="p_phone"   class="tip_text" placeholder="输入手机"/>
+        <input type="text"   name="p_wechat"  class="tip_text" placeholder="输入微信"/>
+        <input type="text"   name="p_email"   class="tip_text" placeholder="输入E-mail"/>
         <textarea  name="p_desc"  class="tip_text" placeholder="输入个人优势"></textarea>
     </form>
     <div class="login_btn" style="margin-bottom: 20px;">
@@ -70,7 +75,7 @@
     .tip_b strong{
         border-left-width: 3px;
         border-left-style: solid;
-        border-left-color: #B02F4B;
+        border-left-color: rgb(64, 118, 0);
         line-height: 32px;
         padding-left: 5px;
         font-size: 14px;
@@ -79,6 +84,12 @@
     }
     .tip_b span{
         color: #B02F4B;
+    }
+    .tip_b_div{
+        margin: 8px 8% 6px 8%;
+        width: 86%;
+        color: rgb(136, 136, 136);
+        font-size: 12px;
     }
     .tip_text{
         width: 90% !important;
@@ -89,7 +100,13 @@
         background-image: -webkit-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
         background-image: -ms-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
     }
-
+    #partner-form{
+        /*margin-top: 40px;*/
+    }
+    .login_btn a{
+        background:rgb(64, 118, 0);
+        border-color: rgb(64, 118, 0);
+    }
 </style>
 <script type="text/javascript">
     var lock = false;
