@@ -44,6 +44,7 @@ class partnerMobileController
             $p_wechat   = I("p_wechat"  , null);
             $p_email    = I("p_email"   , null);
             $p_desc     = I("p_desc"    , null);
+            $user_id    = $this->assignData["userInfo"]["user_id"];
 
             is_null($p_name)        ? exit(json_encode(callback(false, "合伙人姓名不能为空")))       : false;
             is_null($p_city)        ? exit(json_encode(callback(false, "合伙人城市不能为空")))       : false;
@@ -55,7 +56,8 @@ class partnerMobileController
             !check_email($p_email)  ? exit(json_encode(callback(false, "合伙人邮箱格式有误")))       : false;
             is_null($p_desc)        ? exit(json_encode(callback(false, "合伙人个人优势不能为空")))    : false;
 
-            $user_id = $this->assignData["userInfo"]["user_id"];
+            getCountWithCondition(self::TB_LIST,array("user_id"=>$user_id)) >= 4  ?  exit(json_encode(callback(false, "合伙人申请数量达到上限")))    : false;
+
             $addData = array(
                 "p_name"      => $p_name,
                 "p_city"      => $p_city,

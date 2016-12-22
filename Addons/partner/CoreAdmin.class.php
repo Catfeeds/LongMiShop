@@ -23,13 +23,14 @@ class partnerAdminController {
         return $this->assignData;
     }
 
+
+    //申请列表
     public function myList(){
-        $count = getCountWithCondition(TB_LIST);
+        $count = getCountWithCondition( self::TB_LIST );
         $Page  = new \Think\Page( $count , 10 );
         $show = $Page -> show();
-        $this->assignData['list'] = M(TB_SHOP)->limit($Page->firstRow,$Page->listRows) -> select();
+        $this->assignData['list'] = M( self::TB_LIST  )->limit($Page->firstRow,$Page->listRows) ->order(" create_time desc") -> select();
         $this->assignData['page'] = $show;
-        return $this->assignData;
         return $this->assignData;
     }
 
