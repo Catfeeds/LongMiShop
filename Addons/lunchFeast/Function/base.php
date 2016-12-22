@@ -420,6 +420,9 @@ function lunchFeastApiVerificationCode( $code , $token ){
     if( $orderInfo["date"] <  strtotime(date("Y-m-d",time())) ){
         exit(json_encode(callback(false, "订单已过期")));
     }
+    if( $orderInfo["date"] !=  strtotime(date("Y-m-d",time())) ){
+        exit(json_encode(callback(false, "这不是今天的核销码")));
+    }
     return array(
         "userInfo" => $userInfo,
         "codeInfo" => $codeInfo,
