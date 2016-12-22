@@ -45,10 +45,23 @@ body {
 }
 .top_nav_right {
     height: 26px;
-    float: left;
+    float: right;
     z-index: 999;
-    position: absolute;
     width: 35%;
+}
+.top_nav_right .top_nav_find {
+    height: 18px;
+    margin: 3px 10%;
+    border-radius: 3px;
+    width: 80%;
+    background: #dcf1dc;
+}
+.top_nav_right .top_nav_find input {
+    height: 18px;
+    border: 0px;
+    width: 75%;
+    padding: 2px 0;
+    background: transparent;
 }
 
 .top_menu {
@@ -68,7 +81,7 @@ body {
     text-align: center;
     background-image: url(../SVG/a1.svg);
     background-repeat: no-repeat;
-    background-position: center 5px;
+    background-position: center 12px;
     background-size:28px 28px
 }
 .top_menu li span {
@@ -77,7 +90,7 @@ body {
     line-height: 30px;
 }
 .top_menu a {
-    padding-top: 40px;
+    padding-top: 50px;
     padding-bottom: 10px;
     display: block;
     color: #818284;
