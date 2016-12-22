@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>龙米</title>
-    <meta http-equiv="keywords" content="龙米" />
-    <meta name="description" content="龙米" />
+    <title>龙米合伙人招募</title>
+    <meta http-equiv="keywords" content="龙米合伙人招募" />
+    <meta name="description"    content="龙米合伙人招募" />
     <script src="__STATIC__/js/mui.min.js"></script>
     <script src="__STATIC__/js/TouchSlide.js"></script>
     <script src="__STATIC__/js/jquery.js"></script>
-    <link href="__STATIC__/css/css.css" rel="stylesheet" />
-    <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
+    <link   href="__STATIC__/css/css.css"       rel="stylesheet" />
+    <link   href="__STATIC__/css/mui.min.css"   rel="stylesheet" />
 </head>
 <body>
 <div class="tip_b">
@@ -28,7 +28,7 @@
             <strong>加入流程</strong>：
         </div>
         <div style="margin-bottom:6px">
-            您提交申请后，龙米相关负责小伙伴将在3个工作日内联系您，为您进行一对一的合伙人服务。
+            您提交申请后，龙米相关负责小伙伴将在<b>3个工作日</b>内联系您，为您进行一对一的合伙人服务。
         </div>
         <div>
             <strong>合伙人名片</strong>：
@@ -39,18 +39,18 @@
     </div>
 </div>
 <div class="mui-content">
-    <form id='partner-form'  action="{:U('Mobile/Addons/partner')}" method="post">
-        <input type="hidden" name="pluginName" value="save">
-        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入姓名">
-        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入城市">
-        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入性别">
-        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入手机">
-        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入微信">
-        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入E-mail">
-        <input type="text"  name="exchangeCode" id="" class="login_text tip_text" placeholder="输入个人优势">
+    <form id='partner-form'>
+        <input type="hidden" name="pluginName" value="save"/>
+        <input type="text"   name="p_name"    class="login_text tip_text" placeholder="输入姓名"/>
+        <input type="text"   name="p_city"    class="login_text tip_text" placeholder="输入城市"/>
+        <input type="text"   name="p_sex"     class="login_text tip_text" placeholder="输入性别"/>
+        <input type="text"   name="p_phone"   class="login_text tip_text" placeholder="输入手机"/>
+        <input type="text"   name="p_wechat"  class="login_text tip_text" placeholder="输入微信"/>
+        <input type="text"   name="p_email"   class="login_text tip_text" placeholder="输入E-mail"/>
+        <textarea  name="p_desc"  class="tip_text" placeholder="输入个人优势"></textarea>
     </form>
-    <div class="login_btn">
-        <a href="#" id="mySubmit">提交申请</a>
+    <div class="login_btn" style="margin-bottom: 20px;">
+        <a href="javascript:void(0);" id="mySubmit">提交申请</a>
     </div>
 </div>
 </body>
@@ -91,29 +91,68 @@
     }
 
 </style>
-<script>
+<script type="text/javascript">
     var lock = false;
-    function exchangeSubmit(){
-        $("#partner-form").submit();
-        return;
+    function partnerSubmit(){
         if( lock == true ){
             return;
         }
-        var exchangeCodeValue = $('#exchangeCode').val();
-        if( exchangeCodeValue == "" ){
-            alert("请输入密码");
+        var p_name      =  $("#partner-form [name='p_name']").val();
+        var p_city      =  $("#partner-form [name='p_city']").val();
+        var p_sex       =  $("#partner-form [name='p_sex']").val();
+        var p_phone     =  $("#partner-form [name='p_phone']").val();
+        var p_wechat    =  $("#partner-form [name='p_wechat']").val();
+        var p_email     =  $("#partner-form [name='p_email']").val();
+        var p_desc      =  $("#partner-form [name='p_desc']").val();
+
+        if( p_name == ""){
+            alert("请输入姓名");
+            return;
+        }
+        if( p_city == ""){
+            alert("请输入城市");
+            return;
+        }
+        if( p_sex == ""){
+            alert("请输入性别");
+            return;
+        }
+        if( p_phone == ""){
+            alert("请输入手机");
+            return;
+        }
+        if( !checkMobile(p_phone) ){
+            alert("手机号码格式有误");
+            return;
+        }
+        if( p_wechat == ""){
+            alert("请输入微信");
+            return;
+        }
+        if( p_email == ""){
+            alert("请输入E-mail");
+            return;
+        }
+        if( !checkEmail(p_email) ){
+            alert("E-mail格式有误");
+            return;
+        }
+        if( p_desc == ""){
+            alert("请输入个人优势");
             return;
         }
         lock = true;
         $.ajax({
             type:'post',
-            url:"/Mobile/exchange/checkExchangeCode.html",
-            data:{code:exchangeCodeValue},
+            url:"{:U('Mobile/Addons/partner')}",
+            data:$("#partner-form").serialize(),
             dataType:'json',
             success:function(res){
                 lock = false;
                 if(res.state == 1){
-                    window.location.href = "/Mobile/Exchange/exchangeInfo.html";
+                    alert(res.msg);
+                    window.location.href = "{:U('Mobile/Addons/partner',array('pluginName' =>'submitMsg' ))}";
+                    return;
                 }else{
                     alert(res.msg);
                 }
@@ -125,34 +164,14 @@
 
         });
     }
-</script>
-
-<script>
     $(function(){
         $("#mySubmit").click(function(){
-            exchangeSubmit();
+            partnerSubmit();
         });
     });
 </script>
 <script src="__PUBLIC__/js/publicFunctionMobile.js" type="text/javascript"></script>
 <link href="__STATIC__/css/longmi.css" rel="stylesheet" />
-
-<script>
-    $(function(){
-        imgErrorEvent();
-    });
-    function imgErrorEvent(){
-        $('img').each(function(){
-            if($(this).attr('src') == ''){
-                $(this).attr('src',"/Public/images/default/goodsimg.jpg");
-            }
-        });
-        $('img').unbind("error");
-        $('img').error(function(){
-            $(this).attr('src',"/Public/images/default/goodsimg.jpg");
-        });
-    }
-</script>
-<!-- 微信浏览器 调用微信 分享js-->
-<!-- 微信浏览器 调用微信 分享js  end-->
+<script src="__PUBLIC__/js/global.js"></script>
+<include file="$sharePath"/>
 </html>
