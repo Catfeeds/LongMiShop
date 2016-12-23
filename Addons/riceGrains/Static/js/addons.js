@@ -6,11 +6,15 @@
 
 var player_test;
 var playerWidth ;
-var playerHeight;
+var playerHeight
+
+//分数
+var fraction=0;
 
 var is_draw = false;
 var is_first_load = true;
 var is_over = false;
+var is_show_fraction = false;
 
 
 
@@ -18,8 +22,10 @@ $(function(){
 
 
 
-    $(".page_2").show();
-    $(".page_2").show();
+    $(".page_1").show();
+    // $(".page_2").show();
+    // $("#game_over").show();
+    // $("#game_over .result").show();
 
     $(".page_1 .ren").click(function(){
         player_test =  $(this).attr("data-test");
@@ -38,6 +44,7 @@ $(function(){
     });
 
 
+    //分数检测
     $("#game_over .ok").click(function(){
         var number =  $("#game_over input").val();
         if( number == "" ||  number <= 0 ){
@@ -47,7 +54,16 @@ $(function(){
         $("#game_over input").css("width","70%");
         $("#game_over input").attr("disable");
         $("#game_over .result").show();
-        alert(fraction);
+        $("#game_over .fraction").html(fraction);
+        $("#game_over .fraction").show();
+
+        var abs =number - fraction;
+        if( Math.abs(abs) > 10 ){
+            $("#game_over .taunt").show();
+        }
+
+        is_show_fraction = true;
+        resultDraw();
 
     });
 
@@ -75,12 +91,12 @@ $(function(){
     var cao     = new Image();
     var boom    = new Image();
 
+
     var h=20;
     var speed=15; //速度
     var zl=100;
     var chi=0;
     var shi=0;
-    var fraction=0;
 
 
     function object(){
@@ -99,6 +115,12 @@ $(function(){
     var range = canvasW - 60;
 
 
+    var probability_1 = 18;//18
+    var probability_2 = 35;//40
+    var probability_3 = 50;//50
+    var probability_4 = 100;//100
+
+    boom.src= _ADDONS+"/images/boom.png";
     /**
      * 生成飞行物
      */
@@ -117,31 +139,26 @@ $(function(){
                 }
                 var k=Math.round(Math.random()*zl);
 
-                if(k < 18){
-                    flyingObject[j].image.src=_ADDONS+"/images/mi1.png";
-                    flyingObject[j].q = 1;
-                    flyingObject[j].h = 29;
-                    flyingObject[j].w = 15;
-                }else if(k < 40){
-                    flyingObject[j].image.src=_ADDONS+"/images/mi2.png";
-                    flyingObject[j].q = 1;
-                    flyingObject[j].h = 50;
-                    flyingObject[j].w = 24;
-                }else if(k < 50){
-                    flyingObject[j].image.src=_ADDONS+"/images/mi3.png";
-                    flyingObject[j].q = 1;
-                    flyingObject[j].h = 31;
-                    flyingObject[j].w = 15;
-                }else if(k < 100){
+                if(k < probability_1){
                     flyingObject[j].image.src=_ADDONS+"/images/zhadan.png";
                     flyingObject[j].q = -1;
                     flyingObject[j].h = 63;
                     flyingObject[j].w = 40;
-                }else {
-                    flyingObject[j].image.src=_ADDONS+"/images/mi3.png";
+                }else if(k < probability_2){
+                    flyingObject[j].image.src=_ADDONS+"/images/mi2.png";
                     flyingObject[j].q = 1;
                     flyingObject[j].h = 50;
                     flyingObject[j].w = 24;
+                }else if(k < probability_3){
+                    flyingObject[j].image.src=_ADDONS+"/images/mi3.png";
+                    flyingObject[j].q = 1;
+                    flyingObject[j].h = 31;
+                    flyingObject[j].w = 15;
+                }else if(k < probability_4){
+                    flyingObject[j].image.src=_ADDONS+"/images/mi1.png";
+                    flyingObject[j].q = 1;
+                    flyingObject[j].h = 29;
+                    flyingObject[j].w = 15;
                 }
                 flyingObject[j].image.width = flyingObject[j].w;
                 flyingObject[j].image.height = flyingObject[j].h;
@@ -170,6 +187,8 @@ $(function(){
                 if(flyingObject[i].q != -1){
                     plusFunction( flyingObject[i].q );
                 }else{
+                    ctx.drawImage(boom,sprite.x -20,canvasH-120,100,80);
+                    playDieSound();
                     stop();
                 }
                 flyingObject[i].image.width =0;
@@ -210,6 +229,19 @@ $(function(){
         plus[new_key].x=sprite.x;
         plus[new_key].y=canvasH - 110;
         plus[new_key].life = 20;
+        playSound();
+    }
+
+
+
+    function playSound(){
+        document.getElementById('audio').pause();
+        document.getElementById('audio').play();
+    }
+
+    function playDieSound(){
+        document.getElementById('audio').pause();
+        document.getElementById('die_audio').play();
     }
 
     /**
@@ -253,6 +285,9 @@ $(function(){
      * @param event
      */
     function myTouchMove(event){
+        if( is_over ){
+            return;
+        }
         event = event || window.event;
         var x,y ;
         switch(event.type){
@@ -281,7 +316,7 @@ $(function(){
         // }else{
         //     sprite.x =  x - playerWidth/2;
         // }
-        sprite.x =  x - playerWidth/2
+        sprite.x =  x - playerWidth/2;
 
         if( x + playerWidth/2 >= canvasW ) {
             sprite.x=canvasW-playerWidth;
@@ -325,12 +360,18 @@ $(function(){
      * 结果画图
      */
     function resultDraw(){
-        ctx.clearRect(0,0,canvasW,canvasH);
-        ctx.drawImage(cao,0,canvasH-80,canvasW,80);
-        ctx.drawImage(sprite.image,sprite.x,sprite.y,playerWidth,playerHeight);
-        ctx.drawImage(cao,0,canvasH-30,canvasW,30);
-        boom.src= _ADDONS+"/images/boom.png";
-        ctx.drawImage(boom,sprite.x -20,canvasH-120,100,80);
+        if( is_show_fraction ){
+            ctx.clearRect(0,0,canvasW,canvasH);
+            ctx.drawImage(cao,0,canvasH-80,canvasW,80);
+            ctx.drawImage(sprite.image,(canvasW - playerWidth)/2,sprite.y,playerWidth,playerHeight);
+            ctx.drawImage(cao,0,canvasH-30,canvasW,30);
+        }else{
+            ctx.clearRect(0,0,canvasW,canvasH);
+            ctx.drawImage(cao,0,canvasH-80,canvasW,80);
+            ctx.drawImage(sprite.image,sprite.x,sprite.y,playerWidth,playerHeight);
+            ctx.drawImage(cao,0,canvasH-30,canvasW,30);
+            ctx.drawImage(boom,sprite.x -20,canvasH-120,100,80);
+        }
     }
 
 
