@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X6 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="6.0423mm" height="6.9755mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 41 48"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str5 {stroke:#99C614;stroke-width:1.15618}
+    .str4 {stroke:#A3C739;stroke-width:1.15618}
+    .str3 {stroke:#ADC85E;stroke-width:1.15618}
+    .str2 {stroke:#B8CA82;stroke-width:1.15618}
+    .str1 {stroke:#C2CBA7;stroke-width:1.15618}
+    .str0 {stroke:#CCCCCC;stroke-width:1.15618}
+    .fil0 {fill:white}
+    .fil1 {fill:white;fill-rule:nonzero}
+   ]]>
+  </style>
+ </defs>
+ <g id="图层_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_1329825232">
+   <path class="fil0 str0" d="M5 8c4,-8 14,-10 22,-5 5,3 8,8 10,12 2,4 3,8 3,12 0,8 -3,14 -10,18 -7,4 -16,1 -21,-4 -3,-3 -4,-6 -6,-10 -2,-4 -3,-9 -3,-13 0,-4 2,-7 4,-10z"/>
+   <path class="fil0 str1" d="M7 10c3,-7 11,-9 18,-4 4,3 7,7 9,11 1,3 3,7 3,11 0,6 -2,12 -8,15 -6,3 -13,1 -18,-4 -3,-3 -4,-5 -5,-9 -2,-4 -3,-8 -3,-12 0,-3 2,-6 4,-8z"/>
+   <path class="fil0 str2" d="M10 12c1,-1 1,-3 3,-4 4,-3 8,-2 12,0 4,2 6,6 8,10 1,3 2,6 3,9 0,5 -2,10 -7,12 -5,2 -11,1 -15,-3 -2,-2 -4,-5 -5,-8 -2,-3 -3,-7 -2,-11 0,-3 1,-5 3,-7z"/>
+   <path class="fil0 str3" d="M12 14c0,-1 1,-2 2,-3 3,-2 6,-1 8,0 3,2 6,5 7,9 1,3 2,6 2,8 0,4 -1,8 -5,10 -4,2 -8,0 -11,-3 -2,-2 -3,-4 -4,-7 -1,-3 -2,-6 -2,-9 0,-2 1,-4 3,-5z"/>
+   <path class="fil0 str4" d="M15 16c0,-1 0,-2 1,-3 2,-1 3,-1 5,0 3,2 5,5 6,7 1,2 2,5 2,7 0,3 -1,6 -3,7 -3,1 -6,0 -8,-2 -2,-2 -3,-4 -4,-6 -1,-2 -2,-5 -2,-8 0,-2 1,-3 3,-3z"/>
+  </g>
+  <path class="fil1 str5" d="M17 26c1,2 2,4 3,5 2,2 4,2 5,1 1,-1 2,-2 2,-4 0,-2 -1,-4 -2,-6 -1,-3 -3,-5 -5,-6 -3,-2 -1,1 -2,2 -1,1 -2,0 -2,2 0,1 0,3 2,6z"/>
+ </g>
+</svg>

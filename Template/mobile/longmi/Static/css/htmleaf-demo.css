@@ -17,7 +17,7 @@
 }
 .tabBox {
 	background-color: #FFF;
-	margin-top: 10px;
+	margin-top: 2px;
 }
 .tabBox .hd {
 	height: 56px;
@@ -54,7 +54,7 @@
 	padding-bottom: 8px;
 	border-bottom-width: 2px;
 	border-bottom-style: solid;
-	border-bottom-color: #B02F4B;
+	border-bottom-color: #a6dc3d;
 }
 .tabBox .bd ul {
 	padding-bottom: 20px;
@@ -80,7 +80,7 @@
 	height: 40px;
 }
 .merchandise_box span {
-	color: #B02F4B;
+	color: #a6dc3d;
 }
 .merchandise_box li {
 	width: 20%;
@@ -288,7 +288,7 @@
 	padding-left: 10px;
 }
 .feedback-titel span {
-	color: #B02F4B;
+	color: #a6dc3d;
 	font-size: 18px;
 }
 .feedback-txt {
