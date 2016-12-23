@@ -11,7 +11,7 @@
 <div class="er1" style="margin:5px 0;">
 	<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITPAY'))}" class="er1_top">查看全部订单&nbsp;></a>
 	<ul>
-		<li>
+		<li style="background-image:url('__STATIC__/images/svg/my_nav_1.svg')">
 			<p>
 				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITPAY'))}">待付款</a>
 				<if condition = "$orderCount['WAITPAY'] neq 0 ">
@@ -19,7 +19,7 @@
 				</if>
 			</p>
 		</li>
-		<li style="background-image:url('__STATIC__/SVG/a2.svg')">
+		<li style="background-image:url('__STATIC__/images/svg/my_nav_2.svg')">
 			<p>
 				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITSEND'))}">待发货</a>
 				<if condition = "$orderCount['WAITSEND'] neq 0 ">
@@ -27,7 +27,7 @@
 				</if>
 			</p>
 		</li>
-		<li style="background-image:url('__STATIC__/SVG/a3.svg')">
+		<li style="background-image:url('__STATIC__/images/svg/my_nav_3.svg')">
 			<p>
 				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a>
 				<if condition = "$orderCount['WAITRECEIVE'] neq 0 ">
@@ -35,7 +35,7 @@
 				</if>
 			</p>
 		</li>
-		<li style="background-image:url('__STATIC__/SVG/a4.svg')">
+		<li style="background-image:url('__STATIC__/images/svg/my_nav_4.svg')">
 			<p>
 				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a>
 				<if condition = "$orderCount['WAITCCOMMENT'] neq 0 ">

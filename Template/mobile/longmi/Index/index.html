@@ -66,30 +66,43 @@
     <ul>
         <li>
             <p>
-                <a href="/Mobile/Order/order_list/type/WAITPAY.html">钱包</a>
+                <a href="{:U('Mobile/User/account')}">钱包</a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/nav_2.png')">
             <p>
-                <a href="/Mobile/Order/order_list/type/WAITSEND.html">优惠券</a>
+                <a href="{:U('Mobile/User/coupon')}">优惠券</a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/nav_3.png')">
             <p>
-                <a href="/Mobile/Order/order_list/type/WAITRECEIVE.html">活动</a>
+                <a href="{:U('Mobile/Recommend/index')}">推荐有奖</a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/nav_4.png')">
             <p>
-                <a href="/Mobile/Order/order_list/type/WAITCCOMMENT.html">赚米</a>
+                <a href="{:U('Mobile/User/myPoster')}">赚米</a>
             </p>
         </li>
     </ul>
-
 </div>
+
+
+<div class="index_title">
+    <img src="__STATIC__/images/new/suixinda.png">
+    <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>1));}">
+        <img src="__STATIC__/images/new/cp1.gif">
+    </a>
+    <img src="__STATIC__/images/new/suxinda2.png">
+</div>
+
+
 
 <div class="mui-content">
     <ul class="mui-table-view">
+
+
+
         <li class="mui-table-view-cell">
             <div class="mui-slider-handle">
                 <div class="cp_index">
@@ -99,8 +112,8 @@
                         </a>
                     </div>
                     <div class="cp1_r">
-                        <p class="<if condition='$v[store_count] eq 0' >cj1</if>">{$v.goods_name}</p>
-                        <span class="<if condition='$v[store_count] eq 0' >cj1</if>">￥{$v.member_goods_price}</span>
+                        <p class="cj1">{$v.goods_name}是梵蒂冈该</p>
+                        <span class="cj1">￥{$v.member_goods_price}123</span>
 
 
                         <div class="mui-numbox z-index" data-numbox-min='1' data-numbox-max='99'>
@@ -108,10 +121,14 @@
                             <input id="goods_num[{$v.id}]" class="mui-input-numbox" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{$v.goods_num}"  name="goods_num[{$v.id}]" onblur="ajax_cart_list()"/>
                             <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,{$v.id},{$v.store_count});" type="button">+</button>
                         </div>
+                        <p class="cj1">{$v.goods_name}是梵蒂冈该</p>
                     </div>
                 </div>
             </div>
         </li>
+
+
+
     </ul>
 </div>
 
