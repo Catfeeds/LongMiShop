@@ -1,0 +1,235 @@
+
+html,body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background: #e05a5a;
+    overflow: hidden;
+}
+
+
+#box {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000000;
+}
+
+.page{
+    background: #e05a5a;
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: relative;
+}
+
+.page_1{
+}
+
+.page_1 img{
+    position: absolute;
+    height: auto;
+}
+
+.page_1 .logo{
+    top: 3%;
+    left: 5%;
+    width: 38%;
+}
+.page_1 .cao{
+    bottom: 0;
+    left: 0;
+    width:100%;
+}
+/*//貂*/
+.page_1 .img_1{
+    width: 23%;
+    left:5%;
+    bottom: -7%;
+    transform:rotate(15deg);
+    -ms-transform:rotate(15deg); 	/* IE 9 */
+    -moz-transform:rotate(15deg); 	/* Firefox */
+    -webkit-transform:rotate(15deg); /* Safari 和 Chrome */
+    -o-transform:rotate(15deg);
+}
+/*//鹤*/
+.page_1 .img_2{
+    width: 36%;
+    right: -12%;
+    bottom: 35%;
+    transform: rotate(-40deg);
+    -ms-transform: rotate(-40deg);
+    -moz-transform: rotate(-40deg);
+    -webkit-transform: rotate(-40deg);
+    -o-transform: rotate(-40deg);
+}
+/*//虎*/
+.page_1 .img_3{
+    width: 28%;
+    left:-12%;
+    bottom: 10%;
+    transform:rotate(30deg);
+    -ms-transform:rotate(30deg); 	/* IE 9 */
+    -moz-transform:rotate(30deg); 	/* Firefox */
+    -webkit-transform:rotate(30deg); /* Safari 和 Chrome */
+    -o-transform:rotate(30deg);
+}
+/*//鹿*/
+.page_1 .img_4{
+    width: 25%;
+    right: -7%;
+    bottom: 12%;
+    transform: rotate(-48deg);
+    -ms-transform: rotate(-48deg);
+    -moz-transform: rotate(-48deg);
+    -webkit-transform: rotate(-48deg);
+    -o-transform: rotate(-48deg);
+}
+/*//鼠*/
+.page_1 .img_5{
+    width: 28%;
+    left: 51%;
+    bottom: 7%;
+}
+/*//熊*/
+.page_1 .img_6{
+    width: 23%;
+    left: 34%;
+    bottom: 0;
+}
+/*//鹰*/
+.page_1 .img_7{
+    width: 24%;
+    left:75%;
+    bottom: -3%;
+    transform:rotate(-20deg);
+    -ms-transform:rotate(-20deg); 	/* IE 9 */
+    -moz-transform:rotate(-20deg); 	/* Firefox */
+    -webkit-transform:rotate(-20deg); /* Safari 和 Chrome */
+    -o-transform:rotate(-20deg);
+}
+/*//点击开始游戏*/
+.page_1 .img_8{
+    width: 55%;
+    left: 12%;
+    top: 50%;
+}
+.page_1 .img_9{
+    width: 60%;
+    left: 17%;
+    top: 17%;
+}
+.page_1 .img_10{
+    width: 30%;
+    left: 48%;
+    top: 16%;
+}
+.page_1 .img_11{
+    width: 25%;
+    left: 18%;
+    top: 29%;
+}
+.page_1 .img_12{
+    width: 15%;
+    left: 53%;
+    top: 10%;
+}
+.page_1 .img_13{
+    width: 15%;
+    left: 6%;
+    top: 30%;
+}
+
+
+
+.page_2 img{
+    position: absolute;
+    height: auto;
+}
+.page_2 .img_1{
+    width: 70%;
+    left: 15%;
+    top: 10%;
+}
+#game_over{
+    width: 100%;
+    display: none;
+}
+#game_over input{
+    position: absolute;
+    width: 35%;
+    height: 36px;
+    font-size: 28px;
+    color: #fff;
+    line-height: 36px;
+    padding: 5px 5px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    top: 27%;
+    left: 15%;
+    background: #e05a5a;
+}
+#game_over .result{
+    display: none;
+    position: absolute;
+    width: 70%;
+    height: 36px;
+    font-size: 28px;
+    color: #fff;
+    line-height: 36px;
+    padding: 5px 5px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    top: 36%;
+    left: 15%;
+    background: #e05a5a;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+}
+#game_over .ok{
+    position: absolute;
+    width: 24%;
+    height: 36px;
+    font-size: 28px;
+    color: #e05a5a;
+    padding: 5px 10px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    top: 27%;
+    left: 58%;
+    line-height: 36px;
+    background: #fff;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+}
+#game_over .fraction{
+    display: none;
+    position: absolute;
+    width: 85px;
+    padding-left: 15px;
+    height: 65px;
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+    line-height: 65px;
+    bottom: 20%;
+    left: 57%;
+    background: url(../images/bubble.png) center no-repeat;
+    background-size: 100px 65px;
+
+}
+#game_over .taunt{
+    display: none;
+    position: absolute;
+    width: 100px;
+    height: 105px;
+    bottom: 16%;
+    right: 57%;
+    background: url(../images/taunt.png) center no-repeat;
+    background-size: 100px 105px;
+
+}
