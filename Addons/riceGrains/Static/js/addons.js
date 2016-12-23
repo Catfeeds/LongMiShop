@@ -56,12 +56,8 @@ $(function(){
         $("#game_over .fraction").html(fraction);
         $("#game_over .fraction").show();
 
-        // var abs =number - fraction;
-        // var wuca = 10;
-        // if( Math.abs(abs) > 10 ){
-        //     $("#game_over .taunt").show();
-        // }
-        if( number == fraction ){//&& fraction > 30
+        var abs =number - fraction;
+        if( Math.abs(abs) < 3 ){
             $("#game_over .taunt2").show();
             $("#game_over .result2").show();
         }else{
@@ -383,5 +379,14 @@ $(function(){
         }
     }
 
+
+
+
+    $(".page_1 .img_14").click(function(){
+        $(".page_1 .rule").show();
+    });
+    $(".page_1 .rule").click(function(){
+        $(this).hide();
+    });
 
 });
