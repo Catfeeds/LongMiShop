@@ -28,23 +28,23 @@ html,body {
 .page_1{
 }
 
-.page_1 img{
+.page_1 img,.page_3 img{
     position: absolute;
     height: auto;
 }
 
-.page_1 .logo{
+ .logo{
     top: 3%;
     left: 5%;
     width: 38%;
 }
-.page_1 .cao{
+ .cao{
     bottom: 0;
     left: 0;
     width:100%;
 }
 /*//貂*/
-.page_1 .img_1{
+ .img_1{
     width: 23%;
     left:5%;
     bottom: -7%;
@@ -55,7 +55,7 @@ html,body {
     -o-transform:rotate(15deg);
 }
 /*//鹤*/
-.page_1 .img_2{
+ .img_2{
     width: 36%;
     right: -12%;
     bottom: 35%;
@@ -66,7 +66,7 @@ html,body {
     -o-transform: rotate(-40deg);
 }
 /*//虎*/
-.page_1 .img_3{
+ .img_3{
     width: 28%;
     left:-12%;
     bottom: 10%;
@@ -77,7 +77,7 @@ html,body {
     -o-transform:rotate(30deg);
 }
 /*//鹿*/
-.page_1 .img_4{
+ .img_4{
     width: 25%;
     right: -7%;
     bottom: 12%;
@@ -88,19 +88,19 @@ html,body {
     -o-transform: rotate(-48deg);
 }
 /*//鼠*/
-.page_1 .img_5{
+ .img_5{
     width: 28%;
     left: 51%;
     bottom: 7%;
 }
 /*//熊*/
-.page_1 .img_6{
+ .img_6{
     width: 23%;
     left: 34%;
     bottom: 0;
 }
 /*//鹰*/
-.page_1 .img_7{
+ .img_7{
     width: 24%;
     left:75%;
     bottom: -3%;
@@ -111,38 +111,75 @@ html,body {
     -o-transform:rotate(-20deg);
 }
 /*//点击开始游戏*/
-.page_1 .img_8{
+ .img_8{
     width: 55%;
     left: 12%;
     top: 50%;
 }
-.page_1 .img_9{
+ .img_9{
     width: 60%;
     left: 17%;
     top: 17%;
 }
-.page_1 .img_10{
+ .img_10{
     width: 30%;
     left: 48%;
     top: 16%;
 }
-.page_1 .img_11{
+ .img_11{
     width: 25%;
     left: 18%;
     top: 29%;
 }
-.page_1 .img_12{
+.img_12{
     width: 15%;
     left: 53%;
     top: 10%;
 }
-.page_1 .img_13{
+ .img_13{
     width: 15%;
     left: 6%;
     top: 30%;
 }
+ .img_14{
+     width: 50%;
+     left: 22%;
+     top: 22%;
+}
+
+.img_15{
+    width: 25%;
+    left: 22%;
+    top: 67%;
+}
+.img_16{
+    width: 50%;
+    left: 22%;
+    top: 45%;
+}
 
 
+  .rule{
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:#e05a5a ;
+    background: #000;
+    opacity: 0.8;
+
+}
+  .rule p{
+    padding: 10% 0;
+    display: block;
+    width: 70%;
+    line-height: 36px;
+    font-size: 18px;
+    font-family: "微软雅黑";
+    margin: 50px 15%;
+    background: #000;
+    color: #fff;
+}
 
 .page_2 img{
     position: absolute;
@@ -189,6 +226,24 @@ html,body {
     text-align: center;
     font-weight: bold;
 }
+#game_over .result2{
+    display: none;
+    position: absolute;
+    width: 70%;
+    height: 36px;
+    font-size: 28px;
+    color: #fff;
+    line-height: 36px;
+    padding: 5px 5px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    top: 36%;
+    left: 15%;
+    background: #e05a5a;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+}
 #game_over .ok{
     position: absolute;
     width: 24%;
@@ -213,11 +268,13 @@ html,body {
     padding-left: 15px;
     height: 65px;
     text-align: center;
+    font-weight: bold;
     font-size: 20px;
     color: #fff;
     line-height: 65px;
     bottom: 20%;
     left: 57%;
+    font-family: "微软雅黑";
     background: url(../images/bubble.png) center no-repeat;
     background-size: 100px 65px;
 
@@ -231,5 +288,16 @@ html,body {
     right: 57%;
     background: url(../images/taunt.png) center no-repeat;
     background-size: 100px 105px;
+
+}
+#game_over .taunt2{
+    display: none;
+    position: absolute;
+    width: 200px;
+    height: 183px;
+    bottom: 12%;
+    right: 47%;
+    background: url(../images/taunt2.png) center no-repeat;
+    background-size: 200px 183px;
 
 }

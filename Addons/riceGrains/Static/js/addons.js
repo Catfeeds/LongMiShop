@@ -6,7 +6,7 @@
 
 var player_test;
 var playerWidth ;
-var playerHeight
+var playerHeight;
 
 //分数
 var fraction=0;
@@ -23,6 +23,7 @@ $(function(){
 
 
     $(".page_1").show();
+    // $(".page_3").show();
     // $(".page_2").show();
     // $("#game_over").show();
     // $("#game_over .result").show();
@@ -53,14 +54,18 @@ $(function(){
         $(this).hide();
         $("#game_over input").css("width","70%");
         $("#game_over input").attr("disable");
-        $("#game_over .result").show();
         $("#game_over .fraction").html(fraction);
         $("#game_over .fraction").show();
 
         var abs =number - fraction;
-        if( Math.abs(abs) > 10 ){
+        if( Math.abs(abs) < 3 ){
+            $("#game_over .taunt2").show();
+            $("#game_over .result2").show();
+        }else{
             $("#game_over .taunt").show();
+            $("#game_over .result").show();
         }
+
 
         is_show_fraction = true;
         resultDraw();
@@ -186,6 +191,7 @@ $(function(){
             if( touchDetection(sprite,flyingObject[i])  ) {
                 if(flyingObject[i].q != -1){
                     plusFunction( flyingObject[i].q );
+                    // speed++;
                 }else{
                     ctx.drawImage(boom,sprite.x -20,canvasH-120,100,80);
                     playDieSound();
@@ -374,5 +380,17 @@ $(function(){
         }
     }
 
+
+
+
+    $(".page_1 .img_14").click(function(){
+        $(".page_1 .rule").show();
+    });
+    $(".page_1 .rule").click(function(){
+        $(this).hide();
+    });
+    $(".page_2 .result2").click(function(){
+        $(".page_3").show();
+    });
 
 });
