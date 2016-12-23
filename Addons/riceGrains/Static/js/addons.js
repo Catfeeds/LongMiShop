@@ -23,6 +23,7 @@ $(function(){
 
 
     $(".page_1").show();
+    // $(".page_3").show();
     // $(".page_2").show();
     // $("#game_over").show();
     // $("#game_over .result").show();
@@ -387,6 +388,9 @@ $(function(){
     });
     $(".page_1 .rule").click(function(){
         $(this).hide();
+    });
+    $(".page_2 .result2").click(function(){
+        $(".page_3").show();
     });
 
 });
