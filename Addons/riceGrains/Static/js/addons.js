@@ -6,7 +6,7 @@
 
 var player_test;
 var playerWidth ;
-var playerHeight
+var playerHeight;
 
 //分数
 var fraction=0;
@@ -53,14 +53,22 @@ $(function(){
         $(this).hide();
         $("#game_over input").css("width","70%");
         $("#game_over input").attr("disable");
-        $("#game_over .result").show();
         $("#game_over .fraction").html(fraction);
         $("#game_over .fraction").show();
 
-        var abs =number - fraction;
-        if( Math.abs(abs) > 10 ){
+        // var abs =number - fraction;
+        // var wuca = 10;
+        // if( Math.abs(abs) > 10 ){
+        //     $("#game_over .taunt").show();
+        // }
+        if( number == fraction ){//&& fraction > 30
+            $("#game_over .taunt2").show();
+            $("#game_over .result2").show();
+        }else{
             $("#game_over .taunt").show();
+            $("#game_over .result").show();
         }
+
 
         is_show_fraction = true;
         resultDraw();
@@ -186,6 +194,7 @@ $(function(){
             if( touchDetection(sprite,flyingObject[i])  ) {
                 if(flyingObject[i].q != -1){
                     plusFunction( flyingObject[i].q );
+                    // speed++;
                 }else{
                     ctx.drawImage(boom,sprite.x -20,canvasH-120,100,80);
                     playDieSound();
