@@ -1,0 +1,30 @@
+/* animation sets */
+
+/* move from / to  */
+
+.pt-page-moveToLeft1 {
+	-webkit-animation: moveToLeft .6s ease both;
+	animation: moveToLeft .6s ease both;
+}
+
+
+
+/********************************* keyframes **************************************/
+
+/* move from / to  */
+
+@-webkit-keyframes moveToLeft {
+ from {
+}
+to {
+	-webkit-transform: translateX(-100%);
+}
+}
+@keyframes moveToLeft {
+ from {
+}
+to {
+	-webkit-transform: translateX(-100%);
+	transform: translateX(-100%);
+}
+}

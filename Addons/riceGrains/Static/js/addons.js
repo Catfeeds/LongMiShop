@@ -1,17 +1,39 @@
 /**
  * 米粒游戏js
+ *
+ * 钟瀚涛
  */
+
 var player_test;
+var playerWidth ;
+var playerHeight;
+
 var is_draw = false;
 var is_first_load = true;
+var is_over = false;
+
+
 
 $(function(){
+
+
+
+    $(".page_2").show();
+    $(".page_2").show();
+
     $(".page_1 .ren").click(function(){
         player_test =  $(this).attr("data-test");
+        playerWidth = $(this).attr("data-width");
+        playerHeight = $(this).attr("data-height");
+
+        sprite.x=(canvasW - playerWidth)/2;
+        sprite.y=canvasH-playerHeight;
+        sprite.image=player;
         $(".page_1").hide();
         $(".page_2").show();
-
         is_draw = true;
+
+
 
     });
 
@@ -23,8 +45,10 @@ $(function(){
         }
         $(this).hide();
         $("#game_over input").css("width","70%");
+        $("#game_over input").attr("disable");
         $("#game_over .result").show();
         alert(fraction);
+
     });
 
     var box = $('#box');
@@ -47,21 +71,12 @@ $(function(){
 
 
 
-    var flyer = new Array();
-
-
-    var player = new Image();
-
-
-    // var playerWidth =215;
-    // var playerHeight =309;
-    var playerWidth =100;
-    var playerHeight =150;
-
-    var cao = new Image();
+    var player  = new Image();
+    var cao     = new Image();
+    var boom    = new Image();
 
     var h=20;
-    var sudu=15;
+    var speed=15; //速度
     var zl=100;
     var chi=0;
     var shi=0;
@@ -71,64 +86,67 @@ $(function(){
     function object(){
         this.x=0;
         this.y=0;
+        this.h=0;
+        this.w=0;
         this.l=11;
         this.image=new Image();
     }
 
 
     var sprite= new object();
-
-    sprite.x=(canvasW - playerWidth)/2;
-    sprite.y=canvasH-playerHeight;
-    sprite.image=player;
-
+    var plus = new Array();
+    var flyingObject = new Array();
     var range = canvasW - 60;
 
 
     /**
      * 生成飞行物
      */
-    function makeFlyer(){
+    function makeFlyingObject(){
         if(shi%h==0){
             for(var j=2*chi;j<2*(chi+1);j++){
-                flyer[j]=new object();
+
+                flyingObject[j]=new object();
+
                 var i=Math.round(Math.random()*range);
                 if(j==2*chi+1)
                 {
-                    while(Math.abs(i-flyer[2*chi].x)<30){
+                    while(Math.abs(i-flyingObject[2*chi].x)<30){
                         i=Math.round(Math.random()*range);
                     }
                 }
                 var k=Math.round(Math.random()*zl);
 
-                if(k < 50){
-                    flyer[j].image.src=_ADDONS+"/images/mi1.png";
-                    flyer[j].q = 1;
-                    flyer[j].h = 29;
-                    flyer[j].w = 15;
-                }else if(k < 70){
-                    flyer[j].image.src=_ADDONS+"/images/mi2.png";
-                    flyer[j].q = 2;
-                    flyer[j].h = 50;
-                    flyer[j].w = 24;
-                }else if(k < 80){
-                    flyer[j].image.src=_ADDONS+"/images/mi3.png";
-                    flyer[j].q = 3;
-                    flyer[j].h = 79;
-                    flyer[j].w = 38;
-                }else if(k < 90){
-                    flyer[j].image.src=_ADDONS+"/images/zhadan.png";
-                    flyer[j].q = 4;
-                    flyer[j].h = 63;
-                    flyer[j].w = 40;
+                if(k < 18){
+                    flyingObject[j].image.src=_ADDONS+"/images/mi1.png";
+                    flyingObject[j].q = 1;
+                    flyingObject[j].h = 29;
+                    flyingObject[j].w = 15;
+                }else if(k < 40){
+                    flyingObject[j].image.src=_ADDONS+"/images/mi2.png";
+                    flyingObject[j].q = 1;
+                    flyingObject[j].h = 50;
+                    flyingObject[j].w = 24;
+                }else if(k < 50){
+                    flyingObject[j].image.src=_ADDONS+"/images/mi3.png";
+                    flyingObject[j].q = 1;
+                    flyingObject[j].h = 31;
+                    flyingObject[j].w = 15;
+                }else if(k < 100){
+                    flyingObject[j].image.src=_ADDONS+"/images/zhadan.png";
+                    flyingObject[j].q = -1;
+                    flyingObject[j].h = 63;
+                    flyingObject[j].w = 40;
                 }else {
-                    flyer[j].image.src=_ADDONS+"/images/mi3.png";
-                    flyer[j].q = 5;
-                    flyer[j].h = 79;
-                    flyer[j].w = 56;
+                    flyingObject[j].image.src=_ADDONS+"/images/mi3.png";
+                    flyingObject[j].q = 1;
+                    flyingObject[j].h = 50;
+                    flyingObject[j].w = 24;
                 }
-                flyer[j].x=i;
-                flyer[j].y=-Math.round(Math.random()*300);
+                flyingObject[j].image.width = flyingObject[j].w;
+                flyingObject[j].image.height = flyingObject[j].h;
+                flyingObject[j].x=i;
+                flyingObject[j].y=-Math.round(Math.random()*300);
             }
             chi++;
             if(chi==10) chi=0;
@@ -141,29 +159,57 @@ $(function(){
      * 绘图
      */
     function draw(){
-        makeFlyer();
-        for(var i=0; i<flyer.length; i++){
-            if( touchDetection(sprite,flyer[i]) ) {
-                if(flyer[i].q == 1){
-                    fraction+=1;
-                }else if(flyer[i].q == 2){
-                    fraction+=1;
-                }else if(flyer[i].q == 3){
-                    fraction+=1;
-                }else if(flyer[i].q == 4){
-                    stop();
+
+        //创建飞行物
+        makeFlyingObject();
+
+
+        //飞行物绘制
+        for(var i=0; i<flyingObject.length; i++){
+            if( touchDetection(sprite,flyingObject[i])  ) {
+                if(flyingObject[i].q != -1){
+                    plusFunction( flyingObject[i].q );
                 }else{
-                    fraction+=1;
+                    stop();
                 }
-                flyer[i].x =0;
-                flyer[i].y =0;
-                flyer[i].image.width =0;
-                flyer[i].image.height =0;
+                flyingObject[i].image.width =0;
+                flyingObject[i].image.height =0;
+                flyingObject[i].x =0;
+                flyingObject[i].y =canvasH;
             }else{
-                flyer[i].y += sudu;
-                ctx.drawImage(flyer[i].image,flyer[i].x,flyer[i].y,flyer[i].w,flyer[i].h);
+                flyingObject[i].y += speed;
+                ctx.drawImage(flyingObject[i].image,flyingObject[i].x,flyingObject[i].y,flyingObject[i].w,flyingObject[i].h);
             }
         }
+
+        //加分特效绘制
+        for(var j=0; j<plus.length; j++){
+            plus[j].y -= 5;
+            plus[j].life -= 1;
+            if( plus[j].life > 0){
+                plus[j].life --;
+                ctx.drawImage(plus[j].image,plus[j].x,plus[j].y,plus[j].w,plus[j].h);
+            }
+        }
+    }
+
+
+    /**
+     * 加分
+     * @param fraction_number
+     */
+    function plusFunction( fraction_number ){
+        fraction += fraction_number;
+        var new_key  = plus.length > 0 ?plus.length:0;
+        plus[new_key]=new object();
+        plus[new_key].image.src=_ADDONS+"/images/add_one.png";
+        plus[new_key].h = 20;
+        plus[new_key].w = 31;
+        plus[new_key].image.width = plus[new_key].w;
+        plus[new_key].image.height = plus[new_key].h;
+        plus[new_key].x=sprite.x;
+        plus[new_key].y=canvasH - 110;
+        plus[new_key].life = 20;
     }
 
     /**
@@ -172,33 +218,17 @@ $(function(){
      * @param b
      * @returns {boolean}
      */
-    var ii = true;
     function touchDetection(a,b){
         if(
-            (a.y <= b.y + b.image.height  ) &&
+            (a.y <= b.y + b.image.height && b.y  < canvasH - 30  ) &&
             (
                 ( a.x <= b.x && a.x + a.image.width  >= b.x ) ||
                 ( a.x <= b.x  + b.image.width   && a.x + a.image.width  >= b.x  + b.image.width )
             )
         ){
-            // console.log(a);
-            // console.log(b);
-            // console.log("1233");
             return true;
         }
         return false;
-        // var c=a.x-b.x;
-        // var d=a.y-b.y;
-        // if(c < b.image.width && c>-a.image.width && d<b.image.height && d>-a.image.height){
-        //     if( ii){
-        //         ii = false;
-        //         console.log(a);
-        //         console.log(b);
-        //         console.log("1233");
-        //     }
-        //     return true;
-        // }
-        // return false;
     }
 
     /**
@@ -206,7 +236,7 @@ $(function(){
      */
     function stop()
     {
-        clearInterval(interval);
+        is_over = true;
         $("#game_over").show();
     }
 
@@ -240,8 +270,20 @@ $(function(){
                 y = event.touches[0].clientY;
                 break;
         }
-        sprite.x =  x - playerWidth/2;
-        if( sprite.x+playerWidth >= canvasW ) {
+
+        // var abs = x - sprite.x;
+        // if(Math.abs(abs) > 5){
+        //     if( x > sprite.x ){
+        //         sprite.x += 5;
+        //     }else{
+        //         sprite.x -= 5;
+        //     }
+        // }else{
+        //     sprite.x =  x - playerWidth/2;
+        // }
+        sprite.x =  x - playerWidth/2
+
+        if( x + playerWidth/2 >= canvasW ) {
             sprite.x=canvasW-playerWidth;
         }else if( x <= playerWidth/2){
             sprite.x=0;
@@ -261,16 +303,35 @@ $(function(){
         if( is_first_load ){
             player.src=_ADDONS+"/images/ren_"+player_test+".png";
             cao.src=_ADDONS+"/images/cao2.png";
+            player.width = playerWidth;
+            player.height = playerHeight;
             is_first_load = false;
         }
 
+        if( is_over ){
+            resultDraw();
+            clearInterval(interval);
+        }else{
+            ctx.clearRect(0,0,canvasW,canvasH);
+            ctx.drawImage(cao,0,canvasH-80,canvasW,80);
+            ctx.drawImage(sprite.image,sprite.x,sprite.y,playerWidth,playerHeight);
+            ctx.drawImage(cao,0,canvasH-30,canvasW,30);
+            draw();
+        }
+    },50);
+
+
+    /**
+     * 结果画图
+     */
+    function resultDraw(){
         ctx.clearRect(0,0,canvasW,canvasH);
         ctx.drawImage(cao,0,canvasH-80,canvasW,80);
         ctx.drawImage(sprite.image,sprite.x,sprite.y,playerWidth,playerHeight);
         ctx.drawImage(cao,0,canvasH-30,canvasW,30);
-        draw();
-    },50);
-
+        boom.src= _ADDONS+"/images/boom.png";
+        ctx.drawImage(boom,sprite.x -20,canvasH-120,100,80);
+    }
 
 
 });
