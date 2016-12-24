@@ -11,7 +11,7 @@ class riceGrainsMobileController
     //初始化
     public function __construct($userInfo)
     {
-        $this->assignData["v"] = 1;
+        $this->assignData["v"] = time();
 
         $this->assignData["userInfo"] = $this->userInfo = $userInfo;
         $this->assignData["sharePath"] = "./Addons/riceGrains/Template/Mobile/default/Addons_share.html";
