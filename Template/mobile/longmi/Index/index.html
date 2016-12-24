@@ -101,27 +101,24 @@
 <div class="mui-content">
     <ul class="mui-table-view">
 
-
-
         <li class="mui-table-view-cell">
             <div class="mui-slider-handle">
                 <div class="cp_index">
-                    <div class="cp1_l">
+                    <div class="cp_index_l">
                         <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}">
                             <img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92">
                         </a>
                     </div>
-                    <div class="cp1_r">
-                        <p class="cj1">{$v.goods_name}是梵蒂冈该</p>
-                        <span class="cj1">￥{$v.member_goods_price}123</span>
-
-
+                    <div class="cp_index_r">
+                        <p class="cj1">我是彩蛋</p>
+                        <p >
+                        <span>{$v.goods_name}是梵蒂冈该</span>
+                        </p>
                         <div class="mui-numbox z-index" data-numbox-min='1' data-numbox-max='99'>
                             <button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,{$v.id},{$v.store_count});" type="button">-</button>
-                            <input id="goods_num[{$v.id}]" class="mui-input-numbox" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{$v.goods_num}"  name="goods_num[{$v.id}]" onblur="ajax_cart_list()"/>
+                            <input id="goods_num[{$v.id}]" class="mui-input-numbox cp_index_number" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{$v.goods_num}"  name="goods_num[{$v.id}]" onblur="ajax_cart_list()"/>
                             <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,{$v.id},{$v.store_count});" type="button">+</button>
                         </div>
-                        <p class="cj1">{$v.goods_name}是梵蒂冈该</p>
                     </div>
                 </div>
             </div>

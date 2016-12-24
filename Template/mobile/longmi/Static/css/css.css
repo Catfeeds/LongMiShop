@@ -111,14 +111,7 @@ body {
 }
 
 
-.cp_index {
-	width: 100%;
-	overflow: hidden;
-	position: relative;
-}
-.cp_index img {
-	border-radius: 50%;
-}
+
 
 .banner_box {
 	position: relative;
@@ -2427,4 +2420,81 @@ Load—more a{
 	width: 100%;
 	margin: 0;
 	padding: 0;
+}
+
+
+
+.cp_index {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+}
+.cp_index img {
+	border-radius: 50%;
+}
+.cp_index_l {
+	float: left;
+
+}
+.cp_index_l1 {
+	float: left;
+
+}
+.cp_index_l2 {
+	float: left;
+	width: 50%;
+	padding-left: 5px;
+
+}
+
+.cp_index_r {
+	overflow: hidden;
+	padding-left: 10px;
+}
+.cp_index_r1 {
+	overflow: hidden;
+	padding-left: 5px;
+	text-align: right;
+	position: absolute;
+	top: 10px;
+	right: 5px;
+}
+.cp_index_r1 p {
+	overflow: hidden;
+	font-weight: bold;
+}
+.cp_index_r p {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	-moz-text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: left;
+	font-size: 16px !important;
+	line-height: 32px;
+	height: 32px;
+	display: block;
+	margin-bottom: 2px !important;
+}
+.cp_index_r span {
+	color: #a6dc3d;
+	line-height:30px;
+	font-size: 12px;
+	border: 1px dashed #a6dc3d;
+	border-radius: 5px;
+	padding: 0 5px;
+	display: block;
+	float: right;
+	text-align: right;
+}
+
+.cp_index_r .cj1 {
+	font-size: 12px;
+	color: #CCC !important;
+	text-align: right;
+}
+.cp_index_r .cp_index_number {
+	background: #a6dc3d;
+	color: #fff;
 }
