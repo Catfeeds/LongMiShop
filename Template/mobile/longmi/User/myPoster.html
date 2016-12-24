@@ -2,10 +2,26 @@
 <body>
 
 <if condition = "$isFile == true" >
-    <img src="__PUBLIC__/poster/poster_{$user.user_id}.png" style="width: 100%;">
+
+
+    <div class="new_poster">
+        <div class="xiaolian">
+            <img src="__STATIC__/images/new/xiaolian.jpg" >
+        </div>
+        <p>欢迎你成为龙米的小伙伴</p>
+        <span>分享下图专享二维码，邀请好友成功购买龙米，</span>
+        <span>就将赚得<b>{$inviteData.point}{$inviteData.balance}{$inviteData.coupon.money}元</b>龙米基金放入您的账户，</span>
+        <span>基金累计<b>{$shopConfig.basic_withdraw_storage}元</b>可实现提现哟。</span>
+        <span>每次通过你的二维码下单我们都会有信息提示哦~</span>
+        <img src="__PUBLIC__/poster/poster_{$user.user_id}.png" >
+    </div>
+
     <else/>
     海报生成中
 </if>
+
+
+<include file="Public/nav"/>
 
 </body>
 <include file="Public/footer"/>

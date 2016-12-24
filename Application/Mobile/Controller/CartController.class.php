@@ -11,6 +11,7 @@ class CartController extends MobileBaseController {
             'addCart',
             'ajaxAddCart',
             'ajaxCartList',
+            'ajaxChangeCartData',
             'cartList',
         );
     }
@@ -54,6 +55,53 @@ class CartController extends MobileBaseController {
         $result = $this->cartLogic->addCart($goods_id, $goods_num, $goods_spec,$this->session_id,$this->user_id); // 将商品加入购物车
         exit(json_encode($result));
     }
+    /**
+     * ajax 修改购物车中的商品数量
+     */
+    function ajaxChangeCartData()
+    {
+        $goods_id = I("goods_id"); // 商品id
+        $goods_num = $number = I("number");// 商品数量
+        $key = I("key"); // 商品规格
+
+        if( empty($goods_id) ||empty($goods_num) ||empty($key) ){
+            exit(json_encode( array('status'=>-1,'msg'=>'参数错误','result'=>0)));
+        }
+        $condition = array(
+            'user_id'         => $this->user_id,   // 用户id
+            'session_id'      => $this->session_id,   // sessionid
+            'goods_id'        => $goods_id,   // 商品id
+            'spec_key'=>$key
+        );
+        $goods_spec = explode("_",$key);
+        $cartInfo =findDataWithCondition("cart",$condition) ;
+        if( empty( $cartInfo )){
+            if(  $number > 0 ){
+                $result = $this->cartLogic->addCart($goods_id, $goods_num, $goods_spec,$this->session_id,$this->user_id); // 将商品加入购物车
+                exit(json_encode($result));
+            }
+        }else{
+            $goods_num = $cartInfo["goods_num"];
+            $goods_num += $number;
+            if(  $goods_num == 0 ){
+                M("cart")->where($condition)->delete();
+            }else{
+                M("cart")->where($condition)->save(array("goods_num"=>$goods_num));
+            }
+        }
+        $cart_count = cart_goods_num($this->user_id,$this->session_id); // 查找购物车数量
+        setcookie('cn',$cart_count,null,'/');
+        if(  $number < 0 ) {
+            exit(json_encode(array('status' => 1, 'msg' => '数量调整成功', 'result' => $cart_count)));
+        }
+        exit(json_encode(array('status' => 1, 'msg' => '成功加入购物车', 'result' => $cart_count)));
+    }
+
+
+
+
+
+
 
     /*
      * 请求获取购物车列表
