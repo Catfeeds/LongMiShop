@@ -2446,9 +2446,9 @@ Load—more a{
 	text-align: center;
 }
 .cp_index_l3 img{
-    border-radius: 0px;
-    height: 78px !important;
-    width: auto !important;
+	border-radius: 0px;
+	height: auto !important;
+	width: 100% !important;
 	margin: 0 auto;
 }
 
