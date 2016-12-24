@@ -52,7 +52,8 @@
 
 
 <form name="buy_goods_form" method="post" id="buy_goods_form" >
-    <img src="{$goods_images_list.0.image_url}" class="goods_info_banner" />
+
+    <img src="{$goods_images_list.0.image_url}" class="goods_info_banner" id="goods_info_banner" />
 
 
     <div class="price">
@@ -70,37 +71,32 @@
 
     <div style="clear:both"></div>
 
-    <div id="leftTabBox" class="tabBox">
+    <div class="tabBox">
         <div class="bd" >
-            <div class="price_main" style="padding:20px">
-                <div class="tab_cp">
-                    <table width="100%" border="0" cellpadding="3" cellspacing="0">
-                        <tbody>
-                        <foreach name="goods['my_parameter']" item="item" key="key">
-                            <tr>
-                                <th colspan="2">{$key}</th>
-                            </tr>
-                            <tr></tr>
-                            <foreach name="item" ITEM="p_time" key="p_key" >
-                                <tr>
-                                    <td>{$p_key}</td>
-                                    <td>{$p_time}</td>
-                                </tr>
-                            </foreach>
-                        </foreach>
+            <!--<div class="price_main" style="padding:20px">-->
+                <!--<div class="tab_cp">-->
+                    <!--<table width="100%" border="0" cellpadding="3" cellspacing="0">-->
+                        <!--<tbody>-->
+                        <!--<foreach name="goods['my_parameter']" item="item" key="key">-->
+                            <!--<tr>-->
+                                <!--<th colspan="2">{$key}</th>-->
+                            <!--</tr>-->
+                            <!--<tr></tr>-->
+                            <!--<foreach name="item" ITEM="p_time" key="p_key" >-->
+                                <!--<tr>-->
+                                    <!--<td>{$p_key}</td>-->
+                                    <!--<td>{$p_time}</td>-->
+                                <!--</tr>-->
+                            <!--</foreach>-->
+                        <!--</foreach>-->
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="con">
-                <ul>
-                    <li>
-                        <div class="price_main">
-                            {$goods.goods_content|htmlspecialchars_decode}
-                        </div>
-                    </li>
-                </ul>
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="con goods_content">
+                {$goods.goods_content|htmlspecialchars_decode}
             </div>
         </div>
     </div>
@@ -157,6 +153,9 @@
         var inCommentAjax = 0;
         var specNumber = -1;
         var show_is_buyer = 0;
+
+        var one_spec = 0;
+
         $(function(){
 
             $("#goods_num").change(function(){
@@ -164,21 +163,46 @@
             });
             get_goods_price();
             /*           <php>if($number==1){</php>*/
-
+            one_spec = "{$spec_key}";
             var loadingClick = 0 ;
             $(".optionsDiv li").each(function(){
                 if( loadingClick == 0){
-                    if( !$(this).hasClass("gray") ){
+                    var input_val = $(this).find("input").val();
+                    if( input_val == "{$spec_key}"){
                         loadingClick = 1;
                         switch_spec($(this));
                     }
                 }
 
             });
+            longMiChange();
+            $(".optionsDiv li").click(function(){
+                var input_val = $(this).find("input").val();
+                one_spec = input_val;
+                longMiChange();
+            });
+
+            function longMiChange(){
+                $(".my_goods_content").hide();
+                $("#my_goods_content_"+one_spec).show();
+                var src =  $("#goods_content_img_"+one_spec).data("src");
+                if( src != undefined && src != ""){
+                    $("#goods_info_banner").attr("src",src);
+                }else{
+                    $("#goods_info_banner").attr("src","{$goods_images_list.0.image_url}");
+                }
+
+            }
 
             /*           <php>}</php>*/
-            ajaxComment(1,1,0);// ajax 加载评价列表
+//            ajaxComment(1,1,0);// ajax 加载评价列表
         });
+
+
+
+
+
+
         function newSubmit(){
             var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表   //alert(spec_goods_price['28_100']['price']);
             // 如果有属性选择项
@@ -283,28 +307,28 @@
                 arr.splice(index, 1);
             return arr;
         };
-        var i = 1;
-        function ajaxComment(commentType,page,is_buyer){
-            inCommentAjax  = 1;
-            if(  page == 1 ){
-                var html = '<div class="mui-loading"><div class="mui-spinner"></div></div>';
-                $("#my_comment_list").html(html);
-            }
-
-            $("#getmore").remove();
-            $.ajax({
-                type : "GET",
-                url:"/index.php?m=Mobile&c=goods&a=ajaxComment&goods_id={$goods['goods_id']}&commentType="+commentType+"&p="+page+"&is_buyer="+is_buyer,//+tab,
-                success: function(data){
-                    if(  page == 1 ){
-                        $("#my_comment_list").html(data);
-                    }else{
-                        $("#my_comment_list").append(data);
-                    }
-                    inCommentAjax  = 0;
-                }
-            });
-        }
+//        var i = 1;
+//        function ajaxComment(commentType,page,is_buyer){
+//            inCommentAjax  = 1;
+//            if(  page == 1 ){
+//                var html = '<div class="mui-loading"><div class="mui-spinner"></div></div>';
+//                $("#my_comment_list").html(html);
+//            }
+//
+//            $("#getmore").remove();
+//            $.ajax({
+//                type : "GET",
+//                url:"/index.php?m=Mobile&c=goods&a=ajaxComment&goods_id={$goods['goods_id']}&commentType="+commentType+"&p="+page+"&is_buyer="+is_buyer,//+tab,
+//                success: function(data){
+//                    if(  page == 1 ){
+//                        $("#my_comment_list").html(data);
+//                    }else{
+//                        $("#my_comment_list").append(data);
+//                    }
+//                    inCommentAjax  = 0;
+//                }
+//            });
+//        }
 
 
         //        setInterval("get_goods_price();console.log('123')",500);

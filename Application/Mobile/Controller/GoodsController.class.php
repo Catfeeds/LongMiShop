@@ -25,7 +25,6 @@ class GoodsController extends MobileBaseController {
         parent::_initialize();
     }
     public function index(){
-       // $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px } a,a:hover,{color:blue;}</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>版本 V{$Think.version}</div><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_55e75dfae343f5a1"></thinkad><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
         $this -> display();
     }
 
@@ -166,8 +165,6 @@ class GoodsController extends MobileBaseController {
         C('TOKEN_ON',true);
 
         $inviteUserId = I('inviteUserId');
-
-
         createInviteRelationship($this ->user_id,$inviteUserId,$this ->user['nickname'],$this -> shopConfig);
 
 
@@ -175,83 +172,89 @@ class GoodsController extends MobileBaseController {
         $goodsLogic = new \Common\Logic\GoodsLogic();
         $goods_id = I("get.id");
         goodsStatistics($goods_id);
-        $goods = M('Goods') -> where("goods_id = $goods_id")->find();
+        $goods = findDataWithCondition('goods',array("goods_id"=> $goods_id));
         if(empty($goods)){
         	$this->error('此商品不存在或者已下架');
         }
-        if($goods['brand_id']){
-            $brnad = M('brand') -> where("id =".$goods['brand_id'])->find();
-            $goods['brand_name'] = $brnad['name'];
-        }
+
+//        if($goods['brand_id']){
+//            $brnad = M('brand') -> where("id =".$goods['brand_id'])->find();
+//            $goods['brand_name'] = $brnad['name'];
+//        }
+
+
         $goods_images_list = M('GoodsImages') -> where("goods_id = $goods_id")->select(); // 商品 图册
-        $goods_attribute = M('GoodsAttribute')->getField('attr_id,attr_name'); // 查询属性
-        $goods_attr_list = M('GoodsAttr') -> where("goods_id = $goods_id")->select(); // 查询商品属性表
+//        $goods_attribute = M('GoodsAttribute')->getField('attr_id,attr_name'); // 查询属性
+//        $goods_attr_list = M('GoodsAttr') -> where("goods_id = $goods_id")->select(); // 查询商品属性表
 		$filter_spec = $goodsLogic->getSpec($goods_id);
 
         $spec_goods_price  = M('spec_goods_price') -> where("goods_id = $goods_id")->getField("key,price,store_count"); // 规格 对应 价格 库存表
         //M('Goods') -> where("goods_id=$goods_id")->save(array('click_count'=>$goods['click_count']+1 )); //统计点击数
-        $commentStatistics = $goodsLogic->commentStatistics($goods_id);// 获取某个商品的评论统计
+//        $commentStatistics = $goodsLogic->commentStatistics($goods_id);// 获取某个商品的评论统计
         $this -> assign('spec_goods_price', json_encode($spec_goods_price,true)); // 规格 对应 价格 库存表
       	$goods['sale_num'] = M('order_goods') -> where("goods_id=$goods_id and is_send=1")->count();
 
-        //商品促销
-        if($goods['prom_type'] == 3)
-        {
-            $prom_goods = M('prom_goods') -> where("id = {$goods['prom_id']}  AND is_close=0")->find();
-            $this -> assign('prom_goods',$prom_goods);// 商品促销
-        }
-        if(!empty($this->user_id)){
-            $where['user_id'] = $this->user_id;
-            $where['goods_id'] = $goods_id;
-            $collectRes = M('goods_collect') -> where($where)->count();
-            $collectRes == 1 ? $this -> assign('collectRes',$collectRes) : '';
-        }
+//        //商品促销
+//        if($goods['prom_type'] == 3)
+//        {
+//            $prom_goods = M('prom_goods') -> where("id = {$goods['prom_id']}  AND is_close=0")->find();
+//            $this -> assign('prom_goods',$prom_goods);// 商品促销
+//        }
+//        if(!empty($this->user_id)){
+//            $where['user_id'] = $this->user_id;
+//            $where['goods_id'] = $goods_id;
+//            $collectRes = M('goods_collect') -> where($where)->count();
+//            $collectRes == 1 ? $this -> assign('collectRes',$collectRes) : '';
+//        }
 
         $goods['discount'] = round($goods['shop_price']/$goods['market_price'],2)*10;
 
-        $goods_res = M('goods')->field('weight,delivery_way') -> where("goods_id = '".$goods['goods_id']."'")->find();
-        $count_data = array(
-            0=>array(
-                'spec_key'=>'', //商品规格
-                'goods_id'=>$goods['goods_id'], //商品id
-                'goods_name'=>$goods['goods_name'], //商品名称
-                'shop_price'=> $goods['shop_price'], //商品价格
-                'weight'=>$goods_res['weight'], //商品重量
-                'shipping_code'=>$goods_res['delivery_way'], //配送方式
-                'goods_num'=> 1,   //件数  重量
-            ),
-        );
-        $logAdd = M('logistics')->field('log_province,log_city') -> where("log_id = '".$goods_res['delivery_way']."'")->find();
-        $logAdd = $logAdd['log_province'].' '.$logAdd['log_city'];
-        $count_postage = count_postage($count_data);
-
-        $condition3 = array('user_id' => $this -> user_id , 'goods_id' => $goods_id, 'is_delete' => 0 , 'is_buyer' => 0);
-        if( isExistenceDataWithCondition("goods_comment",$condition3) ){
-            $isComment = true;
-        }else{
-            $isComment = false;
-        }
-        $condition2 = 'og.order_id=o.order_id and og.goods_id="'.$goods_id.'" and o.pay_status = 1 and o.user_id = "'.$this -> user_id.'"';
-        if( M()->table(array('lm_order_goods'=>'og','lm_order'=>'o')) -> where($condition2)->count() > 0 ){
-            $this -> assign('isBought',true);
-            $condition4 = array('user_id' => $this -> user_id , 'goods_id' => $goods_id, 'is_delete' => 0 , 'is_buyer' => 1);
-            if( isExistenceDataWithCondition("goods_comment",$condition4) ){
-                $isComment = true;
-            }else{
-                $isComment = false;
-            }
-        }else{
-            $this -> assign('isBought',false);
-        }
+//        $goods_res = M('goods')->field('weight,delivery_way') -> where("goods_id = '".$goods['goods_id']."'")->find();
+//        $count_data = array(
+//            0=>array(
+//                'spec_key'=>'', //商品规格
+//                'goods_id'=>$goods['goods_id'], //商品id
+//                'goods_name'=>$goods['goods_name'], //商品名称
+//                'shop_price'=> $goods['shop_price'], //商品价格
+//                'weight'=>$goods_res['weight'], //商品重量
+//                'shipping_code'=>$goods_res['delivery_way'], //配送方式
+//                'goods_num'=> 1,   //件数  重量
+//            ),
+//        );
+//        $logAdd = M('logistics')->field('log_province,log_city') -> where("log_id = '".$goods_res['delivery_way']."'")->find();
+//        $logAdd = $logAdd['log_province'].' '.$logAdd['log_city'];
+//        $count_postage = count_postage($count_data);
+//
+//        $condition3 = array('user_id' => $this -> user_id , 'goods_id' => $goods_id, 'is_delete' => 0 , 'is_buyer' => 0);
+//        if( isExistenceDataWithCondition("goods_comment",$condition3) ){
+//            $isComment = true;
+//        }else{
+//            $isComment = false;
+//        }
+//        $condition2 = 'og.order_id=o.order_id and og.goods_id="'.$goods_id.'" and o.pay_status = 1 and o.user_id = "'.$this -> user_id.'"';
+//        if( M()->table(array('lm_order_goods'=>'og','lm_order'=>'o')) -> where($condition2)->count() > 0 ){
+//            $this -> assign('isBought',true);
+//            $condition4 = array('user_id' => $this -> user_id , 'goods_id' => $goods_id, 'is_delete' => 0 , 'is_buyer' => 1);
+//            if( isExistenceDataWithCondition("goods_comment",$condition4) ){
+//                $isComment = true;
+//            }else{
+//                $isComment = false;
+//            }
+//        }else{
+//            $this -> assign('isBought',false);
+//        }
         $goods['my_parameter'] = unserialize(base64_decode($goods['my_parameter']));
 //        dd($goods);
 
-        $this -> assign('isComment',$isComment);
-        $this -> assign('count_postage',sprintf(" %1\$.2f",$count_postage['data']['count']));
-        $this -> assign('logAdd',$logAdd);
-        $this -> assign('commentStatistics',$commentStatistics);//评论概览
-        $this -> assign('goods_attribute',$goods_attribute);//属性值
-        $this -> assign('goods_attr_list',$goods_attr_list);//属性列表
+//        $this -> assign('isComment',$isComment);
+//        $this -> assign('count_postage',sprintf(" %1\$.2f",$count_postage['data']['count']));
+//        $this -> assign('logAdd',$logAdd);
+//        $this -> assign('commentStatistics',$commentStatistics);//评论概览
+//        $this -> assign('goods_attribute',$goods_attribute);//属性值
+//        $this -> assign('goods_attr_list',$goods_attr_list);//属性列表
+
+        $spec_key = I("spec_key",0);
+        $this -> assign('spec_key',$spec_key);
         $this -> assign('filter_spec',$filter_spec);//规格参数
         $this -> assign('goods_images_list',$goods_images_list);//商品缩略图
         $this -> assign('goods',$goods);
