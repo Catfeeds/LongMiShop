@@ -48,25 +48,25 @@ class IndexController extends MobileBaseController {
         foreach ($spec_goods_price as $spec_goods_price_key => $spec_goods_price_item) {
             $img = "";
             switch ($spec_goods_price_item['key']) {
-                case "38":
+                case "49":
                     $img = "goods1_banner_sz.jpg";
                     break;
-                case "39":
+                case "50":
                     $img = "goods1_banner_me.jpg";
                     break;
-                case "40":
+                case "51":
                     $img = "goods1_banner_xm.jpg";
                     break;
-                case "41":
+                case "52":
                     $img = "goods1_banner_ld.jpg";
                     break;
-                case "42":
+                case "53":
                     $img = "goods1_banner_lr.jpg";
                     break;
-                case "43":
+                case "54":
                     $img = "goods1_banner_xys.jpg";
                     break;
-                case "44":
+                case "55":
                     $img = "goods1_banner_lm.jpg";
                     break;
             }
