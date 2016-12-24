@@ -49,25 +49,25 @@ class IndexController extends MobileBaseController {
             $img = "";
             switch ($spec_goods_price_item['key']) {
                 case "49":
-                    $img = "goods1_banner_sz.jpg";
+                    $img = "goods1_pic_sz.jpg";
                     break;
                 case "50":
-                    $img = "goods1_banner_me.jpg";
+                    $img = "goods1_pic_me.jpg";
                     break;
                 case "51":
-                    $img = "goods1_banner_xm.jpg";
+                    $img = "goods1_pic_xm.jpg";
                     break;
                 case "52":
-                    $img = "goods1_banner_ld.jpg";
+                    $img = "goods1_pic_ld.jpg";
                     break;
                 case "53":
-                    $img = "goods1_banner_lr.jpg";
+                    $img = "goods1_pic_lr.jpg";
                     break;
                 case "54":
-                    $img = "goods1_banner_xys.jpg";
+                    $img = "goods1_pic_xys.jpg";
                     break;
                 case "55":
-                    $img = "goods1_banner_lm.jpg";
+                    $img = "goods1_pic_lm.jpg";
                     break;
             }
             $spec_goods_price[$spec_goods_price_key]["img"] = $img;
