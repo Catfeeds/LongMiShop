@@ -31,9 +31,9 @@
     });
 
     $(".btn-lc").hover(function () {
-        $(this).css({ "background": "#e5d09d", "color": "#fff" });
+        $(this).css({ "background": "#a6dc3d", "color": "#fff" });
     }, function () {
-        $(this).css({ "background": "none", "color": "#e5d09d" });
+        $(this).css({ "background": "none", "color": "#a6dc3d" });
     });
 
     $(".cpkouwei").click(function () {

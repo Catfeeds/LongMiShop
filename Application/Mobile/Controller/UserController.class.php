@@ -1314,7 +1314,7 @@ class UserController extends MobileBaseController {
 
 
         $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
-        $this -> assign('inviteData', $inviteData);
+        $this -> assign('inviteData', getCallbackData($inviteData));
 
         $this -> display();
     }

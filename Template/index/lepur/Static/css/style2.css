@@ -9,7 +9,7 @@ html,body {width:100%;}
 .box1 {width:100%;}
 .box2 {width:1024px; margin:0 auto;}
 /*头部*/
-.head {height:40px;line-height:40px; background:#e5d09d;color:#fff;font-size:18px;text-align:center; letter-spacing:3px;}
+.head {height:40px;line-height:40px; background:#a6dc3d;color:#fff;font-size:18px;text-align:center; letter-spacing:3px;}
 .nav {width:1024px;margin:0 auto;  height:90px;}/*gai*/
 .nav-left{ float:left;height:90px;/*gai*/ padding:0px 50px; border-left:1px solid #bababa;border-right:1px solid #bababa;}
 .nav-left img{ margin-top:17.5px;}/*gai*/
@@ -26,7 +26,7 @@ html,body {width:100%;}
 .nav-center .menu li{ float:left; margin-right:50px; font-size:13px;}
 .nav-center .menu li:last-child { margin-right:0px;}
 .nav-center .menu li a{color:#4b4b4b; cursor:pointer;}
-.nav-center .menu li a:hover{color:#e5d2a1;}
+.nav-center .menu li a:hover{color:#a6dc3d;}
 /*轮播*/
 .carousel-control {opacity:1;cursor:pointer;}
 .carousel-control div{position:absolute;top:50%; margin-top:-71px;cursor:pointer;padding:25px;border-radius:6px;}
@@ -49,8 +49,8 @@ html,body {width:100%;}
 .yuanqi {width:70%;}
 .yuanqi h3{font-weight:normal;font-size:20px;}
 .yuanqi p{font-size:15px; letter-spacing:2px; margin-top:20px;line-height:25px;}
-.btn-lc {display:inline-block; padding:7px 20px;border:1px solid #e5d09d; color:#e5d09d;font-size:15px; margin-top:40px;cursor:pointer;border-radius:18px;}
-.btn-lc:hover,.btn-lc:focus { color:#e5d09d;}
+.btn-lc {display:inline-block; padding:7px 20px;border:1px solid #a6dc3d; color:#a6dc3d;font-size:15px; margin-top:40px;cursor:pointer;border-radius:18px;}
+.btn-lc:hover,.btn-lc:focus { color:#a6dc3d;}
 /*产品*/
 #product {margin:100px auto;}
 .protit {font-size:25px; margin-bottom:0px;position:relative;display:inline-block;color:#4b4b4b;}
@@ -76,8 +76,8 @@ html,body {width:100%;}
 #praise {margin-top:20px;background:#f2f2f2;padding:30px;}
 .praise-left {width:650px;float:left;}
 .control {left:0px;bottom:0px;margin-left:0px;margin-bottom:0px; width:auto;}
-.control li {background-color: rgba(0,0,0,0);border: 1px solid #e5d09d;}
-.control .active {background-color: #e5d09d;}
+.control li {background-color: rgba(0,0,0,0);border: 1px solid #a6dc3d;}
+.control .active {background-color: #a6dc3d;}
 .praise-right {width:350px;float:right;}
 .weitit{padding:15px 0px;border-bottom:1px solid #dadada; background:#fff;}
 .weitit p{background-image:url(../images/heart.png);background-position:15px center;background-repeat:no-repeat; background-size:auto 100%; padding-left:50px; color:#9e9e9e;font-size:16px;margin-bottom:0px;}
