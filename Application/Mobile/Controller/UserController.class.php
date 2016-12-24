@@ -1311,6 +1311,11 @@ class UserController extends MobileBaseController {
         //查找是否存在海报
         $isFile = file_exists('Public/poster/poster_' . $this->user_id . '.png');
         $this -> assign('isFile', $isFile);
+
+
+        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
+        $this -> assign('inviteData', $inviteData);
+
         $this -> display();
     }
 

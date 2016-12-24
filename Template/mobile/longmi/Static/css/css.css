@@ -2678,3 +2678,41 @@ Load—more a{
 	float: left;
 	display: block;
 }
+
+
+
+.new_poster{
+	float: left;
+	background: #fff;
+	margin-bottom: 60px;
+}
+
+.new_poster .xiaolian{
+	background: #fff;
+	width: 20%;
+	margin: 20px 40%;
+}
+
+.new_poster  p{
+	width: 90%;
+	text-align: center;
+	margin: 5px 5% 20px 5% ;
+	display: block;
+	font-size: 12px;
+}
+.new_poster  span{
+	text-align: center;
+	font-size: 12px;
+	width: 100%;
+	float: left;
+	transform: scale(0.9);
+}
+.new_poster b{
+	color: #a6dc3d;
+}
+
+
+.new_poster img{
+	width: 80%;
+	margin: 0 10%;
+}
