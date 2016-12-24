@@ -1,20 +1,26 @@
 <volist name="coupon_list" id="coupon">
-    <div class="cp1">
-        <div class="c"><a href="javascript:void(0);"></a></div>
-        <div class="cp1_r">
-            <div class="m9">{$coupon.name}</div>
-            <div class="m10">{$coupon.desc}&nbsp;</div>
-            <if condition="$coupon['is_discount'] eq '0' ">
-                <div class="m11">￥{$coupon.money}</div>
-            </if>
-            <if condition="$coupon['is_discount'] eq '1'">
-                <div class="m11">-{$coupon.money}%</div>
-            </if>
+    <div class="coupon_div">
+        <div class="coupon_div_top ">
+            <div class="coupon_div_top_l">
+                <if condition="$coupon['is_discount'] eq '0' ">
+                    ￥{$coupon.money}
+                </if>
+                <if condition="$coupon['is_discount'] eq '1'">
+                    -&nbsp;{$coupon.money}%
+                </if>
+            </div>
+            <div class="coupon_div_top_r">
+                {$coupon.name}
+            </div>
+        </div>
+        <div class="coupon_div_b">
+
             <if condition = "$coupon['use_type'] == 1">
-                <div class="m12">有效期至：{:date('Y-m-d',($coupon['limit_day']*24*60*60 + $coupon['receive_time']))}</div>
+                有效期至：{:date('Y-m-d',($coupon['limit_day']*24*60*60 + $coupon['receive_time']))}
                 <else/>
-                <div class="m12">有效期至：{$coupon.use_end_time|date='Y-m-d',###}</div>
+                有效期至：{$coupon.use_end_time|date='Y-m-d',###}
             </if>
+            <div class="m10">{$coupon.desc}&nbsp;</div>
         </div>
     </div>
 </volist>
