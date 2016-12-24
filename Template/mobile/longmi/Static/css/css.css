@@ -2440,6 +2440,17 @@ Load—more a{
 	padding-left: 5px;
 
 }
+.cp_index_l3{
+	width: 50%;
+    float: left;
+	text-align: center;
+}
+.cp_index_l3 img{
+    border-radius: 0px;
+    height: 78px !important;
+    width: auto !important;
+	margin: 0 auto;
+}
 
 .cp_index_r {
 	overflow: hidden;
