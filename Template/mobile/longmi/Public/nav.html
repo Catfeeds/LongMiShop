@@ -4,60 +4,45 @@
 		<if condition="$_SERVER['REQUEST_URI']==U('Index/index') ">
 			<li class="h">
 				<a href="{:U('Index/index')}">
-					<img src="__STATIC__/SVG/home_h.svg">
+					<img src="__STATIC__/images/svg/nav_1.svg">
 					<span>首页</span>
 				</a>
 			</li>
 			<else/>
 			<li>
 				<a href="{:U('Index/index')}">
-					<img src="__STATIC__/SVG/home.svg">
+					<img src="__STATIC__/images/svg/nav_1.svg">
 					<span>首页</span>
 				</a>
 			</li>
 		</if>
-		<if condition="$_SERVER['REQUEST_URI']==U('Goods/goodsList') ">
-			<li class="h">
-				<a href="{:U('Mobile/Goods/goodsList')}">
-					<img src="__STATIC__/SVG/commodity_h.svg">
-					<span>全部</span>
+		<if condition="$_SERVER['REQUEST_URI']==U('User/index') ">
+			<li class="h nav_d_center">
+				<a href="{:U('User/index')}">
+					<img src="__STATIC__/images/svg/nav_2.svg">
+					<span>个人中心</span>
 				</a>
 			</li>
 			<else/>
-			<li>
-				<a href="{:U('Mobile/Goods/goodsList')}">
-					<img src="__STATIC__/SVG/commodity.svg">
-					<span>全部</span>
+			<li class="nav_d_center">
+				<a href="{:U('User/index')}">
+					<img src="__STATIC__/images/svg/nav_2.svg">
+					<span>个人中心</span>
 				</a>
 			</li>
 		</if>
 		<if condition="$_SERVER['REQUEST_URI']==U('Cart/cart') ">
 			<li class="h">
 				<a href="{:U('Cart/cart')}">
-					<img src="__STATIC__/SVG/shopping_h.svg">
+					<img src="__STATIC__/images/svg/nav_3.svg">
 					<span>购物车</span>
 				</a>
 			</li>
 			<else/>
 			<li>
 				<a href="{:U('Cart/cart')}">
-					<img src="__STATIC__/SVG/shopping.svg">
+					<img src="__STATIC__/images/svg/nav_3.svg">
 					<span>购物车</span>
-				</a>
-			</li>
-		</if>
-		<if condition="$_SERVER['REQUEST_URI']==U('User/index') ">
-			<li class="h">
-				<a href="{:U('User/index')}">
-					<img src="__STATIC__/SVG/my_h.svg">
-					<span>个人中心</span>
-				</a>
-			</li>
-			<else/>
-			<li>
-				<a href="{:U('User/index')}">
-					<img src="__STATIC__/SVG/my.svg">
-					<span>个人中心</span>
 				</a>
 			</li>
 		</if>
