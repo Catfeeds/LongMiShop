@@ -101,7 +101,7 @@
                     <div class="cp_index">
                         <div class="cp_index_l3">
                             <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']))}">
-                                <img src="{$newGoodsItem['goods_id']|goods_thum_images=92,92}" width="92" height="92">
+                                <img src="{$newGoodsItem.original_img}" width="92" height="92">
                             </a>
                         </div>
                         <div class="cp_index_r">
@@ -135,7 +135,7 @@
                 <div class="cp_index">
                     <div class="cp_index_l3">
                         <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}">
-                            <img src="{$goods_id|goods_thum_images=92,92}" width="92" height="92">
+                            <img src="{$v.original_img}">
                         </a>
                     </div>
                     <div class="cp_index_r">
