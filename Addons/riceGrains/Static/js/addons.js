@@ -390,6 +390,7 @@ $(function(){
         $(this).hide();
     });
     $(".page_2 .result2").click(function(){
+        $(".page_2").hide();
         $(".page_3").show();
     });
 
