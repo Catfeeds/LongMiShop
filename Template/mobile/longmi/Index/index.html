@@ -54,7 +54,7 @@
         <div class="mui-slider-indicator">
             <php>$adv_array_key = 0;</php>
             <foreach name="adv_array" item="v" >
-                <div class="mui-indicator <if condition='$adv_array_key++ eq 0'> mui-active</if>"></div>
+                <!--<div class="mui-indicator <if condition='$adv_array_key++ eq 0'> mui-active</if>"></div>-->
             </foreach>
         </div>
     </notempty>
@@ -66,22 +66,22 @@
     <ul>
         <li>
             <p>
-                <a href="{:U('Mobile/User/account')}">钱包</a>
+                <a href="{:U('Mobile/User/account')}"><b>钱包</b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/nav_2.png')">
             <p>
-                <a href="{:U('Mobile/User/coupon')}">优惠券</a>
+                <a href="{:U('Mobile/User/coupon')}"><b>优惠券</b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/nav_3.png')">
             <p>
-                <a href="{:U('Mobile/Recommend/index')}">推荐有奖</a>
+                <a href="{:U('Mobile/Recommend/index')}"><b>推荐有奖</b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/nav_4.png')">
             <p>
-                <a href="{:U('Mobile/User/myPoster')}">赚米</a>
+                <a href="{:U('Mobile/User/myPoster')}"><b>赚米</b></a>
             </p>
         </li>
     </ul>
@@ -97,7 +97,7 @@
         <foreach name="newGoods" item="newGoodsItem" key="newGoodsKey">
             <li class="mui-table-view-cell">
                 <div class="mui-slider-handle">
-                    <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']))}"></a></div>
+                    <!--<div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']))}"></a></div>-->
                     <div class="cp_index">
                         <div class="cp_index_l3">
                             <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']))}">
@@ -127,11 +127,11 @@
     <img src="__STATIC__/images/new/suixinda.png">
 </div>
 
-<div class="mui-content">
+<div class="mui-content my_index_no_line">
     <ul class="mui-table-view">
         <li class="mui-table-view-cell">
             <div class="mui-slider-handle">
-                <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id))}"></a></div>
+                <!--<div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id))}"></a></div>-->
                 <div class="cp_index">
                     <div class="cp_index_l3">
                         <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods[goods_id]))}">
@@ -153,23 +153,22 @@
             </div>
         </li>
     </ul>
+    <p class="my_index_tip">（选择一下龙米伴侣↓）</p>
 </div>
 
-<div class="index_title">
-    <img src="__STATIC__/images/new/suxinda2.png">
-</div>
+
 
 
 <div class="mui-content">
     <ul class="mui-table-view">
         <foreach item="spec" key="key" name="spec_goods_price">
-            <li class="mui-table-view-cell">
+            <li class="my_index_spec_li">
                 <div class="mui-slider-handle">
-                    <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id,'spec_key'=>$spec['key']))}"></a></div>
+                    <!--<div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id,'spec_key'=>$spec['key']))}"></a></div>-->
                     <div class="cp_index">
                         <div class="cp_index_l">
                             <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$spec['goods_id']))}">
-                                <img src="{:$spec['img']?'__STATIC__/images/new/'.$spec['img']:'';}" width="92" height="92">
+                                <img src="{:$spec['img']?'__STATIC__/images/new/'.$spec['img']:'';}" >
                             </a>
                         </div>
                         <div class="cp_index_r">

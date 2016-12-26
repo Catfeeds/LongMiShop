@@ -6,11 +6,16 @@ p, input, h1, h2, h3, h4, h5, h6, ul, li, dl, dt, dd, form {
 	list-style: none;
 	vertical-align: middle;
 	font-weight: normal;
-	font-family: "微软雅黑";
 }
 html, body {
 	height: 100%;
 	width: 100%;
+}
+p,a,span{
+	font-family: "微软雅黑" !important;
+}
+a:active {
+	color: #fff;
 }
 body {
 	color: #818284;
@@ -25,59 +30,62 @@ img{
     /*background-size:92px 92px ;*/
 }
 .top_nav{
-	height: 26px;
+	height:38px;
 	background: #a6dc3d;
 	width: 100%;
+	position: relative;
 }
 .top_nav_left {
-	height: 26px;
+	height: 38px;
 	float: left;
 	z-index: 999;
 	position: absolute;
-	width: 65%;
+	width:75%;
 }
 .top_nav_left a{
 	float: left;
 	width: 25%;
 	text-align: center;
 	display: block;
-	line-height: 26px;
-	height: 26px;
-	font-size: 12px;
+	line-height: 38px;
+	height: 38px;
+	font-size: 14px;
 	color: #ffffff;
 	transform: scale(0.9);
 }
 .top_nav_right {
-	height: 26px;
+	height: 38px;
 	float: right;
 	z-index: 999;
-	width: 35%;
+	width: 25%;
 }
 .top_nav_right .top_nav_find {
-	height: 18px;
-	margin: 3px 10%;
-	border-radius: 3px;
-	width: 80%;
+	height: 24px;
+	margin: 7px 5%;
+	border-radius: 12px;
+	width: 90%;
 	background: #dcf1dc;
 }
 .top_nav_right .top_nav_find input {
-	height: 18px;
+	height: 24px;
 	border: 0;
 	font-size:12px;
-	width: 75%;
+	width:65%;
 	text-align: right;
-	line-height: 18px;
+	line-height: 24px;
 	padding: 2px 0;
 	color: #a6dc3d;
 	background: transparent;
+	float: left;
 }
 .top_nav_right .top_nav_find a {
-	float: right;
-	width: 20%;
+	float: left;
+	width:35%;
 }
 .top_nav_right .top_nav_find a img {
-	width: 18px;
-	height: 18px;
+	width: 14px;
+	height: 14px;
+	margin: 5px;
 }
 
 .top_menu {
@@ -98,7 +106,7 @@ img{
 	background-image: url(../images/new/nav_1.png);
 	background-repeat: no-repeat;
 	background-position: center 12px;
-	background-size:35px 35px
+	background-size: 42px 42px;
 }
 .top_menu li span {
 	font-size: 18px;
@@ -106,12 +114,19 @@ img{
 	line-height: 30px;
 }
 .top_menu a {
-	padding-top: 50px;
-	padding-bottom: 10px;
+	padding-top: 55px;
+	padding-bottom: 1px;
 	display: block;
 	color: #818284;
+	font-size: 12px;
 	text-decoration: none;
 }
+
+.top_menu a b {
+	transform: scale(0.8);
+	font-weight: 100;
+}
+
 
 
 
@@ -429,7 +444,7 @@ img{
 	float: left;
 	width: 30%;
 	text-align: center;
-	height: 50px;
+	height: 57px;
 }
 .nav_d li.nav_d_center {
 	width: 40%;
@@ -610,14 +625,12 @@ img{
 	margin-top: 1px;
 }
 .my_nav ul {
+	margin-top: 20px;
 }
 .my_nav li {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #E3E3E3;
 	background-color: #FFF;
 	padding-left: 10px;
-	margin-bottom: 5px;
+	margin-bottom: 1px;
 }
 .my_nav a {
 	display: block;
@@ -2065,13 +2078,9 @@ Load—more a{
 	/*filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); !* IE6~IE9 *!*/
 /*}*/
 
-.nav_d img{
-	height: 20px;
-	line-height: 20px;
-}
 .nav_d li a span{
 	margin-top: -3px;
-	font-size:13px;
+	font-size:12px;
 	transform:scale(0.7);
 	line-height: 10px;
 	color: #b2b2b2;
@@ -2428,6 +2437,8 @@ Load—more a{
 }
 .cp_index_l {
 	float: left;
+	width: 30%;
+	margin:  0 0 0 5%;
 
 }
 .cp_index_l1 {
@@ -2441,7 +2452,7 @@ Load—more a{
 
 }
 .cp_index_l3{
-	width: 50%;
+	width: 55%;
     float: left;
 	text-align: center;
 }
@@ -2478,8 +2489,8 @@ Load—more a{
 	text-align: left;
 	/*transform: scale(0.8);*/
 	font-size: 16px !important;
-	line-height: 24px;
-	height: 24px;
+	line-height: 30px;
+	height: 30px;
 	display: block;
 	margin-bottom: 2px !important;
 }
@@ -2496,12 +2507,11 @@ Load—more a{
 }
 .cp_index_r span {
 	color: #a6dc3d;
-	line-height:20px;
-	font-size: 12px;
+	line-height:28px;
+	font-size: 14px;
 	border: 1px dashed #a6dc3d;
 	border-radius: 5px;
 	padding: 0 5px;
-	/*transform: scale(0.8);*/
 	display: block;
 	float: right;
 	text-align: right;
@@ -2522,9 +2532,10 @@ Load—more a{
 	position: relative;
 	display: inline-block;
 	overflow: hidden;
-	width: 80px;
-	height: 30px;
+	width: 60px;
+	height: 20px;
 	padding: 0 00px;
+	margin-top: 10px;
 	vertical-align: top;
 	vertical-align: middle;
 	border: solid 1px #f5f5f5;
@@ -2532,13 +2543,13 @@ Load—more a{
 	background-color: #f5f5f5;
 }
 .my-mui-numbox [class*=btn-numbox], .my-mui-numbox [class*=numbox-btn] {
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 400;
 	line-height: 100%;
 	position: absolute;
 	top: 0;
 	overflow: hidden;
-	width: 25px;
+	width: 20px;
 	height: 100%;
 	padding: 0;
 	color: #555;
@@ -2561,8 +2572,6 @@ Load—more a{
 	overflow: hidden;
 	width: 100%!important;
 	height: 100%;
-	margin: 0;
-	padding: 0 3px!important;
 	text-align: center;
 	text-overflow: ellipsis;
 	word-break: normal;
@@ -2726,4 +2735,38 @@ Load—more a{
 .new_poster img{
 	width: 80%;
 	margin: 0 10%;
+}
+
+
+
+
+.my_index_spec_li{
+	position: relative;
+	overflow: hidden;
+	padding: 5px 0;
+	border-bottom: 1px solid #efeff4
+}
+
+.my_index_spec_li .cp_index img{
+	width: 100%;
+}
+
+.my_index_spec_li .cp_index p{
+	/*font-size: 14px !important;*/
+}
+.my_index_spec_li .cp_index_r {
+	width: 60%;
+}
+
+
+.my_index_tip{
+	width: 100%;
+	font-size: 12px;
+	color: #B2B2B2;
+	padding: 5px 0;
+	background: #fff;
+	text-align: center;
+}
+.my_index_no_line .mui-table-view:after{
+	background: none;
 }
