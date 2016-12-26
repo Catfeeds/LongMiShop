@@ -19,7 +19,7 @@ class IndexController extends MobileBaseController {
     {
 
 
-        $newGoods = M("goods")->where(array("is_new" => 1))->order("  goods_id desc")->limit('2')->select();
+        $newGoods = M("goods")->where(array("is_new" => 1))->order("sort")->limit('2')->select();
 //        $this -> assign('newGoodsNumber',count($newGoods));
         $this->assign('newGoods', $newGoods);
 //
