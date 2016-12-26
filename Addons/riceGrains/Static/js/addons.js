@@ -22,56 +22,6 @@ $(function(){
 
 
 
-    $(".page_1").show();
-    // $(".page_3").show();
-    // $(".page_2").show();
-    // $("#game_over").show();
-    // $("#game_over .result").show();
-
-    $(".page_1 .ren").click(function(){
-        player_test =  $(this).attr("data-test");
-        playerWidth = $(this).attr("data-width");
-        playerHeight = $(this).attr("data-height");
-
-        sprite.x=(canvasW - playerWidth)/2;
-        sprite.y=canvasH-playerHeight;
-        sprite.image=player;
-        $(".page_1").hide();
-        $(".page_2").show();
-        is_draw = true;
-
-
-
-    });
-
-
-    //分数检测
-    $("#game_over .ok").click(function(){
-        var number =  $("#game_over input").val();
-        if( number == "" ||  number <= 0 ){
-            return;
-        }
-        $(this).hide();
-        $("#game_over input").css("width","70%");
-        $("#game_over input").attr("disable");
-        $("#game_over .fraction").html(fraction);
-        $("#game_over .fraction").show();
-
-        var abs =number - fraction;
-        if( Math.abs(abs) < 3 ){
-            $("#game_over .taunt2").show();
-            $("#game_over .result2").show();
-        }else{
-            $("#game_over .taunt").show();
-            $("#game_over .result").show();
-        }
-
-
-        is_show_fraction = true;
-        resultDraw();
-
-    });
-
     var box = $('#box');
     box.css('width',window.innerWidth);
     box.css('height',window.innerHeight);
@@ -126,6 +76,8 @@ $(function(){
     var probability_4 = 100;//100
 
     boom.src= _ADDONS+"/images/boom.png";
+
+
     /**
      * 生成飞行物
      */
@@ -136,12 +88,12 @@ $(function(){
                 flyingObject[j]=new object();
 
                 var i=Math.round(Math.random()*range);
-                if(j==2*chi+1)
-                {
-                    while(Math.abs(i-flyingObject[2*chi].x)<30){
-                        i=Math.round(Math.random()*range);
-                    }
-                }
+                // if(j==2*chi+1)
+                // {
+                //     while(Math.abs(i-flyingObject[2*chi].x)<30){
+                //         i=Math.round(Math.random()*range);
+                //     }
+                // }
                 var k=Math.round(Math.random()*zl);
 
                 if(k < probability_1){
@@ -311,24 +263,13 @@ $(function(){
                 y = event.touches[0].clientY;
                 break;
         }
-
-        // var abs = x - sprite.x;
-        // if(Math.abs(abs) > 5){
-        //     if( x > sprite.x ){
-        //         sprite.x += 5;
-        //     }else{
-        //         sprite.x -= 5;
-        //     }
-        // }else{
-        //     sprite.x =  x - playerWidth/2;
-        // }
-        sprite.x =  x - playerWidth/2;
-
+        sprite.x =  x - playerWidth/2
         if( x + playerWidth/2 >= canvasW ) {
             sprite.x=canvasW-playerWidth;
         }else if( x <= playerWidth/2){
             sprite.x=0;
         }
+
     }
 
 
@@ -381,17 +322,63 @@ $(function(){
     }
 
 
+    /**
+     * 事件定义
+     */
 
+    $(".page_1 .ren").click(function(){
+        player_test =  $(this).attr("data-test");
+        playerWidth = $(this).attr("data-width");
+        playerHeight = $(this).attr("data-height");
 
+        sprite.x=(canvasW - playerWidth)/2;
+        sprite.y=canvasH-playerHeight;
+        sprite.image=player;
+        $(".page_1").hide();
+        $(".page_2").show();
+        is_draw = true;
+    });
     $(".page_1 .img_14").click(function(){
         $(".page_1 .rule").show();
     });
     $(".page_1 .rule").click(function(){
         $(this).hide();
     });
+    $(".page_2 .result").click(function(){
+        location.reload();
+    });
     $(".page_2 .result2").click(function(){
         $(".page_2").hide();
         $(".page_3").show();
     });
+    $("#game_over .ok").click(function(){
+        var number =  $("#game_over input").val();
+        if( number == "" ||  number <= 0 ){
+            return;
+        }
+        $(this).hide();
+        $("#game_over input").css("width","70%");
+        $("#game_over input").attr("disable");
+        $("#game_over .fraction").html(fraction);
+        $("#game_over .fraction").show();
 
+        var abs =number - fraction;
+        if( Math.abs(abs) <= 3 &&  fraction > 80 ){
+            $("#game_over .taunt2").show();
+            $("#game_over .result2").show();
+        }else{
+            $("#game_over .taunt").show();
+            $("#game_over .result").show();
+        }
+        is_show_fraction = true;
+        resultDraw();
+
+    });
+
+
+    /**
+     * 开始
+     */
+
+    $(".page_1").show();
 });
