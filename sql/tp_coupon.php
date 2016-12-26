@@ -1,3 +1,6 @@
+<?php
+
+$sql = "
 //新增字段
 
 
@@ -356,7 +359,7 @@ ALTER TABLE `lm_order_goods`
 ADD COLUMN `goods_postage`  float(11,2) NOT NULL COMMENT '订单邮费' AFTER `goods_num`;
 
 ALTER TABLE `lm_order`
-ADD COLUMN `admin_list`  varchar(255) NOT NULL DEFAULT "[0]" COMMENT '供应商列表' AFTER `is_distribut`;
+ADD COLUMN `admin_list`  varchar(255) NOT NULL DEFAULT '[0]' COMMENT '供应商列表' AFTER `is_distribut`;
 
 ALTER TABLE `lm_return_goods`
 ADD COLUMN `admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT '供应商id' AFTER `order_id`;
@@ -467,5 +470,9 @@ ADD COLUMN `is_appoint`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否制定商品' AF
 
 
 
+ALTER TABLE `lm_goods`
+ADD COLUMN `hide_goods_content`  text NULL COMMENT '特殊内容' AFTER `goods_remark`;
 
 
+  
+  ";
