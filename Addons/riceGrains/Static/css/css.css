@@ -142,9 +142,9 @@ html,body {
     top: 30%;
 }
  .img_14{
-     width: 50%;
-     left: 22%;
-     top: 22%;
+     width: 20%;
+     left: 30%;
+     top: 62%;
 }
 
 .img_15{
@@ -158,8 +158,14 @@ html,body {
     top: 45%;
 }
 
+.img_17{
+    width: 50%;
+    left: 22%;
+    top: 22%;
+}
 
-  .rule{
+
+.rule{
     display: none;
     position: absolute;
     width: 100%;
@@ -293,11 +299,10 @@ html,body {
 #game_over .taunt2{
     display: none;
     position: absolute;
-    width: 200px;
+    width: 150px;
     height: 183px;
-    bottom: 12%;
+    bottom: 10%;
     right: 47%;
     background: url(../images/taunt2.png) center no-repeat;
-    background-size: 200px 183px;
-
+    background-size: 150px 123px;
 }
