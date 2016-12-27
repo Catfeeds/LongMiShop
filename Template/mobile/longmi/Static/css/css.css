@@ -2806,7 +2806,13 @@ Load—more a{
 	margin-top: 0px;
 	float: right;
 }
-
+.my_index_cp_li .my_index_cp_li_p1{
+	transform: scale(0.9);
+	margin-bottom: 0px !important;
+	height: 16px;
+	text-align: right;
+	line-height: 16px;
+}
 
 .my_index_tip{
 	width: 100%;

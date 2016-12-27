@@ -105,11 +105,12 @@
                             </a>
                         </div>
                         <div class="cp_index_r">
-                            <p class="cj1">{$newGoodsItem.goods_name}</p>
-                            <p >
-                                <span>￥{$newGoodsItem.shop_price}</span>
+                            <p class="cj1">{:$newGoodsItem['goods_subtitle']?$newGoodsItem['goods_subtitle']:$newGoodsItem['goods_name']}</p>
+                            <p class="cj1">
+                                <span>{:$newGoodsItem['goods_label']?$newGoodsItem['goods_label']:$newGoodsItem['goods_name']}</span>
                             </p>
-                            <p></p>
+                            <p class="my_index_cp_li_p1">{$newGoodsItem.goods_name}</p>
+                            <p class="my_index_cp_li_p1">心动价：￥{$newGoodsItem.shop_price}</p>
                             <p>
                                 <a class="cp_index_buy" href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']));}">
                                     立即购买
@@ -140,13 +141,14 @@
                         </a>
                     </div>
                     <div class="cp_index_r">
-                        <p class="cj1">{$goods.goods_name}</p>
-                        <p >
-                            <span>￥{$goods.shop_price}</span>
+                        <p class="cj1">{:$goods['goods_subtitle']?$goods['goods_subtitle']:$goods['goods_name']}</p>
+                        <p class="cj1">
+                            <span>{:$goods['goods_label']?$goods['goods_label']:$goods['goods_name']}</span>
                         </p>
-                        <p></p>
+                        <p class="my_index_cp_li_p1">{$goods.goods_name}</p>
+                        <p class="my_index_cp_li_p1">心动价：￥{$goods.shop_price}</p>
                         <p>
-                            <a class="cp_index_buy" href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id));}">
+                            <a class="cp_index_buy" href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods['goods_id']));}">
                                 立即购买
                             </a>
                         </p>
