@@ -70,8 +70,8 @@ html,body {width:100%;}
 .item-top .meng p{color:#fff; font-size:12px;width:80%; margin-left:10%; padding-top:30px;}
 .item-top .meng img{width:50%; position:absolute;bottom:30px;left:25%;}
 .item-bottom {border-top:1px solid #d2d2d2;}
-.buy{display:block;padding:10px 0px;color:#ead9b1; font-size:15px;letter-spacing:2px;cursor:pointer;/*background-color:#ead9b1;*/}
-.buy:hover{color:#ead9b1;}
+.buy{display:block;padding:10px 0px;color:#a6dc3d; font-size:15px;letter-spacing:2px;cursor:pointer;/*background-color:#a6dc3d;*/}
+.buy:hover{color:#a6dc3d;}
 /*口碑*/
 #praise {margin-top:20px;background:#f2f2f2;padding:30px;}
 .praise-left {width:650px;float:left;}
