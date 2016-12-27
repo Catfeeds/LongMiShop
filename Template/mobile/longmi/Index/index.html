@@ -7,7 +7,7 @@
     <div class="top_nav_left">
         <a href="{:U('Mobile/Goods/goodsList')}">全部</a>
         <a href="{:U('Mobile/Goods/goodsList')}">新品</a>
-        <a href="#">推荐有礼</a>
+        <a href="{:U('Mobile/Index/recommendPolite')}">推荐有礼</a>
         <a href="{:U('Mobile/Goods/goodsList',array('sort'=>'sales_sum'))}">销量</a>
     </div>
     <form name="sourch_form" id="sourch_form" method="post" action="{:U('Mobile/Goods/goodsList')}">
@@ -67,12 +67,12 @@
     <ul>
         <li style="background-image:url('__STATIC__/images/new/top_menu_1.png')">
             <p>
-                <a href="{:U('Mobile/User/account')}"><b>钱包<br/>{:$user['user_money']?$user['user_money']:0}</b></a>
+                <a href="{:U('Mobile/User/account')}"><b>钱包<br/><span>{:$user['user_money']?$user['user_money']:0}</span></b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_2.png')">
             <p>
-                <a href="{:U('Mobile/User/coupon')}"><b>优惠券<br/>{$couponCount}</b></a>
+                <a href="{:U('Mobile/User/coupon')}"><b>优惠券<br/><span>{$couponCount}</span></b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_3.png')">
@@ -82,7 +82,7 @@
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_4.png')">
             <p>
-                <a href="{:U('Mobile/User/myPoster')}"><b>赚米<br/>{$inviteNumber}</b></a>
+                <a href="{:U('Mobile/User/myPoster')}"><b>赚米<br/><span>{$inviteNumber}</span></b></a>
             </p>
         </li>
     </ul>
