@@ -73,7 +73,7 @@ class CartController extends MobileBaseController {
             'goods_id'        => $goods_id,   // 商品id
         );
         $goods_spec = "";
-        if( !empty($key))
+        if( !empty($key) && $key != "0")
         {
             $condition["spec_key"] = $key;
             $goods_spec = explode("_",$key);
