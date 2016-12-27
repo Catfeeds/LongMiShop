@@ -2798,9 +2798,9 @@ Load—more a{
 }
 .my_index_cp_li .cp_index_r {
 	position: absolute;
-	right: 10px;
-	top: 10px;
-	width:50%;
+	right: 5px;
+	top: 10%;
+	width: 50%;
 }
 .my_index_cp_li .cp_index_r .my-mui-numbox {
 	margin-top: 0px;
