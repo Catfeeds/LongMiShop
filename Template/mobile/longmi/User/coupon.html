@@ -37,6 +37,9 @@
 			<a  href="javascript:void(0)" onClick="ajax_sourch_submit()">点击加载更多</a>
 		</div>
 	</if>
+	<div class="empty_txt">
+		您已有粮票，赶紧去买粮吧！
+	</div>
 	<script>
 		var  page = 1;
 		/*** ajax 提交表单 查询订单列表结果*/
@@ -59,9 +62,9 @@
 	<else/>
 	<div class="empty"><img src="__STATIC__/images/new/no_coupon.png"></div>
 	<!--<div class="empty"><img src="__STATIC__/SVG/d4.svg?423682"></div>-->
-	<!--<div class="empty_txt">-->
-		<!--&lt;!&ndash;暂无数据！&ndash;&gt;-->
-	<!--</div>-->
+	<div class="empty_txt">
+		哎呀，一张粮票也没有呀，赶紧去看看最近的活动吧！
+	</div>
 </notempty>
 
 <include file="Public/nav"/>
