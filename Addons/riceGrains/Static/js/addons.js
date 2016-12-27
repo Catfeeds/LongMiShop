@@ -363,7 +363,10 @@ $(function(){
         $("#game_over .fraction").show();
 
         var abs =number - fraction;
-        if( Math.abs(abs) <= 3 &&  fraction > 80 ){
+        if(
+            Math.abs(abs) <= 3
+            // &&  fraction > 80
+        ){
             $("#game_over .taunt2").show();
             $("#game_over .result2").show();
         }else{
