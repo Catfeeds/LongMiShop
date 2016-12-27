@@ -4,7 +4,7 @@
     <div class="empty_btn"><a href="{:U('Index/index')}">去逛逛</a></div>
     <else/>
     <div class="mui-content">
-        <ul class="mui-table-view">
+        <ul class="mui-table-view my_cart_ul">
             <foreach name="cartList" item="v" key="k" >
                 <li class="mui-table-view-cell">
                     <div class="mui-slider-right mui-disabled">
@@ -35,6 +35,7 @@
                             </div>
                             <div class="cp1_r">
                                 <p class="<if condition='$v[store_count] eq 0' >cj1</if>">{$v.goods_name}</p>
+                                <p class="my_cart_spec <if condition='$v[store_count] eq 0' >cj1</if>">{$v.spec_key_name}</p>
                                 <span class="<if condition='$v[store_count] eq 0' >cj1</if>">￥{$v.member_goods_price}</span>
 
                                 <if condition='$v[store_count] neq 0' >
