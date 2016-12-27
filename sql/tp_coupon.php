@@ -1,12 +1,12 @@
 <?php
 
 $sql = "
-//ÐÂÔö×Ö¶Î
+//æ–°å¢žå­—æ®µ
 
 
-ALTER TABLE  `tp_coupon` ADD  `is_discount` TINYINT( 1 ) NOT NULL COMMENT  'È¯ÀàÐÍ' AFTER  `type` ;
+ALTER TABLE  `tp_coupon` ADD  `is_discount` TINYINT( 1 ) NOT NULL COMMENT  'åˆ¸ç±»åž‹' AFTER  `type` ;
 
-//ÅäÖÃ±í²åÈë
+//é…ç½®è¡¨æ’å…¥
 INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VALUES (NULL, 'details', '1', 'shop_info', NULL);
 
 INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VALUES (NULL, 'classify', '1', 'shop_info', NULL);
@@ -16,7 +16,7 @@ INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VAL
 INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VALUES (NULL, 'default', '1', 'shop_info', NULL);
 
 
-//ÐÂÔöQAÊý¾Ý±í
+//æ–°å¢žQAæ•°æ®è¡¨
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -25,15 +25,15 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `tp_problem`;
 CREATE TABLE `tp_problem` (
   `pro_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `pro_title` varchar(250) DEFAULT NULL COMMENT 'ÃèÊö',
-  `pro_rank` int(11) NOT NULL COMMENT 'ÅÅÐò ´Ó´óµ½Ð¡',
-  `pro_show` int(2) NOT NULL COMMENT '1ÏÔÊ¾ 2Òþ²Ø',
-  `pro_details` text COMMENT 'ÏêÇé',
+  `pro_title` varchar(250) DEFAULT NULL COMMENT 'æè¿°',
+  `pro_rank` int(11) NOT NULL COMMENT 'æŽ’åº ä»Žå¤§åˆ°å°',
+  `pro_show` int(2) NOT NULL COMMENT '1æ˜¾ç¤º 2éšè—',
+  `pro_details` text COMMENT 'è¯¦æƒ…',
   `pro_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`pro_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
-//ÐÂÔöÎïÁ÷±í
+//æ–°å¢žç‰©æµè¡¨
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -42,36 +42,36 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `tp_logistics`;
 CREATE TABLE `tp_logistics` (
   `log_id` int(11) NOT NULL AUTO_INCREMENT,
-  `log_rank` int(11) NOT NULL COMMENT 'ÅÅÐò',
-  `log_template` varchar(255) DEFAULT NULL COMMENT 'Ä£°æÃû³Æ',
-  `log_delivery` varchar(255) DEFAULT NULL COMMENT 'ÅäËÍ·½Ê½',
-  `log_province` varchar(50) DEFAULT NULL COMMENT 'ÉÌÆ·ËùÔÚÊ¡·Ý',
-  `log_city` varchar(50) DEFAULT NULL COMMENT '³ÇÊÐ',
-  `log_aging` varchar(20) NOT NULL COMMENT '·¢»õÊ±Ð§ ',
-  `log_is_take_their` tinyint(2) unsigned NOT NULL COMMENT 'ÊÇ·ñ×ÔÌá  1ÔÊÐí  2²»ÔÊÐí',
-  `log_take_their_site` varchar(255) DEFAULT NULL COMMENT '×ÔÌáµØÖ·',
-  `log_is_free` tinyint(2) NOT NULL COMMENT '°üÓÊ  1ÊÇ  2·ñ',
-  `log_is_collect` tinyint(2) NOT NULL COMMENT 'µ½¸¶ 1ÊÇ 2·ñ',
-  `log_mode` tinyint(2) NOT NULL COMMENT '¼ÇÖØ·½Ê½ 1ÖØÁ¿ 2¼þÊý ',
-  `log_cost` decimal(10,0) NOT NULL COMMENT '»ù´¡·ÑÓÃ',
-  `log_cost_add` decimal(10,0) NOT NULL COMMENT 'Ôö¼Ó·ÑÓÃ',
-  `log_amount` int(11) NOT NULL COMMENT '»ù´¡¼þÊý/ÖØÁ¿',
-  `log_amount_add` int(11) NOT NULL COMMENT 'Ôö¼Ó¼þÊý/ÖØÁ¿',
-  `log_ispinkage` tinyint(2) NOT NULL COMMENT '°üÓÊÌõ¼þ 1ÓÐ  2¿Õ',
-  `log_condition` text COMMENT '°üÓÊµØÇø',
+  `log_rank` int(11) NOT NULL COMMENT 'æŽ’åº',
+  `log_template` varchar(255) DEFAULT NULL COMMENT 'æ¨¡ç‰ˆåç§°',
+  `log_delivery` varchar(255) DEFAULT NULL COMMENT 'é…é€æ–¹å¼',
+  `log_province` varchar(50) DEFAULT NULL COMMENT 'å•†å“æ‰€åœ¨çœä»½',
+  `log_city` varchar(50) DEFAULT NULL COMMENT 'åŸŽå¸‚',
+  `log_aging` varchar(20) NOT NULL COMMENT 'å‘è´§æ—¶æ•ˆ ',
+  `log_is_take_their` tinyint(2) unsigned NOT NULL COMMENT 'æ˜¯å¦è‡ªæ  1å…è®¸  2ä¸å…è®¸',
+  `log_take_their_site` varchar(255) DEFAULT NULL COMMENT 'è‡ªæåœ°å€',
+  `log_is_free` tinyint(2) NOT NULL COMMENT 'åŒ…é‚®  1æ˜¯  2å¦',
+  `log_is_collect` tinyint(2) NOT NULL COMMENT 'åˆ°ä»˜ 1æ˜¯ 2å¦',
+  `log_mode` tinyint(2) NOT NULL COMMENT 'è®°é‡æ–¹å¼ 1é‡é‡ 2ä»¶æ•° ',
+  `log_cost` decimal(10,0) NOT NULL COMMENT 'åŸºç¡€è´¹ç”¨',
+  `log_cost_add` decimal(10,0) NOT NULL COMMENT 'å¢žåŠ è´¹ç”¨',
+  `log_amount` int(11) NOT NULL COMMENT 'åŸºç¡€ä»¶æ•°/é‡é‡',
+  `log_amount_add` int(11) NOT NULL COMMENT 'å¢žåŠ ä»¶æ•°/é‡é‡',
+  `log_ispinkage` tinyint(2) NOT NULL COMMENT 'åŒ…é‚®æ¡ä»¶ 1æœ‰  2ç©º',
+  `log_condition` text COMMENT 'åŒ…é‚®åœ°åŒº',
   `log_time` int(11) NOT NULL,
   PRIMARY KEY (`log_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
-//ÉÌÆ·±í Ìí¼ÓÅäËÍ×Ö¶Î
-ALTER TABLE  `tp_goods` ADD  `delivery_way` INT( 11 ) NOT NULL COMMENT  'ÅäËÍ·½Ê½' AFTER  `is_free_shipping` ;
+//å•†å“è¡¨ æ·»åŠ é…é€å­—æ®µ
+ALTER TABLE  `tp_goods` ADD  `delivery_way` INT( 11 ) NOT NULL COMMENT  'é…é€æ–¹å¼' AFTER  `is_free_shipping` ;
 
-//ÅäÖÃ±íÐÂÔö¹ÙÍøid
+//é…ç½®è¡¨æ–°å¢žå®˜ç½‘id
 INSERT INTO `tpshop`.`tp_config` (`id`, `name`, `value`, `inc_type`, `desc`) VALUES (NULL, 'index_id', '104', 'shop_info', NULL);
 
 
 
-//ÐÂÔöÓÊÏäÑéÖ¤±í
+//æ–°å¢žé‚®ç®±éªŒè¯è¡¨
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -79,26 +79,26 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `tp_email_log`;
 CREATE TABLE `tp_email_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '±íid',
-  `user_id` int(11) DEFAULT NULL COMMENT 'ÓÃ»§id',
-  `secret_key` varchar(255) DEFAULT 'ÑéÖ¤ÃÜÔ¿',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'è¡¨id',
+  `user_id` int(11) DEFAULT NULL COMMENT 'ç”¨æˆ·id',
+  `secret_key` varchar(255) DEFAULT 'éªŒè¯å¯†é’¥',
   `time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 
-//ÍË¿î
+//é€€æ¬¾
 ALTER TABLE `tp_return_goods`
 ADD COLUMN `refund_name`  varchar(60) NULL AFTER `spec_key`,
 ADD COLUMN `refund_code`  varchar(100) NULL AFTER `refund_name`,
-ADD COLUMN `refund_way`  int(1) NOT NULL DEFAULT 0 COMMENT '»¹¿î·½Ê½ 0£¬ Ô­Â·   1£¬Óà¶î ' AFTER `refund_code`;
-ADD COLUMN `refund_money`  decimal(10,2) NULL DEFAULT 0 COMMENT '½ð¶î' AFTER `refund_way`;
+ADD COLUMN `refund_way`  int(1) NOT NULL DEFAULT 0 COMMENT 'è¿˜æ¬¾æ–¹å¼ 0ï¼Œ åŽŸè·¯   1ï¼Œä½™é¢ ' AFTER `refund_code`;
+ADD COLUMN `refund_money`  decimal(10,2) NULL DEFAULT 0 COMMENT 'é‡‘é¢' AFTER `refund_way`;
 
 
-//ÎÄÕÂ±í  ÐÂÔö×Ö¶Î
-ALTER TABLE  `tp_article` ADD  `device_type` TINYINT( 3 ) NOT NULL COMMENT  'Éè±¸ÀàÐÍ 1PC 2ÊÖ»ú 3pc+ÊÖ»ú' AFTER  `cat_id`
+//æ–‡ç« è¡¨  æ–°å¢žå­—æ®µ
+ALTER TABLE  `tp_article` ADD  `device_type` TINYINT( 3 ) NOT NULL COMMENT  'è®¾å¤‡ç±»åž‹ 1PC 2æ‰‹æœº 3pc+æ‰‹æœº' AFTER  `cat_id`
 
-//ÐÂÔö±í ÏûÏ¢¼ÇÂ¼±í
+//æ–°å¢žè¡¨ æ¶ˆæ¯è®°å½•è¡¨
 CREATE TABLE `tp_push_message` (
   `push_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE `tp_push_message` (
 ) AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 
-//openid°ó¶¨±í
+//openidç»‘å®šè¡¨
 CREATE TABLE `tp_binding` (
 `id`  int(11) NOT NULL AUTO_INCREMENT ,
 `user_id`  int(11) NOT NULL ,
@@ -117,23 +117,23 @@ CREATE TABLE `tp_binding` (
 PRIMARY KEY (`id`)
 )DEFAULT CHARSET=utf8;
 
-//openid°ó¶¨±í
+//openidç»‘å®šè¡¨
 ALTER TABLE `tp_binding`
-ADD COLUMN `third_user_id`  int(10) NOT NULL COMMENT 'µÚÈý·½id' AFTER `update_time`,
-ADD COLUMN `current_user_id`  int(10) NOT NULL COMMENT 'µ±Ç°id' AFTER `third_user_id`;
+ADD COLUMN `third_user_id`  int(10) NOT NULL COMMENT 'ç¬¬ä¸‰æ–¹id' AFTER `update_time`,
+ADD COLUMN `current_user_id`  int(10) NOT NULL COMMENT 'å½“å‰id' AFTER `third_user_id`;
 
 
 CREATE TABLE `tp_coupon_code` (
 `id`  int(11) NOT NULL AUTO_INCREMENT ,
-`user_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ÓÃ»§id' ,
-`gift_coupon_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ÀñÆ·È¯id' ,
-`coupon_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ÓÅ»ÝÈ¯id' ,
-`code`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ÓÅ»ÝÂë' ,
-`state`  int(1) NOT NULL DEFAULT 0 COMMENT '0 Î´ÁìÈ¡   1 ÒÑÁìÈ¡  2  ÒÑÊ¹ÓÃ' ,
-`use_time`  int(10) NULL COMMENT 'Ê¹ÓÃÊ±¼ä' ,
-`receive_time`  int(10) NULL COMMENT '»ñÈ¡¿¨È¯Ê±¼ä' ,
-`create_time`  int(10) NULL COMMENT '´´½¨Ê±¼ä' ,
-`update_time`  int(10) NULL COMMENT 'ÐÞ¸ÄÊ±¼ä' ,
+`user_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ç”¨æˆ·id' ,
+`gift_coupon_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ç¤¼å“åˆ¸id' ,
+`coupon_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ä¼˜æƒ åˆ¸id' ,
+`code`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ä¼˜æƒ ç ' ,
+`state`  int(1) NOT NULL DEFAULT 0 COMMENT '0 æœªé¢†å–   1 å·²é¢†å–  2  å·²ä½¿ç”¨' ,
+`use_time`  int(10) NULL COMMENT 'ä½¿ç”¨æ—¶é—´' ,
+`receive_time`  int(10) NULL COMMENT 'èŽ·å–å¡åˆ¸æ—¶é—´' ,
+`create_time`  int(10) NULL COMMENT 'åˆ›å»ºæ—¶é—´' ,
+`update_time`  int(10) NULL COMMENT 'ä¿®æ”¹æ—¶é—´' ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
@@ -147,18 +147,18 @@ ADD COLUMN `use_code`  tinyint(1) NOT NULL DEFAULT 0 AFTER `type`;
 
 CREATE TABLE `tp_gift_coupon` (
 `id`  int(11) NOT NULL AUTO_INCREMENT COMMENT 'id' ,
-`is_create_code`  tinyint(1) NOT NULL DEFAULT 0 COMMENT 'ÊÇ·ñÒÑ¾­Éú³É¶Ò»»' ,
-`gift_coupon_name`  varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ÀñÆ·È¯Ãû³Æ' ,
-`send_start_time`  int(11) NULL COMMENT '·¢·Å¿ªÊ¼Ê±¼ä' ,
-`send_end_time`  int(11) NULL COMMENT '·¢·Å½áÊøÊ±¼ä' ,
-`use_start_time`  int(11) NULL COMMENT 'Ê¹ÓÃ¿ªÊ¼Ê±¼ä' ,
-`use_end_time`  int(11) NULL COMMENT 'Ê¹ÓÃ½áÊøÊ±¼ä' ,
-`create_time`  int(11) NULL COMMENT 'Ìí¼ÓÊ±¼ä' ,
-`update_time`  int(11) NULL COMMENT 'ÐÞ¸ÄÊ±¼ä' ,
-`create_num`  int(11) NULL COMMENT '·¢·ÅÊýÁ¿' ,
-`send_num`  int(11) NULL COMMENT 'ÒÑÁìÈ¡ÊýÁ¿' ,
-`use_num`  int(11) NULL COMMENT 'ÒÑÊ¹ÓÃÊýÁ¿' ,
-`condition`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'ÏêÇé' ,
+`is_create_code`  tinyint(1) NOT NULL DEFAULT 0 COMMENT 'æ˜¯å¦å·²ç»ç”Ÿæˆå…‘æ¢' ,
+`gift_coupon_name`  varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ç¤¼å“åˆ¸åç§°' ,
+`send_start_time`  int(11) NULL COMMENT 'å‘æ”¾å¼€å§‹æ—¶é—´' ,
+`send_end_time`  int(11) NULL COMMENT 'å‘æ”¾ç»“æŸæ—¶é—´' ,
+`use_start_time`  int(11) NULL COMMENT 'ä½¿ç”¨å¼€å§‹æ—¶é—´' ,
+`use_end_time`  int(11) NULL COMMENT 'ä½¿ç”¨ç»“æŸæ—¶é—´' ,
+`create_time`  int(11) NULL COMMENT 'æ·»åŠ æ—¶é—´' ,
+`update_time`  int(11) NULL COMMENT 'ä¿®æ”¹æ—¶é—´' ,
+`create_num`  int(11) NULL COMMENT 'å‘æ”¾æ•°é‡' ,
+`send_num`  int(11) NULL COMMENT 'å·²é¢†å–æ•°é‡' ,
+`use_num`  int(11) NULL COMMENT 'å·²ä½¿ç”¨æ•°é‡' ,
+`condition`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'è¯¦æƒ…' ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
@@ -169,16 +169,16 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 
 CREATE TABLE `tp_gift_coupon_goods_list` (
 `id`  int(11) NOT NULL AUTO_INCREMENT COMMENT 'id' ,
-`gift_coupon_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ÀñÆ·È¯id' ,
-`admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT '¹©Ó¦ÉÌid' ,
-`goods_id`  int(11) NOT NULL COMMENT 'ÉÌÆ·id' ,
-`goods_sn`  varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'ÉÌÆ·»õºÅ' ,
-`goods_name`  varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'ÉÌÆ·Ãû³Æ' ,
-`spec_key`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'ÉÌÆ·¹æ¸ñkey ¶ÔÓ¦tp_spec_goods_price ±í' ,
-`spec_key_name`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'ÉÌÆ·¹æ¸ñ×éºÏÃû³Æ' ,
-`goods_num`  int(11) NOT NULL COMMENT 'ÉÌÆ·ÊýÁ¿' ,
-`create_time`  int(11) NULL COMMENT 'Ìí¼ÓÊ±¼ä' ,
-`update_time`  int(11) NULL COMMENT 'ÐÞ¸ÄÊ±¼ä' ,
+`gift_coupon_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ç¤¼å“åˆ¸id' ,
+`admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ä¾›åº”å•†id' ,
+`goods_id`  int(11) NOT NULL COMMENT 'å•†å“id' ,
+`goods_sn`  varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'å•†å“è´§å·' ,
+`goods_name`  varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'å•†å“åç§°' ,
+`spec_key`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'å•†å“è§„æ ¼key å¯¹åº”tp_spec_goods_price è¡¨' ,
+`spec_key_name`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'å•†å“è§„æ ¼ç»„åˆåç§°' ,
+`goods_num`  int(11) NOT NULL COMMENT 'å•†å“æ•°é‡' ,
+`create_time`  int(11) NULL COMMENT 'æ·»åŠ æ—¶é—´' ,
+`update_time`  int(11) NULL COMMENT 'ä¿®æ”¹æ—¶é—´' ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
@@ -197,31 +197,31 @@ PRIMARY KEY (`id`)
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 ;
-//¹Ø×¢²¿·Ö
+//å…³æ³¨éƒ¨åˆ†
 ALTER TABLE `lm_users`
-ADD COLUMN `is_follow`  int(1) NOT NULL DEFAULT 0 COMMENT 'ÊÇ·ñ¹Ø×¢' AFTER `third_leader`,
-ADD COLUMN `follow_time`  int(11) NULL COMMENT '¹Ø×¢Ê±¼ä' AFTER `is_follow`,
-ADD COLUMN `unfollow_time`  int(11) NULL COMMENT 'È¡Ïû¹Ø×¢Ê±¼ä' AFTER `follow_time`;
+ADD COLUMN `is_follow`  int(1) NOT NULL DEFAULT 0 COMMENT 'æ˜¯å¦å…³æ³¨' AFTER `third_leader`,
+ADD COLUMN `follow_time`  int(11) NULL COMMENT 'å…³æ³¨æ—¶é—´' AFTER `is_follow`,
+ADD COLUMN `unfollow_time`  int(11) NULL COMMENT 'å–æ¶ˆå…³æ³¨æ—¶é—´' AFTER `follow_time`;
 
-//ÓÃ»§±íÐÂÔöÍ¬²½Ê±¼ä×Ö¶Î
-ALTER TABLE  `lm_users` ADD  `sync_time` INT( 11 ) DEFAULT NULL COMMENT  'ÉÏ´ÎÍ¬²½Ê±¼ä' AFTER  `unfollow_time`;
+//ç”¨æˆ·è¡¨æ–°å¢žåŒæ­¥æ—¶é—´å­—æ®µ
+ALTER TABLE  `lm_users` ADD  `sync_time` INT( 11 ) DEFAULT NULL COMMENT  'ä¸Šæ¬¡åŒæ­¥æ—¶é—´' AFTER  `unfollow_time`;
 
 
 ALTER TABLE `lm_goods_images`
-ADD COLUMN `sort`  int(11) DEFAULT '0' COMMENT 'ÅÅÐò';
+ADD COLUMN `sort`  int(11) DEFAULT '0' COMMENT 'æŽ’åº';
 
-//ÉÌÆ·±íÐÂÔö×Ö¶Î
-ALTER TABLE  `lm_goods` ADD  `virtual_sales` INT( 11 ) NOT NULL COMMENT  'ÉÌÆ·ÐéÄâÏúÁ¿' AFTER  `goods_sn`;
-ALTER TABLE  `lm_goods` ADD  `virtual_address` VARCHAR( 255 ) NOT NULL COMMENT  'ÉÌÆ·ÐéÄâ·¢»õµØÖ·' AFTER  `virtual_sales`;
+//å•†å“è¡¨æ–°å¢žå­—æ®µ
+ALTER TABLE  `lm_goods` ADD  `virtual_sales` INT( 11 ) NOT NULL COMMENT  'å•†å“è™šæ‹Ÿé”€é‡' AFTER  `goods_sn`;
+ALTER TABLE  `lm_goods` ADD  `virtual_address` VARCHAR( 255 ) NOT NULL COMMENT  'å•†å“è™šæ‹Ÿå‘è´§åœ°å€' AFTER  `virtual_sales`;
 
-//ÐÂÔö·´À¡±í
+//æ–°å¢žåé¦ˆè¡¨
 CREATE TABLE `lm_user_feedback` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL COMMENT 'ÓÃ»§id',
-  `nickname` varchar(255) DEFAULT NULL COMMENT 'ÓÃ»§êÇ³Æ',
-  `phone_model` varchar(255) DEFAULT NULL COMMENT 'ÊÖ»úÐÍºÅ',
-  `phone_network` varchar(255) DEFAULT NULL COMMENT 'ÊÖ»úÍøÂç',
-  `user_proposal` text COMMENT '·´À¡ÄÚÈÝ',
+  `user_id` int(11) DEFAULT NULL COMMENT 'ç”¨æˆ·id',
+  `nickname` varchar(255) DEFAULT NULL COMMENT 'ç”¨æˆ·æ˜µç§°',
+  `phone_model` varchar(255) DEFAULT NULL COMMENT 'æ‰‹æœºåž‹å·',
+  `phone_network` varchar(255) DEFAULT NULL COMMENT 'æ‰‹æœºç½‘ç»œ',
+  `user_proposal` text COMMENT 'åé¦ˆå†…å®¹',
   `time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -229,15 +229,15 @@ CREATE TABLE `lm_goods_comment` (
 `id`  int(11) NOT NULL AUTO_INCREMENT ,
 `user_id`  int(11) NOT NULL ,
 `goods_id`  int(11) NOT NULL ,
-`is_buyer`  int(1) NOT NULL DEFAULT 0 COMMENT 'ÊÇ·ñÎªÂô¼Ò' ,
+`is_buyer`  int(1) NOT NULL DEFAULT 0 COMMENT 'æ˜¯å¦ä¸ºå–å®¶' ,
 `create_time`  int(11) NULL ,
 `update_time`  int(11) NULL ,
-`level`  int(1) NOT NULL DEFAULT 0 COMMENT 'ÆÀÐÇµÈ¼¶' ,
-`is_show`  int(1) NOT NULL DEFAULT 1 COMMENT 'ÊÇ·ñÏÔÊ¾' ,
-`user_name`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'ÓÃ»§Ãû³Æ' ,
-`user_img`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'ÓÃ»§Í·Ïñ' ,
-`is_delete`  int(1) NOT NULL DEFAULT 0 COMMENT 'ÊÇ·ñÉ¾³ý' ,
-`content`  text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'ÄÚÈÝ' ,
+`level`  int(1) NOT NULL DEFAULT 0 COMMENT 'è¯„æ˜Ÿç­‰çº§' ,
+`is_show`  int(1) NOT NULL DEFAULT 1 COMMENT 'æ˜¯å¦æ˜¾ç¤º' ,
+`user_name`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'ç”¨æˆ·åç§°' ,
+`user_img`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'ç”¨æˆ·å¤´åƒ' ,
+`is_delete`  int(1) NOT NULL DEFAULT 0 COMMENT 'æ˜¯å¦åˆ é™¤' ,
+`content`  text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'å†…å®¹' ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
@@ -245,131 +245,131 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 ;
 
 
-//¶ÔÕËµ¥
+//å¯¹è´¦å•
 CREATE TABLE `lm_account_statement` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `admin_id` int(11) NOT NULL COMMENT '¹©Ó¦ÉÌid',
-  `create_time` int(11) DEFAULT NULL COMMENT 'Éú³ÉÊ±¼ä',
-  `balance` float(11,2) DEFAULT '0.00' COMMENT 'Óà¶î',
-  `type` int(1) NOT NULL DEFAULT '1' COMMENT '¶ÔÕËµ¥ÀàÐÍ 1 ÈÕ¶ÔÕËµ¥ 2 ÔÂ¶ÔÕËµ¥',
-  `income` float(11,2) DEFAULT '0.00' COMMENT 'ÊÕÈë',
-  `expend` float(11,2) DEFAULT '0.00' COMMENT 'Ö§³ö',
-  `income_count` int(11) DEFAULT '0' COMMENT 'ÊÕÈë±ÊÊý',
-  `expend_count` int(11) DEFAULT '0' COMMENT 'Ö§³ö±ÊÊý',
+  `admin_id` int(11) NOT NULL COMMENT 'ä¾›åº”å•†id',
+  `create_time` int(11) DEFAULT NULL COMMENT 'ç”Ÿæˆæ—¶é—´',
+  `balance` float(11,2) DEFAULT '0.00' COMMENT 'ä½™é¢',
+  `type` int(1) NOT NULL DEFAULT '1' COMMENT 'å¯¹è´¦å•ç±»åž‹ 1 æ—¥å¯¹è´¦å• 2 æœˆå¯¹è´¦å•',
+  `income` float(11,2) DEFAULT '0.00' COMMENT 'æ”¶å…¥',
+  `expend` float(11,2) DEFAULT '0.00' COMMENT 'æ”¯å‡º',
+  `income_count` int(11) DEFAULT '0' COMMENT 'æ”¶å…¥ç¬”æ•°',
+  `expend_count` int(11) DEFAULT '0' COMMENT 'æ”¯å‡ºç¬”æ•°',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-//ÉÌÆ·±íÔö¼Ó ¹æ¸ñ²ÎÊý×Ö¶Î
-ALTER TABLE  `lm_goods` ADD  `my_parameter` TEXT NOT NULL COMMENT  '¹æ¸ñ²ÎÊý' AFTER  `sku`;
+//å•†å“è¡¨å¢žåŠ  è§„æ ¼å‚æ•°å­—æ®µ
+ALTER TABLE  `lm_goods` ADD  `my_parameter` TEXT NOT NULL COMMENT  'è§„æ ¼å‚æ•°' AFTER  `sku`;
 
 CREATE TABLE `lm_poster` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL COMMENT 'º£±¨Ãû³Æ',
-  `setting` text COMMENT 'ÉèÖÃÄÚÈÝ',
-  `is_use` int(1) NOT NULL DEFAULT '1' COMMENT 'ÊÇ·ñ¿ÉÊ¹ÓÃ',
+  `name` varchar(50) DEFAULT NULL COMMENT 'æµ·æŠ¥åç§°',
+  `setting` text COMMENT 'è®¾ç½®å†…å®¹',
+  `is_use` int(1) NOT NULL DEFAULT '1' COMMENT 'æ˜¯å¦å¯ä½¿ç”¨',
   `create_time` int(10) DEFAULT NULL,
   `update_time` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-//ÓÃ»§ÌáÏÖ±í
+//ç”¨æˆ·æçŽ°è¡¨
 DROP TABLE IF EXISTS `lm_withdraw_deposit`;
 CREATE TABLE `lm_withdraw_deposit` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL COMMENT 'ÓÃ»§id',
+  `user_id` int(11) DEFAULT NULL COMMENT 'ç”¨æˆ·id',
   `openid` varchar(255) DEFAULT NULL,
-  `nickname` varchar(255) DEFAULT NULL COMMENT 'ÓÃ»§êÇ³Æ',
-  `money` float(11,2) DEFAULT NULL COMMENT 'ÌáÏÖ½ð¶î',
-  `status` int(11) DEFAULT NULL COMMENT 'ÉóºË×´Ì¬  1Î´ÉóºË  2ÉóºË²»Í¨¹ý  3ÉóºËÍ¨¹ý',
-  `application_time` int(11) DEFAULT NULL COMMENT 'ÉêÇëÊ±¼ä',
-  `check_time` int(11) DEFAULT NULL COMMENT 'ÉóºËÊ±¼ä',
-  `remark` varchar(255) DEFAULT NULL COMMENT '±¸×¢',
+  `nickname` varchar(255) DEFAULT NULL COMMENT 'ç”¨æˆ·æ˜µç§°',
+  `money` float(11,2) DEFAULT NULL COMMENT 'æçŽ°é‡‘é¢',
+  `status` int(11) DEFAULT NULL COMMENT 'å®¡æ ¸çŠ¶æ€  1æœªå®¡æ ¸  2å®¡æ ¸ä¸é€šè¿‡  3å®¡æ ¸é€šè¿‡',
+  `application_time` int(11) DEFAULT NULL COMMENT 'ç”³è¯·æ—¶é—´',
+  `check_time` int(11) DEFAULT NULL COMMENT 'å®¡æ ¸æ—¶é—´',
+  `remark` varchar(255) DEFAULT NULL COMMENT 'å¤‡æ³¨',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-//ÉÌ»§ºÅÅäÖÃ±í
+//å•†æˆ·å·é…ç½®è¡¨
 DROP TABLE IF EXISTS `lm_merchant_conf`;
 CREATE TABLE `lm_merchant_conf` (
   `conf_id` int(11) NOT NULL AUTO_INCREMENT,
-  `wx_uid` int(11) DEFAULT NULL COMMENT '¶ÔÓ¦Î¢ÐÅ±íid',
-  `merchant` varchar(255) DEFAULT NULL COMMENT 'ÉÌ»§ºÅ',
-  `apiclient_cert` varchar(255) DEFAULT NULL COMMENT 'Ö¤Êécert',
-  `apiclient_key` varchar(255) DEFAULT NULL COMMENT 'Ö¤Êékey',
-  `create_time` int(11) DEFAULT NULL COMMENT 'Ìí¼ÓÊ±¼ä',
-  `update_time` int(11) DEFAULT NULL COMMENT 'ÐÞ¸ÄÊ±¼ä',
+  `wx_uid` int(11) DEFAULT NULL COMMENT 'å¯¹åº”å¾®ä¿¡è¡¨id',
+  `merchant` varchar(255) DEFAULT NULL COMMENT 'å•†æˆ·å·',
+  `apiclient_cert` varchar(255) DEFAULT NULL COMMENT 'è¯ä¹¦cert',
+  `apiclient_key` varchar(255) DEFAULT NULL COMMENT 'è¯ä¹¦key',
+  `create_time` int(11) DEFAULT NULL COMMENT 'æ·»åŠ æ—¶é—´',
+  `update_time` int(11) DEFAULT NULL COMMENT 'ä¿®æ”¹æ—¶é—´',
   PRIMARY KEY (`conf_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
-//Ôö¼Ó×Ö¶Î
-ALTER TABLE  `lm_order_goods` ADD  `user_message` VARCHAR( 255 )  NULL COMMENT  'ÁôÑÔ±¸×¢' AFTER  `sku`
+//å¢žåŠ å­—æ®µ
+ALTER TABLE  `lm_order_goods` ADD  `user_message` VARCHAR( 255 )  NULL COMMENT  'ç•™è¨€å¤‡æ³¨' AFTER  `sku`
 
 
 ALTER TABLE `lm_spec`
-ADD COLUMN `goods_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ÉÌÆ·id' AFTER `search_index`;
+ADD COLUMN `goods_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'å•†å“id' AFTER `search_index`;
 ALTER TABLE `lm_spec_goods_price`
-ADD COLUMN `weight`  int(11) NULL DEFAULT 0 COMMENT 'ÖØÁ¿' AFTER `price`;
+ADD COLUMN `weight`  int(11) NULL DEFAULT 0 COMMENT 'é‡é‡' AFTER `price`;
 
 
 ALTER TABLE `lm_coupon_code`
-ADD COLUMN `g_code_order_id`  int(11) NULL DEFAULT 0 COMMENT 'GÂëÖ§¸¶¶©µ¥id' AFTER `update_time`;
-//ÍË»õ
-ALTER TABLE  `lm_return_goods` ADD  `refund_money` float(11,2) NOT NULL COMMENT  'ÍË¿î½ð¶î' AFTER  `remark`
+ADD COLUMN `g_code_order_id`  int(11) NULL DEFAULT 0 COMMENT 'Gç æ”¯ä»˜è®¢å•id' AFTER `update_time`;
+//é€€è´§
+ALTER TABLE  `lm_return_goods` ADD  `refund_money` float(11,2) NOT NULL COMMENT  'é€€æ¬¾é‡‘é¢' AFTER  `remark`
 
 
 CREATE TABLE `lm_goods_check` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `goods_id` int(11) DEFAULT NULL COMMENT 'ÉÌÆ·id',
-  `admin_id` int(11) DEFAULT NULL COMMENT '¹©Ó¦ÉÌid',
-  `check` int(2) DEFAULT NULL COMMENT 'ÉóºË×´Ì¬ 0Î´ÉóºË 1ÒÑÉóºË 2ÒÑÏÂ¼Ü',
-  `create_time` int(11) DEFAULT NULL COMMENT '´´½¨Ê±¼ä',
-  `update_time` int(11) DEFAULT NULL COMMENT 'ÐÞ¸ÄÊ±¼ä',
+  `goods_id` int(11) DEFAULT NULL COMMENT 'å•†å“id',
+  `admin_id` int(11) DEFAULT NULL COMMENT 'ä¾›åº”å•†id',
+  `check` int(2) DEFAULT NULL COMMENT 'å®¡æ ¸çŠ¶æ€ 0æœªå®¡æ ¸ 1å·²å®¡æ ¸ 2å·²ä¸‹æž¶',
+  `create_time` int(11) DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `update_time` int(11) DEFAULT NULL COMMENT 'ä¿®æ”¹æ—¶é—´',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-ALTER TABLE  `lm_admin` ADD  `phone` VARCHAR( 20 ) NOT NULL COMMENT  'ÊÖ»úºÅÂë' AFTER  `email`
-ALTER TABLE  `lm_admin` ADD  `headerpic` VARCHAR( 255 )  NULL COMMENT  'ÓÃ»§Í·Ïñ' AFTER  `phone`
+ALTER TABLE  `lm_admin` ADD  `phone` VARCHAR( 20 ) NOT NULL COMMENT  'æ‰‹æœºå·ç ' AFTER  `email`
+ALTER TABLE  `lm_admin` ADD  `headerpic` VARCHAR( 255 )  NULL COMMENT  'ç”¨æˆ·å¤´åƒ' AFTER  `phone`
 
 
 CREATE TABLE `lm_admin_withdrawals` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `money` float(11,2) DEFAULT NULL COMMENT 'ÌáÏÖ½ð¶î',
+  `money` float(11,2) DEFAULT NULL COMMENT 'æçŽ°é‡‘é¢',
   `admin_id` int(11) DEFAULT NULL,
-  `mode` int(2) DEFAULT NULL COMMENT 'ÌáÏÖÀàÐÍ 1¶ÔË½ÕË»§ 2¶Ô¹«ÕË»§',
-  `bank` varchar(100) DEFAULT NULL COMMENT '¿ª»§ÐÐ',
-  `card_number` varchar(50) DEFAULT NULL COMMENT 'ÒøÐÐÕÊºÅ',
-  `bank_name` varchar(50) DEFAULT NULL COMMENT '¿ª¿¨ÈË',
-  `state` int(2) DEFAULT NULL COMMENT '×´Ì¬ 0Î´´¦Àí 1ÒÑ´¦Àí 2²µ»Ø',
-  `create_time` int(11) DEFAULT NULL COMMENT '´´½¨Ê±¼ä',
-  `update_time` int(11) DEFAULT NULL COMMENT 'ÐÞ¸ÄÊ±¼ä',
+  `mode` int(2) DEFAULT NULL COMMENT 'æçŽ°ç±»åž‹ 1å¯¹ç§è´¦æˆ· 2å¯¹å…¬è´¦æˆ·',
+  `bank` varchar(100) DEFAULT NULL COMMENT 'å¼€æˆ·è¡Œ',
+  `card_number` varchar(50) DEFAULT NULL COMMENT 'é“¶è¡Œå¸å·',
+  `bank_name` varchar(50) DEFAULT NULL COMMENT 'å¼€å¡äºº',
+  `state` int(2) DEFAULT NULL COMMENT 'çŠ¶æ€ 0æœªå¤„ç† 1å·²å¤„ç† 2é©³å›ž',
+  `create_time` int(11) DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `update_time` int(11) DEFAULT NULL COMMENT 'ä¿®æ”¹æ—¶é—´',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 
 
 ALTER TABLE `lm_admin`
-ADD COLUMN `suppliers_level`  int(1) NOT NULL DEFAULT 0 COMMENT '¹©Ó¦ÉÌµÈ¼¶' AFTER `role_id`,
-ADD COLUMN `amount`  float(11,2) NULL DEFAULT 0 COMMENT 'Óà¶î' AFTER `suppliers_level`,
-ADD COLUMN `transaction_amount`  float(11,2) NULL DEFAULT 0 COMMENT 'ÀÛ¼ÆÏúÁ¿' AFTER `amount`,
-ADD COLUMN `withdrawals_amount`  float(11,2) NULL DEFAULT 0 COMMENT 'ÌáÏÖ½ð¶î' AFTER `transaction_amount`,
-ADD COLUMN `amount_refresh_time`  int(11) NULL COMMENT 'Óà¶îË¢ÐÂÊ±¼ä' AFTER `withdrawals_amount`;
+ADD COLUMN `suppliers_level`  int(1) NOT NULL DEFAULT 0 COMMENT 'ä¾›åº”å•†ç­‰çº§' AFTER `role_id`,
+ADD COLUMN `amount`  float(11,2) NULL DEFAULT 0 COMMENT 'ä½™é¢' AFTER `suppliers_level`,
+ADD COLUMN `transaction_amount`  float(11,2) NULL DEFAULT 0 COMMENT 'ç´¯è®¡é”€é‡' AFTER `amount`,
+ADD COLUMN `withdrawals_amount`  float(11,2) NULL DEFAULT 0 COMMENT 'æçŽ°é‡‘é¢' AFTER `transaction_amount`,
+ADD COLUMN `amount_refresh_time`  int(11) NULL COMMENT 'ä½™é¢åˆ·æ–°æ—¶é—´' AFTER `withdrawals_amount`;
 
 
 
 ALTER TABLE `lm_order_goods`
-ADD COLUMN `goods_postage`  float(11,2) NOT NULL COMMENT '¶©µ¥ÓÊ·Ñ' AFTER `goods_num`;
+ADD COLUMN `goods_postage`  float(11,2) NOT NULL COMMENT 'è®¢å•é‚®è´¹' AFTER `goods_num`;
 
 ALTER TABLE `lm_order`
-ADD COLUMN `admin_list`  varchar(255) NOT NULL DEFAULT '[0]' COMMENT '¹©Ó¦ÉÌÁÐ±í' AFTER `is_distribut`;
+ADD COLUMN `admin_list`  varchar(255) NOT NULL DEFAULT '[0]' COMMENT 'ä¾›åº”å•†åˆ—è¡¨' AFTER `is_distribut`;
 
 ALTER TABLE `lm_return_goods`
-ADD COLUMN `admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT '¹©Ó¦ÉÌid' AFTER `order_id`;
+ADD COLUMN `admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ä¾›åº”å•†id' AFTER `order_id`;
 
 ALTER TABLE `lm_logistics`
-ADD COLUMN `admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT '¹©Ó¦ÉÌid' AFTER `log_time`;
+ADD COLUMN `admin_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ä¾›åº”å•†id' AFTER `log_time`;
 
 
 ALTER TABLE `lm_admin`
-ADD COLUMN `nickname`  varchar(255) NULL COMMENT 'ÕÊºÅêÇ³Æ' AFTER `role_id`;
+ADD COLUMN `nickname`  varchar(255) NULL COMMENT 'å¸å·æ˜µç§°' AFTER `role_id`;
 
 ALTER TABLE `lm_goods`
 ADD COLUMN `goods_pv`  int(11) NOT NULL DEFAULT 0 AFTER `my_parameter`,
@@ -378,58 +378,58 @@ ADD COLUMN `goods_uv`  int(11) NOT NULL DEFAULT 0 AFTER `goods_pv`;
 DROP TABLE IF EXISTS `lm_goods_uv`;
 CREATE TABLE `lm_goods_uv` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL COMMENT 'ÓÃ»§id',
-  `goods_id` int(11) DEFAULT NULL COMMENT 'ÉÌÆ·id',
-  `create_time` int(11) DEFAULT NULL COMMENT '²åÈëÊ±¼ä',
+  `user_id` int(11) DEFAULT NULL COMMENT 'ç”¨æˆ·id',
+  `goods_id` int(11) DEFAULT NULL COMMENT 'å•†å“id',
+  `create_time` int(11) DEFAULT NULL COMMENT 'æ’å…¥æ—¶é—´',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `lm_goods_pv`;
 CREATE TABLE `lm_goods_pv` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `sum` int(11) DEFAULT NULL COMMENT '×ÜÊý',
-  `goods_id` int(11) DEFAULT NULL COMMENT 'ÉÌÆ·id',
-  `create_time` int(11) DEFAULT NULL COMMENT '²åÈëÊ±¼ä',
+  `sum` int(11) DEFAULT NULL COMMENT 'æ€»æ•°',
+  `goods_id` int(11) DEFAULT NULL COMMENT 'å•†å“id',
+  `create_time` int(11) DEFAULT NULL COMMENT 'æ’å…¥æ—¶é—´',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 ALTER TABLE `lm_admin`
-ADD COLUMN `goods_limit`  int(11) NOT NULL DEFAULT 0 COMMENT 'ÉÌÆ··¢²¼ÏÞÖÆ' AFTER `amount_refresh_time`,
-ADD COLUMN `point_number`  float(11,2) NOT NULL DEFAULT 1.00 COMMENT '»ý·Ö±ÈÀý' AFTER `goods_limit`;
+ADD COLUMN `goods_limit`  int(11) NOT NULL DEFAULT 0 COMMENT 'å•†å“å‘å¸ƒé™åˆ¶' AFTER `amount_refresh_time`,
+ADD COLUMN `point_number`  float(11,2) NOT NULL DEFAULT 1.00 COMMENT 'ç§¯åˆ†æ¯”ä¾‹' AFTER `goods_limit`;
 ALTER TABLE `lm_admin`
-ADD COLUMN `point`  float(11,2) NULL DEFAULT 0 COMMENT 'µ±Ç°»ý·Ö' AFTER `point_number`,
-ADD COLUMN `transaction_point`  float(11,2) NULL DEFAULT 0 COMMENT 'ÀÛ¼Æ»ý·Ö' AFTER `point`;
+ADD COLUMN `point`  float(11,2) NULL DEFAULT 0 COMMENT 'å½“å‰ç§¯åˆ†' AFTER `point_number`,
+ADD COLUMN `transaction_point`  float(11,2) NULL DEFAULT 0 COMMENT 'ç´¯è®¡ç§¯åˆ†' AFTER `point`;
 
 CREATE TABLE `lm_admin_point` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `admin_id` int(11) NOT NULL DEFAULT '0' COMMENT 'ºóÌ¨ÓÃ»§id',
-  `point` float(11,2) DEFAULT '0.00' COMMENT '»ý·ÖÊýÖµ',
+  `admin_id` int(11) NOT NULL DEFAULT '0' COMMENT 'åŽå°ç”¨æˆ·id',
+  `point` float(11,2) DEFAULT '0.00' COMMENT 'ç§¯åˆ†æ•°å€¼',
   `create_time` int(11) DEFAULT NULL,
-  `title` varchar(100) DEFAULT NULL COMMENT '±êÌâ',
-  `flow` varchar(30) DEFAULT '' COMMENT 'Á÷Ë®',
+  `title` varchar(100) DEFAULT NULL COMMENT 'æ ‡é¢˜',
+  `flow` varchar(30) DEFAULT '' COMMENT 'æµæ°´',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 ALTER TABLE `lm_return_goods`
-ADD COLUMN `result`  int(1) NOT NULL DEFAULT 0 COMMENT 'ÍË»õÍË¿î½á¹û  1 ³É¹¦ 2 ¾Ü¾ø' AFTER `refund_money`;
+ADD COLUMN `result`  int(1) NOT NULL DEFAULT 0 COMMENT 'é€€è´§é€€æ¬¾ç»“æžœ  1 æˆåŠŸ 2 æ‹’ç»' AFTER `refund_money`;
 
 
 ALTER TABLE `lm_order_goods`
-MODIFY COLUMN `spec_key`  varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT 'ÉÌÆ·¹æ¸ñkey' AFTER `give_integral`,
-MODIFY COLUMN `spec_key_name`  varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '¹æ¸ñ¶ÔÓ¦µÄÖÐÎÄÃû×Ö' AFTER `spec_key`;
+MODIFY COLUMN `spec_key`  varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT 'å•†å“è§„æ ¼key' AFTER `give_integral`,
+MODIFY COLUMN `spec_key_name`  varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT 'è§„æ ¼å¯¹åº”çš„ä¸­æ–‡åå­—' AFTER `spec_key`;
 
 ALTER TABLE `lm_order`
-MODIFY COLUMN `user_note`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT 'ÓÃ»§±¸×¢' AFTER `discount`;
+MODIFY COLUMN `user_note`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT 'ç”¨æˆ·å¤‡æ³¨' AFTER `discount`;
 
 
 
 ALTER TABLE `lm_coupon`
-ADD COLUMN `use_type`  tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Ê¹ÓÃÀàÐÍ 0 ¹Ì¶¨ÈÕÆÚ  1 ¶¯Ì¬Ê±¼ä' AFTER `is_discount`,
-ADD COLUMN `limit_day`  int(11) NOT NULL DEFAULT 7 COMMENT 'ÏÞÖÆÌìÊý' AFTER `use_type`;
+ADD COLUMN `use_type`  tinyint(1) NOT NULL DEFAULT 0 COMMENT 'ä½¿ç”¨ç±»åž‹ 0 å›ºå®šæ—¥æœŸ  1 åŠ¨æ€æ—¶é—´' AFTER `is_discount`,
+ADD COLUMN `limit_day`  int(11) NOT NULL DEFAULT 7 COMMENT 'é™åˆ¶å¤©æ•°' AFTER `use_type`;
 
 ALTER TABLE `lm_coupon_list`
-ADD COLUMN `receive_time`  int(11) NOT NULL DEFAULT 0 COMMENT 'ÁìÈ¡Ê±¼ä' AFTER `send_time`;
+ADD COLUMN `receive_time`  int(11) NOT NULL DEFAULT 0 COMMENT 'é¢†å–æ—¶é—´' AFTER `send_time`;
 
 
 -- ----------------------------
@@ -439,7 +439,7 @@ DROP TABLE IF EXISTS `lm_cron_list`;
 CREATE TABLE `lm_cron_list` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(100) DEFAULT NULL,
-  `value` int(11) NOT NULL DEFAULT '0' COMMENT 'Öµ Ê±¼ä´Á',
+  `value` int(11) NOT NULL DEFAULT '0' COMMENT 'å€¼ æ—¶é—´æˆ³',
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -452,26 +452,32 @@ INSERT INTO `lm_cron_list` VALUES ('2', 'min', '0', 'Supplier');
 INSERT INTO `lm_cron_list` VALUES ('3', 'hour', '0', 'Push');
 
 ALTER TABLE `lm_coupon_list`
-ADD COLUMN `plugin_name`  varchar(255) NULL COMMENT '²å¼þÃû×Ö' AFTER `receive_time`,
-ADD COLUMN `plugin_order_id`  int(11) NULL COMMENT '²å¼þorder±íid' AFTER `plugin_name`;
+ADD COLUMN `plugin_name`  varchar(255) NULL COMMENT 'æ’ä»¶åå­—' AFTER `receive_time`,
+ADD COLUMN `plugin_order_id`  int(11) NULL COMMENT 'æ’ä»¶orderè¡¨id' AFTER `plugin_name`;
 
 
 
 
 ALTER TABLE `lm_coupon`
-MODIFY COLUMN `is_discount`  tinyint(1) NOT NULL COMMENT 'È¯ÀàÐÍ 0 ÓÅ»ÝÈ¯ 1 ÕÛ¿ÛÈ¯ 2 ÂòÒ»ËÍÒ»È¯ 3 µÚÈý·½Õ¹Ê¾È¯' AFTER `use_code`;
+MODIFY COLUMN `is_discount`  tinyint(1) NOT NULL COMMENT 'åˆ¸ç±»åž‹ 0 ä¼˜æƒ åˆ¸ 1 æŠ˜æ‰£åˆ¸ 2 ä¹°ä¸€é€ä¸€åˆ¸ 3 ç¬¬ä¸‰æ–¹å±•ç¤ºåˆ¸' AFTER `use_code`;
 
 
 
 ALTER TABLE `lm_coupon`
-ADD COLUMN `goods_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'ÉÌÆ·id' AFTER `add_time`,
-ADD COLUMN `is_appoint`  tinyint(1) NOT NULL DEFAULT 0 COMMENT 'ÊÇ·ñÖÆ¶¨ÉÌÆ·' AFTER `goods_id`;
+ADD COLUMN `goods_id`  int(11) NOT NULL DEFAULT 0 COMMENT 'å•†å“id' AFTER `add_time`,
+ADD COLUMN `is_appoint`  tinyint(1) NOT NULL DEFAULT 0 COMMENT 'æ˜¯å¦åˆ¶å®šå•†å“' AFTER `goods_id`;
 
 
 
 
 ALTER TABLE `lm_goods`
-ADD COLUMN `hide_goods_content`  text NULL COMMENT 'ÌØÊâÄÚÈÝ' AFTER `goods_remark`;
+ADD COLUMN `hide_goods_content`  text NULL COMMENT 'ç‰¹æ®Šå†…å®¹' AFTER `goods_remark`;
+
+ALTER TABLE `lm_goods`
+ADD COLUMN `goods_subtitle`  varchar(120) NULL COMMENT 'å•†å“å‰¯æ ‡é¢˜' AFTER `goods_name`,
+ADD COLUMN `goods_label`  varchar(120) NULL COMMENT 'å•†å“æ ‡ç­¾' AFTER `goods_subtitle`;
+
+
 
 
   
