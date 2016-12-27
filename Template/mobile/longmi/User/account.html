@@ -27,6 +27,9 @@
             <a  href="javascript:void(0)" onClick="ajax_sourch_submit()">点击加载更多</a>
         </div>
     </if>
+    <div class="empty_txt">
+        您的粮仓里又有新米了，可别忘了提出来煮粥哦！
+    </div>
     <script>
         var  page = 1;
         /*** ajax 提交表单 查询订单列表结果*/
@@ -50,7 +53,7 @@
     </script>
     <else/>
     <div class="empty"><img src="__STATIC__/images/new/no_money.png"></div>
-    <!--<div class="empty_txt">暂无数据！</div>-->
+    <div class="empty_txt">皇上！国库空虚，赶紧赚米呀！娘娘们都要跑光啦！</div>
 </notempty>
 
 </body>
