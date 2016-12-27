@@ -182,7 +182,7 @@
                             </p>
                             <div class="my-mui-numbox z-index" data-numbox-min='0' data-numbox-max='99'>
                                 <button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,'{$goods_id}','{$spec.key}','{$spec.store_count}');" type="button">-</button>
-                                <input id="goods_num_{$spec.key}" class="mui-input-numbox cp_index_number" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{:$cart_data[$spec['key']]?$cart_data[$spec['key']]:0}"/>
+                                <input id="goods_num_{$goods_id}_{$spec.key}" class="mui-input-numbox cp_index_number" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{:$cart_data[$spec['key']]?$cart_data[$spec['key']]:0}"/>
                                 <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,'{$goods_id}','{$spec.key}','{$spec.store_count}');" type="button">+</button>
                             </div>
                         </div>
@@ -254,5 +254,13 @@
         });
     }
 
+    function moveBox(obj) {
+        var divTop = $(obj).offset().top;
+        var divLeft = $(obj).offset().left;
+        $(obj).css({ "position": "absolute", "z-index": "500", "left": divLeft + "px", "top": divTop + "px" });
+        $(obj).animate({ "left": ($("#collectBox").offset().left - $("#collectBox").width()) + "px", "top": ($(document).scrollTop() + 30) + "px", "width": "100px", "height": "70px" }, 500, function () {
+            $(obj).animate({ "left": $("#collectBox").offset().left + "px", "top": $("#collectBox").offset().top + "px" }, 500).fadeTo(0, 0.1).hide(0);
+        });
+    }
 </script>
 </html>
