@@ -453,6 +453,7 @@ img{
 	width: 30px;
 }
 .nav_d a {
+	position: relative;
 	display: block;
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -2092,6 +2093,16 @@ Load—more a{
 	color: #b2b2b2;
 }
 
+.nav_d li a span.figure {
+	font-size: 12px !important;
+	line-height: 1 !important;
+	color: #FFF !important;
+	position: absolute;
+	z-index: 2;
+	top: 8px;
+	margin-right: -20px;
+	right: 50%;
+}
 
 /*支付详情页*/
 .order_details .l_btn2 a,.order_details .l_btn1 a {
@@ -2628,16 +2639,15 @@ Load—more a{
 .coupon_div .coupon_div_top{
 	width: 100%;
 	border-radius: 6px 6px 0 0;
-	background: #a6dc3d;
 	height: 50px;
 	border-bottom: 2px dashed #fff;
 }
-.coupon_div .coupon_div_top2{
+.coupon_div:nth-child(2n+1) .coupon_div_top{
+	background: #a6dc3d;
+}
+.coupon_div:nth-child(2n) .coupon_div_top{
 	background: #b2b2b2;
 }
-/*.coupon_div .coupon_div_top:nth-child(odd){*/
-	/*background: #b2b2b2;*/
-/*}*/
 
 .coupon_div .coupon_div_top .coupon_div_top_l{
 	padding-left: 5px;
@@ -2701,6 +2711,12 @@ Load—more a{
 	display: block;
 }
 
+.coupon_div .coupon_div_b .coupon_list_icon_1{
+	background: url("../images/new/coupon_list_icon_1.png") no-repeat left center;
+}
+.coupon_div .coupon_div_b .coupon_list_icon_2{
+	background: url("../images/new/coupon_list_icon_2.png") no-repeat left center;
+}
 
 
 .new_poster{
