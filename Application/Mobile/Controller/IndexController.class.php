@@ -67,6 +67,10 @@ class IndexController extends MobileBaseController {
     public function index2(){
         $this -> display();
     }
+
+    public function recommendPolite(){
+        $this -> display();
+    }
 //    /**
 //     * 分类列表显示
 //     */
