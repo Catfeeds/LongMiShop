@@ -562,6 +562,18 @@ class GoodsLogic extends BaseLogic
     }
 
 
+    function getGoodsIdByGoodsName($goodsName)
+    {
+        if(empty($goodsName))
+            return array();
+        $result = M("goods")->where(array('goods_name'=>array("like","%".$goodsName."%")))->field("goods_id ,goods_name")->select();
+
+        $arr = get_arr_column($result, 'goods_id');  // 只获取商品id 那一列
+        return ($arr ? $arr : array_unique($arr));
+    }
+
+
+
     /**
      * 获得指定分类下的子分类的数组
      * @access  public
