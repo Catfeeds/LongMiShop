@@ -99,7 +99,7 @@
                         <li><a href="#tab_goods_images" data-toggle="tab">商品相册</a></li>
                         <li><a href="#tab_goods_spec" data-toggle="tab">商品规格</a></li>                        
                         <!--<li><a href="#tab_goods_attr" data-toggle="tab">商品属性</a></li>-->
-                        <li><a href="#tab_goods_parameter" data-toggle="tab">参数属性</a></li>
+                        <!--<li><a href="#tab_goods_parameter" data-toggle="tab">参数属性</a></li>-->
                     </ul>
                     <!--表单数据-->
                     <form method="post" id="addEditGoodsForm">
@@ -114,7 +114,21 @@
                                     <td>商品名称:</td>
                                     <td>
                                         <input type="text" value="{$goodsInfo.goods_name}" name="goods_name" class="form-control goodsNames" style="width:350px;" />
-                                        <span id="err_goods_name" style="color:#F00; display:none;"></span>                                        
+                                        <span id="err_goods_name" style="color:#F00; display:none;"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>商品副标题:</td>
+                                    <td>
+                                        <input type="text" value="{$goodsInfo.goods_subtitle}" name="goods_subtitle" class="form-control" style="width:350px;" />
+                                        <span id="err_goods_subtitle" style="color:#F00; display:none;"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>商品标签:</td>
+                                    <td>
+                                        <input type="text" value="{$goodsInfo.goods_label}" name="goods_label" class="form-control" style="width:350px;" />
+                                        <span id="err_goods_label" style="color:#F00; display:none;"></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -136,14 +150,14 @@
                                     <td>商品虚拟销量</td>
                                     <td>
                                         <input type="text" value="{$goodsInfo.virtual_sales}" name="virtual_sales" class="form-control" style="width:350px;"/>
-                                        <span id="err_goods_sn" style="color:#F00; display:none;"></span>
+                                        <span id="err_virtual_sales" style="color:#F00; display:none;"></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>商品虚拟发货地址</td>
                                     <td>
                                         <input type="text" value="{$goodsInfo.virtual_address}" name="virtual_address" class="form-control" style="width:350px;"/>
-                                        <span id="err_goods_sn" style="color:#F00; display:none;"></span>
+                                        <span id="err_virtual_address" style="color:#F00; display:none;"></span>
                                     </td>
                                 </tr>
                                 <!--<tr>-->
@@ -209,7 +223,7 @@
                                         <option value="0">请选择商品分类</option>
                                       </select> 
                                       </div>    
-                                      <span id="err_cat_id" style="color:#F00; display:none;"></span>                                 
+                                      <span id="err_extend_cat_id" style="color:#F00; display:none;"></span>
                                     </td>
                                 </tr>                                 
                                 
@@ -372,7 +386,7 @@
                                             </a>
                                             <br>
                                             <input type="text" style="width:100px;" placeholder="序号" value="{$vo['sort']}" name="goods_images_sort[]">
-                                            <a href="javascript:void(0)" onclick="ClearPicArr2(this,'{$vo['image_url']}')">删除</a>
+                                            <a href="javascript:void(0)" onclick="ClearPicArr2(this,'{$vo.image_url}')">删除</a>
                                         </div>
                                     </foreach>
                                     
