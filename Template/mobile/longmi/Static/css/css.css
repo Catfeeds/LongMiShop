@@ -1288,7 +1288,7 @@ img{
 	margin-bottom: 10px;
 }
 .empty img {
-	width: 40%;
+	width: 40% !important;
 	margin: 30px 30%;
 }
 .l {

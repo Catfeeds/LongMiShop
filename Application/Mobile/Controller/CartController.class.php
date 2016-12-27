@@ -64,16 +64,20 @@ class CartController extends MobileBaseController {
         $goods_num = $number = I("number");// 商品数量
         $key = I("key"); // 商品规格
 
-        if( empty($goods_id) ||empty($goods_num) ||empty($key) ){
+        if( empty($goods_id) ||empty($goods_num) ){
             exit(json_encode( array('status'=>-1,'msg'=>'参数错误','result'=>0)));
         }
         $condition = array(
             'user_id'         => $this->user_id,   // 用户id
             'session_id'      => $this->session_id,   // sessionid
             'goods_id'        => $goods_id,   // 商品id
-            'spec_key'=>$key
         );
-        $goods_spec = explode("_",$key);
+        $goods_spec = "";
+        if( !empty($key))
+        {
+            $condition["spec_key"] = $key;
+            $goods_spec = explode("_",$key);
+        }
         $cartInfo =findDataWithCondition("cart",$condition) ;
         if( empty( $cartInfo )){
             if(  $number > 0 ){

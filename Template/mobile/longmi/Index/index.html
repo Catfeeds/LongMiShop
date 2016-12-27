@@ -7,12 +7,13 @@
     <div class="top_nav_left">
         <a href="{:U('Mobile/Goods/goodsList')}">全部</a>
         <a href="{:U('Mobile/Goods/goodsList')}">新品</a>
+        <a href="#">推荐有礼</a>
         <a href="{:U('Mobile/Goods/goodsList',array('sort'=>'sales_sum'))}">销量</a>
     </div>
     <form name="sourch_form" id="sourch_form" method="post" action="{:U('Mobile/Goods/goodsList')}">
         <div class="top_nav_right">
             <div class="top_nav_find">
-                <input name="q" id="q"  type="text" value="<?php echo I('q'); ?>" placeholder="龙米" />
+                <input name="find" id="q"  type="text" value="<?php echo I('q'); ?>" placeholder="龙米" />
                 <a href="javascript:if($.trim($('#q').val()) != '') $('#sourch_form').submit();" >
                     <img src="__STATIC__/SVG/search_r.svg">
                 </a>
@@ -47,7 +48,7 @@
             <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
             <div class="mui-slider-item  mui-slider-item-duplicate">
                 <a href="{$adv_array[0]['ad_link']}" <if condition="$adv_array[0]['target'] eq 1">target="_blank"</if>>
-                <img src="{$adv_array[0]['ad_code']}" title="{$adv_array[0]['title']}"width="100%" style="{$adv_array[0]['style']}">
+                <img src="{$adv_array[0]['ad_code']}" title="{$adv_array[0]['title']}" width="100%" style="{$adv_array[0]['style']}">
                 </a>
             </div>
         </div>
@@ -66,12 +67,12 @@
     <ul>
         <li style="background-image:url('__STATIC__/images/new/top_menu_1.png')">
             <p>
-                <a href="{:U('Mobile/User/account')}"><b>钱包</b></a>
+                <a href="{:U('Mobile/User/account')}"><b>钱包:{$user['user_money']}</b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_2.png')">
             <p>
-                <a href="{:U('Mobile/User/coupon')}"><b>优惠券</b></a>
+                <a href="{:U('Mobile/User/coupon')}"><b>优惠券:{$couponCount}</b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_3.png')">
@@ -127,63 +128,32 @@
 
 <div class="index_title">
     <img src="__STATIC__/images/new/suixinda.png">
+
+    <img src="__STATIC__/images/new/suixinda.png">
 </div>
-
-<div class="mui-content my_index_no_line">
-    <ul class="mui-table-view">
-        <li class="my_index_cp_li">
-            <div class="mui-slider-handle">
-                <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id))}"></a></div>
-                <div class="cp_index">
-                    <div class="cp_index_l3">
-                        <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods[goods_id]))}">
-                            <img src="{$goods.original_img}">
-                        </a>
-                    </div>
-                    <div class="cp_index_r">
-                        <p class="cj1">{:$goods['goods_subtitle']?$goods['goods_subtitle']:$goods['goods_name']}</p>
-                        <p class="cj1">
-                            <span>{:$goods['goods_label']?$goods['goods_label']:$goods['goods_name']}</span>
-                        </p>
-                        <p class="my_index_cp_li_p1">{$goods.goods_name}</p>
-                        <p class="my_index_cp_li_p1">心动价：￥{$goods.shop_price}</p>
-                        <p>
-                            <a class="cp_index_buy" href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods['goods_id']));}">
-                                立即购买
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <p class="my_index_tip">（选择一下龙米伴侣↓）</p>
-</div>
-
-
-
 
 <div class="mui-content">
     <ul class="mui-table-view">
-        <foreach item="spec" key="key" name="spec_goods_price">
-            <li class="my_index_spec_li">
+        <foreach item="spec" key="key" name="favourite_goods">
+            <li class="my_index_spec_li ">
                 <div class="mui-slider-handle">
-                    <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id,'spec_key'=>$spec['key']))}"></a></div>
+                    <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$spec['goods_id']))}"></a></div>
                     <div class="cp_index">
                         <div class="cp_index_l">
                             <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$spec['goods_id']))}">
-                                <img src="{:$spec['img']?'__STATIC__/images/new/'.$spec['img']:'';}" >
+                                <img src="{$spec['original_img']}" >
                             </a>
                         </div>
                         <div class="cp_index_r">
-                            <p class="cj1">我是彩蛋</p>
+                            <p class="cj1">{$spec.goods_name}</p>
                             <p >
-                                <span>{$spec.key_name}</span>
+                                <span>{$spec.goods_subtitle}</span>
                             </p>
+                            <p class="cj1">心动价：￥{$spec.shop_price}</p>
                             <div class="my-mui-numbox z-index" data-numbox-min='0' data-numbox-max='99'>
-                                <button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,'{$goods_id}','{$spec.key}','{$spec.store_count}');" type="button">-</button>
-                                <input id="goods_num_{$goods_id}_{$spec.key}" class="mui-input-numbox cp_index_number" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{:$cart_data[$spec['key']]?$cart_data[$spec['key']]:0}"/>
-                                <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,'{$goods_id}','{$spec.key}','{$spec.store_count}');" type="button">+</button>
+                                <button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,'{$spec.goods_id}','0','{$spec.store_count}');" type="button">-</button>
+                                <input id="goods_num_{$spec.goods_id}_0" class="mui-input-numbox cp_index_number" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{:$cart_data[$goods_id.'_0']?$cart_data[$goods_id.'_0']:0}"/>
+                                <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,'{$spec.goods_id}','0','{$spec.store_count}');" type="button">+</button>
                             </div>
                         </div>
                     </div>
@@ -217,17 +187,17 @@
     });
 
     var before_request = 1; // 上一次请求是否已经有返回来, 有才可以进行下一次请求
-
     function switch_num(number,goods_id,key,store_count) {
         if (before_request == 0)
         {
-//            $("#goods_num_" + key).val(num2);
             alert("点击太频繁 ,休息一下");
             return false;
         }
         var num2 = parseInt($("#goods_num_"+goods_id+"_" + key).val());
+        if( number < 0 && num2 < 1){
+            return false;
+        }
         num2 += number;
-//        if (num2 < 1) num2 = 0; // 保证购买数量不能少于 1
         if (num2 > store_count) {
             alert("库存只有 " + store_count + " 件, 你只能买 " + store_count + " 件");
             num2 = store_count; // 保证购买数量不能多余库存数量
@@ -241,7 +211,6 @@
             data : {number:number,goods_id:goods_id,key:key},
             dataType:"json",
             success: function(data){
-
                 alert(data.msg);
                 if( data.status==1){
                     $("#goods_num_"+goods_id+"_" + key).val(num2);
@@ -254,13 +223,6 @@
         });
     }
 
-    function moveBox(obj) {
-        var divTop = $(obj).offset().top;
-        var divLeft = $(obj).offset().left;
-        $(obj).css({ "position": "absolute", "z-index": "500", "left": divLeft + "px", "top": divTop + "px" });
-        $(obj).animate({ "left": ($("#collectBox").offset().left - $("#collectBox").width()) + "px", "top": ($(document).scrollTop() + 30) + "px", "width": "100px", "height": "70px" }, 500, function () {
-            $(obj).animate({ "left": $("#collectBox").offset().left + "px", "top": $("#collectBox").offset().top + "px" }, 500).fadeTo(0, 0.1).hide(0);
-        });
-    }
+
 </script>
 </html>
