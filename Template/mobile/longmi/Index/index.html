@@ -152,7 +152,7 @@
                             <p class="cj1">心动价：￥{$spec.shop_price}</p>
                             <div class="my-mui-numbox z-index" data-numbox-min='0' data-numbox-max='99'>
                                 <button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,'{$spec.goods_id}','0','{$spec.store_count}');" type="button">-</button>
-                                <input id="goods_num_{$spec.goods_id}_0" class="mui-input-numbox cp_index_number" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{:$cart_data[$goods_id.'_0']?$cart_data[$goods_id.'_0']:0}"/>
+                                <input id="goods_num_{$spec.goods_id}_0" class="mui-input-numbox cp_index_number" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  value="{:$cart_data[$spec['goods_id'].'_0']?$cart_data[$spec['goods_id'].'_0']:0}"/>
                                 <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,'{$spec.goods_id}','0','{$spec.store_count}');" type="button">+</button>
                             </div>
                         </div>
