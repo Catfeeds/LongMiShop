@@ -67,12 +67,12 @@
     <ul>
         <li style="background-image:url('__STATIC__/images/new/top_menu_1.png')">
             <p>
-                <a href="{:U('Mobile/User/account')}"><b>钱包:{:$user['user_money']?$user['user_money']:0}</b></a>
+                <a href="{:U('Mobile/User/account')}"><b>钱包<br/>{:$user['user_money']?$user['user_money']:0}</b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_2.png')">
             <p>
-                <a href="{:U('Mobile/User/coupon')}"><b>优惠券:{$couponCount}</b></a>
+                <a href="{:U('Mobile/User/coupon')}"><b>优惠券<br/>{$couponCount}</b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_3.png')">
@@ -82,7 +82,7 @@
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_4.png')">
             <p>
-                <a href="{:U('Mobile/User/myPoster')}"><b>赚米</b></a>
+                <a href="{:U('Mobile/User/myPoster')}"><b>赚米<br/>{$inviteNumber}</b></a>
             </p>
         </li>
     </ul>

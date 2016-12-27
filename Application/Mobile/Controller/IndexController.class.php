@@ -22,6 +22,18 @@ class IndexController extends MobileBaseController {
         $result = $usersLogic -> getCoupon( $this->user_id);
         $this -> assign('couponCount', $result['data']['count']);
 
+
+        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
+        $inviteData = getCallbackData($inviteData);
+        $inviteNumber = getCountWithCondition("invite_list" ,array('parent_user_id'=>$this->user_id));
+        if( $inviteNumber > 0){
+            $inviteNumber += $inviteNumber *$inviteData['point'];
+            $inviteNumber += $inviteNumber *$inviteData['balance'];
+            $inviteNumber += $inviteNumber *$inviteData["coupon"]['money'];
+        }
+        $this -> assign('inviteNumber',$inviteNumber);
+
+
         $newGoods = M("goods")->where(array("is_new" => 1))->order("sort")->limit('2')->select();
 
         $this->assign('newGoods', $newGoods);
@@ -29,10 +41,15 @@ class IndexController extends MobileBaseController {
         $favourite_goods = M('goods') -> where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,MY_CACHE_TIME)->select();//首页推荐商品
         $this -> assign('favourite_goods',$favourite_goods);
 
+
+
+
         $condition = array(
             'user_id'    => $this->user_id,   // 用户id
-            'session_id' => $this->session_id,   // sessionid
         );
+        if( !$this->user_id ){
+            $condition['session_id'] = $this->session_id;
+        }
         $cart_data = M('cart')->where($condition)->select();
         if(!empty($cart_data)){
             $cart_data2 = array();
