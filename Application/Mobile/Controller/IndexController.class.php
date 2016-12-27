@@ -46,6 +46,13 @@ class IndexController extends MobileBaseController {
             'session_id' => $this->session_id,   // sessionid
         );
         $cart_data = M('cart')->where($condition)->select();
+        if(!empty($cart_data)){
+            $cart_data2 = array();
+            foreach ($cart_data as $cart_data_item){
+                $cart_data2[$cart_data_item['goods_id']."_".intval($cart_data_item['key'])] = $cart_data_item;
+            }
+            $cart_data = $cart_data2;
+        }
 //        $spec_goods_price = selectDataWithCondition('spec_goods_price', array("goods_id" => $goods_id));
 //        foreach ($spec_goods_price as $spec_goods_price_key => $spec_goods_price_item) {
 //            $img = "";

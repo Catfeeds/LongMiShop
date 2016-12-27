@@ -67,7 +67,7 @@
     <ul>
         <li style="background-image:url('__STATIC__/images/new/top_menu_1.png')">
             <p>
-                <a href="{:U('Mobile/User/account')}"><b>钱包:{$user['user_money']}</b></a>
+                <a href="{:U('Mobile/User/account')}"><b>钱包:{:$user['user_money']?$user['user_money']:0}</b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_2.png')">
