@@ -2819,9 +2819,20 @@ Load—more a{
 	font-size: 12px;
 	color: #B2B2B2;
 	padding: 5px 0;
+	margin-bottom: 1px;
 	background: #fff;
 	text-align: center;
 }
 .my_index_no_line .mui-table-view:after{
 	background: none;
+}
+
+
+.my_cart_ul p{
+	height: 24px !important;
+	line-height: 24px !important;
+}
+.my_cart_ul p.my_cart_spec{
+	color: #b2b2b2;
+	font-size: 12px !important;
 }
