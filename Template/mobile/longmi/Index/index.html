@@ -64,22 +64,22 @@
 
 <div class="top_menu">
     <ul>
-        <li>
+        <li style="background-image:url('__STATIC__/images/new/top_menu_1.png')">
             <p>
                 <a href="{:U('Mobile/User/account')}"><b>钱包</b></a>
             </p>
         </li>
-        <li style="background-image:url('__STATIC__/images/new/nav_2.png')">
+        <li style="background-image:url('__STATIC__/images/new/top_menu_2.png')">
             <p>
                 <a href="{:U('Mobile/User/coupon')}"><b>优惠券</b></a>
             </p>
         </li>
-        <li style="background-image:url('__STATIC__/images/new/nav_3.png')">
+        <li style="background-image:url('__STATIC__/images/new/top_menu_3.png')">
             <p>
                 <a href="{:U('Mobile/Recommend/index')}"><b>推荐有奖</b></a>
             </p>
         </li>
-        <li style="background-image:url('__STATIC__/images/new/nav_4.png')">
+        <li style="background-image:url('__STATIC__/images/new/top_menu_4.png')">
             <p>
                 <a href="{:U('Mobile/User/myPoster')}"><b>赚米</b></a>
             </p>
@@ -95,9 +95,9 @@
 <div class="mui-content">
     <ul class="mui-table-view">
         <foreach name="newGoods" item="newGoodsItem" key="newGoodsKey">
-            <li class="mui-table-view-cell">
+            <li class="my_index_cp_li">
                 <div class="mui-slider-handle">
-                    <!--<div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']))}"></a></div>-->
+                    <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']))}"></a></div>
                     <div class="cp_index">
                         <div class="cp_index_l3">
                             <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']))}">
@@ -109,6 +109,7 @@
                             <p >
                                 <span>￥{$newGoodsItem.shop_price}</span>
                             </p>
+                            <p></p>
                             <p>
                                 <a class="cp_index_buy" href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']));}">
                                     立即购买
@@ -129,9 +130,9 @@
 
 <div class="mui-content my_index_no_line">
     <ul class="mui-table-view">
-        <li class="mui-table-view-cell">
+        <li class="my_index_cp_li">
             <div class="mui-slider-handle">
-                <!--<div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id))}"></a></div>-->
+                <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id))}"></a></div>
                 <div class="cp_index">
                     <div class="cp_index_l3">
                         <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods[goods_id]))}">
@@ -143,6 +144,7 @@
                         <p >
                             <span>￥{$goods.shop_price}</span>
                         </p>
+                        <p></p>
                         <p>
                             <a class="cp_index_buy" href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id));}">
                                 立即购买
@@ -164,7 +166,7 @@
         <foreach item="spec" key="key" name="spec_goods_price">
             <li class="my_index_spec_li">
                 <div class="mui-slider-handle">
-                    <!--<div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id,'spec_key'=>$spec['key']))}"></a></div>-->
+                    <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$goods_id,'spec_key'=>$spec['key']))}"></a></div>
                     <div class="cp_index">
                         <div class="cp_index_l">
                             <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$spec['goods_id']))}">
@@ -221,13 +223,13 @@
             alert("点击太频繁 ,休息一下");
             return false;
         }
-        var num2 = parseInt($("#goods_num_" + key).val());
+        var num2 = parseInt($("#goods_num_"+goods_id+"_" + key).val());
         num2 += number;
 //        if (num2 < 1) num2 = 0; // 保证购买数量不能少于 1
         if (num2 > store_count) {
             alert("库存只有 " + store_count + " 件, 你只能买 " + store_count + " 件");
             num2 = store_count; // 保证购买数量不能多余库存数量
-            $("#goods_num_" + key).val(num2);
+            $("#goods_num_"+goods_id+"_" + key).val(num2);
             return false;
         }
         before_request = 0;
@@ -240,7 +242,7 @@
 
                 alert(data.msg);
                 if( data.status==1){
-                    $("#goods_num_" + key).val(num2);
+                    $("#goods_num_"+goods_id+"_" + key).val(num2);
                 }
                 before_request = 1;
             },

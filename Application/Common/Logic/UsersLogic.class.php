@@ -309,7 +309,7 @@ class UsersLogic extends BaseLogic
 
         $sql = "SELECT l.*,c.name,c.is_appoint,c.money,c.use_end_time,c.condition,c.is_discount,c.goods_id,c.use_type,c.desc,c.limit_day  FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
-            " c ON l.cid =  c.id WHERE l.uid = {$user_id} {$where}  ORDER BY l.send_time DESC,l.use_time LIMIT {$Page->firstRow},{$Page->listRows}";
+            " c ON l.cid =  c.id WHERE l.uid = '{$user_id}' {$where}  ORDER BY l.send_time DESC,l.use_time LIMIT {$Page->firstRow},{$Page->listRows}";
 
         $logs = $this->query($sql);
 
