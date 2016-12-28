@@ -82,7 +82,7 @@ class GoodsController extends BaseController {
             $this -> assign('isBought',false);
         }
         $goods['my_parameter'] = unserialize(base64_decode($goods['my_parameter']));
-        $goodArra
+//        $goodArra
         $this -> assign('isComment',$isComment);
         $this -> assign('count_postage',sprintf(" %1\$.2f",$count_postage['data']['count']));
         $this -> assign('logAdd',$logAdd);
@@ -370,74 +370,74 @@ class GoodsController extends BaseController {
         exit($json_str);        
     }    
     
-    /**
-     * 获取商品列表
-     */
-    public function goodsInfo(){
-
-        //$http = SITE_URL; // 网站域名
-        $goods_id = $_REQUEST['id'];
-        $where['goods_id'] = $goods_id;
-        $model = M('Goods');
-
-        $goods  = $model->where($where)->find();
-        
-        // 处理商品属性
-        $goods_attribute = M('GoodsAttribute')->getField('attr_id,attr_name'); // 查询属性
-        $goods_attr_list = M('GoodsAttr') -> where("goods_id = $goods_id")->select(); // 查询商品属性表
-        foreach($goods_attr_list as $key => $val)
-        {
-            $goods_attr_list[$key]['attr_name'] = $goods_attribute[$val['attr_id']];
-        }                
-        $goods['goods_attr_list'] = $goods_attr_list ? $goods_attr_list : '';
-        
-        // 处理商品规格
-        $Model = new \Think\Model();        
-        // 商品规格 价钱 库存表 找出 所有 规格项id
-        $keys = M('SpecGoodsPrice') -> where("goods_id = $goods_id")->getField("GROUP_CONCAT(`key` SEPARATOR '_') ");
-        if($keys)
-        {
-             $specImage =  M('SpecImage') -> where("goods_id = $goods_id and src != '' ")->getField("spec_image_id,src");// 规格对应的 图片表， 例如颜色
-             $keys = str_replace('_',',',$keys);             
-             $sql  = "SELECT a.name,a.order,b.* FROM __PREFIX__spec AS a INNER JOIN __PREFIX__spec_item AS b ON a.id = b.spec_id WHERE b.id IN($keys) ORDER BY a.order";
-             $filter_spec2 = $Model->query($sql);             
-             foreach($filter_spec2 as $key => $val)
-             {                                  
-                 $filter_spec[] = array(
-                     'spec_name'=>$val['name'],
-                     'item_id'=> $val['id'],
-                     'item'=> $val['item'],
-                     'src'=>$specImage[$val['id']] ? SITE_URL.$specImage[$val['id']] : '',
-                     );                 
-             }                        
-             $goods['goods_spec_list'] = $filter_spec;
-        }           
-         
-       // print_r($filter_spec);
-        //print_r($goods_attr_list);
-        //print_r($filter_spec);
-                               
-       $goods['goods_content'] = str_replace('/Public/upload/', SITE_URL."/Public/upload/", $goods['goods_content']);
-        $goods['goods_content'] = htmlspecialchars_decode($goods['goods_content']);
-       $goods['original_img'] = SITE_URL.$goods['original_img'];
-        $return['goods'] = $goods;
-        $return['spec_goods_price']  = M('spec_goods_price') -> where("goods_id = $goods_id")->getField("key,price,store_count"); // 规格 对应 价格 库存表
-        $return['gallery'] = M('goods_images')->field('image_url') -> where(array('goods_id'=>$goods_id))->select();
-        foreach($return['gallery'] as $key => $val){
-           $return['gallery'][$key]['image_url'] = SITE_URL.$return['gallery'][$key]['image_url'];
-        }
-        //获取最近的两条评论
-        $latest_comment = M('comment') -> where("goods_id={$goods_id} AND is_show=1 AND parent_id=0")->limit(2)->select();
-        $return['comment'] = $latest_comment ? $latest_comment : '';
-        
-        if(!$goods){
-            $json_arr = array('status'=>-1,'msg'=>'没有该商品','result'=>'');
-        }else{
-            $json_arr = array('status'=>1,'msg'=>'获取成功','result'=>$return);
-        }
-        $json_str = json_encode($json_arr);
-        exit($json_str);
-    }
+//    /**
+//     * 获取商品列表
+//     */
+//    public function goodsInfo(){
+//
+//        //$http = SITE_URL; // 网站域名
+//        $goods_id = $_REQUEST['id'];
+//        $where['goods_id'] = $goods_id;
+//        $model = M('Goods');
+//
+//        $goods  = $model->where($where)->find();
+//
+//        // 处理商品属性
+//        $goods_attribute = M('GoodsAttribute')->getField('attr_id,attr_name'); // 查询属性
+//        $goods_attr_list = M('GoodsAttr') -> where("goods_id = $goods_id")->select(); // 查询商品属性表
+//        foreach($goods_attr_list as $key => $val)
+//        {
+//            $goods_attr_list[$key]['attr_name'] = $goods_attribute[$val['attr_id']];
+//        }
+//        $goods['goods_attr_list'] = $goods_attr_list ? $goods_attr_list : '';
+//
+//        // 处理商品规格
+//        $Model = new \Think\Model();
+//        // 商品规格 价钱 库存表 找出 所有 规格项id
+//        $keys = M('SpecGoodsPrice') -> where("goods_id = $goods_id")->getField("GROUP_CONCAT(`key` SEPARATOR '_') ");
+//        if($keys)
+//        {
+//             $specImage =  M('SpecImage') -> where("goods_id = $goods_id and src != '' ")->getField("spec_image_id,src");// 规格对应的 图片表， 例如颜色
+//             $keys = str_replace('_',',',$keys);
+//             $sql  = "SELECT a.name,a.order,b.* FROM __PREFIX__spec AS a INNER JOIN __PREFIX__spec_item AS b ON a.id = b.spec_id WHERE b.id IN($keys) ORDER BY a.order";
+//             $filter_spec2 = $Model->query($sql);
+//             foreach($filter_spec2 as $key => $val)
+//             {
+//                 $filter_spec[] = array(
+//                     'spec_name'=>$val['name'],
+//                     'item_id'=> $val['id'],
+//                     'item'=> $val['item'],
+//                     'src'=>$specImage[$val['id']] ? SITE_URL.$specImage[$val['id']] : '',
+//                     );
+//             }
+//             $goods['goods_spec_list'] = $filter_spec;
+//        }
+//
+//       // print_r($filter_spec);
+//        //print_r($goods_attr_list);
+//        //print_r($filter_spec);
+//
+//       $goods['goods_content'] = str_replace('/Public/upload/', SITE_URL."/Public/upload/", $goods['goods_content']);
+//        $goods['goods_content'] = htmlspecialchars_decode($goods['goods_content']);
+//       $goods['original_img'] = SITE_URL.$goods['original_img'];
+//        $return['goods'] = $goods;
+//        $return['spec_goods_price']  = M('spec_goods_price') -> where("goods_id = $goods_id")->getField("key,price,store_count"); // 规格 对应 价格 库存表
+//        $return['gallery'] = M('goods_images')->field('image_url') -> where(array('goods_id'=>$goods_id))->select();
+//        foreach($return['gallery'] as $key => $val){
+//           $return['gallery'][$key]['image_url'] = SITE_URL.$return['gallery'][$key]['image_url'];
+//        }
+//        //获取最近的两条评论
+//        $latest_comment = M('comment') -> where("goods_id={$goods_id} AND is_show=1 AND parent_id=0")->limit(2)->select();
+//        $return['comment'] = $latest_comment ? $latest_comment : '';
+//
+//        if(!$goods){
+//            $json_arr = array('status'=>-1,'msg'=>'没有该商品','result'=>'');
+//        }else{
+//            $json_arr = array('status'=>1,'msg'=>'获取成功','result'=>$return);
+//        }
+//        $json_str = json_encode($json_arr);
+//        exit($json_str);
+//    }
     
     /**
      *  goodsPriceBySpec 获取商品价格
