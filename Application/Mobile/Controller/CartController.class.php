@@ -69,9 +69,11 @@ class CartController extends MobileBaseController {
         }
         $condition = array(
             'user_id'         => $this->user_id,   // 用户id
-            'session_id'      => $this->session_id,   // sessionid
             'goods_id'        => $goods_id,   // 商品id
         );
+        if(! $this->user_id){
+            $condition["session_id"] = $this->session_id;
+        }
         $goods_spec = "";
         if( !empty($key) && $key != "0")
         {
