@@ -11,6 +11,9 @@
     $('#myCarousel').carousel({
         interval: 3000
     });
+    $('#myCarousel2').carousel({
+        interval: 3000
+    });
 
     $('.top').click(function () {
         $('html, body').animate({ scrollTop: 0 }, 'fast');

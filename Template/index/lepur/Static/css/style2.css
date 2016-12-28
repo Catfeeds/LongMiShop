@@ -75,7 +75,7 @@ html,body {width:100%;}
 /*口碑*/
 #praise {margin-top:20px;background:#f6f6f6;padding:30px;}
 .praise-left {width: 100%;float:left;}
-.control {left:0px;bottom:0px;margin-left:0px;margin-bottom:0px; width:auto;}
+.control {left:0px;bottom:0px;margin-left:0px;margin-bottom:0px; width:100%;}
 .control li {background-color: #b3b3b3;border: 1px solid #b3b3b3;}
 .control .active {background-color: #b3b3b3; width: 40px !important;}
 .praise-right {width:350px;float:right;}
