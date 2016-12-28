@@ -70,16 +70,17 @@ function goods_thum_images($goods_id,$width,$height){
      if(empty($goods_id))
 		 return '';
     //判断缩略图是否存在
-    $path = "Public/upload/goods/thumb/$goods_id/";
-    $goods_thumb_name ="goods_thumb_{$goods_id}_{$width}_{$height}";
-  
-    // 这个商品 已经生成过这个比例的图片就直接返回了
-    if(file_exists($path.$goods_thumb_name.'.jpg'))  return '/'.$path.$goods_thumb_name.'.jpg'; 
-    if(file_exists($path.$goods_thumb_name.'.jpeg')) return '/'.$path.$goods_thumb_name.'.jpeg'; 
-    if(file_exists($path.$goods_thumb_name.'.gif'))  return '/'.$path.$goods_thumb_name.'.gif'; 
-    if(file_exists($path.$goods_thumb_name.'.png'))  return '/'.$path.$goods_thumb_name.'.png'; 
+//    $path = "Public/upload/goods/thumb/$goods_id/";
+//    $goods_thumb_name ="goods_thumb_{$goods_id}_{$width}_{$height}";
+//
+//    // 这个商品 已经生成过这个比例的图片就直接返回了
+//    if(file_exists($path.$goods_thumb_name.'.jpg'))  return '/'.$path.$goods_thumb_name.'.jpg';
+//    if(file_exists($path.$goods_thumb_name.'.jpeg')) return '/'.$path.$goods_thumb_name.'.jpeg';
+//    if(file_exists($path.$goods_thumb_name.'.gif'))  return '/'.$path.$goods_thumb_name.'.gif';
+//    if(file_exists($path.$goods_thumb_name.'.png'))  return '/'.$path.$goods_thumb_name.'.png';
         
     $original_img = M('Goods') -> where("goods_id = $goods_id")->getField('original_img');
+    return $original_img;/*
     if(empty($original_img)) return '';
     
     $original_img = '.'.$original_img; // 相对路径
@@ -96,7 +97,7 @@ function goods_thum_images($goods_id,$width,$height){
     // 参考文章 http://www.mb5u.com/biancheng/php/php_84533.html  改动参考 http://www.thinkphp.cn/topic/13542.html
     $image->thumb($width, $height,2)->save($path.$goods_thumb_name,NULL,100); //按照原图的比例生成一个最大为$width*$height的缩略图并保存
     
-
+*/
     //图片水印处理
     /*
     $water = tpCache('water');
@@ -111,7 +112,7 @@ function goods_thum_images($goods_id,$width,$height){
     	}
     }
     */
-    return '/'.$path.$goods_thumb_name;
+    //return '/'.$path.$goods_thumb_name;
 }
 
 /**
