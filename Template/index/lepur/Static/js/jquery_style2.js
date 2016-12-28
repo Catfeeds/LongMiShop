@@ -1,14 +1,17 @@
 ﻿$(function () {
     //$(".buy").click(function () {
     //    $(".buy").html("立即购买");
-    //    $(".buy").css({ "background-color": "#fff", "color": "#ead9b1" });
+    //    $(".buy").css({ "background-color": "#fff", "color": "#a6dc3d" });
     //    $(".meng").hide("fast");
     //    $(this).html("扫码立即购买");
-    //    $(this).css({ "background-color": "#ead9b1", "color": "#fff" });
+    //    $(this).css({ "background-color": "#a6dc3d", "color": "#fff" });
     //    $(this).parent().siblings().children(".meng").slideDown("fast");
     //});
 
     $('#myCarousel').carousel({
+        interval: 3000
+    });
+    $('#myCarousel2').carousel({
         interval: 3000
     });
 
@@ -19,21 +22,21 @@
 
     $(".goods .item").hover(function () {
         $(".buy").html("立即购买");
-        $(".buy").css({ "background-color": "#fff", "color": "#ead9b1" });
+        $(".buy").css({ "background-color": "#fff", "color": "#a6dc3d" });
         $(".meng").hide();
         $(this).find(".buy").html("扫码立即购买");
-        $(this).find(".buy").css({ "background-color": "#ead9b1", "color": "#fff" });
+        $(this).find(".buy").css({ "background-color": "#a6dc3d", "color": "#fff" });
         $(this).find(".buy").parent().siblings().children(".meng").slideDown();
     }, function () {
         $(".buy").html("立即购买");
-        $(".buy").css({ "background-color": "#fff", "color": "#ead9b1" });
+        $(".buy").css({ "background-color": "#fff", "color": "#a6dc3d" });
         $(".meng").hide();
     });
 
     $(".btn-lc").hover(function () {
-        $(this).css({ "background": "#e5d09d", "color": "#fff" });
+        $(this).css({ "background": "#a6dc3d", "color": "#fff" });
     }, function () {
-        $(this).css({ "background": "none", "color": "#e5d09d" });
+        $(this).css({ "background": "none", "color": "#a6dc3d" });
     });
 
     $(".cpkouwei").click(function () {

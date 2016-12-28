@@ -1,10 +1,10 @@
 <empty name ="cartList">
-    <div class="empty"><img src="__STATIC__/SVG/d5.svg?42368"></div>
-    <div class="empty_txt" style="color: #b2b2b2;">购物车空空如也~</div>
-    <div class="empty_btn"><a href="{:U('Index/index')}">去逛逛</a></div>
+    <div class="empty"><img src="__STATIC__/images/new/no_product.png"></div>
+    <div class="empty_txt" style="color: #b2b2b2;">你好，很高兴认识你，<br/>我是一个空空如也的购物车</div>
+    <!--<div class="empty_btn"><a href="{:U('Index/index')}">去逛逛</a></div>-->
     <else/>
     <div class="mui-content">
-        <ul class="mui-table-view">
+        <ul class="mui-table-view my_cart_ul">
             <foreach name="cartList" item="v" key="k" >
                 <li class="mui-table-view-cell">
                     <div class="mui-slider-right mui-disabled">
@@ -35,6 +35,7 @@
                             </div>
                             <div class="cp1_r">
                                 <p class="<if condition='$v[store_count] eq 0' >cj1</if>">{$v.goods_name}</p>
+                                <p class="my_cart_spec <if condition='$v[store_count] eq 0' >cj1</if>">{$v.spec_key_name}</p>
                                 <span class="<if condition='$v[store_count] eq 0' >cj1</if>">￥{$v.member_goods_price}</span>
 
                                 <if condition='$v[store_count] neq 0' >

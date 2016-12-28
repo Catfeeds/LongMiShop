@@ -272,6 +272,8 @@ class GoodsLogic extends BaseLogic
 
     /**
      * 获取商品规格
+     * @param $goods_id
+     * @return array
      */
     public function getSpec($goods_id){
         //商品规格 价钱 库存表 找出 所有 规格项id
@@ -285,11 +287,12 @@ class GoodsLogic extends BaseLogic
             $filter_spec2 = M()->query($sql);
             foreach($filter_spec2 as $key => $val)
             {
-                $filter_spec[$val['name']][] = array(
+                $temp_array = array(
                     'item_id'=> $val['id'],
                     'item'=> $val['item'],
                     'src'=>$specImage[$val['id']],
                 );
+                $filter_spec[$val['name']][] = $temp_array;
             }
         }
         return $filter_spec;
@@ -557,6 +560,18 @@ class GoodsLogic extends BaseLogic
 
         return ($arr ? $arr : array_unique($arr));
     }
+
+
+    function getGoodsIdByGoodsName($goodsName)
+    {
+        if(empty($goodsName))
+            return array();
+        $result = M("goods")->where(array('goods_name'=>array("like","%".$goodsName."%")))->field("goods_id ,goods_name")->select();
+
+        $arr = get_arr_column($result, 'goods_id');  // 只获取商品id 那一列
+        return ($arr ? $arr : array_unique($arr));
+    }
+
 
 
     /**

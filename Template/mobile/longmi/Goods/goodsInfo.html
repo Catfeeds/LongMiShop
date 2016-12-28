@@ -12,7 +12,7 @@
     <script src="__STATIC__/js/function.js"></script>
     <script src="__STATIC__/js/TouchSlide.js"></script>
     <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
-    <link href="__STATIC__/css/css.css?42368" rel="stylesheet" />
+    <link href="__STATIC__/css/css.css?{$versionToken}" rel="stylesheet" />
     <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
     <script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
     <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
@@ -21,7 +21,6 @@
     <script src="__PUBLIC__/js/mobile_common.js"></script>
     <script src="__STATIC__/js/common.js"></script>
     <script type="text/javascript">
-        var process_request = "正在处理您的请求...";
         function share(){
             $('#share').show();
         }
@@ -46,370 +45,38 @@
     </style>
     <link href="__STATIC__/css/htmleaf-demo.css" rel="stylesheet" />
 
-
-    <style type="text/css">
-        .mui-preview-image.mui-fullscreen {
-            position: fixed;
-            z-index: 20;
-            background-color: #000;
-        }
-        .mui-preview-header, .mui-preview-footer {
-            position: absolute;
-            width: 100%;
-            left: 0;
-            z-index: 10;
-        }
-        .mui-preview-header {
-            height: 44px;
-            top: 0;
-        }
-        .mui-preview-footer {
-            height: 50px;
-            bottom: 0px;
-        }
-        .mui-preview-header .mui-preview-indicator {
-            display: block;
-            line-height: 25px;
-            color: #fff;
-            text-align: center;
-            margin: 15px auto 4;
-            width: 70px;
-            background-color: rgba(0, 0, 0, 0.4);
-            border-radius: 12px;
-            font-size: 16px;
-        }
-        .mui-preview-image {
-            display: none;
-            -webkit-animation-duration: 0.5s;
-            animation-duration: 0.5s;
-            -webkit-animation-fill-mode: both;
-            animation-fill-mode: both;
-        }
-        .mui-preview-image.mui-preview-in {
-            -webkit-animation-name: fadeIn;
-            animation-name: fadeIn;
-        }
-        .mui-preview-image.mui-preview-out {
-            background: none;
-            -webkit-animation-name: fadeOut;
-            animation-name: fadeOut;
-        }
-        .mui-preview-image.mui-preview-out .mui-preview-header, .mui-preview-image.mui-preview-out .mui-preview-footer {
-            display: none;
-        }
-        .mui-zoom-scroller {
-            position: absolute;
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: flex;
-            -webkit-box-align: center;
-            -webkit-align-items: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            -webkit-justify-content: center;
-            justify-content: center;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            -webkit-backface-visibility: hidden;
-        }
-        .mui-zoom {
-            -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
-        }
-        .mui-preview-loading {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            display: none;
-        }
-        .mui-preview-loading.mui-active {
-            display: block;
-        }
-        .mui-preview-loading .mui-spinner-white {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-left: -25px;
-            margin-top: -25px;
-            height: 50px;
-            width: 50px;
-        }
-        .mui-preview-image img.mui-transitioning {
-            -webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
-            transition: transform 0.5s ease, opacity 0.5s ease;
-        }
-        @-webkit-keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-        @-webkit-keyframes fadeOut {
-            0% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
-        @keyframes fadeOut {
-            0% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
-        #leftTabBox .bd .con ul{
-            min-height:100px;
-        }
-
-
-        .fixedTop{
-            position: fixed;
-            top:0px;
-            z-index: 22;
-        }
-
-        /*滚动后css*/
-        .com_d_so {
-            background-color: #FFF;
-            padding: 5px;
-            overflow: hidden;
-            text-align: center;
-            position: fixed;
-            _position: absolute;
-            bottom: 0px;
-            _bottom: 0px;
-            _margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop);
-            width: 100%;
-            max-width: 800px;
-            z-index: 2;
-            box-shadow: 10px 0.866px 10px 1px rgb( 210, 210, 210 );
-        }
-    </style>
 </head>
 <body>
 <div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
-<div class="commodity_top" style="z-index: 12;">
-    <div class="commodity_top_l"><a href="javascript:void(0);" onclick="history.back(-1);"><img src="__STATIC__/SVG/b1.svg"></a></div>
-    <div class="commodity_top_r"><a href="javascript:void(0);" onclick="{: isWeChatBrowser() ? 'javascript:share();' : 'http://www.jiathis.com/share' }"><img src="__STATIC__/SVG/b2.svg"></a></div>
-</div>
-<form name="buy_goods_form" method="post" id="buy_goods_form" >
-    <div id="slider" class="mui-slider" >
-        <php>$goods_array =array();</php>
-        <foreach  name="goods_images_list" item="pic">
-            <php>$goods_array[] = $pic;</php>
-        </foreach>
-        <php>$goods_array_count = count($goods_array) - 1;</php>
-        <notempty name = "goods_array">
-            <div class="mui-slider-group mui-slider-loop">
-                <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
-                <div class="mui-slider-item mui-slider-item-duplicate">
-                    <a href="javascript:void(0)">
-                        <img src="{$goods_array[$goods_array_count]['image_url']}">
-                    </a>
-                </div>
-                <foreach name="goods_array" item="pic" >
-                    <div class="mui-slider-item">
-                        <a href="javascript:void(0)">
-                            <img src="{$pic.image_url}"  data-preview-src="" data-preview-group="1">
-                        </a>
-                    </div>
-                </foreach>
-                <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
-                <div class="mui-slider-item mui-slider-item-duplicate">
-                    <a href="javascript:void(0)">
-                        <img src="{$goods_array[0]['image_url']}">
-                    </a>
-                </div>
-            </div>
-            <div class="mui-slider-indicator">
-                <php>$goods_array_key = 0;</php>
-                <foreach name="goods_array" item="pic" >
-                    <div class="mui-indicator <if condition='$goods_array_key++ eq 0'> mui-active</if>"></div>
-                </foreach>
-            </div>
-        </notempty>
 
-    </div>
-    <script>
-        var gallery = mui('.mui-slider');
-        gallery.slider({
-            interval:2000//自动轮播周期，若为0则不自动播放，默认为0；
-        })
-    </script>
+
+<form name="buy_goods_form" method="post" id="buy_goods_form" >
+    <img src="{$goods_images_list.0.image_url}" class="goods_info_banner" id="goods_info_banner" />
     <div class="price">
         <div class="price_left">{$goods.goods_name}</div>
-        <div class="price_right">￥{$goods.shop_price}</div>
     </div>
-
-    <div class="price postage">
-        <div class="countPostage">快递:{$count_postage}</div>
-        <div class="virtualSales">已销售:{: !empty($goods['virtual_sales']) ? $goods['virtual_sales'] : $goods['sales_sum'] }</div>
-        <div class="virtualAddress">{: !empty($goods['virtual_address']) ? $goods['virtual_address'] : $logAdd }</div>
-    </div>
-    <script>
-        $(function(){
-            $('.myUl2').click(function(){
-                $(this).toggleClass("myUl");
-            });
-        });
-    </script>
-    <div class="safeguard">
-        <ul class="myUl myUl2 ">
-            <li>龙米认证产品</li>
-            <li>48小时快速发货</li>
-            <li>7天退货承诺</li>
-            <li>如实描述</li>
-            <li>包邮非偏远地区</li>
-        </ul>
+    <div class="price price2">
+        <div class="price_left">
+            ￥<span class="price_left_money">{$goods.shop_price}</span>
+        </div>
+        <div class="price_right">
+            <div class="c_btn2"><a href="#picture" >立即购买</a></div>
+        </div>
     </div>
     <div style="clear:both"></div>
-    <div id="leftTabBox" class="tabBox">
-        <div class="hd">
-            <ul class="fixed" id="fixedTop">
-                <li><a>商品信息</a></li>
-                <li><a>规格参数</a></li>
-                <li><a>评论</a></li>
-            </ul>
-        </div>
-        <div class="bd" id="tabBox1-bd">
-            <div class="con">
-                <ul>
-                    <li>
-                        <div class="price_main">
-                            {$goods.goods_content|htmlspecialchars_decode}
-                        </div>
-                    </li>
-                </ul>
+
+    <div class="tabBox">
+        <div class="bd" >
+            <div class="con goods_content">
+                {$goods.hide_goods_content|htmlspecialchars_decode}
+                {$goods.goods_content|htmlspecialchars_decode}
             </div>
-            <div class="con">
-                <ul>
-                    <li>
-                        <div class="price_main" style="padding:20px">
-                            <div class="tab_cp">
-                                <table width="100%" border="0" cellpadding="3" cellspacing="0">
-                                    <tbody>
-                                    <foreach name="goods['my_parameter']" item="item" key="key">
-                                        <tr>
-                                            <th colspan="2">{$key}</th>
-                                        </tr>
-                                        <tr></tr>
-                                        <foreach name="item" ITEM="p_time" key="p_key" >
-                                            <tr>
-                                                <td>{$p_key}</td>
-                                                <td>{$p_time}</td>
-                                            </tr>
-                                        </foreach>
-                                    </foreach>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="con">
-                <ul>
-                    <li>
-                        <div class="c_btn55_box">
-                            <div class="c_btn55">
-                                <a href="javascript:;">我要评论</a>
-                            </div>
-                            <div class="c_btn66">
-                                <a href="javascript:;" id="CommentListButton">只看买家</a>
-                            </div>
-                        </div>
-                        <div class="me1_box">
-                            <if condition = " !$isComment">
-                                <textarea class="me1_text" id="commentContent" cols="" rows="" placeholder="请发表您的评论！"></textarea>
-                                <if condition = "$isBought">
-                                    <div id="demo1" class="demo" style="float:left; padding-left:10px">
-                                        <span>评分：</span>
-                                        <span class="ratyli"  id="commentLevel"></span>
-                                    </div>
-                                </if>
-                                <div class="c_btn555_box" style="float:right">
-                                    <div class="c_btn555">
-                                        <a href="javascript:;" id="setCommentButton">确定</a>
-                                    </div>
-                                    <div class="c_btn666">
-                                        <a href="javascript:;">取消</a>
-                                    </div>
-                                </div>
-                                <else/>
-                                <textarea class="me1_text"  cols="" rows="" readonly>您已评论</textarea>
-
-                                <div class="c_btn555_box" style="float:right">
-                                    <div class="c_btn666">
-                                        <a href="javascript:;">取消</a>
-                                    </div>
-                                </div>
-                            </if>
-
-                            <div style="clear:both"></div>
-                        </div>
-                        <div class="evaluate_box" id="my_comment_list">
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        var children_i = 0;
-        TouchSlide( { slideCell:"#leftTabBox",
-
-            endFun:function(i){ //高度自适应
-                children_i = i;
-                changeTabHeight();
-                var bd = document.getElementById("tabBox1-bd");
-                if( i>0) bd.parentNode.style.transition="200ms";//添加动画效果
-            }
-
-        } );
-        function changeTabHeight(){;
-            var bd = document.getElementById("tabBox1-bd");
-            bd.parentNode.style.height = bd.children[children_i].children[0].offsetHeight+"px";
-        }
-        setInterval("changeTabHeight()",1000);
-
-    </script>
-
-    <div style="height:55px"></div>
-    <div class="com_d">
-        <div class="com_d_l">
-            <!--<div class="collect {: $collectRes == 1 ? 'collect_click' : ''}"  onclick="collects_goods({$goods.goods_id})" id="favorite_add"></div>-->
-        </div>
-        <div class="com_d_r">
-            <div class="c_btn1"><a href="#picture" >立即购买</a></div>
-            <div class="c_btn2"><a href="#picture" >加入购物车</a></div>
         </div>
     </div>
     <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
         <div class="cp2">
             <div class="cp2_l">
-                <img src="{$goods.goods_id|goods_thum_images=400,400}" width="92" height="92">
+                <img src="{$goods.original_img}" width="92" height="92">
             </div>
             <div class="cp2_r">
                 <p>{$goods.goods_name}</p>
@@ -443,8 +110,7 @@
             </foreach>
 
             <if condition =" $goods['is_on_sale'] == 1">
-                <div class="m33_btn" id="next1"><a href="javascript:void(0);"  onclick="newSubmit();">下一步</a></div>
-                <!--<div class="m33_btn" id="next2"><a href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a></div>-->
+                <div class="m33_btn" id="next1"><a href="javascript:void(0);"  onclick="newSubmit();">加入购物车</a></div>
                 <else/>
                 <div class="m33_btn " >
                     <a style="background: #c2c2c2; border-color: #c0c0c0;" href="javascript:void(0);">商品已下架</a>
@@ -452,126 +118,22 @@
             </if>
         </div>
     </div>
-    <div class=" goods_info_btn" >
-        <li>
-            <a href="{:U('Index/index')}" onclick="window.location.href='{:U('Mobile/Index/index')}'">
-                <img src="__STATIC__/SVG/home.svg">
-                <span>首页</span>
-            </a>
-        </li>
-        <li class="f_index_cart">
-            <a href="{:U('Cart/cart')}" onclick="window.location.href='{:U('Mobile/Cart/cart')}'">
-                <img src="__STATIC__/SVG/shopping.svg">
-                <span >购物车</span>
-            </a>
-        </li>
-    </div>
+
+</form>
     <script type="text/javascript">
 
-        //收藏
-        function collects_goods(goods_id){
-            $.ajax({
-                type:'post',
-                url:'/index.php?m=Mobile&c=Goods&a=ajaxCollectGoods',
-                data:{goods_id:goods_id},
-                dataType:'json',
-                success:function(res){
-                    if(res.state == 1){
-                        if(res.data.status == 'add'){
-                            $("#favorite_add").addClass("collect_click");
-                        }else{
-                            $("#favorite_add").removeClass("collect_click");
-                        }
-                        alert(res.msg);
-                    }else{
-                        alert(res.msg);
-                    }
-                }
-            });
-        }
-
-
-        var inCommentAjax = 0;
         var specNumber = -1;
-        var show_is_buyer = 0;
-        $(function(){
-            $('#commentLevel').data("rate",5);
-            $("#commentLevel span").removeClass("rate-empty");
-            $("#commentLevel span").addClass("rate-full");
-            $("#commentLevel").addClass("rated");
-            $(".subNav").click(function(){
-                $(this).next(".navContent").slideToggle(300).siblings(".navContent").slideUp(500);
-                $(this).toggleClass("on").siblings(".subNav").removeClass("on");
-                if($(".is_scroll").length <= 0)
-                {
-                    $('html,body').animate({'scrollTop':$('body')[0].scrollHeight},600);
-                }
-            });
 
-            $("#CommentListButton").click(function(){
-                if( inCommentAjax == 1){
-                    return;
-                }
-                show_is_buyer = show_is_buyer ==1 ?0 : 1;
-                var string  = show_is_buyer == 1 ? "查看全部" : "只看买家" ;
-                $("#CommentListButton").html(string);
-                ajaxComment(1,1,show_is_buyer);
-            });
-            var isAjaxSetComment = 0;
-            $("#setCommentButton").click(function(){
-                if(isAjaxSetComment == 1){
-                    return;
-                }
-                var commentContent = $('#commentContent').val();
-                var commentLevel = $('#commentLevel').data("rate");
-                if( commentContent.length < 10 ||commentContent.length > 144 ){
-                    alert("评论文字数量在 10 到 140 之间！");
-                    return;
-                }
-                isAjaxSetComment = 1;
-                $.ajax({
-                    type : "post",
-                    dataType:'json',
-                    data : { commentContent :　commentContent　, commentLevel : commentLevel , goodsId : "{$goods.goods_id}"},
-                    url:"{:U('Mobile/Goods/setGoodsComment')}",
-                    success: function(data){
-                        alert(data.msg);
-                        isAjaxSetComment = 0;
-                        if( data.state == 1 ){
-//                            $(".c_btn55_box").fadeIn(300);
-//                            $(".me1_box").fadeOut(600);
-                            $(".c_btn55_box").fadeIn(300);
-                            $(".me1_box").fadeToggle(300);
-                            ajaxComment(1,1,show_is_buyer);
-                            return;
-                        }
-//                        $("#my_comment_list").empty().append(data);
-                    }
-                })
-            });
+        $(function(){
 
             $("#goods_num").change(function(){
                 get_goods_price();
             });
             get_goods_price();
-            /*           <php>if($number==1){</php>*/
-
-            var loadingClick = 0 ;
-            $(".optionsDiv li").each(function(){
-                if( loadingClick == 0){
-                    if( !$(this).hasClass("gray") ){
-                        loadingClick = 1;
-                        switch_spec($(this));
-                    }
-                }
-
-            });
-
-            /*           <php>}</php>*/
-            ajaxComment(1,1,0);// ajax 加载评价列表
         });
+
         function newSubmit(){
-            var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表   //alert(spec_goods_price['28_100']['price']);
+            var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表
             // 如果有属性选择项
             if(spec_goods_price != null)
             {
@@ -585,7 +147,7 @@
                     return;
                 }
             }
-            AjaxAddCart({$goods.goods_id},1,1);
+            myAjaxAddCart({$goods.goods_id},1,0);
         }
         function switch_spec(spec)
         {
@@ -620,7 +182,7 @@
         {
             var goods_price = {$goods.shop_price}; // 商品起始价
             var store_count = {$goods.store_count}; // 商品起始库存
-            var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表   //alert(spec_goods_price['28_100']['price']);
+            var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表
             // 如果有属性选择项
             if(spec_goods_price != null)
             {
@@ -659,7 +221,7 @@
                 alert('库存仅剩 '+store_count+' 件');
                 $("#goods_num").val(goods_num);
             }
-            $("#goods_price").html('￥'+goods_price+''); // 变动价格显示
+            $("#goods_price").html('￥'+(goods_price*goods_num).toFixed(2)+''); // 变动价格显示
 
         }
 
@@ -674,67 +236,84 @@
                 arr.splice(index, 1);
             return arr;
         };
-        var i = 1;
-        function ajaxComment(commentType,page,is_buyer){
-            inCommentAjax  = 1;
-            if(  page == 1 ){
-                var html = '<div class="mui-loading"><div class="mui-spinner"></div></div>';
-                $("#my_comment_list").html(html);
-            }
 
-            $("#getmore").remove();
-            $.ajax({
-                type : "GET",
-                url:"/index.php?m=Mobile&c=goods&a=ajaxComment&goods_id={$goods['goods_id']}&commentType="+commentType+"&p="+page+"&is_buyer="+is_buyer,//+tab,
-                success: function(data){
-                    if(  page == 1 ){
-                        $("#my_comment_list").html(data);
-                    }else{
-                        $("#my_comment_list").append(data);
+        function myAjaxAddCart(goods_id,num,to_catr)
+        {
+            //如果有商品规格 说明是商品详情页提交
+            if($("#buy_goods_form").length > 0){
+                $.ajax({
+                    type : "POST",
+                    url:"/index.php?m=Mobile&c=Cart&a=ajaxAddCart",
+                    data : $('#buy_goods_form').serialize(),// 你的formid 搜索表单 序列化提交
+                    dataType:'json',
+                    success: function(data){
+                        // 加入购物车后再跳转到 购物车页面
+                        if(data.status < 0)
+                        {
+//                            layer.open({content: data.msg,time: 2});
+                            alert(data.msg);
+                            return false;
+                        }
+                        if(to_catr == 1)  //直接购买
+                        {
+                            location.href = "/index.php?m=Mobile&c=Cart&a=cart";
+                            return false;
+                        }
+                        alert("加入成功");
+//                        cart_num = parseInt($('#tp_cart_info').html())+parseInt($('#number').val());
+//                        $('#tp_cart_info').html(cart_num)
+//                        layer.open({
+//                            content: '添加成功！',
+//                            btn: ['再逛逛', '去购物车'],
+//                            shadeClose: false,
+//                            yes: function(){
+//                                layer.closeAll();
+//                            }, no: function(){
+//                                location.href = "/index.php?m=Mobile&c=Cart&a=cart";
+//                            }
+//                        });
                     }
-                    changeTabHeight();
-                    inCommentAjax  = 0;
-                }
-            });
+                });
+            }else{ //否则可能是商品列表页 、收藏页商品点击加入购物车
+                $.ajax({
+                    type : "POST",
+                    url:"/index.php?m=Home&c=Cart&a=ajaxAddCart",
+                    data :{goods_id:goods_id,goods_num:num} ,
+                    dataType:'json',
+                    success: function(data){
+
+                        if(data.status == -1)
+                        {
+                            //layer.open({content: data.msg,time: 2});
+                            location.href = "/index.php?m=Mobile&c=Goods&a=goodsInfo&id="+goods_id;
+                        }
+                        else
+                        {
+                            if(data.status < 0)
+                            {
+                                layer.open({content:data.msg, time:2});
+                                return false;
+                            }
+                            cart_num = parseInt($('#tp_cart_info').html())+parseInt(num);
+                            $('#tp_cart_info').html(cart_num)
+                            layer.open({content: data.msg,time: 1});
+                            return false;
+                        }
+                    }
+                });
+            }
         }
-
-
-        //        setInterval("get_goods_price();console.log('123')",500);
-
-
 
     </script>
-</form>
+<include file="Public/nav"/>
 </body>
-
-<script src="__STATIC__/js/jquery.ratyli.js"></script>
-<script src="__STATIC__/js/mui.zoom.js"></script>
-<script src="__STATIC__/js/mui.previewimage.js"></script>
-<script>
-    mui.previewImage();
-    $(function(){
-        $(window).scroll(function() {
-            fixedTop();
-        });
-        fixedTop();
-    });
-    function fixedTop(){
-        var fixedTopTop = $("#leftTabBox .hd").offset().top;
-        var scrollTop = $(window).scrollTop();
-        if(
-                scrollTop < fixedTopTop
-        ){
-            $('.com_d').removeClass("com_d_so");
-            $("#fixedTop").removeClass("fixedTop");
-        }else{
-            $('.com_d').addClass("com_d_so");
-            $("#fixedTop").addClass("fixedTop");
-        }
-    }
-
-</script>
 <style>
-    .m33 li{ border: 1px solid #eaeaea;}
+    .nav_d {
+        z-index: 0;
+    }
+    .m33 li {
+        border: 1px solid #eaeaea;
+    }
 </style>
 <include file="Public/footer"/>
 </html>

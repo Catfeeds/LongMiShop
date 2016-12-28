@@ -1306,11 +1306,16 @@ class UserController extends MobileBaseController {
     {
 
 //        $url = 'http://' . $_SERVER['HTTP_HOST'] . U('Mobile/Recommend/share', array('inviteUserId' => $this->user_id));
-        $url = 'http://' . $_SERVER['HTTP_HOST'] . U('Mobile/Goods/goodsInfo', array('id' => 1 ,'inviteUserId' => $this->user_id ));
+        $url = 'http://' . $_SERVER['HTTP_HOST'] . U('Mobile/Goods/goodsInfo', array('id' => 7 ,'inviteUserId' => $this->user_id ));
         createMyPoster($this->user , $url);
         //查找是否存在海报
         $isFile = file_exists('Public/poster/poster_' . $this->user_id . '.png');
         $this -> assign('isFile', $isFile);
+
+
+        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
+        $this -> assign('inviteData', getCallbackData($inviteData));
+
         $this -> display();
     }
 

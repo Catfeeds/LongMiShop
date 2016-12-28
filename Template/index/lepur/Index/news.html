@@ -1,0 +1,42 @@
+<include file="Public/header"/>
+<!--header-->
+<div style="width:100%;">
+
+
+    <div class="box1" >
+        <div class="news_list">
+            <ul>
+                <volist name="list" id="item">
+                    <li>
+                        <a href="{$item.link}" target="_blank" >
+                            <div class="li_left">
+                                <img src="{$item.thumb}" width="150" height="150">
+                            </div>
+                            <div class="li_right">
+                                <p>
+                                    {$item['title']}
+                                </p>
+                                <p>
+                                    {$item['content']|htmlspecialchars_decode|strip_tags|subtext=256}
+                                </p>
+                                <p>
+                                    {:date('Y-m-d' ,$item['publish_time'] )}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </volist>
+            </ul>
+            {$page}
+        </div>
+    </div>
+
+    <div class="top return"><img src="__STATIC__/images/top.png?{$versionToken}"></div>
+
+
+
+
+</div>
+
+
+<include file="Public/footer"/>
