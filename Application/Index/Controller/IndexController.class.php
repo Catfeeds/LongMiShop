@@ -9,7 +9,8 @@ class IndexController extends IndexBaseController {
     function exceptAuthActions()
     {
         return array(
-            'index'
+            'index',
+            'news'
         );
     }
 
@@ -25,7 +26,7 @@ class IndexController extends IndexBaseController {
         $where = "is_open = 1 AND  device_type != 2 ";
 //        $where = "is_open = 1 AND  device_type != 1 ";
         $count = getCountWithCondition( 'article' , $where );
-        $limit = 10;
+        $limit = 30;
         $Page = new \Common\Common\Page($count,$limit);
         $list = M('article') -> where($where)->order('publish_time DESC')->limit($Page->firstRow.','.$Page->listRows) -> select();
 

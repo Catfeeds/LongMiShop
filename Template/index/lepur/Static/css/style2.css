@@ -146,6 +146,28 @@ html,body {width:100%;}
 
 
 .news_list{
-    width: 1100px;
+    width: 600px;
     margin:20px auto;
+    overflow: hidden;
+}
+.news_list .li_left{
+    float: left;
+    width: 200px;
+}
+.news_list .li_right{
+    float: left;
+    width: 400px;
+}
+.news_list{
+    width: 600px;
+    margin:20px auto;
+    overflow: hidden;
+}
+.news_list .li_left{
+    float: left;
+    width: 200px;
+}
+.news_list .li_right{
+    float: left;
+    width: 400px;
 }
