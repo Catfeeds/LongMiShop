@@ -56,7 +56,9 @@ function getShareImages( $web_config ,$goodes_id = null ,$goodsCate  = null ,$us
         $imgurl = $classify==1 ? $logo : "http://" . $_SERVER['HTTP_HOST'] . $goodsCate['image']."";
         return json_encode(array('link'=>$like,'imgurl'=>$imgurl));
     }
-
+    if( $_SERVER['REQUEST_URI']== U('Mobile/Index/recommendPolite')  ){
+        $link = "http://".$_SERVER['HTTP_HOST'].U('Mobile/Index/recommendPolite');
+    }
 
     return json_encode(array('imgurl'=>$imgurl,'link'=>$link));
 
