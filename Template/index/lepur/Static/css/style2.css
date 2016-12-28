@@ -164,7 +164,7 @@ html,body {width:100%;}
     overflow: hidden;
 }
 .news_list li{
-    width: 100px;
+    width: 100%;
     float: left;
     overflow: hidden;
     margin-bottom: 20px;
