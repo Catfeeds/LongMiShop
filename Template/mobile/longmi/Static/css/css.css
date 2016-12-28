@@ -1344,6 +1344,7 @@ img{
 .empty_txt {
 	text-align: center;
 	margin-bottom: 10px;
+	font-size: 12px;
 	color: #999;
 }
 .empty_btn {
