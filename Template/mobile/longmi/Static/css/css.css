@@ -2098,6 +2098,7 @@ Load—more a{
 	line-height: 1 !important;
 	color: #FFF !important;
 	position: absolute;
+	display: none;
 	z-index: 2;
 	top: 8px;
 	margin-right: -20px;
