@@ -18,10 +18,15 @@ class IndexController extends MobileBaseController {
     public function index()
     {
 
-        $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCoupon( $this->user_id);
-        $this -> assign('couponCount', $result['data']['count']);
+        $couponCount = 0 ;
+        if( $this->user_id ){
+            $usersLogic = new \Common\Logic\UsersLogic();
+            $result = $usersLogic -> getCoupon( $this->user_id);
+            $couponCount =  $result['data']['count'];
+        }
 
+
+        $this -> assign('couponCount', $couponCount);
 
         $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
         $inviteData = getCallbackData($inviteData);
