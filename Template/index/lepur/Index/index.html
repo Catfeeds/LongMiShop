@@ -1,330 +1,322 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{$shopConfig['shop_info_store_title']}</title>
-  <meta http-equiv="keywords" content="{$shopConfig['shop_info_store_keyword']}" />
-  <meta name="description" content="{$shopConfig['shop_info_store_desc']}" />
-  <link href="__STATIC__/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-  <link href="__STATIC__/css/style2.css" type="text/css" rel="stylesheet">
-  <script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
-  <script src="__STATIC__/js/jquery_style2.js"></script>
-  <script src="__STATIC__/js/bootstrap.min.js"></script>
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?fd927bbaacd23db59b7b4dcb446581a7";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-  <style>
-    .shipin{width:640px; margin:0 auto; margin-top:50px;}
-  </style>
-  <!--<script charset="UTF-8" src="__STATIC__/js/bundle.js"></script>-->
-  <!--<script charset="UTF-8" src="__STATIC__/js/iframeWidget.js"></script>-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{$shopConfig['shop_info_store_title']}</title>
+    <meta http-equiv="keywords" content="{$shopConfig['shop_info_store_keyword']}" />
+    <meta name="description" content="{$shopConfig['shop_info_store_desc']}" />
+    <link href="__STATIC__/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="__STATIC__/css/style2.css?{$versionToken}" type="text/css" rel="stylesheet">
+    <script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+    <script src="__STATIC__/js/jquery_style2.js?{$versionToken}"></script>
+    <script src="__STATIC__/js/bootstrap.min.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?fd927bbaacd23db59b7b4dcb446581a7";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <style>
+        .shipin{width:640px; margin:0 auto; margin-top:50px;}
+    </style>
+    <!--<script charset="UTF-8" src="__STATIC__/js/bundle.js"></script>-->
+    <!--<script charset="UTF-8" src="__STATIC__/js/iframeWidget.js"></script>-->
 </head>
 <body>
 <div class="box1 head" style="background: #b3b3b3;"></div>
 <div class="box1" style="border-bottom:1px solid #bababa;">
-  <div class="nav">
-    <a class="nav-left" style="cursor:pointer;" href=""><img src="__STATIC__/images/logo1.png" style="height: 80px;margin-top: 5px;"></a>
-    <div class="nav-right">
-      <!--<a class="weibo" href="http://weibo.com/u/5109948719?topnav=1&wvr=6&topsug=1" target="_blank"></a>-->
-      <!--<a class="weixin">-->
-        <!--<img class="weixinma" src="__STATIC__/images/weima.png">-->
-      <!--</a>-->
-    </div>
-    <div class="nav-center">
-      <ul class="menu">
-        <li><a href="#about" class="about">认识龙米</a></li>
-        <li><a href="#product" class="product">我们的米</a></li>
-        <li><a href="#praise" class="praise">听TA们说</a></li>
-        <li><a href="#end"  class="end">联系我们</a></li>
-      </ul>
-    </div>
+    <div class="nav">
+        <a class="nav-left" style="cursor:pointer;" href=""><img src="__STATIC__/images/logo1.png" style="height: 80px;margin-top: 5px;"></a>
+        <div class="nav-right">
+            <!--<a class="weibo" href="http://weibo.com/u/5109948719?topnav=1&wvr=6&topsug=1" target="_blank"></a>-->
+            <!--<a class="weixin">-->
+            <!--<img class="weixinma" src="__STATIC__/images/weima.png">-->
+            <!--</a>-->
+        </div>
+        <div class="nav-center">
+            <ul class="menu">
+                <li><a href="#about" class="about">认识龙米</a></li>
+                <li><a href="#product" class="product">我们的米</a></li>
+                <li><a href="#praise" class="praise">听TA们说</a></li>
+                <li><a href="#end"  class="end">联系我们</a></li>
+            </ul>
+        </div>
 
-  </div>
+    </div>
 </div>
 <!--header-->
 <div style="width:100%;">
 
 
-  <div class="box1" id="lun">
-    <div id="myCarousel" class="carousel slide">
-      <!-- 轮播（Carousel）指标 -->
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1" class=""></li>
-        <li data-target="#myCarousel" data-slide-to="2" class=""></li>
-        <li data-target="#myCarousel" data-slide-to="3" class=""></li>
-      </ol>
-      <!-- 轮播（Carousel）项目 -->
-      <div class="carousel-inner">
-        <div class="item active">
-          <a href="#product"><img src="__STATIC__/images/banner1.jpg" alt=""></a>
-        </div>
-        <div class="item">
-          <a href="#product"><img src="__STATIC__/images/banner2.jpg" alt=""></a>
-        </div>
-        <div class="item">
-          <a href="#product"><img src="__STATIC__/images/banner3.jpg" alt=""></a>
-        </div>
-        <div class="item">
-          <a href="#product"><img src="__STATIC__/images/banner4.jpg" alt=""></a>
-        </div>
-      </div>
-      <!-- 轮播（Carousel）导航 -->
-      <a class="carousel-control left" href="#myCarousel" data-slide="prev">
-        <div>
-          <img src="__STATIC__/images/left.png">
-        </div>
-      </a>
-      <a class="carousel-control right" href="#myCarousel" data-slide="next">
-        <div>
-          <img src="__STATIC__/images/right.png">
-        </div>
-      </a>
-    </div>
-  </div>
-  <!--把div放到想放的位置
-      <div class="shipin">
-          <iframe frameborder="0" width="640" height="498" src="http://v.qq.com/iframe/player.html?vid=r0302u6p45y&tiny=0&auto=0" allowfullscreen>
-          </iframe>
-      </div>-->
-
-
-  <div class="box1" id="about"><img src="__STATIC__/images/index_2.jpg" style="width: 100%"></div>
-
-  <div class="box2" id="product">
-    <div style="text-align:center;"><span class="protit">我们的产品</span></div>
-    <div class="goods">
-
-
-      <div class="item">
-        <div class="item-top">
-          <h4>龙米新年罐</h4>
-          <h5></h5>
-          <img src="__STATIC__/images/cp2.jpg">
-          <p></p>
-          <div class="meng" style="display: none;">
-            <p>这个新年，我们陪你温暖越冬</p>
-            <img src="__STATIC__/images/longmi_qrcode.jpg">
-          </div>
-        </div>
-        <div class="item-bottom">
-          <a class="buy" href="##"  >扫我立即购买</a>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-top">
-          <h4>龙米尝鲜4小罐</h4>
-          <h5></h5>
-          <img src="__STATIC__/images/cp3.jpg">
-          <p></p>
-          <div class="meng" style="display: none;">
-            <p>新鲜美味轻松尝</p>
-            <img src="__STATIC__/images/longmi_qrcode.jpg">
-          </div>
-        </div>
-        <div class="item-bottom">
-          <a class="buy" href="##" >扫我立即购买</a>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-top">
-          <h4>龙米7+1随心搭</h4>
-          <h5></h5>
-          <img src="__STATIC__/images/cp1.jpg">
-          <p></p>
-          <div class="meng" style="display: none;">
-            <p>7罐+1罐，周周有惊喜</p>
-            <img src="__STATIC__/images/longmi_qrcode.jpg">
-          </div>
-        </div>
-        <div class="item-bottom">
-          <a class="buy" href="##" >扫我立即购买</a>
-        </div>
-      </div>
-
-
-      <div class="item">
-        <div class="item-top">
-          <h4>清心解毒小绿豆</h4>
-          <h5></h5>
-          <img src="__STATIC__/images/cp4.jpg">
-          <p></p>
-          <div class="meng" style="display: none;">
-            <p>圆滚滚胖嘟嘟，营养丰富好味道</p>
-            <img src="__STATIC__/images/longmi_qrcode.jpg">
-          </div>
-        </div>
-        <div class="item-bottom">
-          <a class="buy" href="##" >扫我立即购买</a>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-top">
-          <h4>暖心养胃小米君</h4>
-          <h5></h5>
-          <img src="__STATIC__/images/cp6.jpg">
-          <p></p>
-          <div class="meng" style="display: none;">
-            <p>萌萌哒亮亮哒，口感软糯很营养</p>
-            <img src="__STATIC__/images/longmi_qrcode.jpg">
-          </div>
-        </div>
-        <div class="item-bottom">
-          <a class="buy" href="##" >扫我立即购买</a>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-top">
-          <h4>健康美味烤松子</h4>
-          <h5></h5>
-          <img src="__STATIC__/images/cp8.jpg">
-          <p></p>
-          <div class="meng" style="display: none;">
-            <p>烤出自然真美味，美颜健身全靠它</p>
-            <img src="__STATIC__/images/longmi_qrcode.jpg">
-          </div>
-        </div>
-        <div class="item-bottom">
-          <a class="buy" href="##" >扫我立即购买</a>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-top">
-          <h4>排毒养颜秋木耳</h4>
-          <h5></h5>
-          <img src="__STATIC__/images/cp7.jpg">
-          <p></p>
-          <div class="meng" style="display: none;">
-            <p>肉质厚实，口感难忘，爱美你就多吃点</p>
-            <img src="__STATIC__/images/longmi_qrcode.jpg">
-          </div>
-        </div>
-        <div class="item-bottom">
-          <a class="buy" href="##" >扫我立即购买</a>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-top">
-          <h4>强身健体鹿茸君</h4>
-          <h5></h5>
-          <img src="__STATIC__/images/cp5.jpg">
-          <p></p>
-          <div class="meng" style="display: none;">
-            <p>珍贵养生的它，帮你找回健康生活</p>
-            <img src="__STATIC__/images/longmi_qrcode.jpg">
-          </div>
-        </div>
-        <div class="item-bottom">
-          <a class="buy" href="##" >扫我立即购买</a>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-top">
-          <h4>补气养阴西洋参</h4>
-          <h5></h5>
-          <img src="__STATIC__/images/cp9.jpg">
-          <p></p>
-          <div class="meng" style="display: none;">
-            <p>强心健身抗疲劳，做那个永远充满活力的人</p>
-            <img src="__STATIC__/images/longmi_qrcode.jpg">
-          </div>
-        </div>
-        <div class="item-bottom">
-          <a class="buy" href="##" >扫我立即购买</a>
-        </div>
-      </div>
-      <!--<div class="item">-->
-        <!--<div class="item-top">-->
-          <!--<h4>龙米+龙米</h4>-->
-          <!--<h5></h5>-->
-          <!--<img src="__STATIC__/images/cp10.jpg">-->
-          <!--<p></p>-->
-          <!--<div class="meng" style="display: none;">-->
-            <!--<p>扫我立即购买</p>-->
-            <!--<img src="__STATIC__/images/longmi_qrcode.jpg">-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="item-bottom">-->
-          <!--<a class="buy" href="##" >扫我立即购买</a>-->
-        <!--</div>-->
-      <!--</div>-->
-
-
-
-    </div>
-  </div>
-  <div class="box1" id="praise">
-    <div class="box2">
-      <h3>龙米口碑</h3>
-      <p>LongMi word of mouth</p>
-      <div style="overflow:hidden;" class="gunbox">
-        <div class="praise-left">
-          <div id="myCarousel2" class="carousel slide">
+    <div class="box1" id="lun">
+        <div id="myCarousel" class="carousel slide">
             <!-- 轮播（Carousel）指标 -->
-            <ol class="carousel-indicators control">
-              <li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
-              <li data-target="#myCarousel2" data-slide-to="1" class=""></li>
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+                <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+                <li data-target="#myCarousel" data-slide-to="3" class=""></li>
             </ol>
             <!-- 轮播（Carousel）项目 -->
             <div class="carousel-inner">
-              <div class="item active">
-                <img src="__STATIC__/images/koubei1.jpg" alt="">
-              </div>
-              <div class="item">
-                <img src="__STATIC__/images/koubei2.jpg" alt="">
-              </div>
+                <div class="item active">
+                    <a href="#product"><img src="__STATIC__/images/banner1.jpg?{$versionToken}" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#product"><img src="__STATIC__/images/banner2.jpg?{$versionToken}" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#product"><img src="__STATIC__/images/banner3.jpg?{$versionToken}" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#product"><img src="__STATIC__/images/banner4.jpg?{$versionToken}" alt=""></a>
+                </div>
             </div>
-          </div>
+            <!-- 轮播（Carousel）导航 -->
+            <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+                <div>
+                    <img src="__STATIC__/images/left.png">
+                </div>
+            </a>
+            <a class="carousel-control right" href="#myCarousel" data-slide="next">
+                <div>
+                    <img src="__STATIC__/images/right.png">
+                </div>
+            </a>
         </div>
-      </div>
     </div>
-  </div>
+    <!--把div放到想放的位置
+        <div class="shipin">
+            <iframe frameborder="0" width="640" height="498" src="http://v.qq.com/iframe/player.html?vid=r0302u6p45y&tiny=0&auto=0" allowfullscreen>
+            </iframe>
+        </div>-->
 
-  <div class="box1" id="end"><img src="__STATIC__/images/index_end.jpg" style="width: 100%"></div>
+
+    <div class="box1" id="about"><img src="__STATIC__/images/index_2.jpg?{$versionToken}" style="width: 100%"></div>
+
+    <div class="box2" id="product">
+        <div style="text-align:center;"><span class="protit">我们的米</span></div>
+        <div class="goods">
+
+
+            <div class="item">
+                <div class="item-top">
+                    <h4>龙米新年罐</h4>
+                    <h5></h5>
+                    <img src="__STATIC__/images/cp2.jpg">
+                    <p></p>
+                    <div class="meng" style="display: none;">
+                        <p>这个新年，我们陪你温暖越冬</p>
+                        <img src="__STATIC__/images/longmi_qrcode.jpg">
+                    </div>
+                </div>
+                <div class="item-bottom">
+                    <a class="buy" href="##"  >扫我立即购买</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-top">
+                    <h4>龙米尝鲜4小罐</h4>
+                    <h5></h5>
+                    <img src="__STATIC__/images/cp3.jpg">
+                    <p></p>
+                    <div class="meng" style="display: none;">
+                        <p>新鲜美味轻松尝</p>
+                        <img src="__STATIC__/images/longmi_qrcode.jpg">
+                    </div>
+                </div>
+                <div class="item-bottom">
+                    <a class="buy" href="##" >扫我立即购买</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-top">
+                    <h4>龙米7+1随心搭</h4>
+                    <h5></h5>
+                    <img src="__STATIC__/images/cp1.jpg">
+                    <p></p>
+                    <div class="meng" style="display: none;">
+                        <p>7罐+1罐，周周有惊喜</p>
+                        <img src="__STATIC__/images/longmi_qrcode.jpg">
+                    </div>
+                </div>
+                <div class="item-bottom">
+                    <a class="buy" href="##" >扫我立即购买</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box2">
+        <div style="text-align:center;"><span class="protit">我们的彩蛋</span></div>
+        <div class="goods">
+
+
+            <div class="item">
+                <div class="item-top">
+                    <h4>清心解毒小绿豆</h4>
+                    <h5></h5>
+                    <img src="__STATIC__/images/cp4.jpg">
+                    <p></p>
+                    <div class="meng" style="display: none;">
+                        <p>圆滚滚胖嘟嘟，营养丰富好味道</p>
+                        <img src="__STATIC__/images/longmi_qrcode.jpg">
+                    </div>
+                </div>
+                <div class="item-bottom">
+                    <a class="buy" href="##" >扫我立即购买</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-top">
+                    <h4>暖心养胃小米君</h4>
+                    <h5></h5>
+                    <img src="__STATIC__/images/cp6.jpg">
+                    <p></p>
+                    <div class="meng" style="display: none;">
+                        <p>萌萌哒亮亮哒，口感软糯很营养</p>
+                        <img src="__STATIC__/images/longmi_qrcode.jpg">
+                    </div>
+                </div>
+                <div class="item-bottom">
+                    <a class="buy" href="##" >扫我立即购买</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-top">
+                    <h4>健康美味烤松子</h4>
+                    <h5></h5>
+                    <img src="__STATIC__/images/cp8.jpg">
+                    <p></p>
+                    <div class="meng" style="display: none;">
+                        <p>烤出自然真美味，美颜健身全靠它</p>
+                        <img src="__STATIC__/images/longmi_qrcode.jpg">
+                    </div>
+                </div>
+                <div class="item-bottom">
+                    <a class="buy" href="##" >扫我立即购买</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-top">
+                    <h4>排毒养颜秋木耳</h4>
+                    <h5></h5>
+                    <img src="__STATIC__/images/cp7.jpg">
+                    <p></p>
+                    <div class="meng" style="display: none;">
+                        <p>肉质厚实，口感难忘，爱美你就多吃点</p>
+                        <img src="__STATIC__/images/longmi_qrcode.jpg">
+                    </div>
+                </div>
+                <div class="item-bottom">
+                    <a class="buy" href="##" >扫我立即购买</a>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-top">
+                    <h4>强身健体鹿茸君</h4>
+                    <h5></h5>
+                    <img src="__STATIC__/images/cp5.jpg">
+                    <p></p>
+                    <div class="meng" style="display: none;">
+                        <p>珍贵养生的它，帮你找回健康生活</p>
+                        <img src="__STATIC__/images/longmi_qrcode.jpg">
+                    </div>
+                </div>
+                <div class="item-bottom">
+                    <a class="buy" href="##" >扫我立即购买</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-top">
+                    <h4>补气养阴西洋参</h4>
+                    <h5></h5>
+                    <img src="__STATIC__/images/cp9.jpg">
+                    <p></p>
+                    <div class="meng" style="display: none;">
+                        <p>强心健身抗疲劳，做那个永远充满活力的人</p>
+                        <img src="__STATIC__/images/longmi_qrcode.jpg">
+                    </div>
+                </div>
+                <div class="item-bottom">
+                    <a class="buy" href="##" >扫我立即购买</a>
+                </div>
+            </div>
 
 
 
-  <div class="top return"><img src="__STATIC__/images/top.png"></div>
+        </div>
+    </div>
+
+
+
+
+    <div class="box1" id="praise">
+        <div class="box2">
+            <h3>龙米口碑</h3>
+            <p>LongMi word of mouth</p>
+            <div style="overflow:hidden;" class="gunbox">
+                <div class="praise-left">
+                    <div id="myCarousel2" class="carousel slide">
+                        <!-- 轮播（Carousel）指标 -->
+                        <ol class="carousel-indicators control">
+                            <li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel2" data-slide-to="1" class=""></li>
+                        </ol>
+                        <!-- 轮播（Carousel）项目 -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img src="__STATIC__/images/koubei1.jpg" alt="">
+                            </div>
+                            <div class="item">
+                                <img src="__STATIC__/images/koubei2.jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box1" id="end"><img src="__STATIC__/images/index_end.jpg" style="width: 100%"></div>
+
+
+
+    <div class="top return"><img src="__STATIC__/images/top.png?{$versionToken}"></div>
 
 
 
 
 </div>
-<div class="box1" id="contact">
-  <div class="box2 foot">
-
-    <table>
-      <tbody><tr>
-        <td class="foot-left"><img src="__STATIC__/images/logo.svg"></td>
-        <td class="foot-right">
-          <div>
-            <h4>CONTACT US</h4>
-            <p>中国（广州）天河区花城大道68号环球都会广场2710室</p>
-            <p>4000 78 7725</p>
-            <h5>Longmi Agro Co., Ltd All Rights Reserved 粤ICP备15051254号-1 </h5>
-          </div>
-        </td>
-      </tr>
-      </tbody></table>
-    <a class="top"><img src="__STATIC__/images/top(1).png"></a>
-  </div>
-</div>
-
 
 
 
 <!--foot-->
+<div class="box1" id="contact">
+    <div class="box2 foot">
 
+        <table>
+            <tbody><tr>
+                <td class="foot-left"><img src="__STATIC__/images/logo.svg"></td>
+                <td class="foot-right">
+                    <div>
+                        <h4>CONTACT US</h4>
+                        <p>中国（广州）天河区花城大道68号环球都会广场2710室</p>
+                        <p>4000 78 7725</p>
+                        <h5>Longmi Agro Co., Ltd All Rights Reserved 粤ICP备15051254号-1 </h5>
+                    </div>
+                </td>
+            </tr>
+            </tbody></table>
+        <a class="top"><img src="__STATIC__/images/top(1).png"></a>
+    </div>
+</div>
 
-
+<!--foot-->
 
 
 </body>
