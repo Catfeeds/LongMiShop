@@ -73,11 +73,11 @@ html,body {width:100%;}
 .buy{display:block;padding:10px 0px;color:#a6dc3d; font-size:15px;letter-spacing:2px;cursor:pointer;/*background-color:#a6dc3d;*/}
 .buy:hover{color:#a6dc3d;}
 /*口碑*/
-#praise {margin-top:20px;background:#f2f2f2;padding:30px;}
-.praise-left {width:650px;float:left;}
-.control {left:0px;bottom:0px;margin-left:0px;margin-bottom:0px; width:auto;}
-.control li {background-color: rgba(0,0,0,0);border: 1px solid #a6dc3d;}
-.control .active {background-color: #a6dc3d;}
+#praise {margin-top:20px;background:#f6f6f6;padding:30px;}
+.praise-left {width: 100%;float:left;}
+.control {left:0px;bottom:0px;margin-left:0px;margin-bottom:0px; width:100%;}
+.control li {background-color: #b3b3b3;border: 1px solid #b3b3b3;}
+.control .active {background-color: #b3b3b3; width: 40px !important;}
 .praise-right {width:350px;float:right;}
 .weitit{padding:15px 0px;border-bottom:1px solid #dadada; background:#fff;}
 .weitit p{background-image:url(../images/heart.png);background-position:15px center;background-repeat:no-repeat; background-size:auto 100%; padding-left:50px; color:#9e9e9e;font-size:16px;margin-bottom:0px;}
