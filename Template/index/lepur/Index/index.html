@@ -11,20 +11,6 @@
     <script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
     <script src="__STATIC__/js/jquery_style2.js?{$versionToken}"></script>
     <script src="__STATIC__/js/bootstrap.min.js"></script>
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?fd927bbaacd23db59b7b4dcb446581a7";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
-    <style>
-        .shipin{width:640px; margin:0 auto; margin-top:50px;}
-    </style>
-    <!--<script charset="UTF-8" src="__STATIC__/js/bundle.js"></script>-->
-    <!--<script charset="UTF-8" src="__STATIC__/js/iframeWidget.js"></script>-->
 </head>
 <body>
 <div class="box1 head" style="background: #b3b3b3;"></div>
@@ -32,17 +18,20 @@
     <div class="nav">
         <a class="nav-left" style="cursor:pointer;" href=""><img src="__STATIC__/images/logo1.png" style="height: 80px;margin-top: 5px;"></a>
         <div class="nav-right">
-            <a class="weibo" href="http://weibo.com/u/5109948719?topnav=1&wvr=6&topsug=1" target="_blank"></a>
+            <a class="weibo" href="http://weibo.com/u/5563209987?refer_flag=1001030101_&is_hot=1" target="_blank"></a>
             <a class="weixin">
                 <img class="weixinma" src="__STATIC__/images/longmi_qrcode.jpg">
             </a>
         </div>
         <div class="nav-center">
             <ul class="menu">
-                <li><a href="#about" class="about">认识龙米</a></li>
-                <li><a href="#product" class="product">我们的米</a></li>
-                <li><a href="#praise" class="praise">听TA们说</a></li>
-                <li><a href="#end"  class="end">联系我们</a></li>
+                <ul class="menu">
+                    <li><a href="#about" class="about">认识龙米</a></li>
+                    <li><a href="#product" class="product">我们的米</a></li>
+                    <li><a href="{:U('Index/Index/news')}">龙米星球</a></li>
+                    <li><a href="#praise" class="praise">听TA们说</a></li>
+                    <li><a href="#end"  class="end">联系我们</a></li>
+                </ul>
             </ul>
         </div>
 
@@ -293,31 +282,4 @@
 
 </div>
 
-
-
-<!--foot-->
-<div class="box1" id="contact">
-    <div class="box2 foot">
-
-        <table>
-            <tbody><tr>
-                <td class="foot-left"><img src="__STATIC__/images/logo.svg"></td>
-                <td class="foot-right">
-                    <div>
-                        <h4>CONTACT US</h4>
-                        <p>中国（广州）天河区花城大道68号环球都会广场2710室</p>
-                        <p>4000 78 7725</p>
-                        <h5>Longmi Agro Co., Ltd All Rights Reserved 粤ICP备15051254号-1 </h5>
-                    </div>
-                </td>
-            </tr>
-            </tbody></table>
-        <a class="top"><img src="__STATIC__/images/top(1).png"></a>
-    </div>
-</div>
-
-<!--foot-->
-
-
-</body>
-</html>
+<include file="Public/footer"/>

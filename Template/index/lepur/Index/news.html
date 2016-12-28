@@ -1,0 +1,39 @@
+<include file="Public/header"/>
+<!--header-->
+<div style="width:100%;">
+
+
+    <div class="box1" >
+        <div class="news_list">
+            <ul>
+                <volist name="list" id="item">
+                    <li>
+                        <a href="{:U('Index/News/newsDetail',array('id' => $item['article_id']))}" >
+                            <div class="li_left">
+                                <img src="{$item.thumb}" width="100" height="100">
+                            </div>
+                            <div class="li_right">
+                                <p>
+                                    {$item['title']}
+                                </p>
+                                <p>
+                                    {:date('Y-m-d' ,$item['publish_time'] )}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </volist>
+            </ul>
+            {$page}
+        </div>
+    </div>
+
+    <div class="top return"><img src="__STATIC__/images/top.png?{$versionToken}"></div>
+
+
+
+
+</div>
+
+
+<include file="Public/footer"/>
