@@ -306,3 +306,98 @@ html,body {
     background: url(../images/taunt2.png) center no-repeat;
     background-size: 150px 123px;
 }
+
+.cp_box {
+    width: 70%;
+    margin: 200px 15%;
+    position: absolute;
+}
+.m10 {
+    font-size: 14px;
+    line-height: 30px;
+}
+
+.coupon_div{
+    border-radius: 10px;
+    background-color: rgb( 254, 254, 254 );
+    width: 96%;
+    overflow: hidden;
+    position: relative;
+    margin: 0 2% 20px 2%;
+}
+
+.coupon_div .coupon_div_top{
+    width: 90%;
+    padding: 0 5%;
+    border-radius: 10px 10px 0 0;
+    height: 50px;
+    border-bottom: 2px dashed #fff;
+    background: #f5c53d;
+}
+
+.coupon_div .coupon_div_top .coupon_div_top_l{
+    float: left;
+    color: #fff;
+    width: 20%;
+    font-size: 24px;
+    height: 48px;
+    line-height: 48px;
+}
+.coupon_div .coupon_div_top .coupon_div_top_r{
+    float: left;
+    color: #fff;
+    width: 80%;
+    text-align: right;
+    font-size: 12px;
+    margin-top: 20px;
+    height: 28px;
+    line-height: 28px;
+}
+
+
+.coupon_div_b {
+    color: #B2B2B2;
+    font-size: 12px;
+    width: 90%;
+    margin: 5px 5%;
+    text-align: right;
+}
+.ccoupon_div_r1 {
+    overflow: hidden;
+    padding-left: 5px;
+    text-align: right;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+}
+.coupon_div_r1 p {
+    overflow: hidden;
+    font-weight: bold;
+}
+.coupon_div_r p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    font-size: 16px !important;
+    line-height: 48px;
+    height: 48px;
+    display: block;
+}
+.coupon_div_r span {
+    color: #a6dc3d;
+    line-height: 42px;
+    font-size: 18px;
+    float: left;
+    display: block;
+}
+
+.coupon_div .coupon_div_b .coupon_list_icon_1{
+    background: url("../images/coupon_list_icon_1.png") no-repeat left center;
+}
+.coupon_div .coupon_div_b .coupon_list_icon_2{
+    background: url("../images/coupon_list_icon_2.png") no-repeat left center;
+}
