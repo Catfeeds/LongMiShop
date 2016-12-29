@@ -3,7 +3,7 @@
 #tbh5v0 .auction_hot h2 { height: 45px; line-height: 45px; font-size: 16px; text-align: left; color: #EE2F15; border-bottom: 2px #EE2F15 solid; text-indent: 15px; background: #ffffff; }
 .index_floor { margin-bottom: 20px; }
 .floor_body { padding-bottom: 1px; position: relative; }
-.floor_body h2 { height: 35px; line-height: 37px; background: #ffffff; position: relative; font-size: 18px; font-family: "微软雅黑"; font-weight: normal; text-indent: 15px; color: #535353; }
+.floor_body h2 { height: 35px; line-height: 37px; background: #ffffff; position: relative; font-size: 18px; font-family: "my_qkst"; font-weight: normal; text-indent: 15px; color: #535353; }
 .floor_body h2 span { height: 17px; width: 3px; background: #f23015; position: absolute; display: block; margin-top: 10px; margin-left: 6px; }
 .floor_body h2 .geng { width: 20%; background: #ffffff; position: none; display: inline-block; line-height: 15px; text-align: right; color: #ADA3A4; font-size: 12px; right: 0px; }
 .floor_body h2 .geng i { width: 15px; height: 15px; display: inline-block; background: url(../img/xin/more.png) no-repeat; margin-left: 1px; vertical-align: middle; }
@@ -13,8 +13,8 @@
 .floor_body ul li a .products_kuang { padding: 5px; overflow: hidden; }
 .floor_body ul li a .products_kuang img { width: 100%; }
 .floor_body ul li a img { width: 100%; }
-.floor_body ul li .goods_name { font-size: 12px; padding: 5px; color: #585858; font-family: "微软雅黑"; height: 28px; line-height: 38px; overflow: hidden; width: 85%; margin: 0 auto; text-align: left; }
-.floor_body ul li .price { font-size: 12px; color: #F23015; font-family: "微软雅黑"; height: 50px; line-height: 35px; text-align: left; width: 90%; margin: 0 auto; vertical-align: top; }
+.floor_body ul li .goods_name { font-size: 12px; padding: 5px; color: #585858; font-family: "my_qkst"; height: 28px; line-height: 38px; overflow: hidden; width: 85%; margin: 0 auto; text-align: left; }
+.floor_body ul li .price { font-size: 12px; color: #F23015; font-family: "my_qkst"; height: 50px; line-height: 35px; text-align: left; width: 90%; margin: 0 auto; vertical-align: top; }
 .floor_body ul li .price a { color: #f23015; }
 .floor_body ul li .price .price_url { background: #f23; color: #fff; padding: 2px 5px; border-radius: 5px; }
 .floor_body ul li .price .price_pro { width: 70%; display: block; float: left }
@@ -80,7 +80,7 @@
 .footer_nav dl dd a { font-size: 18px; line-height: 60px; color: #FFF }
 .footer_nav dl .flow { background: #ff9c00 }
 .footer_nav dl .goumai { background: #dd2726 }
-.c-btn-orange { display: block; background-color: #FF2233; border-radius: 5px; text-align: center; height: 40px; line-height: 40px; color: #FFF; font-size: 16px; border: none; font-family: 微软雅黑; }
+.c-btn-orange { display: block; background-color: #FF2233; border-radius: 5px; text-align: center; height: 40px; line-height: 40px; color: #FFF; font-size: 16px; border: none; font-family: my_qkst; }
 .c-btn-orange { width: 100%; height: 40px; font-size: 16px; font-weight: blod; }
 /*团购页面广告图*/
 .e-border-b:before { content: ""; position: absolute; bottom: 0; left: 0; right: 0; }
