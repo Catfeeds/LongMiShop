@@ -193,7 +193,6 @@
         }
         var cart_number = $(".my_cart .figure").html();
         cart_number = parseInt(cart_number);
-        console.log(cart_number);
         var num2 = parseInt($("#goods_num_"+goods_id+"_" + key).val());
         if( number < 0 && num2 < 1){
             return false;
@@ -219,7 +218,8 @@
                         flyCart("#goods_num_"+goods_id+"_" + key);
                     }
                     cart_number += number;
-                    $(".my_cart .figure").html(cart_number);
+                    ajaxGetCartData();
+//                    $(".my_cart .figure").html(cart_number);
                 }
                 before_request = 1;
             },

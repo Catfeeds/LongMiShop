@@ -7,12 +7,18 @@ p, input, h1, h2, h3, h4, h5, h6, ul, li, dl, dt, dd, form {
 	vertical-align: middle;
 	font-weight: normal;
 }
+
+@font-face {
+	font-family: "my_qkst";
+	src: url('../fonts/qkst.ttf');
+}
+
 html, body {
 	height: 100%;
 	width: 100%;
 }
 p,a,span{
-	font-family: "微软雅黑" !important;
+	font-family: "my_qkst" !important;
 }
 a:active {
 	color: #fff;

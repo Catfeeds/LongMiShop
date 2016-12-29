@@ -295,7 +295,7 @@ background: url(../images/flow/shop-cart.png) no-repeat 5px -26px; background-si
 .h-left a{ display:block; width:40px; height:40px; margin:auto; background: url(../images/category/arrow_left.png) no-repeat 15px center; background-size: auto 16px; }
 .h-right{float:left; width:15%;height:45px;}
 .h-mid { width:70%; height:45px; float:left; text-align:center; color:#666; font-size:18px; line-height:45px;}
-.h-mid h6 { color:#333; font-size:16px; font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif; font-weight:normal;}
+.h-mid h6 { color:#333; font-size:16px; font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif; font-weight:normal;}
 /*搜索店铺csssearch_list.lbi*/
 .rzs_info { width: 100%; margin-top: 10px; overflow: hidden; background: #FFF; padding-top: 10px; padding-bottom: 10px; margin-bottom: 10px; }
 .rzs_info dl { width: 95%; margin: auto; overflow: hidden; }
@@ -318,7 +318,7 @@ background: url(../images/flow/shop-cart.png) no-repeat 5px -26px; background-si
 .bg1 { display: block; width: 25px; height: 25px; position: absolute; background: url(../images/rzs.png) no-repeat; background-size: auto 50px; background-position: 0 0; margin-top: 5px; left: 15%; }
 .bg2 { display: block; width: 25px; height: 25px; position: absolute; background: url(../images/rzs.png) no-repeat; background-size: auto 50px; background-position: 0 -25px; margin-top: 6px; left: 15%; }
 .index_taocan { width: 100%; overflow: hidden; border-top: 1px solid #eeeeee }
-.index_taocan h2 { font-size: 16px; font-family: "微软雅黑"; font-weight: normal; text-indent: 10px; color: #535353; }
+.index_taocan h2 { font-size: 16px; font-family: "my_qkst"; font-weight: normal; text-indent: 10px; color: #535353; }
 .index_taocan dl { width: 25%; float: left; overflow: hidden; }
 .index_taocan dl dt { width: 100%; overflow: hidden; position: relative; }
 .index_taocan dl dt em { display: block; width: 90%; height: 20px; position: absolute; margin-left: 5%; bottom: 0px; background-color: rgba(0,0,0,0.5); font-size: 12px; line-height: 20px; text-align: center; color: #FFF }
@@ -351,7 +351,7 @@ background: url(../images/flow/shop-cart.png) no-repeat 5px -26px; background-si
 .bg2{ display:block; width:25px; height:25px; position:absolute; background:url(../images/rzs.png) no-repeat;background-size: auto 50px;  background-position:0 -25px; margin-top:6px;left:15%;}
 
 .index_taocan { width:100%; overflow:hidden; border-top:1px solid #eeeeee}
-.index_taocan h2 {font-size: 16px; font-family: "微软雅黑"; font-weight: normal; text-indent: 10px;color:#535353; }
+.index_taocan h2 {font-size: 16px; font-family: "my_qkst"; font-weight: normal; text-indent: 10px;color:#535353; }
 
 .index_taocan dl{ width:25%;float:left; overflow:hidden;}
 .index_taocan dl dt{ width:100%; overflow:hidden; position:relative;}

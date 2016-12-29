@@ -29,7 +29,7 @@
 .log_reg_box {width: 100%;}
 .log_reg_box ul.tab {width: 100%;padding-bottom: 20px;}
 .log_reg_box ul.tab li {width: 50%;height: 41px;text-align: center;line-height: 40px;
-	font-family: 微软雅黑;font-size: 14px;color: #3e3e3e;float: left;}
+	font-family: my_qkst;font-size: 14px;color: #3e3e3e;float: left;}
 .log_reg_box ul.tab li.curr span {border-left: 1px solid #fbfdfe;border-right: 1px solid #fbfdfe;display: block;color: #EE2222;}
 .log_reg_box ul.tab li.curr span font {border: 1px solid #fcfcfd;display: block;}
 .log_reg_box ul.tab li.currl span {background: #F2F5F7;border-right: 1px solid #d3d3d3;border-bottom: 1px solid #d3d3d3;

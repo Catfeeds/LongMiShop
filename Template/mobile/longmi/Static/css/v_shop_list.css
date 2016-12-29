@@ -1,11 +1,11 @@
 
 /*css初始值*/
-body {margin:0px;font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;font-size: 14px;line-height: 180%;color: #000000; min-width:320px;}
+body {margin:0px;font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif;font-size: 14px;line-height: 180%;color: #000000; min-width:320px;}
 html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, input, select, button, textarea, iframe, table, th, td {margin: 0;padding: 0;list-style-type: none;}
 img { border:0px}
-a:link {font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;font-size:14px;color: #000000;text-decoration: none;}
-a:visited {font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;font-size:14px;color:#000000;text-decoration: none;}
-a:hover {font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;font-size:14px;color:#E24615;text-decoration: none;}
+a:link {font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif;font-size:14px;color: #000000;text-decoration: none;}
+a:visited {font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif;font-size:14px;color:#000000;text-decoration: none;}
+a:hover {font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif;font-size:14px;color:#E24615;text-decoration: none;}
 html { font-size: 10px; }
 body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul { margin: 0; padding: 0 }
 fieldset, img { border: 0 }
@@ -33,8 +33,8 @@ body { background-color: #f8f8f8; }
 .h-left a{ display:block; width:45px; height:45px; margin:auto; background: url(../images/v-shop/arrow_left.png) no-repeat 15px center; background-size: auto 16px; }
 .h-right{float:left; width:15%;height:45px;}
 
-.h-mid { width:70%; height:45px; float:left; text-align:center; color:#333; font-size:16px; line-height:45px; position:relative;font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;}
-.h-mid h6 { color:#333; font-size:16px; font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif; font-weight:normal;}
+.h-mid { width:70%; height:45px; float:left; text-align:center; color:#333; font-size:16px; line-height:45px; position:relative;font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif;}
+.h-mid h6 { color:#333; font-size:16px; font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif; font-weight:normal;}
 /*弹出菜单*/
 .top_bar{float:right; display:block;margin-right:8px; width:40px; height:40px; float:right;}
 #show_more{width:30px; height:20px; float:right;background-position:0 -110px; margin-left:10px; margin-top:10px;}
