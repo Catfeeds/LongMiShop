@@ -86,7 +86,7 @@ background: transparent url("../images/upgrade_ad/add_to_cart.png") no-repeat sc
 cursor: pointer;
 }
 .flowHot ul li p .price {
-	font-family: "Microsoft YaHei", 微软雅黑;
+	font-family: "Microsoft YaHei", my_qkst;
 	color: #e31939;
 	font-size: 17px;
 }
@@ -189,14 +189,14 @@ cursor: pointer;
 }
 .cart_jmprice {
 	font-size: 14px;
-	font-family: "Microsoft YaHei", 微软雅黑;
+	font-family: "Microsoft YaHei", my_qkst;
 	font-weight: bold;
 	color:#e31939;
 }
 .jmamount {
 	color: #f8296d;
 	font-size: 19px;
-	font-family: "Microsoft YaHei", 微软雅黑;
+	font-family: "Microsoft YaHei", my_qkst;
 	font-weight: bold;
 }
 a.continue_buy {
@@ -294,7 +294,7 @@ a.jm_buy {
 }
 .checkBox_jm .title {
 	font-size: 19px;
-	font-family: "Microsoft YaHei", 微软雅黑;
+	font-family: "Microsoft YaHei", my_qkst;
 	font-weight: bold;
 }
 .songhuo {
@@ -436,7 +436,7 @@ a.jm_buy {
 	border-top: 1px solid #eeeeee;
 }
 .checkgoods .price_font {
-	font-family: "Microsoft YaHei", 微软雅黑;
+	font-family: "Microsoft YaHei", my_qkst;
 	font-size: 14px;
 	font-weight: bold;
 	color:#e31939
@@ -730,7 +730,7 @@ _top:       expression(eval(document.compatMode && document.compatMode=='CSS1Com
 	width: 100%;
 	border-bottom: 1px solid #eee;
 	background: #faf7f8;
-	font-family: "微软雅黑";
+	font-family: "my_qkst";
 	font-size: 14px;
 	font-weight: normal;
 	text-align: left;
@@ -877,7 +877,7 @@ _top:       expression(eval(document.compatMode &&  document.compatMode=='CSS1Co
 	border-bottom: 1px solid #eee;
 	background: #faf7f8;
 	text-indent: 20px;
-	font-family: "微软雅黑";
+	font-family: "my_qkst";
 	font-size: 16px;
 	font-weight: normal;
 	height: 60px;
@@ -957,7 +957,7 @@ _top:       expression(eval(document.compatMode &&  document.compatMode=='CSS1Co
     margin-left: 5px;
 }
 .checkBox_jm .title {
-    font-family: "Microsoft YaHei",微软雅黑;   
+    font-family: "Microsoft YaHei",my_qkst;
     border: medium none;
 
 	margin: 0px;
@@ -1039,7 +1039,7 @@ a.a_other1 {
 	border-bottom: 1px solid #EEE;
 	background: none repeat scroll 0% 0% #FAF7F8;
 	text-indent: 20px;
-	font-family: "微软雅黑";
+	font-family: "my_qkst";
 	font-size: 16px;
 	font-weight: normal;
 	height: 60px;

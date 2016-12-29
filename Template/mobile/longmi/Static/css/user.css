@@ -282,7 +282,7 @@
 
 
 .btn_big1{ display:block; margin:auto; background:#FF3300; font-size:14px; line-height:40px; 
- border:0px; color:#FFF; width:95%; margin:auto;margin-top:10px; margin-bottom:10px;border-radius:3px; font-family:"微软雅黑"}
+ border:0px; color:#FFF; width:95%; margin:auto;margin-top:10px; margin-bottom:10px;border-radius:3px; font-family:"my_qkst"}
 
 .title{ font-size:16px; color:#333; line-height:40px; margin-left:10px;}
 .field_pwd select{ -webkit-appearance: none; border-radius: 0; border: 1px solid #e5e5e5; height: 34px; line-height: 34px; padding: 0 23px 0 10px; color: #333; background-repeat: no-repeat; background-image: url('../images/down.png'); background-position: center right; background-size: 23px 7px; display: inline-block; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; display:block;margin:auto; width:80%;}
@@ -321,11 +321,11 @@
 
 .dotm_btn{ width:100%; height:50px; background:#fff;position:fixed; margin-top:10px; text-align:center;min-width: 320px; max-width: 640px; }
 .dotm_btn2{ display:block; float:left; width:30%; height:20px;line-height:20px;margin-left:3%; background-position:0px 0px; padding-top:25px;font-size:12px; background:url(../images/all.png) no-repeat;background-size: auto 300px; text-align:left; text-indent:3px }
-.dotm_btn1{ display:block; float:left; width:30%; height:40px; background:#FF3300; font-size:14px; line-height:40px; color:#FFF; border:0; margin-top:5px;border-radius:3px; margin-left:3%; font-family:"微软雅黑"}
+.dotm_btn1{ display:block; float:left; width:30%; height:40px; background:#FF3300; font-size:14px; line-height:40px; color:#FFF; border:0; margin-top:5px;border-radius:3px; margin-left:3%; font-family:"my_qkst"}
 .dotm_btn3{ display:block; float:left; width:30%; height:40px; background:#FF3300; line-height:40px; color:#FFF; border:0;margin-top:5px;border-radius:3px;margin-left:3% }
 .beett{ display:inline; float:inherit; width:60%; margin-left:inherit; padding:0 20px; }
 
-.dotm_btn1_1{ display:block; width:90%; height:40px; background:#FF3300; font-size:14px; line-height:40px; color:#FFF; border:0; margin:auto; margin-top:5px;border-radius:3px; font-family:"微软雅黑"}
+.dotm_btn1_1{ display:block; width:90%; height:40px; background:#FF3300; font-size:14px; line-height:40px; color:#FFF; border:0; margin:auto; margin-top:5px;border-radius:3px; font-family:"my_qkst"}
 
 /*我的推荐user_affiliate.lbi*/
 .tuijian{ width:90%; margin:auto; overflow:hidden; font-size:14px; line-height:150%; color:#333}
