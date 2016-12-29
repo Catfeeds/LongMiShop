@@ -13,6 +13,7 @@ class CartController extends MobileBaseController {
             'ajaxCartList',
             'ajaxChangeCartData',
             'cartList',
+            'ajaxGetCartData'
         );
     }
     /**
@@ -350,6 +351,23 @@ class CartController extends MobileBaseController {
         
     }
 
+    /**
+     * ajax 获取购物车数量
+     */
+    public function ajaxGetCartData()
+    {
+
+        $where = " session_id = '$this->session_id' "; // 默认按照 session_id 查询
+        $this->user_id && $where = " user_id = ".$this->user_id; // 如果这个用户已经等了则按照用户id查询
+        $cartList = M('Cart') -> where($where)->field("goods_num") ->select();
+        $cartNumber = 0 ;
+        if(!empty($cartList)){
+            foreach ( $cartList as  $cartItem){
+                $cartNumber += $cartItem["goods_num"];
+            }
+        }
+        echo $cartNumber;
+    }
 
 
 }

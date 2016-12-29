@@ -36,7 +36,7 @@
 				<a href="{:U('Cart/cart')}" class="my_cart"  >
 					<img src="__STATIC__/images/svg/nav_3.svg?{$versionToken}">
 					<span>购物车</span>
-					<span class="mui-badge mui-badge-danger figure ">{$cartNumber}</span>
+					<span class="mui-badge mui-badge-danger figure ">...</span>
 				</a>
 			</li>
 			<else/>
@@ -44,10 +44,26 @@
 				<a href="{:U('Cart/cart')}"  class="my_cart" >
 					<img src="__STATIC__/images/svg/nav_3.svg?{$versionToken}">
 					<span>购物车</span>
-					<span class="mui-badge mui-badge-danger figure">{$cartNumber}</span>
+					<span class="mui-badge mui-badge-danger figure">...</span>
 				</a>
 			</li>
 		</if>
 	</ul>
 
 </div>
+<script>
+	$(function(){
+		$(window).bind("pageshow", function () {
+			$(".my_cart .figure").html("...");
+			$.ajax({
+				type : "POST",
+				url:"{:U('Mobile/Cart/ajaxGetCartData')}",
+				dataType:'html',
+				success: function(data){
+					$(".my_cart .figure").html(data);
+				}
+			});
+
+		})
+	});
+</script>
