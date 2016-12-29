@@ -10,7 +10,7 @@ p, input, h1, h2, h3, h4, h5, h6, ul, li, dl, dt, dd, form {
 
 @font-face {
 	font-family: "my_qkst";
-	src: url('../fonts/qkst.ttf');
+	src: url('../fonts/my_qkst.ttf');
 }
 
 html, body {
