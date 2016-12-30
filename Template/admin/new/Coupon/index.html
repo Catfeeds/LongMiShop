@@ -45,7 +45,7 @@
                                         <td class="text-center">
                                             <input type="checkbox" name="selected[]" value="6">
                                         </td>
-                                        <td class="text-center">{$list.name}</td>
+                                        <td class="text-center">{$list.name}{:$list['remarks']?"&nbsp;【".$list['remarks']."】":""}</td>
                                         <td class="text-center">{$coupons[$list[type]]}</td>
                                         <td class="text-center">
                                             <if condition="$list['is_discount'] == true">
