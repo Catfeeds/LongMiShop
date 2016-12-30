@@ -15,7 +15,7 @@ var is_draw = false;
 var is_first_load = true;
 var is_over = false;
 var is_show_fraction = false;
-
+var setAchievementLock = false;
 
 
 $(function(){
@@ -272,17 +272,21 @@ $(function(){
 
     }
 
-
     /**
      * 设置分数
      */
     function setAchievement(){
+        if(setAchievementLock){
+            return;
+        }
+        setAchievementLock = true;
         $.ajax({
             type : "POST",
             url:setAchievementUrl,
             data:{pluginName:"setAchievement",fraction:fraction},
             dataType:'json',
             success: function(data){
+                setAchievementLock = false;
                 if(data.state == 1){
                     location.href = data.data;
                     return;
