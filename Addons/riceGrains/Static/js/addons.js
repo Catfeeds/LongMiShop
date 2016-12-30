@@ -273,6 +273,26 @@ $(function(){
     }
 
 
+    /**
+     * 设置分数
+     */
+    function setAchievement(){
+        $.ajax({
+            type : "POST",
+            url:setAchievementUrl,
+            data:{pluginName:"setAchievement",fraction:fraction},
+            dataType:'json',
+            success: function(data){
+                if(data.state == 1){
+                    location.href = data.data;
+                    return;
+                }
+                alert(data.msg);
+                return;
+            }
+        });
+    }
+
 
     /**
      * 绘制循环
@@ -348,8 +368,9 @@ $(function(){
         location.reload();
     });
     $(".page_2 .result2").click(function(){
-        $(".page_2").hide();
-        $(".page_3").show();
+        setAchievement();
+        // $(".page_2").hide();
+        // $(".page_3").show();
     });
     $("#game_over .ok").click(function(){
         var number =  $("#game_over input").val();
@@ -363,7 +384,10 @@ $(function(){
         $("#game_over .fraction").show();
 
         var abs =number - fraction;
-        if( Math.abs(abs) <= 3 &&  fraction > 80 ){
+        if(
+            Math.abs(abs) <= 3
+            &&  fraction > 80
+        ){
             $("#game_over .taunt2").show();
             $("#game_over .result2").show();
         }else{
