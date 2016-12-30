@@ -47,8 +47,8 @@ $(function(){
     var boom    = new Image();
 
 
-    var h=20;
-    var speed=15; //速度
+    var h=10;
+    // var speed=15; //速度
     var zl=100;
     var chi=0;
     var shi=0;
@@ -117,6 +117,7 @@ $(function(){
                     flyingObject[j].h = 29;
                     flyingObject[j].w = 15;
                 }
+                flyingObject[j].speed = Math.random()*10 + 15;
                 flyingObject[j].image.width = flyingObject[j].w;
                 flyingObject[j].image.height = flyingObject[j].h;
                 flyingObject[j].x=i;
@@ -154,7 +155,7 @@ $(function(){
                 flyingObject[i].x =0;
                 flyingObject[i].y =canvasH;
             }else{
-                flyingObject[i].y += speed;
+                flyingObject[i].y += flyingObject[i].speed;
                 ctx.drawImage(flyingObject[i].image,flyingObject[i].x,flyingObject[i].y,flyingObject[i].w,flyingObject[i].h);
             }
         }
@@ -390,7 +391,7 @@ $(function(){
         var abs =number - fraction;
         if(
             Math.abs(abs) <= 3
-            &&  fraction > 80
+            &&  fraction > 50
         ){
             $("#game_over .taunt2").show();
             $("#game_over .result2").show();

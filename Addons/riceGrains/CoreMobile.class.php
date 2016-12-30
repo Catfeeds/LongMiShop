@@ -73,11 +73,11 @@ class riceGrainsMobileController
         }
 
         $gift = findDataWithCondition(self::TB_GIFT);
-        if( $recordInfo["fraction"] > 300 ){
+        if( $recordInfo["fraction"] > 200 ){
             $couponInfo = findDataWithCondition("coupon", array("id" => $gift["coupon_id1"]));
-        }elseif( $recordInfo["fraction"] > 160 ){
+        }elseif( $recordInfo["fraction"] > 120 ){
             $couponInfo = findDataWithCondition("coupon", array("id" => $gift["coupon_id2"]));
-        }elseif( $recordInfo["fraction"] > 80 ){
+        }elseif( $recordInfo["fraction"] > 50 ){
             $couponInfo = findDataWithCondition("coupon", array("id" => $gift["coupon_id3"]));
         }else{
             header("Location: ". U('Mobile/Addons/riceGrains') );
