@@ -125,12 +125,10 @@ class IndexController extends MobileBaseController {
         );
         if( $sendNewsCouponsId > 0 && isExistenceDataWithCondition("coupon",array("id"=>$sendNewsCouponsId)) && !isExistenceDataWithCondition("coupon_list",$condition)){
             addNewCoupon( $sendNewsCouponsId , $this->user_id);
-            header("Location: ".U("Mobile/User/coupon"));
-            exit;
-        }else{
-            header("Location: ".U("Mobile/Index/index"));
-            exit;
         }
+
+        header("Location: ".U("Mobile/User/coupon"));
+        exit;
 
     }
 }
