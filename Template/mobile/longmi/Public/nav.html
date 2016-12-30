@@ -54,16 +54,18 @@
 <script>
 	$(function(){
 		$(window).bind("pageshow", function () {
-			$(".my_cart .figure").html("...");
-			$.ajax({
-				type : "POST",
-				url:"{:U('Mobile/Cart/ajaxGetCartData')}",
-				dataType:'html',
-				success: function(data){
-					$(".my_cart .figure").html(data);
-				}
-			});
-
+			ajaxGetCartData();
 		})
 	});
+	function ajaxGetCartData(){
+		$(".my_cart .figure").html("...");
+		$.ajax({
+			type : "POST",
+			url:"{:U('Mobile/Cart/ajaxGetCartData')}",
+			dataType:'html',
+			success: function(data){
+				$(".my_cart .figure").html(data);
+			}
+		});
+	}
 </script>

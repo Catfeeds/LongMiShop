@@ -957,7 +957,7 @@ _top:       expression(eval(document.compatMode &&  document.compatMode=='CSS1Co
     margin-left: 5px;
 }
 .checkBox_jm .title {
-    font-family: "Microsoft YaHei",微软雅黑;   
+    font-family: "Microsoft YaHei",微软雅黑;
     border: medium none;
 
 	margin: 0px;

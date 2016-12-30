@@ -28,14 +28,14 @@ class IndexController extends MobileBaseController {
 
         $this -> assign('couponCount', $couponCount);
 
-        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
-        $inviteData = getCallbackData($inviteData);
+//        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
+//        $inviteData = getCallbackData($inviteData);
         $inviteNumber = getCountWithCondition("invite_list" ,array('parent_user_id'=>$this->user_id));
-        if( $inviteNumber > 0){
-            $inviteNumber += $inviteNumber *$inviteData['point'];
-            $inviteNumber += $inviteNumber *$inviteData['balance'];
-            $inviteNumber += $inviteNumber *$inviteData["coupon"]['money'];
-        }
+//        if( $inviteNumber > 0){
+//            $inviteNumber += $inviteNumber *$inviteData['point'];
+//            $inviteNumber += $inviteNumber *$inviteData['balance'];
+//            $inviteNumber += $inviteNumber *$inviteData["coupon"]['money'];
+//        }
         $this -> assign('inviteNumber',$inviteNumber);
 
 
