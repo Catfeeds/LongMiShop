@@ -94,17 +94,17 @@ class IndexController extends MobileBaseController {
 //            echo "<a href='http://www.php.com/svn_tpshop/mobile--html/{$html}' target='_blank'>{$html}</a> <br/>";
 //        }
 //    }
-    
-    /**
-     * 商品列表页
-     */
-    public function goodsList(){
-        $goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
-        $id = I('get.id',0); // 当前分类id
-        $lists = getCatGrandson($id);
-        $this -> assign('lists',$lists);
-        $this -> display();
-    }
+//
+//    /**
+//     * 商品列表页
+//     */
+//    public function goodsList(){
+//        $goodsLogic = new \Common\Logic\GoodsLogic(); // 前台商品操作逻辑类
+//        $id = I('get.id',0); // 当前分类id
+//        $lists = getCatGrandson($id);
+//        $this -> assign('lists',$lists);
+//        $this -> display();
+//    }
 //
 //    public function ajaxGetMore(){
 //    	$p = I('p',1);
@@ -112,4 +112,23 @@ class IndexController extends MobileBaseController {
 //    	$this -> assign('favourite_goods',$favourite_goods);
 //    	$this -> display();
 //    }
+
+
+
+    //获取新券
+    public function getSendNewsCoupon(){
+
+        $sendNewsCouponsId = M('config') -> where(array('name' => 'send_news_coupons_id'))->getField("value");
+        $condition = array(
+            "user_id"=>$this->user_id,
+            "cid"=>$sendNewsCouponsId
+        );
+        if( $sendNewsCouponsId > 0 && isExistenceDataWithCondition("coupon",array("id"=>$sendNewsCouponsId)) && !isExistenceDataWithCondition("coupon_list",$condition)){
+            addNewCoupon( $sendNewsCouponsId , $this->user_id);
+        }
+
+        header("Location: ".U("Mobile/User/coupon"));
+        exit;
+
+    }
 }

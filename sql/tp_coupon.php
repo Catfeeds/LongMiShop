@@ -479,6 +479,9 @@ ADD COLUMN `goods_label`  varchar(120) NULL COMMENT '商品标签' AFTER `goods_
 
 
 
+ALTER TABLE `lm_coupon`
+ADD COLUMN `remarks`  varchar(255) NULL COMMENT '备注' AFTER `name`;
+
 
   
   ";
