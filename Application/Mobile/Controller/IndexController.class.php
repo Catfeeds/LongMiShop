@@ -123,6 +123,10 @@ class IndexController extends MobileBaseController {
             "user_id"=>$this->user_id,
             "cid"=>$sendNewsCouponsId
         );
+        if( time() -  $this->user['reg_time'] > 60 * 60 * 5  ){
+            header("Location: ".U("Mobile/User/index"));
+            exit;
+        }
         if( $sendNewsCouponsId > 0 && isExistenceDataWithCondition("coupon",array("id"=>$sendNewsCouponsId)) && !isExistenceDataWithCondition("coupon_list",$condition)){
             addNewCoupon( $sendNewsCouponsId , $this->user_id);
         }
