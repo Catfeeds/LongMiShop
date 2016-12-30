@@ -90,11 +90,16 @@
 
 <script type="text/javascript">
     var _ADDONS = "__ADDONS__";
+    var setAchievementUrl = "{:U('Mobile/Addons/riceGrains')}";
 </script>
 
 <script type="text/javascript" src="__ADDONS__/js/addons.js?v={$v}"></script>
 
-
+<!-- 微信浏览器 调用微信 分享js-->
+<if condition="$signPackage neq null">
+    <include file="$sharePath"/>
+</if>
+<!-- 微信浏览器 调用微信 分享js  end-->
 
 
 </html>

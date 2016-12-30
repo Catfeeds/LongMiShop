@@ -25,18 +25,29 @@
         <div class="coupon_div">
             <div class="coupon_div_top ">
                 <div class="coupon_div_top_l">
-                    ￥5
+
+                    <if condition="$coupon['is_discount'] eq '0' ">
+                        ￥{$coupon.money}
+                    </if>
+                    <if condition="$coupon['is_discount'] eq '1'">
+                        -&nbsp;{$coupon.money}%
+                    </if>
+
                 </div>
                 <div class="coupon_div_top_r">
-                    宴午体验券
+                    {$coupon.name}
                 </div>
             </div>
             <div class="coupon_div_b">
                 <div class="m10 coupon_list_icon_1">
-                    有效期至：2017-01-19
+                    <if condition = "$coupon['use_type'] == 1">
+                        有效期至：{:date('Y-m-d',($coupon['limit_day']*24*60*60 + $coupon['receive_time']))}
+                        <else/>
+                        有效期至：{$coupon.use_end_time|date='Y-m-d',###}
+                    </if>
                 </div>
                 <div class="m10 coupon_list_icon_2">
-                    宴午体验券
+                    {$coupon.desc}&nbsp;
                 </div>
             </div>
         </div>
@@ -54,8 +65,11 @@
     var _ADDONS = "__ADDONS__";
 </script>
 
-<!--<script type="text/javascript" src="__ADDONS__/js/addons.js?v={$v}"></script>-->
-
+<!-- 微信浏览器 调用微信 分享js-->
+<if condition="$signPackage neq null">
+    <include file="$sharePath"/>
+</if>
+<!-- 微信浏览器 调用微信 分享js  end-->
 
 
 

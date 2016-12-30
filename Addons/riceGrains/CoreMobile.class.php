@@ -23,7 +23,7 @@ class riceGrainsMobileController
         $this->assignData["isFollow"] = $this->userInfo["is_follow"];
         $this->assignData["share"] = array(
             "url" => "http://".$_SERVER['HTTP_HOST']. U('Mobile/Addons/riceGrains') ,
-            "img" => "http://".$_SERVER['HTTP_HOST']."{:U('Mobile/Addons/riceGrains')}",
+            "img" => "http://".$_SERVER['HTTP_HOST']."/Addons/riceGrains/logo.jpg",
             "title" => "粒粒接辛苦",
             "desc" => "粒粒接辛苦",
         );
@@ -66,23 +66,38 @@ class riceGrainsMobileController
         $recordInfo = findDataWithCondition(self::TB_RECORD, $condition);
         if (
             empty($recordInfo)
-//            || $recordInfo["status"] == 1
+            || $recordInfo["status"] == 1
         ) {
-//            header("Location: ". U('Mobile/Addons/riceGrains') );
-//            exit;
+            header("Location: ". U('Mobile/Addons/riceGrains') );
+            exit;
         }
+
+        $gift = findDataWithCondition(self::TB_GIFT);
+        if( $recordInfo["fraction"] > 300 ){
+            $couponInfo = findDataWithCondition("coupon", array("coupon_id" => $gift["coupon_id1"]));
+        }elseif( $recordInfo["fraction"] > 160 ){
+            $couponInfo = findDataWithCondition("coupon", array("coupon_id" => $gift["coupon_id2"]));
+        }elseif( $recordInfo["fraction"] > 80 ){
+            $couponInfo = findDataWithCondition("coupon", array("coupon_id" => $gift["coupon_id3"]));
+        }else{
+            header("Location: ". U('Mobile/Addons/riceGrains') );
+            exit;
+        }
+        if( empty( $couponInfo )){
+            header("Location: ". U('Mobile/Addons/riceGrains') );
+            exit;
+        }
+
+
+        addNewCoupon( $couponInfo['id'] , $this->userInfo["user_id"] );
+
 
         $save = array(
             "status" => 1
         );
         saveData(self::TB_RECORD, $condition, $save);
-        $gift = findDataWithCondition(self::TB_GIFT);
-        $couponList = array(
-            "coupon_1" => findDataWithCondition("coupon", array("coupon_id" => $gift["coupon_id1"])),
-            "coupon_2" => findDataWithCondition("coupon", array("coupon_id" => $gift["coupon_id2"])),
-            "coupon_3" => findDataWithCondition("coupon", array("coupon_id" => $gift["coupon_id2"]))
-        );
-        $this->assignData["couponList"] = $couponList;
+
+        $this->assignData["coupon"] = $couponInfo;
         $this->assignData["record"] = $recordInfo;
 
         return $this->assignData;
@@ -105,15 +120,18 @@ class riceGrainsMobileController
                 $condition["create_time"] = time();
                 addData( self::TB_RECORD , $condition );
             }else{
-                if( $fraction > $recordInfo['fraction']){
+                if( $recordInfo["status"] == 1 ){
+                    exit(json_encode(callback(false , "您已经领取过奖励了")));
+                }
+//                if( $fraction > $recordInfo['fraction']){
                     $condition["status"] = 0;
                     $condition["fraction"] = $fraction;
                     $condition["create_time"] = time();
                     saveData( self::TB_RECORD , array("id"=>$recordInfo['id']) , $condition );
-                }
+//                }
             }
-            exit(json_encode(callback(true)));
+            exit(json_encode(callback(true,"",U('Mobile/Addons/riceGrains',array("pluginName"=>"getGift")))));
         }
-        exit(json_encode(callback(false)));
+        exit(json_encode(callback(false,"错误访问")));
     }
 }
