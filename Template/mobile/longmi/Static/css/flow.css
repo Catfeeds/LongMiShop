@@ -20,7 +20,7 @@ input[type="hidden" i], input[type="image" i], input[type="file" i] {
 	background: url(../images/dianpu.png) no-repeat left center; margin-left:10px;
     text-indent: 25px;
     background-size: 25px 25px;
-    font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif;
+    font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;
     font-size: 14px;
     color: #000000;
     text-decoration: none;
@@ -112,7 +112,7 @@ input[type="hidden" i], input[type="image" i], input[type="file" i] {
 .xm-input-number .input-num span { font-size: 1.6em; color: #51555a }
 .xm-input-number .input-add.active { background-color: #fafafa; background: url(../images/flow/shop-cart.png) no-repeat -26px -27px; background-size: 60px }
 .xm-input-number .input-sub.active { background-color: #fafafa; background: url(../images/flow/shop-cart.png) no-repeat 6px -27px; background-size: 60px }
-.page-shopping .bottom-panel .right input.xm-button { border-radius: 5px; background-color: #FF2233; text-align: center; height: 40px; line-height: 40px; font-size: 16px; color: #fff; width: 100%; border: none; font-family: my_qkst; display:block }
+.page-shopping .bottom-panel .right input.xm-button { border-radius: 5px; background-color: #FF2233; text-align: center; height: 40px; line-height: 40px; font-size: 16px; color: #fff; width: 100%; border: none; font-family: 微软雅黑; display:block }
 
 .xm-button.to_cart { background-color: #999999; }
 .xm-button-gray { background-color: #fdfdfd; border: 1px solid #bbb }
@@ -151,8 +151,8 @@ input[type="hidden" i], input[type="image" i], input[type="file" i] {
 .address_add_content .province_select { margin-right: 10px; }
 .address_add_content input.save { display: block; -webkit-appearance: none; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; margin: 0 26px; background: #fe5955; color: #fff; border: none; height: 40px; border-radius: 3px; }
 .c-btn-orange { width: 100%; height: 40px; font-size: 16px; font-weight: blod; }
-.c-btn-orange { display: block; background-color: #FF2233; border-radius: 5px; text-align: center; height: 40px; line-height: 40px; color: #FFF; font-size: 16px; border: none; font-family: my_qkst }
-a.c-btn-orange { width: 100%; height: 40px; font-size: 16px; font-weight: blod; color: #FFF; font-size: 16px; font-family: my_qkst }
+.c-btn-orange { display: block; background-color: #FF2233; border-radius: 5px; text-align: center; height: 40px; line-height: 40px; color: #FFF; font-size: 16px; border: none; font-family: 微软雅黑 }
+a.c-btn-orange { width: 100%; height: 40px; font-size: 16px; font-weight: blod; color: #FFF; font-size: 16px; font-family: 微软雅黑 }
 /*
 结算
 */
@@ -166,7 +166,7 @@ a.c-btn-orange { width: 100%; height: 40px; font-size: 16px; font-weight: blod; 
 .panel-heading a.link { border-radius: 5px; background: #FF6600; color: #fff; line-height: 20px; font-size: 14px; padding: 0px 3px; margin: 0 3px; position: absolute; top: 7px; right: 5px; }
 .title a.link { border-radius: 5px; background: #FF6600; color: #fff; padding: 2px 3px; margin: 0 3px; display: inline-block; font-size: 14px; }
 a.modify { border-radius: 5px; background: #FF6600; color: #fff; float: right; padding: 2px 3px; margin: 0 3px; display: inline-block; font-size: 14px; font-weight: normal; }
-.sub-btn { display: block; width: 100%; display: block; border-radius:5px; background-color: #f60; text-align: center; height:40px; line-height:40px; color: #FFF; font-size: 14px; border: none; font-family:'my_qkst' }
+.sub-btn { display: block; width: 100%; display: block; border-radius:5px; background-color: #f60; text-align: center; height:40px; line-height:40px; color: #FFF; font-size: 14px; border: none; font-family:'微软雅黑' }
 .jh-btn { background: -webkit-gradient(linear, left top, left bottom, from(#ffb22d), to(#ffaa05)); }
 .btn2 { background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e9e9e9)); color: #5f5f5f; border: #d4d4d4 solid 1px; }
 .panel { margin: 0 0 10px; background-color: #fff; overflow: hidden }
@@ -211,7 +211,7 @@ em.qxz { font-size: 14px; color: #999; margin-left: 10px; }
 .scroll_best .hd li { display: inline-block; width: 10px; height: 10px; background: #C5C1C0; margin: 0 4px; vertical-align: top; overflow: hidden; -webkit-border-radius: 8px; -moz-border-radius: 6px; border-radius: 6px; }
 .scroll_best .hd .on { background: #D6505B; }
 .index_floor { width: 100%; overflow: hidden; margin-bottom: 20px; background: #FFF; }
-.index_floor h2 { height: 35px; line-height: 37px; background: #ffffff; position: relative; font-size: 18px; font-family: "my_qkst"; font-weight: normal; text-indent: 15px; color: #535353; }
+.index_floor h2 { height: 35px; line-height: 37px; background: #ffffff; position: relative; font-size: 18px; font-family: "微软雅黑"; font-weight: normal; text-indent: 15px; color: #535353; }
 .index_floor h2 span { height: 17px; width: 3px; background: #f23015; position: absolute; display: block; margin-top: 10px; margin-left: 6px; }
 .bd { width: 100%; overflow: hidden }
 .bd ul { width: 100%; overflow: hidden }
@@ -298,7 +298,7 @@ em.qxz { font-size: 14px; color: #999; margin-left: 10px; }
 .order-buy .bottom-bar .total-price p { display: inline-block; height: 45px; color: #f50; margin-right: 8px; float: right; overflow: hidden }
 .order-buy .bottom-bar .total-price .realPay { line-height: 47px; margin-right: 16px }
 .order-buy .bottom-bar .total-price .price { font-size: 16px; font-weight: 700 }
-.order-buy .c-order-btn { border: 0; display: inline-block; text-align: center; text-decoration: none; width: 130px; height: 45px; line-height: 45px; color: #fff; font-size: 16px; -webkit-border-radius: 5px; background: #ff2233; font-family: 'my_qkst' }
+.order-buy .c-order-btn { border: 0; display: inline-block; text-align: center; text-decoration: none; width: 130px; height: 45px; line-height: 45px; color: #fff; font-size: 16px; -webkit-border-radius: 5px; background: #ff2233; font-family: '微软雅黑' }
 .order-buy .c-order-btn-disabled { background: #dedede; color: #4e4e4e }
 .voucher-num { height: 60px; width: 100%; line-height: 20px; border: #ddd 1px solid; -webkit-appearance: none; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; border-radius: 0; -webkit-rtl-ordering: logical; -webkit-user-select: text; cursor: auto; background-color: white }
 #fapiao68 input { height: 28px; line-height: 28px; margin-top: 10px; margin-bottom: 10px; }
@@ -323,7 +323,7 @@ em.qxz { font-size: 14px; color: #999; margin-left: 10px; }
 .h_title1 { width: 95%; overflow: hidden; margin: auto }
 .h_title1 dt { float: left; overflow: hidden; width: 25%; font-size: 14px; line-height: 150%; }
 .h_title1 dd { width: 75%; float: left; overflow: hidden; font-size: 14px; color: #666; line-height: 150%; }
-.btn_orange { display: block; width: 96%; margin-left: 2%; margin-right: 2%; height: 40px; margin: auto; background: #FF2233; font-size: 16px; line-height: 40px; color: #FFF; text-align: center; border-radius: 5px; border: 0px; margin-top: 10px; margin-bottom: 10px; font-family: my_qkst }
+.btn_orange { display: block; width: 96%; margin-left: 2%; margin-right: 2%; height: 40px; margin: auto; background: #FF2233; font-size: 16px; line-height: 40px; color: #FFF; text-align: center; border-radius: 5px; border: 0px; margin-top: 10px; margin-bottom: 10px; font-family: 微软雅黑 }
 .activity { padding: 10px 10px 10px 10px; font-size: 14px; }
 .order_total_li { border: 0; text-align: right; color: #999; padding-bottom: 20px; font-size: 14px; line-height:22px; }
 .order_total_ul { line-height: 18px; padding-top: 10px; padding-bottom: 10px; }
@@ -554,11 +554,11 @@ input, select, textarea {
   font-size: 16px;
   color: #fff;
   width: 96%;
-  font-family: my_qkst;
+  font-family: 微软雅黑;
   border:none; margin:0 auto;}
 .flow_youhui{ padding:10px 5px;}
 .flow_youhui_no{ padding:10px 5px; border-bottom:#eee 1px solid; font-size:14px;}
-.goods-list-title{ height:50px; line-height:50px; background:url(../images/dianpu.png) no-repeat left center; text-indent:25px; background-size:25px 25px; border-bottom:#eee 1px solid;  font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif;
+.goods-list-title{ height:50px; line-height:50px; background:url(../images/dianpu.png) no-repeat left center; text-indent:25px; background-size:25px 25px; border-bottom:#eee 1px solid;  font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;
   font-size: 14px;
   color: #000000;
   text-decoration: none; font-weight:bold}
@@ -617,7 +617,7 @@ flex: 1;
 .flow_bottom_list textarea{ width:96%; height:80px; padding:0 2%; line-height:22px;}
 .flow_bottom_list .c_checkbox_t{ margin-top:5px}
 .free_freight{ font-size:14px;  color:#333; text-align:center;}
-.free_freight span{ font-size:16px; font-family:my_qkst; color:#E31939; margin:0 5px;}
+.free_freight span{ font-size:16px; font-family:微软雅黑; color:#E31939; margin:0 5px;}
 #zk_{ width:100%;}
 .flow_shipping{ margin-bottom:10px; display:block}
 
