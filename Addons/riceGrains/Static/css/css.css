@@ -44,7 +44,7 @@ html,body {
     width:100%;
 }
 /*//貂*/
- .img_1{
+.page_1 .img_1{
     width: 23%;
     left:5%;
     bottom: -7%;
@@ -55,7 +55,7 @@ html,body {
     -o-transform:rotate(15deg);
 }
 /*//鹤*/
- .img_2{
+.page_1 .img_2{
     width: 36%;
     right: -12%;
     bottom: 35%;
@@ -66,7 +66,7 @@ html,body {
     -o-transform: rotate(-40deg);
 }
 /*//虎*/
- .img_3{
+.page_1 .img_3{
     width: 28%;
     left:-12%;
     bottom: 10%;
@@ -88,19 +88,19 @@ html,body {
     -o-transform: rotate(-48deg);
 }
 /*//鼠*/
- .img_5{
+.page_1 .img_5{
     width: 28%;
     left: 51%;
     bottom: 7%;
 }
 /*//熊*/
- .img_6{
+.page_1 .img_6{
     width: 23%;
     left: 34%;
     bottom: 0;
 }
 /*//鹰*/
- .img_7{
+.page_1 .img_7{
     width: 24%;
     left:75%;
     bottom: -3%;
@@ -111,54 +111,54 @@ html,body {
     -o-transform:rotate(-20deg);
 }
 /*//点击开始游戏*/
- .img_8{
+.page_1 .img_8{
     width: 55%;
     left: 12%;
     top: 50%;
 }
- .img_9{
+.page_1 .img_9{
     width: 60%;
     left: 17%;
     top: 17%;
 }
- .img_10{
+.page_1 .img_10{
     width: 30%;
     left: 48%;
     top: 16%;
 }
- .img_11{
+.page_1 .img_11{
     width: 25%;
     left: 18%;
     top: 29%;
 }
-.img_12{
+.page_1 .img_12{
     width: 15%;
     left: 53%;
     top: 10%;
 }
- .img_13{
+.page_1 .img_13{
     width: 15%;
     left: 6%;
     top: 30%;
 }
- .img_14{
+.page_1 .img_14{
      width: 20%;
      left: 30%;
      top: 62%;
 }
 
-.img_15{
+.page_1 .img_15{
     width: 25%;
     left: 22%;
     top: 67%;
 }
-.img_16{
+.page_1 .img_16{
     width: 50%;
     left: 22%;
     top: 45%;
 }
 
-.img_17{
+.page_1 .img_17{
     width: 50%;
     left: 22%;
     top: 22%;
