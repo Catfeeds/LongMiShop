@@ -368,6 +368,14 @@ class CartController extends MobileBaseController {
         }
         echo $cartNumber;
     }
+    public function ajaxGetCartList(){
+        $result = $this -> cartLogic -> cartList($this->user, $this->session_id,1,1); // 获取购物车商品
+        $cartList = $result['cartList'];
+        if(empty($cartList)){
+            exit(json_encode(callback(false)));
+        }
+        exit(json_encode(callback(true)));
+    }
 
 
 }
