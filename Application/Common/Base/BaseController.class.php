@@ -29,7 +29,7 @@ class BaseController extends Controller
         $shopConfig = getShopConfig();
         $this -> shopConfig = $shopConfig;
         $this -> assign('shopConfig', $shopConfig);
-        $versionToken = "v2.3";
+        $versionToken = "v2.4";
         $this -> assign('versionToken', $versionToken);
     }
 
