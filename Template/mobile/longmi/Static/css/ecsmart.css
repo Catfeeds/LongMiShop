@@ -534,7 +534,7 @@ html.mm-opening .mm-page, html.mm-opening #mm-blocker, html.mm-opening .mm-fixed
 	overflow: hidden;
 	float: left;
 	text-indent: 20px;
-	font-family: "my_qkst";
+	font-family: "微软雅黑";
 	font-size: 16px;
 }
 .fakeInput .search_submit {
@@ -593,7 +593,7 @@ html.mm-opening .mm-page, html.mm-opening #mm-blocker, html.mm-opening .mm-fixed
 	background: #f23015;
 	position: relative;
 	font-size: 18px;
-	font-family: "my_qkst";
+	font-family: "微软雅黑";
 	font-weight: normal;
 	text-indent: 15px;
 	color: #FFF;
@@ -871,7 +871,7 @@ html.mm-opening .mm-page, html.mm-opening #mm-blocker, html.mm-opening .mm-fixed
 	position: relative;
 	text-align: center;
 	font-size: 16px;
-	font-family: "my_qkst";
+	font-family: "微软雅黑";
 	color: #FFF;
 	line-height: 3rem;
 }
@@ -899,7 +899,7 @@ html.mm-opening .mm-page, html.mm-opening #mm-blocker, html.mm-opening .mm-fixed
 	text-align: center;
 	font-size: 16px;
 	line-height: 46px;
-	font-family: 'my_qkst';
+	font-family: '微软雅黑';
 	color: #FFF;
 }
 #header .back {
@@ -2417,7 +2417,7 @@ ul.text_list li {
 	;
 	margin: 0 auto;
 	background: #F7F7F7;
-	font-family: my_qkst;
+	font-family: 微软雅黑;
 	color: #313131;
 	font-size: 12px;
 }
@@ -4222,7 +4222,7 @@ div.taoplus {
 	font-style: italic;
 	color: #585858;
 	font-size: 16px;
-	font-family: "my_qkst";
+	font-family: "微软雅黑";
 	font-weight: 700
 }
 .btn_sure, .btn_buy_detail {
@@ -4232,7 +4232,7 @@ div.taoplus {
 	text-align: center;
 	font-size: 16px;
 	line-height: 30px;
-	font-family: "my_qkst";
+	font-family: "微软雅黑";
 	border-radius: 2px;
 	display: inline-block
 }
@@ -4647,7 +4647,7 @@ input, select, textarea {
 	height: 41px;
 	text-align: center;
 	line-height: 40px;
-	font-family: my_qkst;
+	font-family: 微软雅黑;
 	font-size: 14px;
 	color: #3e3e3e;
 	float: left;
@@ -5559,7 +5559,7 @@ dl.order_list dd font a {
 	border-bottom: 1px #dedede solid;
 }
 .f_w {
-	font-family: "my_qkst";
+	font-family: "微软雅黑";
 }
 .por {
 	position: relative;
@@ -6699,7 +6699,7 @@ _top:       expression(eval(document.compatMode && document.compatMode=='CSS1Com
 	width: 100%;
 	border-bottom: 1px solid #eee;
 	background: #faf7f8;
-	font-family: "my_qkst";
+	font-family: "微软雅黑";
 	font-size: 14px;
 	font-weight: normal;
 	text-align: left;

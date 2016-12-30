@@ -45,7 +45,7 @@
 .bg2{ display:block; width:25px; height:25px; position:absolute; background:url(../images/rzs.png) no-repeat;background-size: auto 50px;  background-position:0 -25px; margin-top:6px;left:20%;}
 
 .index_taocan { width:98%; overflow:hidden; border-top:1px solid #eeeeee; margin:auto}
-.index_taocan h2 {font-size: 14px; font-family: "my_qkst"; font-weight: normal; text-indent: 10px;color:#535353; }
+.index_taocan h2 {font-size: 14px; font-family: "微软雅黑"; font-weight: normal; text-indent: 10px;color:#535353; }
 
 .index_taocan dl{ width:25%;float:left; overflow:hidden;}
 .index_taocan dl dt{ width:100%; overflow:hidden; position:relative;}

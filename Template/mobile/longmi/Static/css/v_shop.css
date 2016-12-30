@@ -1,10 +1,10 @@
 @charset "utf-8";
-body {margin:0px;font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif;font-size: 12px;line-height: 180%;color: #000000;}
+body {margin:0px;font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;font-size: 12px;line-height: 180%;color: #000000;}
 html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, input, select, button, textarea, iframe, table, th, td {margin: 0;padding: 0;list-style-type: none;}
 img { border:0px}
-a:link {font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif;font-size:12px;color: #000000;text-decoration: none;}
-a:visited {font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif;font-size:12px;color:#000000;text-decoration: none;}
-a:hover {font-family: "my_qkst", "宋体", Arial, Helvetica, sans-serif;font-size:12px;color:#E24615;text-decoration: none;}
+a:link {font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;font-size:12px;color: #000000;text-decoration: none;}
+a:visited {font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;font-size:12px;color:#000000;text-decoration: none;}
+a:hover {font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;font-size:12px;color:#E24615;text-decoration: none;}
 /*店铺页面头部*/
 .main{ width:100%; margin:auto; overflow:hidden;}
 .pad{ padding-top:5px; padding-bottom:5px;}

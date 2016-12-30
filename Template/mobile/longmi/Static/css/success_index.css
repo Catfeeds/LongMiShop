@@ -6,7 +6,7 @@
 *{margin:0; padding:0}
 img{ border:0}
 html{color:#333}
-body{font-size:12px/1.5 Arial,Helvetica,sans-serif,"my_qkst"; max-width:640px; min-width:320px; margin:0 auto}
+body{font-size:12px/1.5 Arial,Helvetica,sans-serif,"微软雅黑"; max-width:640px; min-width:320px; margin:0 auto}
 table{font-size:12px; color:#333; border-collapse:collapse}
 .fo-fa{font-family: 'Tahoma',\5FAE\8F6F\96C5\9ED1;}
 ul,ol{ list-style:none}
@@ -638,7 +638,7 @@ a.Sub-orders{ width:118px; font-size:14px}
 .customer-header{ height:73px}
 .setout{ width:1002px; margin:0 auto;}
 .setout table tr td{ padding-top:30px}
-.bit-ti-s table tr td span{ font-size:22px; font-family:"my_qkst"; display:block; padding-left:10px; color:#777777;}
+.bit-ti-s table tr td span{ font-size:22px; font-family:"微软雅黑"; display:block; padding-left:10px; color:#777777;}
 .pa-le-5{ padding-left:5px}
 .ema-tel{ margin-left:auto; margin-right:auto; position:relative; height:31px; width:897px; margin:0; z-index:99;}
 .tel-tab{ background:url(../images/tab_bg.png) no-repeat; background-position:-1px -57px; height:33px; line-height:33px; text-align:center; width:135px; margin-left:2px; font-size:12px; font-weight:bold; color:#FFF; cursor:pointer}
@@ -711,7 +711,7 @@ a .ba-po--185:hover{ background:url(../images/thirdfast_login_all.png) no-repeat
 .fuy-xim h3 span{ display:inline-block; padding:0 8px; margin:0 auto; background-color:#fafafa}
 .fuy-xim ol li{ padding:10px 0; font-size:14px;}
 .curr-res a{ color:#ca151e; border-left-color:#ca151e}
-.fo-fa-ar{ font-family:arial,"my_qkst"}
+.fo-fa-ar{ font-family:arial,"微软雅黑"}
 .he50{ height:50px}
 .wddd{ border-bottom:1px solid #dedede; margin-bottom:20px}
 .ddd-h2 h2{ font-size:24px; line-height:1.2; padding:8px 0 0 2px; font-weight:400}
@@ -737,9 +737,9 @@ a .ba-po--185:hover{ background:url(../images/thirdfast_login_all.png) no-repeat
 .col-quty{ width:74px}
 .col-operate{ width:138px}
 .ma-0--1{ margin:0 -1px}
-.o-info{font-family: arial,"my_qkst";line-height: 1.2;}
+.o-info{font-family: arial,"微软雅黑";line-height: 1.2;}
 .o-inff{border-bottom: 1px solid #dedede;font-size: 14px;padding: 23px 0 10px;height: 17px;}
-.o-pro{font-family: arial,"my_qkst";line-height: 1.2;}
+.o-pro{font-family: arial,"微软雅黑";line-height: 1.2;}
 .co-888{ color:#888}
 .wi138{ width:138px}
 .o-ch{ margin:-2px 6px 0 8px}
@@ -806,7 +806,7 @@ a .ba-po--185:hover{ background:url(../images/thirdfast_login_all.png) no-repeat
 #sltProvince,#sltCity {width: 150px;}
 .btn_midefy {border-radius: 15px;padding: 7px 50px;width: auto;height: 42px;font-weight: normal;font-size: 14px;background-image: none;background-color: RGB(202,21,30);border-width: 0 0 2px 0;border-style: solid;border-color: RGB(202,21,30);text-align: center;color: #fff;cursor: pointer;margin-top: 5px;}
 .tip_point {background-image: url(../images/icon_3.png);width: 18px;height: 18px;background-repeat: no-repeat;position: absolute;margin-left: 20px;bottom: -16px;}
-.uc{font-family: my_qkst, Verdana, Helvetica, Sans-Serif;}
+.uc{font-family: 微软雅黑, Verdana, Helvetica, Sans-Serif;}
 .uc_tip span, .uc_tip b {color: red;}
 .uc_head{ height:100px; background:RGB(202,21,30)}
 .uc .uc_head .uc_head_middle {border: 0px;width: 1000px;margin-left: auto;margin-right: auto;height: 100px;color: #ffffff;}
