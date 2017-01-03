@@ -221,7 +221,7 @@
         before_request = 0;
         $.ajax({
             type : "POST",
-            url:"{:U('Mobile/Cart/ajaxChangeCartData')}",
+            url:"{:U('Wap/Cart/ajaxChangeCartData')}",
             data : {number:number,goods_id:goods_id,key:key},
             dataType:"json",
             success: function(data){
