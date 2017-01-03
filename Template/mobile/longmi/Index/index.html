@@ -168,7 +168,7 @@
     $(function(){
         $(".loading_css").fadeOut();
         $.ajax({
-            type : "POST",
+            type : "GET",
             url:"{:U('Wap/Index/index')}",
             dataType:'json',
             success: function(data){
