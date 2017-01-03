@@ -1,0 +1,777 @@
+body,h1,h2,h3,h4,p,dl,dd,ul,ol,form,input,textarea,th,td,select{margin: 0;padding: 0;}
+em{font-style: normal;}
+li{list-style: none;}
+a{text-decoration: none;}
+img{border: none;vertical-align: top;}
+table{border-collapse: collapse;}
+input,textarea{outline: none;}
+textarea{resize:none;overflow: auto;}
+body{font-size:12px;font-family: "microsoft yahei";}
+html,body{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+
+
+#yinyuetubiao{
+	width: 50px;
+	height: 50px;
+	position: fixed;
+	top: 2%;
+	right: 3%;
+	z-index: 9999;
+}
+.yinyuetubiao{
+	/*-webkit-animation: yinyue_myfirst 2s linear infinite;*/
+}
+
+/*音乐图标动画*/
+@-webkit-keyframes yinyue_myfirst {
+0% {-webkit-transform:rotate(0deg);}
+100% {-webkit-transform:rotate(360deg);}
+}
+
+
+
+.tishitubiao{
+	width: 65px;
+	height: 50px;
+	background: url('../../../images/game/change/arrow.png') center center no-repeat;
+	background-size: 100% 100%;
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	margin-left: -32px;
+	z-index: 998;
+	opacity: 0;
+	display: none;
+
+	-webkit-transform: translateY(120%);
+	-webkit-animation: tishi_myfirst 1.5s linear infinite;
+}
+
+/*提示图标动画*/
+@-webkit-keyframes tishi_myfirst {
+0% {-webkit-transform: translateY(120%);opacity: 0;}
+40% {-webkit-transform: translateY(-40%);opacity: 1;}
+80% {-webkit-transform: translateY(-80%);opacity: 1;}
+100% {-webkit-transform: translateY(-120%);opacity: 0;}
+}
+
+
+
+
+.meng00{display:none;z-index:9999;width: 100%;height: 100%;position: fixed;left: 0;top:0;background:url('../../../images/game/change/15.gif') center center no-repeat rgba(0,0,0,0.8);}
+
+
+
+
+.by{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.loading{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #000;
+	z-index: 999;
+}
+.loading_div{
+	width: 100%;
+	position: absolute;
+	top: 30%;
+	left: 0;
+	text-align: center;
+}
+.loading_tiao{
+	width: 420px;
+	height: 140px;
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+}
+.loading_tu{
+	width: 85px;
+	height: 85px;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -42px;
+	background: url(../../../images/game/change/loading_tu.png) center center no-repeat;
+
+	-webkit-animation: yinyue_myfirst 4s linear infinite;
+}
+.loading_zi{
+	width: 100%;
+	line-height: 34px;
+	text-align: center;
+	font-size: 22px;
+	color: #eae7a8;
+}
+
+
+
+
+
+.content{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+
+
+
+
+.shouye{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: url(../../../images/game/change/shouye_bg.png) center bottom no-repeat;
+}
+.shouye_liuxing{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.shouye_liuxing1{
+	width: 676px;
+	height: 488px;
+	position: absolute;
+	top: -488px;
+	left: 0;
+	background: url(../../../images/game/change/shouye_liuxing.png) center center no-repeat;
+	opacity: 0.5;
+
+	-webkit-animation: shouye_liuxing_myfirst 5s linear infinite;
+}
+.shouye_liuxing2{
+	width: 676px;
+	height: 488px;
+	position: absolute;
+	top: -488px;
+	left: 1000px;
+	background: url(../../../images/game/change/shouye_liuxing.png) center center no-repeat;
+	opacity: 0.5;
+
+	-webkit-animation: shouye_liuxing_myfirst 4s linear 2s infinite;
+}
+@-webkit-keyframes shouye_liuxing_myfirst {
+	0% {
+		-webkit-transform: translate3d(0,0,0);
+	}
+	100% {
+		-webkit-transform: translate3d(-1800px,1800px,0);
+	}
+}
+
+
+.logo{
+	width: 232px;
+	height: 33px;
+	position: absolute;
+	top: 2%;
+	left: 2%;
+	background: url(../../../images/game/change/logo.png) center center no-repeat;
+}
+
+.shouye_biaoti{
+	width: 634px;
+	height: 516px;
+	position: absolute;
+	top: 4.5%;
+	left: 0;
+	opacity: 0;
+}
+.shouye_e .shouye_biaoti{
+	opacity: 1;
+	-webkit-animation: shouye_biaoti_myfirst 0.5s linear;
+}
+@-webkit-keyframes shouye_biaoti_myfirst {
+	0% {
+		-webkit-transform: scale3d(0,0,0);
+	}
+	50% {
+		-webkit-transform: scale3d(1.2,1.2,1.2);
+	}
+	80% {
+		-webkit-transform: scale3d(0.9,0.9,0.9);
+	}
+	100% {
+		-webkit-transform: scale3d(1,1,1);
+	}
+}
+
+.shouye_biaoti1{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: url(../../../images/game/change/shouye_biaoti1.png) center center no-repeat;
+}
+.shouye_biaoti2{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: url(../../../images/game/change/shouye_biaoti2.png) center center no-repeat;
+}
+.shouye_xingxing{
+	width: 486px;
+	height: 376px;
+	position: absolute;
+	top: 80px;
+	left: 80px;
+}
+.shouye_xingxing1{
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: url(../../../images/game/change/shouye_xingxing.png) left bottom no-repeat;
+
+	-webkit-animation: move1 2s linear infinite alternate;
+}
+.shouye_xingxing2{
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: url(../../../images/game/change/shouye_xingxing.png) right top no-repeat;
+
+	-webkit-animation: move1 3s linear 1s infinite alternate;
+}
+/*漂浮动画*/
+@-webkit-keyframes move1 {
+   0%{-webkit-transform:translate3d(0,0,0);}
+   15%{-webkit-transform:translate3d(5px,5px,0) rotate(0deg);}
+   35%{-webkit-transform:translate3d(0,5px,0) rotate(5deg);}
+   45%{-webkit-transform:translate3d(-5px,-5px,0) rotate(-6deg);}
+   55%{-webkit-transform:translate3d(0,5px,0) rotate(8deg);}
+   65%{-webkit-transform:translate3d(-5px,-10px,0) rotate(5deg);}
+   75%{-webkit-transform:translate3d(0px,-5px,0) rotate(10deg);}
+   85%{-webkit-transform:translate3d(6px,0,0) rotate(8deg);}
+   100%{-webkit-transform:translate3d(0,0,0) rotate(0deg);}
+}
+@-webkit-keyframes shouye_xingxing_myfirst {
+	0% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.shouye_hongbao{
+	width: 386px;
+	height: 131px;
+	position: absolute;
+	top: 110px;
+	left: 125px;
+	background: url(../../../images/game/change/shouye_hongbao.png) center center no-repeat;
+}
+
+.shouye_ren{
+	width: 291px;
+	height: 536px;
+	position: absolute;
+	top: 33%;
+	left: 50%;
+	margin-left: -145px;
+	background: url(../../../images/game/change/shouye_ren.png) center center no-repeat;
+	opacity: 0;
+}
+.shouye_e .shouye_ren{
+	-webkit-animation: shouye_ren_myfirst 1s 0.8s both;
+}
+@-webkit-keyframes shouye_ren_myfirst {
+	0% {
+		opacity: 0;
+		-webkit-transform: translate3d(-100px,0,0);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: translate3d(0,0,0);
+	}
+}
+
+.shouye_anniu{
+	width: 276px;
+	height: 106px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: url(../../../images/game/change/shouye_anniu.png) center center no-repeat;
+}
+.shouye_e .shouye_anniu{
+	-webkit-animation: shouye_anniu_myfirst 4s linear 2s infinite;
+}
+@-webkit-keyframes shouye_anniu_myfirst {
+	0% {
+		-webkit-transform: scale3d(1,1,1);
+	}
+	4% {
+		-webkit-transform: scale3d(1.2,1.2,1.2);
+	}
+	8% {
+		-webkit-transform: scale3d(0.8,0.8,0.8);
+	}
+	12% {
+		-webkit-transform: scale3d(1.1,1.1,1.1);
+	}
+	16% {
+		-webkit-transform: scale3d(1,1,1);
+	}
+	100% {
+		-webkit-transform: scale3d(1,1,1);
+	}
+}
+
+
+.shouye_wen{
+	width: 600px;
+	height: 47px;
+	border: 3px solid #83129f;
+	border-radius: 15px;
+	background-color: #ebe7a8;
+	position: absolute;
+	bottom: 2%;
+	left: 50%;
+	margin-left: -303px;
+	overflow: hidden;
+}
+.shouye_wen_box{
+	height: 47px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	line-height: 47px;
+	font-size: 22px;
+	color: #83129f;
+	white-space: nowrap;
+}
+.shouye_wen_box span{
+	margin: 0 30px;
+}
+
+
+.shouye_tan1{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.8);
+	overflow: hidden;
+	/*opacity: 0;*/
+	display: none;
+
+	/*-webkit-animation: tan_myfirst 0.5s both;*/
+}
+@-webkit-keyframes tan_myfirst {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.shouye_tan1_box{
+	width: 456px;
+	height: 417px;
+	position: absolute;
+	top: 26%;
+	left: 50%;
+	margin-left: -228px;
+	background: url(../../../images/game/change/shouye_tan1.png) center center no-repeat;
+
+	-webkit-animation: tan_box_myfirst 0.4s both;
+}
+@-webkit-keyframes tan_box_myfirst {
+	0% {
+		-webkit-transform: translate3d(0,-1200px,0);
+	}
+	80% {
+		-webkit-transform: translate3d(0,60px,0);
+	}
+	100% {
+		-webkit-transform: translate3d(0,0,0);
+	}
+}
+
+.shouye_tan1_anniu{
+	width: 300px;
+	height: 120px;
+	position: absolute;
+	top: 260px;
+	left: 80px;
+}
+
+
+.shouye_tan2{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.8);
+	overflow: hidden;
+	display: none;
+}
+.erweima{
+	width: 457px;
+	height: 443px;
+	padding: 1000px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -1240px 0 0 -1228px;
+
+	-webkit-animation: tan_box_myfirst 0.4s both;
+}
+
+
+
+
+
+.game{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+}
+#canvas1{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.game_left{
+	width: 50%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.game_left_tishi{
+	width: 300px;
+	height: 100px;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	background: url(../../../images/game/change/game_left_tishi.png) center center no-repeat;
+	opacity: 0;
+}
+.start .game_left_tishi{
+	-webkit-animation: game_left_tishi_myfirst 0.4s linear 8 alternate;
+}
+@-webkit-keyframes game_left_tishi_myfirst {
+	0% {
+		opacity: 1;
+		-webkit-transform: translate(20px,-20px);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: translate(0,0);
+	}
+}
+.game_right_tishi{
+	width: 300px;
+	height: 100px;
+	position: absolute;
+	top: 50%;
+	right: 0;
+	background: url(../../../images/game/change/game_right_tishi.png) center center no-repeat;
+	opacity: 0;
+}
+.start .game_right_tishi{
+	-webkit-animation: game_right_tishi_myfirst 0.4s linear 8 alternate;
+}
+@-webkit-keyframes game_right_tishi_myfirst {
+	0% {
+		opacity: 1;
+		-webkit-transform: translate(-20px,-20px);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: translate(0,0);
+	}
+}
+
+.game_right{
+	width: 50%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.game_sm{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.8);
+	overflow: hidden;
+}
+.game_sm_box{
+	width: 504px;
+	height: 712px;
+	position: absolute;
+	top: 12%;
+	left: 50%;
+	margin-left: -252px;
+	background: url(../../../images/game/change/game_sm.png) center center no-repeat;
+
+	-webkit-animation: tan_box_myfirst 0.5s both;
+}
+@-webkit-keyframes game_sm_box_myfirst {
+	0% {
+		opacity: 0;
+		-webkit-transform: rotateY(-90deg);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: rotateY(0deg);
+	}
+}
+
+.game_sm_anniu{
+	width: 344px;
+	height: 120px;
+	position: absolute;
+	top: 558px;
+	left: 80px;
+}
+
+
+
+
+
+
+.over_1{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.8);
+	overflow: hidden;
+	display: none;
+}
+.over_1_box{
+	width: 504px;
+	height: 597px;
+	position: absolute;
+	top: 12%;
+	left: 50%;
+	margin-left: -252px;
+	background: url(../../../images/game/change/over_1.png) center center no-repeat;
+
+	-webkit-animation: tan_box_myfirst 0.4s both;
+}
+.over_1_anniu{
+	width: 344px;
+	height: 120px;
+	position: absolute;
+	top: 442px;
+	left: 80px;
+}
+
+
+
+
+
+
+.over_2{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.8);
+	overflow: hidden;
+	display: none;
+}
+.over_2_box{
+	width: 640px;
+	height: 725px;
+	position: absolute;
+	top: 12%;
+	left: 50%;
+	margin-left: -320px;
+	background: url(../../../images/game/change/over_2.png) center center no-repeat;
+
+	-webkit-animation: tan_box_myfirst 0.4s both;
+}
+.over_2_anniu{
+	width: 344px;
+	height: 120px;
+	position: absolute;
+	top: 510px;
+	left: 144px;
+}
+
+
+
+
+
+
+.zhong{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.8);
+	overflow: hidden;
+	display: none;
+}
+.zhong_box{
+	width: 640px;
+	height: 830px;
+	position: absolute;
+	top: 5%;
+	left: 50%;
+	margin-left: -320px;
+	background: url(../../../images/game/change/zhong.png) center center no-repeat;
+
+	-webkit-animation: tan_box_myfirst 0.4s both;
+}
+.zhong_wen{
+	width: 100%;
+	height: 120px;
+	position: absolute;
+	top: 430px;
+	left: 0;
+	text-align: center;
+	line-height: 120px;
+	font-size: 90px;
+	color: #eae7a8;
+}
+.zhong_anniu{
+	width: 344px;
+	height: 120px;
+	position: absolute;
+	top: 554px;
+	left: 144px;
+}
+
+
+
+
+
+
+.mei{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.8);
+	overflow: hidden;
+	display: none;
+}
+.mei_box{
+	width: 504px;
+	height: 474px;
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	margin-left: -252px;
+	background: url(../../../images/game/change/mei.png) center center no-repeat;
+
+	-webkit-animation: tan_box_myfirst 0.4s both;
+}
+.mei_anniu{
+	width: 344px;
+	height: 120px;
+	position: absolute;
+	top: 318px;
+	left: 85px;
+}
+
+
+
+
+
+
+.fx{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: url(../../../images/game/change/fx.png) center top no-repeat rgba(0,0,0,0.8);
+	overflow: hidden;
+	opacity: 0;
+	display: none;
+
+	-webkit-animation: tan_myfirst 0.5s both;
+}
+
+
+
+
+
+
+.cg{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.8);
+	overflow: hidden;
+	display: none;
+}
+.cg_box{
+	width: 504px;
+	height: 436px;
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	margin-left: -252px;
+	background: url(../../../images/game/change/cg.png) center center no-repeat;
+
+	-webkit-animation: tan_box_myfirst 0.4s both;
+}
+.cg_anniu{
+	width: 344px;
+	height: 120px;
+	position: absolute;
+	top: 270px;
+	left: 85px;
+}
+
+
+
+
+
+
