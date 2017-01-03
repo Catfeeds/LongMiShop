@@ -482,6 +482,10 @@ ADD COLUMN `goods_label`  varchar(120) NULL COMMENT '商品标签' AFTER `goods_
 ALTER TABLE `lm_coupon`
 ADD COLUMN `remarks`  varchar(255) NULL COMMENT '备注' AFTER `name`;
 
+ALTER TABLE `lm_users`
+ADD COLUMN `experience`  int(11) NOT NULL DEFAULT 0 COMMENT '经验值' AFTER `frozen_money`;
 
+ALTER TABLE `lm_users`
+ADD COLUMN `upgrade_time`  int(11) NULL COMMENT '升级时间' AFTER `experience`;
   
   ";

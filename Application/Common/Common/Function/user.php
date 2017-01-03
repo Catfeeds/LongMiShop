@@ -551,3 +551,103 @@ function findUserNickName($userId){
     $user = findDataWithCondition("users",array("user_id"=>$userId),"nickname");
     return $user['nickname'];
 }
+
+
+/**
+ * 修改经验值
+ * @param $value
+ * @param $userId
+ * @param $text
+ */
+function increaseExperience( $value , $userId , $text ){
+    $condition = array("user_id"=>$userId);
+    $userInfo = findDataWithCondition("users",$condition,"experience");
+    if( empty( $userInfo ) ){
+        return;
+    }
+    $experience = $userInfo['experience'] + $value;
+    $data =  array(
+        "experience" => $experience
+    );
+    saveData("users",$condition,$data);
+
+    //应该要有日志
+
+    userUpgradeDetection($userId);
+
+}
+
+
+/**
+ * 获取升级规则
+ * @return array
+ */
+function getUpgradeRules(){
+    return array(
+        array(
+            "id" => 1,
+            "name" => "银卡",
+            "condition" => 10,
+        ),
+        array(
+            "id" => 2,
+            "name" => "金卡",
+            "condition" => 20,
+        ),
+        array(
+            "id" => 3,
+            "name" => "白金卡",
+            "condition" => 30,
+        ),
+        array(
+            "id" => 4,
+            "name" => "钻卡",
+            "condition" => 40,
+        ),
+    );
+}
+
+
+/**
+ * 用户升级检测
+ * @param $userId
+ */
+function userUpgradeDetection( $userId ){
+    $condition = array("user_id"=>$userId);
+    $userInfo = findDataWithCondition( "users" , $condition );
+    if( empty($userInfo) ){
+        return ;
+    }
+
+}
+
+
+/**
+ * 用户升级操作
+ * @param $userId
+ * @param $level
+ * @return bool
+ */
+function userUpgrade( $userId , $level ){
+    $condition = array(
+        "user_id"=>$userId
+    );
+    $data =  array(
+        "level" => $level,
+        "upgrade_time" => time()
+    );
+    //应该要有日志
+
+    return saveData("users",$condition,$data);
+}
+
+/**
+ * 设置升级记录
+ * @param $experience
+ * @param $value
+ * @param $userId
+ * @param $text
+ */
+function setUserExperienceLog( $experience , $value , $userId , $text ){
+    return;
+}
