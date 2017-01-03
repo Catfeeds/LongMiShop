@@ -1,0 +1,87 @@
+<include file="Public/header2"/>
+<body>
+
+<div class="user">
+	<p>
+		<a href="{:U('Mobile/User/userinfo');}">
+			<img  class="userHeadImg" width="92" height="92">
+		</a>
+	</p>
+	<p>余额:...</p>
+</div>
+
+<div class="er1" style="margin:5px 0 0 0 ;">
+	<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITPAY'))}" class="er1_top">查看全部订单&nbsp;></a>
+	<ul>
+		<li style="background-image:url('__STATIC__/images/svg/my_nav_1.svg')">
+			<p>
+				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITPAY'))}">待付款</a>
+				<span class="mui-badge mui-badge-danger figure">...</span>
+			</p>
+		</li>
+		<li style="background-image:url('__STATIC__/images/svg/my_nav_2.svg')">
+			<p>
+				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITSEND'))}">待发货</a>
+				<span class="mui-badge mui-badge-danger figure">...</span>
+			</p>
+		</li>
+		<li style="background-image:url('__STATIC__/images/svg/my_nav_3.svg')">
+			<p>
+				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a>
+				<span class="mui-badge mui-badge-danger figure">...</span>
+			</p>
+		</li>
+		<li style="background-image:url('__STATIC__/images/svg/my_nav_4.svg')">
+			<p>
+				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a>
+				<span class="mui-badge mui-badge-danger figure">...</span>
+			</p>
+		</li>
+	</ul>
+
+</div>
+
+<div class="my_nav">
+	<ul>
+		<li><a href="{:U('Mobile/User/account')}">钱包</a></li>
+	</ul>
+	<ul>
+		<li><a href="{:U('Mobile/User/coupon')}">优惠券</a></li>
+		<li><a href="{:U('Mobile/Exchange/exchange')}">兑换码</a></li>
+	</ul>
+	<ul>
+		<li><a href="{:U('Mobile/User/myPoster')}">赚米</a></li>
+	</ul>
+</div>
+<div class="copyright">
+	<div class="copyright_title">
+		<a href="{: U('Mobile/User/feedback')}">意见反馈&nbsp;-</a>
+		<a href="tel:4000787725">客服热线</a>
+	</div>
+</div>
+
+
+
+<include file="Public/js"/>
+<include file="Public/nav"/>
+
+</body>
+<style>
+	.gz{ display: none !important;}
+	.er1 a {
+		padding-top: 40px;
+		padding-bottom: 0px;
+	}
+	.er1 li{
+		background-position: center 10px;
+	}
+	.user img{
+		width: 84px;
+		height: 84px;
+	}
+	.figure{
+		top: 6px !important;
+	}
+</style>
+<include file="Public/footer"/>
+</html>

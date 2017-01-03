@@ -60,7 +60,7 @@
 	function ajaxGetCartData(){
 		$(".my_cart .figure").html("...");
 		$.ajax({
-			type : "POST",
+			type : "GET",
 			url:"{:U('Mobile/Cart/ajaxGetCartData')}",
 			dataType:'html',
 			success: function(data){
