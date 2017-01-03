@@ -1,26 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>购物车</title>
-    <script src="__STATIC__/js/mui.min.js"></script>
-    <script src="__STATIC__/js/TouchSlide.js"></script>
-    <script src="__STATIC__/js/jquery.min.js"></script>
-    <script src="__STATIC__/js/function.js"></script>
-    <link href="__STATIC__/css/css.css?{$versionToken}" rel="stylesheet" />
-    <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
-    <link href="__STATIC__/css/shopping_cart1.css?{$versionToken}" rel="stylesheet" />
-    <script src="__STATIC__/js/common.js"></script>
-</head>
-<body style=" background-color:#f5f5f5">
+<include file="Public/header2"/>
+<body>
 <!--<div class="top_box3">-->
     <!--&lt;!&ndash;<div class="edit"><a href="#">编辑</a></div>&ndash;&gt;-->
     <!--<include file="Public/news"/>-->
 <!--</div>-->
-<form id="cart_form" name="formCart" action="{:U('Mobile/Cart/ajaxCartList')}" method="post">
-
-</form>
+<form id="cart_form" name="formCart" action="{:U('Mobile/Cart/ajaxCartList')}" method="post"></form>
+<include file="Public/js"/>
 <script type="text/javascript">
     $(document).ready(function(){
         ajax_cart_list(); // ajax 请求获取购物车列表
