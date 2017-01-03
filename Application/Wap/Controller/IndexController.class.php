@@ -27,7 +27,6 @@ class IndexController extends WapBaseController {
                 "inviteNumber" => 0
             ),
         );
-        $condition['session_id'] = $this->session_id;
 
         if( $this->user_id ){
 
@@ -43,6 +42,8 @@ class IndexController extends WapBaseController {
 
             $data["top_menu"]["inviteNumber"] = getCountWithCondition("invite_list" ,array('parent_user_id'=>$this->user_id));
 
+        }else{
+            $condition['session_id'] = $this->session_id;
         }
 
         $data["newGoods"]["item"]=  M("goods")->where(array("is_new" => 1))->order("sort")->limit('2')->select();
