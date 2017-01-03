@@ -18,56 +18,65 @@ class IndexController extends WapBaseController {
 
     public function index()
     {
-//        M("sers")->find();
-//        $couponCount = 0 ;
-//        if( $this->user_id ){
-//            $usersLogic = new \Common\Logic\UsersLogic();
-//            $result = $usersLogic -> getCoupon( $this->user_id);
-//            $couponCount =  $result['data']['count'];
-//        }
-//
-//
-//        $this -> assign('couponCount', $couponCount);
-//
-////        $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
-////        $inviteData = getCallbackData($inviteData);
-//        $inviteNumber = getCountWithCondition("invite_list" ,array('parent_user_id'=>$this->user_id));
-////        if( $inviteNumber > 0){
-////            $inviteNumber += $inviteNumber *$inviteData['point'];
-////            $inviteNumber += $inviteNumber *$inviteData['balance'];
-////            $inviteNumber += $inviteNumber *$inviteData["coupon"]['money'];
-////        }
-//        $this -> assign('inviteNumber',$inviteNumber);
-//
-//
-//        $newGoods = M("goods")->where(array("is_new" => 1))->order("sort")->limit('2')->select();
-//
-//        $this->assign('newGoods', $newGoods);
-//
-//        $favourite_goods = M('goods') -> where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,MY_CACHE_TIME)->select();//首页推荐商品
-//        $this -> assign('favourite_goods',$favourite_goods);
-//
-//
-//
-//
-//        $condition = array(
-//            'user_id'    => $this->user_id,   // 用户id
-//        );
-//        if( !$this->user_id ){
-//            $condition['session_id'] = $this->session_id;
-//        }
-//        $cart_data = M('cart')->where($condition)->select();
-//        if(!empty($cart_data)){
-//            $cart_data2 = array();
-//            foreach ($cart_data as $cart_data_item){
-//                $cart_data2[$cart_data_item['goods_id']."_".intval($cart_data_item['key'])] = $cart_data_item;
-//            }
-//            $cart_data = $cart_data2;
-//        }
-//        $this->assign('cart_data', $cart_data);
-//
-//
-        $this->display();
+
+        $data = array(
+            "top_menu" => array(
+                "userMoney" => 0,
+                "couponCount" => 0,
+                "activityCount" => 2,
+                "inviteNumber" => 0
+            ),
+        );
+        $condition['session_id'] = $this->session_id;
+
+        if( $this->user_id ){
+
+            $condition['user_id'] = $this->user_id;
+
+            $data["top_menu"]["userMoney"] = $this->user['user_money'] ? $this->user['user_money'] : 0 ;
+
+            $usersLogic = new \Common\Logic\UsersLogic();
+            $result = $usersLogic -> getCoupon( $this->user_id);
+            $data["top_menu"]["couponCount"] =  count( $result['data']['count'] );
+
+            $data["top_menu"]["activityCount"] =  2;
+
+            $data["top_menu"]["inviteNumber"] = getCountWithCondition("invite_list" ,array('parent_user_id'=>$this->user_id));
+
+        }
+
+        $data["newGoods"]["item"]=  M("goods")->where(array("is_new" => 1))->order("sort")->limit('2')->select();
+
+        $cart_data = M('cart')->where($condition)->select();
+        if(!empty($cart_data)){
+            $cart_data2 = array();
+            foreach ($cart_data as $cart_data_item){
+                $cart_data2[$cart_data_item['goods_id']."_".intval($cart_data_item['key'])] = $cart_data_item;
+            }
+            $cart_data = $cart_data2;
+        }
+
+        $items = M('goods') -> where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,MY_CACHE_TIME)->select();//首页推荐商品
+        foreach ( $items as $key => $item){
+            $items[$key]['cartNumber'] = $cart_data[$item['goods_id'].'_0']['goods_num']?$cart_data[$item['goods_id'].'_0']['goods_num']:0 ;
+        }
+        $data["favouriteGoods"]["item"] = $items;
+
+
+
+        $pid =2;
+        $ad_position = M("ad_position")->cache(true,MY_CACHE_TIME)->getField("position_id,position_name,ad_width,ad_height");
+        $ad = D("ad") -> where("pid=$pid  and enabled = 1 and start_time < ".time()." and end_time > ".time()." ")->order("orderby desc")->cache(true,MY_CACHE_TIME)->limit("5")->select();
+        foreach($ad as $key=>$v){
+            $ad[$key]['position'] = $ad_position[$v['pid']];
+        }
+
+        $data["ad"] = array(
+            "item" => $ad,
+            "count" => count($ad) - 1 ,
+        );
+
+        printJson(true,"",$data);
     }
 
     public function index2(){

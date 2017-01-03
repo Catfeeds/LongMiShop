@@ -8,6 +8,8 @@ abstract class WapBaseController extends Controller {
     public $user_id     = null;
     public $user        = null;
     public $user_info   = null;
+    public $session_id   = null;
+
     public $shopConfig          = array();
     public $weChatLogic         = null;
     public $weChatConfig        = array();
@@ -21,9 +23,9 @@ abstract class WapBaseController extends Controller {
     public function _initialize() {
 
         $this -> shopConfig = getShopConfig();
-        if( !isWeChatBrowser() ){
-            exit;
-        }
+//        if( !isWeChatBrowser() ){
+//            exit;
+//        }
 //        //验证部分
 //        if( !isWeChatBrowser() ){
 //            if ( !isLoginState() ) {
@@ -39,15 +41,14 @@ abstract class WapBaseController extends Controller {
 //            }
 //        }
 //
-//        $this -> user_id = session(__UserID__);
-//        $userLogic = new \Common\Logic\UsersLogic();
-//        $user_info = $userLogic -> get_info($this -> user_id);
-//        if(!empty($user_info['result'])){
-//            $this -> user_info  = $user_info['result'];
-//            $this -> user  = $this -> user_info;
-//            $this -> assign('user',$this -> user_info );
-//            $this -> assign('auth',true);
-//        }
+        $this -> session_id = session_id();
+        $this -> user_id = session(__UserID__);
+        $userLogic = new \Common\Logic\UsersLogic();
+        $user_info = $userLogic -> get_info($this -> user_id);
+        if(!empty($user_info['result'])){
+            $this -> user_info  = $user_info['result'];
+            $this -> user  = $this -> user_info;
+        }
 //        if( isWeChatBrowser() ){
 //
 //            $this -> weChatLogic    = new \Common\Logic\WeChatLogic();

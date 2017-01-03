@@ -1,4 +1,4 @@
-<include file="Public/header2"/>
+<include file="Public/header"/>
 
 <body>
 <div class="top_nav">
@@ -130,147 +130,16 @@
     <img src="__STATIC__/images/new/suixinda6.jpg">
 </div>
 
-<div class="mui-content" id="main-container">
+<div class="mui-content">
     <ul class="mui-table-view">
-    </ul>
-</div>
-
-<!--<foreach item="spec" key="key" name="favourite_goods">-->
-    <!--<li class="my_index_spec_li ">-->
-        <!--<div class="mui-slider-handle">-->
-
-            <!--<div class="cp_index">-->
-                <!--<div class="cp_index_l">-->
-                    <!--<a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$spec['goods_id']))}">-->
-                        <!--<img src="{$spec['original_img']}" >-->
-                    <!--</a>-->
-                <!--</div>-->
-                <!--<div class="cp_index_r">-->
-                    <!--<p class="cj1">带走{$spec.goods_name}</p>-->
-                    <!--<p >-->
-                        <!--<span>{$spec.goods_subtitle}</span>-->
-                    <!--</p>-->
-                    <!--<p class="cj1">心动价：￥{$spec.shop_price}</p>-->
-                    <!--<div class="my-mui-numbox z-index" data-numbox-min='0' data-numbox-max='99'>-->
-                        <!--<button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,'{$spec.goods_id}','0','{$spec.store_count}');" type="button">-</button>-->
-                        <!--<input id="goods_num_{$spec.goods_id}_0" class="mui-input-numbox cp_index_number" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  readonly value="{:$cart_data[$spec['goods_id'].'_0']['goods_num']?$cart_data[$spec['goods_id'].'_0']['goods_num']:0}"/>-->
-                        <!--<button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,'{$spec.goods_id}','0','{$spec.store_count}');" type="button">+</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</li>-->
-<!--</foreach>-->
-<include file="Public/nav"/>
-</body>
-
-
-<include file="Public/footer"/>
-
-
-<script type="text/javascript">
-
-//    $(function(){
-////        TouchSlide({
-////            slideCell:"#picScroll",
-////            titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
-////            autoPage:true, //自动分页
-////            pnLoop:"false", // 前后按钮不循环
-////            switchLoad:"_src", //切换加载，真实图片路径为"_src"
-////            autoPlay:true
-////        });
-//        var gallery = mui('.mui-slider');
-//        gallery.slider({
-//            interval: 2000//自动轮播周期，若为0则不自动播放，默认为0；
-//        });
-//
-//    });
-//
-//    var before_request = 1; // 上一次请求是否已经有返回来, 有才可以进行下一次请求
-//    function switch_num(number,goods_id,key,store_count) {
-//        if (before_request == 0)
-//        {
-//            alert("点击太频繁 ,休息一下");
-//            return false;
-//        }
-//        var cart_number = $(".my_cart .figure").html();
-//        cart_number = parseInt(cart_number);
-//        var num2 = parseInt($("#goods_num_"+goods_id+"_" + key).val());
-//        if( number < 0 && num2 < 1){
-//            return false;
-//        }
-//        num2 += number;
-//        if (num2 > store_count) {
-//            alert("库存只有 " + store_count + " 件, 你只能买 " + store_count + " 件");
-//            num2 = store_count; // 保证购买数量不能多余库存数量
-//            $("#goods_num_"+goods_id+"_" + key).val(num2);
-//            return false;
-//        }
-//        before_request = 0;
-//        $.ajax({
-//            type : "POST",
-//            url:"{:U('Mobile/Cart/ajaxChangeCartData')}",
-//            data : {number:number,goods_id:goods_id,key:key},
-//            dataType:"json",
-//            success: function(data){
-//                alert(data.msg);
-//                if( data.status==1){
-//                    $("#goods_num_"+goods_id+"_" + key).val(num2);
-//                    if( number > 0){
-//                        flyCart("#goods_num_"+goods_id+"_" + key);
-//                    }
-//                    cart_number += number;
-//                    ajaxGetCartData();
-////                    $(".my_cart .figure").html(cart_number);
-//                }
-//                before_request = 1;
-//            },
-//            error:function(){
-//                before_request = 1;
-//            }
-//        });
-//    }
-
-//    function flyCart( div_id ) {
-//        var img = $(div_id).parent().parent().parent().find('img');
-//        var flyElm = img.clone().css('opacity', 0.75);
-//        $('body').append(flyElm);
-//        flyElm.css({
-//            'z-index': 9000,
-//            'display': 'block',
-//            'position': 'absolute',
-//            'top': $(div_id).offset().top +'px',
-//            'left': $(div_id).offset().left +'px',
-//            'width': img.width() +'px',
-//            'height': img.height() +'px'
-//        });
-//        flyElm.animate({
-//            top: $('.my_cart').offset().top,
-//            left: $('.my_cart').offset().left + ($('.my_cart').width()/2),
-//            width: 20,
-//            height: 32
-//        }, 'slow', function() {
-//            flyElm.remove();
-//        });
-//    }
-
-</script>
-
-
-
-
-<script type="text/html" id="goods2">
-
-    <ul class="mui-table-view">
-        <% for (var i in item) { %>
         <foreach item="spec" key="key" name="favourite_goods">
             <li class="my_index_spec_li ">
                 <div class="mui-slider-handle">
 
                     <div class="cp_index">
                         <div class="cp_index_l">
-                            <a href="{:U('Mobile/Goods/goodsInfo')}?id=<%= item[i].goods_id %>">
-                                <img src="<%= item[i].original_img %>" >
+                            <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$spec['goods_id']))}">
+                                <img src="{$spec['original_img']}" >
                             </a>
                         </div>
                         <div class="cp_index_r">
@@ -288,82 +157,100 @@
                     </div>
                 </div>
             </li>
-        <% } %>
         </foreach>
     </ul>
+</div>
+<include file="Public/nav"/>
+</body>
 
-    <div class="nctouch-home-block item-goods">
-        <% if (title) { %>
-        <div class="tit-bar"><%= title %></div>
-        <% } %>
-        <ul class="goods-list">
-            <% for (var i in item) { %>
-            <li>
-                <i><div>抢购</div></i>
-                <a href="tmpl/product_detail.html?goods_id=<%= item[i].goods_id %>">
-                    <div class="goods-pic"><img src="<%= item[i].goods_image %>" alt=""></div>
-                    <dl class="goods-info">
-                        <dt class="goods-name"><%= item[i].goods_name %></dt>
-                        <dd class="goods-price">￥<em><%= item[i].goods_promotion_price %></em><i class="list-price">￥<%= item[i].goods_price %></i></dd>
-                    </dl>
-                </a>
-            </li>
 
-            <% } %>
-        </ul>
-    </div>
-</script>
-<script>
+<include file="Public/footer"/>
+
+
+<script type="text/javascript">
 
     $(function(){
-       var mydaata = {
-           "title": "潮流女装",
-           "item": [
-               {
-                   "goods_id": "14",
-                   "goods_name": "榭都中长款毛呢大衣 格子茧型冬季外套 秋冬韩版呢子呢大衣品牌女 蓝色 xs",
-                   "goods_promotion_price": "500.00",
-                   "goods_price": "500.00",
-                   "goods_image": "http://www.demo.mall.jianyebao.com/data/upload/shop/store/goods/1/2016/10/1_05301311938313374_240.jpg"
-               },
-               {
-                   "goods_id": "23",
-                   "goods_name": "白色加绒预售MG16秋冬新款小高领宽松卫衣纯色字母上衣粉色卫衣 粉色 L",
-                   "goods_promotion_price": "179.00",
-                   "goods_price": "179.00",
-                   "goods_image": "http://www.demo.mall.jianyebao.com/data/upload/shop/store/goods/1/2016/10/1_05301328116773409_240.jpg"
-               },
-               {
-                   "goods_id": "20",
-                   "goods_name": "白色加绒预售MG16秋冬新款小高领宽松卫衣纯色字母上衣粉色卫衣 白色 L",
-                   "goods_promotion_price": "179.00",
-                   "goods_price": "179.00",
-                   "goods_image": "http://www.demo.mall.jianyebao.com/data/upload/shop/store/goods/1/2016/10/1_05301332038671726_240.jpg"
-               },
-               {
-                   "goods_id": "31",
-                   "goods_name": "MG16秋冬新款V领性感白色圆领百搭显瘦套头毛衫毛线衫线衫女女",
-                   "goods_promotion_price": "199.00",
-                   "goods_price": "199.00",
-                   "goods_image": "http://www.demo.mall.jianyebao.com/data/upload/shop/store/goods/1/2016/10/1_05301349824421685_240.jpg"
-               },
-               {
-                   "goods_id": "33",
-                   "goods_name": "MG16新品流苏半裙高腰修身半身裙个性吉普赛民俗半身长裙 黑色 M",
-                   "goods_promotion_price": "200.00",
-                   "goods_price": "200.00",
-                   "goods_image": "http://www.demo.mall.jianyebao.com/data/upload/shop/store/goods/1/2016/10/1_05301353885442103_240.jpg"
-               },
-               {
-                   "goods_id": "41",
-                   "goods_name": "格子背带裙 荷叶边高腰毛呢连衣裙 2016春装新款打底裙少女背心裙 咖底格子 L",
-                   "goods_promotion_price": "239.00",
-                   "goods_price": "239.00",
-                   "goods_image": "http://www.demo.mall.jianyebao.com/data/upload/shop/store/goods/1/2016/10/1_05301366962987956_240.jpg"
-               }]
-       };
-        console.log({ "item": {:json_encode($favourite_goods)}});
-        $("#main-container").html(template.render("goods2", mydaata));
+        TouchSlide({
+            slideCell:"#picScroll",
+            titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+            autoPage:true, //自动分页
+            pnLoop:"false", // 前后按钮不循环
+            switchLoad:"_src", //切换加载，真实图片路径为"_src"
+            autoPlay:true
+        });
+        var gallery = mui('.mui-slider');
+        gallery.slider({
+            interval: 2000//自动轮播周期，若为0则不自动播放，默认为0；
+        })
     });
+
+    var before_request = 1; // 上一次请求是否已经有返回来, 有才可以进行下一次请求
+    function switch_num(number,goods_id,key,store_count) {
+        if (before_request == 0)
+        {
+            alert("点击太频繁 ,休息一下");
+            return false;
+        }
+        var cart_number = $(".my_cart .figure").html();
+        cart_number = parseInt(cart_number);
+        var num2 = parseInt($("#goods_num_"+goods_id+"_" + key).val());
+        if( number < 0 && num2 < 1){
+            return false;
+        }
+        num2 += number;
+        if (num2 > store_count) {
+            alert("库存只有 " + store_count + " 件, 你只能买 " + store_count + " 件");
+            num2 = store_count; // 保证购买数量不能多余库存数量
+            $("#goods_num_"+goods_id+"_" + key).val(num2);
+            return false;
+        }
+        before_request = 0;
+        $.ajax({
+            type : "POST",
+            url:"{:U('Mobile/Cart/ajaxChangeCartData')}",
+            data : {number:number,goods_id:goods_id,key:key},
+            dataType:"json",
+            success: function(data){
+                alert(data.msg);
+                if( data.status==1){
+                    $("#goods_num_"+goods_id+"_" + key).val(num2);
+                    if( number > 0){
+                        flyCart("#goods_num_"+goods_id+"_" + key);
+                    }
+                    cart_number += number;
+                    ajaxGetCartData();
+//                    $(".my_cart .figure").html(cart_number);
+                }
+                before_request = 1;
+            },
+            error:function(){
+                before_request = 1;
+            }
+        });
+    }
+
+    function flyCart( div_id ) {
+        var img = $(div_id).parent().parent().parent().find('img');
+        var flyElm = img.clone().css('opacity', 0.75);
+        $('body').append(flyElm);
+        flyElm.css({
+            'z-index': 9000,
+            'display': 'block',
+            'position': 'absolute',
+            'top': $(div_id).offset().top +'px',
+            'left': $(div_id).offset().left +'px',
+            'width': img.width() +'px',
+            'height': img.height() +'px'
+        });
+        flyElm.animate({
+            top: $('.my_cart').offset().top,
+            left: $('.my_cart').offset().left + ($('.my_cart').width()/2),
+            width: 20,
+            height: 32
+        }, 'slow', function() {
+            flyElm.remove();
+        });
+    }
+
 </script>
 </html>
