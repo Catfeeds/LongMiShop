@@ -65,10 +65,14 @@ class IndexController extends MobileBaseController {
         }
         $this->assign('cart_data', $cart_data);
 
-        
+
         $this->display();
+//        $this->display("indexNewBak");
     }
 
+    public function indexNewBak(){
+        $this -> display();
+    }
     public function index2(){
         $this -> display();
     }

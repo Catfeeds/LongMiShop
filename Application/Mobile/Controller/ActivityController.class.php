@@ -8,6 +8,7 @@ class ActivityController extends MobileBaseController {
     {
         return array(
             'index',
+            'fiveYuanBuying',
             'group',
             'group_list',
         );
@@ -15,7 +16,10 @@ class ActivityController extends MobileBaseController {
     public function  _initialize() {
         parent::_initialize();
     }
-    public function index(){      
+    public function index(){
+        $this -> display();
+    }
+    public function fiveYuanBuying(){
         $this -> display();
     }
    /**
