@@ -28,7 +28,10 @@ class AddonsController extends MobileBaseController {
      */
     private function _init(){
 
-        $this -> pluginName = I( "pluginName" , "index" );
+        $this -> pluginName = I( "pluginName" , null );
+        $this -> pluginName = is_null($this -> pluginName) ? I( "pN" , "index" ) : $this -> pluginName;
+
+
         $this -> addonsLogic = new AddonsLogic();
         $this -> addonsLogic -> loadAddons( ACTION_NAME , $this -> pluginName , self::APPOINTED , $this -> user_info );
         
