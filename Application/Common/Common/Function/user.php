@@ -553,10 +553,24 @@ function findUserNickName($userId){
 }
 
 
-
-
-
-
+/**
+ * 获取等级名称
+ * @param null $level
+ * @return array|mixed
+ */
+function getLevelName( $level = null )
+{
+    $list =  array(
+        "1" => "酱油群众",
+        "2" => "饭团新人",
+        "3" => "品米专家",
+        "4" => "鉴米大师",
+    );
+    if( is_null( $level )){
+        return $list;
+    }
+    return $list[$level];
+}
 
 /**
  * 获取等级权限
@@ -576,7 +590,7 @@ function getRankPrivilege()
         2 => array(
             "id"                   => 2,
             "condition"            => 20,
-            "growthRate"           => 1.1,
+            "growthRate"           => 1.2,
             "isDeliveryPriority"   => false,
             "cashWithdrawalAmount" => "400",
             "discount"             => 0.95,
@@ -624,6 +638,9 @@ function setUserPointsLog( $before_points , $after_points , $value , $userId , $
     return addData("points_log", $data);
 }
 
+
+
+
 /**
  * 修改积分数值
  * @param $type
@@ -644,7 +661,7 @@ function increasePoints( $type , $userId  )
 
     switch ($type) {
         case "login":
-            $value = 1;
+            $value = 10;
             $text = "登录奖励";
             break;
         case "register":
@@ -709,20 +726,20 @@ function userUpgradeDetection( $userId ,$points,$level)
     $condition = array(
         "user_id" => $userId
     );
-    if( $level == 1 && $points >  $levelArray[2]["condition"] ){
-        $condition["last_buy_time"] = array("gt"=>"0");
-        if( isExistenceDataWithCondition("users" ,$condition)){
-            userUpgrade( $userId , 2 );
-        }
-    }elseif( $level == 2 && $points >  $levelArray[3]["condition"] ){
-        $time = strtotime(date("Y-m-d",strtotime("-1 month")));
-        $condition["last_buy_time"] = array("gt"=>$time);
-        if( isExistenceDataWithCondition("users" ,$condition)){
-            userUpgrade( $userId , 3 );
-        }
-    }elseif( $level == 3 && $points >  $levelArray[4]["condition"] ){
+    if ($level <= 3 && $points > $levelArray[4]["condition"]) {
 //        $condition["goods_id"]
-        userUpgrade( $userId , 4 );
+        userUpgrade($userId, 4);
+    } elseif ($level <= 2 && $points > $levelArray[3]["condition"]) {
+        $time = strtotime(date("Y-m-d", strtotime("-1 month")));
+        $condition["last_buy_time"] = array("gt" => $time);
+        if (isExistenceDataWithCondition("users", $condition)) {
+            userUpgrade($userId, 3);
+        }
+    } elseif ($level <= 1 && $points > $levelArray[2]["condition"]) {
+        $condition["last_buy_time"] = array("gt" => "0");
+        if (isExistenceDataWithCondition("users", $condition)) {
+            userUpgrade($userId, 2);
+        }
     }
     return false;
 }
