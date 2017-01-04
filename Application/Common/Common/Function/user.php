@@ -577,32 +577,68 @@ function increaseExperience( $value , $userId , $text ){
 
 }
 
+/**
+ * 修改积分数值
+ * @param $value
+ * @param $userId
+ * @param $text
+ */
+function increasePoints( $value , $userId , $text ){
+    $condition = array("user_id"=>$userId);
+    $userInfo = findDataWithCondition("users",$condition,"points");
+    if( empty( $userInfo ) ){
+        return;
+    }
+    $experience = $userInfo['points'] + $value;
+    $data =  array(
+        "points" => $experience
+    );
+    saveData("users",$condition,$data);
+
+    //应该要有日志
+
+    userUpgradeDetection($userId);
+
+}
+
 
 /**
- * 获取升级规则
+ * 获取等级权限
  * @return array
  */
-function getUpgradeRules(){
+function getRankPrivilege(){
     return array(
         array(
             "id" => 1,
-            "name" => "银卡",
             "condition" => 10,
+            "growthRate" => 1,
+            "isDeliveryPriority" => false,
+            "cashWithdrawalAmount" => "500",
+            "discount" => 1,
         ),
         array(
             "id" => 2,
-            "name" => "金卡",
             "condition" => 20,
+            "growthRate" => 1.1,
+            "isDeliveryPriority" => false,
+            "cashWithdrawalAmount" => "400",
+            "discount" => 0.95,
         ),
         array(
             "id" => 3,
-            "name" => "白金卡",
             "condition" => 30,
+            "growthRate" => 1.7,
+            "isDeliveryPriority" => true,
+            "cashWithdrawalAmount" => "300",
+            "discount" => 0.9,
         ),
         array(
             "id" => 4,
-            "name" => "钻卡",
             "condition" => 40,
+            "growthRate" => 2.2,
+            "isDeliveryPriority" => true,
+            "cashWithdrawalAmount" => "1",
+            "discount" => 0.8,
         ),
     );
 }
