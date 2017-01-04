@@ -96,7 +96,7 @@ img{
 
 .top_menu {
 	background: #ffffff;
-	box-shadow: 0px 0px 5px #888;
+	/*box-shadow: 0px 0px 5px #888;*/
 	margin-bottom: 5px;
 }
 .top_menu ul {

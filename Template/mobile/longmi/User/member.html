@@ -12,8 +12,18 @@
     <p id="level_name">等级：...</p>
 </div>
 
+<div class="my_nav">
+    <ul>
+        <li><a>拥有特权</a></li>
+    </ul>
+</div>
 <div class="mui-content" id="privilege_list"></div>
 
+<div class="my_nav">
+    <ul>
+        <li><a>积分记录</a></li>
+    </ul>
+</div>
 <div id="log_list">
     <div class="empty"><img src="__STATIC__/images/new/no_money.png"></div>
     <div class="empty_txt">皇上！国库空虚，<br/>赶紧赚米呀！娘娘们都要跑光啦！</div>
@@ -26,15 +36,18 @@
 <include file="Public/footer"/>
 
 <script type="text/html" id="privilegeList">
-    <% for (var i in item) { %>
-    <div class="m6">
-        <div class="m6_left">
-            <div><%= item[i].text %></div>
-            <div class="m7"><%= item[i].time %></div>
-        </div>
-        <div class="m6_right"><% if ( item[i].value != 0 ) { %><%= item[i].value %><% } %></div>
+    <div class="top_menu">
+        <ul>
+            <% for (var i in item) { %>
+
+            <li style="background-image:url('/Template/mobile/longmi/Static/images/svg/my_nav_3.svg')">
+                <p>
+                    <a><b>积分成长速度<br><span id="userMoney">1.2倍</span></b></a>
+                </p>
+            </li>
+            <% } %>
+        </ul>
     </div>
-    <% } %>
 </script>
 
 
@@ -62,6 +75,7 @@
                 $("#point_number").html("积分："+data.data.user.points);
                 $("#level_name").html("等级："+data.data.user.level_name);
                 $("#log_list").html(template.render("logList", data.data.log));
+                $("#privilege_list").html(template.render("privilegeList", data.data.privilege));
             },
             error:function(){
                 alert("网络错误！");
