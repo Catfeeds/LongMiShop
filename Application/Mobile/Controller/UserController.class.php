@@ -1319,4 +1319,10 @@ class UserController extends MobileBaseController {
         $this -> display();
     }
 
+
+
+    public function member(){
+        $this -> display();
+    }
+
 }
