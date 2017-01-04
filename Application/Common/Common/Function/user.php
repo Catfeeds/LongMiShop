@@ -551,3 +551,233 @@ function findUserNickName($userId){
     $user = findDataWithCondition("users",array("user_id"=>$userId),"nickname");
     return $user['nickname'];
 }
+
+
+/**
+ * 获取等级名称
+ * @param null $level
+ * @return array|mixed
+ */
+function getLevelName( $level = null )
+{
+    $list =  array(
+        "1" => "酱油群众",
+        "2" => "饭团新人",
+        "3" => "品米专家",
+        "4" => "鉴米大师",
+    );
+    if( is_null( $level )){
+        return $list;
+    }
+    return $list[$level];
+}
+
+/**
+ * 获取等级权限
+ * @return array
+ */
+function getRankPrivilege()
+{
+    return array(
+        1 => array(
+            "id"                   => 1,
+            "condition"            => 10,
+            "growthRate"           => 1,
+            "isDeliveryPriority"   => false,
+            "cashWithdrawalAmount" => "500",
+            "discount"             => 1,
+        ),
+        2 => array(
+            "id"                   => 2,
+            "condition"            => 20,
+            "growthRate"           => 1.2,
+            "isDeliveryPriority"   => false,
+            "cashWithdrawalAmount" => "400",
+            "discount"             => 0.95,
+        ),
+        3 => array(
+            "id"                   => 3,
+            "condition"            => 30,
+            "growthRate"           => 1.7,
+            "isDeliveryPriority"   => true,
+            "cashWithdrawalAmount" => "300",
+            "discount"             => 0.9,
+        ),
+        4 => array(
+            "id"                   => 4,
+            "condition"            => 40,
+            "growthRate"           => 2.2,
+            "isDeliveryPriority"   => true,
+            "cashWithdrawalAmount" => "1",
+            "discount"             => 0.8,
+        ),
+    );
+}
+
+/**
+ * 积分日志
+ * @param $before_points
+ * @param $after_points
+ * @param $value
+ * @param $userId
+ * @param $text
+ * @return mixed
+ */
+function setUserPointsLog( $before_points , $after_points , $value , $userId , $text )
+{
+
+    $data = array(
+        "user_id"       => $userId,
+        "create_time"   => time(),
+        "value"         => $value,
+        "text"          => $text,
+        "before_points" => $before_points,
+        "after_points"  => $after_points
+    );
+
+    return addData("points_log", $data);
+}
+
+
+
+
+/**
+ * 修改积分数值
+ * @param $type
+ * @param $userId
+ */
+function increasePoints( $type , $userId  )
+{
+    $condition = array("user_id" => $userId);
+    $userInfo = findDataWithCondition("users", $condition, "user_points,level");
+    if (empty($userInfo)) {
+        return;
+    }
+    $value = 0;
+    $text = "";
+
+    $level = $userInfo['level'];
+    $userPoints =$userInfo['user_points'];
+
+    switch ($type) {
+        case "login":
+            $value = 10;
+            $text = "登录奖励";
+            break;
+        case "register":
+            $value = 1;
+            $text = "注册赠送";
+            break;
+        case "sign":
+            $value = 1;
+            $text = "签到奖励";
+            break;
+        case "buy":
+            $value = 1;
+            $text = "购买奖励";
+            break;
+        case "upgrade":
+            $value = 0;
+            $text = "升级";
+            break;
+        case "downgrade":
+            $value = -$userPoints;
+            $text = "积分清空";
+            break;
+        default:
+            break;
+    }
+
+    if ($value == 0 && $text == "" ) {
+        return;
+    }
+
+
+    //根据等级加速积分成长
+    if( $value > 0 ){
+        $levelArray = getRankPrivilege();
+        $value = $levelArray[$level]["growthRate"] * $value;
+    }
+
+
+    $points = $userPoints + $value;
+    $data = array(
+        "user_points" => $points
+    );
+    saveData("users", $condition, $data);
+
+    //日志
+    setUserPointsLog($userInfo['user_points'], $points, $value, $userId, $text);
+
+    //升级检测
+    userUpgradeDetection($userId, $points, $level);
+}
+
+/**
+ * 用户升级检测
+ * @param $userId
+ * @param $points
+ * @param $level
+ * @return bool
+ */
+function userUpgradeDetection( $userId ,$points,$level)
+{
+    $levelArray = getRankPrivilege();
+    $condition = array(
+        "user_id" => $userId
+    );
+    if ($level <= 3 && $points > $levelArray[4]["condition"]) {
+//        $condition["goods_id"]
+        userUpgrade($userId, 4);
+    } elseif ($level <= 2 && $points > $levelArray[3]["condition"]) {
+        $time = strtotime(date("Y-m-d", strtotime("-1 month")));
+        $condition["last_buy_time"] = array("gt" => $time);
+        if (isExistenceDataWithCondition("users", $condition)) {
+            userUpgrade($userId, 3);
+        }
+    } elseif ($level <= 1 && $points > $levelArray[2]["condition"]) {
+        $condition["last_buy_time"] = array("gt" => "0");
+        if (isExistenceDataWithCondition("users", $condition)) {
+            userUpgrade($userId, 2);
+        }
+    }
+    return false;
+}
+
+/**
+ * 用户升级操作
+ * @param $userId
+ * @param $level
+ * @return bool
+ */
+function userUpgrade( $userId , $level )
+{
+    $condition = array(
+        "user_id" => $userId
+    );
+    $data = array(
+        "level"        => $level,
+        "upgrade_time" => time()
+    );
+    $res = saveData("users", $condition, $data);
+    increasePoints("upgrade", $userId);
+    return $res;
+}
+
+/**
+ * 用户降级操作
+ * @param $userId
+ * @return bool
+ */
+function userDowngrade( $userId  ){
+    $condition = array(
+        "user_id" => $userId
+    );
+    $data = array(
+        "level"        => 1,
+        "upgrade_time" => time()
+    );
+    $res = saveData("users", $condition, $data);
+    increasePoints("downgrade", $userId);
+    return $res;
+}

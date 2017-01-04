@@ -1319,4 +1319,24 @@ class UserController extends WapBaseController {
         $this -> display();
     }
 
+
+
+    public function member(){
+        $data = array(
+            "user" => array(
+                "level_name" => getLevelName( $this -> user["level"] ),
+                "points" => $this -> user["user_points"],
+                "head_img" => $this -> user["head_pic"],
+            )
+        );
+        $list  = M("points_log") -> where( array("user_id" => $this -> user_id ))->order("create_time desc")->select();
+        if( !empty($list)){
+             foreach ($list as &$item){
+                 $item["time"] = date("Y-m-d H:i",$item["create_time"]);
+             }
+        }
+        $data["log"]["item"] = $list;
+        printJson(true,"",$data);
+    }
+
 }

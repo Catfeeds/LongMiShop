@@ -38,10 +38,10 @@ return array(
     'RBAC_USER_TABLE'           => 'think_role_user',
     'RBAC_ACCESS_TABLE'         => 'think_access',
     'RBAC_NODE_TABLE'           => 'think_node',
-    'SHOW_PAGE_TRACE'           =>0,         //显示调试信息
+    'SHOW_PAGE_TRACE'           =>1,         //显示调试信息
     //'RBAC_ERROR_PAGE'         => '/Public/tp404.html',
     //'ERROR_PAGE'=>'/Index/Index/error_page.html',
-    'ERROR_PAGE'=>'/index.php/Home/Tperror/tp404.html',
+//    'ERROR_PAGE'=>'/index.php/Home/Tperror/tp404.html',
     // 表单令牌验证相关的配置参数
     'TOKEN_ON'      =>    true,  // 是否开启令牌验证 默认关闭
     'TOKEN_NAME'    =>    '__hash__',    // 令牌验证的表单隐藏字段名称，默认为__hash__
@@ -49,7 +49,7 @@ return array(
     'TOKEN_RESET'   =>    true,  //令牌验证出错后是否重置令牌 默认为true 
     'TAGLIB_LOAD'   => true,
     'APP_AUTOLOAD_PATH'  =>'@.TagLib',
-    'TAGLIB_BUILD_IN'  =>  'cx,tpshop', // tpshop 为自定义标签类名称
+//    'TAGLIB_BUILD_IN'  =>  'cx,tpshop', // tpshop 为自定义标签类名称
     'TMPL_TEMPLATE_SUFFIX'  =>  '.html',     // 默认模板文件后缀
     'URL_HTML_SUFFIX'       =>  'html',  // URL伪静态后缀设置  默认为html  去除默认的 否则很多地址报错
 
@@ -133,17 +133,16 @@ return array(
         查看物流  if(!empty(物流单号))   
         退货按钮（联系客服）  所有退换货操作， 都需要人工介入   不支持在线退换货
      */
-    
-    // 'site_url'=>'http://www.tp-shop.cn', // tpshop 网站域名 已经改写入数据库
-//    'DEFAULT_MODULE'        =>  'Home',  // 默认模块
+
+
     'DEFAULT_MODULE'        =>  'Index',  // 默认模块
     'DEFAULT_CONTROLLER'    =>  'Index', // 默认控制器名称
     'DEFAULT_ACTION'        =>  'index', // 默认操作名称    
     
-    'APP_SUB_DOMAIN_DEPLOY'   =>    0, // 开启子域名或者IP配置
-    'APP_SUB_DOMAIN_RULES'    =>    array( 
+//    'APP_SUB_DOMAIN_DEPLOY'   =>    0, // 开启子域名或者IP配置
+//    'APP_SUB_DOMAIN_RULES'    =>    array(
 //         'm.tpshop.com'   => 'Mobile/',  // 手机访问网站
-    ),    
+//    ),
         
    // 'DEFAULT_FILTER'        => 'trim'   // 系统默认的变量过滤机制
 
@@ -152,5 +151,11 @@ return array(
     'OPEN_PHONE_MALL' => true,//是否开启手机商城
 
 
+    'LEVEL_NAME' => array(
+        "1" => "酱油群众",
+        "2" => "饭团新人",
+        "3" => "品米专家",
+        "4" => "鉴米大师",
+    ),
 
 );

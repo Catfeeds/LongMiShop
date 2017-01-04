@@ -1,0 +1,72 @@
+<include file="Public/header2"/>
+<body>
+<include file="Public/loading"/>
+
+<div class="user">
+    <p>
+        <a href="{:U('Mobile/User/index');}">
+            <img src="__DefaultUserImages__" class="userHeadImg" id="head_img" width="92" height="92">
+        </a>
+    </p>
+    <p id="point_number">积分：...</p>
+    <p id="level_name">等级：...</p>
+</div>
+
+<div class="mui-content" id="privilege_list"></div>
+
+<div id="log_list">
+    <div class="empty"><img src="__STATIC__/images/new/no_money.png"></div>
+    <div class="empty_txt">皇上！国库空虚，<br/>赶紧赚米呀！娘娘们都要跑光啦！</div>
+</div>
+
+<include file="Public/js"/>
+<include file="Public/nav"/>
+
+</body>
+<include file="Public/footer"/>
+
+<script type="text/html" id="privilegeList">
+    <% for (var i in item) { %>
+    <div class="m6">
+        <div class="m6_left">
+            <div><%= item[i].text %></div>
+            <div class="m7"><%= item[i].time %></div>
+        </div>
+        <div class="m6_right"><% if ( item[i].value != 0 ) { %><%= item[i].value %><% } %></div>
+    </div>
+    <% } %>
+</script>
+
+
+<script type="text/html" id="logList">
+    <% for (var i in item) { %>
+    <div class="m6">
+        <div class="m6_left">
+            <div><%= item[i].text %></div>
+            <div class="m7"><%= item[i].time %></div>
+        </div>
+        <div class="m6_right"><% if ( item[i].value != 0 ) { %><%= item[i].value %><% } %></div>
+    </div>
+    <% } %>
+</script>
+
+<script>
+
+    $(function(){
+        $.ajax({
+            type : "GET",
+            url:"{:U('Wap/User/member')}",
+            dataType:'json',
+            success: function(data){
+                $("#head_img").attr("src",data.data.user.head_img);
+                $("#point_number").html("积分："+data.data.user.points);
+                $("#level_name").html("等级："+data.data.user.level_name);
+                $("#log_list").html(template.render("logList", data.data.log));
+            },
+            error:function(){
+                alert("网络错误！");
+            }
+        });
+    });
+</script>
+</html>
