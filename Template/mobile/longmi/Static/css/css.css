@@ -1048,7 +1048,6 @@ img{
 }
 .price_left {
 	float: left;
-	width: 70%;
 	font-weight: bold;
 }
 .price_left .price_left_money{
@@ -2325,7 +2324,6 @@ Load—more a{
 
 .price_left {
 	float: left;
-	width: 60%;
 	font-weight: bold;
 }
 

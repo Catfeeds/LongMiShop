@@ -22,9 +22,9 @@ class CartController extends MobileBaseController {
     public function  _initialize() {
         parent::_initialize();
         $this->cartLogic = new \Common\Logic\CartLogic();
-//                if($user)
-//                    M('Cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price * {$user[discount]} where (user_id ={$user[user_id]} or session_id = '{$this->session_id}') and prom_type = 0");
-//        }
+        if($this->user_id){
+            M('Cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price * {$this->user['discount']} where (user_id ={$this->user_id} or session_id = '{$this->session_id}') and prom_type = 0");
+        }
     }
 
     /**
