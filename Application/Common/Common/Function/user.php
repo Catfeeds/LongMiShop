@@ -561,10 +561,10 @@ function findUserNickName($userId){
 function getLevelName( $level = null )
 {
     $list =  array(
-        "1" => "酱油群众",
-        "2" => "饭团新人",
-        "3" => "品米专家",
-        "4" => "鉴米大师",
+        "1" => "铜米",
+        "2" => "银米",
+        "3" => "金米",
+        "4" => "钻石米",
     );
     if( is_null( $level )){
         return $list;
