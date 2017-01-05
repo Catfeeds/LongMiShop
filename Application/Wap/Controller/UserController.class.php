@@ -44,11 +44,12 @@ class UserController extends WapBaseController {
      */
     public function index(){
         $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCoupon( $this->user_id);
-        $this -> assign('couponCount', $result['data']['count']);
-        $this -> assign('orderCount' , $usersLogic -> getOrderCount( $this->user_id));
-        $this -> assign('number', getInviteNumber($this ->user_id) );
-        $this -> display();
+        $data = array(
+            "head_img" => $this -> user["head_pic"],
+            "userMoney" => $this ->user["user_money"],
+            "orderCount" => $usersLogic -> getOrderCount( $this->user_id )
+        );
+        printJson(true,"",$data);
     }
 
 

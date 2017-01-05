@@ -43,11 +43,6 @@ class UserController extends MobileBaseController {
      * 用户中心首页
      */
     public function index(){
-        $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCoupon( $this->user_id);
-        $this -> assign('couponCount', $result['data']['count']);
-        $this -> assign('orderCount' , $usersLogic -> getOrderCount( $this->user_id));
-        $this -> assign('number', getInviteNumber($this ->user_id) );
         $this -> display();
     }
 
