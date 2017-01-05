@@ -39,11 +39,15 @@ abstract class MobileBaseController extends BaseController {
         }
 
         $this -> user_id = session(__UserID__);
-        $userLogic = new \Common\Logic\UsersLogic();
-        $user_info = $userLogic -> get_info($this -> user_id);
-        if(!empty($user_info['result'])){
-            $this -> user_info  = $user_info['result'];
+        $user_info = get_user_info($this -> user_id);
+        if(!empty($user_info)){
+            $this -> user_info  = $user_info;
             $this -> user  = $this -> user_info;
+            if( empty($user_info["last_login"]) || $user_info["last_login"] < strtotime(date('Y-m-d',time())) ){
+                //登录送积分
+                increasePoints("login", $this->user_id);
+                saveData("users",array("user_id"=>$this -> user_id),array("last_login"=>time()));
+            }
             $this -> assign('user',$this -> user_info );
             $this -> assign('auth',true);
         }

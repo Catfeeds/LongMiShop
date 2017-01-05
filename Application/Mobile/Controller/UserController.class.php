@@ -1315,7 +1315,6 @@ class UserController extends MobileBaseController {
     }
 
     public function member(){
-        increasePoints("login", $this->user_id);
         $this -> display();
     }
 
