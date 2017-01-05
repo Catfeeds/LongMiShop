@@ -513,4 +513,13 @@ ALTER TABLE `lm_users`
 ADD COLUMN `points_clear_time`  int(11) NULL DEFAULT NULL COMMENT '积分清除时间' AFTER `frozen_money`;
 
 
+ALTER TABLE `lm_users`
+MODIFY COLUMN `pay_points`  decimal(10,2) UNSIGNED NOT NULL DEFAULT 0 COMMENT '消费积分' AFTER `distribut_money`;
+
+ALTER TABLE `lm_points_log`
+MODIFY COLUMN `value`  decimal(11,2) NOT NULL DEFAULT 0 COMMENT '更改数值' AFTER `create_time`,
+MODIFY COLUMN `before_points`  decimal(11,2) NOT NULL DEFAULT 0 COMMENT '改变前的数值' AFTER `text`,
+MODIFY COLUMN `after_points`  decimal(11,2) NOT NULL DEFAULT 0 COMMENT '改变后的数值' AFTER `before_points`;
+
+
   ";

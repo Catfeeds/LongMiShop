@@ -21,6 +21,11 @@ abstract class WapBaseController extends Controller {
      * 初始化操作
      */
     public function _initialize() {
+        if ( !isLoginState() ) {
+            if( $this -> needAuth() ){
+                printJson(-1,"请先登录后再操作");
+            }
+        }
         $this -> shopConfig = getShopConfig();
         $this -> session_id = session_id();
         $this -> user_id = session(__UserID__);
@@ -32,6 +37,10 @@ abstract class WapBaseController extends Controller {
     }
 
 
+    /**
+     * 是否需要登录
+     * @return bool
+     */
     protected function needAuth(){
         if ($this->exceptAuthActions() == null) {
             return true;
