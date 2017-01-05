@@ -755,9 +755,20 @@ function userUpgrade( $userId , $level )
     $condition = array(
         "user_id" => $userId
     );
+    $discount = 1;
+    if ($level == 1) {
+        $discount = 1;
+    }elseif ($level == 2) {
+        $discount = 0.95;
+    }elseif ($level == 3) {
+        $discount = 0.9;
+    }elseif ($level == 4) {
+        $discount = 0.8;
+    }
     $data = array(
         "level"        => $level,
-        "upgrade_time" => time()
+        "upgrade_time" => time(),
+        "discount"     => $discount,
     );
     $res = saveData("users", $condition, $data);
     increasePoints("upgrade", $userId);
