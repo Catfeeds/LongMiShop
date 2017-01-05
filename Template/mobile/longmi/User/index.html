@@ -1,12 +1,13 @@
-<include file="Public/header"/>
+<include file="Public/header2"/>
 <body>
+<include file="Public/loading"/>
 <div class="user">
 	<p>
 		<a href="{:U('Mobile/User/userinfo');}">
-			<img src="{$user['head_pic']|default='__DefaultUserImages__'}" class="userHeadImg" width="92" height="92">
+			<img src="__DefaultUserImages__" class="userHeadImg" id="head_img" width="92" height="92">
 		</a>
 	</p>
-	<p>余额:{$user['user_money']}</p>
+	<p id="money_number">余额：...</p>
 </div>
 <div class="er1" style="margin:5px 0 0 0 ;">
 	<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITPAY'))}" class="er1_top">查看全部订单&nbsp;></a>
@@ -14,33 +15,25 @@
 		<li style="background-image:url('__STATIC__/images/svg/my_nav_1.svg')">
 			<p>
 				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITPAY'))}">待付款</a>
-				<if condition = "$orderCount['WAITPAY'] neq 0 ">
-					<span class="mui-badge mui-badge-danger figure">{$orderCount.WAITPAY}</span>
-				</if>
+				<span class="mui-badge mui-badge-danger figure">...</span>
 			</p>
 		</li>
 		<li style="background-image:url('__STATIC__/images/svg/my_nav_2.svg')">
 			<p>
 				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITSEND'))}">待发货</a>
-				<if condition = "$orderCount['WAITSEND'] neq 0 ">
-					<span class="mui-badge mui-badge-danger figure">{$orderCount.WAITSEND}</span>
-				</if>
+				<span class="mui-badge mui-badge-danger figure">...</span>
 			</p>
 		</li>
 		<li style="background-image:url('__STATIC__/images/svg/my_nav_3.svg')">
 			<p>
 				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITRECEIVE'))}">已发货</a>
-				<if condition = "$orderCount['WAITRECEIVE'] neq 0 ">
-					<span class="mui-badge mui-badge-danger figure">{$orderCount.WAITRECEIVE}</span>
-				</if>
+				<span class="mui-badge mui-badge-danger figure">...</span>
 			</p>
 		</li>
 		<li style="background-image:url('__STATIC__/images/svg/my_nav_4.svg')">
 			<p>
 				<a href="{:U('Mobile/Order/order_list',array('type'=>'WAITCCOMMENT'))}">已完成</a>
-				<if condition = "$orderCount['WAITCCOMMENT'] neq 0 ">
-					<span class="mui-badge mui-badge-danger figure">{$orderCount.WAITCCOMMENT}</span>
-				</if>
+				<span class="mui-badge mui-badge-danger figure">...</span>
 			</p>
 		</li>
 	</ul>
@@ -54,40 +47,30 @@
 		</ul>
 	</if>
 	<ul>
-		<!--<li><a href="{:U('Mobile/User/collect_list')}">收藏</a></li>-->
 		<li><a href="{:U('Mobile/User/account')}">钱包</a></li>
 	</ul>
 	<ul>
 		<li><a href="{:U('Mobile/User/coupon')}">优惠券</a></li>
-		<!--<li><a href="{:U('Mobile/User/points')}">积分</a></li>-->
 		<li><a href="{:U('Mobile/Exchange/exchange')}">兑换码</a></li>
-		<!--<li><a href="{:U('Mobile/Recommend/index')}">推荐有奖</a></li>-->
 	</ul>
 	<ul>
-		<!--<li><a href="{:U('Mobile/User/userinfo')}">账户设置</a></li>-->
 		<li><a href="{:U('Mobile/User/myPoster')}">赚米</a></li>
-		<!-- <if condition = " !isWeChatBrowser() " >
-			<li><a href="{:U('Mobile/User/logout')}">注销</a></li>
-		</if> -->
 	</ul>
 </div>
 <div class="copyright">
 	<div class="copyright_title">
-		<!--<a href="javascript:$('#followMask').show();">关注龙米&nbsp;-</a>-->
 		<a href="{: U('Mobile/User/feedback')}">意见反馈&nbsp;-</a>
 		<a href="tel:4000787725">客服热线</a>
 	</div>
-	<!--<p></p>-->
-	<!--<img src="__STATIC__/SVG/bottom_logo.svg" alt="">-->
 </div>
 
-
+<include file="Public/js"/>
 <include file="Public/nav"/>
 
 </body>
-<if condition="$signPackage neq null">
-	<include file="Public/wx_button"/>
-</if>
+<include file="Public/footer"/>
+
+
 <style>
 	.gz{ display: none !important;}
 	.er1 a {
@@ -105,5 +88,36 @@
 		top: 6px !important;
 	}
 </style>
-<include file="Public/footer"/>
+<script>
+
+	$(function(){
+		$.ajax({
+			type : "GET",
+			url:"{:U('Wap/User/index')}",
+			dataType:'json',
+			success: function(data){
+				if( data.state == 1){
+					$("#head_img").attr("src",data.data.head_img);
+					$("#money_number").html("余额："+data.data.userMoney);
+					var item = data.data.orderCount;
+					var j = 0;
+					for(var i in item){
+						if( item[i] > 0 ){
+							$(".er1 .figure").eq(j).html(item[i]);
+						}else{
+							$(".er1 .figure").eq(j).hide();
+						}
+						j++;
+					}
+				}else{
+					alert(data.msg);
+				}
+			},
+			error:function(){
+				alert("网络错误！");
+			}
+		});
+	});
+</script>
+
 </html>

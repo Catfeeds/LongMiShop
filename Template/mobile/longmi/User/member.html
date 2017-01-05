@@ -39,10 +39,9 @@
     <div class="top_menu">
         <ul>
             <% for (var i in item) { %>
-
             <li style="background-image:url('/Template/mobile/longmi/Static/images/svg/my_nav_3.svg')">
                 <p>
-                    <a><b>积分成长速度<br><span id="userMoney">1.2倍</span></b></a>
+                    <a><b><%= item[i].name %><br><span id="userMoney"><%= item[i]['value'][level] %>&nbsp;</span></b></a>
                 </p>
             </li>
             <% } %>
@@ -71,11 +70,15 @@
             url:"{:U('Wap/User/member')}",
             dataType:'json',
             success: function(data){
-                $("#head_img").attr("src",data.data.user.head_img);
-                $("#point_number").html("积分："+data.data.user.points);
-                $("#level_name").html("等级："+data.data.user.level_name);
-                $("#log_list").html(template.render("logList", data.data.log));
-                $("#privilege_list").html(template.render("privilegeList", data.data.privilege));
+                if( data.state == 1){
+                    $("#head_img").attr("src",data.data.user.head_img);
+                    $("#point_number").html("积分："+data.data.user.points);
+                    $("#level_name").html("等级："+data.data.user.level_name);
+                    $("#log_list").html(template.render("logList", data.data.log));
+                    $("#privilege_list").html(template.render("privilegeList", data.data.privilege));
+                }else{
+                    alert(data.msg);
+                }
             },
             error:function(){
                 alert("网络错误！");

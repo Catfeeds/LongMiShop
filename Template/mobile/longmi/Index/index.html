@@ -170,25 +170,29 @@
             url:"{:U('Wap/Index/index')}",
             dataType:'json',
             success: function(data){
-                $("#userMoney").html(data.data.top_menu.userMoney);
-                $("#couponCount").html(data.data.top_menu.couponCount);
-                $("#activityCount").html(data.data.top_menu.activityCount);
-                $("#inviteNumber").html(data.data.top_menu.inviteNumber);
-                $("#slider").html(template.render("banner", data.data.ad));
-                $("#main-container1").html(template.render("goods1", data.data.newGoods));
-                $("#main-container2").html(template.render("goods2", data.data.favouriteGoods));
-                TouchSlide({
-                    slideCell:"#picScroll",
-                    titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
-                    autoPage:true, //自动分页
-                    pnLoop:"false", // 前后按钮不循环
-                    switchLoad:"_src", //切换加载，真实图片路径为"_src"
-                    autoPlay:true
-                });
-                var gallery = mui('.mui-slider');
-                gallery.slider({
-                    interval: 2000//自动轮播周期，若为0则不自动播放，默认为0；
-                });
+                if( data.state == 1){
+                    $("#userMoney").html(data.data.top_menu.userMoney);
+                    $("#couponCount").html(data.data.top_menu.couponCount);
+                    $("#activityCount").html(data.data.top_menu.activityCount);
+                    $("#inviteNumber").html(data.data.top_menu.inviteNumber);
+                    $("#slider").html(template.render("banner", data.data.ad));
+                    $("#main-container1").html(template.render("goods1", data.data.newGoods));
+                    $("#main-container2").html(template.render("goods2", data.data.favouriteGoods));
+                    TouchSlide({
+                        slideCell:"#picScroll",
+                        titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+                        autoPage:true, //自动分页
+                        pnLoop:"false", // 前后按钮不循环
+                        switchLoad:"_src", //切换加载，真实图片路径为"_src"
+                        autoPlay:true
+                    });
+                    var gallery = mui('.mui-slider');
+                    gallery.slider({
+                        interval: 2000//自动轮播周期，若为0则不自动播放，默认为0；
+                    });
+                }else{
+                    alert(data.msg);
+                }
             },
             error:function(){
                 alert("网络错误！");
