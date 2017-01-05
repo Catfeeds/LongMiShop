@@ -39,10 +39,9 @@
     <div class="top_menu">
         <ul>
             <% for (var i in item) { %>
-
             <li style="background-image:url('/Template/mobile/longmi/Static/images/svg/my_nav_3.svg')">
                 <p>
-                    <a><b>积分成长速度<br><span id="userMoney">1.2倍</span></b></a>
+                    <a><b><%= item[i].name %><br><span id="userMoney"><%= item[i]['value'][level] %>&nbsp;</span></b></a>
                 </p>
             </li>
             <% } %>
