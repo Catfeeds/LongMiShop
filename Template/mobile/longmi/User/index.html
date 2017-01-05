@@ -96,17 +96,21 @@
 			url:"{:U('Wap/User/index')}",
 			dataType:'json',
 			success: function(data){
-				$("#head_img").attr("src",data.data.head_img);
-				$("#money_number").html("余额："+data.data.userMoney);
-				var item = data.data.orderCount;
-				var j = 0;
-				for(var i in item){
-					if( item[i] > 0 ){
-						$(".er1 .figure").eq(j).html(item[i]);
-					}else{
-						$(".er1 .figure").eq(j).hide();
+				if( data.state == 1){
+					$("#head_img").attr("src",data.data.head_img);
+					$("#money_number").html("余额："+data.data.userMoney);
+					var item = data.data.orderCount;
+					var j = 0;
+					for(var i in item){
+						if( item[i] > 0 ){
+							$(".er1 .figure").eq(j).html(item[i]);
+						}else{
+							$(".er1 .figure").eq(j).hide();
+						}
+						j++;
 					}
-					j++;
+				}else{
+					alert(data.msg);
 				}
 			},
 			error:function(){

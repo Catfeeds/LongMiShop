@@ -70,11 +70,15 @@
             url:"{:U('Wap/User/member')}",
             dataType:'json',
             success: function(data){
-                $("#head_img").attr("src",data.data.user.head_img);
-                $("#point_number").html("积分："+data.data.user.points);
-                $("#level_name").html("等级："+data.data.user.level_name);
-                $("#log_list").html(template.render("logList", data.data.log));
-                $("#privilege_list").html(template.render("privilegeList", data.data.privilege));
+                if( data.state == 1){
+                    $("#head_img").attr("src",data.data.user.head_img);
+                    $("#point_number").html("积分："+data.data.user.points);
+                    $("#level_name").html("等级："+data.data.user.level_name);
+                    $("#log_list").html(template.render("logList", data.data.log));
+                    $("#privilege_list").html(template.render("privilegeList", data.data.privilege));
+                }else{
+                    alert(data.msg);
+                }
             },
             error:function(){
                 alert("网络错误！");
