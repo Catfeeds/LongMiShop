@@ -22,6 +22,9 @@ class CartController extends WapBaseController
     }
 
 
+    /**
+     * 结算
+     */
     public function settlement()
     {
         $cartLogic = new \Common\Logic\CartLogic();
@@ -34,20 +37,21 @@ class CartController extends WapBaseController
         if (empty($address)) {
             printJson(10001, "正在跳转到添加地址页面", U('Mobile/User/edit_address', array('source' => 'cart2')));
         }
-        $region_list = get_region_list();
-        $return = array(
-            "region_list" => $region_list,
-            "address"     => $address,
-        );
+        $return = array();
         $result = $cartLogic->cartList($this->user, $this->session_id, 1, 1); // 获取购物车商品
         $cartList = $result['cartList'];
         $totalPrice = $result['total_price'];
+        if( empty($cartList)){
+            printJson(10003, "正在跳转到订单列表页面", U('Mobile/Order/order_list'));
+        }
         //计算邮费
         $sum = 0;
         $goods_data = array();
+        $region_list = get_region_list();
         foreach ($cartList as $key => $item) {
             if ($item['selected'] == 1) {
-                $goods_res = M('goods')->field('weight,delivery_way')->where("goods_id = '" . $item['goods_id'] . "'")->find();
+                $goods_res = M('goods')->field('weight,delivery_way,original_img')->where("goods_id = '" . $item['goods_id'] . "'")->find();
+                $cartList[$key]["original_img"] = $goods_res["original_img"];
                 $goods_data[$key]['spec_key'] = $item['spec_key']; //商品规格
                 $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
                 $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
@@ -61,8 +65,10 @@ class CartController extends WapBaseController
                 $sum += $item['member_goods_price'];
             }
         }
-
-
+        $address["province_name"] = $region_list[$address['province']]['name'];
+        $address["city_name"] = $region_list[$address['city']]['name'];
+        $address["district_name"] = $region_list[$address['district']]['name'];
+        $return['address'] = $address;
         $count_postage = count_postage($goods_data); //运费
         $totalPrice['goods_fee'] = $totalPrice['total_fee'];
         $totalPrice['total_fee'] = $totalPrice['total_fee'] + $count_postage['data']['count'];
@@ -70,9 +76,16 @@ class CartController extends WapBaseController
         $usersLogic = new \Common\Logic\UsersLogic();
         $result = $usersLogic->getCanUseCoupon($this->user_id, $sum, $goods_data);
         $return["couponList"] = $result['data']['result'];
+        $return["couponCount"] = count($return["couponList"]);
         $return["cartList"] = $cartList;
         $return["total_price"] = $totalPrice;
         $return["carriage_sum"] = $count_postage['data']['count'];
+
+        $is_no_money = false;
+        if( $this->user['user_money'] < $totalPrice['total_fee']){
+            $is_no_money = true;
+        }
+        $return["is_no_money"] = $is_no_money;
         printJson(true, "", $return);
     }
 
@@ -125,4 +138,37 @@ class CartController extends WapBaseController
     }
 
 
+    /**
+     * ajax 请求获取购物车列表
+     */
+    public function ajaxCartList()
+    {
+        $cartLogic = new \Common\Logic\CartLogic();
+        $post_goods_num = I("goods_num"); // goods_num 购物车商品数量
+        $post_cart_select = I("cart_select"); // 购物车选中状态
+        $where = " session_id = '$this->session_id' "; // 默认按照 session_id 查询
+        $this->user_id && $where = " user_id = ".$this->user_id; // 如果这个用户已经等了则按照用户id查询
+        $cartList = M('Cart') -> where($where)->getField("id,goods_num,selected,prom_type,prom_id");
+        if($post_goods_num)
+        {
+            foreach($post_goods_num as $key => $val)// 修改购物车数量 和勾选状态
+            {
+                $data['goods_num'] = $val < 1 ? 1 : $val;
+                $data['selected'] = $post_cart_select[$key] ? 1 : 0 ;
+                if(($cartList[$key]['goods_num'] != $data['goods_num']) || ($cartList[$key]['selected'] != $data['selected']))
+                    M('Cart') -> where("id = $key")->save($data);
+            }
+            $this -> assign('select_all', $_POST['select_all']); // 全选框
+        }
+
+        $result = $cartLogic-> cartList($this->user, $this->session_id,1,1);
+        if(empty($result['total_price'])){
+            $result['total_price'] = Array( 'total_fee' =>0, 'cut_fee' =>0, 'num' => 0, 'atotal_fee' =>0, 'acut_fee' =>0, 'anum' => 0);
+        }
+        $return = array(
+            "cartList" => $result['cartList'],
+            "total_price" => $result['total_price'],
+        );
+        printJson(true, "", $return);
+    }
 }

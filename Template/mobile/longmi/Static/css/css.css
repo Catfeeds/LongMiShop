@@ -1135,6 +1135,9 @@ img{
 	width: 100%;
 	max-width: 800px;
 	z-index: 2;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #EFEFF4;
 }
 .com_d_l {
 	float: left;
@@ -1617,6 +1620,9 @@ img{
 	background-image: url(../SVG/move.svg);
 	background-repeat: no-repeat;
 	background-position: right center;
+}
+.site1 .consignee p{
+	margin-bottom: 10px;
 }
 .cp6 {
 	background-color: rgb( 254, 254, 254 );

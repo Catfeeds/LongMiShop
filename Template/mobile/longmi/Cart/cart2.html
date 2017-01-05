@@ -1,196 +1,128 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>提交订单_{$shopConfig.shop_info_store_title}</title>
-    <meta http-equiv="keywords" content="{$shopConfig['shop_info_store_keyword']}" />
-    <meta name="description" content="{$shopConfig['shop_info_store_desc']}" />
-    <script src="__STATIC__/js/mui.min.js"></script>
-    <script src="__STATIC__/js/jquery.min.js"></script>
-    <script src="__STATIC__/js/function.js"></script>
-    <link href="__STATIC__/css/css.css?{$versionToken}" rel="stylesheet" />
-    <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
-    <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
-</head>
-<body style="background-color:#f5f5f5">
-<form name="cart2_form" id="cart2_form" method="post">
+<include file="Public/header2"/>
+<body>
+<include file="Public/loading"/>
+
+    <form name="cart2_form" id="cart2_form">
+
+        <div id="addressDiv"></div>
+
+        <div id="goodsDiv"></div>
+
+        <div id="couponDiv"></div>
+
+        <div class="site_txt">运费<span id="carriage_sum">...</span></div>
+        <div class="site_txt">优惠金额<span id="privilege">...</span></div>
+        <div class="site_txt">合计<span id="total_fee">...</span></div>
+
+        <div class="site_txt">备注：</div>
+        <div class="site_txt" style="height:150px; margin-top: 1px;">
+            <textarea class="c1" name="userMessage" cols="" rows="" id="myMessage" placeholder="点击给店家留言"></textarea>
+        </div>
+        <div style="height:60px"></div>
+
+        <div class="com_d">
+            <div class="com_d_r">
+                <div class="c_btn1"><a href="#picture">立即支付</a></div>
+                <div class="c_btn2"><a href="{:U('Mobile/Cart/cart')}">取消</a></div>
+            </div>
+        </div>
+
+        <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+            <ul class="mui-table-view">
+                <li class="mui-table-view-cell" >
+                    <a href="javascript:void(0);" id="balanceButton">余额支付</a>
+                </li>
+            </ul>
+            <ul class="mui-table-view">
+                <li class="mui-table-view-cell">
+                    <a href="#" id="weChatButton">微信安全支付</a>
+                </li>
+            </ul>
+            <ul class="mui-table-view">
+                <li class="mui-table-view-cell">
+                    <a href="#picture"><b>取消</b></a>
+                </li>
+            </ul>
+        </div>
+
+    </form>
+
+</body>
+
+<include file="Public/js"/>
+
+<script type="text/html" id="couponTemplate">
+    <div class="site_txt1">
+        <a href="javascript:void(0);">
+            优惠券
+            <span  class="coupon_span">
+                <% if( couponCount > 0 ){ %><%= couponCount %>张可用<% }else{ %>无可用<% } %>
+            </span>
+        </a>
+        <div class="mui-input-group" style="display:none">
+            <% if( couponCount > 0 ){ %>
+                <div class="mui-input-row mui-radio mui-left">
+                    <label>不使用优惠券</label>
+                    <input name="coupon" type="radio" value="0" checked class="couponClass" />
+                </div>
+                <% for (var i in couponList) { %>
+                <div class="mui-input-row mui-radio mui-left">
+                    <label><%= couponList[i].name %></label>
+                    <input name="coupon" type="radio" value="<%= couponList[i].id %>" class="couponClass" />
+                </div>
+                <% } %>
+            <% }else{ %>
+                <div class="mui-input-row mui-radio mui-left">
+                    <label>暂无可使用的优惠券</label>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="goodsTemplate">
+    <% for (var i in cartList) { %>
+        <% if( cartList[i]["selected"] == 1 ){ %>
+        <div class="cp6">
+            <div class="c">
+                <a href="{:U('Mobile/Goods/goodsInfo')}?id=<%= cartList[i].goods_id %>"></a>
+            </div>
+            <div class="cp1_l">
+                <img src="<%= cartList[i].original_img %>" width="92" height="92">
+            </div>
+            <div class="cp1_r">
+                <p><%= cartList[i].goods_name %><% if( cartList[i]["spec_key_name"]){ %>[<%= cartList[i].spec_key_name %>]<% } %></p>
+                <span>￥<%= cartList[i].member_goods_price %></span><span style="float:right; color:#666">X<%= cartList[i].goods_num %></span>
+            </div>
+
+        </div>
+        <% } %>
+    <% } %>
+</script>
+
+<script type="text/html" id="addressTemplate">
     <div class="site1">
         <div class="c">
             <a href="{:U('User/address_list',array('source'=>'cart2'))}"></a>
         </div>
         <div class="consignee">
-            <p>收货人：{$address.consignee} {$address.mobile}</p>
-            <p>地址：{$region_list[$address['province']]['name']} {$region_list[$address['city']]['name']} {$region_list[$address['district']]['name']} {$address.address}</p>
+            <p >收货人：<%= address.consignee %> <%= address.mobile %></p>
+            <p>地址：<%= address.province_name %> <%= address.city_name %> <%= address.district_name %> <%= address.address %></p>
         </div>
-        <input type="hidden" value="{$address.address_id}" name="address_id" />
+        <input type="hidden" value="<%= address.address_id %>" name="address_id" />
     </div>
-    <foreach name="cartList" item="v" key="k" >
-        <if condition = "$v['selected'] == 1" >
-            <div class="cp6">
-                <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v[goods_id]))}"></a></div>
-                <div class="cp1_l">
-                    <img src="{$v.goods_id|goods_thum_images=92,92}" width="92" height="92">
-                </div>
-                <div class="cp1_r">
-                    <p>{$v.goods_name}{: $v['spec_key_name'] ? "[".$v['spec_key_name']."]" : ""}</p>
-                    <span>￥{$v.member_goods_price}</span><span style="float:right; color:#666">X{$v.goods_num}</span>
-                </div>
-
-            </div>
-        </if>
-    </foreach>
-    <div class="site_txt1">
-        <a href="javascript:void(0);">优惠券 <span  class="coupon_span">{: !empty($couponList) ?  count($couponList).'张可用' : '无可用'}</span></a>
-        <div class="mui-input-group" style="display:none">
-            <notempty name="couponList">
-                <div class="mui-input-row mui-radio mui-left">
-                    <label>不使用优惠券</label>
-                    <input name="coupon" type="radio" value="0" checked class="couponClass" />
-                </div>
-                <foreach name="couponList" item="v"  key="k">
-                    <div class="mui-input-row mui-radio mui-left">
-                        <label>{$v['name']}</label>
-                        <input name="coupon" type="radio" value="{$v['id']}" class="couponClass" />
-                    </div>
-                </foreach>
-                <else/>
-                <div class="mui-input-row mui-radio mui-left">
-                    <label>暂无可使用的优惠券</label>
-                </div>
-            </notempty>
-        </div>
-    </div>
-
-    <div class="site_txt">运费<span>￥{$carriage_sum}</span></div>
-    <div class="site_txt">优惠金额<span id="privilege">￥0</span></div>
-    <div class="site_txt">合计<span id="total_fee">￥{$total_price.total_fee}</span></div>
-
-    <div class="site_txt">备注：</div>
-    <div class="site_txt" style="height:150px; margin-top: 1px;">
-        <textarea class="c1" name="userMessage" cols="" rows="" id="myMessage" placeholder="点击给店家留言"></textarea>
-    </div>
-    <div style="height:60px"></div>
+</script>
 
 
-
-
-    <div class="com_d">
-        <div class="com_d_r">
-            <div class="c_btn1"><a href="#picture">立即支付</a></div>
-            <div class="c_btn2"><a href="{:U('Cart/cart')}">取消</a></div>
-        </div>
-    </div>
-    
-
-    <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
-        <ul class="mui-table-view">
-            <li class="mui-table-view-cell" >
-                <if condition = "$user['user_money'] lt $total_price['total_fee'] " >
-                    <a href="javascript:void(0);" style="color: grey;">余额支付(余额不足)</a>
-                <else/>
-                    <a href="#" id="balanceButton">余额支付</a>
-                </if>
-            </li>
-        </ul>
-        <ul class="mui-table-view">
-            <li class="mui-table-view-cell">
-                <a href="#" onclick="submit_order('weChat');">微信安全支付</a>
-            </li>
-        </ul>
-        <ul class="mui-table-view">
-            <li class="mui-table-view-cell">
-                <a href="#picture"><b>取消</b></a>
-            </li>
-        </ul>
-    </div>
-
-
-</form>
-</body>
 <script>
 
-    $(".couponClass").change(['Data'],function(){
-        var couponId = $(this).val();
-        var money = {$total_price.total_fee};
-        if(couponId != 0){
-            $.ajax({
-                type:'post',
-                url:'{:U("Mobile/Cart/ajaxCoupon")}',
-                data:{couponId:couponId,money:money},
-                dataType:'json',
-                success:function(res){
-                    if(res.state == 1){
-                        $('#total_fee').text('￥'+res.data.money);
-                        $('#privilege').text('￥'+res.data.privilege);
-                    }else{
-                        alert(res.msg);
-                        $('#total_fee').text('￥'+money);
-                        $('#privilege').text('￥'+0);
-                    }
-                },
-                error:function(){
-                    alert('网络超时');
-                }
-
-            });
-        }else{
-            $('#total_fee').text('￥'+money);
-            $('#privilege').text('￥'+0);
-        }
-    });
-
-
-    var lock  = false;
-
-    function submit_order( key )
-    {
-        if( lock == true ){
-            alert('正在请求中...');
-            return;
-        }
-        kong  = true;
-        $.ajax({
-            type : "POST",
-            url:"{:U('Mobile/Cart/cart3')}",
-            data : $('#cart2_form').serialize(),
-            dataType: "json",
-            success: function(data){
-                lock  = false;
-                if(data.state != 1)
-                {
-                    alert(data.msg);
-                    return false;
-                }
-                if( key == "weChat"){
-                    location.href = "/index.php?m=Mobile&c=Order&a=toWeChatPay&id="+data.data;
-                    return false;
-                }
-                if( key == "balance"){
-                    toBalancePay(data.data);
-                    return false;
-                }
-            }
-        });
-    }
-
+    var lock  = true;
+    var money = 0;
+    var is_no_money = false;
     //mui初始化
     mui.init({
         swipeBack: true //启用右滑关闭功能
     });
-    if( document.getElementById("balanceButton") != undefined){
-        document.getElementById("balanceButton").addEventListener('tap', function(e) {
-            e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
-            var btnArray = ['取消', '好'];
-            mui.confirm('立即支付？',  '', btnArray, function(e) {
-                if (e.index == 1) {
-                    submit_order('balance');
-                } else {
-                    // info.value = '';
-                }
-            })
-        });
-    }
 
     /**
      * 余额支付按钮
@@ -206,17 +138,14 @@
                 if(res.state == 1){
                     alert(res.msg);
                     window.location.href = "{:U('Mobile/Order/weChatPaySuccess')}" ;
-                    return
                 }else{
                     alert(res.msg);
-                    window.location.href = "/index.php?m=Mobile&c=Order&a=order_detail&order_id="+id;
-                    return;
+                    window.location.href = "{:U('Mobile/Order/order_detail')}?order_id="+id;
                 }
             },
             error:function(){
                 alert('网络超时');
-                window.location.href = "/index.php?m=Mobile&c=Order&a=order_detail&order_id="+id;
-                return;
+                window.location.href = "{:U('Mobile/Order/order_detail')}&order_id="+id;
             }
 
         });
@@ -226,19 +155,117 @@
     $(function(){
         $(window).bind("pageshow", function () {
             $.ajax({
-                type : "POST",
-                url:"{:U('Mobile/Cart/ajaxGetCartList')}",
+                type : "GET",
+                url:"{:U('Wap/Cart/settlement')}",
                 dataType:'json',
                 success: function(data){
-                    if( data.state != 1 ){
-                        location.href = "{:U('Mobile/Order/order_list')}";
+                    if( data.state == 1 ){
+                        lock = false;
+                        money = data.data.total_price.total_fee;
+                        $("#addressDiv").html(template.render("addressTemplate", data.data));
+                        $("#goodsDiv").html(template.render("goodsTemplate", data.data));
+                        $("#couponDiv").html(template.render("couponTemplate", data.data));
+                        $("#carriage_sum").html("￥"+data.data.carriage_sum);
+                        $("#privilege").html("￥0");
+                        $("#total_fee").html("￥"+data.data.total_price.total_fee);
+                        is_no_money = data.data.is_no_money;
+                        if( is_no_money ){
+                            $("#balanceButton").css("color","grey");
+                            $("#balanceButton").html("余额支付(余额不足)");
+                        }
+                        after_pageshow();
+                    }else{
+                        alert(data.msg);
+                        location.href = data.data;
                     }
+                },
+                error:function(){
+                    alert("网络错误！");
                 }
             });
         })
     });
+
+    function submit_order( key )
+    {
+        if( lock == true ){
+            alert('正在请求中...');
+            return;
+        }
+        lock  = true;
+        $.ajax({
+            type : "POST",
+            url:"{:U('Mobile/Cart/cart3')}",
+            data : $('#cart2_form').serialize(),
+            dataType: "json",
+            success: function(data){
+                lock  = false;
+                if(data.state != 1)
+                {
+                    alert(data.msg);
+                    return false;
+                }
+                if( key == "weChat"){
+                    location.href = "{:U('Mobile/Order/toWeChatPay')}?id="+data.data;
+                    return false;
+                }
+                if( key == "balance"){
+                    toBalancePay(data.data);
+                    return false;
+                }
+            }
+        });
+    }
+
+    function after_pageshow(){
+        if( document.getElementById("balanceButton") != undefined){
+            document.getElementById("balanceButton").addEventListener('tap', function(e) {
+                e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+                if( !is_no_money ){
+                    var btnArray = ['取消', '好'];
+                    mui.confirm('立即支付？',  '', btnArray, function(e) {
+                        if (e.index == 1) {
+                            submit_order('balance');
+                        } else {
+                        }
+                    })
+                }
+            });
+        }
+        $("#weChatButton").click(function(){
+            submit_order('weChat');
+        });
+        $(".couponClass").change(function(){
+            var couponId = $(this).val();
+            if(couponId != 0){
+                $.ajax({
+                    type:'post',
+                    url:'{:U("Mobile/Cart/ajaxCoupon")}',
+                    data:{couponId:couponId,money:money},
+                    dataType:'json',
+                    success:function(res){
+                        if(res.state == 1){
+                            $('#total_fee').text('￥'+res.data.money);
+                            $('#privilege').text('￥'+res.data.privilege);
+                        }else{
+                            alert(res.msg);
+                            $('#total_fee').text('￥'+money);
+                            $('#privilege').text('￥'+0);
+                        }
+                    },
+                    error:function(){
+                        alert('网络超时');
+                    }
+
+                });
+            }else{
+                $('#total_fee').text('￥'+money);
+                $('#privilege').text('￥'+0);
+            }
+        });
+
+    }
+
 </script>
-
-
 <include file="Public/footer"/>
 </html>
