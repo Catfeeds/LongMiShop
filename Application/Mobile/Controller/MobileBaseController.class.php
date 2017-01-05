@@ -79,8 +79,8 @@ abstract class MobileBaseController extends BaseController {
     public function public_assign()
     {
         //用户上次访问时间
-        $push_message_time = push_message_time($this->user_id);
-        $this -> assign('push_message_time',$push_message_time);
+//        $push_message_time = push_message_time($this->user_id);
+//        $this -> assign('push_message_time',$push_message_time);
 
 //        $mobileMessage = cookie("mobileMessage");
 //        if ( !empty($mobileMessage) ){

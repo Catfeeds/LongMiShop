@@ -4,7 +4,7 @@
 <script type="text/javascript">
 
    
-    var list = {:getShareImages($lmshop_config,$goods[goods_id],$goodsCate,$user)};
+    var list = {:getShareImages($shopConfig,$goods[goods_id],$goodsCate,$user)};
     var ShareLink = list.link;       //分享连接
     var ShareImgUrl = list.imgurl;   //分享图片
     var controller = "{: CONTROLLER_NAME }"; //当前控制器
@@ -13,11 +13,11 @@
     var wx_desc = '';
 
     if(controller == 'Recommend' ){
-        wx_title = "{$lmshop_config['wechat_dift_title']}";
-        wx_desc =  "{$lmshop_config['wechat_dift_desc']}"
+        wx_title = "{$shopConfig['wechat_dift_title']}";
+        wx_desc =  "{$shopConfig['wechat_dift_desc']}"
     }else{
-        wx_title = "{$lmshop_config['wechat_wx_title']}";
-        wx_desc =  "{$lmshop_config['wechat_wx_desc']}"
+        wx_title = "{$shopConfig['wechat_wx_title']}";
+        wx_desc =  "{$shopConfig['wechat_wx_desc']}"
     }
 
 
