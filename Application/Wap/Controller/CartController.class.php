@@ -29,7 +29,7 @@ class CartController extends WapBaseController
     {
         $cartLogic = new \Common\Logic\CartLogic();
         if ($cartLogic->cart_count($this->user_id, 1) == 0) {
-            printJson(10002, "你的购物车没有选中商品", U('Mobile/Cart/cart'));
+            printJson(10002, "你的购物车没有选中商品", U('Mobile/Order/order_list'));
         }
 
         $address = getCurrentAddress($this->user_id, I('address_id', null));
@@ -41,9 +41,7 @@ class CartController extends WapBaseController
         $result = $cartLogic->cartList($this->user, $this->session_id, 1, 1); // 获取购物车商品
         $cartList = $result['cartList'];
         $totalPrice = $result['total_price'];
-        if( empty($cartList)){
-            printJson(10003, "正在跳转到订单列表页面", U('Mobile/Order/order_list'));
-        }
+        
         //计算邮费
         $sum = 0;
         $goods_data = array();
