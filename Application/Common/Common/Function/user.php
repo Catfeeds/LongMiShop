@@ -728,19 +728,18 @@ function userUpgradeDetection( $userId ,$points,$level)
     );
     if ($level <= 3 && $points > $levelArray[4]["condition"]) {
 //        $condition["goods_id"]
-        return false;
         userUpgrade($userId, 4);
     } elseif ($level <= 2 && $points > $levelArray[3]["condition"]) {
-        $time = strtotime(date("Y-m-d", strtotime("-1 month")));
-        $condition["last_buy_time"] = array("gt" => $time);
-        if (isExistenceDataWithCondition("users", $condition)) {
+//        $time = strtotime(date("Y-m-d", strtotime("-1 month")));
+//        $condition["last_buy_time"] = array("gt" => $time);
+//        if (isExistenceDataWithCondition("users", $condition)) {
             userUpgrade($userId, 3);
-        }
+//        }
     } elseif ($level <= 1 && $points > $levelArray[2]["condition"]) {
-        $condition["last_buy_time"] = array("gt" => "0");
-        if (isExistenceDataWithCondition("users", $condition)) {
+//        $condition["last_buy_time"] = array("gt" => "0");
+//        if (isExistenceDataWithCondition("users", $condition)) {
             userUpgrade($userId, 2);
-        }
+//        }
     }
     return false;
 }

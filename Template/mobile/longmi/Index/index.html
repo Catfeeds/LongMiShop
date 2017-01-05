@@ -72,7 +72,6 @@
 
 <script type="text/html" id="banner">
     <div class="mui-slider-group mui-slider-loop">
-        <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
         <div class="mui-slider-item  mui-slider-item-duplicate">
             <a href="<%= item[count].ad_link %>" <% if (item[count].target == 1 ) { %> target="_blank" <% } %> >
             <img src="<%= item[count].ad_code %>" title="<%= item[count].title %>" width="100%" style="<%= item[count].style %>">
@@ -85,7 +84,6 @@
             </a>
         </div>
         <% } %>
-        <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
         <div class="mui-slider-item  mui-slider-item-duplicate">
             <a href="<%= item[0].ad_link %>" <% if (item[0].target == 1 ) { %>target="_blank" <% } %> >
             <img src="<%= item[0].ad_code %>" title="<%= item[0].title %>" width="100%" style="<%= item[0].style %>">
