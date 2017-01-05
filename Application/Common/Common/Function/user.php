@@ -661,7 +661,7 @@ function increasePoints( $type , $userId  )
 
     switch ($type) {
         case "login":
-            $value = -10;
+            $value = 1;
             $text = "登录奖励";
             break;
         case "register":
