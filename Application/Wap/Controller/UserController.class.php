@@ -44,11 +44,12 @@ class UserController extends WapBaseController {
      */
     public function index(){
         $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCoupon( $this->user_id);
-        $this -> assign('couponCount', $result['data']['count']);
-        $this -> assign('orderCount' , $usersLogic -> getOrderCount( $this->user_id));
-        $this -> assign('number', getInviteNumber($this ->user_id) );
-        $this -> display();
+        $data = array(
+            "head_img" => $this -> user["head_pic"],
+            "userMoney" => $this ->user["user_money"],
+            "orderCount" => $usersLogic -> getOrderCount( $this->user_id )
+        );
+        printJson(true,"",$data);
     }
 
 
@@ -58,18 +59,12 @@ class UserController extends WapBaseController {
                 "level_name" => getLevelName( $this -> user["level"] ),
                 "points" => $this -> user["user_points"],
                 "head_img" => $this -> user["head_pic"],
-            )
+            ),
+            "log" => array(
+                "item" => M("points_log") -> where( array("user_id" => $this -> user_id ))->field("*, FROM_UNIXTIME(create_time) as time")->order("create_time desc")->select()
+            ),
+            "privilege" => getLevelPrivilege( $this -> user["level"] )
         );
-        $list  = M("points_log") -> where( array("user_id" => $this -> user_id ))->order("create_time desc")->select();
-        if( !empty($list)){
-             foreach ($list as &$item){
-                 $item["time"] = date("Y-m-d H:i",$item["create_time"]);
-             }
-        }
-        $data["log"]["item"] = $list;
-
-        $list  = M("points_log") -> where( array("user_id" => $this -> user_id ))->order("create_time desc")->limit(5)->select();
-        $data["privilege"]["item"] = $list;
         printJson(true,"",$data);
     }
 

@@ -661,7 +661,7 @@ function increasePoints( $type , $userId  )
 
     switch ($type) {
         case "login":
-            $value = 10;
+            $value = 1;
             $text = "登录奖励";
             break;
         case "register":
@@ -728,18 +728,19 @@ function userUpgradeDetection( $userId ,$points,$level)
     );
     if ($level <= 3 && $points > $levelArray[4]["condition"]) {
 //        $condition["goods_id"]
+        return false;
         userUpgrade($userId, 4);
     } elseif ($level <= 2 && $points > $levelArray[3]["condition"]) {
-//        $time = strtotime(date("Y-m-d", strtotime("-1 month")));
-//        $condition["last_buy_time"] = array("gt" => $time);
-//        if (isExistenceDataWithCondition("users", $condition)) {
+        $time = strtotime(date("Y-m-d", strtotime("-1 month")));
+        $condition["last_buy_time"] = array("gt" => $time);
+        if (isExistenceDataWithCondition("users", $condition)) {
             userUpgrade($userId, 3);
-//        }
+        }
     } elseif ($level <= 1 && $points > $levelArray[2]["condition"]) {
-//        $condition["last_buy_time"] = array("gt" => "0");
-//        if (isExistenceDataWithCondition("users", $condition)) {
+        $condition["last_buy_time"] = array("gt" => "0");
+        if (isExistenceDataWithCondition("users", $condition)) {
             userUpgrade($userId, 2);
-//        }
+        }
     }
     return false;
 }
@@ -780,4 +781,138 @@ function userDowngrade( $userId  ){
     $res = saveData("users", $condition, $data);
     increasePoints("downgrade", $userId);
     return $res;
+}
+
+
+/**
+ * 获取等级权限列表
+ * @param null $level
+ * @return array
+ */
+function getLevelPrivilege( $level = null ){
+    $items = array(
+        "1" => array(
+            "name" => "积分成长加速",
+            "value" => array(
+                "1" => false,
+                "2" => "× 1.2",
+                "3" => "× 1.7",
+                "4" => "× 2.2",
+            )
+        ),
+        "2" => array(
+            "name" => "购买包邮",
+            "value" => array(
+                "1" => true,
+                "2" => true,
+                "3" => true,
+                "4" => true,
+            )
+        ),
+        "3" => array(
+            "name" => "每月福利礼包",
+            "value" => array(
+                "1" => false,
+                "2" => true,
+                "3" => true,
+                "4" => true,
+            )
+        ),
+        "4" => array(
+            "name" => "生日礼包",
+            "value" => array(
+                "1" => "",
+                "2" => "普通生日礼包",
+                "3" => "Vip生日礼包",
+                "4" => "首席生日礼包",
+            )
+        ),
+        "5" => array(
+            "name" => "优先发货",
+            "value" => array(
+                "1" => false,
+                "2" => false,
+                "3" => true,
+                "4" => true,
+            )
+        ),
+        "6" => array(
+            "name" => "龙米定制服务",
+            "value" => array(
+                "1" => false,
+                "2" => false,
+                "3" => false,
+                "4" => true,
+            )
+        ),
+        "7" => array(
+            "name" => "用户提现",
+            "value" => array(
+                "1" => "满500元提现",
+                "2" => "满400元提现",
+                "3" => "满300元提现",
+                "4" => "满1元提现",
+            )
+        ),
+        "8" => array(
+            "name" => "优先福利活动",
+            "value" => array(
+                "1" => false,
+                "2" => true,
+                "3" => true,
+                "4" => true,
+            )
+        ),
+        "9" => array(
+            "name" => "生日双倍积分",
+            "value" => array(
+                "1" => false,
+                "2" => true,
+                "3" => true,
+                "4" => true,
+            )
+        ),
+        "10" => array(
+            "name" => "分享赚米",
+            "value" => array(
+                "1" => true,
+                "2" => true,
+                "3" => true,
+                "4" => true,
+            )
+        ),
+        "11" => array(
+            "name" => "专属客服",
+            "value" => array(
+                "1" => false,
+                "2" => false,
+                "3" => false,
+                "4" => "12小时专项服务",
+            )
+        ),
+        "12" => array(
+            "name" => "购买折扣",
+            "value" => array(
+                "1" => false,
+                "2" => "9.5折",
+                "3" => "9折",
+                "4" => "8折",
+            )
+        )
+    );
+    $array = array();
+    if( is_null($level)){
+        $array = $items;
+    }else{
+        foreach ( $items as $item){
+            if( $item["value"][$level] != false){
+                $array[] = $item;
+            }
+        }
+    }
+    $data = array(
+        "level" => $level,
+        "item" => $array
+    );
+    return $data;
 }
