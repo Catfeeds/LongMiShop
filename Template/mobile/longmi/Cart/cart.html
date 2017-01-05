@@ -2,7 +2,7 @@
 <body>
 <include file="Public/loading"/>
 
-<form id="cart_form" name="formCart" ></form>
+<form id="cart_form" name="formCart"  ></form>
 
 
 <include file="Public/js"/>
@@ -24,15 +24,15 @@
             return false;
         }
         before_request = 0;
+        var postData = $('#cart_form').serialize();
         var html = '<div class="mui-loading" style=" text-align:center"><img src="__STATIC__/images/loading.gif" width="90" height="90" style="width:90px !important; height:90px !important"></div>';
         $("#cart_form").html(html);
         $.ajax({
             type : "POST",
             url:"{:U('Mobile/Cart/ajaxCartList')}",//+tab,
-            data :  $('#cart_form').serialize(),// 你的formid
+            data :  postData,
             success: function(data){
-                $("#cart_form").html('');
-                $("#cart_form").append(data);
+                $("#cart_form").html(data);
                 imgErrorEvent();
                 ajaxGetCartData();
                 before_request = 1;
