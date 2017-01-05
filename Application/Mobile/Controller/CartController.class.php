@@ -27,6 +27,9 @@ class CartController extends MobileBaseController {
 //        }
     }
 
+    /**
+     * 购物车页面
+     */
     public function cart(){
         $this -> display();
     }
@@ -154,66 +157,6 @@ class CartController extends MobileBaseController {
      */
     public function cart2()
     {
-        $region_list = get_region_list();
-        $this -> assign('region_list',$region_list);
-
-        $address = getCurrentAddress( $this->user_id , I('address_id',null) );
-        addressTheJump(ACTION_NAME);
-        if( empty($address) ){
-        	header("Location: ".U('Mobile/User/edit_address',array('source'=>'cart2')));
-            exit;
-        }
-        $this -> assign('address',$address);
-
-        if($this->cartLogic->cart_count($this->user_id,1) == 0 ){
-            $this->error ('你的购物车没有选中商品',U('Mobile/Cart/cart'));
-            exit;
-        }
-
-        $result = $this -> cartLogic -> cartList($this->user, $this->session_id,1,1); // 获取购物车商品
-        $cartList = $result['cartList'];
-        $totalPrice = $result['total_price'];
-
-        //计算邮费
-        $sum = 0;
-        $goods_data = array();
-        foreach( $cartList  as $key => $item){
-
-            if($item['selected'] == 1){
-              $goods_res = M('goods')->field('weight,delivery_way') -> where("goods_id = '".$item['goods_id']."'")->find();
-              $goods_data[$key]['spec_key'] = $item['spec_key']; //商品规格
-              $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
-              $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
-              $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称
-              $goods_data[$key]['goods_price'] = $item['goods_price']; //商品价格
-              $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
-              $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
-              $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址
-            }
-
-            if($item['admin_id'] == 0){
-                $sum += $item['member_goods_price'];
-            }
-
-
-        }
-
-
-
-        $count_postage = count_postage($goods_data); //运费
-        $totalPrice['goods_fee'] = $totalPrice['total_fee'];
-        $totalPrice['total_fee'] = $totalPrice['total_fee'] + $count_postage['data']['count'];
-        // dd($count_postage);
-         $shippingList = M('Plugin') -> where("`type` = 'shipping' and status = 1")->select();// 物流公司
-
-        $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum ,$goods_data);
-
-        $this -> assign('couponList',$result['data']['result']);
-        $this -> assign('shippingList', $shippingList); // 物流公司
-        $this -> assign('cartList', $cartList); // 购物车的商品
-        $this -> assign('total_price', $totalPrice); // 总计
-        $this -> assign('carriage_sum',$count_postage['data']['count']); //总邮费
         $this -> display();
     }
 
