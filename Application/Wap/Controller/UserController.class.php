@@ -7,7 +7,9 @@ class UserController extends WapBaseController
 
     function exceptAuthActions()
     {
-        return array();
+        return array(
+            "userInfo"
+        );
     }
 
     /**
@@ -17,6 +19,24 @@ class UserController extends WapBaseController
     {
         parent::_initialize();
     }
+
+
+    /**
+     * 获取用户数据
+     */
+    public function userInfo()
+    {
+        $userInfo = $this -> user;
+        $return = array(
+            "is_login" => false
+        );
+        if( !empty($userInfo)){
+            $return["is_login"] = true;
+            $return["userInfo"] = $userInfo;
+        }
+        printJson(true, "", $return);
+    }
+
 
     /**
      * 用户中心首页
