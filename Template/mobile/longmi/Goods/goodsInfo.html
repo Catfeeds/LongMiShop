@@ -57,7 +57,8 @@
     </div>
     <div class="price price2">
         <div class="price_left">
-            ￥<span class="price_left_money">{:$goods['shop_price']*$user['discount']}</span>
+            ￥<span class="price_left_money">{$goods['shop_price']}</span>
+            {:$user['discount']<1?"会员价:￥<span class='price_left_money'>".number_format($goods['shop_price']*$user['discount'],2)."</span>":""}
         </div>
         <div class="price_right">
             <div class="c_btn2"><a href="#picture" >立即购买</a></div>
