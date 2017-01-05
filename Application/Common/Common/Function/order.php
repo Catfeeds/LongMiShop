@@ -343,6 +343,9 @@ function update_pay_status($order_sn,$pay_status = 1)
 
     commoditySalesVolume($order['order_id']);
 
+    //购买积分
+    increasePoints( "buy" , $order['user_id']  );
+
     sendWeChatMessageUseUserId( $order['user_id'] , "支付" , array("orderId" => $order['order_id']) );
     return true;
     //分销设置

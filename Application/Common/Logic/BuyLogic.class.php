@@ -681,6 +681,9 @@ class BuyLogic extends BaseLogic
             minus_stock($order["order_id"]);
         }
 
+        //更改最后一次购买时间
+        saveData("users",array("user_id"=>$this -> user['user_id']),array("last_buy_time"=>time()));
+
         //改变优惠券状态
         if( $this -> _post_data['useCoupon'] == true &&!empty($this -> _post_data['couponInfo']) ){
             $condition = array(

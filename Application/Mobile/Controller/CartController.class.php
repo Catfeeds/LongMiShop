@@ -179,7 +179,7 @@ class CartController extends MobileBaseController {
         $goods_data = array();
         foreach( $cartList  as $key => $item){
 
-            if($item['selected'] == 1){ 
+            if($item['selected'] == 1){
               $goods_res = M('goods')->field('weight,delivery_way') -> where("goods_id = '".$item['goods_id']."'")->find();
               $goods_data[$key]['spec_key'] = $item['spec_key']; //商品规格
               $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
@@ -188,7 +188,7 @@ class CartController extends MobileBaseController {
               $goods_data[$key]['goods_price'] = $item['goods_price']; //商品价格
               $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
               $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
-              $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址  
+              $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址
             }
 
             if($item['admin_id'] == 0){
