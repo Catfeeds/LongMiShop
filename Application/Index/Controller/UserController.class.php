@@ -12,6 +12,7 @@ class UserController extends IndexBaseController {
     {
         return array(
             'login',
+            'index',
             'doLogin',
             'register',
             'send_sms_reg_code',
