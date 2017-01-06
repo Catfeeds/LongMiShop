@@ -391,7 +391,7 @@ $(function(){
         var abs =number - fraction;
         if(
             Math.abs(abs) <= 3
-            &&  fraction > 50
+            &&  fraction > 30
         ){
             $("#game_over .taunt2").show();
             $("#game_over .result2").show();
