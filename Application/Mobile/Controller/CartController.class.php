@@ -113,7 +113,7 @@ class CartController extends MobileBaseController {
 
 
 
-    /*
+    /**
      * 请求获取购物车列表
      */
     public function cartList()
