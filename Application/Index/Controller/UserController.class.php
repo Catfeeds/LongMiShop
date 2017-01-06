@@ -43,13 +43,15 @@ class UserController extends IndexBaseController {
                     echo "pass<br/>";
                     continue;
                 }
-                $userInfo = findDataWithCondition("users", array("mobile" => $temp['电话']), "user_id");
+                $time = rand(1420041600,1476028800);
+                $userInfo = findDataWithCondition("users", array("mobile" => $temp['电话']), "user_id,reg_time");
 
+                $nickname = str_replace(array("/", " ", ":"), "",$temp["姓名"]);
                 if (empty($userInfo)) {
                     $map = array();
                     $map['user_money'] = 0;
-                    $map['nickname'] = $temp["姓名"];
-                    $map['reg_time'] = time();
+                    $map['nickname'] = $nickname;
+                    $map['reg_time'] = $time;
                     $map['mobile'] = $temp["电话"];
                     $map['mobile_validated'] = 1;
                     $map['oauth'] = "DAORU";
@@ -61,6 +63,7 @@ class UserController extends IndexBaseController {
                     }
                     $user_id = $userId;
                 } else {
+                    $time  =  $userInfo["reg_time"];
                     $user_id = $userInfo["user_id"];
                 }
                 echo "用户_" . $user_id . ":";
@@ -73,7 +76,7 @@ class UserController extends IndexBaseController {
                 $data = array(
                     'order_sn'          => $order_sn, // 订单编号
                     'user_id'           => $user_id, // 用户id
-                    'consignee'         => $temp["姓名"], // 收货人
+                    'consignee'         => $nickname, // 收货人
                     'province'          => 0,//'省份id',
                     'city'              => 0,//'城市id',
                     'district'          => 0,//'县',
@@ -93,15 +96,15 @@ class UserController extends IndexBaseController {
                     'integral_money'    => 0,//'使用积分抵多少钱',
                     'total_amount'      => 99 * $temp["数量"],// 订单总额
                     'order_amount'      => 99 * $temp["数量"],//'应付款金额',
-                    'add_time'          => time(), // 下单时间
+                    'add_time'          => $time+(60*60), // 下单时间
                     'order_prom_id'     => 0,//'订单优惠活动id',
                     'order_prom_amount' => 0,//'订单优惠活动优惠了多少钱',
                 );
 
                 $data['order_status'] = 4;
                 $data['shipping_status'] = 1;
-                $data['shipping_time'] = time();
-                $data['confirm_time'] = time();
+                $data['shipping_time'] = $time+(60*60*3);
+                $data['confirm_time'] = $time+(60*60*12*2);
                 $data['pay_status'] = 1;
                 $data['pay_code'] = "daoru";
                 $data['pay_name'] = "微信支付";
