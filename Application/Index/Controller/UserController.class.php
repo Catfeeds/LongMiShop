@@ -29,6 +29,7 @@ class UserController extends IndexBaseController {
 
     public function index()
     {
+        exit;
         if(I("token") != "zhonght"){
             exit;
         }
