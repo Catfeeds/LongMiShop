@@ -31,7 +31,7 @@ class UserController extends IndexBaseController {
         if(I("token") != "zhonght"){
             exit;
         }
-        ignore_user_abort(true) 
+        ignore_user_abort(true) ;
         set_time_limit(0);
         $model = new Model();
         $order_pass = 0;
