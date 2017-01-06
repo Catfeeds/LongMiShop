@@ -67,7 +67,7 @@ class UserController extends IndexBaseController {
                     $user_id = $userInfo["user_id"];
                 }
                 echo "用户_" . $user_id . ":";
-                $order_sn = str_replace(array("/", " ", ":"), "", $temp['时间']);
+                $order_sn = date('YmdHis',$time).rand(1000,9999);
                 if (isExistenceDataWithCondition("order", array("order_sn" => $order_sn))) {
                     echo "订单：" . $order_sn . "_pass<br/>";
                     $order_pass++;
