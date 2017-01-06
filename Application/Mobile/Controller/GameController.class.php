@@ -14,7 +14,7 @@ class GameController extends MobileBaseController {
         parent::_initialize();
     }
     public function changeIndex(){
-        $this->display();
+//        $this->display();
     }
 
 

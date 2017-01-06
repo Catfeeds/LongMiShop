@@ -2853,10 +2853,8 @@ Load—more a{
 
 .my_activity_div{
 	width: 100%;
-	height: 100%;
+	overflow: hidden;
 	padding-top: 10px;
-	background: #fff;
-
 }
 
 .my_activity_div ul li{
