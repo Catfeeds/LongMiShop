@@ -18,7 +18,7 @@ html, body {
 	width: 100%;
 }
 p,a,span{
-	/*font-family: "微软雅黑" !important;*/
+	font-family: "微软雅黑";
 }
 a:active {
 	color: #fff;
