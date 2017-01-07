@@ -581,7 +581,7 @@ function getRankPrivilege()
     return array(
         1 => array(
             "id"                   => 1,
-            "condition"            => 10,
+            "condition"            => 15,
             "growthRate"           => 1,
             "isDeliveryPriority"   => false,
             "cashWithdrawalAmount" => "500",
@@ -589,7 +589,7 @@ function getRankPrivilege()
         ),
         2 => array(
             "id"                   => 2,
-            "condition"            => 20,
+            "condition"            => 30,
             "growthRate"           => 1.2,
             "isDeliveryPriority"   => false,
             "cashWithdrawalAmount" => "400",
@@ -597,7 +597,7 @@ function getRankPrivilege()
         ),
         3 => array(
             "id"                   => 3,
-            "condition"            => 30,
+            "condition"            => 50,
             "growthRate"           => 1.7,
             "isDeliveryPriority"   => true,
             "cashWithdrawalAmount" => "300",
@@ -605,7 +605,7 @@ function getRankPrivilege()
         ),
         4 => array(
             "id"                   => 4,
-            "condition"            => 40,
+            "condition"            => 100,
             "growthRate"           => 2.2,
             "isDeliveryPriority"   => true,
             "cashWithdrawalAmount" => "1",
@@ -665,7 +665,7 @@ function increasePoints( $type , $userId  )
             $text = "登录奖励";
             break;
         case "register":
-            $value = 1;
+            $value = 2;
             $text = "注册赠送";
             break;
         case "sign":
@@ -673,7 +673,7 @@ function increasePoints( $type , $userId  )
             $text = "签到奖励";
             break;
         case "buy":
-            $value = 1;
+            $value = 10;
             $text = "购买奖励";
             break;
         case "upgrade":
