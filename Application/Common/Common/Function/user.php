@@ -735,14 +735,16 @@ function userUpgradeDetection( $userId ,$points,$level)
         if ( isExistenceDataWithCondition("order", $condition)) {
             userUpgrade($userId, 4);
         }
-    } elseif ($level <= 2 && $points > $levelArray[3]["condition"]) {
+    }
+    if ($level <= 2 && $points > $levelArray[3]["condition"]) {
         $time = strtotime(date("Y-m-d", strtotime("-1 month")));
         $condition["last_buy_time"] = array("gt" , $time);
         if (isExistenceDataWithCondition("users", $condition)) {
             userUpgrade($userId, 3);
             saveData( "users",array("user_id"=> $userId ) , array("points_clear_time" => strtotime(date("Y-m-d", strtotime("+1 month")) )) );
         }
-    } elseif ($level <= 1 && $points > $levelArray[2]["condition"]) {
+    }
+    if ($level <= 1 && $points > $levelArray[2]["condition"]) {
         $condition["last_buy_time"] = array("gt", "0");
         if (isExistenceDataWithCondition("users", $condition)) {
             userUpgrade($userId, 2);
@@ -789,16 +791,7 @@ function userUpgrade( $userId , $level )
  * @return bool
  */
 function userDowngrade( $userId  ){
-//    $condition = array(
-//        "user_id" => $userId
-//    );
-//    $data = array(
-//        "level"        => 1,
-//        "upgrade_time" => time()
-//    );
-//    $res = saveData("users", $condition, $data);
     increasePoints("downgrade", $userId);
-//    return $res;
 }
 
 
