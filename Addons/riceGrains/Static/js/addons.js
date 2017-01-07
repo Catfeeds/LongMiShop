@@ -11,6 +11,7 @@ var playerHeight;
 //分数
 var fraction=0;
 
+var is_one = true;
 var is_draw = false;
 var is_first_load = true;
 var is_over = false;
@@ -228,6 +229,7 @@ $(function(){
     function stop()
     {
         is_over = true;
+        document.getElementById('bg').pause();
         $("#game_over").show();
     }
 
@@ -404,10 +406,19 @@ $(function(){
 
     });
 
-
+    document.addEventListener('touchstart', function(){
+        if( is_one ){
+            is_one = false;
+            document.getElementById('audio').play();
+            document.getElementById('die_audio').play();
+            document.getElementById('bg').play();
+        }
+    }, false);
     /**
      * 开始
      */
 
     $(".page_1").show();
+
+
 });
