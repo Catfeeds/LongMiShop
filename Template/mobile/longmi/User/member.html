@@ -12,9 +12,9 @@
     <p id="level_name">等级：...</p>
 </div>
 
-<div class="my_nav">
+<div class="my_nav member_my_nav">
     <ul>
-        <li><a>拥有特权</a></li>
+        <li><a>拥有特权<span class="mui-icon mui-icon-arrowdown" id="privilege_list_btn" ></span></a></li>
     </ul>
 </div>
 <div class="mui-content" id="privilege_list"></div>
@@ -76,6 +76,12 @@
                     $("#level_name").html("等级："+data.data.user.level_name);
                     $("#log_list").html(template.render("logList", data.data.log));
                     $("#privilege_list").html(template.render("privilegeList", data.data.privilege));
+                    $("#privilege_list_btn").show();
+                    $("#privilege_list_btn").click(function(){
+                        $("#privilege_list").toggleClass("privilege_click");
+                        $("#privilege_list_btn").toggleClass("mui-icon-arrowdown");
+                        $("#privilege_list_btn").toggleClass("mui-icon-arrowup");
+                    });
                 }else{
                     alert(data.msg);
                 }
