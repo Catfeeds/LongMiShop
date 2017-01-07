@@ -3082,3 +3082,17 @@ table td {
 	border-bottom-color: #F5F5F5;
 }
 
+#privilege_list_btn{
+	display: none;;
+}
+#privilege_list ul{
+	max-height: 100px;
+}
+#privilege_list.privilege_click ul{
+	max-height: none !important;
+}
+
+.member_my_nav a span{
+	margin: 10px 5px 10px 0 ;
+	float: right;
+}
