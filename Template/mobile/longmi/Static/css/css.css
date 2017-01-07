@@ -294,7 +294,7 @@ img{
 	float: right;
 	width: 18px;
 	height: 18px;
-	background: url(images/pisScrollIcons.gif) -6px -7px no-repeat;
+	/*background: url(../images/pisScrollIcons.gif) -6px -7px no-repeat;*/
 	overflow: hidden;
 	margin: 11px 5px 0 5px;
 }
@@ -2357,24 +2357,6 @@ Load—more a{
 	height: 48px;
 	width: 48px;
 	margin-bottom: 5px;
-}
-.advance_a {
-	width: 100px;
-	margin-right: auto;
-	margin-left: auto;
-}
-.advance_a a {
-	border-radius: 4px;
-	color: #666666;
-	font-size: 16px;
-	display: block;
-	line-height: 35px;
-	text-align: center;
-	background-image: -moz-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
-	background-image: -webkit-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
-	background-image: -ms-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
-	border: 1px solid #e5e5e5;
-	margin-bottom: 10px;
 }
 .invoice a {
 	color: #FFF;

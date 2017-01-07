@@ -345,6 +345,8 @@ function update_pay_status($order_sn,$pay_status = 1)
 
     //购买积分
     increasePoints( "buy" , $order['user_id']  );
+    //设置最后购买时间
+    saveData( "users",array("user_id"=> $order['user_id']) , array("last_buy_time" => time())  );
 
     sendWeChatMessageUseUserId( $order['user_id'] , "支付" , array("orderId" => $order['order_id']) );
     return true;
