@@ -581,7 +581,7 @@ function getRankPrivilege()
     return array(
         1 => array(
             "id"                   => 1,
-            "condition"            => 10,
+            "condition"            => 15,
             "growthRate"           => 1,
             "isDeliveryPriority"   => false,
             "cashWithdrawalAmount" => "500",
@@ -589,7 +589,7 @@ function getRankPrivilege()
         ),
         2 => array(
             "id"                   => 2,
-            "condition"            => 20,
+            "condition"            => 30,
             "growthRate"           => 1.2,
             "isDeliveryPriority"   => false,
             "cashWithdrawalAmount" => "400",
@@ -597,7 +597,7 @@ function getRankPrivilege()
         ),
         3 => array(
             "id"                   => 3,
-            "condition"            => 30,
+            "condition"            => 50,
             "growthRate"           => 1.7,
             "isDeliveryPriority"   => true,
             "cashWithdrawalAmount" => "300",
@@ -605,7 +605,7 @@ function getRankPrivilege()
         ),
         4 => array(
             "id"                   => 4,
-            "condition"            => 40,
+            "condition"            => 100,
             "growthRate"           => 2.2,
             "isDeliveryPriority"   => true,
             "cashWithdrawalAmount" => "1",
@@ -665,7 +665,7 @@ function increasePoints( $type , $userId  )
             $text = "登录奖励";
             break;
         case "register":
-            $value = 1;
+            $value = 2;
             $text = "注册赠送";
             break;
         case "sign":
@@ -673,7 +673,7 @@ function increasePoints( $type , $userId  )
             $text = "签到奖励";
             break;
         case "buy":
-            $value = 1;
+            $value = 10;
             $text = "购买奖励";
             break;
         case "upgrade":
@@ -682,7 +682,11 @@ function increasePoints( $type , $userId  )
             break;
         case "downgrade":
             $value = -$userPoints;
-            $text = "积分清空";
+            $text = "积分清空,降级";
+            break;
+        case "downgrade2":
+            $value = 0;
+            $text = "降级";
             break;
         default:
             break;
@@ -727,19 +731,23 @@ function userUpgradeDetection( $userId ,$points,$level)
         "user_id" => $userId
     );
     if ($level <= 3 && $points > $levelArray[4]["condition"]) {
-//        $condition["goods_id"]
-        userUpgrade($userId, 4);
+        $condition["total_amount"] = array("egt","20000");
+        if ( isExistenceDataWithCondition("order", $condition)) {
+            userUpgrade($userId, 4);
+        }
     } elseif ($level <= 2 && $points > $levelArray[3]["condition"]) {
-//        $time = strtotime(date("Y-m-d", strtotime("-1 month")));
-//        $condition["last_buy_time"] = array("gt" => $time);
-//        if (isExistenceDataWithCondition("users", $condition)) {
+        $time = strtotime(date("Y-m-d", strtotime("-1 month")));
+        $condition["last_buy_time"] = array("gt" , $time);
+        if (isExistenceDataWithCondition("users", $condition)) {
             userUpgrade($userId, 3);
-//        }
+            saveData( "users",array("user_id"=> $userId ) , array("points_clear_time" => strtotime(date("Y-m-d", strtotime("+1 month")) )) );
+        }
     } elseif ($level <= 1 && $points > $levelArray[2]["condition"]) {
-//        $condition["last_buy_time"] = array("gt" => "0");
-//        if (isExistenceDataWithCondition("users", $condition)) {
+        $condition["last_buy_time"] = array("gt", "0");
+        if (isExistenceDataWithCondition("users", $condition)) {
             userUpgrade($userId, 2);
-//        }
+            saveData( "users",array("user_id"=> $userId ) , array("points_clear_time" => strtotime(date("Y-m-d", strtotime("+1 month")) )) );
+        }
     }
     return false;
 }
@@ -781,16 +789,16 @@ function userUpgrade( $userId , $level )
  * @return bool
  */
 function userDowngrade( $userId  ){
-    $condition = array(
-        "user_id" => $userId
-    );
-    $data = array(
-        "level"        => 1,
-        "upgrade_time" => time()
-    );
-    $res = saveData("users", $condition, $data);
+//    $condition = array(
+//        "user_id" => $userId
+//    );
+//    $data = array(
+//        "level"        => 1,
+//        "upgrade_time" => time()
+//    );
+//    $res = saveData("users", $condition, $data);
     increasePoints("downgrade", $userId);
-    return $res;
+//    return $res;
 }
 
 
