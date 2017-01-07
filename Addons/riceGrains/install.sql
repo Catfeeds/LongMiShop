@@ -4,10 +4,10 @@ CREATE TABLE `lm_addons_ricegrains_record` (
   `fraction` int(11) DEFAULT NULL,
   `create_time` int(10) DEFAULT NULL,
   `openid` varchar(50) DEFAULT NULL,
+  `level` tinyint(1) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 
