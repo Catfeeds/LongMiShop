@@ -1,52 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <meta name="format-detection" content="telephone=no" />
-    <title>{$goods.goods_name}_{$shopConfig.shop_info_store_title}</title>
-    <meta http-equiv="keywords" content="{$shopConfig['shop_info_store_keyword']}" />
-    <meta name="description" content="{$shopConfig['shop_info_store_desc']}" />
-    <script src="__STATIC__/js/mui.min.js"></script>
-    <script src="__STATIC__/js/jquery.min.js"></script>
-    <script src="__STATIC__/js/function.js"></script>
-    <script src="__STATIC__/js/TouchSlide.js"></script>
-    <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
-    <link href="__STATIC__/css/css.css?{$versionToken}" rel="stylesheet" />
-    <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
-    <script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
-    <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/layer.css"/>
-    <script src="__PUBLIC__/js/global.js"></script>
-    <script src="__PUBLIC__/js/mobile_common.js"></script>
-    <script src="__STATIC__/js/common.js"></script>
-    <script type="text/javascript">
-        function share(){
-            $('#share').show();
-        }
-    </script>
-    <style >
-        #share{
-            z-index:9999999999999999999999;
-            position:fixed;
-            width:100%;
-            height:100%;
-            top:0px;
-            right:0px;
-            margin-top:0;
-            background:url('__STATIC__/images/share.png') right top no-repeat #000;
-            background-size:80%;
-            opacity: 0.8;
-        }
-        .price_main img{
-            padding-top: 0px;
-            padding-bottom: 0px;
-        }
-    </style>
-    <link href="__STATIC__/css/htmleaf-demo.css" rel="stylesheet" />
-
-</head>
+<include file="Public/header2"/>
+<link href="__STATIC__/css/htmleaf-demo.css" rel="stylesheet" />
 <body>
+<include file="Public/loading"/>
+
+
+
 <div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
 
 
@@ -121,6 +79,10 @@
     </div>
 
 </form>
+<include file="Public/js"/>
+<include file="Public/nav"/>
+</body>
+
 <script type="text/javascript">
 
     var specNumber = -1;
@@ -270,8 +232,30 @@
     }
 
 </script>
-<include file="Public/nav"/>
-</body>
+
+<script type="text/javascript">
+    function share(){
+        $('#share').show();
+    }
+</script>
+<style >
+    #share{
+        z-index:9999999999999999999999;
+        position:fixed;
+        width:100%;
+        height:100%;
+        top:0px;
+        right:0px;
+        margin-top:0;
+        background:url('__STATIC__/images/share.png') right top no-repeat #000;
+        background-size:80%;
+        opacity: 0.8;
+    }
+    .price_main img{
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+</style>
 <style>
     .nav_d {
         z-index: 0;

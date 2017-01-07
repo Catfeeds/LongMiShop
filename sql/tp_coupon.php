@@ -521,5 +521,8 @@ MODIFY COLUMN `value`  decimal(11,2) NOT NULL DEFAULT 0 COMMENT '更改数值' A
 MODIFY COLUMN `before_points`  decimal(11,2) NOT NULL DEFAULT 0 COMMENT '改变前的数值' AFTER `text`,
 MODIFY COLUMN `after_points`  decimal(11,2) NOT NULL DEFAULT 0 COMMENT '改变后的数值' AFTER `before_points`;
 
+ALTER TABLE `lm_users`
+MODIFY COLUMN `points_clear_time`  int(11) NOT NULL DEFAULT 0 COMMENT '积分清除时间' AFTER `frozen_money`;
+
 
   ";
