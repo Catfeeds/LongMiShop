@@ -57,6 +57,7 @@
 <div class="index_title" id="main-container2-btn">
     <img src="__STATIC__/images/new/suixinda.png">
     <img src="__STATIC__/images/new/suixinda6.jpg">
+    <span class="mui-icon mui-icon-arrowdown" ></span>
 </div>
 
 <div class="mui-content" id="main-container2"></div>
@@ -192,8 +193,9 @@
                     $("#main-container2").hide();
                     $("#main-container2-btn").click(function(){
                         $("#main-container2").slideToggle(300);
+                        $("#main-container2-btn span").toggleClass("mui-icon-arrowdown");
+                        $("#main-container2-btn span").toggleClass("mui-icon-arrowup");
                     });
-
                 }else{
                     alert(data.msg);
                 }
