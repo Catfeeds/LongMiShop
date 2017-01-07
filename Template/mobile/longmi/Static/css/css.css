@@ -18,7 +18,7 @@ html, body {
 	width: 100%;
 }
 p,a,span{
-	font-family: "微软雅黑" !important;
+	/*font-family: "微软雅黑" !important;*/
 }
 a:active {
 	color: #fff;
@@ -2426,6 +2426,12 @@ Load—more a{
 	width: 100%;
 	margin: 0;
 	padding: 0;
+}
+.index_title span{
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
 }
 
 
