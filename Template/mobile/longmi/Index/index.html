@@ -56,10 +56,11 @@
 
 <div class="index_title">
     <img src="__STATIC__/images/new/suixinda.png">
-    <img src="__STATIC__/images/new/suixinda6.jpg">
+    <img src="__STATIC__/images/new/suixinda6.jpg" id="main-container2-btn">
 </div>
 
 <div class="mui-content" id="main-container2"></div>
+<div style="clear: both;height: 40px; "></div>
 
 <include file="Public/js"/>
 <include file="Public/nav"/>
@@ -188,6 +189,11 @@
                     gallery.slider({
                         interval: 2000//自动轮播周期，若为0则不自动播放，默认为0；
                     });
+                    $("#main-container2").hide();
+                    $("#main-container2-btn").click(function(){
+                        $("#main-container2").toggle(300);
+                    });
+
                 }else{
                     alert(data.msg);
                 }
