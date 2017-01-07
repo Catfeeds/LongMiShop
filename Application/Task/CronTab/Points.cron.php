@@ -19,6 +19,7 @@ class PointsCronClass
         );
         $save = array(
             "level" => 2,
+            "discount" => 0.95,
             "upgrade_time" => time()
         );
         $userList = selectDataWithCondition("users",$condition);
@@ -38,6 +39,7 @@ class PointsCronClass
         $save = array(
             "level" => 1,
             "points_clear_time" => 0,
+            "discount" => 1,
             "upgrade_time" => time()
         );
         $userList = selectDataWithCondition("users",$condition);
