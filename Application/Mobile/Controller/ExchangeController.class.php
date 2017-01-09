@@ -26,6 +26,31 @@ class ExchangeController extends MobileBaseController {
     }
 
 
+    public function redeemCode(){
+        $orderNumber = getCountWithCondition("order",array('pay_status' => "1","user_id"=>$this->user_id));
+//        $orderNumber = 2;
+        if( $orderNumber > 1){
+            $is_get = true;
+            $condition = array(
+                "state"=>"0",
+                "gift_coupon_id" => "3",
+            );
+            $codeInfo = findDataWithCondition("coupon_code",$condition);
+            if( empty($codeInfo)){
+                $is_have = false;
+            }else{
+                $is_have = true;
+                $this -> assign( 'codeInfo' , $codeInfo );
+            }
+            $this -> assign( 'is_have' , $is_have );
+        }else{
+            $is_get = false;
+        }
+        $this -> assign( 'is_get' , $is_get );
+        $this -> display();
+    }
+
+
     /**
      * 兑换码检测 AJAX
      */

@@ -1,0 +1,56 @@
+<include file="Public/header"/>
+<body>
+<if condition = " $is_get">
+    <if condition = " $is_have">
+        <div class="tip_b">
+            <div>
+                <div>
+                    <strong>兑换码</strong>:
+                </div>
+            </div>
+        </div>
+        <div class="mui-content">
+            <input type="text"  class="login_text tip_text"  value="{$codeInfo.code}" readonly />
+        </div>
+        <div class="tip_b">
+            <div>
+                <div>
+                    <strong>提示</strong>:
+                </div>
+                <div style="margin-bottom:6px">
+                    复制上方兑换码兑换礼品吧！
+                </div>
+            </div>
+        </div>
+        <div class="mui-content">
+            <div class="login_btn">
+                <a href="{:U('Mobile/Exchange/exchange')}">去兑换</a>
+            </div>
+        </div>
+    <else/>
+        <div class="tip_b">
+            <div>
+                <div>
+                    <strong>提示</strong>:
+                </div>
+                <div style="margin-bottom:6px">
+                    兑换码已经被领取完！
+                </div>
+            </div>
+        </div>
+    </if>
+<else/>
+    <div class="tip_b">
+        <div>
+            <div>
+                <strong>提示</strong>:
+            </div>
+            <div style="margin-bottom:6px">
+                需要在龙米商城消费两次以上才可领取兑换码！
+            </div>
+        </div>
+    </div>
+</if>
+</body>
+<include file="Public/footer"/>
+</html>
