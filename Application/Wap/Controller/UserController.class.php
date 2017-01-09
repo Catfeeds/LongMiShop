@@ -64,7 +64,7 @@ class UserController extends WapBaseController
                 "points"     => $this->user["user_points"],
                 "head_img"   => $this->user["head_pic"],
                 "level" => $this->user["level"],
-                "points_clear_time" => date("Y-m-d H:i:s",$this->user["points_clear_time"]),
+                "points_clear_time" => date("Y-m-d",$this->user["points_clear_time"]),
             ),
             "log"       => array(
                 "item" => M("points_log")->where(array("user_id" => $this->user_id))->field("*, FROM_UNIXTIME(create_time) as time")->order("create_time desc,id desc")->select()
