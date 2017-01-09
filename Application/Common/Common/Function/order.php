@@ -348,7 +348,13 @@ function update_pay_status($order_sn,$pay_status = 1)
     //设置最后购买时间
     saveData( "users",array("user_id"=> $order['user_id']) , array("last_buy_time" => time())  );
 
+    //升级检测
+    $userInfo = get_user_info($order['user_id']);
+    userUpgradeDetection($userInfo['user_id'], $userInfo['user_points'], $userInfo['level']);
+    
     sendWeChatMessageUseUserId( $order['user_id'] , "支付" , array("orderId" => $order['order_id']) );
+
+
     return true;
     //分销设置
 //    M('rebate_log') -> where("order_id = {$order['order_id']}")->save(array('status'=>1));
