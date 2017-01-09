@@ -781,6 +781,7 @@ function userUpgrade( $userId , $level )
         "discount"     => $discount,
     );
     $res = saveData("users", $condition, $data);
+    changeOrderMemberMoney($level,$userId);
     increasePoints("upgrade", $userId);
     return $res;
 }
@@ -926,4 +927,52 @@ function getLevelPrivilege( $level = null ){
         "item" => $array
     );
     return $data;
+}
+
+
+
+
+function changeOrderMemberMoney( $level , $user_id ){
+    $discount = 1 ;
+    if( $level == 1){
+        $discount = 1 ;
+    }
+    if( $level == 2){
+        $discount = 0.95 ;
+    }
+    if( $level == 3){
+        $discount = 0.9 ;
+    }
+    if( $level == 4){
+        $discount = 0.8 ;
+    }
+    $condition2 = array(
+        "user_id" => $user_id,
+        "pay_status" => "0"
+    );
+    $orderList = selectDataWithCondition("order",$condition2);
+    if( !empty($orderList)){
+        foreach ( $orderList as $orderItem){
+            $condition3 = array("order_id" => $orderItem["order_id"]);
+            $orderGoods = selectDataWithCondition("order_goods",$condition3);
+            if( !empty($orderGoods)){
+                $money2 = 0;
+                foreach ( $orderGoods as $orderGoodsItem){
+                    $save2 = array(
+                        "member_goods_price" => $orderGoodsItem["goods_price"] * $discount
+                    );
+                    $money2 += $save2['member_goods_price']*$orderGoodsItem["goods_num"];
+                    saveData("order_goods",array('rec_id' => $orderGoodsItem["rec_id"]),$save2);
+                }
+                $save3 = array(
+                    "total_amount" => $money2 + $orderItem['shipping_price'],
+                    "goods_price" => $money2,
+                    "order_amount" => $money2 + $orderItem['shipping_price'] - $orderItem['coupon_price'] ,
+                );
+                saveData("order",$condition3,$save3);
+            }
+        }
+    }
+    M('cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price* {$discount} where (user_id ='".$user_id."')");
+
 }
