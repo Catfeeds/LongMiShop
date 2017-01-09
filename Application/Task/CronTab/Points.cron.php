@@ -26,35 +26,7 @@ class PointsCronClass
         saveData("users",$condition,$save);
         foreach ( $userList as $userItem){
             increasePoints("downgrade2", $userItem["user_id"]);
-            $condition2 = array(
-                "user_id" => $userItem["user_id"],
-                "pay_status" => "0"
-            );
-            $orderList = selectDataWithCondition("order",$condition2);
-            if( !empty($orderList)){
-                foreach ( $orderList as $orderItem){
-                    $condition3 = array("order_id" => $orderItem["order_id"]);
-                    $orderGoods = selectDataWithCondition("order_goods",$condition3);
-                    if( !empty($orderGoods)){
-                        $money2 = 0;
-                        foreach ( $orderGoods as $orderGoodsItem){
-                            $save2 = array(
-                                "member_goods_price" => $orderGoodsItem["goods_price"]* 0.95
-                            );
-                            $money2 += $save2['member_goods_price']*$orderGoodsItem["goods_num"];
-                            saveData("order_goods",array('rec_id' => $orderGoodsItem["rec_id"]),$save2);
-                        }
-                        $save3 = array(
-                            "total_amount" => $money2 + $orderItem['shipping_price'],
-                            "goods_price" => $money2,
-                            "order_amount" => $money2 + $orderItem['shipping_price'] - $orderItem['coupon_price'] ,
-                        );
-                        saveData("order",$condition3,$save3);
-                    }
-                }
-            }
-            M('cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price * 0.95 where (user_id ='".$userItem["user_id"]."')");
-
+            changeOrderMemberMoney(2,$userItem["user_id"]);
         }
 
 
@@ -75,36 +47,7 @@ class PointsCronClass
         saveData("users",$condition,$save);
         foreach ( $userList as $userItem){
             userDowngrade($userItem["user_id"]);
-            
-            $condition2 = array(
-                "user_id" => $userItem["user_id"],
-                "pay_status" => "0"
-            );
-            $orderList = selectDataWithCondition("order",$condition2);
-            if( !empty($orderList)){
-                foreach ( $orderList as $orderItem){
-                    $condition3 = array("order_id" => $orderItem["order_id"]);
-                    $orderGoods = selectDataWithCondition("order_goods",$condition3);
-                    if( !empty($orderGoods)){
-                        $money2 = 0;
-                        foreach ( $orderGoods as $orderGoodsItem){
-                            $save2 = array(
-                                "member_goods_price" => $orderGoodsItem["goods_price"]
-                            );
-                            $money2 += $save2['member_goods_price']*$orderGoodsItem["goods_num"];
-                            saveData("order_goods",array('rec_id' => $orderGoodsItem["rec_id"]),$save2);
-                        }
-                        $save3 = array(
-                            "total_amount" => $money2 + $orderItem['shipping_price'],
-                            "goods_price" => $money2,
-                            "order_amount" => $money2 + $orderItem['shipping_price'] - $orderItem['coupon_price'] ,
-                        );
-                        saveData("order",$condition3,$save3);
-                    }
-                }
-            }
-            M('cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price where (user_id ='".$userItem["user_id"]."')");
-
+            changeOrderMemberMoney(2,$userItem["user_id"]);
         }
     }
 
