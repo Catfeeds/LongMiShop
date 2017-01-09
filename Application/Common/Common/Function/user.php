@@ -648,7 +648,7 @@ function setUserPointsLog( $before_points , $after_points , $value , $userId , $
  */
 function increasePoints( $type , $userId  )
 {
-    return;
+//    return;
     $condition = array("user_id" => $userId);
     $userInfo = findDataWithCondition("users", $condition, "user_points,level");
     if (empty($userInfo)) {
