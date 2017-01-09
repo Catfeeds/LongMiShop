@@ -1,52 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <meta name="format-detection" content="telephone=no" />
-    <title>{$goods.goods_name}_{$lmshop_config.shop_info_store_title}</title>
-    <meta http-equiv="keywords" content="{$lmshop_config['shop_info_store_keyword']}" />
-    <meta name="description" content="{$lmshop_config['shop_info_store_desc']}" />
-    <script src="__STATIC__/js/mui.min.js"></script>
-    <script src="__STATIC__/js/jquery.min.js"></script>
-    <script src="__STATIC__/js/function.js"></script>
-    <script src="__STATIC__/js/TouchSlide.js"></script>
-    <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
-    <link href="__STATIC__/css/css.css?{$versionToken}" rel="stylesheet" />
-    <link href="__STATIC__/css/shopping_cart1.css" rel="stylesheet" />
-    <script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
-    <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/layer.css"/>
-    <script src="__PUBLIC__/js/global.js"></script>
-    <script src="__PUBLIC__/js/mobile_common.js"></script>
-    <script src="__STATIC__/js/common.js"></script>
-    <script type="text/javascript">
-        function share(){
-            $('#share').show();
-        }
-    </script>
-    <style >
-        #share{
-            z-index:9999999999999999999999;
-            position:fixed;
-            width:100%;
-            height:100%;
-            top:0px;
-            right:0px;
-            margin-top:0;
-            background:url('__STATIC__/images/share.png') right top no-repeat #000;
-            background-size:80%;
-            opacity: 0.8;
-        }
-        .price_main img{
-            padding-top: 0px;
-            padding-bottom: 0px;
-        }
-    </style>
-    <link href="__STATIC__/css/htmleaf-demo.css" rel="stylesheet" />
-
-</head>
+<include file="Public/header2"/>
+<link href="__STATIC__/css/htmleaf-demo.css" rel="stylesheet" />
 <body>
+<include file="Public/loading"/>
+
+
+
 <div id="share" style="display:none" onclick="$(this).css('display','none');"></div>
 
 
@@ -57,7 +15,8 @@
     </div>
     <div class="price price2">
         <div class="price_left">
-            ￥<span class="price_left_money">{$goods.shop_price}</span>
+            ￥<span class="price_left_money">{$goods['shop_price']}</span>
+            {:$user['discount']<1?"会员价:￥<span class='price_left_money'>".number_format($goods['shop_price']*$user['discount'],2)."</span>":""}
         </div>
         <div class="price_right">
             <div class="c_btn2"><a href="#picture" >立即购买</a></div>
@@ -80,7 +39,7 @@
             </div>
             <div class="cp2_r">
                 <p>{$goods.goods_name}</p>
-                <span id="goods_price">￥{$goods.shop_price}</span>
+                <span id="goods_price">￥{:$goods['shop_price']*$user['discount']}</span>
                 <div class="mui-numbox z-index" data-numbox-min="1" data-numbox-max="999999">
                     <button class="mui-btn mui-btn-numbox-minus" type="button" disabled=""  >-</button>
                     <input id="goods_num"  name="goods_num"   class="mui-input-numbox" type="text" value="1">
@@ -120,157 +79,183 @@
     </div>
 
 </form>
-    <script type="text/javascript">
-
-        var specNumber = -1;
-
-        $(function(){
-
-            $("#goods_num").change(function(){
-                get_goods_price();
-            });
-            get_goods_price();
-        });
-
-        function newSubmit(){
-            var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表
-            // 如果有属性选择项
-            if(spec_goods_price != null)
-            {
-                var goods_spec_arr = new Array();
-                $("input[name^='goods_spec']:checked").each(function(){
-                    goods_spec_arr.push($(this).val());
-                });
-                var spec_key = goods_spec_arr.sort(sortNumber).join('_');  //排序后组合成 key
-                if( spec_goods_price[spec_key] == null){
-                    alert("请选择规格");
-                    return;
-                }
-            }
-            myAjaxAddCart({$goods.goods_id},1,0);
-        }
-        function switch_spec(spec)
-        {
-            if( $(spec).hasClass("gray") ){
-                return;
-            }
-            $(spec).siblings().removeClass('m33_hover');
-            $(spec).addClass('m33_hover');
-            $(spec).siblings().children('input').prop('checked',false);
-            $(spec).find('input').prop('checked',true);
-            var div = $(spec).parent().parent();
-            specNumber = div.data("spec");
-            $(".optionsDiv").each(function(){
-                var specNumber2 = $(this).data("spec");
-                if( specNumber2 < specNumber+1 ){
-                    $(this).show();
-                }else if(specNumber2 == specNumber+1){
-                    $(this).show();
-                    $(this).find("li").removeClass('m33_hover');
-                    $(this).find("input[name^='goods_spec']:checked").attr("checked",false);
-                }else{
-                    $(this).hide();
-                    $(this).find("li").removeClass('m33_hover');
-                    $(this).find("input[name^='goods_spec']:checked").attr("checked",false);
-                }
-            });
-            get_goods_price();
-        }
-
-
-        function get_goods_price()
-        {
-            var goods_price = {$goods.shop_price}; // 商品起始价
-            var store_count = {$goods.store_count}; // 商品起始库存
-            var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表
-            // 如果有属性选择项
-            if(spec_goods_price != null)
-            {
-                goods_spec_arr = new Array();
-                $("input[name^='goods_spec']:checked").each(function(){
-                    goods_spec_arr.push($(this).val());
-                });
-                var spec_key = goods_spec_arr.sort(sortNumber).join('_');  //排序后组合成 key
-                if( spec_goods_price[spec_key] != null){
-                    goods_price = spec_goods_price[spec_key]['price']; // 找到对应规格的价格
-                    store_count = spec_goods_price[spec_key]['store_count']; // 找到对应规格的库存
-                }else{
-                    var tempSpecNumber = specNumber+1;
-                    var temp_goods_spec_arr ;
-                    $(".optionsDivNumber"+tempSpecNumber+" input").each(function(){
-                        temp_goods_spec_arr = goods_spec_arr;
-                        temp_goods_spec_arr.push($(this).val());
-                        var temp_spec_key = temp_goods_spec_arr.sort(sortNumber).join('_');
-                        removeFromArray(temp_goods_spec_arr,$(this).val());
-                        if(spec_goods_price[temp_spec_key] != null && spec_goods_price[temp_spec_key]['store_count'] == 0){
-                            $(this).parent().addClass("gray");
-                            $(this).parent().attr("disabled",true);
-                        }else{
-                            $(this).parent().removeClass("gray");
-                            $(this).parent().attr("disabled",false);
-                        }
-                    });
-                    return;
-                }
-            }
-            var goods_num = parseInt($("#goods_num").val());
-            // 库存不足的情况
-            if(goods_num > store_count)
-            {
-                goods_num = store_count;
-                alert('库存仅剩 '+store_count+' 件');
-                $("#goods_num").val(goods_num);
-            }
-            $("#goods_price").html('￥'+(goods_price*goods_num).toFixed(2)+''); // 变动价格显示
-
-        }
-
-        function sortNumber(a,b)
-        {
-            return a - b;
-        }
-
-        var removeFromArray = function (arr, val) {
-            var index = $.inArray(val, arr);
-            if (index >= 0)
-                arr.splice(index, 1);
-            return arr;
-        };
-
-        function myAjaxAddCart(goods_id,num,to_catr)
-        {
-            //如果有商品规格 说明是商品详情页提交
-            if($("#buy_goods_form").length > 0){
-                $.ajax({
-                    type : "POST",
-                    url:"/index.php?m=Mobile&c=Cart&a=ajaxAddCart",
-                    data : $('#buy_goods_form').serialize(),// 你的formid 搜索表单 序列化提交
-                    dataType:'json',
-                    success: function(data){
-                        // 加入购物车后再跳转到 购物车页面
-                        if(data.status < 0)
-                        {
-//                            layer.open({content: data.msg,time: 2});
-                            alert(data.msg);
-                            return false;
-                        }
-                        if(to_catr == 1)  //直接购买
-                        {
-                            location.href = "/index.php?m=Mobile&c=Cart&a=cart";
-                            return false;
-                        }
-                        alert("加入成功");
-                        mui('#picture').popover('toggle');
-                        ajaxGetCartData();
-                    }
-                });
-            }else{
-            }
-        }
-
-    </script>
+<include file="Public/js"/>
 <include file="Public/nav"/>
 </body>
+
+<script type="text/javascript">
+
+    var specNumber = -1;
+    var discount = {$user.discount};
+    $(function(){
+
+        $("#goods_num").change(function(){
+            get_goods_price();
+        });
+        get_goods_price();
+    });
+
+    function newSubmit(){
+        var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表
+        // 如果有属性选择项
+        if(spec_goods_price != null)
+        {
+            var goods_spec_arr = new Array();
+            $("input[name^='goods_spec']:checked").each(function(){
+                goods_spec_arr.push($(this).val());
+            });
+            var spec_key = goods_spec_arr.sort(sortNumber).join('_');  //排序后组合成 key
+            if( spec_goods_price[spec_key] == null){
+                alert("请选择规格");
+                return;
+            }
+        }
+        myAjaxAddCart({$goods.goods_id},1,0);
+    }
+    function switch_spec(spec)
+    {
+        if( $(spec).hasClass("gray") ){
+            return;
+        }
+        $(spec).siblings().removeClass('m33_hover');
+        $(spec).addClass('m33_hover');
+        $(spec).siblings().children('input').prop('checked',false);
+        $(spec).find('input').prop('checked',true);
+        var div = $(spec).parent().parent();
+        specNumber = div.data("spec");
+        $(".optionsDiv").each(function(){
+            var specNumber2 = $(this).data("spec");
+            if( specNumber2 < specNumber+1 ){
+                $(this).show();
+            }else if(specNumber2 == specNumber+1){
+                $(this).show();
+                $(this).find("li").removeClass('m33_hover');
+                $(this).find("input[name^='goods_spec']:checked").attr("checked",false);
+            }else{
+                $(this).hide();
+                $(this).find("li").removeClass('m33_hover');
+                $(this).find("input[name^='goods_spec']:checked").attr("checked",false);
+            }
+        });
+        get_goods_price();
+    }
+
+
+    function get_goods_price()
+    {
+        var goods_price = {$goods.shop_price}; // 商品起始价
+        var store_count = {$goods.store_count}; // 商品起始库存
+        var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表
+        // 如果有属性选择项
+        if(spec_goods_price != null)
+        {
+            goods_spec_arr = new Array();
+            $("input[name^='goods_spec']:checked").each(function(){
+                goods_spec_arr.push($(this).val());
+            });
+            var spec_key = goods_spec_arr.sort(sortNumber).join('_');  //排序后组合成 key
+            if( spec_goods_price[spec_key] != null){
+                goods_price = spec_goods_price[spec_key]['price']; // 找到对应规格的价格
+                store_count = spec_goods_price[spec_key]['store_count']; // 找到对应规格的库存
+            }else{
+                var tempSpecNumber = specNumber+1;
+                var temp_goods_spec_arr ;
+                $(".optionsDivNumber"+tempSpecNumber+" input").each(function(){
+                    temp_goods_spec_arr = goods_spec_arr;
+                    temp_goods_spec_arr.push($(this).val());
+                    var temp_spec_key = temp_goods_spec_arr.sort(sortNumber).join('_');
+                    removeFromArray(temp_goods_spec_arr,$(this).val());
+                    if(spec_goods_price[temp_spec_key] != null && spec_goods_price[temp_spec_key]['store_count'] == 0){
+                        $(this).parent().addClass("gray");
+                        $(this).parent().attr("disabled",true);
+                    }else{
+                        $(this).parent().removeClass("gray");
+                        $(this).parent().attr("disabled",false);
+                    }
+                });
+                return;
+            }
+        }
+        var goods_num = parseInt($("#goods_num").val());
+        // 库存不足的情况
+        if(goods_num > store_count)
+        {
+            goods_num = store_count;
+            alert('库存仅剩 '+store_count+' 件');
+            $("#goods_num").val(goods_num);
+        }
+        $("#goods_price").html('￥'+(goods_price*goods_num*discount).toFixed(2)+''); // 变动价格显示
+
+    }
+
+    function sortNumber(a,b)
+    {
+        return a - b;
+    }
+
+    var removeFromArray = function (arr, val) {
+        var index = $.inArray(val, arr);
+        if (index >= 0)
+            arr.splice(index, 1);
+        return arr;
+    };
+
+    function myAjaxAddCart(goods_id,num,to_catr)
+    {
+        //如果有商品规格 说明是商品详情页提交
+        if($("#buy_goods_form").length > 0){
+            $.ajax({
+                type : "POST",
+                url:"/index.php?m=Mobile&c=Cart&a=ajaxAddCart",
+                data : $('#buy_goods_form').serialize(),// 你的formid 搜索表单 序列化提交
+                dataType:'json',
+                success: function(data){
+                    // 加入购物车后再跳转到 购物车页面
+                    if(data.status < 0)
+                    {
+//                            layer.open({content: data.msg,time: 2});
+                        alert(data.msg);
+                        return false;
+                    }
+                    if(to_catr == 1)  //直接购买
+                    {
+                        location.href = "/index.php?m=Mobile&c=Cart&a=cart";
+                        return false;
+                    }
+                    alert("加入成功");
+                    mui('#picture').popover('toggle');
+                    ajaxGetCartData();
+                }
+            });
+        }else{
+        }
+    }
+
+</script>
+
+<script type="text/javascript">
+    function share(){
+        $('#share').show();
+    }
+</script>
+<style >
+    #share{
+        z-index:9999999999999999999999;
+        position:fixed;
+        width:100%;
+        height:100%;
+        top:0px;
+        right:0px;
+        margin-top:0;
+        background:url('__STATIC__/images/share.png') right top no-repeat #000;
+        background-size:80%;
+        opacity: 0.8;
+    }
+    .price_main img{
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+</style>
 <style>
     .nav_d {
         z-index: 0;

@@ -1,5 +1,4 @@
-<include file="Public/header"/>
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/app.css?{$versionToken}"/>
+<include file="Public/header2"/>
 <style>
     .mui-control-content {
         background-color: #FFF;
@@ -7,8 +6,23 @@
     .mui-control-content .mui-loading {
         margin-top: 50px;
     }
+    .mui-plus.mui-android header.mui-bar{
+        display: none;
+    }
+    .mui-plus.mui-android .mui-bar-nav~.mui-content{
+        padding: 0;
+    }
+    .hm-description{
+        margin: .5em 0;
+    }
+
+    .hm-description>li {
+        font-size: 14px;
+        color: #8f8f94;
+    }
 </style>
 <body>
+<include file="Public/loading"/>
 <div class="mui-content">
     <div id="slider" class="mui-slider">
         <div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
@@ -67,6 +81,8 @@
         </div>
     </div>
 </div>
+<include file="Public/js"/>
+<include file="Public/nav"/>
 <script>
     $(function(){
         var windowHeight = $(window).height();
@@ -154,8 +170,6 @@
         <if condition="$_GET[type] eq 'WAITCCOMMENT'">ajax_sourch_submit( 3 , "item4mobile" , true);</if>
     });
 </script>
-<include file="Public/nav"/>
-
 </body>
 <include file="Public/footer"/>
 </html>

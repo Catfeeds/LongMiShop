@@ -43,22 +43,18 @@ class UserController extends MobileBaseController {
      * 用户中心首页
      */
     public function index(){
-        $usersLogic = new \Common\Logic\UsersLogic();
-        $result = $usersLogic -> getCoupon( $this->user_id);
-        $this -> assign('couponCount', $result['data']['count']);
-        $this -> assign('orderCount' , $usersLogic -> getOrderCount( $this->user_id));
-        $this -> assign('number', getInviteNumber($this ->user_id) );
         $this -> display();
     }
 
 
     public function logout(){
-        session_unset();
-        session_destroy();
-        setcookie('cn','',time()-3600,'/');
-        setcookie('user_id','',time()-3600,'/');
-        //$this->success("退出成功",U('Mobile/Index/index'));
-        header("Location:".U('Mobile/Index/index'));
+        exit;
+//        session_unset();
+//        session_destroy();
+//        setcookie('cn','',time()-3600,'/');
+//        setcookie('user_id','',time()-3600,'/');
+//        //$this->success("退出成功",U('Mobile/Index/index'));
+//        header("Location:".U('Mobile/Index/index'));
     }
 
     /*
@@ -73,7 +69,7 @@ class UserController extends MobileBaseController {
         $this -> assign('account_log',$account_log);
         $this -> assign('page',$data['show']);
         $this -> assign('count',$data['count']);
-        $this -> assign('limit',$data['limit'] * I('p'));
+        $this -> assign('limit',$data['limit'] * I('p',1));
 
         if($_GET['is_ajax'])
         {
@@ -1316,6 +1312,10 @@ class UserController extends MobileBaseController {
         $inviteData = getGiftInfo( $this -> shopConfig['prize_invite_value'] , $this -> shopConfig['prize_invite'] );
         $this -> assign('inviteData', getCallbackData($inviteData));
 
+        $this -> display();
+    }
+
+    public function member(){
         $this -> display();
     }
 

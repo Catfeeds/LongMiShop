@@ -22,11 +22,14 @@ class CartController extends MobileBaseController {
     public function  _initialize() {
         parent::_initialize();
         $this->cartLogic = new \Common\Logic\CartLogic();
-//                if($user)
-//                    M('Cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price * {$user[discount]} where (user_id ={$user[user_id]} or session_id = '{$this->session_id}') and prom_type = 0");
-//        }
+        if($this->user_id){
+            M('Cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price * {$this->user['discount']} where (user_id ={$this->user_id} or session_id = '{$this->session_id}') and prom_type = 0");
+        }
     }
 
+    /**
+     * 购物车页面
+     */
     public function cart(){
         $this -> display();
     }
@@ -110,7 +113,7 @@ class CartController extends MobileBaseController {
 
 
 
-    /*
+    /**
      * 请求获取购物车列表
      */
     public function cartList()
@@ -160,7 +163,7 @@ class CartController extends MobileBaseController {
         $address = getCurrentAddress( $this->user_id , I('address_id',null) );
         addressTheJump(ACTION_NAME);
         if( empty($address) ){
-        	header("Location: ".U('Mobile/User/edit_address',array('source'=>'cart2')));
+            header("Location: ".U('Mobile/User/edit_address',array('source'=>'cart2')));
             exit;
         }
         $this -> assign('address',$address);
@@ -179,16 +182,16 @@ class CartController extends MobileBaseController {
         $goods_data = array();
         foreach( $cartList  as $key => $item){
 
-            if($item['selected'] == 1){ 
-              $goods_res = M('goods')->field('weight,delivery_way') -> where("goods_id = '".$item['goods_id']."'")->find();
-              $goods_data[$key]['spec_key'] = $item['spec_key']; //商品规格
-              $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
-              $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
-              $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称
-              $goods_data[$key]['goods_price'] = $item['goods_price']; //商品价格
-              $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
-              $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
-              $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址  
+            if($item['selected'] == 1){
+                $goods_res = M('goods')->field('weight,delivery_way') -> where("goods_id = '".$item['goods_id']."'")->find();
+                $goods_data[$key]['spec_key'] = $item['spec_key']; //商品规格
+                $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
+                $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
+                $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称
+                $goods_data[$key]['goods_price'] = $item['goods_price']; //商品价格
+                $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
+                $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
+                $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址
             }
 
             if($item['admin_id'] == 0){
@@ -204,7 +207,7 @@ class CartController extends MobileBaseController {
         $totalPrice['goods_fee'] = $totalPrice['total_fee'];
         $totalPrice['total_fee'] = $totalPrice['total_fee'] + $count_postage['data']['count'];
         // dd($count_postage);
-         $shippingList = M('Plugin') -> where("`type` = 'shipping' and status = 1")->select();// 物流公司
+        $shippingList = M('Plugin') -> where("`type` = 'shipping' and status = 1")->select();// 物流公司
 
         $usersLogic = new \Common\Logic\UsersLogic();
         $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum ,$goods_data);

@@ -1,6 +1,7 @@
-<include file="Public/header"/>
-
+<include file="Public/header2"/>
 <body>
+<include file="Public/loading"/>
+
 <div class="top_nav">
     <div class="top_nav_left">
         <a href="{:U('Mobile/Goods/goodsList')}">全部</a>
@@ -20,168 +21,189 @@
     </form>
 </div>
 
-
-
-<div id="slider" class="mui-slider" >
-    <php>$adv_array =array();</php>
-    <adv pid ="2" limit="5" item="v">
-        <php>$adv_array[] = $v;</php>
-    </adv>
-    <php>$adv_array_count = count($adv_array) - 1;</php>
-    <notempty name = "adv_array">
-        <div class="mui-slider-group mui-slider-loop">
-            <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
-            <div class="mui-slider-item  mui-slider-item-duplicate">
-                <a href="{$adv_array[$adv_array_count]['ad_link']}" <if condition="$adv_array[$adv_array_count]['target'] eq 1">target="_blank"</if>>
-                <img src="{$adv_array[$adv_array_count]['ad_code']}" title="{$adv_array[$adv_array_count]['title']}"width="100%" style="{$adv_array[$adv_array_count]['style']}">
-                </a>
-            </div>
-            <foreach name="adv_array" item="v" >
-                <div class="mui-slider-item">
-                    <a href="{$v.ad_link}" <if condition="$v['target'] eq 1">target="_blank"</if>>
-                    <img src="{$v[ad_code]}" title="{$v[title]}"width="100%" style="{$v[style]}">
-                    </a>
-                </div>
-            </foreach>
-            <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
-            <div class="mui-slider-item  mui-slider-item-duplicate">
-                <a href="{$adv_array[0]['ad_link']}" <if condition="$adv_array[0]['target'] eq 1">target="_blank"</if>>
-                <img src="{$adv_array[0]['ad_code']}" title="{$adv_array[0]['title']}" width="100%" style="{$adv_array[0]['style']}">
-                </a>
-            </div>
-        </div>
-        <div class="mui-slider-indicator">
-            <php>$adv_array_key = 0;</php>
-            <foreach name="adv_array" item="v" >
-                <!--<div class="mui-indicator <if condition='$adv_array_key++ eq 0'> mui-active</if>"></div>-->
-            </foreach>
-        </div>
-    </notempty>
-</div>
-
-
+<div id="slider" class="mui-slider" ></div>
 
 <div class="top_menu">
     <ul>
         <li style="background-image:url('__STATIC__/images/new/top_menu_1.png')">
             <p>
-                <a href="{:U('Mobile/User/account')}"><b>钱包<br/><span>{:$user['user_money']?$user['user_money']:0}</span></b></a>
+                <a href="{:U('Mobile/User/account')}"><b>钱包<br/><span id="userMoney">...</span></b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_2.png')">
             <p>
-                <a href="{:U('Mobile/User/coupon')}"><b>优惠券<br/><span>{$couponCount}</span></b></a>
+                <a href="{:U('Mobile/User/coupon')}"><b>优惠券<br/><span id="couponCount">...</span></b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_3.png')">
             <p>
-                <a href="{:U('Mobile/Activity/index')}"><b>活动<br/><span>2</span></b></a>
+                <a href="{:U('Mobile/Activity/index')}"><b>活动<br/><span id="activityCount">...</span></b></a>
             </p>
         </li>
         <li style="background-image:url('__STATIC__/images/new/top_menu_4.png')">
             <p>
-                <a href="{:U('Mobile/User/myPoster')}"><b>赚米<br/><span>{$inviteNumber}</span></b></a>
+                <a href="{:U('Mobile/User/myPoster')}"><b>赚米<br/><span id="inviteNumber">...</span></b></a>
             </p>
         </li>
     </ul>
 </div>
-
 
 <div class="index_title">
     <img src="__STATIC__/images/new/suixinda3.png">
 </div>
 
-<div class="mui-content">
-    <ul class="mui-table-view">
-        <foreach name="newGoods" item="newGoodsItem" key="newGoodsKey">
-            <li class="my_index_cp_li">
-                <div class="mui-slider-handle">
-                    <div class="c"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']))}"></a></div>
-                    <div class="cp_index">
-                        <div class="cp_index_l3">
-                            <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']))}">
-                                <img src="{$newGoodsItem.original_img}" width="92" height="92">
-                            </a>
-                        </div>
-                        <div class="cp_index_r">
-                            <p class="cj1">{:$newGoodsItem['goods_subtitle']?$newGoodsItem['goods_subtitle']:$newGoodsItem['goods_name']}</p>
-                            <p class="cj1">
-                                <span>{:$newGoodsItem['goods_label']?$newGoodsItem['goods_label']:$newGoodsItem['goods_name']}</span>
-                            </p>
-                            <p class="my_index_cp_li_p1">{$newGoodsItem.goods_name}</p>
-                            <p class="my_index_cp_li_p1">心动价：￥{$newGoodsItem.shop_price}</p>
-                            <p>
-                                <a class="cp_index_buy" href="{:U('Mobile/Goods/goodsInfo',array('id'=>$newGoodsItem['goods_id']));}">
-                                    立即购买
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </foreach>
-    </ul>
-</div>
+<div class="mui-content" id="main-container1"></div>
 
-
-<div class="index_title">
+<div class="index_title" id="main-container2-btn">
     <img src="__STATIC__/images/new/suixinda.png">
-
     <img src="__STATIC__/images/new/suixinda6.jpg">
+    <span class="mui-icon mui-icon-arrowdown" ></span>
 </div>
 
-<div class="mui-content">
-    <ul class="mui-table-view">
-        <foreach item="spec" key="key" name="favourite_goods">
-            <li class="my_index_spec_li ">
-                <div class="mui-slider-handle">
+<div class="mui-content" id="main-container2"></div>
+<div style="clear: both;height: 40px; "></div>
 
-                    <div class="cp_index">
-                        <div class="cp_index_l">
-                            <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$spec['goods_id']))}">
-                                <img src="{$spec['original_img']}" >
-                            </a>
-                        </div>
-                        <div class="cp_index_r">
-                            <p class="cj1">带走{$spec.goods_name}</p>
-                            <p >
-                                <span>{$spec.goods_subtitle}</span>
-                            </p>
-                            <p class="cj1">心动价：￥{$spec.shop_price}</p>
-                            <div class="my-mui-numbox z-index" data-numbox-min='0' data-numbox-max='99'>
-                                <button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,'{$spec.goods_id}','0','{$spec.store_count}');" type="button">-</button>
-                                <input id="goods_num_{$spec.goods_id}_0" class="mui-input-numbox cp_index_number" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  readonly value="{:$cart_data[$spec['goods_id'].'_0']['goods_num']?$cart_data[$spec['goods_id'].'_0']['goods_num']:0}"/>
-                                <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,'{$spec.goods_id}','0','{$spec.store_count}');" type="button">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </foreach>
-    </ul>
-</div>
+<include file="Public/js"/>
 <include file="Public/nav"/>
+
 </body>
 
 
-<include file="Public/footer"/>
 
 
-<script type="text/javascript">
+
+<script type="text/html" id="banner">
+    <div class="mui-slider-group mui-slider-loop">
+        <div class="mui-slider-item  mui-slider-item-duplicate">
+            <a href="<%= item[count].ad_link %>" <% if (item[count].target == 1 ) { %> target="_blank" <% } %> >
+            <img src="<%= item[count].ad_code %>" title="<%= item[count].title %>" width="100%" style="<%= item[count].style %>">
+            </a>
+        </div>
+        <% for (var i in item) { %>
+        <div class="mui-slider-item">
+            <a href="<%= item[i].ad_link %>" <% if (item[i].target == 1 ) { %>target="_blank" <% } %> >
+            <img src="<%= item[i].ad_code %>" title="<%= item[i].title %>" width="100%" style="<%= item[i].style %>">
+            </a>
+        </div>
+        <% } %>
+        <div class="mui-slider-item  mui-slider-item-duplicate">
+            <a href="<%= item[0].ad_link %>" <% if (item[0].target == 1 ) { %>target="_blank" <% } %> >
+            <img src="<%= item[0].ad_code %>" title="<%= item[0].title %>" width="100%" style="<%= item[0].style %>">
+            </a>
+        </div>
+    </div>
+    <div class="mui-slider-indicator">
+        <% for (var i in item) { %>
+        <!--<div class="mui-indicator <% if ( i == 0 ) { %> mui-active <% } %> " ></div>-->
+        <% } %>
+    </div>
+</script>
+
+<script type="text/html" id="goods1">
+    <ul class="mui-table-view">
+        <% for (var i in item) { %>
+        <li class="my_index_cp_li">
+            <div class="mui-slider-handle">
+                <div class="c"><a href="{:U('Mobile/Goods/goodsInfo')}?id=<%= item[i].goods_id %>"></a></div>
+                <div class="cp_index">
+                    <div class="cp_index_l3">
+                        <a href="{:U('Mobile/Goods/goodsInfo')}?id=<%= item[i].goods_id %>">
+                            <img src="<%= item[i].original_img %>" width="92" height="92">
+                        </a>
+                    </div>
+                    <div class="cp_index_r">
+                        <p class="cj1"><%= item[i].goods_subtitle?item[i].goods_subtitle:item[i].goods_name %></p>
+                        <p class="cj1">
+                            <span><%= item[i].goods_label?item[i].goods_label:item[i].goods_name %></span>
+                        </p>
+                        <p class="my_index_cp_li_p1"><%= item[i].goods_name %></p>
+                        <p class="my_index_cp_li_p1">心动价：￥<%= item[i].shop_price %></p>
+                        <p>
+                            <a class="cp_index_buy" href="{:U('Mobile/Goods/goodsInfo')}?id=<%= item[i].goods_id %>">
+                                立即购买
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <% } %>
+    </ul>
+</script>
+
+<script type="text/html" id="goods2">
+    <ul class="mui-table-view">
+        <% for (var i in item) { %>
+        <li class="my_index_spec_li ">
+            <div class="mui-slider-handle">
+
+                <div class="cp_index">
+                    <div class="cp_index_l">
+                        <a href="{:U('Mobile/Goods/goodsInfo')}?id=<%= item[i].goods_id %>">
+                            <img src="<%= item[i].original_img %>" >
+                        </a>
+                    </div>
+                    <div class="cp_index_r">
+                        <p class="cj1">带走<%= item[i].goods_name %></p>
+                        <p >
+                            <span><%= item[i].goods_subtitle %></span>
+                        </p>
+                        <p class="cj1">心动价：￥<%= item[i].shop_price %></p>
+                        <div class="my-mui-numbox z-index" data-numbox-min='0' data-numbox-max='99'>
+                            <button class="mui-btn mui-btn-numbox-minus" onclick="switch_num(-1,'<%= item[i].goods_id %>','0','<%= item[i].store_count %>');" type="button">-</button>
+                            <input id="goods_num_<%= item[i].goods_id %>_0" class="mui-input-numbox cp_index_number" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false'  readonly value="<%= item[i].cartNumber %>"/>
+                            <button class="mui-btn mui-btn-numbox-plus"  onclick="switch_num(1,'<%= item[i].goods_id %>','0','<%= item[i].store_count %>');" type="button">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <% } %>
+    </ul>
+</script>
+
+<script>
 
     $(function(){
-        TouchSlide({
-            slideCell:"#picScroll",
-            titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
-            autoPage:true, //自动分页
-            pnLoop:"false", // 前后按钮不循环
-            switchLoad:"_src", //切换加载，真实图片路径为"_src"
-            autoPlay:true
+        $.ajax({
+            type : "GET",
+            url:"{:U('Wap/Index/index')}",
+            dataType:'json',
+            success: function(data){
+                if( data.state == 1){
+                    $("#userMoney").html(data.data.top_menu.userMoney);
+                    $("#couponCount").html(data.data.top_menu.couponCount);
+                    $("#activityCount").html(data.data.top_menu.activityCount);
+                    $("#inviteNumber").html(data.data.top_menu.inviteNumber);
+                    $("#slider").html(template.render("banner", data.data.ad));
+                    $("#main-container1").html(template.render("goods1", data.data.newGoods));
+                    $("#main-container2").html(template.render("goods2", data.data.favouriteGoods));
+                    TouchSlide({
+                        slideCell:"#picScroll",
+                        titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+                        autoPage:true, //自动分页
+                        pnLoop:"false", // 前后按钮不循环
+                        switchLoad:"_src", //切换加载，真实图片路径为"_src"
+                        autoPlay:true
+                    });
+                    var gallery = mui('.mui-slider');
+                    gallery.slider({
+                        interval: 2000//自动轮播周期，若为0则不自动播放，默认为0；
+                    });
+                    $("#main-container2").hide();
+                    $("#main-container2-btn").click(function(){
+                        $("#main-container2").slideToggle(300);
+                        $("#main-container2-btn span").toggleClass("mui-icon-arrowdown");
+                        $("#main-container2-btn span").toggleClass("mui-icon-arrowup");
+                    });
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error:function(){
+                alert("网络错误！");
+            }
         });
-        var gallery = mui('.mui-slider');
-        gallery.slider({
-            interval: 2000//自动轮播周期，若为0则不自动播放，默认为0；
-        })
     });
 
     var before_request = 1; // 上一次请求是否已经有返回来, 有才可以进行下一次请求
@@ -207,7 +229,7 @@
         before_request = 0;
         $.ajax({
             type : "POST",
-            url:"{:U('Mobile/Cart/ajaxChangeCartData')}",
+            url:"{:U('Wap/Cart/ajaxChangeCartData')}",
             data : {number:number,goods_id:goods_id,key:key},
             dataType:"json",
             success: function(data){
@@ -219,7 +241,6 @@
                     }
                     cart_number += number;
                     ajaxGetCartData();
-//                    $(".my_cart .figure").html(cart_number);
                 }
                 before_request = 1;
             },
@@ -228,7 +249,6 @@
             }
         });
     }
-
     function flyCart( div_id ) {
         var img = $(div_id).parent().parent().parent().find('img');
         var flyElm = img.clone().css('opacity', 0.75);
@@ -251,6 +271,9 @@
             flyElm.remove();
         });
     }
-
 </script>
+
+<include file="Public/footer"/>
+
+
 </html>

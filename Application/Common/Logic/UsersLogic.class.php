@@ -85,6 +85,8 @@ class UsersLogic extends BaseLogic
                 $data['user_id'] = $user['user_id'];
                 M('users')->save($data);
             }
+            //注册送积分
+            increasePoints("register", $user['user_id']);
 //			// 会员注册送优惠券
 //			$coupon = M('coupon') -> where("send_end_time > ".time()." and ((createnum - send_num) > 0 or createnum = 0) and type = 2")->select();
 //			foreach ($coupon as $key => $val)
@@ -169,7 +171,8 @@ class UsersLogic extends BaseLogic
             M('coupon_list')->add(array('cid'=>$val['id'],'type'=>$val['type'],'uid'=>$user_id,'send_time'=>time()));
             M('Coupon') -> where("id = {$val['id']}")->setInc('send_num'); // 优惠券领取数量加一
         }
-        
+        //注册送积分
+        increasePoints("register", $user_id);
         return array('status'=>1,'msg'=>'注册成功','result'=>$user);
     }
 

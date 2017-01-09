@@ -1,0 +1,234 @@
+<include file="Public/header2"/>
+<body>
+<!--<include file="Public/loading"/>-->
+
+<form name="buy_goods_form" method="post" id="buy_goods_form" >
+    <img src="{$goods_images_list.0.image_url}" class="goods_info_banner" id="goods_info_banner" />
+    <div class="price">
+        <div class="price_left">{$goods.goods_name}</div>
+    </div>
+    <div class="price price2">
+        <div class="price_left">
+            ￥<span class="price_left_money">{$goods.shop_price}</span>
+        </div>
+        <div class="price_right">
+            <div class="c_btn2"><a href="#picture" >立即购买</a></div>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+
+    <div class="tabBox">
+        <div class="bd" >
+            <div class="con goods_content">
+                {$goods.hide_goods_content|htmlspecialchars_decode}
+                {$goods.goods_content|htmlspecialchars_decode}
+            </div>
+        </div>
+    </div>
+    <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+        <div class="cp2">
+            <div class="cp2_l">
+                <img src="{$goods.original_img}" width="92" height="92">
+            </div>
+            <div class="cp2_r">
+                <p>{$goods.goods_name}</p>
+                <span id="goods_price">￥{$goods.shop_price}</span>
+                <div class="mui-numbox z-index" data-numbox-min="1" data-numbox-max="999999">
+                    <button class="mui-btn mui-btn-numbox-minus" type="button" disabled=""  >-</button>
+                    <input id="goods_num"  name="goods_num"   class="mui-input-numbox" type="text" value="1">
+                    <input type="hidden" name="goods_id" value="{$goods.goods_id}"/>
+                    <button class="mui-btn mui-btn-numbox-plus" type="button"  >+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="m33">
+            <php> $number = 0 ;</php>
+            <foreach item="spec" key="key" name="filter_spec">
+                <div class="optionsDiv optionsDivNumber{$number}" data-spec = "{$number}" style=" <if condition='$number neq 0 '> display: none;</if> " >
+                    <div class="cp2_titel">{$key}</div>
+                    <ul>
+                        <foreach name="spec" item="v2" key="k2">
+                            <li onclick="switch_spec(this);">
+                                <p>
+                                    <a href="javascript:;"  title="{$v2[item]}" >{$v2[item]}</a>
+                                </p>
+                                <input type="radio" style="display:none;" name="goods_spec[{$key}]" value="{$v2[item_id]}" />
+                            </li>
+                        </foreach>
+                    </ul>
+                </div>
+                <php> $number ++ ;</php>
+            </foreach>
+
+            <if condition =" $goods['is_on_sale'] == 1">
+                <div class="m33_btn" id="next1"><a href="javascript:void(0);"  onclick="newSubmit();">加入购物车</a></div>
+                <else/>
+                <div class="m33_btn " >
+                    <a style="background: #c2c2c2; border-color: #c0c0c0;" href="javascript:void(0);">商品已下架</a>
+                </div>
+            </if>
+        </div>
+    </div>
+
+</form>
+<include file="Public/js"/>
+<script type="text/javascript">
+
+    var specNumber = -1;
+
+    $(function(){
+
+        $("#goods_num").change(function(){
+            get_goods_price();
+        });
+        get_goods_price();
+    });
+
+    function newSubmit(){
+        var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表
+        // 如果有属性选择项
+        if(spec_goods_price != null)
+        {
+            var goods_spec_arr = new Array();
+            $("input[name^='goods_spec']:checked").each(function(){
+                goods_spec_arr.push($(this).val());
+            });
+            var spec_key = goods_spec_arr.sort(sortNumber).join('_');  //排序后组合成 key
+            if( spec_goods_price[spec_key] == null){
+                alert("请选择规格");
+                return;
+            }
+        }
+        myAjaxAddCart({$goods.goods_id},1,0);
+    }
+    function switch_spec(spec)
+    {
+        if( $(spec).hasClass("gray") ){
+            return;
+        }
+        $(spec).siblings().removeClass('m33_hover');
+        $(spec).addClass('m33_hover');
+        $(spec).siblings().children('input').prop('checked',false);
+        $(spec).find('input').prop('checked',true);
+        var div = $(spec).parent().parent();
+        specNumber = div.data("spec");
+        $(".optionsDiv").each(function(){
+            var specNumber2 = $(this).data("spec");
+            if( specNumber2 < specNumber+1 ){
+                $(this).show();
+            }else if(specNumber2 == specNumber+1){
+                $(this).show();
+                $(this).find("li").removeClass('m33_hover');
+                $(this).find("input[name^='goods_spec']:checked").attr("checked",false);
+            }else{
+                $(this).hide();
+                $(this).find("li").removeClass('m33_hover');
+                $(this).find("input[name^='goods_spec']:checked").attr("checked",false);
+            }
+        });
+        get_goods_price();
+    }
+
+
+    function get_goods_price()
+    {
+        var goods_price = {$goods.shop_price}; // 商品起始价
+        var store_count = {$goods.store_count}; // 商品起始库存
+        var spec_goods_price = {$spec_goods_price};  // 规格 对应 价格 库存表
+        // 如果有属性选择项
+        if(spec_goods_price != null)
+        {
+            goods_spec_arr = new Array();
+            $("input[name^='goods_spec']:checked").each(function(){
+                goods_spec_arr.push($(this).val());
+            });
+            var spec_key = goods_spec_arr.sort(sortNumber).join('_');  //排序后组合成 key
+            if( spec_goods_price[spec_key] != null){
+                goods_price = spec_goods_price[spec_key]['price']; // 找到对应规格的价格
+                store_count = spec_goods_price[spec_key]['store_count']; // 找到对应规格的库存
+            }else{
+                var tempSpecNumber = specNumber+1;
+                var temp_goods_spec_arr ;
+                $(".optionsDivNumber"+tempSpecNumber+" input").each(function(){
+                    temp_goods_spec_arr = goods_spec_arr;
+                    temp_goods_spec_arr.push($(this).val());
+                    var temp_spec_key = temp_goods_spec_arr.sort(sortNumber).join('_');
+                    removeFromArray(temp_goods_spec_arr,$(this).val());
+                    if(spec_goods_price[temp_spec_key] != null && spec_goods_price[temp_spec_key]['store_count'] == 0){
+                        $(this).parent().addClass("gray");
+                        $(this).parent().attr("disabled",true);
+                    }else{
+                        $(this).parent().removeClass("gray");
+                        $(this).parent().attr("disabled",false);
+                    }
+                });
+                return;
+            }
+        }
+        var goods_num = parseInt($("#goods_num").val());
+        // 库存不足的情况
+        if(goods_num > store_count)
+        {
+            goods_num = store_count;
+            alert('库存仅剩 '+store_count+' 件');
+            $("#goods_num").val(goods_num);
+        }
+        $("#goods_price").html('￥'+(goods_price*goods_num).toFixed(2)+''); // 变动价格显示
+
+    }
+
+    function sortNumber(a,b)
+    {
+        return a - b;
+    }
+
+    var removeFromArray = function (arr, val) {
+        var index = $.inArray(val, arr);
+        if (index >= 0)
+            arr.splice(index, 1);
+        return arr;
+    };
+
+    function myAjaxAddCart(goods_id,num,to_catr)
+    {
+        //如果有商品规格 说明是商品详情页提交
+        if($("#buy_goods_form").length > 0){
+            $.ajax({
+                type : "POST",
+                url:"/index.php?m=Mobile&c=Cart&a=ajaxAddCart",
+                data : $('#buy_goods_form').serialize(),// 你的formid 搜索表单 序列化提交
+                dataType:'json',
+                success: function(data){
+                    // 加入购物车后再跳转到 购物车页面
+                    if(data.status < 0)
+                    {
+//                            layer.open({content: data.msg,time: 2});
+                        alert(data.msg);
+                        return false;
+                    }
+                    if(to_catr == 1)  //直接购买
+                    {
+                        location.href = "/index.php?m=Mobile&c=Cart&a=cart";
+                        return false;
+                    }
+                    alert("加入成功");
+                    mui('#picture').popover('toggle');
+                    ajaxGetCartData();
+                }
+            });
+        }else{
+        }
+    }
+
+</script>
+<include file="Public/nav"/>
+</body>
+<style>
+    .nav_d {
+        z-index: 0;
+    }
+</style>
+<include file="Public/footer"/>
+</html>
+

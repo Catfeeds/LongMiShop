@@ -18,7 +18,7 @@ html, body {
 	width: 100%;
 }
 p,a,span{
-	font-family: "微软雅黑" !important;
+	font-family: "微软雅黑";
 }
 a:active {
 	color: #fff;
@@ -96,7 +96,7 @@ img{
 
 .top_menu {
 	background: #ffffff;
-	box-shadow: 0px 0px 5px #888;
+	/*box-shadow: 0px 0px 5px #888;*/
 	margin-bottom: 5px;
 }
 .top_menu ul {
@@ -294,7 +294,7 @@ img{
 	float: right;
 	width: 18px;
 	height: 18px;
-	background: url(images/pisScrollIcons.gif) -6px -7px no-repeat;
+	/*background: url(../images/pisScrollIcons.gif) -6px -7px no-repeat;*/
 	overflow: hidden;
 	margin: 11px 5px 0 5px;
 }
@@ -630,7 +630,6 @@ img{
 	margin-top: 1px;
 }
 .my_nav ul {
-	margin-top: 20px;
 }
 .my_nav li {
 	background-color: #FFF;
@@ -1048,7 +1047,6 @@ img{
 }
 .price_left {
 	float: left;
-	width: 70%;
 	font-weight: bold;
 }
 .price_left .price_left_money{
@@ -1135,6 +1133,9 @@ img{
 	width: 100%;
 	max-width: 800px;
 	z-index: 2;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #EFEFF4;
 }
 .com_d_l {
 	float: left;
@@ -1340,7 +1341,7 @@ img{
 }
 .checkbox_s {
 	float: left;
-	z-index: 99999999999999999999999;
+	z-index: 8;
 	position: absolute;
 	top: 6px;
 	left: -16px;
@@ -1617,6 +1618,9 @@ img{
 	background-image: url(../SVG/move.svg);
 	background-repeat: no-repeat;
 	background-position: right center;
+}
+.site1 .consignee p{
+	margin-bottom: 10px;
 }
 .cp6 {
 	background-color: rgb( 254, 254, 254 );
@@ -2319,7 +2323,6 @@ Load—more a{
 
 .price_left {
 	float: left;
-	width: 60%;
 	font-weight: bold;
 }
 
@@ -2353,24 +2356,6 @@ Load—more a{
 	height: 48px;
 	width: 48px;
 	margin-bottom: 5px;
-}
-.advance_a {
-	width: 100px;
-	margin-right: auto;
-	margin-left: auto;
-}
-.advance_a a {
-	border-radius: 4px;
-	color: #666666;
-	font-size: 16px;
-	display: block;
-	line-height: 35px;
-	text-align: center;
-	background-image: -moz-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
-	background-image: -webkit-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
-	background-image: -ms-linear-gradient( 90deg, rgb(245,245,245) 0%, rgb(255,255,255) 100%);
-	border: 1px solid #e5e5e5;
-	margin-bottom: 10px;
 }
 .invoice a {
 	color: #FFF;
@@ -2441,6 +2426,12 @@ Load—more a{
 	width: 100%;
 	margin: 0;
 	padding: 0;
+}
+.index_title span{
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
 }
 
 
@@ -2537,7 +2528,7 @@ Load—more a{
 
 .cp_index_r .cj1 {
 	font-size: 12px;
-	color: #CCC !important;
+	color: #828282  !important;
 	text-align: right;
 }
 .cp_index_r .cp_index_number {
@@ -2849,10 +2840,8 @@ Load—more a{
 
 .my_activity_div{
 	width: 100%;
-	height: 100%;
+	overflow: hidden;
 	padding-top: 10px;
-	background: #fff;
-
 }
 
 .my_activity_div ul li{
@@ -2918,4 +2907,199 @@ Load—more a{
 .my_activity_div ul li:nth-child(even) .my_activity_p1
 {
 	color: #8f6411;
+}
+
+
+.loading_css{
+	background: #f2f2f2;
+	width: 100%;
+	height: 100%;
+	z-index: 999999999999;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.spinner {
+	margin: 100px auto 0;
+	width: 150px;
+	text-align: center;
+}
+
+.spinner > div {
+	width: 30px;
+	height: 30px;
+	background-color: #67CF22;
+
+	border-radius: 100%;
+	display: inline-block;
+	-webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+	animation: bouncedelay 1.4s infinite ease-in-out;
+	/* Prevent first frame from flickering when animation starts */
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
+.spinner .bounce1 {
+	-webkit-animation-delay: -0.32s;
+	animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+	-webkit-animation-delay: -0.16s;
+	animation-delay: -0.16s;
+}
+
+@-webkit-keyframes bouncedelay {
+	0%, 80%, 100% { -webkit-transform: scale(0.0) }
+	40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes bouncedelay {
+	0%, 80%, 100% {
+		transform: scale(0.0);
+		-webkit-transform: scale(0.0);
+	} 40% {
+		  transform: scale(1.0);
+		  -webkit-transform: scale(1.0);
+	  }
+}
+
+
+
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.foot {
+	text-align: left;
+	background-color: #FFF;
+	overflow: hidden;
+	position: fixed;
+	_position: absolute;
+	bottom: 0px;
+	_bottom: 0px;
+	_margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop);
+	width: 100%;
+	max-width: 800px;
+	z-index: 99999999999;
+	margin-top: 10px;
+	color: #666;
+	background-color: #FFFFFF;
+	overflow: hidden;
+	font-size: 14px;
+	margin-bottom: 51px;
+}
+.foot div, .foot a {
+	line-height: 48px;
+	height: 48px;
+}
+.foot .select-all {
+	width: 70px;
+	height: 48px;
+	line-height: 48px;
+	padding-left: 2px;
+	color: #666;
+	text-align: left;
+}
+.foot .closing {
+	width: 100px;
+	text-align: center;
+	color: #FFF;
+	font-weight: bold;
+	cursor: pointer;
+	background-color: #a6dc3d;
+	font-size: 16px;
+}
+.foot .total {
+	margin: 0 5px;
+	cursor: pointer;
+}
+.foot #priceTotal, .foot #selectedTotal {
+	color: #a6dc3d;
+	font-weight: bold;
+}
+.foot .selected {
+	cursor: pointer;
+}
+.foot .selected .arrow {
+	position: relative;
+	top: -3px;
+	margin-left: 3px;
+}
+.foot .selected .down {
+	position: relative;
+	top: 3px;
+	display: none;
+}
+.show .selected .down {
+	display: inline;
+}
+.show .selected .up {
+	display: none;
+}
+.foot .selected:hover .arrow {
+	color: #a6dc3d;
+}
+.foot .selected-view {
+	width: 935px;
+	border: 1px solid #a6dc3d;
+	position: absolute;
+	height: auto;
+	background: #ffffff;
+	z-index: 9;
+	bottom: 48px;
+	left: -1px;
+	display: none;
+}
+.show .selected-view {
+	display: block;
+}
+.foot .selected-view div {
+	height: auto;
+}
+.foot .selected-view .arrow {
+	font-size: 16px;
+	line-height: 100%;
+	color: #a6dc3d;
+	position: absolute;
+	right: 330px;
+	bottom: -9px;
+}
+.foot .selected-view .arrow span {
+	color: #ffffff;
+	position: absolute;
+	left: 0px;
+	bottom: 1px;
+}
+table td {
+	margin-bottom: 5px;
+	background-color: #FFF;
+	border-bottom-width: 5px;
+	border-bottom-style: solid;
+	border-bottom-color: #F5F5F5;
+}
+
+#privilege_list_btn{
+	display: none;;
+}
+#privilege_list ul{
+	max-height: 100px;
+}
+#privilege_list.privilege_click ul{
+	max-height: none !important;
+}
+
+.member_my_nav a span{
+	margin: 10px 5px 10px 0 ;
+	float: right;
+}
+.memberInfo{
+	position: absolute;
+	top: 10px;
+	font-size: 14px;
+	color: #ffffff;
+	right: 10px;
 }
