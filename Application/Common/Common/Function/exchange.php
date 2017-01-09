@@ -11,13 +11,38 @@ function checkCode( $code  )
         $condition = array(
             "gift_coupon_id" => array('neq', 0),
             "coupon_id"      => array('eq', 0),
-            "user_id"        => array('eq', 0),
-            "state"          => array('eq', 0),
+//            "user_id"        => array('eq', 0),
+//            "state"          => array('eq', 0),
             "code"           => $code,
         );
-        if ( isExistenceDataWithCondition( "coupon_code" , $condition ) ) {
-            return callback(true, "可用兑换码");
+        $codeInfo = findDataWithCondition( "coupon_code" , $condition);
+
+        /**
+         * 特殊情况
+         */
+        if($codeInfo["gift_coupon_id"] == 3){
+            $condition = array(
+                "gift_coupon_id" => 3,
+                "user_id"        => session(__UserID__),
+                "state"          => array('neq', 0),
+            );
+            if( getCountWithCondition("coupon_code" ,$condition) > 0 ){
+                return callback(false, "每人只有一次领取种子的机会!");
+            }
         }
+
+
+
+        if( !empty($codeInfo)){
+            if( $codeInfo["user_id"] == 0 && $codeInfo["state"] == 0){
+                return callback(true, "可用兑换码");
+            }else{
+                return callback(false, "兑换码已被领取");
+            }
+        }
+//        if ( isExistenceDataWithCondition( "coupon_code" , $condition ) ) {
+//            return callback(true, "可用兑换码");
+//        }
         $condition = array(
             "uid"      => array('eq', 0),
             "order_id" => array('eq', 0),
