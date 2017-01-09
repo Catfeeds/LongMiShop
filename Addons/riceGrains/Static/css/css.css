@@ -318,6 +318,7 @@ html,body {
 }
 
 .coupon_div{
+    text-decoration: none;
     border-radius: 10px;
     background-color: rgb( 254, 254, 254 );
     width: 96%;
@@ -325,7 +326,9 @@ html,body {
     position: relative;
     margin: 0 2% 20px 2%;
 }
-
+.coupon_div a{
+    text-decoration: none;
+}
 .coupon_div .coupon_div_top{
     width: 90%;
     padding: 0 5%;
@@ -342,6 +345,7 @@ html,body {
     font-size: 24px;
     height: 48px;
     line-height: 48px;
+    text-decoration: none;
 }
 .coupon_div .coupon_div_top .coupon_div_top_r{
     float: left;
@@ -352,6 +356,7 @@ html,body {
     margin-top: 20px;
     height: 28px;
     line-height: 28px;
+    text-decoration: none;
 }
 
 
@@ -397,7 +402,9 @@ html,body {
 
 .coupon_div .coupon_div_b .coupon_list_icon_1{
     background: url("../images/coupon_list_icon_1.png") no-repeat left center;
+    text-decoration: none;
 }
 .coupon_div .coupon_div_b .coupon_list_icon_2{
     background: url("../images/coupon_list_icon_2.png") no-repeat left center;
+    text-decoration: none;
 }
