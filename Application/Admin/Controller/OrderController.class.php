@@ -67,7 +67,7 @@ class OrderController extends BaseController {
         $search_type == 3 && !empty($search_name)            ? $condition['mobile']          = $search_name                                 : false ;
         $search_type == 4 && !empty($search_name)            ? $condition['user_id']         = findUserId($search_name)                     : false ;
         //排序
-        $sort_order = I('order_by','order_id').' '.I('sort','DESC');
+        $sort_order = I('order_by','add_time').' '.I('sort','DESC');
 
         $limit = 10;
         $count = getCountWithCondition( 'order' , $condition );
