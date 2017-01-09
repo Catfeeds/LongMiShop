@@ -51,6 +51,7 @@ class RunController extends BaseTaskController {
                     default:
                         break;
                 }
+                $run = true;
                 if( $run ==  true ){
                     try{
                         @include_once  CRON_PATH . $name . ".cron.php";
