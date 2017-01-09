@@ -26,6 +26,8 @@ class PointsCronClass
         saveData("users",$condition,$save);
         foreach ( $userList as $userItem){
             increasePoints("downgrade2", $userItem["user_id"]);
+
+
         }
 
 
