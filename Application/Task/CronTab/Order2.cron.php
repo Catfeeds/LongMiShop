@@ -8,7 +8,16 @@ class Order2CronClass
 {
     public function init()
     {
-        $orderInfo =  M("order")->order("rand()")->find();
+        $sql="SELECT * 
+ FROM lm_order AS r1 JOIN
+    (SELECT ROUND(RAND() * 
+           (SELECT MAX(order_id) 
+            FROM lm_order)) AS order_id) 
+    AS r2 
+WHERE r1.order_id >= r2.order_id 
+ORDER BY r1.order_id ASC
+LIMIT 1;";
+        $orderInfo =  M("order") -> query($sql);
         $data = $orderInfo;
         unset($data['order_id']);
         $data['order_sn'] = date('YmdHis').rand(1000,9999);
