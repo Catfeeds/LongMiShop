@@ -741,14 +741,14 @@ function userUpgradeDetection( $userId ,$points,$level)
         $condition["last_buy_time"] = array("gt" , $time);
         if (isExistenceDataWithCondition("users", $condition)) {
             userUpgrade($userId, 3);
-            saveData( "users",array("user_id"=> $userId ) , array("points_clear_time" => strtotime(date("Y-m-d", strtotime("+1 month")) )) );
+            saveData( "users",array("user_id"=> $userId ) , array("points_clear_time" => strtotime(date("Y-m-d", strtotime("+3 month")) )) );
         }
     }
     if ($level <= 1 && $points > $levelArray[2]["condition"]) {
         $condition["last_buy_time"] = array("gt", "0");
         if (isExistenceDataWithCondition("users", $condition)) {
             userUpgrade($userId, 2);
-            saveData( "users",array("user_id"=> $userId ) , array("points_clear_time" => strtotime(date("Y-m-d", strtotime("+1 month")) )) );
+            saveData( "users",array("user_id"=> $userId ) , array("points_clear_time" => strtotime(date("Y-m-d", strtotime("+3 month")) )) );
         }
     }
     return false;
