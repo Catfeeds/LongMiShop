@@ -32,17 +32,30 @@ class ExchangeController extends MobileBaseController {
         if( $orderNumber > 1){
             $is_get = true;
             $condition = array(
-                "state"=>"0",
-                "gift_coupon_id" => "3",
+                "gift_coupon_id" => 3,
+                "user_id"        => $this->user_id,
+                "state"          => array('neq', 0),
             );
-            $codeInfo = findDataWithCondition("coupon_code",$condition);
-            if( empty($codeInfo)){
-                $is_have = false;
+            if( getCountWithCondition("coupon_code" ,$condition) > 0 ){
+                $is_change = true;
             }else{
-                $is_have = true;
-                $this -> assign( 'codeInfo' , $codeInfo );
+                $is_change = false;
+                $condition = array(
+                    "state"=>"0",
+                    "gift_coupon_id" => "3",
+                );
+                $codeInfo = findDataWithCondition("coupon_code",$condition);
+                if( empty($codeInfo)){
+                    $is_have = false;
+                }else{
+                    $is_have = true;
+                    $this -> assign( 'codeInfo' , $codeInfo );
+                }
+                $this -> assign( 'is_have' , $is_have );
             }
-            $this -> assign( 'is_have' , $is_have );
+            $this -> assign( 'is_change' , $is_change );
+
+
         }else{
             $is_get = false;
         }
