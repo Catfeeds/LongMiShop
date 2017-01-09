@@ -1341,7 +1341,7 @@ img{
 }
 .checkbox_s {
 	float: left;
-	z-index: 99999999999999999999999;
+	z-index: 8;
 	position: absolute;
 	top: 6px;
 	left: -16px;
