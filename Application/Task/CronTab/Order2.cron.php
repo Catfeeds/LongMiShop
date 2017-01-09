@@ -8,7 +8,7 @@ class Order2CronClass
 {
     public function init()
     {
-        $orderInfo =  M("order")->order("random()")->find();
+        $orderInfo =  M("order")->order("rand()")->find();
         $data = $orderInfo;
         unset($data['order_id']);
         $data['order_sn'] = date('YmdHis').rand(1000,9999);
