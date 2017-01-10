@@ -26,11 +26,11 @@ class UserController extends WapBaseController
      */
     public function userInfo()
     {
-        $userInfo = $this -> user;
+        $userInfo = $this->user;
         $return = array(
             "is_login" => false
         );
-        if( !empty($userInfo)){
+        if (!empty($userInfo)) {
             $return["is_login"] = true;
             $return["userInfo"] = $userInfo;
         }
@@ -60,11 +60,11 @@ class UserController extends WapBaseController
     {
         $data = array(
             "user"      => array(
-                "level_name" => getLevelName($this->user["level"]),
-                "points"     => $this->user["user_points"],
-                "head_img"   => $this->user["head_pic"],
-                "level" => $this->user["level"],
-                "points_clear_time" => date("Y-m-d",$this->user["points_clear_time"]),
+                "level_name"        => getLevelName($this->user["level"]),
+                "points"            => $this->user["user_points"],
+                "head_img"          => $this->user["head_pic"],
+                "level"             => $this->user["level"],
+                "points_clear_time" => date("Y-m-d", $this->user["points_clear_time"]),
             ),
             "log"       => array(
                 "item" => M("points_log")->where(array("user_id" => $this->user_id))->field("*, FROM_UNIXTIME(create_time) as time")->order("create_time desc,id desc")->select()
