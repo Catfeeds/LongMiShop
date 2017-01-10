@@ -86,7 +86,7 @@
 <script type="text/javascript">
 
     var specNumber = -1;
-    var discount = {$user.discount};
+    var discount = {:$user['discount']?$user['discount']:1};
     $(function(){
 
         $("#goods_num").change(function(){
