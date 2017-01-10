@@ -56,8 +56,8 @@ abstract class WapBaseController extends Controller {
     /**
      * 跳过报错
      */
-    public function  _empty($method,$args){
-        dd($method);
+    public function  _empty(){
+//        dd($method);
 //        setLogResult();$method,$args);
         exit();
     }
