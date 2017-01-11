@@ -158,7 +158,7 @@ class WeChatController extends Controller {
 
 
         $work_time = intval (date("Hi"));
-        if( $work_time >"930" && $work_time < "2000"){
+        if( $work_time >"900" && $work_time < "1800"){
             /**
              * 客服部分
              */
@@ -179,7 +179,7 @@ class WeChatController extends Controller {
                                 <Content><![CDATA[%s]]></Content>
                                 <FuncFlag>0</FuncFlag>
                                 </xml>";
-            $contentStr = '欢迎来到龙米!';
+            $contentStr = '亲爱滴客官，龙米家的客服MM上班时间是9:00-18:00哦，如有紧急情况可添加meimi-ff帮您解决哦。';
             $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
             exit($resultStr);
         }
