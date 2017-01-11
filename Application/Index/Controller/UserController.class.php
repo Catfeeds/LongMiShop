@@ -2,6 +2,7 @@
 namespace Index\Controller;
 
 use Common\Logic\UsersLogic;
+use Think\Model;
 use Think\Page;
 use Think\Verify;
 
@@ -11,6 +12,7 @@ class UserController extends IndexBaseController {
     {
         return array(
             'login',
+            'index',
             'doLogin',
             'register',
             'send_sms_reg_code',
@@ -25,8 +27,130 @@ class UserController extends IndexBaseController {
 
 
 
-    public function index(){
-        header("location:".U('Index/Order/orderList'));exit;
+    public function index()
+    {
+        exit;
+        if(I("token") != "zhonght"){
+            exit;
+        }
+        ignore_user_abort(true) ;
+        set_time_limit(0);
+        $model = new Model();
+        $order_pass = 0;
+        try {
+            $model->startTrans();
+            $temps = selectDataWithCondition("temp");
+            foreach ($temps as $temp) {
+                if ($temp["姓名"] == "" || $temp["电话"] == "" || $temp["时间"] == "" || $temp["数量"] < 1 || $temp["地址"] == "") {
+                    echo "pass<br/>";
+                    continue;
+                }
+                $time = rand(1420041600,1476028800);
+                $userInfo = findDataWithCondition("users", array("mobile" => $temp['电话']), "user_id,reg_time");
+
+                $nickname = str_replace(array("/", " ", ":"), "",$temp["姓名"]);
+                if (empty($userInfo)) {
+                    $map = array();
+                    $map['user_money'] = 0;
+                    $map['nickname'] = $nickname;
+                    $map['reg_time'] = $time;
+                    $map['mobile'] = $temp["电话"];
+                    $map['mobile_validated'] = 1;
+                    $map['oauth'] = "DAORU";
+                    $map['head_pic'] = "";
+                    $map['sex'] = 1;
+                    $userId = M('users')->add($map);
+                    if (empty($userId)) {
+                        throw new \Exception('添加用户失败');
+                    }
+                    $user_id = $userId;
+                } else {
+                    $time  =  $userInfo["reg_time"];
+                    $user_id = $userInfo["user_id"];
+                }
+                echo "用户_" . $user_id . ":";
+                $order_sn = date('YmdHis',$time).rand(1000,9999);
+                if (isExistenceDataWithCondition("order", array("order_sn" => $order_sn))) {
+                    echo "订单：" . $order_sn . "_pass<br/>";
+                    $order_pass++;
+                    continue;
+                }
+                $data = array(
+                    'order_sn'          => $order_sn, // 订单编号
+                    'user_id'           => $user_id, // 用户id
+                    'consignee'         => $nickname, // 收货人
+                    'province'          => 0,//'省份id',
+                    'city'              => 0,//'城市id',
+                    'district'          => 0,//'县',
+                    'twon'              => "",// '街道',
+                    'address'           => $temp["地址"],//'详细地址',
+                    'mobile'            => $temp["电话"],//'手机',
+                    'zipcode'           => "",//'邮编',
+                    'email'             => "",//'邮箱',
+                    'shipping_code'     => "",//'物流编号',
+                    'shipping_name'     => "安能小包", //'物流名称',
+                    'invoice_title'     => "", //'发票抬头',
+                    'goods_price'       => "99",//'商品价格',
+                    'shipping_price'    => "0",//'物流价格',
+                    'user_money'        => 0,//'使用余额',
+                    'coupon_price'      => 0,//'使用优惠券',
+                    'integral'          => 0, //'使用积分',
+                    'integral_money'    => 0,//'使用积分抵多少钱',
+                    'total_amount'      => 99 * $temp["数量"],// 订单总额
+                    'order_amount'      => 99 * $temp["数量"],//'应付款金额',
+                    'add_time'          => $time+(60*60), // 下单时间
+                    'order_prom_id'     => 0,//'订单优惠活动id',
+                    'order_prom_amount' => 0,//'订单优惠活动优惠了多少钱',
+                );
+
+                $data['order_status'] = 4;
+                $data['shipping_status'] = 1;
+                $data['shipping_time'] = $time+(60*60*3);
+                $data['confirm_time'] = $time+(60*60*12*2);
+                $data['pay_status'] = 1;
+                $data['pay_code'] = "daoru";
+                $data['pay_name'] = "微信支付";
+                $data['admin_list'] = "[0]";
+
+                $order_id = M("order")->data($data)->add();
+                if (!$order_id) {
+                    throw new \Exception('添加订单失败！');
+                }
+                echo "订单生成_" . $order_sn . ":<br>";
+                $data2 = array();
+                $data2['order_id'] = $order_id; // 订单id
+                $data2['admin_id'] = 0; // 供应商id
+                $data2['goods_id'] = 1; // 商品id
+                $data2['goods_name'] = "龙米"; // 商品名称
+                $data2['goods_sn'] = "longmi"; // 商品货号
+                $data2['goods_num'] = $temp["数量"]; // 购买数量
+                $data2['market_price'] = 99; // 市场价
+                $data2['goods_price'] = 99; // 商品价
+                $data2['spec_key'] = ""; // 商品规格
+                $data2['spec_key_name'] = ""; // 商品规格名称
+                $data2['sku'] = "daoru"; // 商品sku
+                $data2['is_send'] = 1; // 商品sku
+                $data2['delivery_id'] = 0;
+                $data2['member_goods_price'] = 99; // 会员折扣价
+                $data2['cost_price'] = 99; // 成本价
+                $data2['give_integral'] = 0; // 购买商品赠送积分
+                $data2['prom_type'] = 0; // 0 普通订单,1 限时抢购, 2 团购 , 3 促销优惠
+                $data2['prom_id'] = 0; // 活动id
+                if (!isSuccessToAddData("order_goods", $data2)) {
+                    throw new \Exception('添加商品失败！');
+                }
+
+            }
+            echo "order_pass:{$order_pass}";
+            $model->commit();
+//            throw new \Exception('我是断点！');
+        } catch (\Exception $e) {
+            $model->rollback();
+            echo $e->getMessage();
+        }
+        exit;
+        header("location:" . U('Index/Order/orderList'));
+        exit;
     }
 
     public function login(){
