@@ -140,21 +140,21 @@ class WeChatController extends Controller {
         }
 
 
-        if($postObj->MsgType == 'image')
-        {
-            // 其他文本回复
-            $textTpl = "<xml>
-                                <ToUserName><![CDATA[%s]]></ToUserName>
-                                <FromUserName><![CDATA[%s]]></FromUserName>
-                                <CreateTime>%s</CreateTime>
-                                <MsgType><![CDATA[%s]]></MsgType>
-                                <Content><![CDATA[%s]]></Content>
-                                <FuncFlag>0</FuncFlag>
-                                </xml>";
-            $contentStr = '客官~小的收到，正在核对您的信息，稍后会有客服通知您结果';
-            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
-            exit($resultStr);
-        }
+//        if($postObj->MsgType == 'image')
+//        {
+//            // 其他文本回复
+//            $textTpl = "<xml>
+//                                <ToUserName><![CDATA[%s]]></ToUserName>
+//                                <FromUserName><![CDATA[%s]]></FromUserName>
+//                                <CreateTime>%s</CreateTime>
+//                                <MsgType><![CDATA[%s]]></MsgType>
+//                                <Content><![CDATA[%s]]></Content>
+//                                <FuncFlag>0</FuncFlag>
+//                                </xml>";
+//            $contentStr = '客官~小的收到，正在核对您的信息，稍后会有客服通知您结果';
+//            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
+//            exit($resultStr);
+//        }
 
 
         $work_time = intval (date("Hi"));
