@@ -157,30 +157,32 @@ class WeChatController extends Controller {
         }
 
 
-        /**
-         * 客服部分
-         */
-        $textTpl = "<xml>
+        $work_time = intval (date("Hi"));
+        if( $work_time >"930" && $work_time < "2000"){
+            /**
+             * 客服部分
+             */
+            $textTpl = "<xml>
                                 <ToUserName><![CDATA[%s]]></ToUserName>
                                 <FromUserName><![CDATA[%s]]></FromUserName>
                                 <CreateTime>%s</CreateTime>
                                 <MsgType><![CDATA[%s]]></MsgType>
                                 </xml>";
-        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'transfer_customer_service');
-        exit($resultStr);
-//
-//        // 其他文本回复
-//        $textTpl = "<xml>
-//                                <ToUserName><![CDATA[%s]]></ToUserName>
-//                                <FromUserName><![CDATA[%s]]></FromUserName>
-//                                <CreateTime>%s</CreateTime>
-//                                <MsgType><![CDATA[%s]]></MsgType>
-//                                <Content><![CDATA[%s]]></Content>
-//                                <FuncFlag>0</FuncFlag>
-//                                </xml>";
-//        $contentStr = '欢迎来到龙米!';
-//        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
-//        exit($resultStr);
+            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'transfer_customer_service');
+            exit($resultStr);
+        }else{
+            $textTpl = "<xml>
+                                <ToUserName><![CDATA[%s]]></ToUserName>
+                                <FromUserName><![CDATA[%s]]></FromUserName>
+                                <CreateTime>%s</CreateTime>
+                                <MsgType><![CDATA[%s]]></MsgType>
+                                <Content><![CDATA[%s]]></Content>
+                                <FuncFlag>0</FuncFlag>
+                                </xml>";
+            $contentStr = '欢迎来到龙米!';
+            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
+            exit($resultStr);
+        }
 
     }
 }
