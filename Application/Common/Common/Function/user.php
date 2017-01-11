@@ -948,8 +948,11 @@ function getLevelPrivilege( $level = null ){
 }
 
 
-
-
+/**
+ * 修改用户的会员价
+ * @param $level
+ * @param $user_id
+ */
 function changeOrderMemberMoney( $level , $user_id ){
     $discount = 1 ;
     if( $level == 1){
