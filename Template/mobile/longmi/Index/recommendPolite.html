@@ -1,38 +1,43 @@
 <include file="Public/header2"/>
 <style>
     .recommendPolite{ overflow: hidden;}
-    .recommendPolite img{ float: left;}
+    .recommendPolite img{ float: left;width: 100%;}
 </style>
 <body>
 <include file="Public/loading"/>
 <div class="recommendPolite">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite1.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite2.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite3.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite4.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite5.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite6.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite7.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite8.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite9.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite10.jpg" style="width: 100%">
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite1.jpg" id="recommendPolite1" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite2.jpg" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite3.jpg" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite4.jpg" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite5.jpg" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite6.jpg" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite7.jpg" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite8.jpg" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite9.jpg" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite10.jpg" >
     <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>7))}" >
-        <img src="__STATIC__/images/new/recommendPolite/recommendPolite11.jpg" style="width: 100%">
+        <img src="__STATIC__/images/new/recommendPolite/recommendPolite11.jpg" >
     </a>
     <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>8))}" >
-        <img src="__STATIC__/images/new/recommendPolite/recommendPolite12.jpg" style="width: 100%">
+        <img src="__STATIC__/images/new/recommendPolite/recommendPolite12.jpg" >
     </a>
     <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>15))}" >
-        <img src="__STATIC__/images/new/recommendPolite/recommendPolite13.jpg" style="width: 100%">
+        <img src="__STATIC__/images/new/recommendPolite/recommendPolite13.jpg" >
     </a>
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite14.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite15.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite16.jpg" style="width: 100%">
-    <img src="__STATIC__/images/new/recommendPolite/recommendPolite17.jpg" style="width: 100%">
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite14.jpg" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite15.jpg" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite16.jpg" >
+    <img src="__STATIC__/images/new/recommendPolite/recommendPolite17.jpg" >
 </div>
 
 <include file="Public/js"/>
 <include file="Public/nav"/>
 </body>
 <include file="Public/footer"/>
+<script>
+    $(function(){
+        $("#recommendPolite1").css("height",$("body").height()+"px");
+    });
+</script>
 </html>
