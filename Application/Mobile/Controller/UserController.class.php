@@ -11,6 +11,7 @@ class UserController extends MobileBaseController {
     {
         return array(
             'login',
+            'login2',
             'pop_login',
             'do_login',
             'logout',
@@ -105,9 +106,16 @@ class UserController extends MobileBaseController {
         }
         $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Mobile/User/index");
         $this -> assign('referurl',$referurl);
-        $this -> display();
+        if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
+            $this -> display("login2");
+        }else{
+            $this -> display();
+        }
     }
 
+    public function login2(){
+        $this -> display();
+    }
 
     public function do_login(){
     	$username = I('post.username');
