@@ -140,9 +140,37 @@ class WeChatController extends Controller {
         }
 
 
-        if($postObj->MsgType == 'image')
-        {
-            // 其他文本回复
+//        if($postObj->MsgType == 'image')
+//        {
+//            // 其他文本回复
+//            $textTpl = "<xml>
+//                                <ToUserName><![CDATA[%s]]></ToUserName>
+//                                <FromUserName><![CDATA[%s]]></FromUserName>
+//                                <CreateTime>%s</CreateTime>
+//                                <MsgType><![CDATA[%s]]></MsgType>
+//                                <Content><![CDATA[%s]]></Content>
+//                                <FuncFlag>0</FuncFlag>
+//                                </xml>";
+//            $contentStr = '客官~小的收到，正在核对您的信息，稍后会有客服通知您结果';
+//            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
+//            exit($resultStr);
+//        }
+
+
+        $work_time = intval (date("Hi"));
+        if( $work_time >"900" && $work_time < "1800"){
+            /**
+             * 客服部分
+             */
+            $textTpl = "<xml>
+                                <ToUserName><![CDATA[%s]]></ToUserName>
+                                <FromUserName><![CDATA[%s]]></FromUserName>
+                                <CreateTime>%s</CreateTime>
+                                <MsgType><![CDATA[%s]]></MsgType>
+                                </xml>";
+            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'transfer_customer_service');
+            exit($resultStr);
+        }else{
             $textTpl = "<xml>
                                 <ToUserName><![CDATA[%s]]></ToUserName>
                                 <FromUserName><![CDATA[%s]]></FromUserName>
@@ -151,23 +179,10 @@ class WeChatController extends Controller {
                                 <Content><![CDATA[%s]]></Content>
                                 <FuncFlag>0</FuncFlag>
                                 </xml>";
-            $contentStr = '客官~小的收到，正在核对您的信息，稍后会有客服通知您结果';
+            $contentStr = '亲爱滴客官，龙米家的客服MM上班时间是9:00-18:00哦，如有紧急情况可添加meimi-ff帮您解决哦。';
             $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
             exit($resultStr);
         }
-
-        // 其他文本回复
-        $textTpl = "<xml>
-                                <ToUserName><![CDATA[%s]]></ToUserName>
-                                <FromUserName><![CDATA[%s]]></FromUserName>
-                                <CreateTime>%s</CreateTime>
-                                <MsgType><![CDATA[%s]]></MsgType>
-                                <Content><![CDATA[%s]]></Content>
-                                <FuncFlag>0</FuncFlag>
-                                </xml>";
-        $contentStr = '欢迎来到龙米!';
-        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
-        exit($resultStr);
 
     }
 }

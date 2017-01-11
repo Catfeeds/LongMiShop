@@ -650,7 +650,7 @@ function increasePoints( $type , $userId  )
 {
     return;
     $condition = array("user_id" => $userId);
-    $userInfo = findDataWithCondition("users", $condition, "user_points,level");
+    $userInfo = findDataWithCondition("users", $condition, "user_points,level,birthday");
     if (empty($userInfo)) {
         return;
     }
@@ -702,6 +702,11 @@ function increasePoints( $type , $userId  )
     if( $value > 0 ){
         $levelArray = getRankPrivilege();
         $value = $levelArray[$level]["growthRate"] * $value;
+
+        //生日双倍积分
+        if( date("Y-m-d",time()) == date("Y-m-d",$userInfo["birthday"]) ){
+            $value = $value * 2;
+        }
     }
 
 
@@ -806,6 +811,7 @@ function getLevelPrivilege( $level = null ){
     $items = array(
         "1" => array(
             "name" => "积分成长加速",
+            "icon" => "medal1",
             "value" => array(
                 "1" => false,
                 "2" => "× 1.2",
@@ -815,6 +821,7 @@ function getLevelPrivilege( $level = null ){
         ),
         "2" => array(
             "name" => "购买包邮",
+            "icon" => "medal2",
             "value" => array(
                 "1" => true,
                 "2" => true,
@@ -824,6 +831,7 @@ function getLevelPrivilege( $level = null ){
         ),
         "3" => array(
             "name" => "每月福利礼包",
+            "icon" => "medal3",
             "value" => array(
                 "1" => false,
                 "2" => true,
@@ -833,6 +841,7 @@ function getLevelPrivilege( $level = null ){
         ),
         "4" => array(
             "name" => "生日礼包",
+            "icon" => "medal4",
             "value" => array(
                 "1" => "",
                 "2" => "普通生日礼包",
@@ -842,6 +851,7 @@ function getLevelPrivilege( $level = null ){
         ),
         "5" => array(
             "name" => "优先发货",
+            "icon" => "medal5",
             "value" => array(
                 "1" => false,
                 "2" => false,
@@ -851,6 +861,7 @@ function getLevelPrivilege( $level = null ){
         ),
         "6" => array(
             "name" => "龙米定制服务",
+            "icon" => "medal6",
             "value" => array(
                 "1" => false,
                 "2" => false,
@@ -860,6 +871,7 @@ function getLevelPrivilege( $level = null ){
         ),
         "7" => array(
             "name" => "用户提现",
+            "icon" => "medal7",
             "value" => array(
                 "1" => "满500元提现",
                 "2" => "满400元提现",
@@ -869,6 +881,7 @@ function getLevelPrivilege( $level = null ){
         ),
         "8" => array(
             "name" => "优先福利活动",
+            "icon" => "medal8",
             "value" => array(
                 "1" => false,
                 "2" => true,
@@ -878,6 +891,7 @@ function getLevelPrivilege( $level = null ){
         ),
         "9" => array(
             "name" => "生日双倍积分",
+            "icon" => "medal9",
             "value" => array(
                 "1" => false,
                 "2" => true,
@@ -887,6 +901,7 @@ function getLevelPrivilege( $level = null ){
         ),
         "10" => array(
             "name" => "分享赚米",
+            "icon" => "medal10",
             "value" => array(
                 "1" => true,
                 "2" => true,
@@ -896,6 +911,7 @@ function getLevelPrivilege( $level = null ){
         ),
         "11" => array(
             "name" => "专属客服",
+            "icon" => "medal11",
             "value" => array(
                 "1" => false,
                 "2" => false,
@@ -905,6 +921,7 @@ function getLevelPrivilege( $level = null ){
         ),
         "12" => array(
             "name" => "购买折扣",
+            "icon" => "medal12",
             "value" => array(
                 "1" => false,
                 "2" => "9.5折",
@@ -931,8 +948,11 @@ function getLevelPrivilege( $level = null ){
 }
 
 
-
-
+/**
+ * 修改用户的会员价
+ * @param $level
+ * @param $user_id
+ */
 function changeOrderMemberMoney( $level , $user_id ){
     $discount = 1 ;
     if( $level == 1){

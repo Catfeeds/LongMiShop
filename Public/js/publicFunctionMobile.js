@@ -10,17 +10,19 @@ function alert( msg ){
 }
 
 $(function(){
-    var time = Date.parse(new Date());
-    time = time * 123465;
-    $.ajax({
-        type : "get",
-        url:"/index.php/Mobile/User/returnSession/time/"+time+".html",
-        success: function(data)
-        {
-            if( data != undefined && data != "" && data != null ){
-                alert(data);
+    $(window).bind("pageshow", function () {
+        var time = Date.parse(new Date());
+        time = time * 123465;
+        $.ajax({
+            type : "get",
+            url:"/index.php/Mobile/User/returnSession/time/"+time+".html",
+            success: function(data)
+            {
+                if( data != undefined && data != "" && data != null ){
+                    alert(data);
+                }
             }
-        }
+        });
     });
 });
 
