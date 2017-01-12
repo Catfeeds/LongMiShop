@@ -1327,4 +1327,12 @@ class UserController extends MobileBaseController {
         $this -> display();
     }
 
+
+
+    public function getCoupon(){
+        $this -> assign('id', I("id"));
+
+        $this -> display();
+    }
+
 }
