@@ -581,7 +581,7 @@ function getRankPrivilege()
     return array(
         1 => array(
             "id"                   => 1,
-            "condition"            => 15,
+            "condition"            => 50,
             "growthRate"           => 1,
             "isDeliveryPriority"   => false,
             "cashWithdrawalAmount" => "500",
@@ -589,7 +589,7 @@ function getRankPrivilege()
         ),
         2 => array(
             "id"                   => 2,
-            "condition"            => 30,
+            "condition"            => 100,
             "growthRate"           => 1.2,
             "isDeliveryPriority"   => false,
             "cashWithdrawalAmount" => "400",
@@ -597,7 +597,7 @@ function getRankPrivilege()
         ),
         3 => array(
             "id"                   => 3,
-            "condition"            => 50,
+            "condition"            => 150,
             "growthRate"           => 1.7,
             "isDeliveryPriority"   => true,
             "cashWithdrawalAmount" => "300",
@@ -605,7 +605,7 @@ function getRankPrivilege()
         ),
         4 => array(
             "id"                   => 4,
-            "condition"            => 100,
+            "condition"            => 200,
             "growthRate"           => 2.2,
             "isDeliveryPriority"   => true,
             "cashWithdrawalAmount" => "1",
@@ -648,7 +648,7 @@ function setUserPointsLog( $before_points , $after_points , $value , $userId , $
  */
 function increasePoints( $type , $userId  )
 {
-    return;
+//    return;
     $condition = array("user_id" => $userId);
     $userInfo = findDataWithCondition("users", $condition, "user_points,level,birthday");
     if (empty($userInfo)) {
@@ -662,7 +662,7 @@ function increasePoints( $type , $userId  )
 
     switch ($type) {
         case "login":
-            $value = 1;
+            $value = 2;
             $text = "登录奖励";
             break;
         case "register":
@@ -674,7 +674,7 @@ function increasePoints( $type , $userId  )
             $text = "签到奖励";
             break;
         case "buy":
-            $value = 10;
+            $value = 30;
             $text = "购买奖励";
             break;
         case "upgrade":
@@ -829,26 +829,26 @@ function getLevelPrivilege( $level = null ){
                 "4" => true,
             )
         ),
-        "3" => array(
-            "name" => "每月福利礼包",
-            "icon" => "medal3",
-            "value" => array(
-                "1" => false,
-                "2" => true,
-                "3" => true,
-                "4" => true,
-            )
-        ),
-        "4" => array(
-            "name" => "生日礼包",
-            "icon" => "medal4",
-            "value" => array(
-                "1" => "",
-                "2" => "普通生日礼包",
-                "3" => "Vip生日礼包",
-                "4" => "首席生日礼包",
-            )
-        ),
+//        "3" => array(
+//            "name" => "每月福利礼包",
+//            "icon" => "medal3",
+//            "value" => array(
+//                "1" => false,
+//                "2" => true,
+//                "3" => true,
+//                "4" => true,
+//            )
+//        ),
+//        "4" => array(
+//            "name" => "生日礼包",
+//            "icon" => "medal4",
+//            "value" => array(
+//                "1" => "",
+//                "2" => "普通生日礼包",
+//                "3" => "Vip生日礼包",
+//                "4" => "首席生日礼包",
+//            )
+//        ),
         "5" => array(
             "name" => "优先发货",
             "icon" => "medal5",
@@ -869,16 +869,16 @@ function getLevelPrivilege( $level = null ){
                 "4" => true,
             )
         ),
-        "7" => array(
-            "name" => "用户提现",
-            "icon" => "medal7",
-            "value" => array(
-                "1" => "满500元提现",
-                "2" => "满400元提现",
-                "3" => "满300元提现",
-                "4" => "满1元提现",
-            )
-        ),
+//        "7" => array(
+//            "name" => "用户提现",
+//            "icon" => "medal7",
+//            "value" => array(
+//                "1" => "满500元提现",
+//                "2" => "满400元提现",
+//                "3" => "满300元提现",
+//                "4" => "满1元提现",
+//            )
+//        ),
         "8" => array(
             "name" => "优先福利活动",
             "icon" => "medal8",
@@ -889,16 +889,16 @@ function getLevelPrivilege( $level = null ){
                 "4" => true,
             )
         ),
-        "9" => array(
-            "name" => "生日双倍积分",
-            "icon" => "medal9",
-            "value" => array(
-                "1" => false,
-                "2" => true,
-                "3" => true,
-                "4" => true,
-            )
-        ),
+//        "9" => array(
+//            "name" => "生日双倍积分",
+//            "icon" => "medal9",
+//            "value" => array(
+//                "1" => false,
+//                "2" => true,
+//                "3" => true,
+//                "4" => true,
+//            )
+//        ),
         "10" => array(
             "name" => "分享赚米",
             "icon" => "medal10",
