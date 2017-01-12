@@ -1337,7 +1337,7 @@ class UserController extends MobileBaseController {
             exit;
         }
         $condition = array(
-            "user_id"=>$this->user_id,
+            "uid"=>$this->user_id,
             "cid"=>$id
         );
         if( !isExistenceDataWithCondition("coupon_list",$condition)){
