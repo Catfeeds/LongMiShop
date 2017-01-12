@@ -1330,9 +1330,29 @@ class UserController extends MobileBaseController {
 
 
     public function getCoupon(){
-        $this -> assign('id', I("id"));
+        $id = I("id");
+        $id = 17;
+        if( empty($id)  || !isExistenceDataWithCondition("coupon",array("id"=>$id))  ){
+            header("Location: ".U("Mobile/User/index"));
+            exit;
+        }
+        $condition = array(
+            "user_id"=>$this->user_id,
+            "cid"=>$id
+        );
+        if( !isExistenceDataWithCondition("coupon_list",$condition)){
+            if( $this->user["is_follow"] == 1){
+                addNewCoupon( $id , $this->user_id);
+                header("Location: ".U("Mobile/User/coupon"));
+                exit;
+            }else{
+                $this -> display();
+                exit;
+            }
+        }
 
-        $this -> display();
+        header("Location: ".U("Mobile/User/index"));
+        exit;
     }
 
 }

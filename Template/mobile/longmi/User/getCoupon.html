@@ -1,1 +1,42 @@
-{$id}-{:time()}
+<include file="Public/header"/>
+<style>
+
+    #followMask{
+        z-index:9999999999999999999999;
+        position:fixed;
+        width:100%;
+        height:100%;
+        top:0px;
+        right:0px;
+        margin-top:0;
+        background: #000;
+        /*background-size:50%;*/
+        opacity: 0.9;
+    }
+    #followMask .follow{
+        position: relative;
+        left: 50%;
+        top: 50%;
+        width: 240px;
+        height: 452px;
+        margin: -226px 0 0 -120px;
+    }
+</style>
+<body>
+<div class="tip_b">
+    <div>
+        <div>
+            <strong>提示</strong>:
+        </div>
+        <div style="margin-bottom:6px">
+            关注公众号后才可以领取哦！
+        </div>
+    </div>
+</div>
+<div id="followMask">
+    <img src="__STATIC__/images/follow.png" class="follow">
+</div>
+
+</body>
+<include file="Public/footer"/>
+</html>
