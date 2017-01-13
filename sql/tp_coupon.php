@@ -523,6 +523,8 @@ MODIFY COLUMN `after_points`  decimal(11,2) NOT NULL DEFAULT 0 COMMENT '改变�
 
 ALTER TABLE `lm_users`
 MODIFY COLUMN `points_clear_time`  int(11) NOT NULL DEFAULT 0 COMMENT '积分清除时间' AFTER `frozen_money`;
+ALTER TABLE `lm_users`
+ADD COLUMN `need_show_level`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否需要显示升级动画' AFTER `level`;
 
 
   ";
