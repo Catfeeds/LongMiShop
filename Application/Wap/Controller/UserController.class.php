@@ -65,12 +65,16 @@ class UserController extends WapBaseController
                 "head_img"          => $this->user["head_pic"],
                 "level"             => $this->user["level"],
                 "points_clear_time" => date("Y-m-d", $this->user["points_clear_time"]),
+                "need_show_level"   => $this->user["need_show_level"],
             ),
             "log"       => array(
                 "item" => M("points_log")->where(array("user_id" => $this->user_id))->field("*, FROM_UNIXTIME(create_time) as time")->order("create_time desc,id desc")->select()
             ),
             "privilege" => getLevelPrivilege($this->user["level"])
         );
+        if( $this->user["need_show_level"] == 1){
+            saveData("users",array("user_id" => $this->user_id),array("need_show_level" =>0));
+        }
         printJson(true, "", $data);
     }
 
