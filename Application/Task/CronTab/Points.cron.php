@@ -41,6 +41,7 @@ class PointsCronClass
             "level" => 1,
             "points_clear_time" => 0,
             "discount" => 1,
+            "need_show_level" => 0,
             "upgrade_time" => time()
         );
         $userList = selectDataWithCondition("users",$condition);
