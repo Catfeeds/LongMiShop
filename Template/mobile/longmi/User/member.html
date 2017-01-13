@@ -84,6 +84,9 @@
                         $("#privilege_list_btn").toggleClass("mui-icon-arrowdown");
                         $("#privilege_list_btn").toggleClass("mui-icon-arrowup");
                     });
+                    if( data.data.user.need_show_level == 1){
+                        alert("恭喜你升级为"+data.data.user.level_name);
+                    }
                 }else{
                     alert(data.msg);
                 }

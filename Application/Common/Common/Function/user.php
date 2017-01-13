@@ -648,7 +648,7 @@ function setUserPointsLog( $before_points , $after_points , $value , $userId , $
  */
 function increasePoints( $type , $userId  )
 {
-    return;
+//    return;
     $condition = array("user_id" => $userId);
     $userInfo = findDataWithCondition("users", $condition, "user_points,level,birthday");
     if (empty($userInfo)) {
@@ -774,20 +774,21 @@ function userUpgrade( $userId , $level )
     $discount = 1;
     if ($level == 1) {
         $discount = 1;
-    }elseif ($level == 2) {
+    } elseif ($level == 2) {
         $discount = 0.95;
-    }elseif ($level == 3) {
+    } elseif ($level == 3) {
         $discount = 0.9;
-    }elseif ($level == 4) {
+    } elseif ($level == 4) {
         $discount = 0.8;
     }
     $data = array(
-        "level"        => $level,
-        "upgrade_time" => time(),
-        "discount"     => $discount,
+        "level"           => $level,
+        "upgrade_time"    => time(),
+        "discount"        => $discount,
+        "need_show_level" => 1
     );
     $res = saveData("users", $condition, $data);
-    changeOrderMemberMoney($level,$userId);
+    changeOrderMemberMoney($level, $userId);
     increasePoints("upgrade", $userId);
     return $res;
 }
