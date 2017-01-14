@@ -19,7 +19,7 @@ class riceGrainsMobileController
     //初始化
     public function __construct($userInfo)
     {
-        $this->assignData["v"] = "v1.0";
+        $this->assignData["v"] = "v1.1";
         $this->assignData["userInfo"] = $this->userInfo = $userInfo;
         $this->assignData["sharePath"] = "./Addons/riceGrains/Template/Mobile/default/Addons_share.html";
         $this->assignData["headerPath"] = "./Addons/riceGrains/Template/Mobile/default/Addons_header.html";

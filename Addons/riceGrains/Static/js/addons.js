@@ -178,9 +178,9 @@ $(function(){
      * @param fraction_number
      */
     function plusFunction( fraction_number ){
-        fraction_number = parseInt(fraction_number);
+        fraction_number = Number(fraction_number);
         fraction += fraction_number;
-        fraction = parseInt(fraction);
+        fraction = Number(fraction);
         var new_key  = plus.length > 0 ?plus.length:0;
         plus[new_key]=new object();
         plus[new_key].image.src=_ADDONS+"/images/add_one.png";
