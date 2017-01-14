@@ -29,7 +29,7 @@ class riceGrainsMobileController
             "url"   => "http://" . $_SERVER['HTTP_HOST'] . U('Mobile/Addons/riceGrains'),
             "img"   => "http://" . $_SERVER['HTTP_HOST'] . "/Addons/riceGrains/logo.jpg",
             "title" => "粒粒接辛苦",
-            "desc"  => "粒粒接辛苦",
+            "desc"  => "你会比我害还牛吗？",
         );
         if (isWeChatBrowser()) {
             $weChatLogic = new \Common\Logic\WeChatLogic();
