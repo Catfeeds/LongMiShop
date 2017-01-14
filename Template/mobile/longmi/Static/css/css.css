@@ -37,7 +37,7 @@ img{
 }
 .top_nav{
 	height:38px;
-	background: #a6dc3d;
+	background: #fff;
 	width: 100%;
 	position: relative;
 }
@@ -56,7 +56,7 @@ img{
 	line-height: 38px;
 	height: 38px;
 	font-size: 14px;
-	color: #ffffff;
+	color: #151515;
 	transform: scale(0.9);
 }
 .top_nav_right {
@@ -70,7 +70,8 @@ img{
 	margin: 7px 5%;
 	border-radius: 12px;
 	width: 90%;
-	background: #dcf1dc;
+	border: 1px solid #dadada;
+	background: #fff;
 }
 .top_nav_right .top_nav_find input {
 	height: 24px;
