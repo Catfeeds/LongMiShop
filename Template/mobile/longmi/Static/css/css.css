@@ -2780,6 +2780,7 @@ Load—more a{
 	position: relative;
 	overflow: hidden;
 	padding: 5px 0;
+	color: #151515 !important;
 	border-bottom: 1px solid #efeff4
 }
 .my_index_cp_li .cp_index_l {
@@ -2791,7 +2792,7 @@ Load—more a{
 }
 
 .my_index_cp_li .cp_index p{
-	color: #828282 !important;
+	color: #151515 !important;
 	font-size: 12px !important;
 }
 .my_index_cp_li .cp_index_r {
