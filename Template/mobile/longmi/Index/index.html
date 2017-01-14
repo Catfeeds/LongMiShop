@@ -106,11 +106,20 @@
             <div class="mui-slider-handle">
                 <div class="c"><a href="{:U('Mobile/Goods/goodsInfo')}?id=<%= item[i].goods_id %>"></a></div>
                 <div class="cp_index">
+                    <% if(i == 0){ %>
+                    <div class="cp_index_l3" style="width: 100%; margin-top: 50px;">
+                        <a href="{:U('Mobile/Goods/goodsInfo')}?id=<%= item[i].goods_id %>">
+                            <img src="__STATIC__/images/new/goods_banner.jpg" >
+
+                        </a>
+                    </div>
+                    <% }else{ %>
                     <div class="cp_index_l3">
                         <a href="{:U('Mobile/Goods/goodsInfo')}?id=<%= item[i].goods_id %>">
                             <img src="<%= item[i].original_img %>" width="92" height="92">
                         </a>
                     </div>
+                    <%}%>
                     <div class="cp_index_r">
                         <p class="cj1"><%= item[i].goods_subtitle?item[i].goods_subtitle:item[i].goods_name %></p>
                         <p class="cj1">
