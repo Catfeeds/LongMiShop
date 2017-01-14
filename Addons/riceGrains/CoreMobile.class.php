@@ -19,7 +19,7 @@ class riceGrainsMobileController
     //初始化
     public function __construct($userInfo)
     {
-        $this->assignData["v"] = "v1.0";
+        $this->assignData["v"] = "v1.1";
         $this->assignData["userInfo"] = $this->userInfo = $userInfo;
         $this->assignData["sharePath"] = "./Addons/riceGrains/Template/Mobile/default/Addons_share.html";
         $this->assignData["headerPath"] = "./Addons/riceGrains/Template/Mobile/default/Addons_header.html";
@@ -29,7 +29,7 @@ class riceGrainsMobileController
             "url"   => "http://" . $_SERVER['HTTP_HOST'] . U('Mobile/Addons/riceGrains'),
             "img"   => "http://" . $_SERVER['HTTP_HOST'] . "/Addons/riceGrains/logo.jpg",
             "title" => "粒粒接辛苦",
-            "desc"  => "粒粒接辛苦",
+            "desc"  => "你会比我害还牛吗？",
         );
         if (isWeChatBrowser()) {
             $weChatLogic = new \Common\Logic\WeChatLogic();
