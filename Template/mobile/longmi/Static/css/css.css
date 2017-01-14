@@ -2768,7 +2768,7 @@ Load—more a{
 }
 
 .my_index_spec_li .cp_index p{
-	/*font-size: 14px !important;*/
+    color: #151515 !important;
 }
 .my_index_spec_li .cp_index_r {
 	width: 60%;
