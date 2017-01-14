@@ -35,8 +35,8 @@ class IndexController extends WapBaseController
             $data["top_menu"]["userMoney"] = $this->user['user_money'] ? $this->user['user_money'] : 0;
 
             $usersLogic = new \Common\Logic\UsersLogic();
-            $result = $usersLogic->getCoupon($this->user_id);
-            $data["top_menu"]["couponCount"] = count($result['data']['count']);
+            $result = $usersLogic->get_coupon($this->user_id);
+            $data["top_menu"]["couponCount"] = $result['count'];
 
             $data["top_menu"]["activityCount"] = 2;
 
