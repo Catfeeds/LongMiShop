@@ -129,7 +129,7 @@ img{
 .top_menu a b {
 	font-family: "微软雅黑" !important;
 	color: #151515 !important;
-	font-weight: 100;
+	font-weight:normal !important;
 }
 
 
