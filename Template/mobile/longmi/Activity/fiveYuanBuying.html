@@ -3,7 +3,7 @@
 <include file="Public/loading"/>
 <div class="fiveYuanBuying">
     <img src="__STATIC__/images/new/activity_1_banner.jpg">
-    <a href="#" class="a1">5元抢购88元龙米大礼包</a>
+    <a id="buy" class="a1">5元抢购88元龙米大礼包</a>
     <a href="{:U('Mobile/Index/index')}" class="a2">放弃抢购，去看看更多好玩的</a>
 </div>
 <div class="new_poster" style="background: none;">
@@ -15,5 +15,26 @@
 <include file="Public/js"/>
 <include file="Public/nav"/>
 </body>
+<script>
+    var lock = false;
+    $(function(){
+        $("#buy").click(function(){
+            if(lock){
+                return;
+            }
+            lock = true;
+            $.ajax({
+                type: "GET",
+                url: "{:U('Wap/Index/index')}",
+                dataType: 'json',
+                success: function (data) {
+                    alert(2);
+//                    lock = false;
+                }
+            });
+            alert(2);
+        });
+    });
+</script>
 <include file="Public/footer"/>
 </html>
