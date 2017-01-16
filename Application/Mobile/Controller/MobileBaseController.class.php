@@ -26,7 +26,7 @@ abstract class MobileBaseController extends BaseController {
         //验证部分
         if( !isWeChatBrowser() ){
             if ( !isLoginState() ) {
-                if( $this -> needAuth() ){
+//                if( $this -> needAuth() ){
                     $redirectedUrl = session("redirectedUrl");
                     if( empty( $redirectedUrl ) ){
                         session("redirectedUrl",$_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]) ;
@@ -34,7 +34,7 @@ abstract class MobileBaseController extends BaseController {
 //                echo "请在微信端访问！";exit;
                     header("location:".U('Mobile/User/login'));
                     exit;
-                }
+//                }
             }
         }
 
