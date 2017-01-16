@@ -36,12 +36,12 @@ class ActivityController extends WapBaseController
                     "title" => "赚米($)攻略",
                     "desc"  => "边吃龙米边赚点米($)",
                 ),
-                array(
-                    "url"   => U('Mobile/Activity/fiveYuanBuying'),
-                    "bg"    => "images/new/activity_bg_3.png",
-                    "title" => "5元抢购88元龙米大礼包",
-                    "desc"  => "优惠多多，还能送福利给好友",
-                )
+//                array(
+//                    "url"   => U('Mobile/Activity/fiveYuanBuying'),
+//                    "bg"    => "images/new/activity_bg_3.png",
+//                    "title" => "5元抢购88元龙米大礼包",
+//                    "desc"  => "优惠多多，还能送福利给好友",
+//                )
             )
         );
         printJson(true, "", $data);
