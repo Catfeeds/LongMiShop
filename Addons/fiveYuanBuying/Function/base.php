@@ -53,7 +53,7 @@ function addonsPayData( $orderId ){
                 header('Location: '.U('Mobile/Activity/fiveYuanBuying'));
                 exit;
             }
-            $order["order_amount"] = $order["pay_amount"];
+            $order["order_amount"] = $order["money"];
             $payData['order'] = $order;
             $payData['goUrl'] = U('Mobile/Activity/fiveYuanBuying');
             $payData['backUrl'] = U('Mobile/Activity/fiveYuanBuying');
