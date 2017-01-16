@@ -23,7 +23,7 @@ class IndexController extends WapBaseController
             "top_menu" => array(
                 "userMoney"     => 0,
                 "couponCount"   => 0,
-                "activityCount" => 2,
+                "activityCount" => 0,
                 "inviteNumber"  => 0
             ),
         );
@@ -38,7 +38,7 @@ class IndexController extends WapBaseController
             $result = $usersLogic->get_coupon($this->user_id);
             $data["top_menu"]["couponCount"] = $result['count'];
 
-            $data["top_menu"]["activityCount"] = 2;
+            $data["top_menu"]["activityCount"] = 3;
 
             $data["top_menu"]["inviteNumber"] = getCountWithCondition("invite_list", array('parent_user_id' => $this->user_id));
 
