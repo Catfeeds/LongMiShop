@@ -57,7 +57,7 @@ function addonsPayData( $orderId )
             }
             $order["order_amount"] = $order["money"];
             $payData['order'] = $order;
-            $payData['goUrl'] = U('Mobile/Activity/fiveYuanBuyingPayOK');
+            $payData['goUrl'] = U('Mobile/Activity/fiveYuanBuyingPayOk');
             $payData['backUrl'] = U('Mobile/Activity/fiveYuanBuying');
             $payData['notifyUrl'] = SITE_URL . '/index.php/Api/Addons/fiveYuanBuying/pluginName/notifyUrl';
             return $payData;
