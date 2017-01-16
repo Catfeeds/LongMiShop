@@ -13,29 +13,23 @@ class fiveYuanBuyingMobileController
 
     }
 
-
-    public function initial()
-    {
-
-        return $this->assignData;
-
-    }
-
-
-    public function createActivity()
-    {
-        $userId = $this -> userInfo["user_id"];
-//        findDataWithCondition($userId);
-        exit;
-    }
-
-
     //初始页面
     public function index()
     {
+    }
 
-        return $this->assignData;
-
+    public function pay(){
+        $id = I("id");
+        if( $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
+            $order = findDataWithCondition( TB_ORDER , array("id"=>$id));
+            if( !empty( $order ) ){
+                addonsWeChatPay( $id , "fiveYuanBuying" );
+                exit;
+            }
+        }else{
+            exit;
+        }
+        exit;
     }
 
 }
