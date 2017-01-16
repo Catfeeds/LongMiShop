@@ -23,7 +23,7 @@ class IndexController extends WapBaseController
             "top_menu" => array(
                 "userMoney"     => 0,
                 "couponCount"   => 0,
-                "activityCount" => 2,
+                "activityCount" => 0,
                 "inviteNumber"  => 0
             ),
         );

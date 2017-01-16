@@ -449,14 +449,16 @@ img{
 	float: left;
 	width: 30%;
 	text-align: center;
-	height: 57px;
+	height:57px;
 }
 .nav_d li.nav_d_center {
 	width: 40%;
 }
 .nav_d img {
-	height: 30px;
-	width: 30px;
+	/*height: 30px;*/
+	/*width: 30px;*/
+	height: 32px;
+	width: 32px;
 }
 .nav_d a {
 	position: relative;
@@ -2093,7 +2095,7 @@ Load—more a{
 .nav_d li a span{
 	margin-top: -3px;
 	font-size:12px;
-	transform:scale(0.7);
+	transform:scale(0.9);
 	line-height: 10px;
 	color: #b2b2b2;
 	/*width: 20px;*/
