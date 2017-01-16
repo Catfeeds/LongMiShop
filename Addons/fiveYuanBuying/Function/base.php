@@ -6,34 +6,19 @@
  * @param $data
  */
 function addonsPayNotify( $orderSn , $data ){
-    $orderInfo = findDataWithCondition( "addons_lunchfeast_order" , array( "order_sn" => $orderSn ) );
+    $condition = array( "order_sn" => $orderSn ) ;
+    $orderInfo = findDataWithCondition( "addons_fiveyuanbuying_order" , $condition);
     if( !empty( $orderInfo ) ){
         if( $orderInfo["status"] != 0 ){
             return;
         }
-        $add = array(
-            "order_id" => $orderInfo["id"],
-            "user_id" => $orderInfo["user_id"],
-            "openid" => $data["openid"],
-            "create_time" => time(),
+        $save = array(
+            'status' => 1 ,
             "pay_time" => time(),
-            "money" => $data["total_fee"]/100,
-            "tag" => serialize( $data ),
-            "status" => 1,
+            "pay_tag" => serialize( $data ),
         );
-        addData( "addons_lunchfeast_order_pay_log" , $add );
-        $payLogList =selectDataWithCondition( "addons_lunchfeast_order_pay_log" , array('order_id' =>$orderInfo["id"] , "status" => 1 )  , "money");
-        $money = 0;
-        foreach ($payLogList as $payLogItem){
-            $money += $payLogItem["money"];
-        }
-        if( $orderInfo["pay_amount"] <= $money ){
-            saveData( "addons_lunchfeast_order" ,  array( "order_sn" => $orderSn ) , array( 'status' => 1 ,"pay_time" => time()));
-            //邀请人奖励
-            lunchFeastGiveInviteGift( $orderInfo['user_id'] );
-            //宴午推送
-            lunchFeastWeChatSend($orderInfo);
-        }
+        saveData( "addons_fiveyuanbuying_order" ,  $condition , $save);
+
     }
 }
 
@@ -51,17 +36,17 @@ function addonsPayData( $orderId ){
         "notifyUrl" => "",
     );
     if( $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')) {
-        $order = findDataWithCondition( "addons_lunchfeast_order" , array("id" => $id));
+        $order = findDataWithCondition( "addons_fiveyuanbuying_order" , array("id" => $id));
         if (!empty($order)) {
             if($order['status'] != 0){
-                header('Location: '.U('Mobile/Addons/lunchFeast',array('pluginName'=>'orderList')));
+                header('Location: '.U('Mobile/Activity/fiveYuanBuying'));
                 exit;
             }
             $order["order_amount"] = $order["pay_amount"];
             $payData['order'] = $order;
-            $payData['goUrl'] = U('Mobile/Addons/lunchFeast', array("pluginName" => "results" , "id" => $id ) );
-            $payData['backUrl'] = U('Mobile/Addons/lunchFeast', array("pluginName" => "payBack" , "id" => $id ));
-            $payData['notifyUrl'] =  SITE_URL.'/index.php/Api/Addons/lunchFeast/pluginName/notifyUrl';
+            $payData['goUrl'] = U('Mobile/Activity/fiveYuanBuying');
+            $payData['backUrl'] = U('Mobile/Activity/fiveYuanBuying');
+            $payData['notifyUrl'] =  SITE_URL.'/index.php/Api/Addons/fiveYuanBuying/pluginName/notifyUrl';
             return $payData;
         }
     }
