@@ -6,7 +6,6 @@ class fiveYuanBuyingMobileController
     public $assignData = array();
     public $userInfo = array();
 
-    private $activeVersion = null;
 
     public function __construct( $userInfo )
     {
