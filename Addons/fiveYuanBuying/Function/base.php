@@ -19,6 +19,17 @@ function addonsPayNotify( $orderSn , $data ){
         );
         saveData( "addons_fiveyuanbuying_order" ,  $condition , $save);
 
+        /**
+         * 送券
+         */
+        $giftList = selectDataWithCondition("addons_fiveyuanbuying_gift");
+        if( !empty($giftList)){
+            foreach ($giftList as $giftItem){
+                for($i = 1;$i<= $giftItem["number"];$i++){
+                    addNewCoupon( $giftItem['coupon_id'] , $orderInfo['user_id']);
+                }
+            }
+        }
     }
 }
 

@@ -273,6 +273,9 @@ function addNewCoupon($cid = null  ,$userId = null,$type =3)
         return false;
     }
 
+    if( !isExistenceDataWithCondition("coupon",array("id"=>$cid))){
+        return false;
+    }
     $add = array(
         "cid"          => $cid,
         "type"         => $type,
