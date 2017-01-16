@@ -22,6 +22,9 @@ class ActivityController extends MobileBaseController {
     public function fiveYuanBuying(){
         $this -> display();
     }
+    public function fiveYuanBuyingPayOk(){
+        $this -> display();
+    }
    /**
     * 商品详情页
     */ 
