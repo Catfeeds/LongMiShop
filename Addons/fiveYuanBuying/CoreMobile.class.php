@@ -45,7 +45,7 @@ class fiveYuanBuyingMobileController
     public function pay(){
         $id = I("id");
         if( $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
-            $order = findDataWithCondition( TB_ORDER , array("id"=>$id));
+            $order = findDataWithCondition( self::TB_ORDER , array("id"=>$id));
             if( !empty( $order ) ){
                 addonsWeChatPay( $id , "fiveYuanBuying" );
                 exit;
