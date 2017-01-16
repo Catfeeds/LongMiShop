@@ -26,7 +26,7 @@ function addonsPayNotify( $orderSn , $data ){
         if( !empty($giftList)){
             foreach ($giftList as $giftItem){
                 for($i = 1;$i<= $giftItem["number"];$i++){
-                    addNewCoupon( $giftItem['coupon_id'] , $orderInfo['user_id']);
+                    addNewCoupon( $giftItem['coupon_id'] , $orderInfo['user_id'],3,false);
                 }
             }
         }
