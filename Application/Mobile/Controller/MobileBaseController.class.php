@@ -27,7 +27,7 @@ abstract class MobileBaseController extends BaseController {
         if( !isWeChatBrowser() ){
             if ( !isLoginState() ) {
                 if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
-                    if( !in_array(ACTION_NAME, array("login2")) ){
+                    if( !in_array(ACTION_NAME, array("login2","returnSession")) ){
                         header("location:".U('Mobile/User/login2'));
                         exit;
                     }
