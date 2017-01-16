@@ -25,14 +25,23 @@
             lock = true;
             $.ajax({
                 type: "GET",
-                url: "{:U('Wap/Index/index')}",
+                url: "{:U('Mobile/Addons/fiveYuanBuying')}",
                 dataType: 'json',
                 success: function (data) {
-                    alert(2);
-//                    lock = false;
+                    if(data.state){
+                        alert("正在为你跳转到支付页面...");
+                        location.href =  data.data;
+                        return ;
+                    }else{
+                        alert(data.msg);
+                    }
+                    lock = false;
+                },
+                error:function(){
+                    lock = false;
+                    alert("网络错误");
                 }
             });
-            alert(2);
         });
     });
 </script>
