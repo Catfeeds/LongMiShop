@@ -10,3 +10,12 @@ CREATE TABLE `lm_addons_fiveyuanbuying_order` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+
+CREATE TABLE `lm_addons_fiveyuanbuying_gift` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `coupon_id` int(11) DEFAULT NULL,
+  `number` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
