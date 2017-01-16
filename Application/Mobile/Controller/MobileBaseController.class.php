@@ -26,15 +26,22 @@ abstract class MobileBaseController extends BaseController {
         //验证部分
         if( !isWeChatBrowser() ){
             if ( !isLoginState() ) {
-//                if( $this -> needAuth() ){
-                    $redirectedUrl = session("redirectedUrl");
-                    if( empty( $redirectedUrl ) ){
-                        session("redirectedUrl",$_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]) ;
+                if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
+                    if( !in_array(ACTION_NAME, array("login2")) ){
+                        header("location:".U('Mobile/User/login2'));
+                        exit;
                     }
+                }else{
+                    if( $this -> needAuth() ){
+                        $redirectedUrl = session("redirectedUrl");
+                        if( empty( $redirectedUrl ) ){
+                            session("redirectedUrl",$_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]) ;
+                        }
 //                echo "请在微信端访问！";exit;
-                    header("location:".U('Mobile/User/login'));
-                    exit;
-//                }
+                        header("location:".U('Mobile/User/login'));
+                        exit;
+                    }
+                }
             }
         }
 
