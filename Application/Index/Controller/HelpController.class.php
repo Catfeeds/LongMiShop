@@ -45,10 +45,11 @@ class HelpController extends IndexBaseController {
             $model->startTrans();
             foreach ($numbers as $month => $number) {
                 $startTime = strtotime("2016-" . $month . "-01");
-
-                $endTime = strtotime("2016-" . ($month + 1) . "-01");
-                echo  rand($startTime, $endTime)."///";
-                echo $startTime."///".$endTime;exit;
+                if( $month == 12){
+                    $endTime = strtotime("2017-01-01");
+                }else{
+                    $endTime = strtotime("2016-" . ($month + 1) . "-01");
+                }
                 for ($i = 1; $i <= $number; $i++) {
                     $map = array();
                     $map['user_money'] = 0;
