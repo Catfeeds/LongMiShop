@@ -101,8 +101,11 @@ class UserController extends MobileBaseController {
      *  登录
      */
     public function login(){
+        if( isWeChatBrowser() ){
+            header("Location: ".U('Mobile/Addons/riceGrains'));exit;
+        }
         if( isLoginState() ){
-        	header("Location: ".U('Mobile/User/index'));
+            header("Location: ".U('Mobile/User/index'));
         }
         $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Mobile/User/index");
         $this -> assign('referurl',$referurl);
