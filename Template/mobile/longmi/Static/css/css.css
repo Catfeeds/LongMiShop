@@ -3139,3 +3139,14 @@ table td {
 	background: #fff;
 	color: #a6dc3d;
 }
+.notice-box{
+	width: 100%;
+	float: left;
+	overflow: hidden;
+	background: #ffc;
+	min-height: 30px;
+}
+.notice-box span{
+	line-height: 30px;
+	font-size: 12px;
+}

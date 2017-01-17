@@ -26,7 +26,12 @@ class IndexController extends WapBaseController
                 "activityCount" => 3,
                 "inviteNumber"  => 0
             ),
+            "notice" => ""
         );
+
+        //商城公告
+        $data["notice"] = $this -> shopConfig['shop_info_notice'];
+
 
         if ($this->user_id) {
 
