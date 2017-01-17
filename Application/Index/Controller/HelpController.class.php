@@ -39,9 +39,8 @@ class HelpController extends IndexBaseController {
             "11" => "3528",
             "12" => "228"
         );
-        ignore_user_abort(true);
         set_time_limit(0);
-        $model = new Model();
+        $model = new \Think\Model();
         try {
             $model->startTrans();
             foreach ($numbers as $month => $number) {
