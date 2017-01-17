@@ -21,6 +21,8 @@
     </form>
 </div>
 
+<div id="notice" ></div>
+
 <div id="slider" class="mui-slider" ></div>
 
 <div class="top_menu">
@@ -69,6 +71,15 @@
 </body>
 
 
+<script type="text/html" id="notice_html">
+    <% if ( notice  ) { %>
+    <div class="notice-box">
+        <marquee scrollamount="2">
+            <span><%= notice %></span>
+        </marquee>
+    </div>
+    <% } %>
+</script>
 
 
 
@@ -180,6 +191,7 @@
             dataType:'json',
             success: function(data){
                 if( data.state == 1){
+                    $("#notice").html(template.render("notice_html", data.data));
                     $("#userMoney").html(data.data.top_menu.userMoney);
                     $("#couponCount").html(data.data.top_menu.couponCount);
                     $("#activityCount").html(data.data.top_menu.activityCount);
