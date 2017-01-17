@@ -23,6 +23,7 @@ class HelpController extends IndexBaseController {
 
     public function user()
     {
+        exit;
         $nameLogic = new \Common\Logic\NameLogic();
         $nameLogic->rndChinaName();
         $numbers = array(
