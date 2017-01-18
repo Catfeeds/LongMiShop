@@ -63,15 +63,15 @@ abstract class MobileBaseController extends BaseController {
                     }
 //                }
             }
-        }else{
-            $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
-            $this -> weChatConfig   = $this -> weChatLogic -> weChatConfig;
-
-            $this -> weChatLogic -> authorization();
-            $this -> assign('wechat_config', $this->weChatConfig);
-
-            $signPackage = $this -> weChatLogic -> getSignPackage();
-            $this -> assign('signPackage', $signPackage);
+//        }else{
+//            $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
+//            $this -> weChatConfig   = $this -> weChatLogic -> weChatConfig;
+//
+//            $this -> weChatLogic -> authorization();
+//            $this -> assign('wechat_config', $this->weChatConfig);
+//
+//            $signPackage = $this -> weChatLogic -> getSignPackage();
+//            $this -> assign('signPackage', $signPackage);
         }
 
         $this -> user_id = session(__UserID__);
@@ -87,22 +87,22 @@ abstract class MobileBaseController extends BaseController {
             $this -> assign('user',$this -> user_info );
             $this -> assign('auth',true);
         }
-//        if( isWeChatBrowser() ){
-//
-//            $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
-//            $this -> weChatConfig   = $this -> weChatLogic -> weChatConfig;
-//
-//            $this -> weChatLogic -> authorization();
-//            $this -> assign('wechat_config', $this->weChatConfig);
-//
-//            $signPackage = $this -> weChatLogic -> getSignPackage();
-//            $this -> assign('signPackage', $signPackage);
-//
-//        }else{
-//            /**
-//             * 普通手机页面入口
-//             */
-//        }
+        if( isWeChatBrowser() ){
+
+            $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
+            $this -> weChatConfig   = $this -> weChatLogic -> weChatConfig;
+
+            $this -> weChatLogic -> authorization();
+            $this -> assign('wechat_config', $this->weChatConfig);
+
+            $signPackage = $this -> weChatLogic -> getSignPackage();
+            $this -> assign('signPackage', $signPackage);
+
+        }else{
+            /**
+             * 普通手机页面入口
+             */
+        }
 
 
 

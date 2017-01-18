@@ -26,7 +26,7 @@ class IndexController extends MobileBaseController {
 
         $sendNewsCouponsId = M('config') -> where(array('name' => 'send_news_coupons_id'))->getField("value");
         $condition = array(
-            "user_id"=>$this->user_id,
+            "uid"=>$this->user_id,
             "cid"=>$sendNewsCouponsId
         );
         if( time() -  $this->user['reg_time'] > 60 * 60 * 5  ){
