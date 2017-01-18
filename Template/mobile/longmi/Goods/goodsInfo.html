@@ -39,7 +39,7 @@
             </div>
             <div class="cp2_r">
                 <p>{$goods.goods_name}</p>
-                <span id="goods_price">￥{:$goods['shop_price']*$user['discount']}</span>
+                <span id="goods_price">￥{:$user&&$user['discount']<1?$goods['shop_price']*$user['discount']:$goods['shop_price']}</span>
                 <div class="mui-numbox z-index" data-numbox-min="1" data-numbox-max="999999">
                     <button class="mui-btn mui-btn-numbox-minus" type="button" disabled=""  >-</button>
                     <input id="goods_num"  name="goods_num"   class="mui-input-numbox" type="text" value="1">
