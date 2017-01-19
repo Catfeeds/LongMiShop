@@ -3145,9 +3145,11 @@ table td {
 	overflow: hidden;
 	background: #ffc;
 	min-height: 30px;
+	height: 30px;
 }
 .notice-box span{
 	line-height: 30px;
 	font-size: 12px;
 	color: #000;
+	height: 30px;
 }
