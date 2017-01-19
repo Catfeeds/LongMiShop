@@ -1,0 +1,410 @@
+
+html,body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background: #e05a5a;
+    overflow: hidden;
+}
+
+
+#box {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000000;
+}
+
+.page{
+    background: #e05a5a;
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: relative;
+}
+
+.page_1{
+}
+
+.page_1 img,.page_3 img{
+    position: absolute;
+    height: auto;
+}
+
+ .logo{
+    top: 3%;
+    left: 5%;
+    width: 38%;
+}
+ .cao{
+    bottom: 0;
+    left: 0;
+    width:100%;
+}
+/*//貂*/
+.page_1 .img_1{
+    width: 23%;
+    left:5%;
+    bottom: -7%;
+    transform:rotate(15deg);
+    -ms-transform:rotate(15deg); 	/* IE 9 */
+    -moz-transform:rotate(15deg); 	/* Firefox */
+    -webkit-transform:rotate(15deg); /* Safari 和 Chrome */
+    -o-transform:rotate(15deg);
+}
+/*//鹤*/
+.page_1 .img_2{
+    width: 36%;
+    right: -12%;
+    bottom: 35%;
+    transform: rotate(-40deg);
+    -ms-transform: rotate(-40deg);
+    -moz-transform: rotate(-40deg);
+    -webkit-transform: rotate(-40deg);
+    -o-transform: rotate(-40deg);
+}
+/*//虎*/
+.page_1 .img_3{
+    width: 28%;
+    left:-12%;
+    bottom: 10%;
+    transform:rotate(30deg);
+    -ms-transform:rotate(30deg); 	/* IE 9 */
+    -moz-transform:rotate(30deg); 	/* Firefox */
+    -webkit-transform:rotate(30deg); /* Safari 和 Chrome */
+    -o-transform:rotate(30deg);
+}
+/*//鹿*/
+ .img_4{
+    width: 25%;
+    right: -7%;
+    bottom: 12%;
+    transform: rotate(-48deg);
+    -ms-transform: rotate(-48deg);
+    -moz-transform: rotate(-48deg);
+    -webkit-transform: rotate(-48deg);
+    -o-transform: rotate(-48deg);
+}
+/*//鼠*/
+.page_1 .img_5{
+    width: 28%;
+    left: 51%;
+    bottom: 7%;
+}
+/*//熊*/
+.page_1 .img_6{
+    width: 23%;
+    left: 34%;
+    bottom: 0;
+}
+/*//鹰*/
+.page_1 .img_7{
+    width: 24%;
+    left:75%;
+    bottom: -3%;
+    transform:rotate(-20deg);
+    -ms-transform:rotate(-20deg); 	/* IE 9 */
+    -moz-transform:rotate(-20deg); 	/* Firefox */
+    -webkit-transform:rotate(-20deg); /* Safari 和 Chrome */
+    -o-transform:rotate(-20deg);
+}
+/*//点击开始游戏*/
+.page_1 .img_8{
+    width: 55%;
+    left: 12%;
+    top: 50%;
+}
+.page_1 .img_9{
+    width: 60%;
+    left: 17%;
+    top: 17%;
+}
+.page_1 .img_10{
+    width: 30%;
+    left: 48%;
+    top: 16%;
+}
+.page_1 .img_11{
+    width: 25%;
+    left: 18%;
+    top: 29%;
+}
+.page_1 .img_12{
+    width: 15%;
+    left: 53%;
+    top: 10%;
+}
+.page_1 .img_13{
+    width: 15%;
+    left: 6%;
+    top: 30%;
+}
+.page_1 .img_14{
+     width: 20%;
+     left: 30%;
+     top: 62%;
+}
+
+.page_1 .img_15{
+    width: 25%;
+    left: 22%;
+    top: 67%;
+}
+.page_1 .img_16{
+    width: 50%;
+    left: 22%;
+    top: 45%;
+}
+
+.page_1 .img_17{
+    width: 50%;
+    left: 22%;
+    top: 22%;
+}
+
+
+.rule{
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:#e05a5a ;
+    background: #000;
+    opacity: 0.8;
+
+}
+  .rule p{
+    padding: 10% 0;
+    display: block;
+    width: 70%;
+    line-height: 36px;
+    font-size: 18px;
+    font-family: "微软雅黑";
+    margin: 50px 15%;
+    background: #000;
+    color: #fff;
+}
+
+.page_2 img{
+    position: absolute;
+    height: auto;
+}
+.page_2 .img_1{
+    width: 70%;
+    left: 15%;
+    top: 10%;
+}
+#game_over{
+    width: 100%;
+    display: none;
+}
+#game_over input{
+    position: absolute;
+    width: 35%;
+    height: 36px;
+    font-size: 28px;
+    color: #fff;
+    line-height: 36px;
+    padding: 5px 5px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    top: 27%;
+    left: 15%;
+    background: #e05a5a;
+}
+#game_over .result{
+    display: none;
+    position: absolute;
+    width: 70%;
+    height: 36px;
+    font-size: 28px;
+    color: #fff;
+    line-height: 36px;
+    padding: 5px 5px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    top: 36%;
+    left: 15%;
+    background: #e05a5a;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+}
+#game_over .result2{
+    display: none;
+    position: absolute;
+    width: 70%;
+    height: 36px;
+    font-size: 28px;
+    color: #fff;
+    line-height: 36px;
+    padding: 5px 5px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    top: 36%;
+    left: 15%;
+    background: #e05a5a;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+}
+#game_over .ok{
+    position: absolute;
+    width: 24%;
+    height: 36px;
+    font-size: 28px;
+    color: #e05a5a;
+    padding: 5px 10px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    top: 27%;
+    left: 58%;
+    line-height: 36px;
+    background: #fff;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+}
+#game_over .fraction{
+    display: none;
+    position: absolute;
+    width: 85px;
+    padding-left: 15px;
+    height: 65px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: #fff;
+    line-height: 65px;
+    bottom: 20%;
+    left: 57%;
+    font-family: "微软雅黑";
+    background: url(../images/bubble.png) center no-repeat;
+    background-size: 100px 65px;
+
+}
+#game_over .taunt{
+    display: none;
+    position: absolute;
+    width: 100px;
+    height: 105px;
+    bottom: 16%;
+    right: 57%;
+    background: url(../images/taunt.png) center no-repeat;
+    background-size: 100px 105px;
+
+}
+#game_over .taunt2{
+    display: none;
+    position: absolute;
+    width: 150px;
+    height: 183px;
+    bottom: 10%;
+    right: 47%;
+    background: url(../images/taunt2.png) center no-repeat;
+    background-size: 150px 123px;
+}
+
+.cp_box {
+    width: 70%;
+    margin: 200px 15%;
+    position: absolute;
+}
+.m10 {
+    font-size: 14px;
+    line-height: 30px;
+}
+
+.coupon_div{
+    text-decoration: none;
+    border-radius: 10px;
+    background-color: rgb( 254, 254, 254 );
+    width: 96%;
+    overflow: hidden;
+    position: relative;
+    margin: 0 2% 20px 2%;
+}
+.coupon_div a{
+    text-decoration: none;
+}
+.coupon_div .coupon_div_top{
+    width: 90%;
+    padding: 0 5%;
+    border-radius: 10px 10px 0 0;
+    height: 50px;
+    border-bottom: 2px dashed #fff;
+    background: #f5c53d;
+}
+
+.coupon_div .coupon_div_top .coupon_div_top_l{
+    float: left;
+    color: #fff;
+    width: 20%;
+    font-size: 24px;
+    height: 48px;
+    line-height: 48px;
+    text-decoration: none;
+}
+.coupon_div .coupon_div_top .coupon_div_top_r{
+    float: left;
+    color: #fff;
+    width: 80%;
+    text-align: right;
+    font-size: 12px;
+    margin-top: 20px;
+    height: 28px;
+    line-height: 28px;
+    text-decoration: none;
+}
+
+
+.coupon_div_b {
+    color: #B2B2B2;
+    font-size: 12px;
+    width: 90%;
+    margin: 5px 5%;
+    text-align: right;
+}
+.ccoupon_div_r1 {
+    overflow: hidden;
+    padding-left: 5px;
+    text-align: right;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+}
+.coupon_div_r1 p {
+    overflow: hidden;
+    font-weight: bold;
+}
+.coupon_div_r p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    font-size: 16px !important;
+    line-height: 48px;
+    height: 48px;
+    display: block;
+}
+.coupon_div_r span {
+    color: #a6dc3d;
+    line-height: 42px;
+    font-size: 18px;
+    float: left;
+    display: block;
+}
+
+.coupon_div .coupon_div_b .coupon_list_icon_1{
+    background: url("../images/coupon_list_icon_1.png") no-repeat left center;
+    text-decoration: none;
+}
+.coupon_div .coupon_div_b .coupon_list_icon_2{
+    background: url("../images/coupon_list_icon_2.png") no-repeat left center;
+    text-decoration: none;
+}

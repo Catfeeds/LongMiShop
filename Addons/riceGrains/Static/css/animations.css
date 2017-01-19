@@ -1,0 +1,306 @@
+/* animation sets */
+
+/* move from / to  */
+
+.pt-ren-he {
+	-webkit-animation: ren-he .6s ease both;
+	animation: ren-he .6s ease both;
+}
+
+.pt-ren-lu {
+	-webkit-animation: ren-lu .6s ease both;
+	animation: ren-lu .6s ease both;
+	-webkit-animation-delay: 0.3s;
+	animation-delay: 0.3s;
+}
+.pt-ren-ying {
+	-webkit-animation: ren-ying .9s ease both;
+	animation: ren-ying .9s ease both;
+	-webkit-animation-delay: 0.1s;
+	animation-delay: 0.1s;
+}
+.pt-ren-xiong {
+	-webkit-animation: ren-xiong .3s ease both;
+	animation: ren-xiong .3s ease both;
+	-webkit-animation-delay: 0.4s;
+	animation-delay: 0.4s;
+}
+
+.pt-ren-shu {
+	-webkit-animation: ren-shu .3s ease both;
+	animation: ren-shu .3s ease both;
+}
+.pt-ren-diao {
+	-webkit-animation: ren-diao .2s ease both;
+	animation: ren-diao .2s ease both;
+	-webkit-animation-delay: 1.0s;
+	animation-delay: 1.0s;
+}
+.pt-ren-hu {
+	-webkit-animation: ren-hu .5s ease both;
+	animation: ren-hu .5s ease both;
+}
+
+
+
+.pt-p1-title {
+	-webkit-animation: p1-title .5s ease both;
+	animation: p1-title .5s ease both;
+}
+
+
+
+/********************************* keyframes **************************************/
+
+/* move from / to  */
+
+@-webkit-keyframes ren-he {
+	from {
+		transform: rotate(-40deg) translate(100%,100%);
+		-ms-transform: rotate(-40deg) translate(100%,100%);
+		-moz-transform: rotate(-40deg) translate(100%,100%);
+		-webkit-transform: rotate(-40deg) translate(100%,100%);
+		-o-transform: rotate(-40deg) translate(100%,100%);
+	}
+	to {
+		transform: rotate(-40deg);
+		-ms-transform: rotate(-40deg);
+		-moz-transform: rotate(-40deg);
+		-webkit-transform: rotate(-40deg);
+		-o-transform: rotate(-40deg);
+	}
+}
+@keyframes ren-he {
+	from {
+		transform: rotate(-40deg) translate(100%,100%);
+		-ms-transform: rotate(-40deg) translate(100%,100%);
+		-moz-transform: rotate(-40deg) translate(100%,100%);
+		-webkit-transform: rotate(-40deg) translate(100%,100%);
+		-o-transform: rotate(-40deg) translate(100%,100%);
+	}
+	to {
+		transform: rotate(-40deg);
+		-ms-transform: rotate(-40deg);
+		-moz-transform: rotate(-40deg);
+		-webkit-transform: rotate(-40deg);
+		-o-transform: rotate(-40deg);
+	}
+}
+
+
+
+
+
+@-webkit-keyframes ren-lu {
+	from {
+		transform: rotate(-48deg) translate(100%,100%);
+		-ms-transform: rotate(-48deg) translate(100%,100%);
+		-moz-transform: rotate(-48deg) translate(100%,100%);
+		-webkit-transform: rotate(-48deg) translate(100%,100%);
+		-o-transform: rotate(-48deg) translate(100%,100%);
+	}
+	to {
+		transform: rotate(-48deg);
+		-ms-transform: rotate(-48deg);
+		-moz-transform: rotate(-48deg);
+		-webkit-transform: rotate(-48deg);
+		-o-transform: rotate(-48deg);
+	}
+}
+@keyframes ren-lu {
+	from {
+		transform: rotate(-48deg) translate(100%,100%);
+		-ms-transform: rotate(-48deg) translate(100%,100%);
+		-moz-transform: rotate(-48deg) translate(100%,100%);
+		-webkit-transform: rotate(-48deg) translate(100%,100%);
+		-o-transform: rotate(-48deg) translate(100%,100%);
+	}
+	to {
+		transform: rotate(-48deg);
+		-ms-transform: rotate(-48deg);
+		-moz-transform: rotate(-48deg);
+		-webkit-transform: rotate(-48deg);
+		-o-transform: rotate(-48deg);
+	}
+}
+
+
+
+@-webkit-keyframes ren-ying {
+	from {
+		transform:rotate(-20deg)  translate(100%,50%);
+		-ms-transform:rotate(-20deg)  translate(100%,50%); 	/* IE 9 */
+		-moz-transform:rotate(-20deg)  translate(100%,50%); 	/* Firefox */
+		-webkit-transform:rotate(-20deg)  translate(100%,50%); /* Safari 和 Chrome */
+		-o-transform:rotate(-20deg)  translate(100%,50%);
+	}
+	to {
+		transform:rotate(-20deg);
+		-ms-transform:rotate(-20deg); 	/* IE 9 */
+		-moz-transform:rotate(-20deg); 	/* Firefox */
+		-webkit-transform:rotate(-20deg); /* Safari 和 Chrome */
+		-o-transform:rotate(-20deg);
+	}
+}
+@keyframes ren-ying {
+	from {
+		transform:rotate(-20deg)  translate(100%,50%);
+		-ms-transform:rotate(-20deg)  translate(100%,50%); 	/* IE 9 */
+		-moz-transform:rotate(-20deg)  translate(100%,50%); 	/* Firefox */
+		-webkit-transform:rotate(-20deg)  translate(100%,50%); /* Safari 和 Chrome */
+		-o-transform:rotate(-20deg)  translate(100%,50%);
+	}
+	to {
+		transform:rotate(-20deg);
+		-ms-transform:rotate(-20deg); 	/* IE 9 */
+		-moz-transform:rotate(-20deg); 	/* Firefox */
+		-webkit-transform:rotate(-20deg); /* Safari 和 Chrome */
+		-o-transform:rotate(-20deg);
+	}
+}
+
+
+@-webkit-keyframes ren-xiong {
+	from {
+		transform:translate(0,100%);
+		-ms-transform:translate(0,100%);	/* IE 9 */
+		-moz-transform:translate(0,100%); 	/* Firefox */
+		-webkit-transform:translate(0,100%); /* Safari 和 Chrome */
+		-o-transform:translate(0,100%);
+	}
+	to {
+	}
+}
+@keyframes ren-xiong {
+	from {
+		transform:translate(0,100%);
+		-ms-transform:translate(0,100%);	/* IE 9 */
+		-moz-transform:translate(0,100%); 	/* Firefox */
+		-webkit-transform:translate(0,100%); /* Safari 和 Chrome */
+		-o-transform:translate(0,100%);
+	}
+	to {
+	}
+}
+
+
+@-webkit-keyframes ren-shu {
+	from {
+		transform:translate(0,100%);
+		-ms-transform:translate(0,100%);	/* IE 9 */
+		-moz-transform:translate(0,100%); 	/* Firefox */
+		-webkit-transform:translate(0,100%); /* Safari 和 Chrome */
+		-o-transform:translate(0,100%);
+	}
+	to {
+	}
+}
+@keyframes ren-shu {
+	from {
+		transform:translate(0,100%);
+		-ms-transform:translate(0,100%);	/* IE 9 */
+		-moz-transform:translate(0,100%); 	/* Firefox */
+		-webkit-transform:translate(0,100%); /* Safari 和 Chrome */
+		-o-transform:translate(0,100%);
+	}
+	to {
+	}
+}
+
+
+
+
+@-webkit-keyframes ren-diao {
+	from {
+		transform:rotate(15deg) translate(-100%,100%);
+		-ms-transform:rotate(15deg) translate(-100%,100%); 	/* IE 9 */
+		-moz-transform:rotate(15deg) translate(-100%,100%); 	/* Firefox */
+		-webkit-transform:rotate(15deg) translate(-100%,100%); /* Safari 和 Chrome */
+		-o-transform:rotate(15deg) translate(-100%,100%);
+	}
+	to {
+		transform:rotate(15deg);
+		-ms-transform:rotate(15deg); 	/* IE 9 */
+		-moz-transform:rotate(15deg); 	/* Firefox */
+		-webkit-transform:rotate(15deg); /* Safari 和 Chrome */
+		-o-transform:rotate(15deg);
+	}
+}
+@keyframes ren-diao {
+	from {
+		transform:rotate(15deg) translate(-100%,100%);
+		-ms-transform:rotate(15deg) translate(-100%,100%); 	/* IE 9 */
+		-moz-transform:rotate(15deg) translate(-100%,100%); 	/* Firefox */
+		-webkit-transform:rotate(15deg) translate(-100%,100%); /* Safari 和 Chrome */
+		-o-transform:rotate(15deg) translate(-100%,100%);
+	}
+	to {
+		transform:rotate(15deg);
+		-ms-transform:rotate(15deg); 	/* IE 9 */
+		-moz-transform:rotate(15deg); 	/* Firefox */
+		-webkit-transform:rotate(15deg); /* Safari 和 Chrome */
+		-o-transform:rotate(15deg);
+	}
+}
+
+
+
+
+@-webkit-keyframes ren-hu {
+	from {
+		transform:rotate(30deg) translate(-100%,100%);
+		-ms-transform:rotate(30deg) translate(-100%,100%); 	/* IE 9 */
+		-moz-transform:rotate(30deg) translate(-100%,100%); 	/* Firefox */
+		-webkit-transform:rotate(30deg) translate(-100%,100%); /* Safari 和 Chrome */
+		-o-transform:rotate(30deg) translate(-100%,100%);
+	}
+	to {
+		transform:rotate(30deg);
+		-ms-transform:rotate(30deg); 	/* IE 9 */
+		-moz-transform:rotate(30deg); 	/* Firefox */
+		-webkit-transform:rotate(30deg); /* Safari 和 Chrome */
+		-o-transform:rotate(30deg);
+	}
+}
+@keyframes ren-hu {
+	from {
+		transform:rotate(30deg) translate(-100%,100%);
+		-ms-transform:rotate(30deg) translate(-100%,100%); 	/* IE 9 */
+		-moz-transform:rotate(30deg) translate(-100%,100%); 	/* Firefox */
+		-webkit-transform:rotate(30deg) translate(-100%,100%); /* Safari 和 Chrome */
+		-o-transform:rotate(30deg) translate(-100%,100%);
+	}
+	to {
+		transform:rotate(30deg);
+		-ms-transform:rotate(30deg); 	/* IE 9 */
+		-moz-transform:rotate(30deg); 	/* Firefox */
+		-webkit-transform:rotate(30deg); /* Safari 和 Chrome */
+		-o-transform:rotate(30deg);
+	}
+}
+
+
+
+
+@-webkit-keyframes p1-title {
+	from {
+		transform:translate(-100%,-100%);
+		-ms-transform:translate(-100%,-100%); 	/* IE 9 */
+		-moz-transform:translate(-100%,-100%); 	/* Firefox */
+		-webkit-transform:translate(-100%,-100%); /* Safari 和 Chrome */
+		-o-transform:translate(-100%,-100%);
+	}
+	to {
+	}
+}
+@keyframes p1-title {
+	from {
+		transform:translate(-100%,-100%);
+		-ms-transform:translate(-100%,-100%); 	/* IE 9 */
+		-moz-transform:translate(-100%,-100%); 	/* Firefox */
+		-webkit-transform:translate(-100%,-100%); /* Safari 和 Chrome */
+		-o-transform:translate(-100%,-100%);
+	}
+	to {
+	}
+}

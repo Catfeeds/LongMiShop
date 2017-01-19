@@ -3,207 +3,104 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"/>
-    <title>无标题文档</title>
-    <style type="text/css">
-        html,body{width:100%;height:100%;padding:0;margin:0;overflow:hidden}
-    </style>
-    <script type="text/javascript" src="__ADDONS__/js/jquery.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            var box = $('#box');
-            box.css('width',window.innerWidth);
-            box.css('height',window.innerHeight);
-
-        });
-    </script>
+    <title>粒粒接辛苦</title>
+    <link  rel="stylesheet"  href="__ADDONS__/css/css.css?v={$v}"/>
+    <link  rel="stylesheet"  href="__ADDONS__/css/animations.css?v={$v}"/>
 </head>
 <body>
-<div id="box" style="border: 0;margin: 0;padding: 0;overflow: hidden;background-color: #000000;">
-    <canvas id="canvas" style="display: block;">
-        <script type="text/javascript">
-            var B = 0.56;
-            var canvasW = window.innerWidth;
-            var canvasH = canvasW/B;
-            if(canvasH > window.innerHeight) canvasH = window.innerHeight;
-            var canvasObj = $('#canvas');
-            canvasObj.css('margin-top',(window.innerHeight-canvasH)/2);
-            canvasObj.attr('width',canvasW);
-            canvasObj.attr('height',canvasH);
-            var ca=document.getElementById("canvas");
 
-            var ctx=ca.getContext("2d");
-            var bj1=new Image();
+<audio id="audio" src="__ADDONS__/music/score.wav"  preload="preload" style="width:0px;height:0px;" ></audio>
+<audio id="die_audio" src="__ADDONS__/music/hurt.wav" preload="preload"  style="width:0px;height:0px;" ></audio>
+<audio id="bg" src="__ADDONS__/music/789.mp3?v={$v}" preload="preload"  style="width:0px;height:0px;" loop="loop"></audio>
 
-            var player = new Image();
-            var tu = new Array();
+<div class=" page page_1">
+    <img src="__ADDONS__/images/logo.png" class="logo">
 
-            bj1.src="__ADDONS__/images/bj.jpg";
-            player.src="__ADDONS__/images/ren.png";
-            var playerWidth =123*B;
-            var playerHeight =213*B;
-
-            var h=20;
-            var gk=1;
-            var sudu=10;
-            var zl=100;
-            var chi=0;
-            var shi=0;
-            var fs=0;
-            var sm=1;
-            var bj=bj1;
-            function object(){
-                this.x=0;
-                this.y=0;
-                this.l=11;
-                this.image=new Image();
-            }
-
-            var sprite=new object();
-            //sprite.x=(canvasW - playerWidth)/2;
-            sprite.x=0;
-            sprite.y=canvasH-playerHeight;
-            //sprite.y=canvasH-playerHeight;
-
-            sprite.image=player;
-
-            var beginTime = new Date();
-            var gameTime = 1500;
-            var remainTime;
-            function checkTime()
-            {
-                var nowTime = new Date();
-                remainTime = gameTime-parseInt((nowTime.getTime()-beginTime.getTime())/1000);
-                document.getElementById('m').innerHTML = remainTime;
-            }
-            var range = canvasW - 60*B;
-            function chansheng(){
-                if(shi%h==0){
-                    for(var j=2*chi;j<2*(chi+1);j++){
-                        tu[j]=new object();
-                        var i=Math.round(Math.random()*range);
-                        if(j==2*chi+1)
-                        {
-                            while(Math.abs(i-tu[2*chi].x)<30){
-                                i=Math.round(Math.random()*range);
-                            }
-                        }
-                        var k=Math.round(Math.random()*zl);
-                        if(k < 90){
-                            tu[j].image.src="__ADDONS__/images/1.png";
-                            tu[j].q = 1;
-                        }else if(k < 97){
-                            tu[j].image.src="__ADDONS__/images/2.png";
-                            tu[j].q = 2;
-                        }else{
-                            tu[j].image.src="__ADDONS__/images/3.png";
-                            tu[j].q = 3;
-                        }
-                        tu[j].x=i;
-                        tu[j].y=-Math.round(Math.random()*300);
-                    }
-                    chi++;
-                    if(chi==10) chi=0;
-                }
-                shi++;
-            }
+    <img src="__ADDONS__/images/ren_he.png" class="img_2 ren pt-ren-he" data-test="he" data-width="70"  data-height="100">
+    <img src="__ADDONS__/images/ren_hu.png" class="img_3 ren pt-ren-hu" data-test="hu" data-width="60"  data-height="100">
+    <img src="__ADDONS__/images/ren_lu.png" class="img_4 ren pt-ren-lu" data-test="lu" data-width="45"  data-height="100">
+    <img src="__ADDONS__/images/ren_shu.png" class="img_5 ren pt-ren-shu" data-test="shu" data-width="61"  data-height="100">
+    <img src="__ADDONS__/images/cao2.png" class="cao">
+    <img src="__ADDONS__/images/ren_diao.png" class="img_1 ren pt-ren-diao" data-test="diao" data-width="53"  data-height="100">
+    <img src="__ADDONS__/images/ren_xiong.png" class="img_6 ren pt-ren-xiong" data-test="xiong" data-width="59"  data-height="100">
+    <img src="__ADDONS__/images/ren_ying.png" class="img_7 ren pt-ren-ying" data-test="ying" data-width="57"  data-height="100">
 
 
-            function sudukongzhi(){
-                if(remainTime > 10){
-                    h=5;
-                    sudu=30;
-                }else if(remainTime > 5){
-                    h=5;
-                    sudu=50;
-                }else{
-                    h=5;
-                    sudu=60;
-                }
-            }
-            function draw(){
-                sudukongzhi();
-                chansheng();
-                for(var i=0;i<tu.length;i++){
-                    if(jianche(sprite,tu[i])) {
-                        if(tu[i].q == 1){
-                            fs+=1;
-                        }else if(tu[i].q == 2){
-                            fs+=5;
-                        }else{
-                            fs+=10;
-                        }
-                        tu[i].y+=200;
-                    }else if(!jianche(sprite,tu[i])){
-                        //ctx.drawImage(tu[i].image,tu[i].x,tu[i].y,60*B,60*B);
-                        tu[i].y+=sudu;
-                    }
-                    ctx.drawImage(tu[i].image,tu[i].x,tu[i].y,60*B,60*B);
-                }
-            }
+    <img src="__ADDONS__/images/page_1_4.png" class="img_8 pt-p1-title">
+    <img src="__ADDONS__/images/page_1_3.png" class="img_9 pt-p1-title">
+    <img src="__ADDONS__/images/page_1_1.png" class="img_10 pt-p1-title">
+    <img src="__ADDONS__/images/page_1_2.png" class="img_11 pt-p1-title">
+    <img src="__ADDONS__/images/page_1_5.png" class="img_12 pt-p1-title">
+    <img src="__ADDONS__/images/page_1_6.png" class="img_13 pt-p1-title">
+    <img src="__ADDONS__/images/rule.png"     class="img_14 pt-p1-title">
 
-            function jianche(a,b){
-                var c=a.x-b.x;
-                var d=a.y-b.y;
-                if(c < b.image.width*B && c>-a.image.width*B  && d<b.image.height*B && d>-a.image.height*B){
-                    return true;
-                }else{
-                    return false;
-                }
-            }
-            function addListener(element,e,fn){
-                if(element.addEventListener){
-                    element.addEventListener(e,fn,false);
-                } else {
-                    element.attachEvent("on" + e,fn);
-                }
-            }
+    <div class="rule">
+        <p>
+            接辛苦，有多辛苦.除了接米,你还要算下接了多少个米?分数越高,猜米数越准,优惠越高!接米超过30以上并猜对接米数，得到5元优惠券。接米超过120以上并猜对接米数，得到10元优惠券。接米超过200以上并猜对接米数，得到20元优惠券。（差三个超三个也算你对哟）
+        </p>
+    </div>
 
-            function m(event){
-                sprite.x=event.clientX-playerWidth/2;
-                if(sprite.x+playerWidth>=canvasW) sprite.x=canvasW-playerWidth;
-                else if(sprite.x<=playerWidth/2) sprite.x=0;
-            }
-            //                function m(event){
-            //                    var last=event.clientX-playerWidth/2;
-            //
-            //                    if(last+playerWidth>=canvasW) last=canvasW-playerWidth;
-            //                    else if(last<=playerWidth/2) last=0;
-            //                    if(last < sprite.x){
-            //                        for(var i=sprite.x;i>last;i--){
-            //                            sprite.x = i;
-            //                            ctx.drawImage(sprite.image,sprite.x,sprite.y,playerWidth,playerHeight);
-            //                        }
-            //                    }else{
-            //                        for(var j=0;j<last;j+10){
-            //                            sprite.x = j;
-            //                            ctx.drawImage(sprite.image,sprite.x,sprite.y,playerWidth,playerHeight);
-            //                        }
-            //                    }
-            //                }
-            function stop()
-            {
-                clearInterval(interval);
-            }
-            interval = setInterval(function(){
-                ctx.clearRect(0,0,canvasW,canvasH);
-                ctx.drawImage(bj,0,0,canvasW,canvasH);
-                ctx.drawImage(sprite.image,sprite.x,sprite.y,playerWidth,playerHeight);
-                draw();
-                document.getElementById("f").innerHTML=fs;
-                checkTime();
-                if(remainTime==0) {stop()}
-            },100);
+</div>
 
-            $(function(){
-                addListener(ca,"mousemove",m);
-//            addListener(ca,"onMouseMove",m);
-                addListener(ca,"touchstart",m);
-                addListener(ca,"touchmove",m);
-            });
-        </script>
-    </canvas>
-    <div id="f" style="font-size:20px; width:10%;height:5%;position:absolute; top:4.2%; left: 25%;text-align:right" ></div>
-    <div  id="m" style="font-size:20px; width:7%;height:5%;position:absolute; top:4.2%; left: 85.5%;text-align:right"></div>
+<div id="box" class="page page_2"   >
+    <div id="game_over">
+        <img src="__ADDONS__/images/page_2_1.png" class="img_1">
+        <input type="text" value="">
+        <a href="javascript:void(0);" class="ok">确定</a>
+        <div class="result"><a href="{:U('Mobile/Addons/riceGrains')}" style="color: #fff;text-decoration: none;"> 不服！再战！</a></div>
+        <div class="result2">WIN！礼物狂戳这</div>
+        <div class="fraction"></div>
+        <div class="taunt"></div>
+        <div class="taunt2"></div>
+    </div>
+    <canvas id="canvas" style="display: block;"></canvas>
+</div>
+<div class=" page page_3">
+    <img src="__ADDONS__/images/logo.png" class="logo">
+
+    <img src="__ADDONS__/images/ren_he.png" class="img_2 ren pt-ren-he" data-test="he" data-width="70"  data-height="100">
+    <img src="__ADDONS__/images/ren_hu.png" class="img_3 ren pt-ren-hu" data-test="hu" data-width="60"  data-height="100">
+    <img src="__ADDONS__/images/ren_lu.png" class="img_4 ren pt-ren-lu" data-test="lu" data-width="45"  data-height="100">
+    <img src="__ADDONS__/images/ren_shu.png" class="img_5 ren pt-ren-shu" data-test="shu" data-width="61"  data-height="100">
+    <img src="__ADDONS__/images/cao2.png" class="cao">
+    <img src="__ADDONS__/images/ren_diao.png" class="img_1 ren pt-ren-diao" data-test="diao" data-width="53"  data-height="100">
+    <img src="__ADDONS__/images/ren_xiong.png" class="img_6 ren pt-ren-xiong" data-test="xiong" data-width="59"  data-height="100">
+    <img src="__ADDONS__/images/ren_ying.png" class="img_7 ren pt-ren-ying" data-test="ying" data-width="57"  data-height="100">
+
+
+    <img src="__ADDONS__/images/page_1_1.png" class="img_10 pt-p1-title">
+    <img src="__ADDONS__/images/page_1_2.png" class="img_11 pt-p1-title">
+    <img src="__ADDONS__/images/page_1_5.png" class="img_12 pt-p1-title">
+    <img src="__ADDONS__/images/page_1_6.png" class="img_13 pt-p1-title">
+
+
+
+    <img src="__ADDONS__/images/page_3_2.png" class="img_16 pt-p1-title">
+    <img src="__ADDONS__/images/page_3_1.png" class="img_17 pt-p1-title">
+    <img src="__ADDONS__/images/page_3_3.png" class="img_15 pt-p1-title">
+
+
+
 </div>
 </body>
+
+
+
+<script type="text/javascript" src="__ADDONS__/js/zepto.min.js"></script>
+<script type="text/javascript" src="__ADDONS__/js/touch.js"></script>
+
+<script type="text/javascript">
+    var _ADDONS = "__ADDONS__";
+    var setAchievementUrl = "{:U('Mobile/Addons/riceGrains')}";
+</script>
+
+<script type="text/javascript" src="__ADDONS__/js/addons.js?v={$v}"></script>
+
+<!-- 微信浏览器 调用微信 分享js-->
+<if condition="$signPackage neq null">
+    <include file="$sharePath"/>
+</if>
+<!-- 微信浏览器 调用微信 分享js  end-->
+
+
 </html>

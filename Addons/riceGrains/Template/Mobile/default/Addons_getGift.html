@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"/>
+    <title>粒粒接辛苦</title>
+    <link  rel="stylesheet"  href="__ADDONS__/css/css.css?v={$v}"/>
+    <link  rel="stylesheet"  href="__ADDONS__/css/animations.css?v={$v}"/>
+</head>
+<body>
+
+<div class=" page page_1" style="display:block;">
+    <img src="__ADDONS__/images/logo.png" class="logo">
+
+    <img src="__ADDONS__/images/ren_he.png" class="img_2 ren pt-ren-he" >
+    <img src="__ADDONS__/images/ren_hu.png" class="img_3 ren pt-ren-hu" >
+    <img src="__ADDONS__/images/ren_lu.png" class="img_4 ren pt-ren-lu" >
+    <img src="__ADDONS__/images/ren_shu.png" class="img_5 ren pt-ren-shu" >
+    <img src="__ADDONS__/images/cao2.png" class="cao">
+    <img src="__ADDONS__/images/ren_diao.png" class="img_1 ren pt-ren-diao" >
+    <img src="__ADDONS__/images/ren_xiong.png" class="img_6 ren pt-ren-xiong" >
+    <img src="__ADDONS__/images/ren_ying.png" class="img_7 ren pt-ren-ying" >
+
+    <div class="cp_box">
+
+        <div class="coupon_div">
+            <a href="{:U('Mobile/Index/index')}">
+                <div class="coupon_div_top ">
+                    <div class="coupon_div_top_l">
+
+                        <if condition="$coupon['is_discount'] eq '0' ">
+                            ￥{$coupon.money}
+                        </if>
+                        <if condition="$coupon['is_discount'] eq '1'">
+                            -&nbsp;{$coupon.money}%
+                        </if>
+
+                    </div>
+                    <div class="coupon_div_top_r">
+                        {$coupon.name}
+                    </div>
+                </div>
+                <div class="coupon_div_b">
+                    <div class="m10 coupon_list_icon_1">
+                        <if condition = "$coupon['use_type'] == 1">
+                            有效期至：{:date('Y-m-d',($coupon['limit_day']*24*60*60 + time()))}
+                            <else/>
+                            有效期至：{$coupon.use_end_time|date='Y-m-d',###}
+                        </if>
+                    </div>
+                    <div class="m10 coupon_list_icon_2">
+                        {$coupon.desc}&nbsp;
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+
+
+<script type="text/javascript" src="__ADDONS__/js/zepto.min.js"></script>
+<script type="text/javascript" src="__ADDONS__/js/touch.js"></script>
+
+<script type="text/javascript">
+    var _ADDONS = "__ADDONS__";
+</script>
+
+<!-- 微信浏览器 调用微信 分享js-->
+<if condition="$signPackage neq null">
+    <include file="$sharePath"/>
+</if>
+<!-- 微信浏览器 调用微信 分享js  end-->
+
+
+
+</html>
