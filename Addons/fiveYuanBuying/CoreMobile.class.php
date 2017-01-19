@@ -42,6 +42,9 @@ class fiveYuanBuyingMobileController
         }
     }
 
+    /**
+     * 支付部分
+     */
     public function pay(){
         $id = I("id");
         if( $_SESSION['openid'] && strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger')){
