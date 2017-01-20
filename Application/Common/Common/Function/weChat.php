@@ -572,12 +572,9 @@ function getWeChatUserList( $openid = null ){
 
 
 
-function sendWeChatRed($openid,$amounts,$nickname,$title = "用户提现" ){
+function sendWeChatRed($openid,$amounts ,$act_name = null,$desc = null ){
     if( empty($openid) ){
         return callback( false , 'openid不能为空' );
-    }
-    if($amounts*100 < 100){
-        return callback( false , '提现金额不能少于100' );
     }
     $weChatConfig = M('wx_user')->find();
     if( empty( $weChatConfig ) ){
@@ -590,84 +587,76 @@ function sendWeChatRed($openid,$amounts,$nickname,$title = "用户提现" ){
     $merchantConf = M('merchant_conf') -> where(array('wx_uid'=>$weChatConfig['id']))->find();
 
     $keyRes = $key['key'];
+
     $mch_appid = $appid;
-    $openid = $openids; //用户唯一标识
     $mchid = $merchantConf['merchant']; //商户号
     $nonce_str = 'qyzf'.rand(100000, 999999); //随机数
     $partner_trade_no = 'HW'.time().rand(10000, 99999); //商户订单号
-    $check_name = 'NO_CHECK';//校验用户姓名选项，NO_CHECK：不校验真实姓名 FORCE_CHECK：强校验真实姓名（未实名认证的用户会校验失败，无法转账）OPTION_CHECK：针对已实名认证的用户才校验真实姓名（未实名认证用户不校验，可以转账成功）
-    $re_user_name = 'test';//收款用户姓名
     $amount = $amounts*100;//金额（以分为单位，必须大于100）
-    $desc = $title;//描述
     $spbill_create_ip = $_SERVER["REMOTE_ADDR"];//请求ip
 
-    //封装成数据
-    $dataArr=array();
-    $dataArr['amount']=$amount;
-    $dataArr['check_name']=$check_name;
-    $dataArr['desc']=$desc;
-    $dataArr['mch_appid']=$mch_appid;
-    $dataArr['mchid']=$mchid;
-    $dataArr['nonce_str']=$nonce_str;
-    $dataArr['openid']=$openid;
-    $dataArr['partner_trade_no']=$partner_trade_no;
-    $dataArr['re_user_name']=$re_user_name;
-    $dataArr['spbill_create_ip']=$spbill_create_ip;
 
+    is_null($act_name)?$act_name = "活动奖品！":false;
+    is_null($desc)?$desc = "祝您元宵节快乐！":false;
+
+
+
+    //封装成数据
+    $dataArr=array(
+        "mch_billno" => $partner_trade_no,
+        "mch_id" => $mchid,
+        "wxappid" => $mch_appid,
+        "send_name" => "龙米科技",
+        "re_openid" => $openid,
+        "total_amount" => $amount,
+        "total_num" => 1,
+        "wishing" => $desc,
+        "client_ip" => $spbill_create_ip,
+        "act_name" => $act_name,
+        "remark" => $act_name.$desc,
+        "nonce_str" => $nonce_str,
+    );
     $sign = getSign($dataArr,$keyRes);
 
     $data="<xml>
-	<mch_appid>".$mch_appid."</mch_appid>
-	<mchid>".$mchid."</mchid>
+	<mch_billno>".$partner_trade_no."</mch_billno>
+	<mch_id>".$mchid."</mch_id>
+	<wxappid>".$mch_appid."</wxappid>
+	<send_name>"."龙米科技"."</send_name>
+	<re_openid>".$openid."</re_openid>
+	<total_amount>".$amount."</total_amount>
+	<total_num>1</total_num>
+	<wishing>".$desc."</wishing>
+	<client_ip>".$spbill_create_ip."</client_ip>
+	<act_name>".$act_name."</act_name>
+	<remark>".$act_name.$desc."</remark>
 	<nonce_str>".$nonce_str."</nonce_str>
-	<partner_trade_no>".$partner_trade_no."</partner_trade_no>
-	<openid>".$openid."</openid>
-	<check_name>".$check_name."</check_name>
-	<re_user_name>".$re_user_name."</re_user_name>
-	<amount>".$amount."</amount>
-	<desc>".$desc."</desc>
-	<spbill_create_ip>".$spbill_create_ip."</spbill_create_ip>
 	<sign>".$sign."</sign>
 	</xml>";
 
 
     $ch = curl_init ();
 
-    $MENU_URL="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
+    $MENU_URL="https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
     curl_setopt ( $ch, CURLOPT_URL, $MENU_URL );
     curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
     curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
     curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
     curl_setopt($ch, CURLOPT_TIMEOUT,60);
-    // $zs1="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_cert.pem";
-    // $zs2="http://" . $_SERVER['HTTP_HOST'] . "/Application/Common/Common/Function/apiclient_key.pem";
     $zs1= $_SERVER['DOCUMENT_ROOT'].$merchantConf['apiclient_cert'];
     $zs2= $_SERVER['DOCUMENT_ROOT'].$merchantConf['apiclient_key'];
     curl_setopt($ch,CURLOPT_SSLCERT,$zs1);
     curl_setopt($ch,CURLOPT_SSLKEY,$zs2);
-    // curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01;
-    // Windows NT 5.0)');
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
     curl_setopt($ch, CURLOPT_AUTOREFERER,1);
     curl_setopt($ch, CURLOPT_POSTFIELDS,$data );
     $info = curl_exec($ch);
     libxml_disable_entity_loader(true);
-    // $postObj = simplexml_load_string($info, 'SimpleXMLElement', LIBXML_NOCDATA);
-    // dd($postData);
-    // dd($postObj->return_code);
     $postData = xmlToArray($info);
     if ( empty($postData) ) {
         return callback( false , curl_error($ch));
     }
-
-    // $curl_info= curl_getinfo($ch);
-    // $error = curl_error($ch);
     curl_close($ch);
     return callback( true , "" , array('postData'=>$postData,'data'=>$data) );
-//	return array('postData'=>$postData,'data'=>$data);
-
-
-
-
 }
