@@ -20,7 +20,7 @@ class IndexController extends MobileBaseController {
     }
     public function sendRed()
     {
-        dd(sendWeChatRed("owjy5v4020Mh7yNAT0aVapESwqNM",0.01));
+        dd(sendWeChatRed("owjy5v4020Mh7yNAT0aVapESwqNM",1));
 //        $this->display();
     }
     public function recommendPolite(){
