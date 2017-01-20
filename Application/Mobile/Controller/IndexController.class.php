@@ -18,6 +18,11 @@ class IndexController extends MobileBaseController {
     {
         $this->display();
     }
+//    public function sendRed()
+//    {
+//        dd(sendWeChatRed("owjy5v4020Mh7yNAT0aVapESwqNM",1));
+////        $this->display();
+//    }
     public function recommendPolite(){
         $this -> display();
     }

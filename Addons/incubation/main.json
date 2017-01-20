@@ -3,5 +3,6 @@
   "desc"  : "孵蛋",
   "code"  : "incubation",
   "author": "孵蛋",
+  "is_hide": true,
   "icon"  : "logo.jpg"
 }
