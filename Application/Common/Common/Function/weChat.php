@@ -567,3 +567,96 @@ function getWeChatUserList( $openid = null ){
     $res = $WeChatLogic -> getWeChatUserList( $openid );
     return $res['data']["openid"];
 }
+
+
+
+
+
+function sendWeChatRed($openid,$amounts ,$act_name = null,$desc = null ){
+    if( empty($openid) ){
+        return callback( false , 'openid不能为空' );
+    }
+    $weChatConfig = M('wx_user')->find();
+    if( empty( $weChatConfig ) ){
+        return callback( false , '微信未配置' );
+    }
+
+    $appid = $weChatConfig['appid'];
+    $pluginRes  = M('plugin') -> where(array('code'=>'weixin','name'=>'微信支付'))->find();
+    $key = unserialize($pluginRes['config_value']);
+    $merchantConf = M('merchant_conf') -> where(array('wx_uid'=>$weChatConfig['id']))->find();
+
+    $keyRes = $key['key'];
+
+    $mch_appid = $appid;
+    $mchid = $merchantConf['merchant']; //商户号
+    $nonce_str = 'qyzf'.rand(100000, 999999); //随机数
+    $partner_trade_no = 'HW'.time().rand(10000, 99999); //商户订单号
+    $amount = $amounts*100;//金额（以分为单位，必须大于100）
+    $spbill_create_ip = $_SERVER["REMOTE_ADDR"];//请求ip
+
+
+    is_null($act_name)?$act_name = "活动奖品！":false;
+    is_null($desc)?$desc = "祝您元宵节快乐！":false;
+
+
+
+    //封装成数据
+    $dataArr=array(
+        "mch_billno" => $partner_trade_no,
+        "mch_id" => $mchid,
+        "wxappid" => $mch_appid,
+        "send_name" => "龙米科技",
+        "re_openid" => $openid,
+        "total_amount" => $amount,
+        "total_num" => 1,
+        "wishing" => $desc,
+        "client_ip" => $spbill_create_ip,
+        "act_name" => $act_name,
+        "remark" => $act_name.$desc,
+        "nonce_str" => $nonce_str,
+    );
+    $sign = getSign($dataArr,$keyRes);
+
+    $data="<xml>
+	<mch_billno>".$partner_trade_no."</mch_billno>
+	<mch_id>".$mchid."</mch_id>
+	<wxappid>".$mch_appid."</wxappid>
+	<send_name>"."龙米科技"."</send_name>
+	<re_openid>".$openid."</re_openid>
+	<total_amount>".$amount."</total_amount>
+	<total_num>1</total_num>
+	<wishing>".$desc."</wishing>
+	<client_ip>".$spbill_create_ip."</client_ip>
+	<act_name>".$act_name."</act_name>
+	<remark>".$act_name.$desc."</remark>
+	<nonce_str>".$nonce_str."</nonce_str>
+	<sign>".$sign."</sign>
+	</xml>";
+
+
+    $ch = curl_init ();
+
+    $MENU_URL="https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
+    curl_setopt ( $ch, CURLOPT_URL, $MENU_URL );
+    curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
+    curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
+    curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+    curl_setopt($ch, CURLOPT_TIMEOUT,60);
+    $zs1= $_SERVER['DOCUMENT_ROOT'].$merchantConf['apiclient_cert'];
+    $zs2= $_SERVER['DOCUMENT_ROOT'].$merchantConf['apiclient_key'];
+    curl_setopt($ch,CURLOPT_SSLCERT,$zs1);
+    curl_setopt($ch,CURLOPT_SSLKEY,$zs2);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
+    curl_setopt($ch, CURLOPT_AUTOREFERER,1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS,$data );
+    $info = curl_exec($ch);
+    libxml_disable_entity_loader(true);
+    $postData = xmlToArray($info);
+    if ( empty($postData) ) {
+        return callback( false , curl_error($ch));
+    }
+    curl_close($ch);
+    return callback( true , "" , array('postData'=>$postData,'data'=>$data) );
+}

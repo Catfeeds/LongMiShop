@@ -32,18 +32,18 @@ class lunchFeastAdminController
             ),
 
         );
-
-        $this->assignData['statistical'] = array(
-            array(
-                "title" => "概况",
-                "act"   => "statistical"
-            ),
-            array(
-                "title" => "店铺排行",
-                "act"   => "ranking"
-            ),
-
-        );
+//
+//        $this->assignData['statistical'] = array(
+//            array(
+//                "title" => "概况",
+//                "act"   => "statistical"
+//            ),
+//            array(
+//                "title" => "店铺排行",
+//                "act"   => "ranking"
+//            ),
+//
+//        );
         return $this->assignData;
     }
 
