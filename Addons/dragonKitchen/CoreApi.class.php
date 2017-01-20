@@ -7,10 +7,10 @@ class dragonKitchenApiController
 
     public function __construct()
     {
-        $signArray = array("sign_time" => I("sign_time"), "sign_str" => I("sign_str"));
-        if (!signVerification($signArray)) {
+//        $signArray = array("sign_time" => I("sign_time"), "sign_str" => I("sign_str"));
+//        if (!signVerification($signArray)) {
 //            printJson(false, "验证失败!");
-        }
+//        }
     }
 
 
@@ -43,10 +43,41 @@ class dragonKitchenApiController
         printJson(true, "", $data);
     }
 
+    public function getClassify()
+    {
+        $data = array(
+            array(
+                "title" => "热门",
+                "color_class" => "background1",
+                "item"      => array(
+                    "早餐",
+                    "早餐",
+                    "早餐",
+                    "早餐",
+                    "早餐",
+                    "早餐",
+                )
+            ),
+            array(
+                "title" => "热门2",
+                "color_class" => "background2",
+                "item"      => array(
+                    "早餐",
+                    "早餐",
+                    "早餐",
+                    "早餐",
+                    "早餐",
+                    "早餐",
+                )
+            )
+        );
+        printJson(true, "", $data);
+    }
+
 
     public function getCollection(){
         $key = I("userId", null);
-        is_null($key) ? printJson(false, "关键字错误!") : false;
+//        is_null($key) ? printJson(false, "关键字错误!") : false;
         $data = array(
             array(
                 "id"         => 1,
