@@ -1,0 +1,114 @@
+
+
+body{
+    background: #000;
+    background: url("../images/bg.jpg") no-repeat;
+    background-size: cover;
+}
+p , a , span{
+    font-family: "微软雅黑";
+}
+.red{
+    width: 90%;
+    height: 70%;
+    /*min-height: 500px;*/
+    position: fixed;
+    top:15%;
+    left: 5%;
+    background: #f71044;
+    border-radius: 20px;
+
+}
+.red .bottom{
+    width: 100%;
+    height: 30%;
+    /*min-height: 150px;*/
+    position: absolute;
+    left:0;
+    bottom: 0;
+    background: #da001d;
+    border-radius:   0 0 20px 20px;
+
+}
+.red .bottom a#rob{
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 30px;
+    text-align: center;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 5px;
+    font-weight: bold;
+    /*margin-left: -41px;*/
+    margin-left: -40px;
+    background: #fdd725;
+    color: #bc1504;
+    /*border: 1px solid #bc1504;*/
+    border-radius: 50%;
+    text-decoration: none;
+}
+.red p{
+    width: 100%;
+    line-height: 40px;
+    font-size: 20px;
+    text-align: center;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 20px;
+    color: #ffffff;
+    overflow: hidden;
+
+}
+
+#prompt{
+    width: 100%;
+    bottom: 30%;
+    height: 50%;
+    left: 0;
+    text-align: center;
+    position: absolute;
+}
+#prompt span{
+    position: absolute;
+    font-size: 20px;
+    bottom: 0;
+    color: #fdd725;
+    -webkit-animation: go_up ease-in-out 1s both;
+    animation: go_up ease-in-out 1s both;
+}
+
+
+
+
+
+
+.animation_run{
+    -webkit-animation: rob_run 1s infinite linear ;
+    animation: rob_run 1s infinite linear ;
+}
+
+
+
+
+/*动画效果*/
+@-webkit-keyframes rob_run {
+    from { -webkit-transform: rotateX(0); }
+    to { -webkit-transform: rotateY(-360deg); }
+}
+@keyframes rob_run {
+    from { -webkit-transform: rotateX(0); }
+    to { -webkit-transform: rotateY(-360deg); }
+}
+
+
+@-webkit-keyframes go_up {
+    from {  bottom:0; opacity: 1;}
+    to { bottom:100%; opacity: 0; }
+}
+@keyframes go_up {
+    from {  bottom:0; opacity: 1;}
+    to { bottom:100%; opacity: 0; }
+}
