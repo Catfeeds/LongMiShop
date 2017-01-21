@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>红包抢购</title>
+    <meta http-equiv="keywords" content="红包抢购" />
+    <meta name="description"    content="红包抢购" />
+    <link href="__ADDONS__/css/style.css" rel="stylesheet" />
+
+</head>
+<body>
+
+<div class="red">
+
+    <p>
+        来啊，抢红包啊！<br>
+        来啊，抢红包啊！<br>
+        来啊，抢红包啊！<br>
+        来啊，抢红包啊！
+    </p>
+
+    <div id="prompt"></div>
+
+    <div class="bottom">
+        <a href="#" id="rob" >抢</a>
+    </div>
+
+</div>
+
+</body>
+
+<script src="__STATIC__/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var ApiUrl = "{:U('Mobile/Addons/redRain')}";
+</script>
+<script src="__ADDONS__/js/script.js"></script>
+
+<!--微信分享-->
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+
+    var ShareLink = "{$config['share_url']}";
+    var ShareImgUrl = "{$config['share_img']}";
+    var ShareTitle = "{$config['share_title']}！";
+    var ShareDesc = "{$config['share_desc']}";
+
+    wx.config({
+        debug: false,
+        appId: "{$signPackage['appId']}",
+        timestamp: '{$signPackage["timestamp"]}',
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'hideOptionMenu'] // 功能列表，我们要使用JS-SDK的什么功能
+    });
+
+    wx.ready(function() {
+        wx.onMenuShareTimeline({
+            title: ShareTitle,
+            link: ShareLink,
+            imgUrl: ShareImgUrl
+        });
+        wx.onMenuShareAppMessage({
+            title: ShareTitle,
+            desc: ShareDesc,
+            link: ShareLink,
+            imgUrl: ShareImgUrl
+        });
+    });
+</script>
+
+</html>
