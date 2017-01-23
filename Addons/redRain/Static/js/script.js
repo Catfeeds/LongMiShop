@@ -3,7 +3,7 @@
  */
 
 var lock = false;
-var timeLimit = 200;
+var timeLimit = 100;
 $(function() {
 
     $("#rob").click(function () {
@@ -11,8 +11,10 @@ $(function() {
             return;
         }
         lockAction();
-        var probability = Math.round(Math.random() * 100);
 
+        prompt();
+
+        var probability = Math.round(Math.random() * 100);
         if( probability > 90 ){
             $("#rob").addClass("animation_run");
             $.ajax({
@@ -22,7 +24,7 @@ $(function() {
                 dataType:'json',
                 success: function(data){
                     if(data.state == 1){
-
+                        $("#rob").removeClass("run");
                     }else{
                         $("#rob").removeClass("run");
                         unLockAction();
@@ -36,7 +38,6 @@ $(function() {
             });
 
         }else{
-            prompt();
             setTimeout(function(){
                 unLockAction();
             },timeLimit);
@@ -66,6 +67,10 @@ function unLockAction(){
  *
  */
 function prompt(){
+    $(".red").addClass("red_shake");
+    setTimeout(function(){
+        $(".red").removeClass("red_shake");
+    },100);
     var html = "<span>狂戳!</span>";
     $("#prompt").append(html);
 }

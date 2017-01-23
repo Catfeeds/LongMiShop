@@ -192,6 +192,10 @@ p , a , span{
     color: #b2b2b2;
 }
 
+.red_shake{
+    -webkit-animation: red_shake ease-in-out .1s both;
+    animation: red_shake ease-in-out .1s both;
+}
 
 
 /*动画效果*/
@@ -202,6 +206,27 @@ p , a , span{
 @keyframes rob_run {
     from { -webkit-transform: rotateX(0); }
     to { -webkit-transform: rotateY(-360deg); }
+}
+
+@-webkit-keyframes red_shake {
+    25%{
+        top:14%;
+        left: 4%;
+    }
+    75%{
+        top:16%;
+        left: 6%;
+    }
+}
+@keyframes red_shake {
+    25%{
+        top:14%;
+        left: 4%;
+    }
+    75%{
+        top:16%;
+        left: 6%;
+    }
 }
 
 
