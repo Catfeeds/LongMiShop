@@ -3,6 +3,8 @@
 body{
     background: #fefefe;
     min-height: 568px;
+    margin: 0;
+    padding: 0;
     /*background: url("../images/bg.jpg") no-repeat;*/
     /*background-size: cover;*/
 }
@@ -149,6 +151,47 @@ p , a , span{
     background: #f71044;
     text-decoration: none;
 }
+
+.item{
+    width: 85%;
+    padding: 0 5% 0 10%;
+    height: 60px;
+    background: #f71044;
+    margin-bottom: 1px;
+    box-shadow: 1px 1px 1px #888888;
+}
+
+.item span{
+    color: #fff;
+    height:30px;
+    line-height: 30px;
+    width: 100%;
+    display: block;
+    float: left;
+}
+
+.item span b{
+    /*color:#4CBF0E;*/
+    font-size: 24px;
+    float: right;
+}
+
+.empty {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+.empty img {
+    width: 40%;
+    margin: 30px 30%;
+}
+.empty_txt {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: #b2b2b2;
+}
+
 
 
 /*动画效果*/
