@@ -24,7 +24,7 @@ class redRainMobileController
                 "number"    => "2",
                 "version"   => "1",
                 "title"     => "第1波",
-                "lastTitle"     => "第0波",
+                "lastTitle" => "第0波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
             ),
@@ -34,7 +34,7 @@ class redRainMobileController
                 "number"    => "10",
                 "version"   => "2",
                 "title"     => "第2波",
-                "lastTitle"     => "第1波",
+                "lastTitle" => "第1波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
             ),
@@ -44,7 +44,27 @@ class redRainMobileController
                 "number"    => "10",
                 "version"   => "3",
                 "title"     => "第3波",
-                "lastTitle"     => "第2波",
+                "lastTitle" => "第2波",
+                "minMoney"  => "1",
+                "maxMoney"  => "1.5",
+            ),
+            "4" => array(
+                "startTime" => "1485139200",//2017/1/23 10:40
+                "endTime"   => "1485139500",//2017/1/23 10:45
+                "number"    => "1",
+                "version"   => "4",
+                "title"     => "第4波",
+                "lastTitle" => "第3波",
+                "minMoney"  => "1",
+                "maxMoney"  => "1.5",
+            ),
+            "5" => array(
+                "startTime" => "1485139800",//2017/1/23 10:50
+                "endTime"   => "1485140100",//2017/1/23 10:45
+                "number"    => "1",
+                "version"   => "5",
+                "title"     => "第5波",
+                "lastTitle" => "第4波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
             ),
