@@ -88,13 +88,19 @@ function redRainGetMyInviteList($userId){
     $array = array();
 
     $inviteMan = findDataWithCondition("addons_redrain_invite_list",array("user_id"=>$userId));
-    if( !empty($inviteLise)){
-        $array[] = findDataWithCondition("users",array("user_id"=>$inviteMan["parent_user_id"]),"head_pic");
+    if( !empty($inviteMan)){
+        $userInfo = findDataWithCondition("users",array("user_id"=>$inviteMan["parent_user_id"]),"head_pic");
+        if( !empty($userInfo["head_pic"]) ){
+            $array[] = $userInfo["head_pic"];
+        }
     }
     $inviteLise = selectDataWithCondition("addons_redrain_invite_list",array("parent_user_id"=>$userId));
     if( !empty($inviteLise)){
         foreach ( $inviteLise as $inviteItem){
-            $array[] = findDataWithCondition("users",array("user_id"=>$inviteItem["user_id"]),"head_pic");
+            $userInfo = findDataWithCondition("users",array("user_id"=>$inviteItem["user_id"]),"head_pic");
+            if( !empty($userInfo["head_pic"]) ){
+                $array[] = $userInfo["head_pic"];
+            }
         }
     }
     return $array;
