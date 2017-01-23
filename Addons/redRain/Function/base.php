@@ -65,15 +65,50 @@ function redRainGetCurrentState( $configs , $userId )
     return array("state" => 4);
 }
 
-
-function redRainSendRed( $userInfo , $money){
-    $jsSdkLogic = new \Common\Logic\JsSdkLogic();
-    $jsSdkLogic -> push_msg( $userInfo['openid'] , "此处会换成发红包" );
-
+/**
+ * 发送微信红包
+ * @param $userInfo
+ * @param $money
+ * @param $version
+ */
+function redRainSendRed( $userInfo , $money , $version )
+{
+    $condition = array(
+        "user_id" => $userInfo['user_id'],
+        "version" => $version,
+        "state"   => "0"
+    );
+    if (isExistenceDataWithCondition("addons_redrain_winning", $condition)) {
+        $result = sendWeChatRed($userInfo['openid'], $money);
+        if (!callbackIsTrue($result)) {
+            setLogResult(getCallbackMessage($result), "红包雨", "addons");
+            $jsSdkLogic = new \Common\Logic\JsSdkLogic();
+            $jsSdkLogic->push_msg($userInfo['openid'], "恭喜你获得微信红包，工作人员会在两个工作日内将红包发送给你");
+        } else {
+            saveData("addons_redrain_winning", $condition, array("state" => "1"));
+        }
+    }
 }
 
+/**
+ * 红包资格检测
+ * @param $userId
+ * @param $version
+ * @param int $singleLimit
+ * @return bool
+ */
+function redRainAwardQualificationTesting( $userId , $version , $singleLimit = 3 )
+{
+    if (getCountWithCondition("addons_redrain_winning", array("user_id" => $userId)) >= $singleLimit) {
+        return false;
+    }
 
-function redRainAwardQualificationTesting( $userId ){
+    $invite_list = selectDataWithCondition("addons_redrain_invite_list", array("parent_user_id" => $userId));
+    if( !empty($invite_list) ){
+
+    }else{
+        return true;
+    }
     return true;
 }
 
@@ -83,22 +118,21 @@ function redRainAwardQualificationTesting( $userId ){
  * @param $userId
  * @return mixed
  */
-function redRainGetMyInviteList($userId){
-
+function redRainGetMyInviteList($userId)
+{
     $array = array();
-
-    $inviteMan = findDataWithCondition("addons_redrain_invite_list",array("user_id"=>$userId));
-    if( !empty($inviteMan)){
-        $userInfo = findDataWithCondition("users",array("user_id"=>$inviteMan["parent_user_id"]),"head_pic");
-        if( !empty($userInfo["head_pic"]) ){
+    $inviteMan = findDataWithCondition("addons_redrain_invite_list", array("user_id" => $userId));
+    if (!empty($inviteMan)) {
+        $userInfo = findDataWithCondition("users", array("user_id" => $inviteMan["parent_user_id"]), "head_pic");
+        if (!empty($userInfo["head_pic"])) {
             $array[] = $userInfo["head_pic"];
         }
     }
-    $inviteLise = selectDataWithCondition("addons_redrain_invite_list",array("parent_user_id"=>$userId));
-    if( !empty($inviteLise)){
-        foreach ( $inviteLise as $inviteItem){
-            $userInfo = findDataWithCondition("users",array("user_id"=>$inviteItem["user_id"]),"head_pic");
-            if( !empty($userInfo["head_pic"]) ){
+    $inviteLise = selectDataWithCondition("addons_redrain_invite_list", array("parent_user_id" => $userId));
+    if (!empty($inviteLise)) {
+        foreach ($inviteLise as $inviteItem) {
+            $userInfo = findDataWithCondition("users", array("user_id" => $inviteItem["user_id"]), "head_pic");
+            if (!empty($userInfo["head_pic"])) {
                 $array[] = $userInfo["head_pic"];
             }
         }

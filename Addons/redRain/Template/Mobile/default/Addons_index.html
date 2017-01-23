@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>龙米红包雨</title>
-    <meta http-equiv="keywords" content="龙米红包雨" />
-    <meta name="description"    content="龙米红包雨" />
-    <link href="__ADDONS__/css/style.css?{$time}" rel="stylesheet" />
-
-</head>
+<include file="$headerPath"/>
 <body>
 <div class="follow" id="follow">
     <img src="__STATIC__/images/follow.png"/>
@@ -36,8 +26,8 @@
 </div>
 
 <div class="buttonNav">
-    <a href="#">中奖排行榜</a>
-    <a href="#">查看中奖纪录</a>
+    <a href="#">规则</a>
+    <a href="{:U('Mobile/Addons/redRain',array('pluginName'=>'lists'))}">查看中奖纪录</a>
 </div>
 
 
@@ -50,40 +40,11 @@
     <script type="text/javascript">
         var ApiUrl = "{:U('Mobile/Addons/redRain')}";
     </script>
-    <script src="__ADDONS__/js/script.js"></script>
+    <script type="text/javascript" src="__ADDONS__/js/jquery-jrumble.js"></script>
+    <script type="text/javascript" src="__ADDONS__/js/script.js?{:time()}"></script>
+
 </if>
 
-<!--微信分享-->
-<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script type="text/javascript">
 
-    var ShareLink = "{$config['share_url']}";
-    var ShareImgUrl = "{$config['share_img']}";
-    var ShareTitle = "{$config['share_title']}！";
-    var ShareDesc = "{$config['share_desc']}";
-
-    wx.config({
-        debug: false,
-        appId: "{$signPackage['appId']}",
-        timestamp: '{$signPackage["timestamp"]}',
-        nonceStr: '{$signPackage["nonceStr"]}',
-        signature: '{$signPackage["signature"]}',
-        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'hideOptionMenu'] // 功能列表，我们要使用JS-SDK的什么功能
-    });
-
-    wx.ready(function() {
-        wx.onMenuShareTimeline({
-            title: ShareTitle,
-            link: ShareLink,
-            imgUrl: ShareImgUrl
-        });
-        wx.onMenuShareAppMessage({
-            title: ShareTitle,
-            desc: ShareDesc,
-            link: ShareLink,
-            imgUrl: ShareImgUrl
-        });
-    });
-</script>
-
+<include file="$sharePath"/>
 </html>

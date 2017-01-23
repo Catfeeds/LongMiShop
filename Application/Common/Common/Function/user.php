@@ -513,7 +513,7 @@ function checkWithdrawDeposit( $id , $status , $reason ){
 
 
         if( $status == 3 ){
-            $result = userWechatWithdrawDeposit( $userInfo['openid'] , $withdrawDepositInfo['money'] , $userInfo['nickname']);
+            $result = userWeChatWithdrawDeposit( $userInfo['openid'] , $withdrawDepositInfo['money'] , $userInfo['nickname']);
             if(  !callbackIsTrue( $result ) ){
                 throw new \Exception( getCallbackMessage( $result ) );
             }

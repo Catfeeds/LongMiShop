@@ -78,8 +78,20 @@ class redRainMobileController
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
             ),
+            "7" => array(
+                "startTime" => "1485162000",//2017/1/23 11:00
+                "endTime"   => "1485165600",//2017/1/23 11:05
+                "number"    => "2",
+                "version"   => "7",
+                "title"     => "第7波",
+                "lastTitle" => "第6波",
+                "minMoney"  => "1",
+                "maxMoney"  => "1.5",
+            ),
         );
 
+        $this->assignData["sharePath"]= "./Addons/redRain/Template/Mobile/default/Addons_share.html";
+        $this->assignData["headerPath"]= "./Addons/redRain/Template/Mobile/default/Addons_header.html";
 
         $this->assignData["config"] = array(
             "share_title" => "来和我一起抢红包吧！",
@@ -91,6 +103,8 @@ class redRainMobileController
         $this->weChatLogic = new \Common\Logic\WeChatLogic();
         $this->assignData["signPackage"] = $this->weChatLogic->getSignPackage();
 
+
+        $this->assignData["redConfig"] =  $this->redConfig;
     }
 
     /**
@@ -111,8 +125,8 @@ class redRainMobileController
 
         //状态
         $currentState = 0;
+        $currentState = 1;
         $tipMsg = "";
-
         //获取当前状态数组
         $stateArray = redRainGetCurrentState($this->redConfig, $this->userId);
         switch ($stateArray["state"]) {
@@ -161,19 +175,19 @@ class redRainMobileController
         $stateArray = redRainGetCurrentState($this->redConfig, $this->userId);
         switch ($stateArray["state"]) {
             case 1://抢购中
-                if( redRainAwardQualificationTesting( $this->userId  ) ){
+                if( redRainAwardQualificationTesting( $this->userId ,$stateArray["data"]["version"] ) ){
                     $money = 1;
                     addData(
                         "addons_redrain_winning",
                         array(
                             "user_id"     => $this->userId,
                             "version"     => $stateArray["data"]["version"],
-                            "money"       => 1,
+                            "money"       => $money,
                             "state"       => 0,
                             "create_time" => time()
                         )
                     );
-                    redRainSendRed( $this->userInfo , $money );
+                    redRainSendRed( $this->userInfo , $money , $stateArray["data"]["version"] );
                     exit(json_encode(callback(true, "恭喜")));
                 }else{
                     exit(json_encode(callback(false, "手快有手慢无！红包已被抢完")));
@@ -199,4 +213,11 @@ class redRainMobileController
 
     }
 
+
+
+
+    public function lists(){
+        $this->assignData["lists"] = selectDataWithCondition("addons_redrain_winning",array("user_id"=>$this->userId));
+        return $this->assignData;
+    }
 }

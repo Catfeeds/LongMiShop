@@ -43,6 +43,19 @@ $(function() {
         }
     });
 
+    //
+    // $('.red').jrumble({
+    //     rumbleEvent: 'mousedown'
+    // });
+
+    $('#rob').jrumble({
+        rangeX: 4,
+        rangeY: 0,
+        rangeRot: 0,
+        rumbleEvent: 'mousedown'
+    });
+
+
 
 });
 
@@ -67,3 +80,5 @@ function prompt(){
     var html = "<span>狂戳!</span>";
     $("#prompt").append(html);
 }
+
+

@@ -1,0 +1,25 @@
+<include file="$headerPath"/>
+
+<body>
+
+<empty name="lists">
+
+    <div class="empty"><img src="__STATIC__/images/new/no_money.png"></div>
+    <div class="empty_txt">还没有拿过红包！<br>赶快去抢红包吧</div>
+
+    <else/>
+
+    <volist name="lists" id="item">
+        <div class="item">
+            <span>{$redConfig[$item['version']]["title"]} <b>+{$item['money']}</b></span>
+            <span>{:date('Y-m-d H:i:s',$item["create_time"])}</span>
+        </div>
+    </volist>
+
+</empty>
+
+</body>
+
+<include file="$sharePath"/>
+
+</html>
