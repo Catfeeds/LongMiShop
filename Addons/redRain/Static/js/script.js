@@ -46,13 +46,23 @@ $(function() {
 
 });
 
+/**
+ * 锁定动作
+ */
 function lockAction(){
     lock = true;
 }
+
+/**
+ * 解锁动作
+ */
 function unLockAction(){
     lock = false;
 }
 
+/**
+ *
+ */
 function prompt(){
     var html = "<span>狂戳!</span>";
     $("#prompt").append(html);
