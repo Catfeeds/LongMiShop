@@ -1,5 +1,6 @@
 <include file="$headerPath"/>
 <body>
+
 <div class="follow" id="follow">
     <img src="__STATIC__/images/follow.png"/>
 </div>
@@ -43,7 +44,11 @@
     <script type="text/javascript" src="__ADDONS__/js/script.js?{:time()}"></script>
 
 </if>
-
+<if condition=" !$isFollow ">
+    <script type="text/javascript">
+        $("#follow").show();
+    </script>
+</if>
 
 <include file="$sharePath"/>
 </html>
