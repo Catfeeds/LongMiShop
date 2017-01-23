@@ -165,7 +165,7 @@ class redRainMobileController
 
         //关注情况
         $this->assignData["isFollow"] = $this->userInfo["is_follow"];
-        
+        $currentState = !$this->userInfo["is_follow"] ? 0 : $currentState;
 
         $this->assignData["tipMsg"] = $tipMsg;
         $this->assignData["currentState"] = $currentState;
