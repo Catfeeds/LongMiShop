@@ -33,8 +33,9 @@ p , a , span{
     border-radius:   0 0 20px 20px;
 
 }
-.red .bottom a.rob{
+.red .bottom button.rob,.red .bottom a.rob{
     width: 80px;
+    border: 0;
     height: 80px;
     line-height: 80px;
     font-size: 30px;
@@ -51,6 +52,7 @@ p , a , span{
     /*border: 1px solid #bc1504;*/
     border-radius: 50%;
     text-decoration: none;
+    box-shadow: inset 0 0.3rem 0.2rem rgba(255, 255, 255, 0.2), inset 0 -0.3rem 0.2rem rgba(0, 0, 0, 0.2), 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
 }
 .red p{
     width: 100%;
