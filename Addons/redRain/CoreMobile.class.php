@@ -70,7 +70,7 @@ class redRainMobileController
             ),
             "6" => array(
                 "startTime" => "1485140400",//2017/1/23 11:00
-                "endTime"   => "1485140700",//2017/1/23 11:05
+                "endTime"   => "1485143400",//2017/1/23 11:05
                 "number"    => "2",
                 "version"   => "6",
                 "title"     => "第6波",
