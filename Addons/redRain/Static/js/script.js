@@ -43,17 +43,6 @@ $(function() {
         }
     });
 
-    //
-    // $('.red').jrumble({
-    //     rumbleEvent: 'mousedown'
-    // });
-
-    $('#rob').jrumble({
-        rangeX: 4,
-        rangeY: 0,
-        rangeRot: 0,
-        rumbleEvent: 'mousedown'
-    });
 
 
 
