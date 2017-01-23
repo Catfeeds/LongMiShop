@@ -24,6 +24,7 @@ class redRainMobileController
                 "number"    => "2",
                 "version"   => "1",
                 "title"     => "第1波",
+                "lastTitle"     => "第0波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
             ),
@@ -33,6 +34,7 @@ class redRainMobileController
                 "number"    => "10",
                 "version"   => "2",
                 "title"     => "第2波",
+                "lastTitle"     => "第1波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
             ),
@@ -42,6 +44,7 @@ class redRainMobileController
                 "number"    => "10",
                 "version"   => "3",
                 "title"     => "第3波",
+                "lastTitle"     => "第2波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
             ),
@@ -70,30 +73,31 @@ class redRainMobileController
         $inviteUserId = I("inviteUserId", null);
         !is_null($inviteUserId) ? redRainSetInvite($this->userId, $inviteUserId) : false;
 
+        //状态
+        $currentState = 0;
+        $tipMsg = "";
+
         //获取当前状态数组
         $stateArray = redRainGetCurrentState($this->redConfig, $this->userId);
         switch ($stateArray["state"]) {
             case 1://抢购中
-
+                $currentState = 1;
+                $tipMsg = "来啊，抢红包啊！<br>来啊，抢红包啊！<br>来啊，抢红包啊！";
                 break;
             case 2://第一波还没开始
-                dd("第一波还没开始");
+                $tipMsg = "红包雨还没开始<br>开始时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
                 break;
             case 3://下一波还没开始
-
-                dd("下一波还没开始");
+                $tipMsg = $stateArray["data"]["lastTitle"]."已经结束<br>下一波时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
                 break;
             case 4://全部结束
-
-                dd("全部结束");
+                $tipMsg = "本次红包雨活动已经结束<br>关注公众号<br>更多活动等你来玩";
                 break;
             case 5://领取过
-
-                dd("领取过");
+                $tipMsg = "您已经领取过这一波红包雨的红包啦！";
                 break;
             case 6://抢完了
-                dd("抢完了");
-
+                $tipMsg = "手快有手慢无！<br>这波红包已被抢光";
                 break;
             default:
                 break;
@@ -101,6 +105,13 @@ class redRainMobileController
 
         //关注情况
         $this->assignData["isFollow"] = $this->userInfo["is_follow"];
+
+        $currentState = 1;
+
+        $this->assignData["tipMsg"] = $tipMsg;
+        $this->assignData["currentState"] = $currentState;
+
+
 
         return $this->assignData;
     }
@@ -139,7 +150,7 @@ class redRainMobileController
                 break;
             case 3://下一波还没开始
             case 4://全部结束
-                exit(json_encode(callback(false, "活动已经结束开始")));
+                exit(json_encode(callback(false, "活动已经结束")));
                 break;
             case 5://领取过
                 exit(json_encode(callback(false, "您已经领取过红包")));
