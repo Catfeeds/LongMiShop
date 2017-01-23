@@ -125,7 +125,7 @@ class redRainMobileController
 
         //状态
         $currentState = 0;
-        $currentState = 1;
+//        $currentState = 1;
         $tipMsg = "";
         //获取当前状态数组
         $stateArray = redRainGetCurrentState($this->redConfig, $this->userId);
