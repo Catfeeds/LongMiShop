@@ -109,6 +109,23 @@ p , a , span{
 }
 
 
+.invite{
+    width: 100%;
+    position: fixed;
+    z-index: 2;
+    bottom: 0;
+    left: 0;
+    background: #dedede;
+    overflow: hidden;
+}
+.invite img{
+    height: 40px;
+    width: 40px;
+    margin: 5px 10px;
+    float: left;
+}
+
+
 
 /*动画效果*/
 @-webkit-keyframes rob_run {
