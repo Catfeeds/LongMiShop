@@ -103,6 +103,12 @@ class redRainMobileController
         $inviteUserId = I("inviteUserId", null);
         !is_null($inviteUserId) ? redRainSetInvite($this->userId, $inviteUserId) : false;
 
+
+
+        $inviteList = redRainGetMyInviteList($this->userId);
+        $this->assignData["inviteList"] = $inviteList;
+
+
         //状态
         $currentState = 0;
         $tipMsg = "";
