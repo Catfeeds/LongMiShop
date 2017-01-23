@@ -130,7 +130,7 @@ class redRainMobileController
                 $tipMsg = "本次红包雨活动已经结束<br>关注公众号<br>更多活动等你来玩";
                 break;
             case 5://领取过
-                $tipMsg = "您已经领取过这一波红包雨的红包啦！";
+                $tipMsg = "您已经领取过<br>这一波的红包啦";
                 break;
             case 6://抢完了
                 $tipMsg = "手快有手慢无！<br>这波红包已被抢光";
