@@ -49,7 +49,7 @@ function redRainGetCurrentState( $configs , $userId )
                 return array("state" => 3, "data" => $config);
             }
         } else {
-            if ($currentTime < $config["endTime"]) {
+            if ($currentTime < $config["endqianghongbTime"]) {
                 if (isExistenceDataWithCondition("addons_redrain_winning", array("user_id" => $userId, "version" => $config["version"]))) {
                     return array("state" => 5, "data" => $config);
                 }
