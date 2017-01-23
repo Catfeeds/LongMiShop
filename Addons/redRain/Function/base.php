@@ -18,7 +18,7 @@ function redRainSetInvite($userId , $parentUserId)
     if (!isExistenceDataWithCondition("users", array("user_id" => $userId))) {
         return false;
     }
-    if (!isExistenceDataWithCondition("addons_redrain_invite_list", array("user_id" => $userId))) {
+    if ( isExistenceDataWithCondition("addons_redrain_invite_list", array("user_id" => $userId))) {
         return false;
     }
     $data = array(
