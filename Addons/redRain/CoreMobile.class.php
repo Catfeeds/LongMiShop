@@ -80,11 +80,21 @@ class redRainMobileController
             ),
             "7" => array(
                 "startTime" => "1485162000",//2017/1/23 11:00
-                "endTime"   => "1485165600",//2017/1/23 11:05
+                "endTime"   => "1485162001",//2017/1/23 11:05
                 "number"    => "2",
                 "version"   => "7",
                 "title"     => "第7波",
                 "lastTitle" => "第6波",
+                "minMoney"  => "1",
+                "maxMoney"  => "1.5",
+            ),
+            "8" => array(
+                "startTime" => "1485165000",//2017/1/23 11:00
+                "endTime"   => "1485168600",//2017/1/23 11:05
+                "number"    => "2",
+                "version"   => "8",
+                "title"     => "第8波",
+                "lastTitle" => "第7波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
             ),
