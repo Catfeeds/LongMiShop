@@ -68,6 +68,16 @@ class redRainMobileController
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
             ),
+            "6" => array(
+                "startTime" => "1485140400",//2017/1/23 11:00
+                "endTime"   => "1485140700",//2017/1/23 11:05
+                "number"    => "2",
+                "version"   => "6",
+                "title"     => "第6波",
+                "lastTitle" => "第5波",
+                "minMoney"  => "1",
+                "maxMoney"  => "1.5",
+            ),
         );
 
 
