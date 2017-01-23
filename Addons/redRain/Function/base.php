@@ -80,12 +80,12 @@ function redRainSendRed( $userInfo , $money , $version )
     );
     if (isExistenceDataWithCondition("addons_redrain_winning", $condition)) {
         $result = sendWeChatRed($userInfo['openid'], $money);
-        if (!callbackIsTrue($result)) {
+        if ( callbackIsTrue($result) && $result["data"]["postData"]['result_code'] != "FAIL") {
+            saveData("addons_redrain_winning", $condition, array("state" => "1"));
+        } else {
             setLogResult(getCallbackMessage($result), "红包雨", "addons");
             $jsSdkLogic = new \Common\Logic\JsSdkLogic();
             $jsSdkLogic->push_msg($userInfo['openid'], "恭喜你获得微信红包，工作人员会在两个工作日内将红包发送给你");
-        } else {
-            saveData("addons_redrain_winning", $condition, array("state" => "1"));
         }
     }
 }
