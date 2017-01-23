@@ -24,11 +24,10 @@ $(function() {
                 dataType:'json',
                 success: function(data){
                     if(data.state == 1){
-                        $("#rob").removeClass("run");
                     }else{
-                        $("#rob").removeClass("run");
                         unLockAction();
                     }
+                    $("#rob").removeClass("animation_run");
                     alert(data.msg);
                 },
                 error:function(){
