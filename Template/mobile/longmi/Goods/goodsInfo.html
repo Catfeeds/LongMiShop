@@ -9,7 +9,47 @@
 
 
 <form name="buy_goods_form" method="post" id="buy_goods_form" >
-    <img src="{$goods_images_list.0.image_url}" class="goods_info_banner" id="goods_info_banner" />
+    <div id="slider" class="mui-slider" >
+        <php>$goods_array =array();</php>
+        <foreach  name="goods_images_list" item="pic">
+            <php>$goods_array[] = $pic;</php>
+        </foreach>
+        <php>$goods_array_count = count($goods_array) - 1;</php>
+        <if condition=" count($goods_array) == 1">
+            <img src="{$goods_images_list.0.image_url}" class="goods_info_banner" id="goods_info_banner" />
+            <else/>
+            <notempty name = "goods_array">
+                <div class="mui-slider-group mui-slider-loop">
+                    <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+                    <div class="mui-slider-item mui-slider-item-duplicate">
+                        <a href="javascript:void(0)">
+                            <img src="{$goods_array[$goods_array_count]['image_url']}">
+                        </a>
+                    </div>
+                    <foreach name="goods_array" item="pic" >
+                        <div class="mui-slider-item">
+                            <a href="javascript:void(0)">
+                                <img src="{$pic.image_url}"  data-preview-src="" data-preview-group="1">
+                            </a>
+                        </div>
+                    </foreach>
+                    <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+                    <div class="mui-slider-item mui-slider-item-duplicate">
+                        <a href="javascript:void(0)">
+                            <img src="{$goods_array[0]['image_url']}">
+                        </a>
+                    </div>
+                </div>
+                <div class="mui-slider-indicator">
+                    <php>$goods_array_key = 0;</php>
+                    <foreach name="goods_array" item="pic" >
+                        <div class="mui-indicator <if condition='$goods_array_key++ eq 0'> mui-active</if>"></div>
+                    </foreach>
+                </div>
+            </notempty>
+        </if>
+
+    </div>
     <div class="price">
         <div class="price_left">{$goods.goods_name}</div>
     </div>
@@ -82,7 +122,15 @@
 <include file="Public/js"/>
 <include file="Public/nav"/>
 </body>
-
+<if condition=" count($goods_array) == 1">
+    <script src="__STATIC__/js/TouchSlide.js"></script>
+    <script>
+        var gallery = mui('.mui-slider');
+        gallery.slider({
+            interval:2000//自动轮播周期，若为0则不自动播放，默认为0；
+        })
+    </script>
+</if>
 <script type="text/javascript">
 
     var specNumber = -1;
