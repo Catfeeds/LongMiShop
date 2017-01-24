@@ -109,7 +109,12 @@ class GoodsController extends MobileBaseController {
     	$page = new Page($count,$limit);
     	if($count > 0)
     	{
-    		$goods_list = M('goods') -> where("goods_id in ( ".  implode(',', $filter_goods_id).")")->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows) ->select();
+    	    $field = "*";
+    	    if( $sort == "sales_sum"){
+                $field = "* ,if(virtual_sales>0,virtual_sales,sales_sum) as sales_sum2 ";
+                $sort = "sales_sum2";
+            }
+            $goods_list = M('goods') -> where("goods_id in ( ".  implode(',', $filter_goods_id).")") ->field($field)->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows) ->select();
 
             $filter_goods_id2 = get_arr_column($goods_list, 'goods_id');
     		if($filter_goods_id2)
