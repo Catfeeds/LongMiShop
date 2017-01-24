@@ -5,7 +5,9 @@
     <img src="__STATIC__/images/follow.png"/>
 </div>
 <div class="red">
+    <div class="bg">
 
+    </div>
     <p>{$tipMsg}</p>
 
     <div id="prompt"></div>
@@ -41,7 +43,7 @@
     <script type="text/javascript">
         var ApiUrl = "{:U('Mobile/Addons/redRain')}";
     </script>
-    <script type="text/javascript" src="__ADDONS__/js/script.js?{:time()}"></script>
+    <script type="text/javascript" src="__ADDONS__/js/script.js?{$v}"></script>
 
 </if>
 <if condition=" !$isFollow ">
