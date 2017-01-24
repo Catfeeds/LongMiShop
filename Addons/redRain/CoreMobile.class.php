@@ -21,85 +21,15 @@ class redRainMobileController
         
         $this->redConfig = array(
             "1" => array(
-                "startTime" => "1484994600",//2017/1/21 20:0:0
-                "endTime"   => "1484994900",//2017/1/21 20:05:0
-                "number"    => "2",
+                "startTime" => "1485346680",//2017/1/21 20:0:0
+                "endTime"   => "1485350280",//2017/1/21 20:05:0
+                "number"    => "100",
                 "version"   => "1",
                 "title"     => "第1波",
                 "lastTitle" => "第0波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
-            ),
-            "2" => array(
-                "startTime" => "1485000000",//2017/1/21 20:0:0
-                "endTime"   => "1485000300",//2017/1/21 20:05:0
-                "number"    => "10",
-                "version"   => "2",
-                "title"     => "第2波",
-                "lastTitle" => "第1波",
-                "minMoney"  => "1",
-                "maxMoney"  => "1.5",
-            ),
-            "3" => array(
-                "startTime" => "1485003600",//2017/1/21 21:0:0
-                "endTime"   => "1485003900",//2017/1/21 21:05:0
-                "number"    => "10",
-                "version"   => "3",
-                "title"     => "第3波",
-                "lastTitle" => "第2波",
-                "minMoney"  => "1",
-                "maxMoney"  => "1.5",
-            ),
-            "4" => array(
-                "startTime" => "1485139200",//2017/1/23 10:40
-                "endTime"   => "1485139500",//2017/1/23 10:45
-                "number"    => "1",
-                "version"   => "4",
-                "title"     => "第4波",
-                "lastTitle" => "第3波",
-                "minMoney"  => "1",
-                "maxMoney"  => "1.5",
-            ),
-            "5" => array(
-                "startTime" => "1485139800",//2017/1/23 10:50
-                "endTime"   => "1485140100",//2017/1/23 10:45
-                "number"    => "1",
-                "version"   => "5",
-                "title"     => "第5波",
-                "lastTitle" => "第4波",
-                "minMoney"  => "1",
-                "maxMoney"  => "1.5",
-            ),
-            "6" => array(
-                "startTime" => "1485140400",//2017/1/23 11:00
-                "endTime"   => "1485143400",//2017/1/23 11:05
-                "number"    => "2",
-                "version"   => "6",
-                "title"     => "第6波",
-                "lastTitle" => "第5波",
-                "minMoney"  => "1",
-                "maxMoney"  => "1.5",
-            ),
-            "7" => array(
-                "startTime" => "1485162000",//2017/1/23 11:00
-                "endTime"   => "1485162001",//2017/1/23 11:05
-                "number"    => "2",
-                "version"   => "7",
-                "title"     => "第7波",
-                "lastTitle" => "第6波",
-                "minMoney"  => "1",
-                "maxMoney"  => "1.5",
-            ),
-            "8" => array(
-                "startTime" => "1485165000",//2017/1/23 11:00
-                "endTime"   => "1485168600",//2017/1/23 11:05
-                "number"    => "2",
-                "version"   => "8",
-                "title"     => "第8波",
-                "lastTitle" => "第7波",
-                "minMoney"  => "1",
-                "maxMoney"  => "1.5",
-            ),
+            )
         );
 
         $this->assignData["sharePath"]= "./Addons/redRain/Template/Mobile/default/Addons_share.html";

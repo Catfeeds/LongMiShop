@@ -678,7 +678,9 @@ class BuyLogic extends BaseLogic
         $order = $this -> _post_data['orderData'];
 
         if( $this -> status == "inCreateOrder" ){
-            minus_stock($order["order_id"]);
+            if(!minus_stock($order["order_id"])){
+                throw new \Exception('库存不足！');
+            }
         }
 
         //更改最后一次购买时间
