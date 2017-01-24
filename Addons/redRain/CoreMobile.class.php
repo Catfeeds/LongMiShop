@@ -17,6 +17,8 @@ class redRainMobileController
         $this->userInfo = $userInfo;
         $this->userId = $this->userInfo["user_id"];
 
+        $this->assignData["v"] = time();
+        
         $this->redConfig = array(
             "1" => array(
                 "startTime" => "1484994600",//2017/1/21 20:0:0
