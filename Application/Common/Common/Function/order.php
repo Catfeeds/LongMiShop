@@ -423,28 +423,41 @@ function minus_stock($order_id,$goods_num = null ){
             if(!empty($goods_num)){
                 M('SpecGoodsPrice') -> where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->setInc('store_count',$val['goods_num']);
             }else{
-                M('SpecGoodsPrice') -> where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->setDec('store_count',$val['goods_num']);
+                if(M('SpecGoodsPrice') -> where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->getField('store_count')>=$val['goods_num']){
+
+                    M('SpecGoodsPrice') -> where("goods_id = {$val['goods_id']} and `key` = '{$val['spec_key']}'")->setDec('store_count',$val['goods_num']);
+
+                }else{
+                    return false;
+                }
             }
 
             refresh_stock($val['goods_id']);
             //更新活动商品购买量
-            if($val['prom_type']==1 || $val['prom_type']==2){
-                $prom = get_goods_promotion($val['goods_id']);
-                if($prom['is_end']==0){
-                    $tb = $val['prom_type']==1 ? 'flash_sale' : 'group_buy';
-                    M($tb) -> where("id=".$val['prom_id'])->setInc('buy_num',$val['goods_num']);
-                    M($tb) -> where("id=".$val['prom_id'])->setInc('order_num');
-                }
-            }
+//            if($val['prom_type']==1 || $val['prom_type']==2){
+//                $prom = get_goods_promotion($val['goods_id']);
+//                if($prom['is_end']==0){
+//                    $tb = $val['prom_type']==1 ? 'flash_sale' : 'group_buy';
+//                    M($tb) -> where("id=".$val['prom_id'])->setInc('buy_num',$val['goods_num']);
+//                    M($tb) -> where("id=".$val['prom_id'])->setInc('order_num');
+//                }
+//            }
         }else{
             if(!empty($goods_num)){
                 M('Goods') -> where("goods_id = {$val['goods_id']}")->setInc('store_count',$val['goods_num']); // 直接增加商品总数量
             }else{
-                M('Goods') -> where("goods_id = {$val['goods_id']}")->setDec('store_count',$val['goods_num']); // 直接扣除商品总数量
+
+                if(M('Goods') -> where("goods_id = {$val['goods_id']} ")->getField('store_count')>=$val['goods_num']){
+                    M('Goods') -> where("goods_id = {$val['goods_id']}")->setDec('store_count',$val['goods_num']); // 直接扣除商品总数量
+                }else{
+                    return false;
+                }
+
             }
 
         }
     }
+    return true;
 }
 
 

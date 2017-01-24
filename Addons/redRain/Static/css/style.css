@@ -127,7 +127,7 @@ p , a , span{
 .invite{
     width: 100%;
     position: fixed;
-    height: 50px;
+    max-height: 50px;
     z-index: 2;
     top: 0;
     left: 0;
