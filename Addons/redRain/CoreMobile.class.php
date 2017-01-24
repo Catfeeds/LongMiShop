@@ -36,8 +36,8 @@ class redRainMobileController
         $this->assignData["headerPath"]= "./Addons/redRain/Template/Mobile/default/Addons_header.html";
 
         $this->assignData["config"] = array(
-            "share_title" => "来和我一起抢红包吧！",
-            "share_desc"  => "来和我一起抢红包吧！",
+            "share_title" => $this->userInfo["nickname"]."叫你一起来抢大红包啦！",
+            "share_desc"  => "有你助力我才能抢更多哦！",
             "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/redRain/logo.jpg",
             "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/redRain', array('inviteUserId' => $this->userId))
         );
