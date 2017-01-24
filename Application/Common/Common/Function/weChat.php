@@ -288,7 +288,7 @@ function sendWeChatMessageUseUserId( $userId , $type , $data ){
  * @param string $title
  * @return array
  */
-function userWechatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户提现" ){
+function userWeChatWithdrawDeposit($openids,$amounts,$nickname,$title = "用户提现" ){
 	if( empty($openids) ){
 		return callback( false , 'openid不能为空' );
 	}
@@ -569,9 +569,14 @@ function getWeChatUserList( $openid = null ){
 }
 
 
-
-
-
+/**
+ * 发微信红包
+ * @param $openid
+ * @param $amounts
+ * @param null $act_name
+ * @param null $desc
+ * @return array
+ */
 function sendWeChatRed($openid,$amounts ,$act_name = null,$desc = null ){
     if( empty($openid) ){
         return callback( false , 'openid不能为空' );

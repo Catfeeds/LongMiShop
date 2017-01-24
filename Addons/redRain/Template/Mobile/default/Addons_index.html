@@ -1,0 +1,54 @@
+<include file="$headerPath"/>
+<body>
+
+<div class="follow" id="follow">
+    <img src="__STATIC__/images/follow.png"/>
+</div>
+<div class="red">
+
+    <p>{$tipMsg}</p>
+
+    <div id="prompt"></div>
+
+    <div class="bottom">
+        <if condition="$currentState">
+            <button  class="rob" id="rob" >抢</button>
+            <else/>
+            <a  class="rob" >抢</a>
+        </if>
+    </div>
+
+</div>
+
+<div class="invite">
+    <volist name="inviteList" id="inviteItem">
+        <img src="{$inviteItem}"/>
+    </volist>
+</div>
+
+<div class="buttonNav">
+    <a href="#">规则</a>
+    <a href="{:U('Mobile/Addons/redRain',array('pluginName'=>'lists'))}">查看中奖纪录</a>
+</div>
+
+
+</body>
+
+<script src="__STATIC__/js/jquery.js" type="text/javascript"></script>
+
+
+<if condition="$currentState">
+    <script type="text/javascript">
+        var ApiUrl = "{:U('Mobile/Addons/redRain')}";
+    </script>
+    <script type="text/javascript" src="__ADDONS__/js/script.js?{:time()}"></script>
+
+</if>
+<if condition=" !$isFollow ">
+    <script type="text/javascript">
+        $("#follow").show();
+    </script>
+</if>
+
+<include file="$sharePath"/>
+</html>
