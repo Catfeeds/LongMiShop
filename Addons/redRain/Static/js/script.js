@@ -57,6 +57,9 @@ function myTouchMove(event){
     event = event || window.event;
     switch(event.type){
         case "touchstart":
+            if (lock) {
+                return;
+            }
             $("#rob").css("bottom","27%");
             $("#rob").css("width","70px");
             $("#rob").css("height","70px");
@@ -85,6 +88,18 @@ document.addEventListener('touchstart', function(){
 
 document.getElementById("rob").addEventListener('touchend',myTouchMove, false);
 document.getElementById("rob").addEventListener('touchstart',myTouchMove, false);
+
+
+
+var timer = setInterval(function(){
+    if( thisTime >= startTime ){
+        $("#tipMsg").html(tipMsg);
+        lock = false;
+        clearInterval(timer);
+    }else{
+        thisTime ++;
+    }
+},1000);
 
 
 // function prompt(){
