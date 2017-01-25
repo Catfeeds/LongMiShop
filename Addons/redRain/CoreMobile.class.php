@@ -162,6 +162,19 @@ class redRainMobileController
     }
 
 
+    public function setStop(){
+        if(I('token') == "zhonght"){
+            saveData("addons_redrain_stop",array(),array("stop"=>1));exit;
+        }
+        exit("非法访问");
+    }
+    public function openStop(){
+        if(I('token') == "zhonght"){
+            saveData("addons_redrain_stop",array(),array("stop"=>0));exit;
+        }
+        exit("非法访问");
+
+    }
 
 
     public function lists(){
