@@ -17,7 +17,7 @@ class redRainMobileController
         $this->userInfo = $userInfo;
         $this->userId = $this->userInfo["user_id"];
 
-        $this->assignData["v"] = "v1.0.1";
+        $this->assignData["v"] = "v1.0.2";
 
         $this->redConfig = redRainGetRedConfig();
 
@@ -94,6 +94,9 @@ class redRainMobileController
 
 
         $this->assignData["action"] = $stateArray["data"]["version"] -1 ;
+
+//        $winningNumber = getCountWithCondition("addons_redrain_winning",array('version'=>$stateArray["data"]["version"]));
+
         //关注情况
         $this->assignData["isFollow"] = $this->userInfo["is_follow"];
         $currentState = !$this->userInfo["is_follow"] ? 0 : $currentState;
@@ -108,7 +111,7 @@ class redRainMobileController
         );
 
         $this->assignData["isRun"] =  $isRun;
-        $this->assignData["startTime"] = time();// $stateArray["data"]["startTime"];
+        $this->assignData["startTime"] = $stateArray["data"]["endTime"];
 
         return $this->assignData;
     }
@@ -136,7 +139,7 @@ class redRainMobileController
                         )
                     );
                     redRainSendRed( $this->userInfo , $money , $stateArray["data"]["version"]  );
-                    exit(json_encode(callback(true, "恭喜")));
+                    exit(json_encode(callback(true, "恭喜，轻轻松松，红包到手")));
                 }else{
                     exit(json_encode(callback(false, "手快有手慢无！红包已被抢完")));
                 }
@@ -152,7 +155,7 @@ class redRainMobileController
             case 5://领取过
                 exit(json_encode(callback(false, "您已经领取过红包")));
                 break;
-            case 6://领取过
+            case 6://抢完
                 exit(json_encode(callback(false, "手快有手慢无！红包已被抢完")));
                 break;
         }
@@ -180,5 +183,54 @@ class redRainMobileController
     public function lists(){
         $this->assignData["lists"] = selectDataWithCondition("addons_redrain_winning",array("user_id"=>$this->userId));
         return $this->assignData;
+    }
+
+
+
+
+    public function getManData(){
+        $needList = I("needList",0);
+        $array= array("number"=>0,"list"=>array(),"msg"=>"","needList"=>0,"state"=>0);
+        //获取当前状态数组
+        $stateArray = redRainGetCurrentState($this->redConfig, $this->userId);
+        switch ($stateArray["state"]) {
+            case 1://抢购中
+                if( redRainAwardQualificationTesting( $this->userId ,$stateArray["data"]["version"] ) ){
+                    $array["state"] = 1;
+                }else{
+                    $array["state"] = 1;
+                }
+                break;
+            case 2://第一波还没开始
+                $array["state"] = 2;
+                break;
+            case 3://下一波还没开始
+            case 4://全部结束
+                $array["state"] = 2;
+                break;
+            case 5://领取过
+                $array["state"] = 1;
+                break;
+            case 6://抢完
+                $array["state"] = 1;
+                break;
+        }
+        if( $array["state"] == 1){
+            $array["number"] = redRainGetManNumber($stateArray["data"]);
+            if( $needList == 1){
+                $userNumber = getCountWithCondition("users");
+                $limit = $array["number"] > 1000 ? 1000 : $array["number"];
+                if($userNumber > $limit){
+                    $userNumber = $userNumber - $limit;
+                    $id_1 = time() % $userNumber;
+                    $array["list"] = M("users")->limit($id_1 . ",".$limit)->getField("nickname",true);
+                }else{
+                    $array["list"] = M("users")->getField("nickname",true);
+                }
+                $array["needList"]  = 1;
+            }
+        }
+
+        exit(json_encode($array));
     }
 }
