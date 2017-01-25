@@ -225,6 +225,10 @@ function redRainGetRedConfig()
  * @return float|int
  */
 function redRainGetManNumber($config){
+    $stop = findDataWithCondition("addons_redrain_stop");
+    if( $stop['stop'] == 1){
+        return $config["maxNumber"];
+    }
     $winningNumber = getCountWithCondition("addons_redrain_winning",array('version'=>$config["version"]));
     if( $winningNumber >= $config["number"] ){
         $number = $config["maxNumber"];
