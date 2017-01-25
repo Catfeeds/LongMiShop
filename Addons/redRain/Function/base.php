@@ -39,6 +39,7 @@ function redRainSetInvite($userId , $parentUserId)
  */
 function redRainGetCurrentState( $configs , $userId )
 {
+    $stop = findDataWithCondition("addons_redrain_stop");
     $currentTime = time();
     $isFirst = true;
     foreach ($configs as $config) {
@@ -50,6 +51,9 @@ function redRainGetCurrentState( $configs , $userId )
             }
         } else {
             if ($currentTime < $config["endTime"]) {
+                if( $stop['stop'] == 1){
+                    return array("state" => 6, "data" => $config);
+                }
                 if (isExistenceDataWithCondition("addons_redrain_winning", array("user_id" => $userId, "version" => $config["version"]))) {
                     return array("state" => 5, "data" => $config);
                 }
