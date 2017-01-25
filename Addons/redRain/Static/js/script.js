@@ -12,7 +12,7 @@ $(function() {
         lockAction();
 
         // prompt();
-        $("#rob").addClass("animation_run");
+        // $("#rob").addClass("animation_run");
         $.ajax({
             type : "GET",
             url:ApiUrl,
@@ -20,15 +20,14 @@ $(function() {
             dataType:'json',
             success: function(data){
                 unLockAction();
-                $("#rob").removeClass("animation_run");
+                // $("#rob").removeClass("animation_run");
                 if(data.state == 1){
                     var myVid=document.getElementById("audio");
                     myVid.muted=false;
                     myVid.play();
-                }else{
                 }
                 alert(data.msg);
-                window.location.href=ApiUrl+'?pluginName=lists';
+                window.location.href=ApiUrl;
             },
             error:function(){
                 alert("网络错误！");
@@ -52,7 +51,29 @@ function lockAction(){
 function unLockAction(){
     lock = false;
 }
-var  is_one = true;
+
+
+function myTouchMove(event){
+    event = event || window.event;
+    switch(event.type){
+        case "touchstart":
+            $("#rob").css("bottom","27%");
+            $("#rob").css("width","76px");
+            $("#rob").css("height","76px");
+            $("#rob").css("margin-left","-38px");
+            break;
+        case "touchend":
+            $("#rob").css("bottom","28%");
+            $("#rob").css("width","80px");
+            $("#rob").css("height","80px");
+            $("#rob").css("margin-left","-40px");
+            break;
+    }
+
+}
+
+
+var is_one = true;
 document.addEventListener('touchstart', function(){
     if( is_one ){
         is_one = false;
@@ -61,9 +82,11 @@ document.addEventListener('touchstart', function(){
         myVid.play();
     }
 }, false);
-/**
- *
- */
+
+document.getElementById("rob").addEventListener('touchend',myTouchMove, false);
+document.getElementById("rob").addEventListener('touchstart',myTouchMove, false);
+
+
 // function prompt(){
 //     $(".red").addClass("red_shake");
 //     setTimeout(function(){
