@@ -70,8 +70,10 @@ function redRainGetCurrentState( $configs , $userId )
  * @param $userInfo
  * @param $money
  * @param $version
+ * @param bool $needReturn
+ * @return bool
  */
-function redRainSendRed( $userInfo , $money , $version )
+function redRainSendRed( $userInfo , $money , $version ,$needReturn = false )
 {
     $condition = array(
         "user_id" => $userInfo['user_id'],
@@ -82,11 +84,21 @@ function redRainSendRed( $userInfo , $money , $version )
         $result = sendWeChatRed($userInfo['openid'], $money);
         if ( callbackIsTrue($result) && $result["data"]["postData"]['result_code'] != "FAIL") {
             saveData("addons_redrain_winning", $condition, array("state" => "1"));
+            if( $needReturn ){
+                return true;
+            }
         } else {
-            setLogResult($result, "红包雨", "addons");
-            $jsSdkLogic = new \Common\Logic\JsSdkLogic();
-            $jsSdkLogic->push_msg($userInfo['openid'], "恭喜你获得微信红包，工作人员会在两个工作日内将红包发送给你");
+            if( $needReturn ){
+                return false;
+            }else{
+                setLogResult($result, "红包雨", "addons");
+                $jsSdkLogic = new \Common\Logic\JsSdkLogic();
+                $jsSdkLogic->push_msg($userInfo['openid'], "恭喜你获得微信红包，工作人员会在两个工作日内将红包发送给你");
+            }
         }
+    }
+    if( $needReturn ){
+        return false;
     }
 }
 
