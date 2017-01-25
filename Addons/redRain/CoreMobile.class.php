@@ -17,7 +17,7 @@ class redRainMobileController
         $this->userInfo = $userInfo;
         $this->userId = $this->userInfo["user_id"];
 
-        $this->assignData["v"] = "v1.0.0";
+        $this->assignData["v"] = "v1.0.1";
 
         $this->redConfig = redRainGetRedConfig();
 
@@ -108,7 +108,7 @@ class redRainMobileController
         );
 
         $this->assignData["isRun"] =  $isRun;
-        $this->assignData["startTime"] =  $stateArray["data"]["startTime"];
+        $this->assignData["startTime"] = time();// $stateArray["data"]["startTime"];
 
         return $this->assignData;
     }
