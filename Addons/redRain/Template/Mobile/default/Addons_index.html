@@ -1,33 +1,29 @@
 <include file="$headerPath"/>
 <body>
 
+<!--邀请部分-->
 <div class="follow" id="follow">
     <img src="__STATIC__/images/follow.png"/>
 </div>
+
+<!--红包部分-->
 <div class="red">
-    <div class="bg">
-
-    </div>
-    <p>{$tipMsg}</p>
-
+    <p id="tipMsg">{$tipMsg}</p>
     <div id="prompt"></div>
-
     <div class="bottom">
-        <if condition="$currentState">
-            <button  class="rob" id="rob" >抢</button>
-            <else/>
-            <a  class="rob" >抢</a>
-        </if>
+        <button  class="rob" id="rob" ></button>
     </div>
-
 </div>
 
+<!--邀请列表-->
 <div class="invite">
     <volist name="inviteList" id="inviteItem">
         <img src="{$inviteItem}"/>
     </volist>
 </div>
 
+
+<!--底部菜单-->
 <div class="buttonNav">
     <!--<a href="#">规则</a>-->
     <a href="{:U('Mobile/Addons/redRain',array('pluginName'=>'lists'))}">查看中奖纪录</a>
@@ -37,15 +33,37 @@
 </body>
 
 <script src="__STATIC__/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function(){
+        $(".red").css("background-size", $(".red").width()+"px "+$(".red").height()+"px");
+    });
+    var ApiUrl = "{:U('Mobile/Addons/redRain')}";
 
+//    锁定状态
+    var lock = {:$currentState?"false":"true"};
 
-<if condition="$currentState">
+</script>
+<script type="text/javascript" src="__ADDONS__/js/script.js?{$v}"></script>
+
+<notempty name="stateTimeArray">
+    <!--倒计时-->
     <script type="text/javascript">
-        var ApiUrl = "{:U('Mobile/Addons/redRain')}";
+        var thisTime = {$stateTimeArray.thisTime};
+        var startTime = {$stateTimeArray.startTime};
+        var tipMsg = "{$stateTimeArray.tipMsg}";
+        var timer = setInterval(function(){
+            if( thisTime >= startTime ){
+                $("#tipMsg").html(tipMsg);
+                lock = false;
+                clearInterval(timer);
+            }else{
+                thisTime ++;
+            }
+            console.log(thisTime);
+        },1000);
     </script>
-    <script type="text/javascript" src="__ADDONS__/js/script.js?{$v}"></script>
+</notempty>
 
-</if>
 <if condition=" !$isFollow ">
     <script type="text/javascript">
         $("#follow").show();

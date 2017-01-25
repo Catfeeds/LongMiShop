@@ -18,26 +18,40 @@ class redRainMobileController
         $this->userId = $this->userInfo["user_id"];
 
         $this->assignData["v"] = time();
-        
-        $this->redConfig = array(
-            "1" => array(
-                "startTime" => "1485346680",//2017/1/21 20:0:0
-                "endTime"   => "1485350280",//2017/1/21 20:05:0
-                "number"    => "100",
-                "version"   => "1",
-                "title"     => "第1波",
-                "lastTitle" => "第0波",
-                "minMoney"  => "1",
-                "maxMoney"  => "1.5",
-            )
-        );
+        if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
+            $this->redConfig = array(
+                "1" => array(
+                    "startTime" => "1485346680",//2017/1/21 20:0:0
+                    "endTime"   => "1485350280",//2017/1/21 20:05:0
+                    "number"    => "100",
+                    "version"   => "1",
+                    "title"     => "第1波",
+                    "lastTitle" => "第0波",
+                    "minMoney"  => "1",
+                    "maxMoney"  => "1.5",
+                )
+            );
+        }else{
+            $this->redConfig = array(
+                "1" => array(
+                    "startTime" => "1485315960",//2017/1/21 20:0:0
+                    "endTime"   => "1485348600",//2017/1/21 20:05:0
+                    "number"    => "5",
+                    "version"   => "1",
+                    "title"     => "第1波",
+                    "lastTitle" => "第0波",
+                    "minMoney"  => "1",
+                    "maxMoney"  => "1.5",
+                )
+            );
+        }
 
         $this->assignData["sharePath"]= "./Addons/redRain/Template/Mobile/default/Addons_share.html";
         $this->assignData["headerPath"]= "./Addons/redRain/Template/Mobile/default/Addons_header.html";
 
         $this->assignData["config"] = array(
             "share_title" => $this->userInfo["nickname"]."叫你一起来抢大红包啦！",
-            "share_desc"  => "有你助力我才能抢更多哦！",
+            "share_desc"  => "助力我，一起抢1888大红包！",
             "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/redRain/logo.jpg",
             "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/redRain', array('inviteUserId' => $this->userId))
         );
@@ -59,41 +73,45 @@ class redRainMobileController
         $inviteUserId = I("inviteUserId", null);
         !is_null($inviteUserId) ? redRainSetInvite($this->userId, $inviteUserId) : false;
 
-
-
         $inviteList = redRainGetMyInviteList($this->userId);
         $this->assignData["inviteList"] = $inviteList;
 
-
         //状态
         $currentState = 0;
-//        $currentState = 1;
+
+        $startTime = null;
+
         $tipMsg = "";
         //获取当前状态数组
         $stateArray = redRainGetCurrentState($this->redConfig, $this->userId);
         switch ($stateArray["state"]) {
             case 1://抢购中
                 $currentState = 1;
-                $tipMsg = "来啊，抢红包啊！<br>来啊，抢红包啊！<br>来啊，抢红包啊！";
+                $tipMsg = "<b>年年有米，红包多多</b><br>不抢红包非好汉！<br>抢到红包旺一年！";
                 break;
             case 2://第一波还没开始
-                $tipMsg = "红包雨还没开始<br>开始时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
+                $tipMsg = "<b>客官您来早啦</b><br>红包雨开始时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
+                $startTime = $stateArray["data"]["startTime"];
                 break;
             case 3://下一波还没开始
-                $tipMsg = $stateArray["data"]["lastTitle"]."已经结束<br>下一波时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
+                $tipMsg = "<b>啊哦，您手慢了，".$stateArray["data"]["lastTitle"]."已经结束</b><br>下一波时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
+                $startTime = $stateArray["data"]["startTime"];
                 break;
             case 4://全部结束
-                $tipMsg = "本次红包雨活动已经结束<br>关注公众号<br>更多活动等你来玩";
+                $tipMsg = "<b>本次红包雨活动已经结束</b><br>关注公众号<br>更多活动等你来玩";
                 break;
             case 5://领取过
-                $tipMsg = "您已经领取过<br>这一波的红包啦";
+                $tipMsg = "<b>不要贪心哦</b><br>您已经领取过啦";
                 break;
             case 6://抢完了
-                $tipMsg = "手快有手慢无！<br>这波红包已被抢光";
+                $tipMsg = "<b>嘤嘤嘤，手太慢了</b><br>红包抢光啦，明天再来吧";
                 break;
             default:
                 break;
         }
+
+
+
 
         //关注情况
         $this->assignData["isFollow"] = $this->userInfo["is_follow"];
@@ -101,6 +119,12 @@ class redRainMobileController
 
         $this->assignData["tipMsg"] = $tipMsg;
         $this->assignData["currentState"] = $currentState;
+
+        is_null($startTime)?false: $this->assignData["stateTimeArray"] = array(
+            "thisTime"=>time(),
+            "startTime"=>$startTime,
+            "tipMsg" => "<b>年年有米，红包多多</b><br>不抢红包非好汉！<br>抢到红包旺一年！"
+        );
 
 
 

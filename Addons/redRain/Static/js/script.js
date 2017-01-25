@@ -2,7 +2,6 @@
  * Created by 钟瀚涛 on 2017/1/21.
  */
 
-var lock = false;
 var timeLimit = 100;
 $(function() {
 
@@ -12,39 +11,27 @@ $(function() {
         }
         lockAction();
 
-        prompt();
-
-        var probability = Math.round(Math.random() * 100);
-        if( probability > 90 ){
-            $("#rob").addClass("animation_run");
-            $.ajax({
-                type : "GET",
-                url:ApiUrl,
-                data:{pluginName:"getRed"},
-                dataType:'json',
-                success: function(data){
-                    if(data.state == 1){
-                    }else{
-                        unLockAction();
-                    }
-                    $("#rob").removeClass("animation_run");
-                    alert(data.msg);
-                },
-                error:function(){
-                    alert("网络错误！");
-                    location.reload();
+        // prompt();
+        $("#rob").addClass("animation_run");
+        $.ajax({
+            type : "GET",
+            url:ApiUrl,
+            data:{pluginName:"getRed"},
+            dataType:'json',
+            success: function(data){
+                if(data.state == 1){
+                }else{
+                    unLockAction();
                 }
-            });
-
-        }else{
-            setTimeout(function(){
-                unLockAction();
-            },timeLimit);
-        }
+                $("#rob").removeClass("animation_run");
+                alert(data.msg);
+            },
+            error:function(){
+                alert("网络错误！");
+                location.reload();
+            }
+        });
     });
-
-
-
 
 });
 
@@ -65,13 +52,12 @@ function unLockAction(){
 /**
  *
  */
-function prompt(){
-    $(".red").addClass("red_shake");
-    setTimeout(function(){
-        $(".red").removeClass("red_shake");
-    },100);
-    var html = "<span>狂戳!</span>";
-    $("#prompt").append(html);
-}
+// function prompt(){
+//     $(".red").addClass("red_shake");
+//     setTimeout(function(){
+//         $(".red").removeClass("red_shake");
+//     },100);
+//
+// }
 
 
