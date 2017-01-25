@@ -218,8 +218,9 @@ class redRainMobileController
         if( $array["state"] == 1){
             $array["number"] = redRainGetManNumber($stateArray["data"]);
             if( $needList == 1){
+                $getNumber = getCountWithCondition("addons_redrain_winning",array('version'=>$stateArray["data"]["version"]));
                 $userNumber = getCountWithCondition("users");
-                $limit = $array["number"] > 1000 ? 1000 : $array["number"];
+                $limit = $getNumber > 1000 ? 1000 : $getNumber;
                 if($userNumber > $limit){
                     $userNumber = $userNumber - $limit;
                     $id_1 = time() % $userNumber;
