@@ -66,7 +66,7 @@ function redRainGetCurrentState( $configs , $userId )
         }
         $isFirst = false;
     }
-    return array("state" => 4);
+    return array("state" => 4, "data" => $config);
 }
 
 /**

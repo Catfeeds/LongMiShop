@@ -108,7 +108,7 @@ class redRainMobileController
         );
 
         $this->assignData["isRun"] =  $isRun;
-        $this->assignData["startTime"] = time();// $stateArray["data"]["startTime"];
+        $this->assignData["startTime"] = $stateArray["data"]["startTime"];
 
         return $this->assignData;
     }
