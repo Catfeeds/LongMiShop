@@ -15,7 +15,7 @@ $(function() {
         prompt();
 
         var probability = Math.round(Math.random() * 100);
-        if( probability > 90 ){
+        if( probability > 95 ){
             $("#rob").addClass("animation_run");
             $.ajax({
                 type : "GET",
