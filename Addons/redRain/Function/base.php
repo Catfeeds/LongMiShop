@@ -115,17 +115,18 @@ function redRainSendRed( $userInfo , $money , $version ,$needReturn = false )
  */
 function redRainAwardQualificationTesting( $userId , $version , $singleLimit = 3 )
 {
-    if (getCountWithCondition("addons_redrain_winning", array("user_id" => $userId)) >= $singleLimit) {
-        return false;
-    }
-
-    $invite_list = selectDataWithCondition("addons_redrain_invite_list", array("parent_user_id" => $userId));
-    if( !empty($invite_list) ){
-
-    }else{
-        return true;
-    }
     return true;
+//    if (getCountWithCondition("addons_redrain_winning", array("user_id" => $userId)) >= $singleLimit) {
+//        return false;
+//    }
+//
+//    $invite_list = selectDataWithCondition("addons_redrain_invite_list", array("parent_user_id" => $userId));
+//    if( !empty($invite_list) ){
+//
+//    }else{
+//        return true;
+//    }
+//    return true;
 }
 
 
@@ -161,8 +162,9 @@ function redRainGetMyInviteList($userId)
  * 获取配置
  * @return array
  */
-function redRainGetRedConfig(){
-    if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
+function redRainGetRedConfig()
+{
+    if ($_SERVER["HTTP_HOST"] == "www.longmiwang.com") {
         $data = array(
             "1" => array(
                 "startTime" => "1485346680",
@@ -173,6 +175,7 @@ function redRainGetRedConfig(){
                 "lastTitle" => "第0波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
+                "maxNumber" => "21523",
             ),
             "2" => array(
                 "startTime" => "1485519480",
@@ -183,9 +186,10 @@ function redRainGetRedConfig(){
                 "lastTitle" => "第1波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
+                "maxNumber" => "20326",
             )
         );
-    }else{
+    } else {
         $data = array(
             "1" => array(
                 "startTime" => "1485334540",//2017/1/21 20:0:0
@@ -196,8 +200,38 @@ function redRainGetRedConfig(){
                 "lastTitle" => "第0波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
+                "maxNumber" => "20152",
+            ),
+            "2" => array(
+                "startTime" => "1485362429",
+                "endTime"   => "1485523080",
+                "number"    => "2",
+                "version"   => "2",
+                "title"     => "第2波",
+                "lastTitle" => "第1波",
+                "minMoney"  => "1",
+                "maxMoney"  => "1.5",
+                "maxNumber" => "20326",
             )
         );
     }
     return $data;
+}
+
+
+/**
+ * 获取数量
+ * @param $config
+ * @return float|int
+ */
+function redRainGetManNumber($config){
+    $winningNumber = getCountWithCondition("addons_redrain_winning",array('version'=>$config["version"]));
+    if( $winningNumber >= $config["number"] ){
+        $number = $config["maxNumber"];
+    }else{
+        $number = $winningNumber /  $config["number"] *  $config["maxNumber"];
+        $number = intval($number);
+    }
+
+    return $number;
 }

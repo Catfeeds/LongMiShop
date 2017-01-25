@@ -161,6 +161,7 @@ p , a , span{
 }
 .notice .row{
     width:50%;
+    width:100%;
     float: left;
     color: #a66f2e;
     font-size: 12px;
