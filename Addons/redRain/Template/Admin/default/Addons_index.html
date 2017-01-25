@@ -1,16 +1,50 @@
-<div class="tab-pane active" id="tab_pay">
-    <div class="row">
-        <volist name="list" id="p">
-            <div class="col-sm-2">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h4>{$p.title}</h4>
-                        <p>
-                            <a href="{:U('Admin/Addons/'.ADDONS_NAME , array('pluginName' => $p['act']))}" class="btn btn-primary" role="button">查看</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td class="text-right">
+                ID
+            </td>
+            <td class="text-left">
+                版本
+            </td>
+            <td class="text-left">
+                昵称
+            </td>
+            <td class="text-left">
+                金额
+            </td>
+            <td class="text-left">
+                是否发放
+            </td>
+            <td class="text-left">
+                时间
+            </td>
+            <td class="text-left">
+                操作
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="item">
+            <tr>
+                <td class="text-right">{$item.id}</td>
+                <td class="text-left">{$redConfig[$item["version"]]["title"]}</td>
+                <td class="text-left">{$item.user.nickname}</td>
+                <td class="text-left">{$item.money}</td>
+                <td class="text-left">{$stateTest[$item['state']]}</td>
+                <td class="text-left">{:date('Y-m-d H:i:s',$item['create_time'])}</td>
+                <td class="text-left">
+                    <if condition="$item['state'] != 1">
+                        <a href="">发放</a>
+                    </if>
+                </td>
+            </tr>
         </volist>
-    </div>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-sm-3 text-left"></div>
+    <div class="col-sm-9 text-right">{$page}</div>
 </div>

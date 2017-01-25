@@ -19,12 +19,16 @@ $(function() {
             data:{pluginName:"getRed"},
             dataType:'json',
             success: function(data){
-                if(data.state == 1){
-                }else{
-                    unLockAction();
-                }
+                unLockAction();
                 $("#rob").removeClass("animation_run");
+                if(data.state == 1){
+                    var myVid=document.getElementById("audio");
+                    myVid.muted=false;
+                    myVid.play();
+                }else{
+                }
                 alert(data.msg);
+                window.location.href=ApiUrl+'?pluginName=lists';
             },
             error:function(){
                 alert("网络错误！");
@@ -48,7 +52,15 @@ function lockAction(){
 function unLockAction(){
     lock = false;
 }
-
+var  is_one = true;
+document.addEventListener('touchstart', function(){
+    if( is_one ){
+        is_one = false;
+        var myVid=document.getElementById("audio");
+        myVid.muted=true;
+        myVid.play();
+    }
+}, false);
 /**
  *
  */

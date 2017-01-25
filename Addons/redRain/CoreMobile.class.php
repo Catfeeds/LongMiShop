@@ -18,33 +18,9 @@ class redRainMobileController
         $this->userId = $this->userInfo["user_id"];
 
         $this->assignData["v"] = time();
-        if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
-            $this->redConfig = array(
-                "1" => array(
-                    "startTime" => "1485346680",//2017/1/21 20:0:0
-                    "endTime"   => "1485350280",//2017/1/21 20:05:0
-                    "number"    => "100",
-                    "version"   => "1",
-                    "title"     => "第1波",
-                    "lastTitle" => "第0波",
-                    "minMoney"  => "1",
-                    "maxMoney"  => "1.5",
-                )
-            );
-        }else{
-            $this->redConfig = array(
-                "1" => array(
-                    "startTime" => "1485315960",//2017/1/21 20:0:0
-                    "endTime"   => "1485348600",//2017/1/21 20:05:0
-                    "number"    => "5",
-                    "version"   => "1",
-                    "title"     => "第1波",
-                    "lastTitle" => "第0波",
-                    "minMoney"  => "1",
-                    "maxMoney"  => "1.5",
-                )
-            );
-        }
+
+        $this->redConfig = redRainGetRedConfig();
+
 
         $this->assignData["sharePath"]= "./Addons/redRain/Template/Mobile/default/Addons_share.html";
         $this->assignData["headerPath"]= "./Addons/redRain/Template/Mobile/default/Addons_header.html";
@@ -142,7 +118,7 @@ class redRainMobileController
         switch ($stateArray["state"]) {
             case 1://抢购中
                 if( redRainAwardQualificationTesting( $this->userId ,$stateArray["data"]["version"] ) ){
-                    $money = 1;
+                    $money = $stateArray["data"]["minMoney"];
                     addData(
                         "addons_redrain_winning",
                         array(
