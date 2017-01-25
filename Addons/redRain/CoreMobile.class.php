@@ -27,7 +27,7 @@ class redRainMobileController
 
         $this->assignData["config"] = array(
             "share_title" => $this->userInfo["nickname"]."叫你一起来抢大红包啦！",
-            "share_desc"  => "助力我，一起抢1888大红包！",
+            "share_desc"  => "助力我，一起抢1888元大红包！",
             "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/redRain/logo.jpg",
             "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/redRain', array('inviteUserId' => $this->userId))
         );
@@ -57,12 +57,15 @@ class redRainMobileController
 
         $startTime = null;
 
+        $isRun = "false";
+
         $tipMsg = "";
         //获取当前状态数组
         $stateArray = redRainGetCurrentState($this->redConfig, $this->userId);
         switch ($stateArray["state"]) {
             case 1://抢购中
                 $currentState = 1;
+                $isRun = "true";
                 $tipMsg = "<b>年年有米，红包多多</b><br>不抢红包非好汉！<br>抢到红包旺一年！";
                 break;
             case 2://第一波还没开始
@@ -77,6 +80,7 @@ class redRainMobileController
                 $tipMsg = "<b>本次红包雨活动已经结束</b><br>关注公众号<br>更多活动等你来玩";
                 break;
             case 5://领取过
+                $isRun = "true";
                 $tipMsg = "<b>不要贪心哦</b><br>您已经领取过啦";
                 break;
             case 6://抢完了
@@ -89,6 +93,7 @@ class redRainMobileController
 
 
 
+        $this->assignData["action"] = $stateArray["data"]["version"] -1 ;
         //关注情况
         $this->assignData["isFollow"] = $this->userInfo["is_follow"];
         $currentState = !$this->userInfo["is_follow"] ? 0 : $currentState;
@@ -102,7 +107,8 @@ class redRainMobileController
             "tipMsg" => "<b>年年有米，红包多多</b><br>不抢红包非好汉！<br>抢到红包旺一年！"
         );
 
-
+        $this->assignData["isRun"] =  $isRun;
+        $this->assignData["startTime"] =  $stateArray["data"]["startTime"];
 
         return $this->assignData;
     }
@@ -156,6 +162,19 @@ class redRainMobileController
     }
 
 
+    public function setStop(){
+        if(I('token') == "zhonght"){
+            saveData("addons_redrain_stop",array(),array("stop"=>1));exit;
+        }
+        exit("非法访问");
+    }
+    public function openStop(){
+        if(I('token') == "zhonght"){
+            saveData("addons_redrain_stop",array(),array("stop"=>0));exit;
+        }
+        exit("非法访问");
+
+    }
 
 
     public function lists(){

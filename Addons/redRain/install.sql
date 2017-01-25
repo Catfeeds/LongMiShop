@@ -16,3 +16,9 @@ CREATE TABLE `lm_addons_redrain_winning` (
   `create_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `lm_addons_redrain_stop` (
+  `stop` int(1) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
