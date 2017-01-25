@@ -15,7 +15,7 @@ p , a , span{
     width: 90%;
     height: 70%;
     position: absolute;
-    top:15%;
+    top:10%;
     left: 5%;
     background: url("../images/red_bg.png") no-repeat  top left;
 
@@ -159,7 +159,6 @@ p , a , span{
     position: absolute;
     bottom: 30px;
     height: 30px;
-    display: none;
     line-height: 30px;
 }
 .notice .row{

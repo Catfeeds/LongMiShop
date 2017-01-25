@@ -66,7 +66,7 @@ function redRainGetCurrentState( $configs , $userId )
         }
         $isFirst = false;
     }
-    return array("state" => 4);
+    return array("state" => 4, "data" => $config);
 }
 
 /**
@@ -165,12 +165,22 @@ function redRainGetRedConfig(){
     if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
         $data = array(
             "1" => array(
-                "startTime" => "1485346680",//2017/1/21 20:0:0
-                "endTime"   => "1485350280",//2017/1/21 20:05:0
+                "startTime" => "1485346680",
+                "endTime"   => "1485350280",
                 "number"    => "100",
                 "version"   => "1",
                 "title"     => "第1波",
                 "lastTitle" => "第0波",
+                "minMoney"  => "1",
+                "maxMoney"  => "1.5",
+            ),
+            "2" => array(
+                "startTime" => "1485519480",
+                "endTime"   => "1485523080",
+                "number"    => "500",
+                "version"   => "2",
+                "title"     => "第2波",
+                "lastTitle" => "第1波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
             )
