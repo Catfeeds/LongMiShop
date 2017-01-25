@@ -219,8 +219,9 @@ class redRainMobileController
             $array["number"] = redRainGetManNumber($stateArray["data"]);
             if( $needList == 1){
                 $userNumber = getCountWithCondition("users");
-                if($userNumber > 1000){
-                    $userNumber = $userNumber - 1000;
+                $limit = $array["number"] > 1000 ? 1000 : $array["number"];
+                if($userNumber > $limit){
+                    $userNumber = $userNumber - $limit;
                     $id_1 = time() % $userNumber;
                     $array["list"] = M("users")->limit($id_1 . " 1000")->getField("nickname",true);
                 }else{
