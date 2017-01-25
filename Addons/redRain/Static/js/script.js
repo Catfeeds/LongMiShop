@@ -61,9 +61,9 @@ function myTouchMove(event){
                 return;
             }
             $("#rob").css("bottom","27%");
-            $("#rob").css("width","70px");
-            $("#rob").css("height","70px");
-            $("#rob").css("margin-left","-35px");
+            $("#rob").css("width","64px");
+            $("#rob").css("height","64px");
+            $("#rob").css("margin-left","-32px");
             break;
         case "touchend":
             $("#rob").css("bottom","28%");
@@ -91,13 +91,22 @@ document.getElementById("rob").addEventListener('touchstart',myTouchMove, false)
 
 
 
-var timer = setInterval(function(){
-    if( thisTime >= startTime ){
-        $("#tipMsg").html(tipMsg);
-        lock = false;
-        clearInterval(timer);
+var dd = nowTime - startTime;
+if( dd > 0){
+    var numberss = dd /6;
+    nowMan += numberss;
+}
+
+var timer2 = setInterval(function(){
+    if(isRun != true){
+        clearInterval(timer2);
     }else{
-        thisTime ++;
+        nowTime++;
+        if( nowTime % 6 == 0 ){
+            nowMan ++;
+        }
+        nowMan =  parseInt(nowMan);
+        $("#number").html(nowMan);
     }
 },1000);
 

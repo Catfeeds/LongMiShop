@@ -24,13 +24,13 @@
 
 <div class="notice">
     <div class="row">
-        &nbsp;已经有<span id="number">11</span>人领取了红包
+         已有<span id="number">...</span>人领取了红包
     </div>
-    <div class="row">
-        <marquee scrollamount="2"  direction="up">
-            <span>ddd</span>
-        </marquee>
-    </div>
+    <!--<div class="row">-->
+        <!--<marquee scrollamount="2"  direction="up">-->
+            <!--<span>ddd</span>-->
+        <!--</marquee>-->
+    <!--</div>-->
 </div>
 
 <!--邀请列表-->
@@ -57,7 +57,10 @@
         $(".red").css("background-size", $(".red").width()+"px "+$(".red").height()+"px");
     });
     var ApiUrl = "{:U('Mobile/Addons/redRain')}";
-
+    var nowTime = {:time()};
+    var nowMan = {$action}*264;
+    var isRun = {$isRun};
+    var startTime = {$startTime};
 //    锁定状态
     var lock = {:$currentState?"false":"true"};
 
