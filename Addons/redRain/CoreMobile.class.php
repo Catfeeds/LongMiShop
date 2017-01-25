@@ -117,7 +117,7 @@ class redRainMobileController
         $stateArray = redRainGetCurrentState($this->redConfig, $this->userId);
         switch ($stateArray["state"]) {
             case 1://抢购中
-                if( redRainAwardQualificationTesting( $this->userId ,$stateArray["data"]["version"] ) ){
+                if( !redRainAwardQualificationTesting( $this->userId ,$stateArray["data"]["version"] ) ){
                     $money = $stateArray["data"]["minMoney"];
                     addData(
                         "addons_redrain_winning",
