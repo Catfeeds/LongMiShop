@@ -19,12 +19,14 @@ $(function() {
             data:{pluginName:"getRed"},
             dataType:'json',
             success: function(data){
-                if(data.state == 1){
-                }else{
-                    unLockAction();
-                }
+                unLockAction();
                 $("#rob").removeClass("animation_run");
                 alert(data.msg);
+                if(data.state == 1){
+                    window.location.href=ApiUrl+'?pluginName=lists';
+                }else{
+
+                }
             },
             error:function(){
                 alert("网络错误！");
