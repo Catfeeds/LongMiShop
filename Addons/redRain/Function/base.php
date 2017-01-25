@@ -139,3 +139,39 @@ function redRainGetMyInviteList($userId)
     }
     return $array;
 }
+
+
+/**
+ * 获取配置
+ * @return array
+ */
+function redRainGetRedConfig(){
+    if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
+        $data = array(
+            "1" => array(
+                "startTime" => "1485346680",//2017/1/21 20:0:0
+                "endTime"   => "1485350280",//2017/1/21 20:05:0
+                "number"    => "100",
+                "version"   => "1",
+                "title"     => "第1波",
+                "lastTitle" => "第0波",
+                "minMoney"  => "1",
+                "maxMoney"  => "1.5",
+            )
+        );
+    }else{
+        $data = array(
+            "1" => array(
+                "startTime" => "1485317980",//2017/1/21 20:0:0
+                "endTime"   => "1485348600",//2017/1/21 20:05:0
+                "number"    => "5",
+                "version"   => "1",
+                "title"     => "第1波",
+                "lastTitle" => "第0波",
+                "minMoney"  => "1",
+                "maxMoney"  => "1.5",
+            )
+        );
+    }
+    return $data;
+}

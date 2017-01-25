@@ -25,12 +25,10 @@ $(function() {
                     var myVid=document.getElementById("audio");
                     myVid.muted=false;
                     myVid.play();
-                    alert(data.msg);
-                    window.location.href=ApiUrl+'?pluginName=lists';
                 }else{
-                    alert(data.msg);
-                    window.location.href=ApiUrl;
                 }
+                alert(data.msg);
+                window.location.href=ApiUrl+'?pluginName=lists';
             },
             error:function(){
                 alert("网络错误！");
