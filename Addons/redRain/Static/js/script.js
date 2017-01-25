@@ -70,8 +70,8 @@ function prompt(){
     setTimeout(function(){
         $(".red").removeClass("red_shake");
     },100);
-    var html = "<span>狂戳!</span>";
-    $("#prompt").append(html);
+    // var html = "<span>狂戳!</span>";
+    // $("#prompt").append(html);
 }
 
 
