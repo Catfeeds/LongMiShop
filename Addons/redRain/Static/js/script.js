@@ -29,6 +29,7 @@ $(function() {
                     window.location.href=ApiUrl+'?pluginName=lists';
                 }else{
                     alert(data.msg);
+                    window.location.href=ApiUrl;
                 }
             },
             error:function(){
