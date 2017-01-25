@@ -15,7 +15,7 @@ p , a , span{
     width: 90%;
     height: 70%;
     position: absolute;
-    top:15%;
+    top:10%;
     left: 5%;
     background: url("../images/red_bg.png") no-repeat  top left;
 
@@ -98,8 +98,15 @@ p , a , span{
 
 .follow img{
     width: 80%;
-    height: 80%;
     margin: 10%;
+}
+.follow p{
+    width: 80%;
+    margin: 10%;
+    color: #fff;
+    display:block;
+    font-size: 20px;
+    text-align:center;
 }
 
 
@@ -143,6 +150,18 @@ p , a , span{
     text-decoration: none;
     box-shadow: inset 0 0.3rem 0.2rem rgba(255, 255, 255, 0.2), inset 0 -0.3rem 0.2rem rgba(0, 0, 0, 0.2), 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
 
+}
+
+
+
+.notice{
+    width: 100%;
+    position: absolute;
+    bottom: 32px;
+    height: 30px;
+    display: none;
+    line-height: 30px;
+    background: #ffc;
 }
 
 .item{

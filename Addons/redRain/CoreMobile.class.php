@@ -129,7 +129,7 @@ class redRainMobileController
                             "create_time" => time()
                         )
                     );
-                    redRainSendRed( $this->userInfo , $money , $stateArray["data"]["version"] );
+                    redRainSendRed( $this->userInfo , $money , $stateArray["data"]["version"]  );
                     exit(json_encode(callback(true, "恭喜")));
                 }else{
                     exit(json_encode(callback(false, "手快有手慢无！红包已被抢完")));

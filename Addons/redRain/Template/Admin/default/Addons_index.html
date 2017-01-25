@@ -36,7 +36,7 @@
                 <td class="text-left">{:date('Y-m-d H:i:s',$item['create_time'])}</td>
                 <td class="text-left">
                     <if condition="$item['state'] != 1">
-                        <a href="">发放</a>
+                        <a href="{:U('Admin/Addons/redRain',array('pluginName'=>'grant','id'=>$item['id']))}" target="_blank">发放红包</a>
                     </if>
                 </td>
             </tr>
