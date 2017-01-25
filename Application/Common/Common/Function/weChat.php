@@ -618,7 +618,7 @@ function sendWeChatRed($openid,$amounts ,$act_name = null,$desc = null ){
         "wishing" => $desc,
         "client_ip" => $spbill_create_ip,
         "act_name" => $act_name,
-        "remark" => $act_name.$desc,
+        "remark" => $desc,
         "nonce_str" => $nonce_str,
     );
     $sign = getSign($dataArr,$keyRes);

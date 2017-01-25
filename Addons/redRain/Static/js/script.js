@@ -91,26 +91,6 @@ document.getElementById("rob").addEventListener('touchstart',myTouchMove, false)
 
 
 
-var dd = nowTime - startTime;
-if( dd > 0){
-    var numberss = dd /6;
-    nowMan += numberss;
-}
-nowMan =  parseInt(nowMan);
-$("#number").html(nowMan);
-var timer2 = setInterval(function(){
-    if(isRun != true){
-        clearInterval(timer2);
-    }else{
-        nowTime++;
-        if( nowTime % 6 == 0 ){
-            nowMan ++;
-        }
-        nowMan =  parseInt(nowMan);
-        $("#number").html(nowMan);
-    }
-},1000);
-
 
 // function prompt(){
 //     $(".red").addClass("red_shake");
@@ -121,3 +101,32 @@ var timer2 = setInterval(function(){
 // }
 
 
+
+function getManData(){
+    $.ajax({
+        type : "GET",
+        url:ApiUrl,
+        data:{pluginName:"getManData"},
+        dataType:'json',
+        success: function(data){
+            if( data.state == 1){
+                $("#number").html("已有"+data.number+"人领取了红包");
+            }else{
+                $("#number").html("年年有米");
+            }
+        }
+    });
+}
+
+
+
+$(function(){
+    getManData();
+    var timer2 = setInterval(function(){
+        if(isRun != true){
+            return;
+        }else{
+            getManData()
+        }
+    },5000);
+});
