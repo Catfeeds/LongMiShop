@@ -21,11 +21,14 @@ $(function() {
             success: function(data){
                 unLockAction();
                 $("#rob").removeClass("animation_run");
-                alert(data.msg);
                 if(data.state == 1){
+                    var myVid=document.getElementById("audio");
+                    myVid.muted=false;
+                    myVid.play();
+                    alert(data.msg);
                     window.location.href=ApiUrl+'?pluginName=lists';
                 }else{
-
+                    alert(data.msg);
                 }
             },
             error:function(){
@@ -50,7 +53,15 @@ function lockAction(){
 function unLockAction(){
     lock = false;
 }
-
+var  is_one = true;
+document.addEventListener('touchstart', function(){
+    if( is_one ){
+        is_one = false;
+        var myVid=document.getElementById("audio");
+        myVid.muted=true;
+        myVid.play();
+    }
+}, false);
 /**
  *
  */
