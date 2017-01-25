@@ -1,14 +1,15 @@
 <include file="$headerPath"/>
 <body>
 
+<!--邀请部分-->
 <div class="follow" id="follow">
     <img src="__STATIC__/images/follow.png"/>
 </div>
+
+<!--红包部分-->
 <div class="red">
     <p>{$tipMsg}</p>
-
     <div id="prompt"></div>
-
     <div class="bottom">
         <if condition="$currentState">
             <button  class="rob" id="rob" ></button>
@@ -16,15 +17,17 @@
             <a  class="rob" ></a>
         </if>
     </div>
-
 </div>
 
+<!--邀请列表-->
 <div class="invite">
     <volist name="inviteList" id="inviteItem">
         <img src="{$inviteItem}"/>
     </volist>
 </div>
 
+
+<!--底部菜单-->
 <div class="buttonNav">
     <!--<a href="#">规则</a>-->
     <a href="{:U('Mobile/Addons/redRain',array('pluginName'=>'lists'))}">查看中奖纪录</a>
