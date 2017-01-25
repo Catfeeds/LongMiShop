@@ -139,7 +139,7 @@ class redRainMobileController
                         )
                     );
                     redRainSendRed( $this->userInfo , $money , $stateArray["data"]["version"]  );
-                    exit(json_encode(callback(true, "恭喜")));
+                    exit(json_encode(callback(true, "恭喜，轻轻松松，红包到手")));
                 }else{
                     exit(json_encode(callback(false, "手快有手慢无！红包已被抢完")));
                 }
@@ -155,7 +155,7 @@ class redRainMobileController
             case 5://领取过
                 exit(json_encode(callback(false, "您已经领取过红包")));
                 break;
-            case 6://领取过
+            case 6://抢完
                 exit(json_encode(callback(false, "手快有手慢无！红包已被抢完")));
                 break;
         }
@@ -183,5 +183,44 @@ class redRainMobileController
     public function lists(){
         $this->assignData["lists"] = selectDataWithCondition("addons_redrain_winning",array("user_id"=>$this->userId));
         return $this->assignData;
+    }
+
+
+
+
+    public function getManData(){
+
+        $array= array("number"=>0,"list"=>array(),"msg"=>"","state"=>0);
+        //获取当前状态数组
+        $stateArray = redRainGetCurrentState($this->redConfig, $this->userId);
+        switch ($stateArray["state"]) {
+            case 1://抢购中
+                if( redRainAwardQualificationTesting( $this->userId ,$stateArray["data"]["version"] ) ){
+                    $array["state"] = 1;
+                }else{
+                    $array["state"] = 1;
+                }
+                break;
+            case 2://第一波还没开始
+                $array["state"] = 2;
+                break;
+            case 3://下一波还没开始
+                $array["state"] = 2;
+            case 4://全部结束
+                $array["state"] = 2;
+                break;
+            case 5://领取过
+                $array["state"] = 1;
+                break;
+            case 6://抢完
+                $array["state"] = 1;
+                break;
+        }
+
+        if( $array["state"] == 1){
+            $array["number"] = redRainGetManNumber($stateArray["data"]);
+        }
+
+        exit(json_encode($array));
     }
 }
