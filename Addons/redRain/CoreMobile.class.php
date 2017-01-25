@@ -17,7 +17,7 @@ class redRainMobileController
         $this->userInfo = $userInfo;
         $this->userId = $this->userInfo["user_id"];
 
-        $this->assignData["v"] = time();
+        $this->assignData["v"] = "v1.0";
         
         $this->redConfig = array(
             "1" => array(
@@ -74,22 +74,22 @@ class redRainMobileController
         switch ($stateArray["state"]) {
             case 1://抢购中
                 $currentState = 1;
-                $tipMsg = "来啊，抢红包啊！<br>来啊，抢红包啊！<br>来啊，抢红包啊！";
+                $tipMsg = "<b>年年有米，红包多多</b><br>不抢红包非好汉！<br>抢到红包旺一年！";
                 break;
             case 2://第一波还没开始
-                $tipMsg = "红包雨还没开始<br>开始时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
+                $tipMsg = "<b>客官您来早啦</b><br>红包雨开始时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
                 break;
             case 3://下一波还没开始
-                $tipMsg = $stateArray["data"]["lastTitle"]."已经结束<br>下一波时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
+                $tipMsg = "<b>啊哦，您手慢了，".$stateArray["data"]["lastTitle"]."已经结束</b><br>下一波时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
                 break;
             case 4://全部结束
-                $tipMsg = "本次红包雨活动已经结束<br>关注公众号<br>更多活动等你来玩";
+                $tipMsg = "<b>本次红包雨活动已经结束</b><br>关注公众号<br>更多活动等你来玩";
                 break;
             case 5://领取过
-                $tipMsg = "您已经领取过<br>这一波的红包啦";
+                $tipMsg = "<b>不要贪心哦</b><br>您已经领取过啦";
                 break;
             case 6://抢完了
-                $tipMsg = "手快有手慢无！<br>这波红包已被抢光";
+                $tipMsg = "<b>嘤嘤嘤，手太慢了</b><br>红包抢光啦，明天再来吧";
                 break;
             default:
                 break;
