@@ -58,9 +58,9 @@ function myTouchMove(event){
     switch(event.type){
         case "touchstart":
             $("#rob").css("bottom","27%");
-            $("#rob").css("width","76px");
-            $("#rob").css("height","76px");
-            $("#rob").css("margin-left","-38px");
+            $("#rob").css("width","70px");
+            $("#rob").css("height","70px");
+            $("#rob").css("margin-left","-35px");
             break;
         case "touchend":
             $("#rob").css("bottom","28%");
