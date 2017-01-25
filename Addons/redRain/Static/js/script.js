@@ -96,7 +96,8 @@ if( dd > 0){
     var numberss = dd /6;
     nowMan += numberss;
 }
-
+nowMan =  parseInt(nowMan);
+$("#number").html(nowMan);
 var timer2 = setInterval(function(){
     if(isRun != true){
         clearInterval(timer2);
