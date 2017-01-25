@@ -189,8 +189,8 @@ class redRainMobileController
 
 
     public function getManData(){
-
-        $array= array("number"=>0,"list"=>array(),"msg"=>"","state"=>0);
+        $needList = I("needList",0);
+        $array= array("number"=>0,"list"=>array(),"msg"=>"","needList"=>0,"state"=>0);
         //获取当前状态数组
         $stateArray = redRainGetCurrentState($this->redConfig, $this->userId);
         switch ($stateArray["state"]) {
@@ -205,7 +205,6 @@ class redRainMobileController
                 $array["state"] = 2;
                 break;
             case 3://下一波还没开始
-                $array["state"] = 2;
             case 4://全部结束
                 $array["state"] = 2;
                 break;
@@ -216,9 +215,19 @@ class redRainMobileController
                 $array["state"] = 1;
                 break;
         }
-
         if( $array["state"] == 1){
             $array["number"] = redRainGetManNumber($stateArray["data"]);
+            if( $needList == 1){
+                $userNumber = getCountWithCondition("users");
+                if($userNumber > 1000){
+                    $userNumber = $userNumber - 1000;
+                    $id_1 = time() % $userNumber;
+                    $array["list"] = M("users")->limit($id_1 . " 1000")->getField("nickname",true);
+                }else{
+                    $array["list"] = M("users")->getField("nickname",true);
+                }
+                $array["needList"]  = 1;
+            }
         }
 
         exit(json_encode($array));

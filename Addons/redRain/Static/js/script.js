@@ -101,16 +101,35 @@ document.getElementById("rob").addEventListener('touchstart',myTouchMove, false)
 // }
 
 
-
+var manDataLock = false;
+var mamOne = true;
 function getManData(){
+    if(manDataLock){
+        return;
+    }
+    manDataLock = true;
+    var p_data={pluginName:"getManData"};
+    if( mamOne ){
+        p_data={pluginName:"getManData",needList:1};
+    }
     $.ajax({
         type : "GET",
         url:ApiUrl,
-        data:{pluginName:"getManData"},
+        data:p_data,
         dataType:'json',
         success: function(data){
+            manDataLock = false;
             if( data.state == 1){
                 $("#number").html("已有"+data.number+"人领取了红包");
+                if( data.needList ==1){
+                    mamOne = false;
+                    var listHtml = "";
+                    var lists = data.list;
+                    for(var i in lists){
+                        listHtml +="<span>恭喜"+lists[i]+"</span><br>";
+                    }
+                    $("#marquee").html(listHtml);
+                }
             }else{
                 $("#number").html("年年有米");
             }
