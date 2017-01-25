@@ -220,12 +220,14 @@ class redRainMobileController
             if( $needList == 1){
                 $userNumber = getCountWithCondition("users");
                 $limit = $array["number"] > 1000 ? 1000 : $array["number"];
-                if($userNumber > $limit){
-                    $userNumber = $userNumber - $limit;
-                    $id_1 = time() % $userNumber;
-                    $array["list"] = M("users")->limit($id_1 . " ".$limit)->getField("nickname",true);
-                }else{
-                    $array["list"] = M("users")->getField("nickname",true);
+                if( $limit >0){
+                    if($userNumber > $limit){
+                        $userNumber = $userNumber - $limit;
+                        $id_1 = time() % $userNumber;
+                        $array["list"] = M("users")->limit($id_1 . " ".$limit)->getField("nickname",true);
+                    }else{
+                        $array["list"] = M("users")->getField("nickname",true);
+                    }
                 }
                 $array["needList"]  = 1;
             }
