@@ -94,6 +94,9 @@ class redRainMobileController
 
 
         $this->assignData["action"] = $stateArray["data"]["version"] -1 ;
+
+//        $winningNumber = getCountWithCondition("addons_redrain_winning",array('version'=>$stateArray["data"]["version"]));
+
         //关注情况
         $this->assignData["isFollow"] = $this->userInfo["is_follow"];
         $currentState = !$this->userInfo["is_follow"] ? 0 : $currentState;
@@ -108,7 +111,7 @@ class redRainMobileController
         );
 
         $this->assignData["isRun"] =  $isRun;
-        $this->assignData["startTime"] = $stateArray["data"]["startTime"];
+        $this->assignData["startTime"] = $stateArray["data"]["endTime"];
 
         return $this->assignData;
     }
