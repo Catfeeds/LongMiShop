@@ -34,7 +34,7 @@ class redRainMobileController
         }else{
             $this->redConfig = array(
                 "1" => array(
-                    "startTime" => "1485315960",//2017/1/21 20:0:0
+                    "startTime" => "1485317980",//2017/1/21 20:0:0
                     "endTime"   => "1485348600",//2017/1/21 20:05:0
                     "number"    => "5",
                     "version"   => "1",
@@ -142,7 +142,7 @@ class redRainMobileController
         switch ($stateArray["state"]) {
             case 1://抢购中
                 if( redRainAwardQualificationTesting( $this->userId ,$stateArray["data"]["version"] ) ){
-                    $money = 1;
+                    $money = $stateArray["data"]["minMoney"];
                     addData(
                         "addons_redrain_winning",
                         array(
