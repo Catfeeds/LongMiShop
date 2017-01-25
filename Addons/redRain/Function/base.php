@@ -174,7 +174,7 @@ function redRainGetRedConfig(){
     }else{
         $data = array(
             "1" => array(
-                "startTime" => "1485317980",//2017/1/21 20:0:0
+                "startTime" => "1485334540",//2017/1/21 20:0:0
                 "endTime"   => "1485348600",//2017/1/21 20:05:0
                 "number"    => "5",
                 "version"   => "1",
