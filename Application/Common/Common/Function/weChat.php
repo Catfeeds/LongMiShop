@@ -602,7 +602,7 @@ function sendWeChatRed($openid,$amounts ,$act_name = null,$desc = null ){
 
 
     is_null($act_name)?$act_name = "活动奖品！":false;
-    is_null($desc)?$desc = "祝您元宵节快乐！":false;
+    is_null($desc)?$desc = "祝您春节快乐！":false;
 
 
 
