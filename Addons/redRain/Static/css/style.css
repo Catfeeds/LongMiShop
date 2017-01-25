@@ -84,11 +84,6 @@ p , a , span{
 
 
 
-.animation_run{
-    -webkit-animation: rob_run 1s infinite linear ;
-    animation: rob_run 1s infinite linear ;
-}
-
 
 .follow{
     width: 100%;
@@ -196,14 +191,25 @@ p , a , span{
 }
 
 
+.animation_run{
+    -webkit-animation: rob_run 1s infinite linear ;
+    animation: rob_run 1s infinite linear ;
+}
+
 /*动画效果*/
 @-webkit-keyframes rob_run {
-    from { -webkit-transform: rotateX(0); }
-    to { -webkit-transform: rotateY(-360deg); }
+    from { }
+    to {
+        -webkit-transform: rotateY(-360deg);
+        transform: rotateY(-360deg);
+    }
 }
 @keyframes rob_run {
-    from { -webkit-transform: rotateX(0); }
-    to { -webkit-transform: rotateY(-360deg); }
+    from {  }
+    to {
+        -webkit-transform: rotateY(-360deg);
+        transform: rotateY(-360deg);
+    }
 }
 
 @-webkit-keyframes red_shake {
