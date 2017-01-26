@@ -171,7 +171,7 @@ function redRainGetRedConfig()
                 "endTime"   => "1485350280",
                 "number"    => "100",
                 "version"   => "1",
-                "title"     => "第1波",
+                "title"     => "预热波",
                 "lastTitle" => "第0波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
@@ -182,12 +182,23 @@ function redRainGetRedConfig()
                 "endTime"   => "1485523080",
                 "number"    => "500",
                 "version"   => "2",
-                "title"     => "第2波",
-                "lastTitle" => "第1波",
+                "title"     => "第1波",
+                "lastTitle" => "预热波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
                 "maxNumber" => "20326",
-            )
+            ),
+            "3" => array(
+                "startTime" => "1485605880",
+                "endTime"   => "1485609480",
+                "number"    => "297",
+                "version"   => "3",
+                "title"     => "第2波",
+                "lastTitle" => "第1波",
+                "minMoney"  => "1.68",
+                "maxMoney"  => "1.5",
+                "maxNumber" => "20326",
+            ),
         );
     } else {
         $data = array(
