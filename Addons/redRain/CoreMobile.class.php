@@ -69,11 +69,11 @@ class redRainMobileController
                 $tipMsg = "<b>年年有米，红包多多</b><br>不抢红包非好汉！<br>抢到红包旺一年！";
                 break;
             case 2://第一波还没开始
-                $tipMsg = "<b>客官您来早啦</b><br>红包雨开始时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
+                $tipMsg = "<b>客官您来早啦</b><br>红包雨开始时间<br>" . date("Y-m-d H:i:s", $stateArray["data"]["startTime"]);
                 $startTime = $stateArray["data"]["startTime"];
                 break;
             case 3://下一波还没开始
-                $tipMsg = "<b>啊哦，您手慢了，".$stateArray["data"]["lastTitle"]."已经结束</b><br>下一波时间<br>" . date( "Y-m-d H:i:s" , $stateArray["data"]["startTime"] );
+                $tipMsg = "<b>啊哦，您手慢了，" . $stateArray["data"]["lastTitle"] . "已经结束</b><br>下一波时间<br>" . date("Y-m-d H:i:s", $stateArray["data"]["startTime"]);
                 $startTime = $stateArray["data"]["startTime"];
                 break;
             case 4://全部结束
@@ -91,9 +91,13 @@ class redRainMobileController
         }
 
 
+        if ($_SERVER["HTTP_HOST"] == "www.longmiwang.com") {
+            $this->assignData["qrcode"] = "qecode.jpg";
+        } else {
+            $this->assignData["qrcode"] = "qecode2.jpg";
+        }
 
-
-        $this->assignData["action"] = $stateArray["data"]["version"] -1 ;
+        $this->assignData["action"] = $stateArray["data"]["version"] - 1;
 
 //        $winningNumber = getCountWithCondition("addons_redrain_winning",array('version'=>$stateArray["data"]["version"]));
 
@@ -104,13 +108,13 @@ class redRainMobileController
         $this->assignData["tipMsg"] = $tipMsg;
         $this->assignData["currentState"] = $currentState;
 
-        is_null($startTime)?false: $this->assignData["stateTimeArray"] = array(
-            "thisTime"=>time(),
-            "startTime"=>$startTime,
-            "tipMsg" => "<b>年年有米，红包多多</b><br>不抢红包非好汉！<br>抢到红包旺一年！"
+        is_null($startTime) ? false : $this->assignData["stateTimeArray"] = array(
+            "thisTime"  => time(),
+            "startTime" => $startTime,
+            "tipMsg"    => "<b>年年有米，红包多多</b><br>不抢红包非好汉！<br>抢到红包旺一年！"
         );
 
-        $this->assignData["isRun"] =  $isRun;
+        $this->assignData["isRun"] = $isRun;
         $this->assignData["startTime"] = $stateArray["data"]["endTime"];
 
         return $this->assignData;
