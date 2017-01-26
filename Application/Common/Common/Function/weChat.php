@@ -634,7 +634,7 @@ function sendWeChatRed($openid,$amounts ,$act_name = null,$desc = null ){
 	<wishing>".$desc."</wishing>
 	<client_ip>".$spbill_create_ip."</client_ip>
 	<act_name>".$act_name."</act_name>
-	<remark>".$act_name.$desc."</remark>
+	<remark>".$desc."</remark>
 	<nonce_str>".$nonce_str."</nonce_str>
 	<sign>".$sign."</sign>
 	</xml>";
