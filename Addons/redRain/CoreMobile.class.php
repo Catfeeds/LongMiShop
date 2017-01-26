@@ -222,16 +222,18 @@ class redRainMobileController
         if( $array["state"] == 1){
             $array["number"] = redRainGetManNumber($stateArray["data"]);
             if( $needList == 1){
-                $userNumber = getCountWithCondition("users");
-                $limit = $array["number"] > 1000 ? 1000 : $array["number"];
-                if($userNumber > $limit){
-                    $userNumber = $userNumber - $limit;
-                    $id_1 = time() % $userNumber;
-                    $array["list"] = M("users")->limit($id_1 . ",".$limit)->getField("nickname",true);
-                }else{
-                    $array["list"] = M("users")->getField("nickname",true);
+                if( $array["number"] > 0){
+                    $userNumber = getCountWithCondition("users");
+                    $limit = $array["number"] > 1000 ? 1000 : $array["number"];
+                    if($userNumber > $limit){
+                        $userNumber = $userNumber - $limit;
+                        $id_1 = time() % $userNumber;
+                        $array["list"] = M("users")->limit($id_1 . ",".$limit)->getField("nickname",true);
+                    }else{
+                        $array["list"] = M("users")->getField("nickname",true);
+                    }
+                    $array["needList"]  = 1;
                 }
-                $array["needList"]  = 1;
             }
         }
 
