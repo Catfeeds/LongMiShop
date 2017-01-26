@@ -203,7 +203,7 @@ function redRainGetRedConfig()
                 "maxNumber" => "20152",
             ),
             "2" => array(
-                "startTime" => "1485399600",
+                "startTime" => "1485396900",
                 "endTime"   => "1485523080",
                 "number"    => "6",
                 "version"   => "2",
