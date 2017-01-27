@@ -186,7 +186,7 @@ function redRainGetRedConfig()
                 "lastTitle" => "预热波",
                 "minMoney"  => "1",
                 "maxMoney"  => "1.5",
-                "maxNumber" => "20326",
+                "maxNumber" => "6000",
             ),
             "3" => array(
                 "startTime" => "1485605880",
