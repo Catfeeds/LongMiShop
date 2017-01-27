@@ -39,8 +39,8 @@ class CouponController extends MobileBaseController {
                 exit;
             }
         }
-
-        header("Location: ".U("Mobile/User/index"));
+        $this -> error("您已经领取过优惠券",U("Mobile/User/coupon"));
+//        header("Location: ".U("Mobile/User/index"));
         exit;
     }
 }
