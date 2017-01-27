@@ -601,7 +601,7 @@ function sendWeChatRed($openid,$amounts ,$act_name = null,$desc = null ){
     $spbill_create_ip = $_SERVER["REMOTE_ADDR"];//请求ip
 
 
-    is_null($act_name)?$act_name = "活动奖品！":false;
+    is_null($act_name)?$act_name = "红包雨":false;
     is_null($desc)?$desc = "祝您春节快乐！":false;
 
 
