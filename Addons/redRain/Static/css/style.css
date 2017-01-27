@@ -137,7 +137,7 @@ p , a , span{
 }
 .buttonNav a{
     display: block;
-    width: 100%;
+    width: 50%;
     height:30px;
     line-height: 30px;
     text-align: center;
