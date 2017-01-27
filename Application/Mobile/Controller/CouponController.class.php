@@ -30,14 +30,14 @@ class CouponController extends MobileBaseController {
             "cid"=>$id
         );
         if( !isExistenceDataWithCondition("coupon_list",$condition)){
-            if( $this->user["is_follow"] == 1){
+//            if( $this->user["is_follow"] == 1){
                 addNewCoupon( $id , $this->user_id);
                 header("Location: ".U("Mobile/User/coupon"));
                 exit;
-            }else{
-                $this -> display();
-                exit;
-            }
+//            }else{
+//                $this -> display();
+//                exit;
+//            }
         }
         $this -> error("您已经领取过优惠券",U("Mobile/User/coupon"));
 //        header("Location: ".U("Mobile/User/index"));
