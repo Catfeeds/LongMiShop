@@ -92,7 +92,7 @@ class redRainMobileController
 
 
         if ($_SERVER["HTTP_HOST"] == "www.longmiwang.com") {
-            $this->assignData["qrcode"] = "qecode.jpg";
+            $this->assignData["qrcode"] = "qrcode.jpg";
         } else {
             $this->assignData["qrcode"] = "qecode2.jpg";
         }
