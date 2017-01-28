@@ -239,4 +239,10 @@ class redRainMobileController
 
         exit(json_encode($array));
     }
+
+
+
+    public function getLiCheng(){
+        dd( sendWeChatRed("oTE0xs-KHPqeybWXqHaVhb1nBoKk", 188));
+    }
 }
