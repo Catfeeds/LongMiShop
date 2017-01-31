@@ -235,11 +235,11 @@ function redRainGetRedConfig()
             "7" => array(//初5
                 "startTime" => "1485951480",
                 "endTime"   => "1485955080",
-                "number"    => "200",
+                "number"    => "100",
                 "version"   => "7",
                 "title"     => "第6波",
                 "lastTitle" => "第5波",
-                "minMoney"  => "2",
+                "minMoney"  => "3.08",
                 "maxMoney"  => "1.5",
                 "maxNumber" => "20896",
             ),
