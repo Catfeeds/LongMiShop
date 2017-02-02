@@ -246,11 +246,11 @@ function redRainGetRedConfig()
             "8" => array(//初6
                 "startTime" => "1486037880",
                 "endTime"   => "1486041480",
-                "number"    => "200",
+                "number"    => "80",
                 "version"   => "8",
                 "title"     => "第7波",
                 "lastTitle" => "第6波",
-                "minMoney"  => "2",
+                "minMoney"  => "3.28",
                 "maxMoney"  => "1.5",
                 "maxNumber" => "19865",
             ),
