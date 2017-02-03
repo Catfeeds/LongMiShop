@@ -37,6 +37,7 @@ class AddonsController extends MobileBaseController {
         
         $this -> addonsConfig  = $this -> addonsLogic -> getAddonsConfig();
         $dataList = $this -> addonsLogic -> run() ;
+        $theme = self::THEME;
         if( !empty( $dataList ) ){
             foreach ( $dataList as $dataKey => $dataItem ){
                 if( $dataKey == "__success"){
@@ -47,11 +48,16 @@ class AddonsController extends MobileBaseController {
                     $this -> error( $dataItem["msg"] , $dataItem["url"] , $dataItem["time"]  );
                     exit;
                 }
+                if( $dataKey == "__theme"){
+                    $theme = $dataItem;
+                    continue;
+                }
+
                 $this -> assign( $dataKey , $dataItem );
             }
         }
         C( "TMPL_PARSE_STRING.__ADDONS__" , '/Addons/' . ACTION_NAME . '/Static' );
-        $viewPath = "./Addons/".ACTION_NAME."/Template/" . self::APPOINTED . "/" . self::THEME . "/Addons_" . $this -> pluginName .".html" ;
+        $viewPath = "./Addons/".ACTION_NAME."/Template/" . self::APPOINTED . "/" . $theme . "/Addons_" . $this -> pluginName .".html" ;
         $this -> view -> display($viewPath);
     }
 
