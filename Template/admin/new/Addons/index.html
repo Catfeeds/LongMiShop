@@ -23,7 +23,10 @@
                                         <div class="thumbnail">
                                             <img  style="max-width:150px; height:150px;" src="/Addons/{$p.code}/{$p.icon}" alt="...">
                                             <div class="caption">
-                                                <h4>{$p.title}</h4>
+                                                <h4>
+                                                    {$p.title}
+                                                    <!--({$p.author})-->
+                                                </h4>
                                                 <p>{$p.desc}</p>
                                                 <p>
                                                     <a href="{:U('Admin/Addons/'.$p['code'])}"  style="width:100%;" class="btn btn-primary" role="button">进入</a>
