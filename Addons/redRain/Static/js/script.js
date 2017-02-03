@@ -30,7 +30,7 @@ $(function() {
                 window.location.href=ApiUrl;
             },
             error:function(){
-                alert("网络错误！");
+                alert("系统繁忙，请稍后再试！");
                 location.reload();
             }
         });
