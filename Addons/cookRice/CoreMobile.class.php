@@ -1,33 +1,22 @@
 <?php
-@include 'Addons/assistWinning/Function/base.php';
+@include 'Addons/cookRice/Function/base.php';
 
-class assistWinningMobileController {
+class cookRiceMobileController {
 
     const TB_PRIZE = "addons_assistwinning_prize";
     const TB_HELP  = "addons_assistwinning_help";
     const TB_SET_PRIZE = "addons_assistwinning_setprize";
 
 
+    const TB_ACTIVITY = "addons_cookrice_activity";
+
 
     public $assignData = array();
     public $user = array();
 
-//    public $temArray = array(
-//        '1'=>'29',
-//        '2'=>'18',
-//        '3'=>'10',
-//        '4'=>'-16',
-//        '5'=>'5',
-//    );
-//    public $hints = array(
-//        '29' => "自信一调，温度上升29",
-//        '18' => '小心一转，温度上升18',
-//        '10' => '努力控温，温度上升10',
-//        '-16'=> '好奇打开门，温度下降16',
-//        '5'=>'煽了个风，温度下降5',
-//    );
 
-    public $edition = null;
+    public $config;
+    public $edition;
 
     public $temperature = array(
         "-8",
@@ -50,10 +39,15 @@ class assistWinningMobileController {
     public function __construct($userInfo)
     {
         $this->user = $userInfo;
-        $this -> assignData["share"] = "./Addons/assistWinning/Template/Mobile/default/Addons_share.html";
-        $this -> assignData["headerPath"] = "./Addons/assistWinning/Template/Mobile/default/Addons_header.html";
-        $this -> assignData["footerPath"] = "./Addons/assistWinning/Template/Mobile/default/Addons_footer.html";
-        $edition = getActivityId();
+
+        $this->assignData["share"] = "./Addons/assistWinning/Template/Mobile/default/Addons_share.html";
+        $this->assignData["headerPath"] = "./Addons/assistWinning/Template/Mobile/default/Addons_header.html";
+        $this->assignData["footerPath"] = "./Addons/assistWinning/Template/Mobile/default/Addons_footer.html";
+
+
+        $this->config = cookRiceGetConfig();
+        $this->edition = $this->config["edition"];
+        $this->assignData["__theme"] = $this->config["data"][$this->edition]['theme'];
     }
 
     //初始页面
