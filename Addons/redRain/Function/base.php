@@ -75,7 +75,7 @@ function redRainGetCurrentState( $configs , $userId )
  * @param $money
  * @param $version
  * @param bool $needReturn
- * @return bool
+ * @return array
  */
 function redRainSendRed( $userInfo , $money , $version ,$needReturn = false )
 {
@@ -89,11 +89,11 @@ function redRainSendRed( $userInfo , $money , $version ,$needReturn = false )
         if ( callbackIsTrue($result) && $result["data"]["postData"]['result_code'] != "FAIL") {
             saveData("addons_redrain_winning", $condition, array("state" => "1"));
             if( $needReturn ){
-                return true;
+                return callback(true);
             }
         } else {
             if( $needReturn ){
-                return false;
+                return callback(false,"微信:" . $result["data"]["postData"]['err_code_des']);
             }else{
                 setLogResult($result, "红包雨", "addons");
                 $jsSdkLogic = new \Common\Logic\JsSdkLogic();
@@ -102,7 +102,7 @@ function redRainSendRed( $userInfo , $money , $version ,$needReturn = false )
         }
     }
     if( $needReturn ){
-        return false;
+        return callback(false,"此用户已经发放过了");
     }
 }
 
@@ -257,11 +257,11 @@ function redRainGetRedConfig()
             "9" => array(//初7
                 "startTime" => "1486124280",
                 "endTime"   => "1486127880",
-                "number"    => "200",
+                "number"    => "100",
                 "version"   => "9",
                 "title"     => "第8波",
                 "lastTitle" => "第7波",
-                "minMoney"  => "2",
+                "minMoney"  => "3.33",
                 "maxMoney"  => "1.5",
                 "maxNumber" => "21035",
             ),
