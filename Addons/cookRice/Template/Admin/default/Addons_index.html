@@ -1,16 +1,48 @@
-<div class="tab-pane active" id="tab_pay">
-    <div class="row">
-        <volist name="list" id="p">
-            <div class="col-sm-2">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h4>{$p.title}</h4>
-                        <p>
-                            <a href="{:U('Admin/Addons/'.ADDONS_NAME , array('pluginName' => $p['act']))}" class="btn btn-primary" role="button">查看</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td class="text-right">
+                ID/用户ID
+            </td>
+            <td class="text-left">
+                状态
+            </td>
+            <td class="text-left">
+                版本/版本名字
+            </td>
+            <td class="text-left">
+                领奖人名称/领奖人手机号
+            </td>
+            <td class="text-left">
+                领奖人地址
+            </td>
+            <td class="text-left">
+                分数
+            </td>
+            <td class="text-left">
+                开始时间
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="item">
+            <tr>
+                <td class="text-right">{$item.id}/{$item.user_id}</td>
+                <td class="text-left">{$state[$item["state"]]}</td>
+                <td class="text-left">{$config["data"][$item["edition_id"]]["name"]}</td>
+                <td class="text-left">{$item.user_name}{:$item["user_phone"]?"/".$item["user_phone"]:""}</td>
+                <td class="text-left">{$item.user_site}</td>
+                <td class="text-left">{$item.number}</td>
+                <td class="text-left">
+                    {:date('Y-m-d H:i:s',$item['create_time'])}
+                </td>
+            </tr>
         </volist>
-    </div>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-sm-3 text-left"></div>
+    <div class="col-sm-9 text-right">{$page}</div>
 </div>

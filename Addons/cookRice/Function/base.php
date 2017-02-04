@@ -12,7 +12,7 @@ function cookRiceGetConfig()
         "data"      => array(
             "1" => array(
                 "edition" => 1,
-                "name"    => "加温啦",
+                "name"    => "煮饭游戏",
                 "theme"   => "default"
             ),
             "2" => array(

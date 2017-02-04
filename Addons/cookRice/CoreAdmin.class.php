@@ -1,8 +1,10 @@
 <?php
-use Think\AjaxPage;
+@include 'Addons/cookRice/Function/base.php';
 
-
-class cookRiceAdminController {
+class cookRiceAdminController
+{
+    const TB_ACTIVITY = "addons_cookrice_activity";
+    const TB_HELP_LIST = "addons_cookrice_help_list";
 
     public $assignData = array();
 
@@ -11,54 +13,31 @@ class cookRiceAdminController {
     }
 
     //初始页面
-    public function index(){
-        $this -> assignData["list"] = array(
-            array(
-                "title" => "奖品设置",
-                "act"   => "setPrize"
-            ),
-            array(
-                "title" => "中奖列表",
-                "act"   => "prize"
-            )
-        );
-        return $this -> assignData;
+    public function index()
+    {
 
-    }
-    public function setPrize(){
-        $list = M('addons_assistwinning_setprize')->find();
-        $this -> assignData['list'] = $list;
-        return $this -> assignData;
-    }
+        $count = getCountWithCondition(self::TB_ACTIVITY);
+        $Page = new \Think\Page($count, 40);
+        $show = $Page->show();
+        $lists = M(self::TB_ACTIVITY)->limit($Page->firstRow, $Page->listRows)->order("create_time desc")->select();
+        if (!empty($lists)) {
+            foreach ($lists as $key => $item) {
+                $number = 0;
+                $helpList = selectDataWithCondition(self::TB_HELP_LIST, array("activity_id" => $item["id"]));
+                if (!empty($helpList)) {
+                    foreach ($helpList as $helpItem) {
+                        $number += $helpItem["value"];
+                    }
+                }
 
-    public function PostSet(){
-        $data = I('post.');
-        unset($data['pluginName']);
-        $data['uptatetime'] = time();
-        $res = M('addons_assistwinning_setprize')->save($data);
-        if($res){
-            exit(json_encode(callback(true,'修改成功')));
+                $lists[$key]["help"] = $helpList;
+                $lists[$key]["number"] = $number;
+            }
         }
-        exit(json_encode(callback(false,'修改失败')));
-
-    }
-    public function prize(){
-        $prefix = C('DB_PREFIX');
-        $join = $prefix."users ON ".$prefix."addons_assistwinning_prize.user_id = ".$prefix."users.user_id";
-        I('mobile') ? $condition[$prefix.'users.mobile'] = I('mobile') : false;
-        I('nickname') ? $condition[$prefix.'users.nickname'] = array("like" , "%".I('nickname')."%") : false;
-
-        $count = M('addons_assistwinning_prize')->join($join)->where($condition)->count();
-        $Page  = new AjaxPage($count,10);
-        //  搜索条件下 分页赋值
-        foreach($condition as $key=>$val) {
-            $Page->parameter[$key]   =   urlencode($val);
-        }
-        $field = $prefix.'addons_assistwinning_prize.*,'.$prefix.'users.nickname,'.$prefix.'users.user_id';
-        $userList = M('addons_assistwinning_prize')->field($field)->join($join)->where($condition)->limit($Page->firstRow.','.$Page->listRows)->select();
-
-        $this -> assignData['page'] = $Page -> show();
-        $this -> assignData['userList'] = $userList;
-        return $this -> assignData;
+        $this->assignData['config'] = cookRiceGetConfig();
+        $this->assignData['state'] = array("进行中","待领取","已提交资料");
+        $this->assignData['list'] = $lists;
+        $this->assignData['page'] = $show;
+        return $this->assignData;
     }
 }
