@@ -232,12 +232,12 @@ function cookRiceGetHelpValue($activityId,$edition)
 //    $date = array();
     do {
         if ($number == 0) {
-            $date = array_rand($value_a);
+            $date = $value_a[mt_rand(0,count($value_a)-1)];
         } else {
             if ($number > 80) {
-                $date = array_rand($value_d);
+                $date = $value_d[mt_rand(0,count($value_d)-1)];
             } else {
-                $date = array_rand($value_c);
+                $date = $value_c[mt_rand(0,count($value_c)-1)];
             }
         }
         $numberNew = $number + $date["value"];
