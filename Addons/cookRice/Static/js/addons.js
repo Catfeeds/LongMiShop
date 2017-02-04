@@ -40,6 +40,7 @@ function cookRiceButtonClick() {
             show_guide();
             break;
         case "3":
+        case "4":
             needAjax = true;
             data = {pluginName: "help", activityId: activityId};
             break;
