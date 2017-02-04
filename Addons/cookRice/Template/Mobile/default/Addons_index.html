@@ -46,17 +46,17 @@
             </a>
         </if>
         <if condition = "$status eq 5">
-            <a href="javascript:void(0);" class="f_c_button">
+            <a href="javascript:showSubmit();" class="f_c_button2">
                 点击领取奖品
             </a>
-            <div class="f_application">
+            <div class="f_application" style="display:none;">
                 <form action="" method="post" class="form">
-                    <input type="text" placeholder="得奖人：">
-                    <input type="text" placeholder="手机号：">
-                    <input type="text" placeholder="邮寄地址：">
+                    <input type="text" id="user_name"  placeholder="姓名：">
+                    <input type="text" id="user_phone" placeholder="手机号：">
+                    <input type="text" id="user_site"  placeholder="邮寄地址：">
                 </form>
             </div>
-            <a href="javascript:void(0);" class="f_c_button">
+            <a href="javascript:void(0);" class="f_c_button"  style="display:none;">
                 提交资料
             </a>
         </if>
@@ -99,6 +99,20 @@
     </div>
     <!--tab 3 end-->
 
+    <!--tab 4-->
+    <div id="tab_4" class="f_tab">
+        <div class="f_describe_top"></div>
+        <div class="f_help_list">
+            <volist name="helpList" id="helpItem">
+                <div class="f_help">
+                    <img src="{$helpItem.head_pic}">
+                    <span>+{$helpItem.value}</span>
+                </div>
+            </volist>
+        </div>
+    </div>
+    <!--tab 4 end-->
+
     <div class="f_bottom">
         <a href="javascript:void(0);" data-number = "1">
             专业煮饭>
@@ -108,6 +122,9 @@
         </a>
         <a href="javascript:void(0);" data-number = "3">
             煮饭秘诀>
+        </a>
+        <a href="javascript:void(0);" data-number = "4">
+            邀请列表>
         </a>
     </div>
 
