@@ -1,4 +1,14 @@
-<include file="$headerPath"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta content="telephone=no" name="format-detection" />
+    <title>煮饭</title>
+    <link href="__PUBLIC__/mui/css/mui.min.css" rel="stylesheet" />
+    <link href="__ADDONS__/css/css.css?{$v}" rel="stylesheet" />
+</head>
+<body>
 
 <div class="main">
     <!--tab 1-->
@@ -7,27 +17,11 @@
             <img src="__ADDONS__/images/f_bg.jpg" >
         </div>
         <p class="f_tip">{$tip}</p>
-        <if condition = "$status neq 5 and $status neq 6">
+        <if condition = " $status neq 7">
             <div class="f_content">
                 <div class="f_progress">
                     <span class="f_progress_l">0°</span>
                     <span class="f_progress_r">100°</span>
-                </div>
-            </div>
-        </if>
-        <if condition = "$status eq 5">
-            <div class="f_application">
-                <form action="" method="post" class="form">
-                    <input type="text" placeholder="得奖人：">
-                    <input type="text" placeholder="手机号：">
-                    <input type="text" placeholder="邮寄地址：">
-                </form>
-            </div>
-        </if>
-        <if condition = "$status eq 6">
-            <div class="f_application">
-                <div class="form">
-                    <span class="f_application_tip">领取成功</span>
                 </div>
             </div>
         </if>
@@ -48,13 +42,30 @@
         </if>
         <if condition = "$status eq 4">
             <a href="javascript:void(0);" class="f_c_button">
-                点击领取奖品
+                我也要煮饭
             </a>
         </if>
         <if condition = "$status eq 5">
             <a href="javascript:void(0);" class="f_c_button">
+                点击领取奖品
+            </a>
+            <div class="f_application">
+                <form action="" method="post" class="form">
+                    <input type="text" placeholder="得奖人：">
+                    <input type="text" placeholder="手机号：">
+                    <input type="text" placeholder="邮寄地址：">
+                </form>
+            </div>
+            <a href="javascript:void(0);" class="f_c_button">
                 提交资料
             </a>
+        </if>
+        <if condition = "$status eq 7">
+            <div class="f_application">
+                <div class="form">
+                    <span class="f_application_tip">领取成功</span>
+                </div>
+            </div>
         </if>
     </div>
     <!--tab 1 end-->
@@ -88,8 +99,6 @@
     </div>
     <!--tab 3 end-->
 
-
-
     <div class="f_bottom">
         <a href="javascript:void(0);" data-number = "1">
             专业煮饭>
@@ -104,20 +113,51 @@
 
 </div>
 
-<script type="text/javascript">
-    $(function(){
-        $("#tab_{$tabNumber}").show();
 
-        $('.f_bottom a').on('click',function(){
-            $(".f_tab").hide();
-            var number = $(this).data("number");
-            $("#tab_" + number).show();
+<!--分享遮罩-->
+<div id="guide">
+    <img src="__ADDONS__/images/guide1.png">
+</div>
+
+</body>
+
+
+<script src="__PUBLIC__/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    var ApiUrl = "{:U('Mobile/Addons/cookRice')}";
+    var status = "{$status}";
+    var activityId = "{$id}";
+</script>
+<script src="__ADDONS__/js/addons.js?{$v}" type="text/javascript"></script>
+
+
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    var ShareLink = "{$config['share_url']}?activityId="+activityId;
+    var ShareImgUrl = "{$config['share_img']}";
+    var ShareTitle = "{$config['share_title']}";
+    var ShareDesc = "{$config['share_desc']}";
+    wx.config({
+        debug: false,
+        appId: "{$signPackage['appId']}",
+        timestamp: '{$signPackage["timestamp"]}',
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage','hideOptionMenu']
+    });
+    wx.ready(function(){
+        wx.onMenuShareTimeline({
+            title: ShareTitle,
+            link:ShareLink,
+            imgUrl:ShareImgUrl
         });
-        $(".f_c_button").click(function(){
-            assistWinningButtonClick("{$f_c_button}");
+        wx.onMenuShareAppMessage({
+            title: ShareTitle,
+            desc: ShareDesc,
+            link:ShareLink,
+            imgUrl:ShareImgUrl
         });
+
     });
 </script>
-
-
-<include file="$footerPath"/>
+</html>

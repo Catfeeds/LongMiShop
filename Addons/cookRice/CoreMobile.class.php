@@ -1,225 +1,68 @@
 <?php
 @include 'Addons/cookRice/Function/base.php';
 
-class cookRiceMobileController {
-
-    const TB_PRIZE = "addons_assistwinning_prize";
-    const TB_HELP  = "addons_assistwinning_help";
-    const TB_SET_PRIZE = "addons_assistwinning_setprize";
-
+class cookRiceMobileController
+{
 
     const TB_ACTIVITY = "addons_cookrice_activity";
-
+    const TB_HELP_LIST = "addons_cookrice_help_list";
 
     public $assignData = array();
     public $user = array();
 
-
     public $config;
     public $edition;
 
-    public $temperature = array(
-        "-8",
-        "-5",
-        "-14",
-        "4",
-        "10",
-        "12",
-        "13",
-        "15",
-        "20",
-        "21",
-    );
-
-    public $tip = array(
-        "加温至100摄氏度，成功煮饭即可中奖",
-        "即便不在父母身边&nbsp;也可感受家的味道"
-    );
-
     public function __construct($userInfo)
     {
+        $this->assignData["v"] = time();
         $this->user = $userInfo;
-
-        $this->assignData["share"] = "./Addons/assistWinning/Template/Mobile/default/Addons_share.html";
-        $this->assignData["headerPath"] = "./Addons/assistWinning/Template/Mobile/default/Addons_header.html";
-        $this->assignData["footerPath"] = "./Addons/assistWinning/Template/Mobile/default/Addons_footer.html";
-
-
         $this->config = cookRiceGetConfig();
         $this->edition = $this->config["edition"];
         $this->assignData["__theme"] = $this->config["data"][$this->edition]['theme'];
+
     }
 
     //初始页面
-    public function index(){
-        $userId = $this->user['user_id'];
-        $helpUserId = I("userId");
-        $activityID = $this -> edition;
+    public function index()
+    {
 
-        $tip = 0;
-        $isReceive = 0;
-        $tabNumber = 1;
-        $status = 1;
+        $data = cookRiceGetData($this->user["user_id"], $this->edition, I("activityId", null));
 
-        $activityInfo = findDataWithCondition(self::TB_HELP ,array("user_id"=>$userId,"help_uid"=>$helpUserId));
-        if( empty($activityInfo) ){
-            $status = 1;
-        }else{
-            if( $activityInfo["user_id"] == $this->user['user_id'] ){
-//                if(){
-//
-//                }
-                $status = 2;
-            }
-        }
-        if ( empty($helpUserId) ){
-            if( !isExistenceDataWithCondition( self::TB_HELP ,array("user_id"=>$userId)) ){
-                $status = 1;
-            }else{
-                if( $activityInfo ){
-
-                }
-                $status = 2;
-            }
-        }else{
-            if( $userId == $helpUserId ){
-                if( !isExistenceDataWithCondition( self::TB_HELP ,array("user_id"=>$userId,"help_uid"=>$userId)) ){
-                    $status = 1;
-                }else{
-                    $activityInfo = findDataWithCondition(self::TB_HELP ,array("user_id"=>$userId,"help_uid"=>$userId));
-                    $status = 2;
-                }
-            }else{
-                $status = 3;
-            }
-        }
-
-        $this -> assignData['tip'] = $this -> tip[$tip];
-        $this -> assignData['status'] = $status;
-        $this -> assignData['status'] = 1;
-        $this -> assignData['isReceive'] = $isReceive;
-        $this -> assignData['tabNumber'] = $tabNumber;
-        return $this -> assignData;
-        exit;
-        /**
-         * old
-         */
-        $uId = I('id');
-//        $Uid = '1';
-        $user_id = $this->user['user_id'];
-        $user_id = '12';
-
-        $where  = array();
-        $where['user_id'] = !empty($Uid) ? $uId : $user_id;
+        $this->assignData["id"] = $data["id"];
+        $this->assignData["tip"] = $data["tip"];
+        $this->assignData["status"] = $data["state"];
 
 
-        $list = get_user_info($where['user_id']);
-        if($user_id == $list['user_id']){
-            //是否中过奖
-            $prizeRes = M('addons_assistwinning_prize')->where($where)->find();
-            if(!empty($prizeRes)){
-                $this -> assignData['msg'] = '领取成功';
-                $this -> assignData["prize"] = true;
-            }
-            //自己给自己加温
-            $arrData = array(
-                'help_uid'=>$user_id,
-                'user_id'=>$where['user_id'],
-            );
-            $helpRes = M('addons_assistwinning_help')->where($arrData)->find();
-            if(empty($helpRes)){
-                $arrData['temperature'] = $this->temArray[1];
-                $arrData['create_time'] = time();
-                M('addons_assistwinning_help')->add($arrData);
-            }
-        }
-        $arrData = array(
-            'help_uid'=>$user_id,
-            'user_id'=>$where['user_id'],
+        $this->assignData["config"] = array(
+            "share_title" => "煮饭小游戏！",
+            "share_desc"  => "助力我！",
+            "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/cookRice/logo.jpg",
+            "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/cookRice')
         );
-        $helpRes = M('addons_assistwinning_help')->where($arrData)->find();
-        if(empty($helpRes)){
-            $list['Ishelp'] = true;
-        }
-        //查询奖品表数量
-        $prize = M('addons_assistwinning_setprize')->find();
-        if($prize['sum'] <= 0){
-            $this -> assignData['End'] = true;
-            $this -> assignData['msg'] = '活动结束';
-        }
 
-        $helpList = M('addons_assistwinning_help')->where($where)->order('create_time DESC')->limit(5)->select();
-        $list['sumTem'] = 0;
-        foreach($helpList as $key=>$item){
-            $list['help'][$key] =  M('users')->where(array("user_id"=>$item['help_uid']))->find();
-            $list['help'][$key]['temperature'] = $this->hints[$item['temperature']];
-            $list['sumTem'] +=  $item['temperature'];
-        }
-        if($list['sumTem'] > 180){
-            $list['sumTem'] = 180;
-        }
+        $weChatLogic = new \Common\Logic\WeChatLogic();
+        $this->assignData["signPackage"] = $weChatLogic->getSignPackage();
 
-        $list['visitId'] = $user_id;
-
-        $this -> assignData["list"] = $list;
-        $isFollow = M('users')->field('is_follow')->where(array("user_id"=>$user_id))->find();
-        $this -> assignData['isFollow'] = $isFollow['is_follow'];
-        $this -> assignData['sum'] = $prize['sum'];
-        return $this -> assignData;
+        return $this->assignData;
     }
 
-    public function fillIn(){
-        $data = I('post.');
-        unset($data['pluginName']);
-        $prize = M('addons_assistwinning_prize')->where(array('user_id'=>$this->user['user_id']))->find();
-        if(!empty($prize)){
-            exit(json_encode(callback(false,'您已中过奖了,请不要重复提交')));
-        }
-        $prizeName = M('addons_assistwinning_setprize')->find();
-        $data['prize'] = $prizeName['prize'];
-        $data['user_id'] = $this->user['user_id'];
-        $data['create_time'] = time();
-        $res = M('addons_assistwinning_prize')->add($data);
-        if($res){
-            M('addons_assistwinning_setprize')->where(array('id'=>$prizeName['id']))->setDec('sum');
-            exit(json_encode(callback(true,'资料提交成功')));
-        }
-        exit(json_encode(callback(false,'提交失败')));
-
+    //ajax 创建活动
+    public function createActivity()
+    {
+        $res = cookRiceCreateActivity($this->user["user_id"], $this->edition);
+        exit(json_encode($res));
     }
 
-
-    //加热
-    public function help(){
-        $Uid = I('id');
-        $user_id = $this->user['user_id'];
-        if( !empty($Uid) ){
-            $where['user_id'] = $Uid;
-        }else{
-            $where['user_id'] = $user_id;
+    //ajax 助力动作
+    public function help()
+    {
+        $activityId = I("activityId", null);
+        if( is_null($activityId)){
+            exit(json_encode(callback(false,"参数错误")));
         }
-
-        //加热
-//        $count = M('addons_assistwinning_help')->where($where)->count();
-//        if($count > count($this->temArray) + 1 ){
-//            $temperature = 0;
-//        }else{
-//            $temperature = $this->temArray[$count+1];
-//        }
-        $temperature = array_rand($this->temArray,1);
-        $arrData = array(
-            'help_uid'=>$user_id,
-            'user_id'=>$where['user_id'],
-        );
-        $helpRes = M('addons_assistwinning_help')->where($arrData)->find();
-        if(empty($helpRes)){
-            $arrData['temperature'] = $temperature;
-            $arrData['create_time'] = time();
-            M('addons_assistwinning_help')->add($arrData);
-            exit(json_encode(callback(true,'加温成功')));
-        }
-        exit(json_encode(callback(false,'加温失败')));
+        $res = cookRiceHelpAction($activityId, $this->user["user_id"], $this->edition);
+        exit(json_encode($res));
     }
-
 
 }
