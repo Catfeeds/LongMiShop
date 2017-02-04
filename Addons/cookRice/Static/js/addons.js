@@ -40,10 +40,12 @@ function cookRiceButtonClick() {
             show_guide();
             break;
         case "3":
-        case "4":
             needAjax = true;
             data = {pluginName: "help", activityId: activityId};
             break;
+        case "4":
+            window.location.href=ApiUrl;
+            return;
         case "5":
             needAjax = true;
             var user_name = $("#user_name").val();
