@@ -39,8 +39,9 @@ body {
 .main {
     background: #7bc8e4;
     padding-bottom: 20px;
-    margin: 10px;
+    /*margin: 10px;*/
     min-height: 100%;
+    width: 100%;
     position: absolute;
 }
 
@@ -135,12 +136,23 @@ body {
     background-size: 156px 30px;
     display: block;
 }
+.f_c_button2{
+    width: 156px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    color: #3f3f42;
+    margin: 9px auto 0 auto;
+    background: url("../images/f_c_button.jpg") no-repeat center;
+    background-size: 156px 30px;
+    display: block;
+}
 .f_bottom{
     width: 100%;
 }
 .f_bottom a{
     display: block;
-    width: 33%;
+    width: 25%;
     height: 48px;
     line-height: 48px;
     float: left;
@@ -173,7 +185,30 @@ body {
 }
 
 
+.f_help_list{
+    width: 100%;
+    overflow: hidden;
+}
+.f_help{
+    width: 100%;
+    padding: 0 10%;
+    height: 50px;
+    overflow: hidden;
+    border-top: 1px solid #ffffff;
+    float: left;
+}
 
+.f_help img{
+    width:40px;
+    height: 40px;
+    float: left;
+}
+.f_help span{
+    float: right;
+    display: block;
+    height: 50px;
+    line-height: 50px;
+}
 
 
 

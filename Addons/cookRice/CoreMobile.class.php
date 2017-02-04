@@ -31,7 +31,9 @@ class cookRiceMobileController
 
         $this->assignData["id"] = $data["id"];
         $this->assignData["tip"] = $data["tip"];
-        $this->assignData["status"] = $data["state"];
+        $this->assignData["status"] = $data["status"];
+        $this->assignData["number"] = $data['number'];
+        $this->assignData["helpList"] = $data['helpList'];
 
 
         $this->assignData["config"] = array(
@@ -62,6 +64,13 @@ class cookRiceMobileController
             exit(json_encode(callback(false,"参数错误")));
         }
         $res = cookRiceHelpAction($activityId, $this->user["user_id"], $this->edition);
+        exit(json_encode($res));
+    }
+
+
+    //领奖
+    public function setData(){
+        $res = cookRiceSetData($this->user["user_id"], $this->edition,$_GET);
         exit(json_encode($res));
     }
 
