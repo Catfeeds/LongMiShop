@@ -8,12 +8,12 @@ var lock = false;
 
 
 $(function(){
-    $("#tab_1").show();
-    $('.f_bottom a').on('click',function(){
-        $(".f_tab").hide();
-        var number = $(this).data("number");
-        $("#tab_" + number).show();
-    });
+    // $("#tab_1").show();
+    // $('.f_bottom a').on('click',function(){
+    //     $(".f_tab").hide();
+    //     var number = $(this).data("number");
+    //     $("#tab_" + number).show();
+    // });
     $(".f_c_button").click(function(){
         cookRiceButtonClick();
     });
@@ -131,8 +131,8 @@ function checkMobile(tel) {
 
 //显示表单
 function showSubmit(){
-    $(".f_content").hide();
+    $(".n_tip").hide();
     $(".f_c_button2").hide();
     $(".f_c_button").show();
-    $(".f_application").show();
+    $(".n_application").show();
 }

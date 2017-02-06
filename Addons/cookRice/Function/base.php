@@ -13,11 +13,13 @@ function cookRiceGetConfig()
             "1" => array(
                 "edition" => 1,
                 "name"    => "煮饭游戏",
-                "theme"   => "default"
+                "number"  => "5",
+                "theme"   => "new"
             ),
             "2" => array(
                 "edition" => 2,
                 "name"    => "加温啦2",
+                "number"  => "5",
                 "theme"   => "default2"
             ),
         ),
@@ -74,6 +76,7 @@ function cookRiceGetData( $userId , $edition, $activityId = null)
                 $number += $helpItem['value'];
             }
         }
+        $number = $number > 100 ? 100 : $number;
     }
 
     $data = array(
@@ -126,12 +129,15 @@ function cookRiceCreateActivity( $userId , $edition)
 function cookRiceHelpAction( $activityId, $userId , $edition )
 {
     $data = array(
-        "state"       => "0",
         "edition_id"  => $edition,
         "activity_id" => $activityId,
     );
-    if (!isExistenceDataWithCondition("addons_cookrice_activity", $data)) {
+    $activityInfo = findDataWithCondition("addons_cookrice_activity", $data);
+    if( empty($activityInfo)){
         return callback(false, "活动不存在");
+    }
+    if( $activityInfo['state'] != 0){
+        return callback(false, "小伙伴已经中奖啦");
     }
     unset($data["state"]);
     $data["user_id"] = $userId;
