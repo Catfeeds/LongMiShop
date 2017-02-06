@@ -39,9 +39,9 @@ class cookRiceMobileController
 
 
         $this->assignData["config"] = array(
-            "share_title" => "煮饭小游戏！",
-            "share_desc"  => "助力我！",
-            "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/cookRice/logo.jpg",
+            "share_title" => "土豪龙米又发福利啦，千元电饭煲免费送！",
+            "share_desc"  => "亲爱哒，快来帮我抢千元电饭煲～",
+            "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/cookRice/Static/images/share.jpg",
             "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/cookRice')
         );
 
