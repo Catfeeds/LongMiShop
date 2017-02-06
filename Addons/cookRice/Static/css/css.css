@@ -291,6 +291,8 @@ body {
 }
 .f_c_button img,.f_c_button2 img{
     width: 100%;
+    -webkit-animation: rob_run .4s infinite linear ;
+    animation: rob_run .4s infinite linear ;
 }
 
 
@@ -412,3 +414,26 @@ body {
 }
 
 
+
+
+/*动画效果*/
+@-webkit-keyframes rob_run {
+    from { }
+    to {
+        transform:translateY(3px);
+        -ms-transform:translateY(3px); 	/* IE 9 */
+        -moz-transform:translateY(3px); 	/* Firefox */
+        -webkit-transform:translateY(3px); /* Safari 和 Chrome */
+        -o-transform:translateY(3px);
+    }
+}
+@keyframes rob_run {
+    from {  }
+    to {
+        transform:translateY(3px);
+        -ms-transform:translateY(3px); 	/* IE 9 */
+        -moz-transform:translateY(3px); 	/* Firefox */
+        -webkit-transform:translateY(3px); /* Safari 和 Chrome */
+        -o-transform:translateY(3px);
+    }
+}
