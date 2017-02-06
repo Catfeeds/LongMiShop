@@ -146,7 +146,9 @@ function cookRiceHelpAction( $activityId, $userId , $edition )
     } else {
 
         $helpValue = cookRiceGetHelpValue($activityId, $edition);
-        $userInfo = findDataWithCondition("users", array('user_id' => $userId), "head_pic");
+        $userInfo = findDataWithCondition("users", array('user_id' => $userId), "head_pic,nickname");
+
+        $helpValue["desc"] = str_replace("[nickname]",$userInfo["nickname"],$helpValue["desc"]);
 
         $data["value"] = $helpValue["value"];
         $data["desc"] = $helpValue["desc"];
@@ -249,9 +251,31 @@ function cookRiceGetHelpValue($activityId,$edition)
         $numberNew = $number + $date["value"];
     } while ($numberNew <= 0);
 
+
+    $desc_a = array(
+        "[nickname]使出了洪荒之力，帮你加温了[value]度",
+        "[nickname]轻轻一按，帮你加温了[value]度",
+        "[nickname]发现了加温小秘诀，帮你加温了[value]度",
+        "[nickname]吃了大力菠菜，帮你加温了[value]度",
+    );
+    $desc_b = array(
+        "[nickname]一个不小心犯错了，减掉了[value]度",
+        "[nickname]闭着眼睛乱点，减掉了[value]度",
+        "[nickname]碰掉了电插头，减掉[value]度",
+    );
+    if( $number == 0){
+        $desc = "[nickname]使出了洪荒之力，温度上升了[value]度";
+    }else{
+        if( $date["value"] > 0){
+            $desc =  $desc_a[mt_rand(0,count($desc_a)-1)];
+        }else{
+            $desc =  $desc_b[mt_rand(0,count($desc_b)-1)];
+        }
+    }
+    $desc = str_replace("[value]",$date["value"],$desc);
     return array(
         "value" => $date["value"],
-        "desc"  => $date["desc"]
+        "desc"  => $desc
     );
 }
 
