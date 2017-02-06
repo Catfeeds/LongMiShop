@@ -8,12 +8,18 @@ var lock = false;
 
 
 $(function(){
-    // $("#tab_1").show();
-    // $('.f_bottom a').on('click',function(){
-    //     $(".f_tab").hide();
-    //     var number = $(this).data("number");
-    //     $("#tab_" + number).show();
-    // });
+    $("#tab").show();
+    $("#tab_1").show();
+    $('.f_bottom a').on('click',function(){
+        $("#tab").show();
+        $(".n_tab_div").hide();
+        var number = $(this).data("number");
+        $("#tab_" + number).show();
+    });
+    $(".n_tab_div_tip_shrink").click(function(){
+        $("#tab").hide();
+    });
+
     $(".f_c_button").click(function(){
         cookRiceButtonClick();
     });
