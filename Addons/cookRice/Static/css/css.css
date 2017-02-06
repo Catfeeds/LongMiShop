@@ -350,10 +350,11 @@ body {
     float: left;
 }
 .f_help span{
-    float: left;
+    float: right;
     display: block;
     height: 50px;
-    line-height: 50px;
+    line-height: 25px;
+    width: 60%;
 }
 
 
