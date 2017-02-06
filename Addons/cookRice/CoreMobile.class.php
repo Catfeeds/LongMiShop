@@ -30,12 +30,11 @@ class cookRiceMobileController
         $data = cookRiceGetData($this->user["user_id"], $this->edition, I("activityId", null));
 
         $this->assignData["id"] = $data["id"];
-        $this->assignData["tip"] = $data["tip"];
         $this->assignData["status"] = $data["status"];
-//        $this->assignData["status"] = 5;
         $this->assignData["number"] = $data['number'];
         $this->assignData["surplusNumber"] = 100 - $data['number'];
         $this->assignData["currentNumber"] = ( $data['number'] * 1.5 ) + 3;
+        $this->assignData["getList"] = $data['getList'];
         $this->assignData["helpList"] = $data['helpList'];
 
 
