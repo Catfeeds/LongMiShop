@@ -61,7 +61,7 @@ function cookRiceButtonClick() {
                 lock = false;
                 return;
             }
-            if (checkMobile(user_phone)) {
+            if (!checkMobile(user_phone)) {
                 alert("请填写正确的手机号");
                 lock = false;
                 return;
@@ -71,7 +71,7 @@ function cookRiceButtonClick() {
                 lock = false;
                 return;
             }
-            data = {pluginName: "help", activityId: activityId,user_name:user_name,user_phone:user_phone,user_site:user_site};
+            data = {pluginName: "setData", activityId: activityId,user_name:user_name,user_phone:user_phone,user_site:user_site};
             break;
         default:
             break;
