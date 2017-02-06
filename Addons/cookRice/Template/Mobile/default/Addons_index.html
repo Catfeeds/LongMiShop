@@ -10,6 +10,15 @@
 </head>
 <body>
 
+<!--关注部分-->
+<div class="follow" id="follow">
+    <img src="__PUBLIC__/images/{$qrcode}"/>
+    <p>
+        关注公众号才能玩游戏哦！
+    </p>
+</div>
+
+
 <div class="main">
     <!--tab 1-->
     <div id="tab_1" class="f_tab">
@@ -133,48 +142,57 @@
 
 <!--分享遮罩-->
 <div id="guide">
-    <img src="__ADDONS__/images/guide1.png">
+    <img src="__ADDONS__/images/guide.png">
 </div>
 
 </body>
 
 
 <script src="__PUBLIC__/js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript">
-    var ApiUrl = "{:U('Mobile/Addons/cookRice')}";
-    var status = "{$status}";
-    var activityId = "{$id}";
-</script>
-<script src="__ADDONS__/js/addons.js?{$v}" type="text/javascript"></script>
 
 
-<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script type="text/javascript">
-    var ShareLink = "{$config['share_url']}?activityId="+activityId;
-    var ShareImgUrl = "{$config['share_img']}";
-    var ShareTitle = "{$config['share_title']}";
-    var ShareDesc = "{$config['share_desc']}";
-    wx.config({
-        debug: false,
-        appId: "{$signPackage['appId']}",
-        timestamp: '{$signPackage["timestamp"]}',
-        nonceStr: '{$signPackage["nonceStr"]}',
-        signature: '{$signPackage["signature"]}',
-        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage','hideOptionMenu']
-    });
-    wx.ready(function(){
-        wx.onMenuShareTimeline({
-            title: ShareTitle,
-            link:ShareLink,
-            imgUrl:ShareImgUrl
+<if condition=" !$isFollow ">
+    <script type="text/javascript">
+        $("#follow").show();
+    </script>
+    <else/>
+    <script type="text/javascript">
+        var ApiUrl = "{:U('Mobile/Addons/cookRice')}";
+        var status = "{$status}";
+        var activityId = "{$id}";
+    </script>
+    <script src="__ADDONS__/js/addons.js?{$v}" type="text/javascript"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        var ShareLink = "{$config['share_url']}";
+        if(status != 1){
+            ShareLink = ShareLink+"?activityId="+activityId;
+        }
+        var ShareImgUrl = "{$config['share_img']}";
+        var ShareTitle = "{$config['share_title']}";
+        var ShareDesc = "{$config['share_desc']}";
+        wx.config({
+            debug: false,
+            appId: "{$signPackage['appId']}",
+            timestamp: '{$signPackage["timestamp"]}',
+            nonceStr: '{$signPackage["nonceStr"]}',
+            signature: '{$signPackage["signature"]}',
+            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage','hideOptionMenu']
         });
-        wx.onMenuShareAppMessage({
-            title: ShareTitle,
-            desc: ShareDesc,
-            link:ShareLink,
-            imgUrl:ShareImgUrl
-        });
+        wx.ready(function(){
+            wx.onMenuShareTimeline({
+                title: ShareTitle,
+                link:ShareLink,
+                imgUrl:ShareImgUrl
+            });
+            wx.onMenuShareAppMessage({
+                title: ShareTitle,
+                desc: ShareDesc,
+                link:ShareLink,
+                imgUrl:ShareImgUrl
+            });
 
-    });
-</script>
+        });
+    </script>
+</if>
 </html>

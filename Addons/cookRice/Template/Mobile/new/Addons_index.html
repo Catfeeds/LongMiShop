@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta content="telephone=no" name="format-detection" />
+    <title>煮饭</title>
+    <link href="__PUBLIC__/mui/css/mui.min.css" rel="stylesheet" />
+    <link href="__ADDONS__/css/css.css?{$v}" rel="stylesheet" />
+</head>
+<body>
+
+<!--关注部分-->
+<div class="follow" id="follow">
+    <img src="__PUBLIC__/images/{$qrcode}"/>
+    <p>关注公众号才能玩游戏哦！</p>
+</div>
+
+<!--分享遮罩-->
+<div id="guide">
+    <img src="__ADDONS__/images/guide.png">
+</div>
+
+<!--头部-->
+<if condition = "$status eq 1">
+    <img src="__ADDONS__/images/logo.png" class="logo" >
+    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
+    <img src="__ADDONS__/images/n_logo.png" class="n_logo" >
+</if>
+<if condition = "$status eq 2">
+    <img src="__ADDONS__/images/logo.png" class="logo" >
+    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
+    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
+</if>
+<if condition = "$status eq 3">
+    <img src="__ADDONS__/images/logo.png" class="logo" >
+    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
+    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
+</if>
+<if condition = "$status eq 4">
+    <img src="__ADDONS__/images/logo.png" class="logo" >
+    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
+    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
+</if>
+<if condition = "$status eq 5">
+    <img src="__ADDONS__/images/logo.png" class="logo" >
+    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
+    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
+</if>
+<if condition = "$status eq 7">
+    <img src="__ADDONS__/images/logo.png" class="logo" >
+    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
+    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
+</if>
+
+
+
+
+<div class="main">
+<if condition = "$status eq 1">
+        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
+        <img src="__ADDONS__/images/n_pot_1.png" class="pot_1" >
+        <span class="n_tip">达到100度，把龙米宝宝煮香喷喷，千元电饭煲就是你哒~</span>
+
+        <div class="n_button">
+            <a href="javascript:void(0);" class="f_c_button">
+                <!--我也要玩-->
+                <img src="__ADDONS__/images/n_btn_4.png" >
+            </a>
+        </div>
+
+</if>
+<if condition = "$status eq 2">
+        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
+        <img src="__ADDONS__/images/n_pot_2.png" class="pot_2" >
+        <div class="n_thermometer">
+            <img src="__ADDONS__/images/n_thermometer_bg.png"  class="n_thermometer_bg">
+            <div class="n_white_edge"></div>
+            <div class="n_progress_bar" style="height: {$currentNumber}px"></div>
+        </div>
+        <div class="n_number_tip">
+            <p>
+                再加温{$surplusNumber}度,<br>就能拿到电饭锅啦~
+            </p>
+        </div>
+        <span class="n_tip">已经自己加过温</span>
+        <div class="n_button">
+            <a href="javascript:void(0);" class="f_c_button">
+                <!--拉好友-->
+                <img src="__ADDONS__/images/n_btn_2.png" >
+            </a>
+        </div>
+    <style>
+        body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
+    </style>
+</if>
+<if condition = "$status eq 3">
+        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
+        <img src="__ADDONS__/images/n_pot_2.png" class="pot_2" >
+        <div class="n_thermometer">
+            <img src="__ADDONS__/images/n_thermometer_bg.png"  class="n_thermometer_bg">
+            <div class="n_white_edge"></div>
+            <div class="n_progress_bar" style="height: {$currentNumber}px"></div>
+        </div>
+        <div class="n_button">
+            <a href="javascript:void(0);" class="f_c_button">
+                <!--帮ta煮饭-->
+                <img src="__ADDONS__/images/n_btn_3.png" >
+            </a>
+            <a href="{:U('Mobile/Addons/cookRice')}" class="f_c_button2">
+                <!--我也要玩-->
+                <img src="__ADDONS__/images/n_btn_4.png" >
+            </a>
+        </div>
+    <style>
+        body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
+        .n_button{ top:45%; }
+    </style>
+</if>
+<if condition = "$status eq 4">
+        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
+        <img src="__ADDONS__/images/n_pot_2.png" class="pot_2" >
+        <div class="n_thermometer">
+            <img src="__ADDONS__/images/n_thermometer_bg.png"  class="n_thermometer_bg">
+            <div class="n_white_edge"></div>
+            <div class="n_progress_bar" style="height: {$currentNumber}px"></div>
+        </div>
+        <span class="n_tip">已经帮小伙伴加过温啦！</span>
+        <div class="n_button">
+            <a href="{:U('Mobile/Addons/cookRice')}" class="f_c_button2">
+                <!--我也要玩-->
+                <img src="__ADDONS__/images/n_btn_4.png" >
+            </a>
+        </div>
+    <style>
+        body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
+    </style>
+</if>
+<if condition = "$status eq 5">
+        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
+        <img src="__ADDONS__/images/n_pot_3.png" class="pot_3" >
+
+        <span class="n_tip" >温度达到100度啦！</span>
+
+        <div class="n_button">
+            <a href="javascript:showSubmit();" class="f_c_button2">
+                <!--点击领取奖品-->
+                <img src="__ADDONS__/images/n_btn_1.png" >
+            </a>
+        </div>
+        <div class="n_application" style="display:none;">
+            <form action="" method="post" class="form">
+                <input type="text" id="user_name"  placeholder="姓名：">
+                <input type="text" id="user_phone" placeholder="手机号：">
+                <input type="text" id="user_site"  placeholder="邮寄地址：">
+            </form>
+        </div>
+        <div class="n_button" style="top: 68%;">
+            <a href="javascript:void(0);" class="f_c_button"   style="display:none;">
+                <!--提交资料-->
+                <img src="__ADDONS__/images/n_btn_5.png" >
+            </a>
+        </div>
+    <style>
+        body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
+        .n_tip{ top:40%; }
+        .n_button{ top:50%; }
+    </style>
+</if>
+<if condition = "$status eq 7">
+        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
+        <img src="__ADDONS__/images/n_pot_3.png" class="pot_3" >
+
+        <span class="n_tip">领取成功！</span>
+    <style>
+        body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
+        .n_tip{ top:40%; font-size: 30px; }
+    </style>
+</if>
+
+
+
+<div class="f_bottom">
+    <a href="javascript:void(0);" data-number = "1">
+        <img src="__ADDONS__/images/n_nav_btn_1.png" >
+    </a>
+    <a href="javascript:void(0);" data-number = "2">
+        <img src="__ADDONS__/images/n_nav_btn_2.png" >
+    </a>
+    <a href="javascript:void(0);" data-number = "3">
+        <img src="__ADDONS__/images/n_nav_btn_3.png" >
+    </a>
+</div>
+<!--<div class="n_tab">-->
+    <!--<div class="n_tab_div">-->
+
+    <!--</div>-->
+<!--</div>-->
+
+
+</div>
+</body>
+
+
+<script src="__PUBLIC__/js/jquery-1.10.2.min.js"></script>
+
+
+<if condition=" !$isFollow ">
+    <script type="text/javascript">
+        $("#follow").show();
+    </script>
+    <else/>
+    <script src="__PUBLIC__/mui/js/mui.min.js"></script>
+    <script type="text/javascript">
+        var ApiUrl = "{:U('Mobile/Addons/cookRice')}";
+        var status = "{$status}";
+        var activityId = "{$id}";
+        function alert( msg ){
+            mui.toast( msg );
+        }
+    </script>
+    <script src="__ADDONS__/js/addons.js?{$v}" type="text/javascript"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        var ShareLink = "{$config['share_url']}";
+        if(status != 1){
+            ShareLink = ShareLink+"?activityId="+activityId;
+        }
+        var ShareImgUrl = "{$config['share_img']}";
+        var ShareTitle = "{$config['share_title']}";
+        var ShareDesc = "{$config['share_desc']}";
+        wx.config({
+            debug: false,
+            appId: "{$signPackage['appId']}",
+            timestamp: '{$signPackage["timestamp"]}',
+            nonceStr: '{$signPackage["nonceStr"]}',
+            signature: '{$signPackage["signature"]}',
+            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage','hideOptionMenu']
+        });
+        wx.ready(function(){
+            wx.onMenuShareTimeline({
+                title: ShareTitle,
+                link:ShareLink,
+                imgUrl:ShareImgUrl
+            });
+            wx.onMenuShareAppMessage({
+                title: ShareTitle,
+                desc: ShareDesc,
+                link:ShareLink,
+                imgUrl:ShareImgUrl
+            });
+
+        });
+    </script>
+</if>
+</html>

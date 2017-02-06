@@ -25,29 +25,193 @@ html {
 body {
     font-family: "微软雅黑";
     font-size: 14px;
-    height: 100%;
     line-height: 1.5;
-    min-height: 100%;
+    max-width: 640px;
+    height: 100%;
+    position: absolute;
     width: 100%;
     color: #3f3f42;
     margin-top: 0;
     margin-right: auto;
     margin-left: auto;
     text-align: justify;
-    background-color: #fff;
+    background:url("../images/n_bg.jpg") repeat left center;
 }
+
+
+
+
+.logo {
+    width: 10%;
+    right:5px;
+    top:5px;
+    position: absolute;
+}
+.n_zs {
+    width:100%;
+    right: 0;
+    top:0;
+    position: absolute;
+}
+
+.n_logo{
+    width: 80%;
+    right: 10%;
+    top:7%;
+    position: absolute;
+}
+.n_logo2{
+    width: 40%;
+    left: 5px;
+    top:5px;
+    position: absolute;
+}
+
+
 .main {
-    background: #7bc8e4;
-    padding-bottom: 20px;
-    /*margin: 10px;*/
-    min-height: 100%;
     width: 100%;
+    top: 35%;
+    z-index: 1;
+    position: absolute;
+}
+.main .bg2{
+    width: 100%;
+    top: 0;
+    z-index: -1;
+    position: relative;
+}
+.main .pot_1{
+    width: 76%;
+    top: 0;
+    left:12%;
+    z-index: -1;
+    position: absolute;
+}
+.main .pot_2{
+    width: 76%;
+    top: -30%;
+    left: 12%;
+    z-index: -1;
+    position: absolute;
+}
+.main .pot_3{
+    width: 90%;
+    top: -50%;
+    left:5%;
+    z-index: -1;
     position: absolute;
 }
 
 .main .bg img{
     width: 100%;
 }
+
+
+.n_thermometer{
+    width: 70px;
+    left: 10px;
+    top:-20px;
+    position: absolute;
+}
+.n_thermometer .n_thermometer_bg{
+    width: 100%;
+}
+.n_thermometer .n_white_edge{
+    position: absolute;
+    top: 30px;
+    left: 15px;
+    background: #f4d2d3;
+    width: 3px;
+    height: 70%;
+    z-index: 1;
+}
+.n_thermometer .n_progress_bar{
+    position: absolute;
+    bottom: 45px;
+    left: 13px;
+    background: #cd3335;
+    width: 12px;
+    height: 153px;
+    border-radius: 50% 50% 0 0;
+}
+
+.n_number_tip{
+    width: 120px;
+    height: 69px;
+    left: 53px;
+    top: 135px;
+    position: absolute;
+    background: url("../images/n_number_tip_bg.png") left top no-repeat;
+    background-size: 120px 69px;
+}
+.n_number_tip p{
+    color: #530f10;
+    /*transform:scale(0.8);*/
+    display: block;
+    line-height: 19px;
+    width: 90px;
+    height: 39px;
+    margin: 5px 10px 15px 20px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+.n_tip{
+    position: absolute;
+    color: #cd3335;
+    z-index: 1;
+    display: block;
+    width: 80%;
+    left: 10%;
+    top: 52%;
+    text-align: center;
+    font-size: 12px;
+}
+
+.n_button{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 60%;
+}
+
+.n_application{
+    width: 70%;
+    margin: 0 15%;
+    position: absolute;
+    top:35%;
+}
+.n_application .form{
+}
+.n_application .form input{
+    width: 100%;
+    border: 2px solid #530f10;
+    color: #530f10;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+.n_application .form .n_application_tip{
+    color: #6f6e68;
+    text-align: center;
+    font-size: 12px;
+    display: block;
+    line-height: 56px;
+    height: 56px;
+    width: 100%;
+}
+
+.n_application .form input::-webkit-input-placeholder{color:#530f10;font-weight: bold;}
+.n_application .form input::-moz-placeholder{color:#530f10;font-weight: bold;}
+.n_application .form input::-moz-placeholder{color:#530f10;font-weight: bold;}
+
+
+.n_tab{
+    background: #f1bb00;
+}
+
+
 .f_tip{
     width: 100%;
     color: #fff;
@@ -125,37 +289,30 @@ body {
     width: 100%;
 }
 
-.f_c_button{
+.f_c_button,.f_c_button2{
     width: 156px;
-    height: 30px;
-    line-height: 30px;
-    font-size: 16px;
-    color: #3f3f42;
     margin: 9px auto 0 auto;
-    background: url("../images/f_c_button.jpg") no-repeat center;
-    background-size: 156px 30px;
     display: block;
 }
-.f_c_button2{
-    width: 156px;
-    height: 30px;
-    line-height: 30px;
-    font-size: 16px;
-    color: #3f3f42;
-    margin: 9px auto 0 auto;
-    background: url("../images/f_c_button.jpg") no-repeat center;
-    background-size: 156px 30px;
-    display: block;
-}
-.f_bottom{
+.f_c_button img,.f_c_button2 img{
     width: 100%;
+}
+
+
+.f_bottom{
+    z-index: 1;
+    width: 100%;
+    position: absolute;
+    bottom: 10px;
 }
 .f_bottom a{
     display: block;
-    width: 25%;
-    height: 48px;
-    line-height: 48px;
+    width: 28%;
+    margin: 0 2.6%;
     float: left;
+}
+.f_bottom a img{
+    width: 100%;
 }
 
 
@@ -219,17 +376,42 @@ body {
     z-index: 99999;
     width: 100%;
     height: 100%;
-    background: #000;
-    opacity: 0.8;
+    opacity:1;
     top:0;
     right: 0;
     display: none;
 }
 #guide img{
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 70%;
+    top: 0;
+    right: 0;
+    width: 100%;
+}
+
+
+
+.follow{
+    width: 100%;
+    height: 100%;
+    background: #333;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: 3;
+    display: none;
+}
+
+.follow img{
+    width: 80%;
+    margin: 10%;
+}
+.follow p{
+    width: 80%;
+    margin: 10%;
+    color: #fff;
+    display:block;
+    font-size: 20px;
+    text-align:center;
 }
 
 

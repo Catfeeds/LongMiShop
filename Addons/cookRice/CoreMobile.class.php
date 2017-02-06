@@ -32,7 +32,10 @@ class cookRiceMobileController
         $this->assignData["id"] = $data["id"];
         $this->assignData["tip"] = $data["tip"];
         $this->assignData["status"] = $data["status"];
+//        $this->assignData["status"] = 5;
         $this->assignData["number"] = $data['number'];
+        $this->assignData["surplusNumber"] = 100 - $data['number'];
+        $this->assignData["currentNumber"] = ( $data['number'] * 1.5 ) + 3;
         $this->assignData["helpList"] = $data['helpList'];
 
 
@@ -45,6 +48,14 @@ class cookRiceMobileController
 
         $weChatLogic = new \Common\Logic\WeChatLogic();
         $this->assignData["signPackage"] = $weChatLogic->getSignPackage();
+
+        if ($_SERVER["HTTP_HOST"] == "www.longmiwang.com") {
+            $this->assignData["qrcode"] = "qrcode.jpg";
+        } else {
+            $this->assignData["qrcode"] = "qecode2.jpg";
+        }
+        //关注情况
+        $this->assignData["isFollow"] = $this->user["is_follow"];
 
         return $this->assignData;
     }
