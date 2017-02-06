@@ -13,12 +13,16 @@ function cookRiceGetConfig()
             "1" => array(
                 "edition" => 1,
                 "name"    => "煮饭游戏",
-                "theme"   => "default"
+                "number"  => "5",
+                "theme"   => "new",
+                "endTime" => 1487174400
             ),
             "2" => array(
                 "edition" => 2,
                 "name"    => "加温啦2",
-                "theme"   => "default2"
+                "number"  => "5",
+                "theme"   => "default",
+                "endTime" => 1487174400
             ),
         ),
         "maxNumber" => "100",
@@ -36,57 +40,98 @@ function cookRiceGetConfig()
  */
 function cookRiceGetData( $userId , $edition, $activityId = null)
 {
+
     $condition = array("edition_id" => $edition);
     $id = 0;
     $number = 0;
-    $tip = "加温至100摄氏度，成功煮饭即可中奖";
     $helpList = array();
-
-    is_null($activityId) ? $condition["user_id"] = $userId : $condition["id"] = $activityId;
-    $activityInfo = findDataWithCondition("addons_cookrice_activity", $condition);
-    if (empty($activityInfo)) {
-        $state = 1;
+    $getList = array();
+    $config = cookRiceGetConfig();
+    if ($config["data"][$edition]["endTime"] < time()) {
+        $state = -1;
+        $getList = setGetGiftUserList($getList);
     } else {
-        $id = $activityInfo["id"];
-        if ($activityInfo["user_id"] == $userId) {
-            if ($activityInfo["state"] == 1) {
-                $tip = "即便不在父母身边&nbsp;也可感受家的味道";
-                $state = 5;
-            } else if ($activityInfo["state"] == 2) {
-                $tip = "即便不在父母身边&nbsp;也可感受家的味道";
-                $state = 7;
-            } else {
-                $state = 2;
-            }
+        $getList = selectDataWithCondition("addons_cookrice_activity", array('state' => "2", "edition_id" => $edition));
+        if (count($getList) >= 5) {
+            $state = -1;
+            $getList = setGetGiftUserList($getList);
         } else {
-            unset($condition["id"]);
-            $condition["user_id"] = $userId;
-            $condition["activity_id"] = $activityId;
-            if (isExistenceDataWithCondition("addons_cookrice_help_list", $condition)) {
-                $state = 4;
+            is_null($activityId) ? $condition["user_id"] = $userId : $condition["id"] = $activityId;
+            $activityInfo = findDataWithCondition("addons_cookrice_activity", $condition);
+            if (empty($activityInfo)) {
+                $state = 1;
             } else {
-                $state = 3;
-            }
-        }
-        $helpList = M("addons_cookrice_help_list") -> where(array("activity_id" => $id)) -> order("create_time desc") -> select();
-        if (!empty($helpList)) {
-            foreach ($helpList as $helpItem) {
-                $number += $helpItem['value'];
+                $id = $activityInfo["id"];
+                //获奖检测
+                cookRiceTesting($id);
+                $activityInfo = findDataWithCondition("addons_cookrice_activity", $condition);
+                if ($activityInfo["user_id"] == $userId) {
+                    if ($activityInfo["state"] == 1) {
+                        $state = 5;
+                    } else if ($activityInfo["state"] == 2) {
+                        $state = 7;
+                    } else {
+                        $state = 2;
+                    }
+                } else {
+                    unset($condition["id"]);
+                    $condition["user_id"] = $userId;
+                    $condition["activity_id"] = $activityId;
+                    if($activityInfo["state"] != 0 ){
+                        $state = 6;
+                    }elseif ( isExistenceDataWithCondition("addons_cookrice_help_list", $condition)) {
+                        $state = 4;
+                    } else {
+                        $state = 3;
+                    }
+                }
+                $helpList = M("addons_cookrice_help_list")->where(array("activity_id" => $id))->order("create_time desc")->select();
+                if (!empty($helpList)) {
+                    foreach ($helpList as $helpItem) {
+                        $number += $helpItem['value'];
+                    }
+                }
+                $number = $number > 100 ? 100 : $number;
             }
         }
     }
 
     $data = array(
         "id"       => $id,
-        "tip"      => $tip,
         "status"   => $state,
         "number"   => $number,
+        "getList"  => $getList,
         "helpList" => $helpList,
     );
 
     return $data;
 }
 
+
+/**
+ * 列表获取
+ * @param array $getList
+ * @return array
+ */
+function setGetGiftUserList( $getList = array() ){
+    $getList[] = array("user_name"=>"李文龙","user_phone"=>"13476933067");
+    $getList[] = array("user_name"=>"陈雅西","user_phone"=>"18900570106");
+    $getList[] = array("user_name"=>"黄海华","user_phone"=>"18710625666");
+    $getList[] = array("user_name"=>"陈圆圆","user_phone"=>"18818458745");
+    $getList[] = array("user_name"=>"廖德宝","user_phone"=>"13614565845");
+    foreach ($getList as $key =>  $getItem){
+        $len = mb_strlen($getItem['user_name'],'utf-8');
+        if($len>=1){
+            $str1 = mb_substr($getItem['user_name'],0,1,'utf-8');
+            $str2 = mb_substr($getItem['user_name'],$len-1,1,'utf-8');
+            $getList[$key]['user_name'] =  $str1."*".$str2;
+        }
+
+        $getList[$key]['user_phone'] =  substr_replace($getItem['user_phone'],'****','4','4');
+
+    }
+    return $getList;
+}
 
 /**
  * 创建活动
@@ -126,12 +171,15 @@ function cookRiceCreateActivity( $userId , $edition)
 function cookRiceHelpAction( $activityId, $userId , $edition )
 {
     $data = array(
-        "state"       => "0",
         "edition_id"  => $edition,
         "activity_id" => $activityId,
     );
-    if (!isExistenceDataWithCondition("addons_cookrice_activity", $data)) {
+    $activityInfo = findDataWithCondition("addons_cookrice_activity", $data);
+    if( empty($activityInfo)){
         return callback(false, "活动不存在");
+    }
+    if( $activityInfo['state'] != 0){
+        return callback(false, "小伙伴已经中奖啦");
     }
     unset($data["state"]);
     $data["user_id"] = $userId;
@@ -140,7 +188,9 @@ function cookRiceHelpAction( $activityId, $userId , $edition )
     } else {
 
         $helpValue = cookRiceGetHelpValue($activityId, $edition);
-        $userInfo = findDataWithCondition("users", array('user_id' => $userId), "head_pic");
+        $userInfo = findDataWithCondition("users", array('user_id' => $userId), "head_pic,nickname");
+
+        $helpValue["desc"] = str_replace("[nickname]",$userInfo["nickname"],$helpValue["desc"]);
 
         $data["value"] = $helpValue["value"];
         $data["desc"] = $helpValue["desc"];
@@ -243,9 +293,31 @@ function cookRiceGetHelpValue($activityId,$edition)
         $numberNew = $number + $date["value"];
     } while ($numberNew <= 0);
 
+
+    $desc_a = array(
+        "[nickname]使出了洪荒之力，帮你加温了[value]度",
+        "[nickname]轻轻一按，帮你加温了[value]度",
+        "[nickname]发现了加温小秘诀，帮你加温了[value]度",
+        "[nickname]吃了大力菠菜，帮你加温了[value]度",
+    );
+    $desc_b = array(
+        "[nickname]一个不小心犯错了，减掉了[value]度",
+        "[nickname]闭着眼睛乱点，减掉了[value]度",
+        "[nickname]碰掉了电插头，减掉[value]度",
+    );
+    if( $number == 0){
+        $desc = "[nickname]使出了洪荒之力，温度上升了[value]度";
+    }else{
+        if( $date["value"] > 0){
+            $desc =  $desc_a[mt_rand(0,count($desc_a)-1)];
+        }else{
+            $desc =  $desc_b[mt_rand(0,count($desc_b)-1)];
+        }
+    }
+    $desc = str_replace("[value]",$date["value"],$desc);
     return array(
         "value" => $date["value"],
-        "desc"  => $date["desc"]
+        "desc"  => $desc
     );
 }
 
@@ -259,6 +331,7 @@ function cookRiceTesting( $activityId )
     $config = cookRiceGetConfig();
     $condition = array('activity_id' => $activityId);
     $number = M('addons_cookrice_help_list')->where($condition)->sum("value");
+    $condition = array('id' => $activityId,'state' => "0");
     if ($number >= $config["maxNumber"]) {
         saveData("addons_cookrice_activity", $condition, array('state' => 1));
     }
@@ -290,7 +363,7 @@ function cookRiceSetData( $userId, $edition,$get)
         return callback(false, "回寄地址不能为空");
     }
     $condition = array("user_id" => $userId, "edition_id" => $edition, "state" => 1);
-    if (isExistenceDataWithCondition("addons_cookrice_activity", $condition)) {
+    if (!isExistenceDataWithCondition("addons_cookrice_activity", $condition)) {
         return callback(false, "活动记录有误");
     }
     unset($condition["state"]);

@@ -30,21 +30,31 @@ class cookRiceMobileController
         $data = cookRiceGetData($this->user["user_id"], $this->edition, I("activityId", null));
 
         $this->assignData["id"] = $data["id"];
-        $this->assignData["tip"] = $data["tip"];
         $this->assignData["status"] = $data["status"];
         $this->assignData["number"] = $data['number'];
+        $this->assignData["surplusNumber"] = 100 - $data['number'];
+        $this->assignData["currentNumber"] = ( $data['number'] * 1.5 ) + 3;
+        $this->assignData["getList"] = $data['getList'];
         $this->assignData["helpList"] = $data['helpList'];
 
 
         $this->assignData["config"] = array(
-            "share_title" => "煮饭小游戏！",
-            "share_desc"  => "助力我！",
-            "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/cookRice/logo.jpg",
+            "share_title" => "土豪龙米又发福利啦，千元电饭煲免费送！",
+            "share_desc"  => "亲爱哒，快来帮我抢千元电饭煲～",
+            "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/cookRice/Static/images/share.jpg",
             "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/cookRice')
         );
 
         $weChatLogic = new \Common\Logic\WeChatLogic();
         $this->assignData["signPackage"] = $weChatLogic->getSignPackage();
+
+        if ($_SERVER["HTTP_HOST"] == "www.longmiwang.com") {
+            $this->assignData["qrcode"] = "qrcode.jpg";
+        } else {
+            $this->assignData["qrcode"] = "qecode2.jpg";
+        }
+        //关注情况
+        $this->assignData["isFollow"] = $this->user["is_follow"];
 
         return $this->assignData;
     }

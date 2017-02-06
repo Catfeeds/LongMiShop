@@ -8,12 +8,18 @@ var lock = false;
 
 
 $(function(){
-    $("#tab_1").show();
+    $("#tab").show();
+    $("#tab_1").fadeIn();
     $('.f_bottom a').on('click',function(){
-        $(".f_tab").hide();
+        $("#tab").show();
+        $(".n_tab_div").fadeOut();
         var number = $(this).data("number");
-        $("#tab_" + number).show();
+        $("#tab_" + number).fadeIn();
     });
+    $(".n_tab_div_tip_shrink").click(function(){
+        $("#tab").slideToggle(300);
+    });
+
     $(".f_c_button").click(function(){
         cookRiceButtonClick();
     });
@@ -131,8 +137,8 @@ function checkMobile(tel) {
 
 //显示表单
 function showSubmit(){
-    $(".f_content").hide();
+    $(".n_tip").hide();
     $(".f_c_button2").hide();
     $(".f_c_button").show();
-    $(".f_application").show();
+    $(".n_application").show();
 }
