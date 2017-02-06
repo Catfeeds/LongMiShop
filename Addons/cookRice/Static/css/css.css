@@ -258,7 +258,12 @@ body {
     display: block;
 }
 
-
+.n_tab .n_tab_div .n_tab_content {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    float: left;
+}
 
 .f_tip{
     width: 100%;
