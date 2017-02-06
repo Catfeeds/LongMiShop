@@ -329,6 +329,7 @@ function cookRiceTesting( $activityId )
     $config = cookRiceGetConfig();
     $condition = array('activity_id' => $activityId);
     $number = M('addons_cookrice_help_list')->where($condition)->sum("value");
+    $condition = array('id' => $activityId,'state' => "0");
     if ($number >= $config["maxNumber"]) {
         saveData("addons_cookrice_activity", $condition, array('state' => 1));
     }
