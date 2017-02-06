@@ -62,7 +62,7 @@ function cookRiceGetData( $userId , $edition, $activityId = null)
             unset($condition["id"]);
             $condition["user_id"] = $userId;
             $condition["activity_id"] = $activityId;
-            if (isExistenceDataWithCondition("addons_cookrice_help_list", $condition)) {
+            if ($activityInfo["state"] != 0 || isExistenceDataWithCondition("addons_cookrice_help_list", $condition)) {
                 $state = 4;
             } else {
                 $state = 3;
