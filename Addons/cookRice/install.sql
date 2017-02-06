@@ -4,7 +4,7 @@ CREATE TABLE `lm_addons_cookrice_activity` (
   `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态: 0 进行中 1 待领取 2 已领取',
   `edition_id` int(11) DEFAULT NULL COMMENT '版本id',
   `user_name` varchar(50) DEFAULT NULL COMMENT '领奖人名称',
-  `user_phone` int(11) DEFAULT NULL COMMENT '领奖人电话',
+  `user_phone` varchar(20) DEFAULT NULL COMMENT '领奖人电话',
   `user_site` varchar(255) DEFAULT NULL COMMENT '领奖人地址',
   `create_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
