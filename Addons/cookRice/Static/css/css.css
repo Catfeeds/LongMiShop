@@ -216,6 +216,7 @@ body {
 }
 .n_tab .n_tab_div{
     width: 100%;
+    overflow: hidden;
     display: none;
 }
 .n_tab .n_tab_div_tip{
