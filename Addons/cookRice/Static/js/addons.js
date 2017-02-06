@@ -9,15 +9,15 @@ var lock = false;
 
 $(function(){
     $("#tab").show();
-    $("#tab_1").show();
+    $("#tab_1").fadeIn();
     $('.f_bottom a').on('click',function(){
         $("#tab").show();
-        $(".n_tab_div").hide();
+        $(".n_tab_div").fadeOut();
         var number = $(this).data("number");
-        $("#tab_" + number).show();
+        $("#tab_" + number).fadeIn();
     });
     $(".n_tab_div_tip_shrink").click(function(){
-        $("#tab").hide();
+        $("#tab").slideToggle(300);
     });
 
     $(".f_c_button").click(function(){
