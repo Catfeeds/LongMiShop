@@ -290,7 +290,7 @@ function cookRiceSetData( $userId, $edition,$get)
         return callback(false, "回寄地址不能为空");
     }
     $condition = array("user_id" => $userId, "edition_id" => $edition, "state" => 1);
-    if (isExistenceDataWithCondition("addons_cookrice_activity", $condition)) {
+    if (!isExistenceDataWithCondition("addons_cookrice_activity", $condition)) {
         return callback(false, "活动记录有误");
     }
     unset($condition["state"]);
