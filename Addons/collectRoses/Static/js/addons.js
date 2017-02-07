@@ -110,22 +110,7 @@ function cookRiceButtonClick() {
             success: function (data) {
                 alert(data.msg);
                 lock = false;
-                $_GET['timestamp'] = date_obj.getTime();
 
-                var location_url = window.location.href;
-                var url = location_url.split('?')[0];
-                var hash_str = location_url.split('#')[1];
-                var query_arr = [];
-                for(var i in $_GET){
-                    query_arr.push(i+'='+$_GET[i]);
-                }
-                if(query_arr){
-                    url += '?' + query_arr.join('&');
-                }
-                if(hash_str){
-                    url += '#' + hash_str;
-                }
-                window.location.href = url;
                 return;
             },
             error: function () {
@@ -176,5 +161,32 @@ function showSubmit(){
     $(".f_c_button").show();
     $(".n_application").show();
 }
+
+
+
+
+function new_jop(){
+    $_GET['timestamp'] = date_obj.getTime();
+
+    var location_url = window.location.href;
+    var url = location_url.split('?')[0];
+    var hash_str = location_url.split('#')[1];
+    var query_arr = [];
+    for(var i in $_GET){
+        query_arr.push(i+'='+$_GET[i]);
+    }
+    if(query_arr){
+        url += '?' + query_arr.join('&');
+    }
+    if(hash_str){
+        url += '#' + hash_str;
+    }
+    window.location.href = url;
+}
+
+
+
+
+
 
 

@@ -54,7 +54,44 @@ function collectRosesGetData( $userId , $edition, $activityId = null)
 
     $condition = array("edition_id" => $edition);
     $id = 0;
-    $number = array();
+    $number = array(
+        "1"=>array(
+            "value"=>1,
+            "number" => 0
+        ),
+        "2"=>array(
+            "value"=>2,
+            "number" => 0
+        ),
+        "3"=>array(
+            "value"=>3,
+            "number" => 0
+        ),
+        "4"=>array(
+            "value"=>4,
+            "number" => 0
+        ),
+        "5"=>array(
+            "value"=>5,
+            "number" => 0
+        ),
+        "6"=>array(
+            "value"=>6,
+            "number" => 0
+        ),
+        "7"=>array(
+            "value"=>7,
+            "number" => 0
+        ),
+        "8"=>array(
+            "value"=>8,
+            "number" => 0
+        ),
+        "9"=>array(
+            "value"=>9,
+            "number" => 0
+        ),
+    );
     $helpList = array();
     $getList = array();
     $config = collectRosesGetConfig();
@@ -97,44 +134,7 @@ function collectRosesGetData( $userId , $edition, $activityId = null)
                     }
                 }
                 $helpList = M("addons_collectroses_help_list")->where(array("activity_id" => $id))->order("create_time desc")->select();
-                $number = array(
-                    "1"=>array(
-                        "value"=>1,
-                        "number" => 0
-                    ),
-                    "2"=>array(
-                        "value"=>2,
-                        "number" => 0
-                    ),
-                    "3"=>array(
-                        "value"=>3,
-                        "number" => 0
-                    ),
-                    "4"=>array(
-                        "value"=>4,
-                        "number" => 0
-                    ),
-                    "5"=>array(
-                        "value"=>5,
-                        "number" => 0
-                    ),
-                    "6"=>array(
-                        "value"=>6,
-                        "number" => 0
-                    ),
-                    "7"=>array(
-                        "value"=>7,
-                        "number" => 0
-                    ),
-                    "8"=>array(
-                        "value"=>8,
-                        "number" => 0
-                    ),
-                    "9"=>array(
-                        "value"=>9,
-                        "number" => 0
-                    ),
-                );
+
                 if (!empty($helpList)) {
                     foreach ($helpList as $helpItem) {
                         $number[$helpItem['value']]["number"] ++;
