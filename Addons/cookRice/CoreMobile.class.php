@@ -87,7 +87,8 @@ class cookRiceMobileController
     //检测
     public function testing(){
         $data = cookRiceGetData($this->user["user_id"], $this->edition, I("activityId", null));
-        exit($data["status"]);
+        echo $data["status"];
+        exit;
     }
 
 }
