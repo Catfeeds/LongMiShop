@@ -13,9 +13,9 @@ function collectRosesGetConfig()
             "1" => array(
                 "edition" => 1,
                 "name"    => "煮饭游戏",
-                "number"  => "5",
+                "number"  => "1",
                 "theme"   => "default",
-                "endTime" => 1487174400
+                "endTime" => 1486915200
             ),
             "2" => array(
                 "edition" => 2,
@@ -26,6 +26,17 @@ function collectRosesGetConfig()
             ),
         ),
         "maxNumber" => "100",
+        "name"=>array(
+            "1"=>"信任",
+            "2"=>"理解",
+            "3"=>"沟通",
+            "4"=>"尊重",
+            "5"=>"关怀",
+            "6"=>"忠诚",
+            "7"=>"赞美",
+            "8"=>"感恩",
+            "9"=>"相爱",
+        )
     );
     return $array;
 }
@@ -43,7 +54,7 @@ function collectRosesGetData( $userId , $edition, $activityId = null)
 
     $condition = array("edition_id" => $edition);
     $id = 0;
-    $number = 0;
+    $number = array();
     $helpList = array();
     $getList = array();
     $config = collectRosesGetConfig();
@@ -86,12 +97,49 @@ function collectRosesGetData( $userId , $edition, $activityId = null)
                     }
                 }
                 $helpList = M("addons_collectroses_help_list")->where(array("activity_id" => $id))->order("create_time desc")->select();
+                $number = array(
+                    "1"=>array(
+                        "value"=>1,
+                        "number" => 0
+                    ),
+                    "2"=>array(
+                        "value"=>2,
+                        "number" => 0
+                    ),
+                    "3"=>array(
+                        "value"=>3,
+                        "number" => 0
+                    ),
+                    "4"=>array(
+                        "value"=>4,
+                        "number" => 0
+                    ),
+                    "5"=>array(
+                        "value"=>5,
+                        "number" => 0
+                    ),
+                    "6"=>array(
+                        "value"=>6,
+                        "number" => 0
+                    ),
+                    "7"=>array(
+                        "value"=>7,
+                        "number" => 0
+                    ),
+                    "8"=>array(
+                        "value"=>8,
+                        "number" => 0
+                    ),
+                    "9"=>array(
+                        "value"=>9,
+                        "number" => 0
+                    ),
+                );
                 if (!empty($helpList)) {
                     foreach ($helpList as $helpItem) {
-                        $number += $helpItem['value'];
+                        $number[$helpItem['value']]["number"] ++;
                     }
                 }
-                $number = $number > 100 ? 100 : $number;
             }
         }
     }
@@ -207,114 +255,69 @@ function collectRosesHelpAction( $activityId, $userId , $edition )
 
 /**
  * 获取助力参数
- * @param $activityId
- * @param $edition
  * @return array
  */
-function collectRosesGetHelpValue($activityId,$edition)
+function collectRosesGetHelpValue( )
 {
-    $value_a = array(
-        array("value" => 1, "desc" => ""),
-        array("value" => 2, "desc" => ""),
-        array("value" => 3, "desc" => ""),
-        array("value" => 4, "desc" => ""),
-        array("value" => 5, "desc" => ""),
-        array("value" => 6, "desc" => ""),
-        array("value" => 7, "desc" => ""),
-        array("value" => 8, "desc" => ""),
-        array("value" => 9, "desc" => ""),
-        array("value" => 10, "desc" => ""),
-//        array("value" => 11,"desc" => ""),
-//        array("value" => 12,"desc" => ""),
-//        array("value" => 13,"desc" => ""),
-//        array("value" => 14,"desc" => ""),
-//        array("value" => 15,"desc" => ""),
-//        array("value" => 16,"desc" => ""),
-//        array("value" => 17,"desc" => ""),
-//        array("value" => 18,"desc" => ""),
-//        array("value" => 19,"desc" => ""),
-//        array("value" => 20,"desc" => ""),
-//        array("value" => 21,"desc" => ""),
-//        array("value" => 22,"desc" => ""),
-//        array("value" => 23,"desc" => ""),
-//        array("value" => 24,"desc" => ""),
-//        array("value" => 25,"desc" => ""),
+    $config = collectRosesGetConfig();
+    $random = array(
+        array(
+            "value" => 1,
+            "keys" => 15,
+        ),
+        array(
+            "value" => 2,
+            "keys" => 15,
+        ),
+        array(
+            "value" => 3,
+            "keys" => 15,
+        ),
+        array(
+            "value" => 4,
+            "keys" => 15,
+        ),
+        array(
+            "value" => 5,
+            "keys" => 10,
+        ),
+        array(
+            "value" => 6,
+            "keys" => 10,
+        ),
+        array(
+            "value" => 7,
+            "keys" => 10,
+        ),
+        array(
+            "value" => 8,
+            "keys" => 9,
+        ),
+        array(
+            "value" => 9,
+            "keys" => 1,
+        ),
     );
-    $value_b = array(
-        array("value" => -1, "desc" => ""),
-        array("value" => -2, "desc" => ""),
-        array("value" => -3, "desc" => ""),
-        array("value" => -4, "desc" => ""),
-        array("value" => -5, "desc" => ""),
-        array("value" => -6, "desc" => ""),
-        array("value" => -7, "desc" => ""),
-        array("value" => -8, "desc" => ""),
-        array("value" => -9, "desc" => ""),
-        array("value" => -10, "desc" => ""),
-//        array("value" => -11,"desc" => ""),
-//        array("value" => -12,"desc" => ""),
-//        array("value" => -13,"desc" => ""),
-//        array("value" => -14,"desc" => ""),
-//        array("value" => -15,"desc" => ""),
-//        array("value" => -16,"desc" => ""),
-//        array("value" => -17,"desc" => ""),
-//        array("value" => -18,"desc" => ""),
-//        array("value" => -19,"desc" => ""),
-//        array("value" => -20,"desc" => ""),
-//        array("value" => -21,"desc" => ""),
-//        array("value" => -22,"desc" => ""),
-//        array("value" => -23,"desc" => ""),
-//        array("value" => -24,"desc" => ""),
-//        array("value" => -25,"desc" => ""),
-    );
-    $value_c = array_merge($value_a, $value_b);
-    $value_d = array_merge($value_c, $value_b);
-
-//    $activityInfo = findDataWithCondition("addons_collectroses_activity",array("id"=>$activityId,"edition_id"=>$edition));
-    $helpList = selectDataWithCondition("addons_collectroses_help_list", array('activity_id' => $activityId, "edition_id" => $edition));
-    $number = 0;
-    if (!empty($helpList)) {
-        foreach ($helpList as $helpItem) {
-            $number += $helpItem["value"];
+    $randoms = array();
+    foreach ($random as $randomItem){
+        for( $i = 1 ; $i< $randomItem["keys"];$i++){
+            $randoms[] = $randomItem;
         }
     }
-//    $numberNew = 0;
-//    $date = array();
-    do {
-        if ($number == 0) {
-            $date = $value_a[mt_rand(0,count($value_a)-1)];
-        } else {
-            if ($number > 80) {
-                $date = $value_d[mt_rand(0,count($value_d)-1)];
-            } else {
-                $date = $value_c[mt_rand(0,count($value_c)-1)];
-            }
-        }
-        $numberNew = $number + $date["value"];
-    } while ($numberNew <= 0);
-
-
+    $date = $randoms[mt_rand(0,count($randoms)-1)];
     $desc_a = array(
-        "[nickname]使出了洪荒之力，帮你加温了[value]度",
-        "[nickname]轻轻一按，帮你加温了[value]度",
-        "[nickname]发现了加温小秘诀，帮你加温了[value]度",
-        "[nickname]吃了大力菠菜，帮你加温了[value]度",
+        "[nickname]到玫瑰园帮你偷了一朵[value]",
+        "[nickname]“咻”的一下拎出了一朵[value]",
+        "[nickname]满怀爱意送了你一朵[value]",
+        "[nickname]自带玫瑰送了你一朵[value]",
+        "[nickname]呼唤花仙子给了你一朵[value]",
+        "[nickname]大发慈悲赠了你一朵[value]",
+        "[nickname]花了一毛钱给你一朵[value]",
+        "[nickname]人品太好了采到了一朵[value]",
     );
-    $desc_b = array(
-        "[nickname]一个不小心犯错了，减掉了[value]度",
-        "[nickname]闭着眼睛乱点，减掉了[value]度",
-        "[nickname]碰掉了电插头，减掉[value]度",
-    );
-    if( $number == 0){
-        $desc = "[nickname]使出了洪荒之力，温度上升了[value]度";
-    }else{
-        if( $date["value"] > 0){
-            $desc =  $desc_a[mt_rand(0,count($desc_a)-1)];
-        }else{
-            $desc =  $desc_b[mt_rand(0,count($desc_b)-1)];
-        }
-    }
-    $desc = str_replace("[value]",$date["value"],$desc);
+    $desc =  $desc_a[mt_rand(0,count($desc_a)-1)];
+    $desc = str_replace("[value]",$config[$date["value"]],$desc);
+
     return array(
         "value" => $date["value"],
         "desc"  => $desc
@@ -328,11 +331,10 @@ function collectRosesGetHelpValue($activityId,$edition)
  */
 function collectRosesTesting( $activityId )
 {
-    $config = collectRosesGetConfig();
     $condition = array('activity_id' => $activityId);
-    $number = M('addons_collectroses_help_list')->where($condition)->sum("value");
+    $number = M('addons_collectroses_help_list')->where($condition)->group("value")->count();
     $condition = array('id' => $activityId,'state' => "0");
-    if ($number >= $config["maxNumber"]) {
+    if ($number == 9) {
         saveData("addons_collectroses_activity", $condition, array('state' => 1));
     }
 }

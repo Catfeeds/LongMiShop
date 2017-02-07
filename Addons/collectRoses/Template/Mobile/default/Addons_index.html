@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta content="telephone=no" name="format-detection" />
-    <title>好米配好锅，煮饭游戏</title>
-    <meta name="description" content="好米配好锅，煮饭游戏" />
-    <meta http-equiv="keywords" content="好米配好锅，煮饭游戏" />
+    <title>集齐9朵爱情玫瑰，即可获赠龙米独家“有钱花”</title>
+    <meta name="description" content="集齐9朵爱情玫瑰，即可获赠龙米独家“有钱花”" />
+    <meta http-equiv="keywords" content="集齐9朵爱情玫瑰，即可获赠龙米独家“有钱花”" />
     <link href="__PUBLIC__/mui/css/mui.min.css" rel="stylesheet" />
-    <link href="__ADDONS__/css/css.css?{$v}" rel="stylesheet" />
+    <link href="__ADDONS__/css/style.css?{$v}" rel="stylesheet" />
 </head>
 <body>
 
@@ -24,217 +24,137 @@
 </div>
 
 <!--头部-->
-<if condition = "$status eq 1">
-    <img src="__ADDONS__/images/logo.png" class="logo" >
-    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
-    <img src="__ADDONS__/images/n_logo.png" class="n_logo" >
-</if>
-<if condition = "$status eq 2">
-    <img src="__ADDONS__/images/logo.png" class="logo" >
-    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
-    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
-</if>
-<if condition = "$status eq 3">
-    <img src="__ADDONS__/images/logo.png" class="logo" >
-    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
-    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
-</if>
-<if condition = "$status eq 4">
-    <img src="__ADDONS__/images/logo.png" class="logo" >
-    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
-    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
-</if>
-<if condition = "$status eq 5">
-    <img src="__ADDONS__/images/logo.png" class="logo" >
-    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
-    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
-</if>
-<if condition = "$status eq 6">
-    <img src="__ADDONS__/images/logo.png" class="logo" >
-    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
-    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
-</if>
-<if condition = "$status eq 7">
-    <img src="__ADDONS__/images/logo.png" class="logo" >
-    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
-    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
-</if>
-<if condition = "$status eq -1">
-    <img src="__ADDONS__/images/logo.png" class="logo" >
-    <img src="__ADDONS__/images/n_zs_1.png" class="n_zs" >
-    <img src="__ADDONS__/images/n_logo2.png" class="n_logo2" >
-</if>
+<img src="__ADDONS__/images/r_logo.jpg" class="r_logo" >
+
+<div class="r_content">
+    <img src="__ADDONS__/images/r_content_flower.png" class="r_content_flower" >
+    <volist name="numbers" id="number">
+        <if condition = "$number['number'] == 0 and $status neq 1 and $status neq -1">
+            <img src="__ADDONS__/images/r_content_flower_a_{$number.value}.png" class="f_flower_img f_flower_img_{$number.value}">
+            <span class="f_flower_span f_flower_span_{$number.value}" style="background: #848484;">{$configs['name'][$number["value"]]}</span>
+        <else/>
+            <img src="__ADDONS__/images/r_content_flower_{$number.value}.png" class="f_flower_img f_flower_img_{$number.value}">
+            <span class="f_flower_span f_flower_span_{$number.value}">{$configs['name'][$number["value"]]}
+                <if condition = "$status neq 1 and $status neq -1">
+                ×{$number['number']}
+                </if>
+            </span>
+        </if>
+    </volist>
+</div>
 
 
-
+<div class="r_alert" id="r_alert">
+    <div class="r_alert_bg"></div>
+    <div class="r_alert_div">
+        <img src="__ADDONS__/images/r_alert_flower_1.png" id="r_alert_flower_img">
+        <span id="r_alert_span">11</span>
+        <span id="r_alert_div_span">1111111</span>
+    </div>
+    <div class="n_button" style="background:none;position: absolute;top: 70%;">
+        <a href="javascript:$('#r_alert').hide();" class="f_c_button2">
+            <!--拉好友-->
+            <img src="__ADDONS__/images/r_btn_2.png" >
+        </a>
+    </div>
+</div>
 
 <div class="main">
+    <img src="__ADDONS__/images/r_bg_2.png" class="bg2" >
     <if condition = "$status eq -1">
-        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
-        <img src="__ADDONS__/images/n_pot_3.png" class="pot_3" >
-
         <span class="n_tip">活动已经结束啦</span>
         <style>
-            body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
             .n_tip{ top:40%; font-size: 30px; }
         </style>
     </if>
     <if condition = "$status eq 1">
-        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
-        <img src="__ADDONS__/images/n_pot_1.png" class="pot_1" >
-        <span class="n_tip">达到100度，把龙米宝宝煮香喷喷，千元电饭煲就是你哒~</span>
-
+        <span class="n_tip">情人节，龙米送<b>999</b>元现金<br/>不管单身汪还是情侣喵，集齐9朵就送钱</span>
         <div class="n_button">
             <a href="javascript:void(0);" class="f_c_button">
                 <!--我也要玩-->
-                <img src="__ADDONS__/images/n_btn_4.png" >
+                <img src="__ADDONS__/images/r_btn_1.png" >
             </a>
         </div>
-
     </if>
     <if condition = "$status eq 2">
-        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
-        <img src="__ADDONS__/images/n_pot_2.png" class="pot_2" >
-        <div class="n_thermometer">
-            <img src="__ADDONS__/images/n_thermometer_bg.png"  class="n_thermometer_bg">
-            <div class="n_white_edge"></div>
-            <div class="n_progress_bar" style="height: {$currentNumber}px"></div>
-        </div>
-        <div class="n_number_tip">
-            <p>
-                亲爱的小伙伴！再加温{$surplusNumber}度,<br>就能拿到电饭锅啦~
-            </p>
-        </div>
-        <span class="n_tip">已经自己加过温</span>
+        <span class="n_tip">自己已经收集一朵</span>
         <div class="n_button">
             <a href="javascript:void(0);" class="f_c_button">
                 <!--拉好友-->
-                <img src="__ADDONS__/images/n_btn_2.png" >
+                <img src="__ADDONS__/images/r_btn_3.png" >
             </a>
         </div>
-        <style>
-            body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
-        </style>
     </if>
     <if condition = "$status eq 3">
-        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
-        <img src="__ADDONS__/images/n_pot_2.png" class="pot_2" >
-        <div class="n_thermometer">
-            <img src="__ADDONS__/images/n_thermometer_bg.png"  class="n_thermometer_bg">
-            <div class="n_white_edge"></div>
-            <div class="n_progress_bar" style="height: {$currentNumber}px"></div>
-        </div>
+        <span class="n_tip"></span>
         <div class="n_button">
             <a href="javascript:void(0);" class="f_c_button">
                 <!--帮ta煮饭-->
-                <img src="__ADDONS__/images/n_btn_3.png" >
-            </a>
-            <a href="{:U('Mobile/Addons/cookRice')}" class="f_c_button2">
-                <!--我也要玩-->
-                <img src="__ADDONS__/images/n_btn_4.png" >
+                <img src="__ADDONS__/images/r_btn_4.png" >
             </a>
         </div>
-        <style>
-            body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
-            .n_button{ top:45%; }
-        </style>
+        <div class="n_button">
+            <a href="{:U('Mobile/Addons/collectRoses')}" class="f_c_button2">
+                <!--我也要玩-->
+                <img src="__ADDONS__/images/r_btn_1.png" >
+            </a>
+        </div>
     </if>
     <if condition = "$status eq 4">
-        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
-        <img src="__ADDONS__/images/n_pot_2.png" class="pot_2" >
-        <div class="n_thermometer">
-            <img src="__ADDONS__/images/n_thermometer_bg.png"  class="n_thermometer_bg">
-            <div class="n_white_edge"></div>
-            <div class="n_progress_bar" style="height: {$currentNumber}px"></div>
-        </div>
-        <span class="n_tip">已经帮小伙伴加过温啦！</span>
+        <span class="n_tip">已经送出去一朵了</span>
         <div class="n_button">
-            <a href="{:U('Mobile/Addons/cookRice')}" class="f_c_button2">
+            <a href="{:U('Mobile/Addons/collectRoses')}" class="f_c_button2">
                 <!--我也要玩-->
-                <img src="__ADDONS__/images/n_btn_4.png" >
+                <img src="__ADDONS__/images/r_btn_1.png" >
             </a>
         </div>
-        <style>
-            body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
-        </style>
     </if>
     <if condition = "$status eq 5">
-        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
-        <img src="__ADDONS__/images/n_pot_3.png" class="pot_3" >
-
-        <span class="n_tip" >温度达到100度啦！</span>
-
-        <div class="n_button">
-            <a href="javascript:showSubmit();" class="f_c_button2">
-                <!--点击领取奖品-->
-                <img src="__ADDONS__/images/n_btn_1.png" >
-            </a>
-        </div>
-        <div class="n_application" style="display:none;">
+        <span class="n_tip"></span>
+        <div class="n_application" >
             <form action="" method="post" class="form">
                 <input type="text" id="user_name"  placeholder="姓名：">
                 <input type="text" id="user_phone" placeholder="手机号：">
                 <input type="text" id="user_site"  placeholder="邮寄地址：">
             </form>
         </div>
-        <div class="n_button" style="top: 68%;">
-            <a href="javascript:void(0);" class="f_c_button"   style="display:none;width: 156px;">
+        <div class="n_button" >
+            <a href="javascript:void(0);" class="f_c_button"   style=" width: 156px;">
                 <!--提交资料-->
-                <img src="__ADDONS__/images/n_btn_5.png" >
+                <img src="__ADDONS__/images/r_btn_5.png" >
             </a>
         </div>
-        <style>
-            body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
-            .n_tip{ top:40%; }
-            .n_button{ top:50%; }
-        </style>
     </if>
     <if condition = "$status eq 6">
-        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
-        <img src="__ADDONS__/images/n_pot_2.png" class="pot_2" >
-        <div class="n_thermometer">
-            <img src="__ADDONS__/images/n_thermometer_bg.png"  class="n_thermometer_bg">
-            <div class="n_white_edge"></div>
-            <div class="n_progress_bar" style="height: {$currentNumber}px"></div>
-        </div>
-        <span class="n_tip">小伙伴已经加温成功啦！</span>
+        <span class="n_tip">小伙伴已经集齐花朵啦！</span>
         <div class="n_button">
-            <a href="{:U('Mobile/Addons/cookRice')}" class="f_c_button2">
+            <a href="javascript:void(0);" class="f_c_button2">
                 <!--我也要玩-->
-                <img src="__ADDONS__/images/n_btn_4.png" >
+                <img src="__ADDONS__/images/r_btn_4.png" >
             </a>
         </div>
-        <style>
-            body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
-        </style>
     </if>
     <if condition = "$status eq 7">
-        <img src="__ADDONS__/images/n_bg_2.png" class="bg2" >
-        <img src="__ADDONS__/images/n_pot_3.png" class="pot_3" >
-
-        <div class="n_button" style="top: 35%;">
-            <a href="{:U('Mobile/Addons/cookRice')}" class="f_c_button2" style="width: 156px;">
+        <span class="n_tip" style=" top: 68%;">3天之内会有龙米客服会联系您哦</span>
+        <div class="n_button" >
+            <a href="{:U('Mobile/Addons/collectRoses')}" class="f_c_button2" style="width: 156px;">
                 <!--领取成功-->
-                <img src="__ADDONS__/images/n_btn_6.png" >
+                <img src="__ADDONS__/images/r_btn_6.png" >
             </a>
         </div>
-        <span class="n_tip" style=" top: 68%;">3天之内会有龙米客服会联系您哦</span>
-        <style>
-            body {background:url("__ADDONS__/images/n_bg_3.jpg") repeat left center;}
-        </style>
     </if>
 
 
 
     <div class="f_bottom">
         <a href="javascript:void(0);" data-number = "1">
-            <img src="__ADDONS__/images/n_nav_btn_1.png" >
+            <img src="__ADDONS__/images/r_nav_btn_1.png" >
         </a>
         <a href="javascript:void(0);" data-number = "2">
-            <img src="__ADDONS__/images/n_nav_btn_2.png" >
+            <img src="__ADDONS__/images/r_nav_btn_2.png" >
         </a>
         <a href="javascript:void(0);" data-number = "3">
-            <img src="__ADDONS__/images/n_nav_btn_3.png" >
+            <img src="__ADDONS__/images/r_nav_btn_3.png" >
         </a>
     </div>
     <div class="n_tab" id="tab">
@@ -250,7 +170,7 @@
                     </volist>
                     <else/>
                     <empty name="helpList">
-                        <span class="tip_span">还未有饭友哦！</span>
+                        <span class="tip_span">还没有好友助力！</span>
                         <else/>
                         <volist name="helpList" id="helpItem">
                             <div class="f_help">
@@ -263,26 +183,27 @@
             </div>
         </div>
         <div class="n_tab_div" id="tab_2">
-            <img class="n_tab_content" src="__ADDONS__/images/n_content_01.jpg"/>
-            <img class="n_tab_content" src="__ADDONS__/images/n_content_02.jpg"/>
-            <img class="n_tab_content" src="__ADDONS__/images/n_content_03.jpg"/>
-            <img class="n_tab_content" src="__ADDONS__/images/n_content_04.jpg"/>
-            <img class="n_tab_content" src="__ADDONS__/images/n_content_06.jpg"/>
-            <img class="n_tab_content" src="__ADDONS__/images/n_content_07.jpg"/>
+            <div class="n_tab_div_tip">
+                <img class="n_tab_content" src="__ADDONS__/images/n_content_01.jpg"/>
+            </div>
         </div>
         <div class="n_tab_div" id="tab_3">
             <div class="n_tab_div_tip">
-                <p>如何领锅</p>
-                <span class="tip_span">当左边的温度条达到100°的时候，你就能带走美的煮米神器啦。每个人只能给自己加温一次，想达到100°就赶紧多多分享召集朋友帮你加温吧，每个朋友也只能加温一次哦，加的温度随机，也有可能减温哦，考验友谊的时刻到了！</span>
+                <p>“有钱花”如何到手？</p>
+                <span class="tip_span">
+                    集齐9朵玫瑰花即可获得“有钱花”，<b>“有钱花”即999元现金红包。</b>你可以为自己拿到一朵玫瑰花，剩下的就要靠好友的爱情助攻啦。每个好友可赠送一次玫瑰，又是一个考验友谊的游戏，只有集齐全部9种玫瑰花，才能召唤“有钱花”哦。
+                    <br>9朵玫瑰花分别为：<br>相爱 信任 理解 沟通 尊重 关怀 忠诚 赞美 感恩
+                </span>
 
-                <p>领锅须知</p>
-                <span class="tip_span">温度达到100°之后，将自动跳转资料填写页面，正确填写收货地址，联系人及联系方式，龙米就会为你送来煮米神器哦~每个id限领一次，限量10个还包邮呢，赶紧抓住机会吧！</span>
+                <p>摘花须知</p>
+                <span class="tip_span">
+                    如果成功摘得“有钱花”，则会自动跳转资料填写页面，正确填写资料，龙米会主动联系您，为您送来“有钱花”~
+                </span>
 
                 <p>活动细则</p>
-                <span class="tip_span">本活动将于2017.02.16截止，若奖品发完则提前停止活动，时间有限，奖品有限，再不动起来，你的锅就要跟别人回家啦。</span>
-
-
-                <span class="tip_span" style="font-size: 12px;">*本活动最终解释权归龙米所有</span>
+                <span class="tip_span">
+                    本活动将于2017.02.13结束，<b>奖品“有钱花”即999元现金红包，限量10个名额</b>，先来先摘花，后来吃泥巴，无论单身狗还是小情侣，都赶紧动起来，让这个情人节“有钱花”！
+                </span>
 
             </div>
         </div>
@@ -304,7 +225,7 @@
     <else/>
     <script src="__PUBLIC__/mui/js/mui.min.js"></script>
     <script type="text/javascript">
-        var ApiUrl = "{:U('Mobile/Addons/cookRice')}";
+        var ApiUrl = "{:U('Mobile/Addons/collectRoses')}";
         var status = "{$status}";
         var activityId = "{$id}";
         function alert( msg ){

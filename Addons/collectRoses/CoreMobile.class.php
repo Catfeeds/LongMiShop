@@ -15,10 +15,11 @@ class collectRosesMobileController
 
     public function __construct($userInfo)
     {
-        $this->assignData["v"] = "v2.0";
+        $this->assignData["v"] = time();
         $this->user = $userInfo;
         $this->config = collectRosesGetConfig();
         $this->edition = $this->config["edition"];
+        $this->assignData["configs"] = collectRosesGetConfig();
         $this->assignData["__theme"] = $this->config["data"][$this->edition]['theme'];
 
     }
@@ -26,21 +27,18 @@ class collectRosesMobileController
     //初始页面
     public function index()
     {
-
         $data = collectRosesGetData($this->user["user_id"], $this->edition, I("activityId", null));
 
         $this->assignData["id"] = $data["id"];
         $this->assignData["status"] = $data["status"];
-        $this->assignData["number"] = $data['number'];
-        $this->assignData["surplusNumber"] = 100 - $data['number'];
-        $this->assignData["currentNumber"] = ( $data['number'] * 1.5 ) + 3;
+        $this->assignData["numbers"] = $data['number'];
         $this->assignData["getList"] = $data['getList'];
         $this->assignData["helpList"] = $data['helpList'];
 
         $this->assignData["config"] = array(
-            "share_title" => "土豪龙米又发福利啦，千元电饭煲免费送！",
-            "share_desc"  => "亲爱哒，快来帮我抢千元电饭煲～",
-            "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/cookRice/Static/images/share.jpg",
+            "share_title" => "集齐9朵爱情玫瑰，即可获赠龙米独家“有钱花”",
+            "share_desc"  => "情人节，龙米送999元现金,不管单身汪还是情侣喵，集齐9朵就送钱",
+            "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/collectRoses/Static/images/share.jpg",
             "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/cookRice')
         );
 
