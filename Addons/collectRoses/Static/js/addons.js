@@ -1,6 +1,6 @@
 /*
  * @Author: zhonght
- * @Date:   2016-12-08
+ * @Date:   2016-02-07
  */
 
 
@@ -135,9 +135,8 @@ function cookRiceButtonClick() {
         });
     } else {
 
+        lock = false;
     }
-
-    lock = false;
 }
 
 

@@ -135,9 +135,8 @@ function cookRiceButtonClick() {
         });
     } else {
 
+        lock = false;
     }
-
-    lock = false;
 }
 
 
