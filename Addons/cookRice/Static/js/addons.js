@@ -91,9 +91,10 @@ function cookRiceButtonClick() {
             success: function (data) {
                 alert(data.msg);
                 lock = false;
-                document.url= location.href;
-                // window.location.href= ShareLink;
-                location.reload();
+                // document.url= location.href;
+                window.location.href= ShareLink;
+                return;
+                // location.reload();
             },
             error: function () {
                 alert("系统繁忙，请稍后再试！");
