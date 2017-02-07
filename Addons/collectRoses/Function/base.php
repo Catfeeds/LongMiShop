@@ -275,7 +275,7 @@ function collectRosesGetHelpValue( )
         ),
         array(
             "value" => 4,
-            "keys" => 15,
+            "keys" => 1,
         ),
         array(
             "value" => 5,
@@ -283,19 +283,19 @@ function collectRosesGetHelpValue( )
         ),
         array(
             "value" => 6,
-            "keys" => 10,
+            "keys" => 35,
         ),
         array(
             "value" => 7,
-            "keys" => 10,
+            "keys" => 2,
         ),
         array(
             "value" => 8,
-            "keys" => 9,
+            "keys" => 2,
         ),
         array(
             "value" => 9,
-            "keys" => 1,
+            "keys" => 15,
         ),
     );
     $randoms = array();
@@ -316,7 +316,7 @@ function collectRosesGetHelpValue( )
         "[nickname]人品太好了采到了一朵[value]",
     );
     $desc =  $desc_a[mt_rand(0,count($desc_a)-1)];
-    $desc = str_replace("[value]",$config[$date["value"]],$desc);
+    $desc = str_replace("[value]",$config["name"][$date["value"]],$desc);
 
     return array(
         "value" => $date["value"],
