@@ -5,7 +5,7 @@
  * 获取基础配置
  * @return array
  */
-function cookRiceGetConfig()
+function collectRosesGetConfig()
 {
     $array = array(
         "edition"   => 1,
@@ -14,7 +14,7 @@ function cookRiceGetConfig()
                 "edition" => 1,
                 "name"    => "煮饭游戏",
                 "number"  => "5",
-                "theme"   => "new",
+                "theme"   => "default",
                 "endTime" => 1487174400
             ),
             "2" => array(
@@ -38,7 +38,7 @@ function cookRiceGetConfig()
  * @param null $activityId
  * @return array
  */
-function cookRiceGetData( $userId , $edition, $activityId = null)
+function collectRosesGetData( $userId , $edition, $activityId = null)
 {
 
     $condition = array("edition_id" => $edition);
@@ -46,25 +46,25 @@ function cookRiceGetData( $userId , $edition, $activityId = null)
     $number = 0;
     $helpList = array();
     $getList = array();
-    $config = cookRiceGetConfig();
+    $config = collectRosesGetConfig();
     if ($config["data"][$edition]["endTime"] < time()) {
         $state = -1;
-        $getList = cookRiceSetGetGiftUserList($getList);
+        $getList = collectRosesSetGetGiftUserList($getList);
     } else {
-        $getList = selectDataWithCondition("addons_cookrice_activity", array('state' => "2", "edition_id" => $edition));
+        $getList = selectDataWithCondition("addons_collectroses_activity", array('state' => "2", "edition_id" => $edition));
         if (count($getList) >= 5) {
             $state = -1;
-            $getList = cookRiceSetGetGiftUserList($getList);
+            $getList = collectRosesSetGetGiftUserList($getList);
         } else {
             is_null($activityId) ? $condition["user_id"] = $userId : $condition["id"] = $activityId;
-            $activityInfo = findDataWithCondition("addons_cookrice_activity", $condition);
+            $activityInfo = findDataWithCondition("addons_collectroses_activity", $condition);
             if (empty($activityInfo)) {
                 $state = 1;
             } else {
                 $id = $activityInfo["id"];
                 //获奖检测
-                cookRiceTesting($id);
-                $activityInfo = findDataWithCondition("addons_cookrice_activity", $condition);
+                collectRosesTesting($id);
+                $activityInfo = findDataWithCondition("addons_collectroses_activity", $condition);
                 if ($activityInfo["user_id"] == $userId) {
                     if ($activityInfo["state"] == 1) {
                         $state = 5;
@@ -79,13 +79,13 @@ function cookRiceGetData( $userId , $edition, $activityId = null)
                     $condition["activity_id"] = $activityId;
                     if($activityInfo["state"] != 0 ){
                         $state = 6;
-                    }elseif ( isExistenceDataWithCondition("addons_cookrice_help_list", $condition)) {
+                    }elseif ( isExistenceDataWithCondition("addons_collectroses_help_list", $condition)) {
                         $state = 4;
                     } else {
                         $state = 3;
                     }
                 }
-                $helpList = M("addons_cookrice_help_list")->where(array("activity_id" => $id))->order("create_time desc")->select();
+                $helpList = M("addons_collectroses_help_list")->where(array("activity_id" => $id))->order("create_time desc")->select();
                 if (!empty($helpList)) {
                     foreach ($helpList as $helpItem) {
                         $number += $helpItem['value'];
@@ -113,7 +113,7 @@ function cookRiceGetData( $userId , $edition, $activityId = null)
  * @param array $getList
  * @return array
  */
-function cookRiceSetGetGiftUserList( $getList = array() ){
+function collectRosesSetGetGiftUserList( $getList = array() ){
     $getList[] = array("user_name"=>"李文龙","user_phone"=>"13476933067");
     $getList[] = array("user_name"=>"陈雅西","user_phone"=>"18900570106");
     $getList[] = array("user_name"=>"黄海华","user_phone"=>"18710625666");
@@ -139,10 +139,10 @@ function cookRiceSetGetGiftUserList( $getList = array() ){
  * @param $edition
  * @return array
  */
-function cookRiceCreateActivity( $userId , $edition)
+function collectRosesCreateActivity( $userId , $edition)
 {
     $condition = array("edition_id" => $edition, "user_id" => $userId);
-    if (isExistenceDataWithCondition("addons_cookrice_activity", $condition)) {
+    if (isExistenceDataWithCondition("addons_collectroses_activity", $condition)) {
         return callback(false, "您已经参与了本次活动");
     }
     $data = array(
@@ -151,8 +151,8 @@ function cookRiceCreateActivity( $userId , $edition)
         "state"       => "0",
         "create_time" => time()
     );
-    $activityId = addData("addons_cookrice_activity", $data);
-    $res = cookRiceHelpAction($activityId, $userId, $edition);
+    $activityId = addData("addons_collectroses_activity", $data);
+    $res = collectRosesHelpAction($activityId, $userId, $edition);
     if (callbackIsTrue($res)) {
         return callback(true, "参加活动成功");
     } else {
@@ -168,13 +168,13 @@ function cookRiceCreateActivity( $userId , $edition)
  * @param $edition
  * @return array
  */
-function cookRiceHelpAction( $activityId, $userId , $edition )
+function collectRosesHelpAction( $activityId, $userId , $edition )
 {
     $data = array(
         "edition_id"  => $edition,
         "activity_id" => $activityId,
     );
-    $activityInfo = findDataWithCondition("addons_cookrice_activity", $data);
+    $activityInfo = findDataWithCondition("addons_collectroses_activity", $data);
     if( empty($activityInfo)){
         return callback(false, "活动不存在");
     }
@@ -183,11 +183,11 @@ function cookRiceHelpAction( $activityId, $userId , $edition )
     }
     unset($data["state"]);
     $data["user_id"] = $userId;
-    if (isExistenceDataWithCondition("addons_cookrice_help_list", $data)) {
+    if (isExistenceDataWithCondition("addons_collectroses_help_list", $data)) {
         return callback(false, "您已经帮助过这个小伙伴了");
     } else {
 
-        $helpValue = cookRiceGetHelpValue($activityId, $edition);
+        $helpValue = collectRosesGetHelpValue($activityId, $edition);
         $userInfo = findDataWithCondition("users", array('user_id' => $userId), "head_pic,nickname");
 
         $helpValue["desc"] = str_replace("[nickname]",$userInfo["nickname"],$helpValue["desc"]);
@@ -197,9 +197,9 @@ function cookRiceHelpAction( $activityId, $userId , $edition )
         $data["head_pic"] = $userInfo["head_pic"];
         $data["create_time"] = time();
 
-        addData("addons_cookrice_help_list", $data);
+        addData("addons_collectroses_help_list", $data);
         //分数检测
-        cookRiceTesting($activityId);
+        collectRosesTesting($activityId);
         return callback(true, "成功帮助小伙伴");
     }
 }
@@ -211,7 +211,7 @@ function cookRiceHelpAction( $activityId, $userId , $edition )
  * @param $edition
  * @return array
  */
-function cookRiceGetHelpValue($activityId,$edition)
+function collectRosesGetHelpValue($activityId,$edition)
 {
     $value_a = array(
         array("value" => 1, "desc" => ""),
@@ -270,8 +270,8 @@ function cookRiceGetHelpValue($activityId,$edition)
     $value_c = array_merge($value_a, $value_b);
     $value_d = array_merge($value_c, $value_b);
 
-//    $activityInfo = findDataWithCondition("addons_cookrice_activity",array("id"=>$activityId,"edition_id"=>$edition));
-    $helpList = selectDataWithCondition("addons_cookrice_help_list", array('activity_id' => $activityId, "edition_id" => $edition));
+//    $activityInfo = findDataWithCondition("addons_collectroses_activity",array("id"=>$activityId,"edition_id"=>$edition));
+    $helpList = selectDataWithCondition("addons_collectroses_help_list", array('activity_id' => $activityId, "edition_id" => $edition));
     $number = 0;
     if (!empty($helpList)) {
         foreach ($helpList as $helpItem) {
@@ -326,14 +326,14 @@ function cookRiceGetHelpValue($activityId,$edition)
  * 分数检测
  * @param $activityId
  */
-function cookRiceTesting( $activityId )
+function collectRosesTesting( $activityId )
 {
-    $config = cookRiceGetConfig();
+    $config = collectRosesGetConfig();
     $condition = array('activity_id' => $activityId);
-    $number = M('addons_cookrice_help_list')->where($condition)->sum("value");
+    $number = M('addons_collectroses_help_list')->where($condition)->sum("value");
     $condition = array('id' => $activityId,'state' => "0");
     if ($number >= $config["maxNumber"]) {
-        saveData("addons_cookrice_activity", $condition, array('state' => 1));
+        saveData("addons_collectroses_activity", $condition, array('state' => 1));
     }
 }
 
@@ -345,7 +345,7 @@ function cookRiceTesting( $activityId )
  * @param $get
  * @return array
  */
-function cookRiceSetData( $userId, $edition,$get)
+function collectRosesSetData( $userId, $edition,$get)
 {
     $userName = $get["user_name"];
     $userPhone = $get["user_phone"];
@@ -363,7 +363,7 @@ function cookRiceSetData( $userId, $edition,$get)
         return callback(false, "回寄地址不能为空");
     }
     $condition = array("user_id" => $userId, "edition_id" => $edition, "state" => 1);
-    if (!isExistenceDataWithCondition("addons_cookrice_activity", $condition)) {
+    if (!isExistenceDataWithCondition("addons_collectroses_activity", $condition)) {
         return callback(false, "活动记录有误");
     }
     unset($condition["state"]);
@@ -373,7 +373,7 @@ function cookRiceSetData( $userId, $edition,$get)
         "user_phone" => $userPhone,
         "user_site"  => $userSite
     );
-    saveData("addons_cookrice_activity", $condition, $data);
+    saveData("addons_collectroses_activity", $condition, $data);
     return callback(true, "领取成功");
 }
 
