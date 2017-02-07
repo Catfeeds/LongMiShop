@@ -12,7 +12,6 @@ function get_query_str(){
     var location_url = window.location.href;
 
     var parameter_str = location_url.split('?')[1];
-    parameter_str = parameter_str.split('#')[0];
 
     var $_GET = {};
 
