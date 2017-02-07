@@ -15,7 +15,7 @@ class cookRiceMobileController
 
     public function __construct($userInfo)
     {
-        $this->assignData["v"] = "v1.0";
+        $this->assignData["v"] = "v1.1";
         $this->user = $userInfo;
         $this->config = cookRiceGetConfig();
         $this->edition = $this->config["edition"];
@@ -36,7 +36,6 @@ class cookRiceMobileController
         $this->assignData["currentNumber"] = ( $data['number'] * 1.5 ) + 3;
         $this->assignData["getList"] = $data['getList'];
         $this->assignData["helpList"] = $data['helpList'];
-
 
         $this->assignData["config"] = array(
             "share_title" => "土豪龙米又发福利啦，千元电饭煲免费送！",
