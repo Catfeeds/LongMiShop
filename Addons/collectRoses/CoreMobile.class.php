@@ -39,7 +39,7 @@ class collectRosesMobileController
             "share_title" => "现金999元，是龙米送你的“有钱花”",
             "share_desc"  => "亲爱哒，帮我集花花，一起领取999元现金吧",
             "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/collectRoses/Static/images/share.jpg",
-            "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/cookRice')
+            "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/collectRoses')
         );
 
         $weChatLogic = new \Common\Logic\WeChatLogic();
