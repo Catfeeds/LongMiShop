@@ -468,10 +468,8 @@ body {
     height: 100%;
     position: fixed;
     z-index: 3;
-    animation-delay:1s;
-    -webkit-animation-delay:1s;
-    animation: alert_run .4s ease both;
-    -webkit-animation: alert_run .4s ease both;
+    animation: alert_run 1.4s ease both;
+    -webkit-animation: alert_run 1.4s ease both;
 }
 .r_alert .r_alert_bg{
     width: 100%;
@@ -551,14 +549,14 @@ body {
 
 
 @-webkit-keyframes alert_run {
-    from {
+    60% {
         transform:scale(0,0);
         -ms-transform:scale(0,0); 	/* IE 9 */
         -moz-transform:scale(0,0); 	/* Firefox */
         -webkit-transform:scale(0,0); /* Safari 和 Chrome */
         -o-transform:scale(0,0);
     }
-    to {
+    100% {
         transform:scale(1,1);
         -ms-transform:scale(1,1); 	/* IE 9 */
         -moz-transform:scale(1,1); 	/* Firefox */
@@ -567,14 +565,14 @@ body {
     }
 }
 @keyframes alert_run {
-    from {
+    60% {
         transform:scale(0,0);
         -ms-transform:scale(0,0); 	/* IE 9 */
         -moz-transform:scale(0,0); 	/* Firefox */
         -webkit-transform:scale(0,0); /* Safari 和 Chrome */
         -o-transform:scale(0,0);
     }
-    to {
+    100% {
         transform:scale(1,1);
         -ms-transform:scale(1,1); 	/* IE 9 */
         -moz-transform:scale(1,1); 	/* Firefox */
