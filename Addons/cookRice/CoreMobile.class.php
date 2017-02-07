@@ -15,7 +15,7 @@ class cookRiceMobileController
 
     public function __construct($userInfo)
     {
-        $this->assignData["v"] = "v1.9";
+        $this->assignData["v"] = "v2.0";
         $this->user = $userInfo;
         $this->config = cookRiceGetConfig();
         $this->edition = $this->config["edition"];
