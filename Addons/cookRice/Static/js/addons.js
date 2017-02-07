@@ -91,7 +91,8 @@ function cookRiceButtonClick() {
             success: function (data) {
                 alert(data.msg);
                 lock = false;
-                location.reload();
+                window.location.href= ShareLink;
+                // location.reload();
             },
             error: function () {
                 alert("系统繁忙，请稍后再试！");
