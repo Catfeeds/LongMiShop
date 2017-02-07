@@ -458,8 +458,8 @@ body {
 
 
 .r_alert_start{
-    animation: alert_start_run 1s infinite linear ;
-    -webkit-animation: alert_start_run 1s infinite linear ;
+    animation: alert_start_run 1s ease both;
+    -webkit-animation: alert_start_run 1s ease both;
 }
 
 .r_alert{
@@ -470,8 +470,8 @@ body {
     z-index: 3;
     animation-delay:1s;
     -webkit-animation-delay:1s;
-    animation: alert_run .4s infinite linear ;
-    -webkit-animation: alert_run .4s infinite linear ;
+    animation: alert_run .4s ease both;
+    -webkit-animation: alert_run .4s ease both;
 }
 .r_alert .r_alert_bg{
     width: 100%;
