@@ -102,7 +102,7 @@
         </div>
         <div class="n_number_tip">
             <p>
-                再加温{$surplusNumber}度,<br>就能拿到电饭锅啦~
+                亲爱的小伙伴！再加温{$surplusNumber}度,<br>就能拿到电饭锅啦~
             </p>
         </div>
         <span class="n_tip">已经自己加过温</span>
@@ -273,7 +273,7 @@
         <div class="n_tab_div" id="tab_3">
             <div class="n_tab_div_tip">
                 <p>如何领锅</p>
-                <span class="tip_span">当左边的温度条达到100°的时候，你就能带走美的煮米神器啦。每个人只能给自己加温一次，想达到100°就赶紧多多分享召集朋友帮你加温吧，每个朋友也只能加温一次哦，考验友谊的时刻到了！</span>
+                <span class="tip_span">当左边的温度条达到100°的时候，你就能带走美的煮米神器啦。每个人只能给自己加温一次，想达到100°就赶紧多多分享召集朋友帮你加温吧，每个朋友也只能加温一次哦，加的温度随机，也有可能减温哦，考验友谊的时刻到了！</span>
 
                 <p>领锅须知</p>
                 <span class="tip_span">温度达到100°之后，将自动跳转资料填写页面，正确填写收货地址，联系人及联系方式，龙米就会为你送来煮米神器哦~每个id限领一次，限量10个还包邮呢，赶紧抓住机会吧！</span>
@@ -310,14 +310,14 @@
         function alert( msg ){
             mui.toast( msg );
         }
-    </script>
-    <script src="__ADDONS__/js/addons.js?{$v}" type="text/javascript"></script>
-    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script type="text/javascript">
         var ShareLink = "{$config['share_url']}";
         if(status != 1){
             ShareLink = ShareLink+"?activityId="+activityId;
         }
+    </script>
+    <script src="__ADDONS__/js/addons.js?{$v}" type="text/javascript"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
         var ShareImgUrl = "{$config['share_img']}";
         var ShareTitle = "{$config['share_title']}";
         var ShareDesc = "{$config['share_desc']}";

@@ -146,7 +146,7 @@ body {
 }
 .n_number_tip p{
     color: #530f10;
-    /*transform:scale(0.8);*/
+    transform:scale(0.8);
     display: block;
     line-height: 19px;
     width: 90px;
