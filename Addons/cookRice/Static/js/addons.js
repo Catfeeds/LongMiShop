@@ -144,3 +144,24 @@ function showSubmit(){
     $(".f_c_button").show();
     $(".n_application").show();
 }
+
+
+$(function(){
+    $(window).bind("pageshow", function () {
+        testing();
+    })
+});
+function testing(){
+    data = {pluginName: "testing", activityId: activityId};
+    $.ajax({
+        type : "GET",
+        url:ApiUrl,
+        dataType:'html',
+        data: data,
+        success: function(data){
+            if(data!=status){
+                location.reload();
+            }
+        }
+    });
+}
