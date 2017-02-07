@@ -36,8 +36,8 @@ class collectRosesMobileController
         $this->assignData["helpList"] = $data['helpList'];
 
         $this->assignData["config"] = array(
-            "share_title" => "集齐9朵爱情玫瑰，即可获赠龙米独家“有钱花”",
-            "share_desc"  => "情人节，龙米送999元现金,不管单身汪还是情侣喵，集齐9朵就送钱",
+            "share_title" => "现金999元，是龙米送你的“有钱花”",
+            "share_desc"  => "亲爱哒，帮我集花花，一起领取999元现金吧",
             "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/collectRoses/Static/images/share.jpg",
             "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/cookRice')
         );

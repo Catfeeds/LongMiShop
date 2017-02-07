@@ -202,7 +202,7 @@ function collectRosesCreateActivity( $userId , $edition)
     $activityId = addData("addons_collectroses_activity", $data);
     $res = collectRosesHelpAction($activityId, $userId, $edition);
     if (callbackIsTrue($res)) {
-        return callback(true, "参加活动成功");
+        return callback(true, "参加活动成功",getCallbackData($res));
     } else {
         return callback(false, getCallbackMessage($res));
     }
@@ -248,7 +248,7 @@ function collectRosesHelpAction( $activityId, $userId , $edition )
         addData("addons_collectroses_help_list", $data);
         //分数检测
         collectRosesTesting($activityId);
-        return callback(true, "成功帮助小伙伴");
+        return callback(true, "成功帮助小伙伴",array('getRose'=>1,'roseNumber'=>$helpValue["value"]));
     }
 }
 

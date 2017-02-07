@@ -6,7 +6,17 @@
 
 var lock = false;
 var date_obj = new Date();
-
+var roses_list = {
+    1:{"name":"信任","text":"爱是妒忌、爱是怀疑、爱是种近乎幻想的真理。"},
+    2:{"name":"理解","text":"你不懂我，我就怪你。"},
+    3:{"name":"沟通","text":"大声说出我爱你。"},
+    4:{"name":"尊重","text":"我愿是你身旁的一棵木棉。"},
+    5:{"name":"关怀","text":"多喝热水。"},
+    6:{"name":"忠诚","text":"忠于国家忠于党忠于你。"},
+    7:{"name":"赞美","text":"在我心里，你永远都是最胖哒。"},
+    8:{"name":"感恩","text":"谢谢把我当成小公举。"},
+    9:{"name":"相爱","text":"相爱才能互相伤害呀，么么哒"}
+};
 //获取url参数
 function get_query_str(){
     var location_url = window.location.href;
@@ -110,6 +120,13 @@ function cookRiceButtonClick() {
             success: function (data) {
                 alert(data.msg);
                 lock = false;
+                if(data.data.getRose==1){
+                    data.data.getRose==1
+                    $("#r_alert_span").html(roses_list[data.data.roseNumber]["name"]);
+                    $("#r_alert_div_span").html(roses_list[data.data.roseNumber]["text"]);
+                    $("#r_alert_flower_img").attr("src",imagesUrl+"r_alert_flower_"+data.data.roseNumber+".png");
+                    $('#r_alert').show();
+                }
 
                 return;
             },
@@ -166,6 +183,7 @@ function showSubmit(){
 
 
 function new_jop(){
+    $('#r_alert').hide();
     $_GET['timestamp'] = date_obj.getTime();
 
     var location_url = window.location.href;
