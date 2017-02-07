@@ -6,6 +6,27 @@
 
 var lock = false;
 
+var date_obj = new Date();
+
+function get_query_str(){
+    var location_url = window.location.href;
+
+    var parameter_str = location_url.split('?')[1];
+    parameter_str = parameter_str.split('#')[0];
+
+    var $_GET = {};
+
+    var parameter_arr = parameter_str.split('&');
+    var tmp_arr;
+    for(var i = 0, len = parameter_arr.length; i <= len -1; i++){
+        tmp_arr = parameter_arr[i].split('=');
+        $_GET[tmp_arr[0]] = decodeURIComponent(tmp_arr[1]);
+    }
+
+    window.$_GET = $_GET;
+}
+
+
 
 $(function(){
     $("#tab").show();
@@ -26,6 +47,7 @@ $(function(){
     $("#showGuide").click(function(){
         show_guide();
     });
+    get_query_str();
 });
 
 
@@ -91,7 +113,28 @@ function cookRiceButtonClick() {
             success: function (data) {
                 alert(data.msg);
                 lock = false;
-                location.reload();
+                $_GET['timestamp'] = date_obj.getTime();
+
+                var location_url = window.location.href;
+
+                var url = location_url.split('?')[0];
+
+                var hash_str = location_url.split('#')[1];
+
+                var query_arr = [];
+                for(var i in $_GET){
+                    query_arr.push(i+'='+$_GET[i]);
+                }
+
+                if(query_arr){
+                    url += '?' + query_arr.join('&');
+                }
+
+                if(hash_str){
+                    url += '#' + hash_str;
+                }
+
+                window.location.href = url;
                 return;
             },
             error: function () {
@@ -145,22 +188,3 @@ function showSubmit(){
 }
 
 
-$(function(){
-    $(window).bind("pageshow", function () {
-        testing();
-    })
-});
-function testing(){
-    data = {pluginName: "testing", activityId: activityId};
-    $.ajax({
-        type : "GET",
-        url:ApiUrl,
-        dataType:'html',
-        data: data,
-        success: function(data){
-            if(data!=status){
-                location.reload();
-            }
-        }
-    });
-}

@@ -15,7 +15,7 @@ class cookRiceMobileController
 
     public function __construct($userInfo)
     {
-        $this->assignData["v"] = "v1.7";
+        $this->assignData["v"] = "v1.8";
         $this->user = $userInfo;
         $this->config = cookRiceGetConfig();
         $this->edition = $this->config["edition"];
@@ -83,12 +83,5 @@ class cookRiceMobileController
         exit(json_encode($res));
     }
 
-
-    //检测
-    public function testing(){
-        $data = cookRiceGetData($this->user["user_id"], $this->edition, I("activityId", null));
-        echo $data["status"];
-        exit;
-    }
 
 }
