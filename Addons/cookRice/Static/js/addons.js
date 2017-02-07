@@ -12,16 +12,16 @@ function get_query_str(){
     var location_url = window.location.href;
 
     var parameter_str = location_url.split('?')[1];
-
     var $_GET = {};
-
-    var parameter_arr = parameter_str.split('&');
-    var tmp_arr;
-    for(var i = 0, len = parameter_arr.length; i <= len -1; i++){
-        tmp_arr = parameter_arr[i].split('=');
-        $_GET[tmp_arr[0]] = decodeURIComponent(tmp_arr[1]);
+    if(parameter_str!=undefined){
+        parameter_str = parameter_str.split('#')[0];
+        var parameter_arr = parameter_str.split('&');
+        var tmp_arr;
+        for(var i = 0, len = parameter_arr.length; i <= len -1; i++){
+            tmp_arr = parameter_arr[i].split('=');
+            $_GET[tmp_arr[0]] = decodeURIComponent(tmp_arr[1]);
+        }
     }
-
     window.$_GET = $_GET;
 }
 
