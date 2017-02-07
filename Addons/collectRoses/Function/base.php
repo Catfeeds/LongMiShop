@@ -12,7 +12,7 @@ function collectRosesGetConfig()
         "data"      => array(
             "1" => array(
                 "edition" => 1,
-                "name"    => "煮饭游戏",
+                "name"    => "收集玫瑰",
                 "number"  => "1",
                 "theme"   => "default",
                 "endTime" => 1486915200
