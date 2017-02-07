@@ -47,12 +47,12 @@
 <div class="r_alert" id="r_alert">
     <div class="r_alert_bg"></div>
     <div class="r_alert_div">
-        <img src="__ADDONS__/images/r_alert_flower_1.png" id="r_alert_flower_img">
-        <span id="r_alert_span">11</span>
-        <span id="r_alert_div_span">1111111</span>
+        <img src="__ADDONS__/images/r_alert_flower_1.png"  id="r_alert_flower_img">
+        <span id="r_alert_span"></span>
+        <span id="r_alert_div_span"></span>
     </div>
     <div class="n_button" style="background:none;position: absolute;top: 70%;">
-        <a href="javascript:$('#r_alert').hide();" class="f_c_button2">
+        <a href="javascript:new_jop();" class="f_c_button2">
             <!--拉好友-->
             <img src="__ADDONS__/images/r_btn_2.png" >
         </a>
@@ -225,6 +225,7 @@
     <else/>
     <script src="__PUBLIC__/mui/js/mui.min.js"></script>
     <script type="text/javascript">
+        var imagesUrl="__ADDONS__/images/";
         var ApiUrl = "{:U('Mobile/Addons/collectRoses')}";
         var status = "{$status}";
         var activityId = "{$id}";
