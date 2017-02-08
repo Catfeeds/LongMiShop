@@ -18,7 +18,7 @@
                 领奖人地址
             </td>
             <td class="text-left">
-                分数
+                情况
             </td>
             <td class="text-left">
                 开始时间
@@ -33,7 +33,11 @@
                 <td class="text-left">{$config["data"][$item["edition_id"]]["name"]}</td>
                 <td class="text-left">{$item.user_name}{:$item["user_phone"]?"/".$item["user_phone"]:""}</td>
                 <td class="text-left">{$item.user_site}</td>
-                <td class="text-left">{$item.number}</td>
+                <td class="text-left">
+                    <volist name="item.help" id="helpItem">
+                        {$helpItem['value']},
+                    </volist>
+                </td>
                 <td class="text-left">
                     {:date('Y-m-d H:i:s',$item['create_time'])}
                 </td>

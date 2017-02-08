@@ -22,16 +22,9 @@ class collectRosesAdminController
         $lists = M(self::TB_ACTIVITY)->limit($Page->firstRow, $Page->listRows)->order("create_time desc")->select();
         if (!empty($lists)) {
             foreach ($lists as $key => $item) {
-                $number = 0;
-                $helpList = selectDataWithCondition(self::TB_HELP_LIST, array("activity_id" => $item["id"]));
-                if (!empty($helpList)) {
-                    foreach ($helpList as $helpItem) {
-                        $number += $helpItem["value"];
-                    }
-                }
+                $helpList = M(self::TB_HELP_LIST) -> where(array('activity_id'=>$item['id']))->group('value')->select();
 
                 $lists[$key]["help"] = $helpList;
-                $lists[$key]["number"] = $number;
             }
         }
         $this->assignData['config'] = collectRosesGetConfig();
