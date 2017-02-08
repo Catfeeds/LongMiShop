@@ -122,11 +122,13 @@ function cookRiceButtonClick() {
                 alert(data.msg);
                 lock = false;
                 if(data.data.getRose==1){
-                    data.data.getRose==1
+                    $(".r_content_flower").addClass("r_alert_start");
                     $("#r_alert_span").html(roses_list[data.data.roseNumber]["name"]);
                     $("#r_alert_div_span").html(roses_list[data.data.roseNumber]["text"]);
                     $("#r_alert_flower_img").attr("src",imagesUrl+"r_alert_flower_"+data.data.roseNumber+".png");
                     $('#r_alert').show();
+                }else{
+                    new_jop();
                 }
 
                 return;
