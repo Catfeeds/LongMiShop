@@ -279,7 +279,7 @@ function collectRosesGetHelpValue( )
         ),
         array(
             "value" => 4,
-            "keys" => 1,
+            "keys" => 0,
         ),
         array(
             "value" => 5,
