@@ -15,7 +15,7 @@ function collectRosesGetConfig()
                 "name"    => "收集玫瑰",
                 "number"  => "1",
                 "theme"   => "default",
-                "endTime" => 1486915200
+                "endTime" => 1487001600
             ),
             "2" => array(
                 "edition" => 2,
