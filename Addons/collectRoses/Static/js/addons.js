@@ -40,7 +40,6 @@ $(function(){
     $("#tab_1").fadeIn();
     $('.f_bottom a').on('click',function(){
         $("#tab").show();
-        $(".r_content_flower").addClass("r_alert_start");
         $(".n_tab_div").fadeOut();
         var number = $(this).data("number");
         $("#tab_" + number).fadeIn();
