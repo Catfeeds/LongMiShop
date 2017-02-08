@@ -287,19 +287,19 @@ function collectRosesGetHelpValue( )
         ),
         array(
             "value" => 6,
-            "keys" => 35,
+            "keys" => 38,
         ),
         array(
             "value" => 7,
-            "keys" => 2,
+            "keys" => 5,
         ),
         array(
             "value" => 8,
-            "keys" => 2,
+            "keys" => 7,
         ),
         array(
             "value" => 9,
-            "keys" => 15,
+            "keys" => 10,
         ),
     );
     $randoms = array();
@@ -336,7 +336,8 @@ function collectRosesGetHelpValue( )
 function collectRosesTesting( $activityId )
 {
     $condition = array('activity_id' => $activityId);
-    $number = M('addons_collectroses_help_list')->where($condition)->group("value")->count();
+    $numbers = M('addons_collectroses_help_list')->where($condition)->group("value")->select();
+    $number = count($numbers);
     $condition = array('id' => $activityId,'state' => "0");
     if ($number == 9) {
         saveData("addons_collectroses_activity", $condition, array('state' => 1));
