@@ -64,11 +64,11 @@ body {
 
 
 .r_content{
-    width:200px;
-    height: 200px;
+    width:250px;
+    height: 250px;
     top: 40%;
     left: 50%;
-    margin-left: -100px;
+    margin-left: -125px;
     z-index: 2;
     background: #fff;
     border-radius: 50%;
@@ -77,8 +77,8 @@ body {
 }
 
 .r_content .f_flower_img{
-    width:40px;
-    height: 40px;
+    width:50px;
+    height:50px;
     position: absolute;
 }
 .r_content .f_flower_span{
@@ -95,84 +95,84 @@ body {
     position: absolute;
 }
 .r_content .f_flower_span_1{
-    top: 15px;
-    left: 100px;
+    top: 18px;
+    left: 120px;
 }
 .r_content .f_flower_span_2{
-    top: 45px;
-    left: 180px;
+    top: 54px;
+    left: 216px;
 }
 .r_content .f_flower_span_3{
-    top: 110px;
-    left: 180px;
+    top: 132px;
+    left: 216px;
 }
 .r_content .f_flower_span_4{
-    top: 165px;
-    left: 160px;
+    top: 198px;
+    left: 192px;
 }
 .r_content .f_flower_span_5{
-    top: 210px;
-    left: 100px;
+    top: 252px;
+    left: 120px;
 }
 .r_content .f_flower_span_6{
-    top: 195px;
-    left: 40px;
+    top: 234px;
+    left: 48px;
 }
 .r_content .f_flower_span_7{
-    top: 140px;
+    top: 168px;
     left: 0px;
 }
 .r_content .f_flower_span_8{
-    top: 80px;
+    top: 96px;
     left: 0px;
 }
 .r_content .f_flower_span_9{
-    top: 30px;
-    left: 30px;
+    top: 36px;
+    left: 36px;
 }
 
 .r_content .r_content_flower{
-    width:140px;
-    height: 140px;
-    top: 20px;
-    left: 30px;
+    width:180px;
+    height: 180px;
+    top:25px;
+    left: 35px;
     position: absolute;
 }
 .r_content .f_flower_img_1{
-    top: -20px;
-    left: 100px;
+    top: -24px;
+    left: 120px;
 }
 .r_content .f_flower_img_2{
-    top: 10px;
-    left: 160px;
+    top: 12px;
+    left: 192px;
 }
 .r_content .f_flower_img_3{
-    top: 70px;
-    left: 180px;
+    top: 84px;
+    left: 216px;
 }
 .r_content .f_flower_img_4{
-    top: 130px;
-    left: 165px;
+    top: 156px;
+    left: 198px;
 }
 .r_content .f_flower_img_5{
-    top: 175px;
-    left: 90px;
+    top: 210px;
+    left: 108px;
 }
 .r_content .f_flower_img_6{
-    top: 160px;
-    left: 20px;
+    top: 192px;
+    left: 24px;
 }
 .r_content .f_flower_img_7{
-    top: 100px;
-    left: -15px;
+    top: 120px;
+    left: -18px;
 }
 .r_content .f_flower_img_8{
-    top: 40px;
-    left: -10px;
+    top: 48px;
+    left: -12px;
 }
 .r_content .f_flower_img_9{
-    top: -5px;
-    left: 25px;
+    top: -6px;
+    left: 30px;
 }
 
 
