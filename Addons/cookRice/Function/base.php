@@ -269,7 +269,7 @@ function cookRiceGetHelpValue($activityId,$edition)
     );
     $value_c = array_merge($value_a, $value_b);
     $value_d = array_merge($value_c, $value_b);
-    $value_d = array_merge($value_d, $value_b);
+//    $value_d = array_merge($value_d, $value_b);
 //    $activityInfo = findDataWithCondition("addons_cookrice_activity",array("id"=>$activityId,"edition_id"=>$edition));
     $helpList = selectDataWithCondition("addons_cookrice_help_list", array('activity_id' => $activityId, "edition_id" => $edition));
     $number = 0;
