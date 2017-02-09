@@ -48,7 +48,7 @@ class agriculturalBankMobileController
             !check_mobile($p_phone) ? exit(json_encode(callback(false, "手机号格式有误"))) : false;
 //            is_null($p_branch) ? exit(json_encode(callback(false, "支行信息不能为空"))) : false;
 
-            !isExistenceDataWithCondition(self::TB_LIST, array("user_id" => $user_id)) ? exit(json_encode(callback(false, "已经领取过"))) : false;
+            isExistenceDataWithCondition(self::TB_LIST, array("user_id" => $user_id)) ? exit(json_encode(callback(false, "已经领取过"))) : false;
 
             $addData = array(
                 "p_name"      => $p_name,
