@@ -59,9 +59,13 @@ class agriculturalBankMobileController
                 "status"      => "0"
             );
             if (addData(self::TB_LIST, $addData)) {
-
+                if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
 //                $inviteUserId = 1;
-                $sendNewsCouponsId = 15;
+                    $sendNewsCouponsId = 25;
+                }else{
+//                $inviteUserId = 1;
+                    $sendNewsCouponsId = 15;
+                }
 
 //                createInviteRelationship($user_id,$inviteUserId,$this->assignData["userInfo"]['nickname'],getShopConfig());
                 addNewCoupon(  $sendNewsCouponsId, $user_id);
