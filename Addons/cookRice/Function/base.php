@@ -347,6 +347,10 @@ function cookRiceTesting( $activityId )
  */
 function cookRiceSetData( $userId, $edition,$get)
 {
+    $condition = array( "edition_id" => $edition, "state" => 2);
+    if (getCountWithCondition("addons_cookrice_activity", $condition) >= 5) {
+        return callback(false, "奖品已被领完！");
+    }
     $userName = $get["user_name"];
     $userPhone = $get["user_phone"];
     $userSite = $get["user_site"];
@@ -362,7 +366,7 @@ function cookRiceSetData( $userId, $edition,$get)
     if (!$userSite || $userSite == '') {
         return callback(false, "回寄地址不能为空");
     }
-    $condition = array("user_id" => $userId, "edition_id" => $edition, "state" => 1);
+    $condition["user_id"]=$userId;
     if (!isExistenceDataWithCondition("addons_cookrice_activity", $condition)) {
         return callback(false, "活动记录有误");
     }
