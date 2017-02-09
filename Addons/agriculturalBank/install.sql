@@ -1,4 +1,4 @@
-CREATE TABLE `lm_addons_partner_list` (
+CREATE TABLE `addons_agriculturalbank_list` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `p_name` varchar(100) DEFAULT NULL COMMENT '姓名',
   `p_phone` varchar(13) DEFAULT NULL COMMENT '手机号',
