@@ -6,25 +6,16 @@
                 ID
             </td>
             <td class="text-left">
-                合伙人姓名
+                姓名
             </td>
             <td class="text-left">
-                合伙人城市
+                手机号
             </td>
             <td class="text-left">
-                合伙人性别
+                用户ID
             </td>
             <td class="text-left">
-                合伙人手机号
-            </td>
-            <td class="text-left">
-                合伙人微信号
-            </td>
-            <td class="text-left">
-                合伙人邮箱
-            </td>
-            <td class="text-left">
-                合伙人个人优势
+                用户昵称
             </td>
             <td class="text-left">
                 申请时间
@@ -36,12 +27,9 @@
             <tr>
                 <td class="text-right">{$item.id}</td>
                 <td class="text-left">{$item.p_name}</td>
-                <td class="text-left">{$item.p_city}</td>
-                <td class="text-left">{$item.p_sex}</td>
                 <td class="text-left">{$item.p_phone}</td>
-                <td class="text-left">{$item.p_wechat}</td>
-                <td class="text-left">{$item.p_email}</td>
-                <td class="text-left">{$item.p_desc}</td>
+                <td class="text-left">{$item.user_id}</td>
+                <td class="text-left">{$item.user.nickname}</td>
                 <td class="text-left">{$item.create_time|date="Y-m-d H:d",###}</td>
             </tr>
         </volist>
