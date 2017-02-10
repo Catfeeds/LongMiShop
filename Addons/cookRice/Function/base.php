@@ -52,7 +52,7 @@ function cookRiceGetData( $userId , $edition, $activityId = null)
         $getList = cookRiceSetGetGiftUserList($getList);
     } else {
         $getList = selectDataWithCondition("addons_cookrice_activity", array('state' => "2", "edition_id" => $edition));
-        if (count($getList) >= 5) {
+        if (count($getList) >= 1) {
             $state = -1;
             $getList = cookRiceSetGetGiftUserList($getList);
         } else {
@@ -119,6 +119,10 @@ function cookRiceSetGetGiftUserList( $getList = array() ){
     $getList[] = array("user_name"=>"黄海华","user_phone"=>"18710625666");
     $getList[] = array("user_name"=>"陈圆圆","user_phone"=>"18818458745");
     $getList[] = array("user_name"=>"廖德宝","user_phone"=>"13614565845");
+    $getList[] = array("user_name"=>"李乐思","user_phone"=>"13432785694");
+    $getList[] = array("user_name"=>"黄华敏","user_phone"=>"13614536589");
+    $getList[] = array("user_name"=>"高大贤","user_phone"=>"18818458745");
+    $getList[] = array("user_name"=>"黄海明","user_phone"=>"13957578456");
     foreach ($getList as $key =>  $getItem){
         $len = mb_strlen($getItem['user_name'],'utf-8');
         if($len>=1){
@@ -348,7 +352,7 @@ function cookRiceTesting( $activityId )
 function cookRiceSetData( $userId, $edition,$get)
 {
     $condition = array( "edition_id" => $edition, "state" => 2);
-    if (getCountWithCondition("addons_cookrice_activity", $condition) >= 5) {
+    if (getCountWithCondition("addons_cookrice_activity", $condition) >= 1) {
         return callback(false, "奖品已被领完！");
     }
     $userName = $get["user_name"];
