@@ -374,6 +374,7 @@ function collectRosesSetData( $userId, $edition,$get)
         return callback(false, "回寄地址不能为空");
     }
     $condition["user_id"]=$userId;
+    $condition["state"] = 1;
     if (!isExistenceDataWithCondition("addons_collectroses_activity", $condition)) {
         return callback(false, "活动记录有误");
     }
