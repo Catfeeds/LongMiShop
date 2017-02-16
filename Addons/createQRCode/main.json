@@ -1,0 +1,8 @@
+{
+  "title" : "带参数二维码",
+  "desc"  : "生成带参数的二维码（永久）",
+  "code"  : "createQRCode",
+  "author": "钟瀚涛",
+  "is_hide": true,
+  "icon"  : "logo.jpg"
+}
