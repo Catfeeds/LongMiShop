@@ -1,0 +1,8 @@
+{
+  "title" : "推文二维码",
+  "desc"  : "推文二维码",
+  "code"  : "tweetQRCode",
+  "author": "钟瀚涛",
+  "is_hide": true,
+  "icon"  : "logo.jpg"
+}
