@@ -551,6 +551,10 @@ function findUserNickName($userId){
     $user = findDataWithCondition("users",array("user_id"=>$userId),"nickname");
     return $user['nickname'];
 }
+function findUserInfo($userId){
+    $user = findDataWithCondition("users",array("user_id"=>$userId));
+    return $user;
+}
 
 
 /**

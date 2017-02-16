@@ -31,6 +31,8 @@ class OrderLogic extends RelationModel
         if( !empty( $orderList ) ){
             foreach($orderList as $orderKeys => $items) {
                 $orderList[$orderKeys]['nickname'] = findUserNickName($items['user_id']);
+
+//                $orderList[$orderKeys]['userInfo'] = findUserInfo($items['user_id']);
                 $orderList[$orderKeys] = setBtnOrderStatus($items);
                 $orderList[$orderKeys]["goods"] = $this -> getOrderGoods( $items["order_id"] );
                 if (
@@ -65,6 +67,12 @@ class OrderLogic extends RelationModel
                         $orderList[$orderKeys]["goods"][$goodsKey]['result']    = $returnRes['result'];
                         $returnRes['result'] == 0 ? $orderList[$orderKeys]['isFast'] = false : false ;
                     }
+                }
+                $tempOrderInfo = M("order") -> where(array('user_id'=>$items['user_id'],"pay_status"=>"1"))->order("order_id")->find();
+                if( empty($tempOrderInfo) || $tempOrderInfo["order_id"]==$items["order_id"]){
+                    $orderList[$orderKeys]['is_one'] = true;
+                }else{
+                    $orderList[$orderKeys]['is_one'] = false;
                 }
             }
         }
