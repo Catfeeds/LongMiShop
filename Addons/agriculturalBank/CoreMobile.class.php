@@ -28,6 +28,13 @@ class agriculturalBankMobileController
     //首页
     public function index()
     {
+        //关注情况
+        $this->assignData["isFollow"] = $this->userInfo["is_follow"];
+        if ($_SERVER["HTTP_HOST"] == "www.longmiwang.com") {
+            $this->assignData["qrcode"] = "qrcode.jpg";
+        } else {
+            $this->assignData["qrcode"] = "qecode2.jpg";
+        }
         return $this->assignData;
     }
 
@@ -48,27 +55,27 @@ class agriculturalBankMobileController
             !check_mobile($p_phone) ? exit(json_encode(callback(false, "手机号格式有误"))) : false;
 //            is_null($p_branch) ? exit(json_encode(callback(false, "支行信息不能为空"))) : false;
 
-//            isExistenceDataWithCondition(self::TB_LIST, array("user_id" => $user_id)) ? exit(json_encode(callback(false, "已经领取过"))) : false;
+            isExistenceDataWithCondition(self::TB_LIST, array("user_id" => $user_id)) ? exit(json_encode(callback(false, "已经领取过"))) : false;
 
             $addData = array(
-                "p_name"      => $p_name,
-                "p_phone"     => $p_phone,
+                "p_name" => $p_name,
+                "p_phone" => $p_phone,
 //                "p_branch"    => $p_branch,
-                "user_id"     => $user_id,
+                "user_id" => $user_id,
                 "create_time" => time(),
-                "status"      => "0"
+                "status" => "0"
             );
             if (addData(self::TB_LIST, $addData)) {
-                if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
-//                $inviteUserId = 1;
+                if ($_SERVER["HTTP_HOST"] == "www.longmiwang.com") {
+                    $inviteUserId = 32516;
                     $sendNewsCouponsId = 25;
-                }else{
-//                $inviteUserId = 1;
+                } else {
+                    $inviteUserId = 5962;
                     $sendNewsCouponsId = 15;
                 }
 
-//                createInviteRelationship($user_id,$inviteUserId,$this->assignData["userInfo"]['nickname'],getShopConfig());
-                addNewCoupon(  $sendNewsCouponsId, $user_id);
+                createInviteRelationship($user_id, $inviteUserId, $this->assignData["userInfo"]['nickname'], getShopConfig());
+                addNewCoupon($sendNewsCouponsId, $user_id);
                 exit(json_encode(callback(true, "申请成功")));
             }
             exit(json_encode(callback(false, "领取失败")));
