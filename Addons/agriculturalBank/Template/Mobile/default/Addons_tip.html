@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>农行</title>
+    <meta http-equiv="keywords" content="农行" />
+    <meta name="description" content="农行" />
+    <script src="__STATIC__/js/mui.min.js"></script>
+    <script src="__STATIC__/js/TouchSlide.js"></script>
+    <script src="__STATIC__/js/jquery.js"></script>
+    <link href="__STATIC__/css/css.css" rel="stylesheet" />
+    <link href="__STATIC__/css/mui.min.css" rel="stylesheet" />
+</head>
+<body>
+<div class="tip_b">
+    <div>
+        <div>
+            <strong>提示</strong>
+        </div>
+        <div class="tip_b_div">
+            您还不是农行用户
+            <br/><a href="{:U('Mobile/Index/index')}">去龙米商城》》</a>
+        </div>
+    </div>
+</div>
+</body>
+<style>
+    .tip_b{
+        color: #858585;
+        line-height: 24px;
+        font-weight: normal;
+        font-size: 12px;
+        margin-top: 20px;
+        border:0px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        margin-left: 10px;
+        padding-top: 10px;
+    }
+    .tip_b strong{
+        border-left-width: 3px;
+        border-left-style: solid;
+        border-left-color: rgb(64, 118, 0);
+        line-height: 32px;
+        padding-left: 5px;
+        font-size: 14px;
+        font-weight: normal;
+        color: #333;
+    }
+    .tip_b span{
+        color: #B02F4B;
+    }
+    .tip_b_div{
+        margin: 8px 8% 6px 8%;
+        width: 86%;
+        color: rgb(136, 136, 136);
+        font-size: 12px;
+    }
+    .tip_text{
+        width: 90% !important;
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+        background-image: -moz-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
+        background-image: -webkit-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
+        background-image: -ms-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
+    }
+    #partner-form{
+        /*margin-top: 40px;*/
+    }
+    .login_btn a{
+        background:rgb(64, 118, 0);
+        border-color: rgb(64, 118, 0);
+    }
+</style>
+<script src="__PUBLIC__/js/global.js"></script>
+
+<if condition="$signPackage neq null">
+    <!-- 微信浏览器 调用微信 分享js-->
+    <if condition="$signPackage neq null">
+        <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script type="text/javascript">
+
+            var wx_title = '{$shareData.title}';
+            var wx_desc = '{$shareData.desc}';
+            var ShareLink = '{$shareData.url}';
+            var ShareImgUrl = '{$shareData.img}';
+
+            // 微信配置
+            wx.config({
+                debug: false,
+                appId: "{$signPackage['appId']}",
+                timestamp: '{$signPackage["timestamp"]}',
+                nonceStr: '{$signPackage["nonceStr"]}',
+                signature: '{$signPackage["signature"]}',
+                jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone','hideOptionMenu'] // 功能列表，我们要使用JS-SDK的什么功能
+            });
+
+            // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在 页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready 函数中。
+            wx.ready(function(){
+                // 获取"分享到朋友圈"按钮点击状态及自定义分享内容接口
+                wx.onMenuShareTimeline({
+                    title: wx_title, // 分享标题
+                    link:ShareLink,
+                    imgUrl:ShareImgUrl // 分享图标
+                });
+
+                // 获取"分享给朋友"按钮点击状态及自定义分享内容接口
+                wx.onMenuShareAppMessage({
+                    title: wx_title, // 分享标题
+                    desc: wx_desc, // 分享描述
+                    link:ShareLink,
+                    imgUrl:ShareImgUrl // 分享图标
+                });
+                // 分享到QQ
+                wx.onMenuShareQQ({
+                    title: wx_title, // 分享标题
+                    desc: wx_desc, // 分享描述
+                    link:ShareLink,
+                    imgUrl:ShareImgUrl // 分享图标
+                });
+                // 分享到QQ空间
+                wx.onMenuShareQZone({
+                    title: wx_title, // 分享标题
+                    desc: wx_desc, // 分享描述
+                    link:ShareLink,
+                    imgUrl:ShareImgUrl // 分享图标
+                });
+
+            });
+        </script>
+    </if>
+    <!-- 微信浏览器 调用微信 分享js  end-->
+</if>
+</html>

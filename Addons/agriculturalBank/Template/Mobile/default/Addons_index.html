@@ -9,7 +9,6 @@
     <script src="__STATIC__/js/mui.min.js"></script>
     <script src="__STATIC__/js/TouchSlide.js"></script>
     <script src="__STATIC__/js/jquery.js"></script>
-    <link   href="__STATIC__/css/css.css"       rel="stylesheet" />
     <link   href="__STATIC__/css/mui.min.css"   rel="stylesheet" />
 
 </head>
@@ -19,85 +18,73 @@
     <img src="__PUBLIC__/images/{$qrcode}"/>
     <p>关注公众号才能领取哦！<br>长按二维码即可关注哦！</p>
 </div>
-<p style="text-align: center; margin-top: 20px;"><span style="font-size: 16px;"><strong><span style="font-family:宋体"><span style="color: rgb(0, 0, 0);">农行用户大礼包领取</span></span></strong></span></p>
-<p style="font-size: 13px; line-height: normal; font-family: 'Helvetica Neue'; text-align: center;">▔▔</p>
-<div class="tip_b">
-    <div>
-        <div>
-            <strong>领取条件</strong>:
-        </div>
-        <div class="tip_b_div">
-            1.农行新注册用户<br>
-            2.农行VIP客户<br>
-        </div>
-    </div>
-</div>
-<div class="mui-content">
-    <form id='partner-form'>
-        <input type="hidden" name="pluginName" value="save"/>
-        <input type="text"   name="p_name"    class="tip_text" placeholder="输入姓名"/>
-        <input type="text"   name="p_phone"   class="tip_text" placeholder="输入手机"/>
-        <!--<select  name="p_branch"  class="tip_text">-->
+
+
+<div class="main">
+
+
+    <img src="__ADDONS__/images/bg.jpg" class="ab_bg"/>
+
+
+    <div class="ab_form">
+        <form id='partner-form'>
+            <input type="hidden" name="pluginName" value="save"/>
+            <input type="text"   name="p_name"    class="tip_text" style="top: 60%;"  placeholder="姓名"/>
+            <input type="text"   name="p_phone"   class="tip_text" style="top: 70%;"  placeholder="电话"/>
+            <!--<select  name="p_branch"  class="tip_text">-->
             <!--<option>选择支行</option>-->
             <!--<option>支行1</option>-->
             <!--<option>支行2</option>-->
             <!--<option>支行3</option>-->
             <!--<option>支行4</option>-->
-        <!--</select>-->
-    </form>
-    <div class="login_btn" style="margin-bottom: 20px;">
-        <a href="javascript:void(0);" id="mySubmit">立刻领取</a>
+            <!--</select>-->
+        </form>
+        <div class="login_btn" style="margin-bottom: 20px;">
+            <a href="javascript:void(0);"  style="top: 80%;" id="mySubmit">立刻领取</a>
+        </div>
     </div>
 </div>
 </body>
 <style>
-    .tip_b{
-        color: #858585;
-        line-height: 24px;
-        font-weight: normal;
-        font-size: 12px;
-        margin-top: 20px;
-        border:0px;
-        margin-right: 10px;
-        margin-bottom: 10px;
-        margin-left: 10px;
-        padding-top: 10px;
+    body{
+        width: 100%;
     }
-    .tip_b strong{
-        border-left-width: 3px;
-        border-left-style: solid;
-        border-left-color: rgb(64, 118, 0);
-        line-height: 32px;
-        padding-left: 5px;
-        font-size: 14px;
-        font-weight: normal;
-        color: #333;
+    .main{
+        position: absolute;
+        max-width: 640px;
     }
-    .tip_b span{
-        color: #B02F4B;
-    }
-    .tip_b_div{
-        margin: 8px 8% 6px 8%;
-        width: 86%;
-        color: rgb(136, 136, 136);
-        font-size: 12px;
-    }
-    .tip_text{
-        width: 90% !important;
-        display: block;
-        margin-right: auto;
-        margin-left: auto;
-        background-image: -moz-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
-        background-image: -webkit-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
-        background-image: -ms-linear-gradient( -90deg, rgb(245,245,245) 0%, rgb(255,255,255) 6%);
+    .ab_bg{
+        width: 100%;
+        top:0px;
+        left: 0px;
+        z-index: -1;
+        position: relative;
     }
     #partner-form{
         /*margin-top: 40px;*/
     }
-    .login_btn a{
-        background:rgb(64, 118, 0);
-        border-color: rgb(64, 118, 0);
+    .tip_text{
+        width: 50% !important;
+        position: absolute;
+        left: 25%;
+        border: 2px solid #128d79 !important;
+        border-radius: 10px !important;
     }
+
+    .login_btn a{
+        position: absolute;
+        left: 30%;
+        width: 40%;
+        display: block;
+        text-align: center;
+        color: #fff;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 10px;
+        background:#128d79;
+        font-weight: bold;
+    }
+
     .follow{
         width: 100%;
         height: 100%;
@@ -181,9 +168,7 @@
 <link href="__STATIC__/css/longmi.css" rel="stylesheet" />
 <script src="__PUBLIC__/js/global.js"></script>
 
-<if condition="$signPackage neq null">
-    <!-- 微信浏览器 调用微信 分享js-->
-    <if condition="$signPackage neq null">
+
         <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
         <script type="text/javascript">
 
@@ -235,7 +220,6 @@
 
             });
         </script>
-    </if>
-    <!-- 微信浏览器 调用微信 分享js  end-->
-</if>
+
+
 </html>

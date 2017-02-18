@@ -5,6 +5,7 @@ class agriculturalBankMobileController
 {
 
     const TB_LIST = "addons_agriculturalbank_list";
+    const TB_USER = "addons_agriculturalbank_user";
 
     public $userInfo = null;
     public $assignData = array();
@@ -28,6 +29,15 @@ class agriculturalBankMobileController
     //首页
     public function index()
     {
+        if( !isExistenceDataWithCondition(self::TB_USER,array("user_id" =>  $this->userInfo["user_id"]))){
+            $come = I('come',null);
+            if( !is_null($come) && $come == "weChat"){
+                header("Location: ".U("Mobile/Addons/agriculturalBank",array("pluginName"=>"tip")) );exit;
+            }else{
+                addData(self::TB_USER,array("user_id" =>  $this->userInfo["user_id"]));
+            }
+        }
+
         //关注情况
         $this->assignData["isFollow"] = $this->userInfo["is_follow"];
         if ($_SERVER["HTTP_HOST"] == "www.longmiwang.com") {
@@ -43,8 +53,6 @@ class agriculturalBankMobileController
     public function save()
     {
         if (IS_POST) {
-
-
             $p_name = I("p_name", null);
             $p_phone = I("p_phone", null);
 //            $p_branch = I("p_branch", null);
@@ -85,6 +93,11 @@ class agriculturalBankMobileController
 
     //提交结果
     public function submitMsg()
+    {
+        return $this->assignData;
+    }
+    //提示页面
+    public function tip()
     {
         return $this->assignData;
     }
