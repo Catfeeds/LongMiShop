@@ -29,6 +29,9 @@ class agriculturalBankMobileController
     //首页
     public function index()
     {
+        if(isExistenceDataWithCondition(self::TB_LIST, array("user_id" => $this->userInfo["user_id"]))){
+            header("Location: ".U("Mobile/Addons/agriculturalBank",array("pluginName"=>"submitMsg")) );exit;
+        }
         if( !isExistenceDataWithCondition(self::TB_USER,array("user_id" =>  $this->userInfo["user_id"]))){
             $come = I('come',null);
             if( !is_null($come) && $come == "weChat"){
