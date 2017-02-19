@@ -171,12 +171,6 @@
 
         <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
         <script type="text/javascript">
-
-            var wx_title = '{$shareData.title}';
-            var wx_desc = '{$shareData.desc}';
-            var ShareLink = '{$shareData.url}';
-            var ShareImgUrl = '{$shareData.img}';
-
             // 微信配置
             wx.config({
                 debug: false,
@@ -184,39 +178,12 @@
                 timestamp: '{$signPackage["timestamp"]}',
                 nonceStr: '{$signPackage["nonceStr"]}',
                 signature: '{$signPackage["signature"]}',
-                jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone','hideOptionMenu'] // 功能列表，我们要使用JS-SDK的什么功能
+                jsApiList: ['hideOptionMenu'] // 功能列表，我们要使用JS-SDK的什么功能
             });
 
             // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在 页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready 函数中。
             wx.ready(function(){
-                // 获取"分享到朋友圈"按钮点击状态及自定义分享内容接口
-                wx.onMenuShareTimeline({
-                    title: wx_title, // 分享标题
-                    link:ShareLink,
-                    imgUrl:ShareImgUrl // 分享图标
-                });
-
-                // 获取"分享给朋友"按钮点击状态及自定义分享内容接口
-                wx.onMenuShareAppMessage({
-                    title: wx_title, // 分享标题
-                    desc: wx_desc, // 分享描述
-                    link:ShareLink,
-                    imgUrl:ShareImgUrl // 分享图标
-                });
-                // 分享到QQ
-                wx.onMenuShareQQ({
-                    title: wx_title, // 分享标题
-                    desc: wx_desc, // 分享描述
-                    link:ShareLink,
-                    imgUrl:ShareImgUrl // 分享图标
-                });
-                // 分享到QQ空间
-                wx.onMenuShareQZone({
-                    title: wx_title, // 分享标题
-                    desc: wx_desc, // 分享描述
-                    link:ShareLink,
-                    imgUrl:ShareImgUrl // 分享图标
-                });
+                wx.hideOptionMenu();
 
             });
         </script>
