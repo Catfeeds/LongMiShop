@@ -1,7 +1,7 @@
 <include file="Public/header2"/>
 <body style="background: #fff;">
 <include file="Public/loading"/>
-<if condition = "$isFile == true" >
+<if condition = "$isFile != true" >
 
 
     <div class="new_poster">
@@ -13,6 +13,7 @@
         <span>就将赚得<b>{$inviteData.point}{$inviteData.balance}{$inviteData.coupon.money}元</b>龙米基金放入您的账户，</span>
         <span>基金累计<b>{$shopConfig.basic_withdraw_storage}元</b>可实现提现哟。</span>
         <span>每次通过你的二维码下单我们都会有信息提示哦~</span>
+        <span><a href="{:U('Mobile/Recommend/recommendList')}">点击查看邀请列表</a></span>
         <img src="__PUBLIC__/poster/poster_{$user.user_id}.png?v={$versionToken}" >
     </div>
 
