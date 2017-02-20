@@ -12,22 +12,29 @@ class fightGroupsMobileController
     public function __construct($userInfo)
     {
         $this->assignData["userInfo"] = $this->userInfo = $userInfo;
+        $this->assignData["v"]= time();
 
-        $this->assignData["sharePath"] = "./Addons/partner/Template/Mobile/default/Addons_wxShare.html";
-        if (isWeChatBrowser()) {
-            $weChatLogic = new \Common\Logic\WeChatLogic();
-            $this->assignData["signPackage"] = $weChatLogic->getSignPackage();
-            $this->assignData["shareData"] = array(
-                "title" => "龙米合伙人",
-                "desc"  => "龙米合伙人招募",
-                "img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Template/index/default/Static/images/sh-02.png",
-                "url"   => "http://" . $_SERVER["HTTP_HOST"] . U("Mobile/Addons/partner")
-            );
-        }
+        $this->assignData["headerPath"]= "./Addons/fightGroups/Template/Mobile/default/Addons_header.html";
+        $this->assignData["jsPath"]= "./Addons/fightGroups/Template/Mobile/default/Addons_js.html";
+
+        $weChatLogic = new \Common\Logic\WeChatLogic();
+        $this->assignData["signPackage"] = $weChatLogic->getSignPackage();
+        $this->assignData["shareData"] = array(
+            "title" => "龙米合伙人",
+            "desc"  => "龙米合伙人招募",
+            "img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Template/index/default/Static/images/sh-02.png",
+            "url"   => "http://" . $_SERVER["HTTP_HOST"] . U("Mobile/Addons/partner")
+        );
     }
 
     //首页
     public function index()
+    {
+        return $this->assignData;
+    }
+
+
+    public function tip()
     {
         return $this->assignData;
     }
