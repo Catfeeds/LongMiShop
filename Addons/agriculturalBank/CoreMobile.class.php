@@ -41,7 +41,7 @@ class agriculturalBankMobileController
         }
 
         //关注情况
-        $this->assignData["isFollow"] = $this->userInfo["is_follow"];
+        $this->assignData["isFollow"] = 1;//$this->userInfo["is_follow"];
         if ($_SERVER["HTTP_HOST"] == "www.longmiwang.com") {
             $this->assignData["qrcode"] = "qrcode.jpg";
         } else {
