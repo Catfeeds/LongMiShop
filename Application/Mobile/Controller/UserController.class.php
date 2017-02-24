@@ -371,6 +371,15 @@ class UserController extends MobileBaseController {
     public function save_address(){
         $id = I('address_id');
         $data = I('post.');
+        if(empty($data["consignee"])){
+            $this->error('收货人姓名不能为空');exit;
+        }
+        if(empty($data["mobile"])){
+            $this->error('收货人手机号不能为空');exit;
+        }
+        if(empty($data["address"])){
+            $this->error('收货人地址不能为空');exit;
+        }
         $data['user_id'] = $this->user_id;
         if( !empty($data['is_default']) ){
             M('user_address') -> where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
@@ -1339,8 +1348,11 @@ class UserController extends MobileBaseController {
 
 
     public function getCoupon(){
-        $id = I("id");
-        $id = 17;
+        $id = I("id",null);
+
+        is_null($id)?$id=17:false;
+        !in_array($id,array('17',"16"))?$id=17:false;
+
         if( empty($id)  || !isExistenceDataWithCondition("coupon",array("id"=>$id))  ){
             header("Location: ".U("Mobile/User/index"));
             exit;
