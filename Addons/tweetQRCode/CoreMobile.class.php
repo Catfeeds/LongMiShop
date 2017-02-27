@@ -21,7 +21,9 @@ class tweetQRCodeMobileController
     public function index()
     {
         if( $this->userInfo['is_follow'] == 1){
-           dd("此处会跳到推文");
+
+            header("Location: http://mp.weixin.qq.com/s/Y3wh3M03BnrWgw6gyj-nOg");
+            exit;
         }
 
         return $this->assignData;
