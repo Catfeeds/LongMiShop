@@ -22,7 +22,7 @@ class tweetQRCodeMobileController
     {
         if( $this->userInfo['is_follow'] == 1){
 
-            header("Location: http://mp.weixin.qq.com/s/Y3wh3M03BnrWgw6gyj-nOg");
+            header("Location: http://mp.weixin.qq.com/s/ksHv0QFtJEOAUJOv0QNTNQ");
             exit;
         }
 
