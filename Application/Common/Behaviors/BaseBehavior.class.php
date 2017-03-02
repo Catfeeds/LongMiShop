@@ -9,21 +9,24 @@ class BaseBehavior extends Behavior{
         }
 
         if(MODULE_NAME == "Admin"){
-            if( isMobile() ){
-                C("DEFAULT_THEME","Moving");
-                C("TMPL_PARSE_STRING.__STATIC__","/Template/admin/Moving/Static");
-                $routeArray =  array(
-                    '/Admin/Index/index'=>'/Admin/Index/welcome',
-                );
+//            if( isMobile() ){
+//                C("DEFAULT_THEME","Moving");
+//                C("TMPL_PARSE_STRING.__STATIC__","/Template/admin/Moving/Static");
+//                $routeArray =  array(
+//                    '/Admin/Index/index'=>'/Admin/Index/welcome',
+//                );
+//
+//                if(!empty($routeArray[__ACTION__])){
+//                    header("Location: ".U($routeArray[__ACTION__])."");
+//                    exit;
+//                }
+//            }else{
+//                C("DEFAULT_THEME","new");
+//                C("TMPL_PARSE_STRING.__STATIC__","/Template/admin/new/Static");
+//            }
 
-                if(!empty($routeArray[__ACTION__])){
-                    header("Location: ".U($routeArray[__ACTION__])."");
-                    exit;
-                }
-            }else{
-                C("DEFAULT_THEME","new");
-                C("TMPL_PARSE_STRING.__STATIC__","/Template/admin/new/Static");
-            }
+            C("DEFAULT_THEME","new");
+            C("TMPL_PARSE_STRING.__STATIC__","/Template/admin/new/Static");
         }
     }
 }
