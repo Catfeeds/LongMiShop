@@ -88,15 +88,16 @@ abstract class MobileBaseController extends BaseController {
             $this -> assign('auth',true);
         }
         if( isWeChatBrowser() ){
+            if( ACTION_NAME != "tweetQRCode"){
+                $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
+                $this -> weChatConfig   = $this -> weChatLogic -> weChatConfig;
 
-            $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
-            $this -> weChatConfig   = $this -> weChatLogic -> weChatConfig;
+                $this -> weChatLogic -> authorization();
+                $this -> assign('wechat_config', $this->weChatConfig);
 
-            $this -> weChatLogic -> authorization();
-            $this -> assign('wechat_config', $this->weChatConfig);
-
-            $signPackage = $this -> weChatLogic -> getSignPackage();
-            $this -> assign('signPackage', $signPackage);
+                $signPackage = $this -> weChatLogic -> getSignPackage();
+                $this -> assign('signPackage', $signPackage);
+            }
 
         }else{
             /**
