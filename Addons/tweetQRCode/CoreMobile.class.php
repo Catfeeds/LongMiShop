@@ -20,13 +20,13 @@ class tweetQRCodeMobileController
     //首页
     public function index()
     {
-        if( $this->userInfo['is_follow'] == 1){
+//        if( $this->userInfo['is_follow'] == 1){
 
             header("Location: http://mp.weixin.qq.com/s/ksHv0QFtJEOAUJOv0QNTNQ");
             exit;
-        }
-
-        return $this->assignData;
+//        }
+//
+//        return $this->assignData;
     }
 
 }
