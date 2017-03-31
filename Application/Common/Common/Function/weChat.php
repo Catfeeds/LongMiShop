@@ -207,7 +207,9 @@ function sendWeChatMessage( $openid , $type , $data ){
         "完成",
         "送券",
         "成功邀请",
+        "成功邀请2",
         "邀请奖励",
+        "邀请奖励2",
         "拒绝提现",
         "成功提现",
     );
