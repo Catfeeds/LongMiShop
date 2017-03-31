@@ -389,6 +389,8 @@ function createMyPoster( $userInfo , $url )
  *
  */
 function createInviteRelationship( $userID , $inviteUserId , $nickname , $shopConfig = null ){
+
+
     if(
         !empty( $userID ) &&
         !empty( $inviteUserId ) &&
@@ -413,7 +415,12 @@ function createInviteRelationship( $userID , $inviteUserId , $nickname , $shopCo
             sendWeChatMessageUseUserId( $userID , "送券" , array("couponId" => $shopConfig['prize_invited_to_value']) );
         }
         if(  $shopConfig['prize_invite'] == 2 ){
-            sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array( "userName" => $nickname ,"money" => $shopConfig['prize_invite_value'] ) );
+            $isSpecial = isSpecialInvitation($inviteUserId);
+            if( $isSpecial ){
+                sendWeChatMessageUseUserId( $inviteUserId , "成功邀请2" , array( "userName" => $nickname ,"money" => $shopConfig['prize_invite_value'] ) );
+            }else{
+                sendWeChatMessageUseUserId( $inviteUserId , "成功邀请" , array( "userName" => $nickname ,"money" => $shopConfig['prize_invite_value'] ) );
+            }
         }
         return true;
     }
@@ -1001,4 +1008,28 @@ function changeOrderMemberMoney( $level , $user_id ){
     }
     M('cart')->execute("update `__PREFIX__cart` set member_goods_price = goods_price* {$discount} where (user_id ='".$user_id."')");
 
+}
+
+
+
+/**
+ * @return array
+ */
+function getSpecialInvitation(){
+    $array = array(
+        "35421","35420","5823"
+    );
+    return $array;
+}
+
+/**
+ * @param $userId
+ * @return bool
+ */
+function isSpecialInvitation( $userId ){
+    $users = getSpecialInvitation();
+    if( in_array($userId,$users)){
+        return true;
+    }
+    return false;
 }

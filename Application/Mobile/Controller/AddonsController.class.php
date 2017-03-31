@@ -15,7 +15,9 @@ class AddonsController extends MobileBaseController {
 
     function exceptAuthActions()
     {
-        return null;
+        return array(
+            "tweetQRCode"
+        );
     }
 
     public function  _initialize() {
@@ -66,5 +68,10 @@ class AddonsController extends MobileBaseController {
      */
     public function  _empty(){}
 
+
+    public function tweetQRCode(){
+        header("Location: http://mp.weixin.qq.com/s/ksHv0QFtJEOAUJOv0QNTNQ");
+        exit;
+    }
 
 }
