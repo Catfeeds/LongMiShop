@@ -195,7 +195,7 @@ class CartController extends MobileBaseController {
             }
 
             if($item['admin_id'] == 0){
-                $sum += $item['member_goods_price'];
+                $sum += $item['member_goods_price'] * $item['goods_num'];
             }
 
 
