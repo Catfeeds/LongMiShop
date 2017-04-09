@@ -24,4 +24,9 @@ class createQRCodeAdminController
         return $this->assignData;
     }
 
+    
+    public function create(){
+        addons_create_qr_code(time());
+    }
+
 }
