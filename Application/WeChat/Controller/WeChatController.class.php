@@ -84,7 +84,7 @@ class WeChatController extends Controller {
         if($postObj->MsgType == 'event' && ($postObj->Event == 'subscribe' || $postObj->Event == 'SCAN' ))
         {
             $qrCode = trim($postObj->EventKey);
-            if(strstr($qrCode,"addons_qe_code_")){
+            if(strstr($qrCode,"addons_qr_code_")){
                 $qrInfo = findDataWithCondition("addons_createqrcode_qr",array("code"=>$qrCode),array('id','key_word'));
                 if( !empty($qrInfo)){
                     $data = array(
