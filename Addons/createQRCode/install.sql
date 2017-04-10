@@ -1,5 +1,5 @@
 CREATE TABLE `lm_addons_createqrcode_list` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `qr_id` int(11) DEFAULT NULL,
   `create_time` int(11) DEFAULT NULL,
   `openid` varchar(100) DEFAULT NULL,
