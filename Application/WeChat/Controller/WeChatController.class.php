@@ -80,6 +80,26 @@ class WeChatController extends Controller {
                 M('users') -> where($where) -> save($data);
             }
         }
+
+        if($postObj->MsgType == 'event' && ($postObj->Event == 'subscribe' || $postObj->Event == 'SCAN' ))
+        {
+            $qrCode = trim($postObj->EventKey);
+            if(strstr($qrCode,"addons_qe_code_")){
+                $qrInfo = findDataWithCondition("addons_createqrcode_qr",array("code"=>$qrCode),array('id','key_word'));
+                if( !empty($qrInfo)){
+                    $data = array(
+                        "qr_id"=>$qrInfo['id'],
+                        "create_time"=>time(),
+                        "openid"=>$fromUsername,
+                        "event"=>$postObj->Event,
+                        "tag"=>json_encode($postObj),
+                    );
+                    addData("addons_createqrcode_list",$data);
+                    $keyword = $qrInfo["key_word"];
+                }
+            }
+        }
+
         if($postObj->MsgType == 'event' && $postObj->Event == 'unsubscribe')
         {
             if( !empty($fromUsername) ){
