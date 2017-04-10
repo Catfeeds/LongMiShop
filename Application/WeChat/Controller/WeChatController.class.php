@@ -87,11 +87,12 @@ class WeChatController extends Controller {
             if(strstr($qrCode,"addons_qr_code_")){
                 $qrInfo = findDataWithCondition("addons_createqrcode_qr",array("code"=>$qrCode),array('id','key_word'));
                 if( !empty($qrInfo)){
+                    $postObjArray=json_decode(json_encode($postObj),true);
                     $data = array(
                         "qr_id"=>$qrInfo['id'],
                         "create_time"=>time(),
-                        "openid"=>$fromUsername,
-                        "event"=>$postObj->Event,
+                        "openid"=>$postObjArray['FromUserName'],
+                        "event"=>$postObjArray['Event'],
                         "tag"=>json_encode($postObj),
                     );
                     addData("addons_createqrcode_list",$data);
