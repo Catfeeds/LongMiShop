@@ -87,7 +87,7 @@ class createQRCodeAdminController
     public function order(){
         $id = I('id');
         $user_id = I('user_id');
-        $info = findDataWithCondition(self::TB_QR, array("id" => $id));
+        $info = findDataWithCondition(self::TB_LIST, array("id" => $id));
 
         $condition = "user_id ='".$user_id."' and add_time >= '".$info['create_time']."' and pay_status = 1";
         $count = getCountWithCondition("order", $condition);
