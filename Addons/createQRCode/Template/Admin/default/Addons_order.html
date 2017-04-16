@@ -3,32 +3,36 @@
         <thead>
         <tr>
             <td class="text-right">
-                ID
+                订单ID
             </td>
             <td class="text-left">
-                昵称
+                订单号
             </td>
             <td class="text-left">
-                类型
+                状态
             </td>
             <td class="text-left">
-                扫码时间
+                订单总价
             </td>
             <td class="text-left">
-                扫码之后的订单情况
+                下单时间
+            </td>
+            <td class="text-left">
+                操作
             </td>
         </tr>
         </thead>
         <tbody>
         <volist name="list" id="item">
             <tr>
-                <td class="text-right">{$item.id}</td>
-                <td class="text-left">{$item.nickname}</td>
-                <td class="text-left">{$item.event}</td>
-                <td class="text-left">{$item.create_time|date="Y-m-d H:d",###}</td>
+                <td class="text-right">{$item.order_id}</td>
+                <td class="text-left">{$item.order_sn}</td>
+                <td class="text-left">{$item.order_status_desc}</td>
+                <td class="text-left">{$item.total_amount}</td>
+                <td class="text-left">{$item.add_time|date="Y-m-d H:d",###}</td>
                 <td class="text-left">
-                    <a href="{: U('Admin/Addons/createQRCode',array('pluginName'=>'order','id'=>$item['id'],'user_id'=>$item['user_id'])) }">
-                        查看
+                    <a href="{:U('Admin/order/detail',array('order_id'=>$item['order_id']))}">
+                        查看详情
                     </a>
                 </td>
             </tr>
