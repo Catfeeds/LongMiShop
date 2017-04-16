@@ -52,7 +52,7 @@ class breakFastMobileController
                     $condition['create_time'] = time();
                     addData(self::TB_DATA, $condition);
                     if(accountLog($this->userInfo['user_id'],1,0,"早餐打卡")){
-                        $text = "打卡成功！1元余额已到达你的账户【<a href=\"".U('Mobile/User/account')."\">点击查看</a>】";
+                        $text = "打卡成功！1元余额已到达你的账户【<a href='".U('Mobile/User/account')."'>点击查看</a>】";
                         $jsSdkLogic = new \Common\Logic\JsSdkLogic();
                         $jsSdkLogic->push_msg($this->userInfo['openid'], $text);
                     }
