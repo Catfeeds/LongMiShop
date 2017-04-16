@@ -1,5 +1,5 @@
 <?php
-@include 'Addons/breakFast /Function/base.php';
+@include 'Addons/breakFast/Function/base.php';
 
 class breakFastMobileController
 {
