@@ -78,6 +78,11 @@ class OrderController extends MobileBaseController {
 
 
     public function weChatPaySuccess(){
+        if( !empty($this -> shopConfig["basic_pay_ok_url"])){
+            header("Location: ".$this -> shopConfig["basic_pay_ok_url"]);
+            exit;
+        }
+
         $this -> display();
     }
 

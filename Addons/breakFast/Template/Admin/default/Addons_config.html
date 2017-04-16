@@ -1,0 +1,89 @@
+<form id="configForm" enctype="multipart/form-data" method="post" action="{:U('Admin/Addons/breakFast')}">
+    <div class="tab-content">
+
+        <div class="tab-pane active">
+            <table class="table table-bordered">
+
+                <tr>
+                    <td>网页标题:</td>
+                    <td width="85%">
+                        <input name="config[title]" class="form-control"  value="{$config.title}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>主页背景图：</td>
+                    <td >
+                        <input type="button" value="上传图片"  onclick="GetUploadify(1,'','configImg','call_back');"/>
+                        <input type="text" class="input-sm"  name="config[index_bg]" id="shareimg" value="{$config.index_bg}"/>
+                        <if condition="$config['index_bg'] neq null">
+                            <a target="_blank" href="{$config.index_bg}" id="shareimg2">
+                                <img width="150" height="150" src="{$config.index_bg}">
+                            </a>
+                        </if>
+                    </td>
+                </tr>
+                <tr>
+                    <td>结果页背景图：</td>
+                    <td >
+                        <input type="button" value="上传图片"  onclick="GetUploadify(1,'','configImg','call_back2');"/>
+                        <input type="text" class="input-sm"  name="config[over_bg]" id="shareimg3" value="{$config.over_bg}"/>
+                        <if condition="$config['over_bg'] neq null">
+                            <a target="_blank" href="{$config.over_bg}" id="shareimg4">
+                                <img width="150" height="150" src="{$config.over_bg}">
+                            </a>
+                        </if>
+                    </td>
+                </tr>
+                <tr>
+                    <td>分享标题:</td>
+                    <td width="85%">
+                        <input name="config[share_title]" class="form-control"  value="{$config.share_title}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>分享简介:</td>
+                    <td width="85%">
+                        <input name="config[share_desc]" class="form-control"  value="{$config.share_desc}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>分享图片：</td>
+                    <td >
+                        <input type="button" value="上传图片"  onclick="GetUploadify(1,'','configImg','call_back3');"/>
+                        <input type="text" class="input-sm"  name="config[share_img]" id="shareimg5" value="{$config.share_img}"/>
+                        <if condition="$config['share_img'] neq null">
+                            <a target="_blank" href="{$config.share_img}" id="shareimg6">
+                                <img width="150" height="150" src="{$config.share_img}">
+                            </a>
+                        </if>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="pull-right">
+            <input type="hidden" name="pluginName" value="config">
+            <button class="btn btn-primary" onclick="ajaxSubmitForm();" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
+        </div>
+    </div>
+</form>
+<script>
+    function ajaxSubmitForm(){
+        $('#configForm').submit();
+    }
+    // 上传分享图片成功回调函数
+    function call_back(file_url_tmp){
+        $("#shareimg").val(file_url_tmp);
+        $("#shareimg2").attr('href', file_url_tmp);
+        $("#shareimg2 img").attr('src', file_url_tmp);
+    }
+    function call_back2(file_url_tmp){
+        $("#shareimg3").val(file_url_tmp);
+        $("#shareimg4").attr('href', file_url_tmp);
+        $("#shareimg4 img").attr('src', file_url_tmp);
+    }
+    function call_back3(file_url_tmp){
+        $("#shareimg5").val(file_url_tmp);
+        $("#shareimg6").attr('href', file_url_tmp);
+        $("#shareimg6 img").attr('src', file_url_tmp);
+    }
+</script>

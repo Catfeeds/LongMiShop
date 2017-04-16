@@ -33,7 +33,15 @@ class createQRCodeAdminController
         $count = getCountWithCondition(self::TB_LIST, $condition);
         $Page = new \Think\Page($count, 10);
         $show = $Page->show();
-        $this->assignData['list'] = M(self::TB_LIST)->where($condition)->limit($Page->firstRow, $Page->listRows)->order(" create_time desc")->select();
+        $lists =M(self::TB_LIST)->where($condition)->limit($Page->firstRow, $Page->listRows)->order(" create_time desc")->select();
+        if(!empty($lists)){
+            foreach ($lists as $key=>$list){
+                $user = findDataWithCondition("users",array('openid'=>$list['openid']),"nickname");
+                $lists[$key]["nickname"] = $user["nickname"];
+                $lists[$key]["user_id"] = $user["user_id"];
+            }
+        }
+        $this->assignData['list'] =$lists;
         $this->assignData['page'] = $show;
         return $this->assignData;
     }
@@ -72,6 +80,24 @@ class createQRCodeAdminController
             }
         }
         $this->assignData['info'] = $info;
+        return $this->assignData;
+    }
+
+
+    public function order(){
+        $id = I('id');
+        $user_id = I('user_id');
+        $info = findDataWithCondition(self::TB_QR, array("id" => $id));
+
+        $condition = "user_id ='{$user_id}' and add_time >= {$info['create_time']} and pay_status = 1";
+        $count = getCountWithCondition("order", $condition);
+        $Page = new \Think\Page($count, 10);
+        $show = $Page->show();
+        $lists =M("order")->where($condition)->limit($Page->firstRow, $Page->listRows)->order(" add_time desc")->select();
+        $orderLogic = new Admin\Logic\OrderLogic();
+        $lists = $orderLogic -> getOrderListInfo( $lists );
+        $this->assignData['list'] =$lists;
+        $this->assignData['page'] = $show;
         return $this->assignData;
     }
 
