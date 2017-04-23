@@ -20,23 +20,23 @@ class BreakFastCronClass
         }
         $configs = $return;
 
-        $endTime =  $configs['start_time'] + $configs['days'] *24*60*60;
-//        if ($this->nineItem == '08') {
-        if($endTime > time() && time() >  $configs['start_time'] ){
-            $userList = M('addons_breakfast_data')->group("user_id")->select();
-            if(!empty($userList)){
-                foreach ($userList as $item) {
-                    $userInfo = findDataWithCondition("users",array('user_id'=>$item['user_id']),"openid");
-                    $text = $configs['tx_text']."【<a href = 'http://".$_SERVER['HTTP_HOST'].U("Mobile/Addons/breakFast",array('pluginName'=>'over'))."'>点击打卡 来领取你本日余额</a>】";
-                    $jsSdkLogic = new \Common\Logic\JsSdkLogic();
-                    $jsSdkLogic->push_msg($userInfo['openid'], $text);
+        $endTime = $configs['start_time'] + $configs['days'] * 24 * 60 * 60;
+        if ($this->nineItem == '08') {
+            if ($endTime > time() && time() > $configs['start_time']) {
+                $userList = M('addons_breakfast_data')->group("user_id")->select();
+                if (!empty($userList)) {
+                    foreach ($userList as $item) {
+                        $userInfo = findDataWithCondition("users", array('user_id' => $item['user_id']), "openid");
+                        $text = $configs['tx_text'] . "【<a href = 'http://" . $_SERVER['HTTP_HOST'] . U("Mobile/Addons/breakFast", array('pluginName' => 'over')) . "'>点击打卡 来领取你本日余额</a>】";
+                        $jsSdkLogic = new \Common\Logic\JsSdkLogic();
+                        $jsSdkLogic->push_msg($userInfo['openid'], $text);
+                    }
                 }
             }
-        }
 
-//        }
+        }
     }
 }
 
 $breakFastCronClassObj = new BreakFastCronClass();
-$breakFastCronClassObj -> init();
+$breakFastCronClassObj->init();
