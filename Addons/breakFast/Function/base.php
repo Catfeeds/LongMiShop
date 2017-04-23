@@ -31,10 +31,11 @@ function break_fast_is_hour()
 
 function break_fast_get_status()
 {
-    $time = array(
-        "start" => 0,
-        "end" => 1492617600,
-    );
+    $time = array();
+    $config = break_fast_get_config();
+    $time["start"] = $config['start_time'];
+    $time["end"] = $config['start_time'] + $config['days'] * 24*60*60;
+
     if ($time["end"] <= time()) {
         return 3;
     } else if ($time["start"] <= time()) {

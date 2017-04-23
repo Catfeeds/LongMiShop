@@ -43,6 +43,9 @@ class breakFastAdminController
             $dataList = I("config");
             if( !empty($dataList)){
                 foreach ($dataList as $dataKey => $dataItem){
+                    if( $dataKey == "start_time"){
+                        $dataItem = $dataList[$dataKey] = strtotime($dataItem);
+                    }
                     $condition = array("key_name" => $dataKey);
                     if(getCountWithCondition(self::TB_CONFIG,$condition)>0){
                         $data = array("val" =>$dataItem);
@@ -56,7 +59,9 @@ class breakFastAdminController
             }
             return addonsError("非法访问");
         }
-        $this->assignData["config"] = break_fast_get_config();
+        $config = break_fast_get_config();
+        $config['start_time'] = !empty($config['start_time'] )?$config['start_time']:time();
+        $this->assignData["config"] = $config;
         return $this->assignData;
     }
 
