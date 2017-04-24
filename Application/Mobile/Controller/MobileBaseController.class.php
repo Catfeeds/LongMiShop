@@ -24,54 +24,17 @@ abstract class MobileBaseController extends BaseController {
     public function _initialize() {
         parent::_initialize();
         //验证部分
-//        if( !isWeChatBrowser() ){
-//            if ( !isLoginState() ) {
-//                if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
-//                    if( !in_array(ACTION_NAME, array("login2","returnSession")) ){
-//                        header("location:".U('Mobile/User/login2'));
-//                        exit;
-//                    }
-//                }else{
-//                    if( $this -> needAuth() ){
-//                        $redirectedUrl = session("redirectedUrl");
-//                        if( empty( $redirectedUrl ) ){
-//                            session("redirectedUrl",$_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]) ;
-//                        }
-////                echo "请在微信端访问！";exit;
-//                        header("location:".U('Mobile/User/login'));
-//                        exit;
-//                    }
-//                }
-//            }
-//        }
         if( !isWeChatBrowser() ){
             if ( !isLoginState() ) {
-//                if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
-//                    if( !in_array(ACTION_NAME, array("login2","returnSession")) ){
-//                        header("location:".U('Mobile/User/login2'));
-//                        exit;
-//                    }
-//                }else{
                     if( $this -> needAuth() ){
                         $redirectedUrl = session("redirectedUrl");
                         if( empty( $redirectedUrl ) ){
                             session("redirectedUrl",$_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]) ;
                         }
-//                echo "请在微信端访问！";exit;
                         header("location:".U('Mobile/User/login'));
                         exit;
                     }
-//                }
             }
-//        }else{
-//            $this -> weChatLogic    = new \Common\Logic\WeChatLogic();
-//            $this -> weChatConfig   = $this -> weChatLogic -> weChatConfig;
-//
-//            $this -> weChatLogic -> authorization();
-//            $this -> assign('wechat_config', $this->weChatConfig);
-//
-//            $signPackage = $this -> weChatLogic -> getSignPackage();
-//            $this -> assign('signPackage', $signPackage);
         }
 
         $this -> user_id = session(__UserID__);
@@ -97,6 +60,28 @@ abstract class MobileBaseController extends BaseController {
 
                 $signPackage = $this -> weChatLogic -> getSignPackage();
                 $this -> assign('signPackage', $signPackage);
+
+                //用户轨迹记录
+                if(!empty($this -> user_id)){
+                    if (in_array(ACTION_NAME, array(
+                            "index",
+                            "goodsInfo",
+                            "myPoster",
+                            "coupon",
+                            "goodsList",
+                            "cart",
+                        ))|| strstr($_SERVER['REQUEST_URI'], "Addons")
+                    ) {
+                        $userRouteData = array(
+                            "url" => 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                            "create_time" => time(),
+                            "user_id" => $this->user_id,
+                            "type" =>ACTION_NAME
+                        );
+                        addData("user_route",$userRouteData);
+                    }
+                }
+
             }
 
         }else{
@@ -104,7 +89,6 @@ abstract class MobileBaseController extends BaseController {
              * 普通手机页面入口
              */
         }
-
 
 
         $this -> public_assign();

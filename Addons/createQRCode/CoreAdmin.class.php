@@ -101,4 +101,20 @@ class createQRCodeAdminController
         return $this->assignData;
     }
 
+    public function route(){
+        $id = I('id');
+        $user_id = I('user_id');
+        $info = findDataWithCondition(self::TB_LIST, array("id" => $id));
+
+        $condition = "user_id ='".$user_id."' and create_time >= '".$info['create_time']."' ";
+        $count = getCountWithCondition("user_route", $condition);
+        $Page = new \Think\Page($count, 50);
+        $show = $Page->show();
+        $lists =M("user_route")->where($condition)->limit($Page->firstRow, $Page->listRows)->order(" create_time desc")->select();
+        $this->assignData['list'] =$lists;
+        $this->assignData['page'] = $show;
+        return $this->assignData;
+    }
+
+
 }

@@ -526,5 +526,14 @@ MODIFY COLUMN `points_clear_time`  int(11) NOT NULL DEFAULT 0 COMMENT '积分清
 ALTER TABLE `lm_users`
 ADD COLUMN `need_show_level`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否需要显示升级动画' AFTER `level`;
 
+DROP TABLE IF EXISTS `lm_user_route`;
+CREATE TABLE `lm_user_route` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
   ";

@@ -189,11 +189,12 @@
             for( var i = 1 ;i <= days;i++){
                 var timestamp2= parseInt(timestamp) + (i-1)*24*60*60;
                 var html2 = ' <tr><td>'+getLocalTime(timestamp2)+'背景图：</td><td >' +
-                        '<input type="button" value="上传图片"  onclick="GetUploadify(1,\'_'+timestamp+'\',\'configImg\');"/>' +
-                        '<input type="text" class="input-sm _'+timestamp+'"  name="config[ok_bg_'+timestamp+']" />' +
+                        '<input type="button" value="上传图片"  onclick="GetUploadify(1,\'_'+timestamp2+'\',\'configImg\');"/>' +
+                        '<input type="text" class="input-sm _'+timestamp2+'"  name="config[ok_bg_'+timestamp2+']" />' +
                         '</td></tr>';
                 html += html2;
             }
+            $("#f5_div").html("");
             $("#f5_div").append(html);
         });
     });

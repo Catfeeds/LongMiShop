@@ -28,7 +28,10 @@
                 <td class="text-left">{$item.create_time|date="Y-m-d H:d",###}</td>
                 <td class="text-left">
                     <a href="{: U('Admin/Addons/createQRCode',array('pluginName'=>'order','id'=>$item['id'],'user_id'=>$item['user_id'])) }">
-                        查看
+                        订单查看
+                    </a>
+                    <a href="{: U('Admin/Addons/createQRCode',array('pluginName'=>'route','id'=>$item['id'],'user_id'=>$item['user_id'])) }">
+                        浏览路径查看
                     </a>
                 </td>
             </tr>
