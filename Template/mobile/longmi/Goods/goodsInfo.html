@@ -52,6 +52,7 @@
     </div>
 
 
+    <if condition=" $goods['isOldManTime']">
     <style>
         .count_down{
             width: 100%;
@@ -70,7 +71,6 @@
     <div class="count_down" >
          <span id="count_down">距结束仅剩&nbsp;<b>00</b>天<b>00</b>时<b>00</b>分<b>00</b>秒(已结束)</span>
     </div>
-    <if condition=" $goods['isOldManTime']">
         <if condition=" !$goods['isOver']">
     <script type="text/javascript">
         window.onload = function () {
