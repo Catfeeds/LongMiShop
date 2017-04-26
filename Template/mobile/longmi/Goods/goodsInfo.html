@@ -50,6 +50,66 @@
         </if>
 
     </div>
+
+
+    <style>
+        .count_down{
+            width: 100%;
+            background: #fff;
+            margin-bottom: 1px;
+        }
+        .count_down span{
+            margin-left: 10px;
+            line-height: 30px;
+            display: block;
+        }
+        .count_down span b{
+            color: #a6dc3d;
+        }
+    </style>
+    <div class="count_down" >
+         <span id="count_down">距结束仅剩&nbsp;<b>00</b>天<b>00</b>时<b>00</b>分<b>00</b>秒(已结束)</span>
+    </div>
+    <if condition=" $goods['isOldManTime']">
+        <if condition=" !$goods['isOver']">
+    <script type="text/javascript">
+        window.onload = function () {
+
+            var total = parseInt("{$goods['diffTime']}");
+            var timer = null;
+
+            var count_down = document.getElementById('count_down');
+
+            function countdown() {
+                timer = setInterval(function () {
+                    total--;
+                    if (total <= 0) {
+                        clearInterval(timer);
+                        count_down.innerHTML = "距结束仅剩&nbsp;<b>00</b>天<b>00</b>时<b>00</b>分<b>00</b>秒";
+                        window.location.href = window.location.href + "&_tk={$_W['token']}";
+                    } else {
+                        var ss = Math.floor(total );
+                        var day = parseInt(ss / 86400);
+                        var remain = ss % 86400;
+                        var hours = parseInt(remain / 3600);
+                        remain = remain % 3600;
+                        var min = parseInt(remain / 60);
+                        ss = remain % 60;
+                        var ms = total - Math.floor(total / 100) * 100;
+                        day = day < 10 ? "0" + day : day;
+                        hours = hours < 10 ? "0" + hours : hours;
+                        min = min < 10 ? "0" + min : min;
+                        ss = ss < 10 ? "0" + ss : ss;
+                        ms = ms < 10 ? "0" + ms : ms;
+                        count_down.innerHTML = "距结束仅剩&nbsp;<b>" + day + "</b>天<b>" + hours + "</b>时<b>" + min + "</b>分<b>" + ss+"</b>秒";
+                    }
+                }, 1000);
+            };
+            countdown();
+        };
+    </script>
+        </if>
+        </if>
     <div class="price">
         <div class="price_left">{$goods.goods_name}</div>
     </div>
@@ -263,6 +323,18 @@
                 data : $('#buy_goods_form').serialize(),// 你的formid 搜索表单 序列化提交
                 dataType:'json',
                 success: function(data){
+                    <if condition=" $goods['isOldManTime']">
+
+                            <if condition=" !$goods['isOldMan']">
+                            alert("该活动只对老用户开放");
+                    return false;
+                            </if>
+                            <if condition=" $goods['isOver']">
+                            alert("活动已经结束");
+                             return false;
+                            </if>
+                    </if>
+
                     // 加入购物车后再跳转到 购物车页面
                     if(data.status < 0)
                     {

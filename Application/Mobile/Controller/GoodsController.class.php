@@ -194,6 +194,25 @@ class GoodsController extends MobileBaseController {
         	$this->error('此商品不存在或者已下架');
         }
 
+        //老用户促销
+        if (!empty($goods['old_mam_timer'])) {
+            $goods['isOldManTime'] =  true;
+            $diffTime = $goods['old_mam_timer'] - time();
+            if( $diffTime < 2 ){
+                $isOver = true;
+                M('Cart') -> where(array('goods_id'=>$goods_id))->delete();
+            }else{
+                $goods['diffTime'] = $diffTime;
+                $isOver = false;
+            }
+            $isOldMan = false;
+            if($this->user['last_buy_time'] > 0){
+                $isOldMan = true;
+            }
+            $goods['isOver'] = $isOver;
+            $goods['isOldMan'] = $isOldMan;
+        }
+
 //        if($goods['brand_id']){
 //            $brnad = M('brand') -> where("id =".$goods['brand_id'])->find();
 //            $goods['brand_name'] = $brnad['name'];
