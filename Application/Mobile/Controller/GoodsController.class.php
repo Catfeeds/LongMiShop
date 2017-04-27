@@ -205,10 +205,10 @@ class GoodsController extends MobileBaseController {
                 $goods['diffTime'] = $diffTime;
                 $isOver = false;
             }
-            $isOldMan = false;
-            if($this->user['last_buy_time'] > 0){
-                $isOldMan = true;
-            }
+            $isOldMan = true;
+            //if($this->user['last_buy_time'] > 0 || $goods_id == 23){
+            //    $isOldMan = true;
+           // }
             $goods['isOver'] = $isOver;
             $goods['isOldMan'] = $isOldMan;
         }
