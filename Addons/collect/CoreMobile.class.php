@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 @include 'Addons/collect/Function/base.php';
 
 
@@ -44,7 +44,7 @@ class collectMobileController
 
 //        dd($data);
         $this->assignData["id"] = $data["id"];
-        $this->assignData["status"] = $data["status"] = 5;
+        $this->assignData["status"] = $data["status"];
         $this->assignData["numbers"] = $data['number'];
         $this->assignData["getList"] = $data['getList'];
         $this->assignData["helpList"] = $data['helpList'];
