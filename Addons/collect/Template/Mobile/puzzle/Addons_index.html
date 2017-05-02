@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta content="telephone=no" name="format-detection" />
+    <title>集齐9朵爱情玫瑰，即可获赠龙米独家“有钱花”</title>
+    <meta name="description" content="集齐9朵爱情玫瑰，即可获赠龙米独家“有钱花”" />
+    <meta http-equiv="keywords" content="集齐9朵爱情玫瑰，即可获赠龙米独家“有钱花”" />
+    <link href="__PUBLIC__/mui/css/mui.min.css" rel="stylesheet" />
+    <link href="{$__temp}/css/style.css?{$v}" rel="stylesheet" />
+</head>
+<body>
+
+<!--关注部分-->
+<div class="follow" id="follow">
+    <img src="__PUBLIC__/images/{$qrcode}"/>
+    <p>关注公众号才能玩游戏哦！<br>长按二维码即可关注哦！</p>
+</div>
+
+<!--分享遮罩-->
+<div id="guide">
+    <img src="{$__temp}/images/guide.png">
+</div>
+
+<!--头部-->
+<img src="{$__temp}/images/r_logo.jpg" class="r_logo" >
+
+<div class="r_content">
+    <img src="{$__temp}/images/r_content_flower.png" class="r_content_flower" >
+    <volist name="numbers" id="number">
+        <div class="f_flower_img_div">
+            <if condition = "$number['number'] == 0 and $status neq 1 and $status neq -1">
+                <else/>
+                <img src="{$__temp}/images/pt_{$number.value}.jpg" class="f_flower_img f_flower_img_{$number.value}">
+                </if>
+        </div>
+    </volist>
+</div>
+
+
+<div class="r_alert" id="r_alert">
+    <div class="r_alert_bg"></div>
+    <div class="r_alert_div">
+        <img src="{$__temp}/images/top_nav_title.png"  id="r_alert_flower_img">
+        <img src="{$__temp}/images/pt_1.jpg"  id="r_alert_img">
+    </div>
+    <div class="n_button" style="background:none;position: absolute;top: 70%;">
+        <a href="javascript:new_jop();" class="f_c_button2">
+            <!--拉好友-->
+            <img src="{$__temp}/images/r_btn_2.png" >
+        </a>
+    </div>
+</div>
+
+<div class="main">
+    <if condition = "$status eq -1">
+        <span class="n_tip">活动已经结束啦</span>
+        <style>
+            .n_tip{ top:40%; font-size: 30px; }
+        </style>
+    </if>
+    <if condition = "$status eq 1">
+        <span class="n_tip">拼出一张完整海报<br/>第一好吃的龙米跟着你回家</span>
+        <div class="n_button">
+            <a href="javascript:void(0);" class="f_c_button">
+                <!--我也要玩-->
+                <img src="{$__temp}/images/r_btn_1.png" >
+            </a>
+        </div>
+    </if>
+    <if condition = "$status eq 2">
+        <span class="n_tip">拼出一张完整海报<br/>第一好吃的龙米跟着你回家</span>
+        <div class="n_button">
+            <a href="javascript:void(0);" class="f_c_button">
+                <!--拉好友-->
+                <img src="{$__temp}/images/r_btn_3.png" >
+            </a>
+        </div>
+    </if>
+    <if condition = "$status eq 3">
+        <span class="n_tip"></span>
+        <div class="n_button">
+            <a href="javascript:void(0);" class="f_c_button" style="    width: 40%; margin:9px 2% 0 8%;float: left;">
+                <!--帮ta煮饭-->
+                <img src="{$__temp}/images/r_btn_5.png" >
+            </a>
+            <a href="{:U('Mobile/Addons/collect')}" class="f_c_button2" style="    width: 40%; margin:9px 8% 0 2%;float: left;">
+                <!--我也要玩-->
+                <img src="{$__temp}/images/r_btn_4.png" >
+            </a>
+        </div>
+    </if>
+    <if condition = "$status eq 4">
+        <span class="n_tip"></span>
+        <div class="n_button">
+            <a href="{:U('Mobile/Addons/collect')}" class="f_c_button2">
+                <!--我也要玩-->
+                <img src="{$__temp}/images/r_btn_4.png" >
+            </a>
+        </div>
+    </if>
+    <if condition = "$status eq 5">
+        <span class="n_tip"></span>
+        <div class="n_application" >
+            <form action="" method="post" class="form">
+                <input type="text" id="user_name"  placeholder="姓名：">
+                <input type="text" id="user_phone" placeholder="手机号：">
+                <input type="text" id="user_site"  placeholder="邮寄地址：">
+            </form>
+        </div>
+        <div class="n_button" >
+            <a href="javascript:void(0);" class="f_c_button"   style=" width: 156px;">
+                <!--提交资料-->
+                <img src="{$__temp}/images/r_btn_5.png" >
+            </a>
+        </div>
+    </if>
+    <if condition = "$status eq 6">
+        <span class="n_tip">小伙伴已经集齐花朵啦！</span>
+        <div class="n_button">
+            <a href="javascript:void(0);" class="f_c_button2">
+                <!--我也要玩-->
+                <img src="{$__temp}/images/r_btn_4.png" >
+            </a>
+        </div>
+    </if>
+    <if condition = "$status eq 7">
+        <span class="n_tip" style=" top: 68%;">3天之内会有龙米客服会联系您哦</span>
+        <div class="n_button" >
+            <a href="{:U('Mobile/Addons/collect')}" class="f_c_button2" style="width: 156px;">
+                <!--领取成功-->
+                <img src="{$__temp}/images/r_btn_6.png" >
+            </a>
+        </div>
+    </if>
+
+
+
+    <div class="f_bottom">
+        <a href="javascript:void(0);" data-number = "1">
+            <img src="{$__temp}/images/r_nav_btn_1.png" >
+        </a>
+        <a href="javascript:void(0);" data-number = "2" style="width: 30%;margin: 0;">
+            <img src="{$__temp}/images/r_nav_btn_2.png" >
+        </a>
+        <a href="javascript:void(0);" data-number = "3">
+            <img src="{$__temp}/images/r_nav_btn_3.png" >
+        </a>
+    </div>
+    <div class="n_tab" id="tab">
+        <div class="n_tab_div" id="tab_1">
+            <div class="n_tab_div_tip">
+                <if condition = "$status eq -1">
+                    <volist name="getList" id="getItem">
+                        <div class="f_help">
+                            <span style="float: left;">
+                                &nbsp;&nbsp;{$getItem.user_name}&nbsp;&nbsp;&nbsp;{$getItem.user_phone}
+                            </span>
+                        </div>
+                    </volist>
+                    <else/>
+                    <empty name="helpList">
+                        <span class="tip_span">还没有好友助力！</span>
+                        <else/>
+                        <volist name="helpList" id="helpItem">
+                            <div class="f_help">
+                                <img src="{$helpItem.head_pic}">
+                                <span>{$helpItem.desc}</span>
+                            </div>
+                        </volist>
+                    </empty>
+                    </if>
+            </div>
+        </div>
+        <div class="n_tab_div" id="tab_2">
+            <div class="n_tab_div_tip">
+                <img class="n_tab_content" src="{$__temp}/images/n_content_01.jpg"/>
+            </div>
+        </div>
+        <div class="n_tab_div" id="tab_3">
+            <div class="n_tab_div_tip">
+                <p>1. 如何参与</p>
+                <span class="tip_span">点击［开始拼图］发起活动，并为自己“拼图”一次，邀请好友帮你抽取拼图。拼图会随机出现，直到拼成一张完整的海报，奖品就是你的，奖品是超棒的8罐装龙米，包邮哦。</span>
+                <p>2. 活动时间</p>
+                <span class="tip_span">即日起至5月11日12:00，奖品共100箱，送完则活动结束；款式为龙米7＋1小动物款，中奖者需填写详细正确的信息，以便领奖审核；（刷奖等作弊行为将取消领奖资格，且1个手机号、1个微信号、1个地址仅限领取1箱龙米）活动结束后30个工作日内发放奖品。<br> 本次活动最终解释权归龙米所有。</span>
+            </div>
+        </div>
+        <div class="n_tab_div_tip_shrink"></div>
+    </div>
+
+
+</div>
+</body>
+
+
+<script src="__PUBLIC__/js/jquery-1.10.2.min.js"></script>
+
+
+<if condition=" !$isFollow ">
+    <script type="text/javascript">
+        $("#follow").show();
+    </script>
+    <else/>
+    <script src="__PUBLIC__/mui/js/mui.min.js"></script>
+    <script type="text/javascript">
+        var imagesUrl="{$__temp}/images/";
+        var ApiUrl = "{:U('Mobile/Addons/collect')}";
+        var status = "{$status}";
+        var activityId = "{$id}";
+        function alert( msg ){
+            mui.toast( msg );
+        }
+        var ShareLink = "{$config['share_url']}";
+        if(status != 1){
+            ShareLink = ShareLink+"?activityId="+activityId;
+        }
+    </script>
+    <script src="{$__temp}/js/addons.js?{$v}" type="text/javascript"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        var ShareImgUrl = "{$config['share_img']}";
+        var ShareTitle = "{$config['share_title']}";
+        var ShareDesc = "{$config['share_desc']}";
+        wx.config({
+            debug: false,
+            appId: "{$signPackage['appId']}",
+            timestamp: '{$signPackage["timestamp"]}',
+            nonceStr: '{$signPackage["nonceStr"]}',
+            signature: '{$signPackage["signature"]}',
+            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage','hideOptionMenu']
+        });
+        wx.ready(function(){
+            wx.onMenuShareTimeline({
+                title: ShareTitle,
+                link:ShareLink,
+                imgUrl:ShareImgUrl
+            });
+            wx.onMenuShareAppMessage({
+                title: ShareTitle,
+                desc: ShareDesc,
+                link:ShareLink,
+                imgUrl:ShareImgUrl
+            });
+
+        });
+    </script>
+</if>
+</html>

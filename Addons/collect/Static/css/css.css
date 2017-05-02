@@ -1,0 +1,439 @@
+/*
+* @Author: zhonght
+* @Date:   2016-12-08
+*/
+* {
+    font-size: 100%;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+    font-size: 12px;
+    color: #3f3f42;
+    text-align: center;
+}
+span{
+    color: #3f3f42;
+}
+html {
+    font-size: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+body {
+    font-family: "微软雅黑";
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 640px;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    color: #3f3f42;
+    margin-top: 0;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: justify;
+    background:url("../images/n_bg.jpg") repeat left center;
+}
+
+
+
+
+.logo {
+    width: 10%;
+    right:5px;
+    top:5px;
+    position: absolute;
+}
+.n_zs {
+    width:100%;
+    right: 0;
+    top:0;
+    position: absolute;
+}
+
+.n_logo{
+    width: 80%;
+    right: 10%;
+    top:7%;
+    position: absolute;
+}
+.n_logo2{
+    width: 40%;
+    left: 5px;
+    top:5px;
+    position: absolute;
+}
+
+
+.main {
+    width: 100%;
+    top: 35%;
+    z-index: 1;
+    position: absolute;
+}
+.main .bg2{
+    width: 100%;
+    top: 0;
+    z-index: -1;
+    position: relative;
+}
+.main .pot_1{
+    width: 76%;
+    top: 0;
+    left:12%;
+    z-index: -1;
+    position: absolute;
+}
+.main .pot_2{
+    width: 76%;
+    top: -30%;
+    left: 12%;
+    z-index: -1;
+    position: absolute;
+}
+.main .pot_3{
+    width: 90%;
+    top: -50%;
+    left:5%;
+    z-index: -1;
+    position: absolute;
+}
+
+.main .bg img{
+    width: 100%;
+}
+
+
+.n_thermometer{
+    width: 70px;
+    left: 10px;
+    top:-20px;
+    position: absolute;
+}
+.n_thermometer .n_thermometer_bg{
+    width: 100%;
+}
+.n_thermometer .n_white_edge{
+    position: absolute;
+    top: 30px;
+    left: 15px;
+    background: #f4d2d3;
+    width: 3px;
+    height: 70%;
+    z-index: 1;
+}
+.n_thermometer .n_progress_bar{
+    position: absolute;
+    bottom: 45px;
+    left: 13px;
+    background: #cd3335;
+    width: 12px;
+    height: 153px;
+    border-radius: 6px 6px 0 0;
+}
+
+.n_number_tip{
+    width: 120px;
+    height: 69px;
+    left: 53px;
+    top: 135px;
+    position: absolute;
+    background: url("../images/n_number_tip_bg.png") left top no-repeat;
+    background-size: 120px 69px;
+}
+.n_number_tip p{
+    color: #530f10;
+    transform:scale(0.8);
+    display: block;
+    line-height: 19px;
+    width: 90px;
+    height: 39px;
+    margin: 5px 10px 15px 20px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+.n_tip{
+    position: absolute;
+    color: #cd3335;
+    z-index: 1;
+    display: block;
+    width: 80%;
+    left: 10%;
+    top: 52%;
+    text-align: center;
+    font-size: 12px;
+}
+
+.n_button{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 60%;
+}
+
+.n_application{
+    width: 70%;
+    margin: 0 15%;
+    position: absolute;
+    top:35%;
+}
+.n_application .form{
+}
+.n_application .form input{
+    width: 100%;
+    border: 2px solid #530f10;
+    color: #530f10;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+.n_application .form .n_application_tip{
+    color: #6f6e68;
+    text-align: center;
+    font-size: 12px;
+    display: block;
+    line-height: 56px;
+    height: 56px;
+    width: 100%;
+}
+
+.n_application .form input::-webkit-input-placeholder{color:#530f10;font-weight: bold;}
+.n_application .form input::-moz-placeholder{color:#530f10;font-weight: bold;}
+.n_application .form input::-moz-placeholder{color:#530f10;font-weight: bold;}
+
+
+.n_tab{
+    background: #f1bb00;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 95%;
+}
+.n_tab .n_tab_div{
+    width: 100%;
+    overflow: hidden;
+    display: none;
+}
+.n_tab .n_tab_div_tip{
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px 0;
+    background: #fff;
+    border: 6px solid #b14d19;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+
+.n_tab .n_tab_div_tip p{
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    margin-left: 5px;
+    display: block;
+    float: left;
+    background: url("../images/n_tab_div_tip_title.png") center no-repeat;
+    background-size: 100px 30px;
+}
+.n_tab .n_tab_div_tip .tip_span{
+    width: 90%;
+    margin: 0 5% 30px 5%;
+    line-height: 20px;
+    display: block;
+    float: left;
+}
+
+.n_tab .n_tab_div_tip_shrink{
+    width:43px;
+    margin:10px auto;
+    background: url("../images/n_tab_div_tip_shrink.png") center no-repeat;
+    background-size: 43px 10px;
+    height:10px;
+    display: block;
+}
+
+.n_tab .n_tab_div .n_tab_content {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    float: left;
+}
+
+.f_tip{
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    height: 56px;
+    line-height: 56px;
+    font-size: 16px;
+    font-weight: 100;
+}
+
+.f_pic{
+    margin-top: 20px;
+    width: 100%;
+}
+.f_pic img{
+    width: 100%;
+}
+
+.f_c_button,.f_c_button2{
+    width: 65%;
+    margin: 9px auto 0 auto;
+    display: block;
+}
+.f_c_button img,.f_c_button2 img{
+    width: 100%;
+    -webkit-animation: rob_run .4s infinite linear ;
+    animation: rob_run .4s infinite linear ;
+}
+
+
+.f_bottom{
+    z-index: 1;
+    width: 100%;
+    position: absolute;
+    top: 80%;
+}
+.f_bottom a{
+    display: block;
+    width: 28%;
+    margin: 0 2.6%;
+    float: left;
+}
+.f_bottom a img{
+    width: 100%;
+}
+
+
+
+.f_describe_top{
+    width: 100%;
+    height: 59px;
+    background: url("../images/f_describe_top.jpg") no-repeat top left;
+    background-size: 70px 59px;
+}
+.f_describe{
+    width: 92%;
+    overflow: hidden;
+    margin: 0 4%;
+    padding: 0 4% 30px 4%;
+    min-height: 300px;
+    background: url("../images/f_describe_bottom.jpg") no-repeat bottom right;
+    background-size: 70px 62px;
+}
+.f_describe p{
+    margin:0px;
+    font-weight: bold;
+}
+
+.f_tab{
+    display: none;
+}
+
+
+.f_help_list{
+    width: 100%;
+    overflow: hidden;
+}
+.f_help{
+    width: 100%;
+    padding: 0 10px;
+    margin: 2px 0;
+    height: 50px;
+    overflow: hidden;
+    float: left;
+}
+
+.f_help img{
+    width:50px;
+    height: 50px;
+    border-radius: 50%;
+    float: left;
+}
+.f_help span{
+    float: right;
+    display: block;
+    height: 50px;
+    line-height: 25px;
+    width: 60%;
+}
+
+
+
+
+
+#guide{
+    position: fixed;
+    z-index: 99999;
+    width: 100%;
+    height: 100%;
+    opacity:1;
+    top:0;
+    right: 0;
+    display: none;
+}
+#guide img{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+}
+
+
+
+.follow{
+    width: 100%;
+    height: 100%;
+    background: #333;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: 3;
+    display: none;
+}
+
+.follow img{
+    width: 80%;
+    margin: 10%;
+}
+.follow p{
+    width: 80%;
+    margin: 10%;
+    color: #fff;
+    display:block;
+    font-size: 20px;
+    text-align:center;
+}
+
+
+
+
+/*动画效果*/
+@-webkit-keyframes rob_run {
+    from { }
+    to {
+        transform:translateY(3px);
+        -ms-transform:translateY(3px); 	/* IE 9 */
+        -moz-transform:translateY(3px); 	/* Firefox */
+        -webkit-transform:translateY(3px); /* Safari 和 Chrome */
+        -o-transform:translateY(3px);
+    }
+}
+@keyframes rob_run {
+    from {  }
+    to {
+        transform:translateY(3px);
+        -ms-transform:translateY(3px); 	/* IE 9 */
+        -moz-transform:translateY(3px); 	/* Firefox */
+        -webkit-transform:translateY(3px); /* Safari 和 Chrome */
+        -o-transform:translateY(3px);
+    }
+}
