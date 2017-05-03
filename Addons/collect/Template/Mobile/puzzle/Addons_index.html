@@ -29,7 +29,21 @@
     奖品还剩&nbsp;<b>{$surplus}</b>
 </span>
 
+<div class="r_content">
+    <img src="{$__temp}/images/r_content_flower.png" class="r_content_flower" >
+    <volist name="numbers" id="number">
+        <div class="f_flower_img_div">
+            <if condition = "$number['number'] == 0 and $status neq 1 and $status neq -1">
+                <else/>
+                <img src="{$__temp}/images/pt_{$number.value}.jpg" class="f_flower_img f_flower_img_{$number.value}">
+                <if condition = "$status neq 1 and $status neq -1">
+                    <span  class="f_flower_img f_flower_img_{$number.value}" style="width:80px;display:block;text-align:right;color: #ff0017; font-size: 20px;">×{$number['number']}</span>
 
+                </if>
+                </if>
+        </div>
+    </volist>
+</div>
 
 
 <div class="r_alert" id="r_alert">
