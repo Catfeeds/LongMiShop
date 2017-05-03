@@ -17,7 +17,7 @@ class collectMobileController
 
     public function __construct($userInfo)
     {
-        $this->assignData["v"] = "v1.0";
+        $this->assignData["v"] = "v1.1";
         $this->user = $userInfo;
         $this->config = collectGetConfig();
         $this->edition = $this->config["edition"];
@@ -25,30 +25,27 @@ class collectMobileController
         $this->assignData["__theme"] = $this->config["data"][$this->edition]['theme'];
         $this->assignData["__temp"] = "/Addons/collect/Template/Mobile/".$this->assignData["__theme"]."/Static";
 
-        //分享
-        $this->assignData["config"] = array(
-            "share_title" => "江湖救急！动动手指来帮我抢龙米吧，我的奖品分你一口～",
-            "share_desc"  => " ",
-            "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/collect/Template、Mobile、puzzle、Static/images/top_nav_title.png",
-            "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/collect')
-        );
-        $weChatLogic = new \Common\Logic\WeChatLogic();
-        $this->assignData["signPackage"] = $weChatLogic->getSignPackage();
-
     }
 
     //初始页面
     public function index()
     {
-        $data = collectGetData($this->user["user_id"], $this->edition, I("activityId", null));
+        //分享
+        $this->assignData["config"] = array(
+            "share_title" => "有饭青年，请把龙米带回家",
+            "share_desc"  => "江湖救急！动动手指来帮我抢龙米吧，我的奖品分你一口～",
+            "share_img"   => "http://" . $_SERVER["HTTP_HOST"] . "/Addons/collect/Template/Mobile/puzzle/Static/images/top_nav_title.png",
+            "share_url"   => "http://" . $_SERVER["HTTP_HOST"] . U('Mobile/Addons/collect')
+        );
+        $weChatLogic = new \Common\Logic\WeChatLogic();
+        $this->assignData["signPackage"] = $weChatLogic->getSignPackage();
 
-//        dd($data);
+        $data = collectGetData($this->user["user_id"], $this->edition, I("activityId", null));
         $this->assignData["id"] = $data["id"];
         $this->assignData["status"] = $data["status"];
         $this->assignData["numbers"] = $data['number'];
         $this->assignData["getList"] = $data['getList'];
         $this->assignData["helpList"] = $data['helpList'];
-
 
         if ($_SERVER["HTTP_HOST"] == "www.longmiwang.com") {
             $this->assignData["qrcode"] = "qrcode.jpg";

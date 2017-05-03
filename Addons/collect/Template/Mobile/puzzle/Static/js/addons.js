@@ -85,6 +85,7 @@ function cookRiceButtonClick() {
             needAjax = true;
             var user_name = $("#user_name").val();
             var user_phone = $("#user_phone").val();
+            var user_wechat = $("#user_wechat").val();
             var user_site = $("#user_site").val();
             if (user_name == "") {
                 alert("得奖人姓名不能为空");
@@ -101,12 +102,17 @@ function cookRiceButtonClick() {
                 lock = false;
                 return;
             }
-            if (user_site == "") {
-                alert("回寄地址不能为空");
+            if (user_wechat == "") {
+                alert("微信号不能为空");
                 lock = false;
                 return;
             }
-            data = {pluginName: "setData", activityId: activityId,user_name:user_name,user_phone:user_phone,user_site:user_site};
+            if (user_site == "") {
+                alert("地址不能为空");
+                lock = false;
+                return;
+            }
+            data = {pluginName: "setData", activityId: activityId,user_name:user_name,user_wechat:user_wechat,user_phone:user_phone,user_site:user_site};
             break;
         default:
             break;

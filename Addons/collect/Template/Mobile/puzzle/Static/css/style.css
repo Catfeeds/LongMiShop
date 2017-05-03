@@ -281,8 +281,9 @@ body {
 }
 .n_application .form input{
     width: 100%;
-    border: 2px solid #c1150e;
-    color: #c1150e;
+    border: 2px solid #000000;
+    color: #000000;
+    background: #f3f3f3;
     margin-bottom: 5px;
     border-radius: 10px;
 }
@@ -296,9 +297,9 @@ body {
     width: 100%;
 }
 
-.n_application .form input::-webkit-input-placeholder{color:#c1150e;font-weight: bold;}
-.n_application .form input::-moz-placeholder{color:#c1150e;font-weight: bold;}
-.n_application .form input::-moz-placeholder{color:#c1150e;font-weight: bold;}
+.n_application .form input::-webkit-input-placeholder{color:#000000;font-weight: bold;}
+.n_application .form input::-moz-placeholder{color:#000000;font-weight: bold;}
+.n_application .form input::-moz-placeholder{color:#000000;font-weight: bold;}
 
 
 .n_tab{
