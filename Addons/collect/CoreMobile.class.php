@@ -16,7 +16,7 @@ class collectMobileController
 
     public function __construct($userInfo)
     {
-        $this->assignData["v"] = "v1.3".time();
+        $this->assignData["v"] = "v1.4";
         $this->user = $userInfo;
         $this->config = collectGetConfig();
         $this->edition = $this->config["edition"];
