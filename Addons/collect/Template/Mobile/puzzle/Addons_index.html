@@ -33,6 +33,10 @@
             <if condition = "$number['number'] == 0 and $status neq 1 and $status neq -1">
                 <else/>
                 <img src="{$__temp}/images/pt_{$number.value}.jpg" class="f_flower_img f_flower_img_{$number.value}">
+                <if condition = "$status neq 1 and $status neq -1">
+                    <span  class="f_flower_img f_flower_img_{$number.value}" style="margin:-10px 0 0 65px;color: #ff0017; font-size: 20px;">×{$number['number']}</span>
+
+                </if>
                 </if>
         </div>
     </volist>
