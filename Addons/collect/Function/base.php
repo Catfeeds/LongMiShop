@@ -35,7 +35,7 @@ function collectGetConfig()
             ),
         ),
         "getManNumber" => array(
-            "1" => "1",
+            "1" => "10",
         )
     );
     return $array;
@@ -93,14 +93,14 @@ function collectGetData($userId, $edition, $activityId = null)
         ),
     );
     $helpList = array();
-    $getList = array();
     $config = collectGetConfig();
+    $getList = selectDataWithCondition("addons_collect_activity", array('state' => "2", "edition_id" => $edition));
+    $surplus = $config["getManNumber"][$edition] - count($getList);
     if ($config["data"][$edition]["endTime"] < time()) {
         $state = -1;
         $getList = collectSetGetGiftUserList($getList);
     } else {
-        $getList = selectDataWithCondition("addons_collect_activity", array('state' => "2", "edition_id" => $edition));
-        if (count($getList) >= $config["getManNumber"][$edition]) {
+        if (0 >= $surplus) {
             $state = -1;
             $getList = collectSetGetGiftUserList($getList);
         } else {
@@ -148,6 +148,7 @@ function collectGetData($userId, $edition, $activityId = null)
         "id" => $id,
         "status" => $state,
         "number" => $number,
+        "surplus" => $surplus,
         "getList" => $getList,
         "helpList" => $helpList,
     );
@@ -163,15 +164,15 @@ function collectGetData($userId, $edition, $activityId = null)
  */
 function collectSetGetGiftUserList($getList = array())
 {
-    $getList[] = array("user_name" => "朱雀堂", "user_phone" => "18818458745");
-    $getList[] = array("user_name" => "李丹德", "user_phone" => "13614564563");
-    $getList[] = array("user_name" => "周亚纶", "user_phone" => "18976935047");
-    $getList[] = array("user_name" => "陈德阳", "user_phone" => "13476933067");
-    $getList[] = array("user_name" => "杨雅雯", "user_phone" => "18900570456");
-    $getList[] = array("user_name" => "吕洞泽", "user_phone" => "18710625666");
-    $getList[] = array("user_name" => "钟亦凡", "user_phone" => "13476933078");
-    $getList[] = array("user_name" => "范大梅", "user_phone" => "18710625666");
-    $getList[] = array("user_name" => "周大侠", "user_phone" => "15818458482");
+//    $getList[] = array("user_name" => "朱雀堂", "user_phone" => "18818458745");
+//    $getList[] = array("user_name" => "李丹德", "user_phone" => "13614564563");
+//    $getList[] = array("user_name" => "周亚纶", "user_phone" => "18976935047");
+//    $getList[] = array("user_name" => "陈德阳", "user_phone" => "13476933067");
+//    $getList[] = array("user_name" => "杨雅雯", "user_phone" => "18900570456");
+//    $getList[] = array("user_name" => "吕洞泽", "user_phone" => "18710625666");
+//    $getList[] = array("user_name" => "钟亦凡", "user_phone" => "13476933078");
+//    $getList[] = array("user_name" => "范大梅", "user_phone" => "18710625666");
+//    $getList[] = array("user_name" => "周大侠", "user_phone" => "15818458482");
     foreach ($getList as $key => $getItem) {
         $len = mb_strlen($getItem['user_name'], 'utf-8');
         if ($len >= 1) {
