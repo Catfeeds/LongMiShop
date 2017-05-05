@@ -15,7 +15,7 @@ function collectGetConfig()
                 "name" => "拼图游戏",
                 "number" => "1",
                 "theme" => "puzzle",
-                "endTime" => 1493913600
+                "endTime" => 1494475200
             ),
         ),
         "maxNumber" =>  array(
