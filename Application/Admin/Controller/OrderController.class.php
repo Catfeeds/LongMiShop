@@ -701,7 +701,8 @@ class OrderController extends BaseController {
     	$strTable ='<table width="500" border="1">';
     	$strTable .= '<tr>';
     	$strTable .= '<td style="text-align:center;font-size:12px;width:120px;">订单编号</td>';
-    	$strTable .= '<td style="text-align:center;font-size:12px;" width="100">日期</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="100">日期</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">下单时间</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">收货人</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">收货地址</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">手机</td>';
@@ -710,48 +711,61 @@ class OrderController extends BaseController {
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付方式</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付状态</td>';
         $strTable .= '<td style="text-align:center;font-size:12px;" width="*">发货状态</td>';
-    	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">商品信息</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">商品信息</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">商品数量</td>';
         $strTable .= '<td style="text-align:center;font-size:12px;" width="*">用户备注</td>';
     	$strTable .= '</tr>';
-//    	dd(count($orderList));
     	foreach($orderList as $k=>$val){
+            $orderGoods = D('order_goods') -> where('order_id='.$val['order_id'])->select();
+            $lineNumber = count($orderGoods);
+
             $tempString = "";
             $tempString .= '<tr>';
-            $tempString .= '<td style="text-align:center;font-size:12px;">&nbsp;'.$val['order_sn'].'</td>';
-            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['create_time'].' </td>';
-            $tempString .= '<td style="text-align:left;font-size:12px;">'."{$val['consignee']}".' </td>';
-            $tempString .= '<td style="text-align:left;font-size:12px;">'."{$region[$val['province']]},{$region[$val['city']]},{$region[$val['district']]},{$region[$val['twon']]}".$val['address'].'</td>';
-            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['mobile'].'</td>';
-            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['goods_price'].'</td>';
-            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['order_amount'].'</td>';
-            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['pay_name'].'</td>';
-            $tempString .= '<td style="text-align:left;font-size:12px;">'.$this->pay_status[$val['pay_status']].'</td>';
-            $tempString .= '<td style="text-align:left;font-size:12px;">'.$this->shipping_status[$val['shipping_status']].'</td>';
-            $orderGoods = D('order_goods') -> where('order_id='.$val['order_id'])->select();
+            $tempString .= '<td style="text-align:center;font-size:12px;" rowspan="'.$lineNumber.'">&nbsp;'.$val['order_sn'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['create_time'].' </td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.date("H:i:d",$val['add_time']).' </td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'."{$val['consignee']}".' </td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'."{$region[$val['province']]},{$region[$val['city']]},{$region[$val['district']]},{$region[$val['twon']]}".$val['address'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['mobile'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['goods_price'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['order_amount'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['pay_name'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$this->pay_status[$val['pay_status']].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$this->shipping_status[$val['shipping_status']].'</td>';
 
-    		$strGoods="";
-    		foreach($orderGoods as $goods){
+            $strGoods=array();
+            foreach($orderGoods as $key =>  $goods){
                 $returnRes = M('return_goods') -> where(array('order_id'=>$goods['order_id'],'goods_id'=>$goods['goods_id'],'spec_key'=>$goods['spec_key']))->find();
-    			if(!empty($returnRes) && $returnRes['result'] == 0){ //有未处理订单 不能导出该订单
+                if(!empty($returnRes) && $returnRes['result'] == 0){ //有未处理订单 不能导出该订单
                     continue 2;
                 }
                 if( $returnRes['result'] == 1 ){ //同意退款 跳出该商品
                     continue;
                 }
-                $strGoods .= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name']." 数量: <b style='color:red;font-size:18px;'>".$goods['goods_num']."</b>";
-    			if ($goods['spec_key_name'] != '') $strGoods .= " 规格：".$goods['spec_key_name'];
-    			$strGoods .= "<br />";
-    		}
-
+                $strGoods[$key]['string']= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name']." ";
+                if ($goods['spec_key_name'] != '') $strGoods[$key]['string'] .= " 规格：".$goods['spec_key_name'];
+                $strGoods[$key]['number']=$goods['goods_num'];
+            }
             unset($orderGoods);
-            $tempString .= '<td style="text-align:left;font-size:12px;">'.$strGoods.' </td>';
-            $tempString .= '<td style="text-align:left;font-size:12px;">'.$val['user_note'].'</td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;">'.$strGoods[0]['string'].' </td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;"><b style="color:#f00;">'.$strGoods[0]['number'].'</b> </td>';
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['user_note'].'</td>';
             $tempString .= '</tr>';
+
+            if( $lineNumber > 1){
+                for( $myI=1;$myI < $lineNumber;$myI++ ){
+                    $tempString .= '<tr>';
+                    $tempString .= '<td style="text-align:left;font-size:12px;">'.$strGoods[$myI]['string'].' </td>';
+                    $tempString .= '<td style="text-align:left;font-size:12px;"><b style="color:#f00;">'.$strGoods[$myI]['number'].'</b> </td>';
+                    $tempString .= '</tr>';
+                }
+            }
 
             $strTable .= $tempString;
     	}
     	$strTable .='</table>';
     	unset($orderList);
+        dd($strTable);
     	downloadExcel($strTable,'order');
     	exit();
     }
