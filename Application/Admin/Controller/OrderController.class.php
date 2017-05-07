@@ -765,7 +765,6 @@ class OrderController extends BaseController {
     	}
     	$strTable .='</table>';
     	unset($orderList);
-        dd($strTable);
     	downloadExcel($strTable,'order');
     	exit();
     }
