@@ -12,26 +12,24 @@
                     <div class="navbar navbar-default">
                             <form action="" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
                                 <div class="form-group">
-                                    <label class="control-label" for="input-mobile">昵称</label>
+                                    <label class="control-label" for="input-id">用户id</label>
+                                    <div class="input-group">
+                                        <input type="text" name="userId" value="" placeholder="用户id" id="input-id" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-nickname">昵称</label>
                                     <div class="input-group">
                                         <input type="text" name="nickname" value="" placeholder="昵称" id="input-nickname" class="form-control">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label" for="input-mobile">手机号码</label>
-                                    <div class="input-group">
-                                        <input type="text" name="mobile" value="" placeholder="手机号码" id="input-mobile" class="form-control">
-                                        <!--<span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>-->
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label" for="input-email">email</label>
-                                    <div class="input-group">
-                                        <input type="text" name="email" value="" placeholder="email" id="input-email" class="form-control">
-                                        <!--<span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>-->
-                                    </div>
-                                </div>
+                                <!--<div class="form-group">-->
+                                    <!--<label class="control-label" for="input-mobile">手机号码</label>-->
+                                    <!--<div class="input-group">-->
+                                        <!--<input type="text" name="mobile" value="" placeholder="手机号码" id="input-mobile" class="form-control">-->
+                                        <!--&lt;!&ndash;<span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>&ndash;&gt;-->
+                                    <!--</div>-->
+                                <!--</div>-->
                                 <input type="hidden" name="order_by" value="user_id">
                                 <input type="hidden" name="sort" value="desc">
                                 <button type="submit" onclick="obtainFans()" id="button-filter search-order" class="btn btn-primary pull-right"><i class="fa fa-search"></i> 同步信息</button>
