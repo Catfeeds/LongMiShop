@@ -16,6 +16,12 @@ class CouponController extends BaseController {
     	$Page = new \Think\Page($count,10);        
         $show = $Page -> show();
         $lists = M('coupon')->order('add_time desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        if(!empty($lists)){
+            foreach ( $lists as $key => $list){
+                $lists[$key]['use_num'] = getCountWithCondition("coupon_list",array('cid'=>$list['id'],'use_time' => array('neq',"0")));
+                $lists[$key]['send_num'] = getCountWithCondition("coupon_list",array('cid'=>$list['id']));
+            }
+        }
         $this -> assign('lists',$lists);
         $this -> assign('page',$show);// 赋值分页输出
         $this -> assign('coupons',C('COUPON_TYPE'));
