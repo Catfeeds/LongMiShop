@@ -63,10 +63,9 @@ class createQRCodeAdminController
             $strTable .= '</tr>';
             foreach ($lists as $key=>$list){
                 $user = findDataWithCondition("users",array('openid'=>$list['openid']),"nickname");
-                $lists[$key]["nickname"] = $user["nickname"];
                 $strTable .= '<tr>';
                 $strTable .= '<td>'.$list['id'].'</td>';
-                $strTable .= '<td>'.$list['nickname'].'</td>';
+                $strTable .= '<td>'.$user['nickname'].'</td>';
                 $strTable .= '<td>'.$list['event'].'</td>';
                 $strTable .= '<td>'.date('Y-m-d H:i',$list['create_time']).'</td>';
                 $strTable .= '</tr>';
