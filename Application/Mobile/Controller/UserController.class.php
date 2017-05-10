@@ -1351,7 +1351,7 @@ class UserController extends MobileBaseController {
         $id = I("id",null);
 
         is_null($id)?$id=17:false;
-        !in_array($id,array('17',"16","28","30"))?$id=17:false;
+        !in_array($id,array('4','17',"16","28","30"))?$id=17:false;
 
         if( empty($id)  || !isExistenceDataWithCondition("coupon",array("id"=>$id))  ){
             header("Location: ".U("Mobile/User/index"));
