@@ -2812,6 +2812,7 @@ Load—more a{
 	transform: scale(0.9);
 	margin-bottom: 0px !important;
 	height: 16px;
+	margin-right: -10px;
 	text-align: right;
 	line-height: 16px;
 }
