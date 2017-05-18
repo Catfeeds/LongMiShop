@@ -339,6 +339,14 @@ class UsersLogic extends BaseLogic
         $couponCount    = $result['data']['count'];
         if( !empty( $couponList ) ){
             foreach ( $couponList as $couponKey => $couponItem ){
+                if($couponItem['use_type'] == 0 && $couponItem['use_end_time']  <= time()){
+                    unset($couponList[$couponKey]);
+                    continue;
+                }
+                if($couponItem['use_type'] == 1 && $couponItem['receive_time']  <= (time()+($couponItem['limit_day'] * 24 * 60 * 60 ))){
+                    unset($couponList[$couponKey]);
+                    continue;
+                }
                 if( $couponList[$couponKey]['order_id'] != 0 ){
                     unset($couponList[$couponKey]);
                     continue;
@@ -382,12 +390,12 @@ class UsersLogic extends BaseLogic
                             unset($couponList[$couponKey]);
                             continue;
                         }
-                        if( $goodsSum < $couponList[$couponKey]['condition'] ){
+                        if( $goodsSum > $couponList[$couponKey]['condition'] ){
                             unset($couponList[$couponKey]);
                             continue;
                         }
                     }else{
-                        if( $sum < $couponList[$couponKey]['condition'] ){
+                        if( $sum > $couponList[$couponKey]['condition'] ){
                             unset($couponList[$couponKey]);
                             continue;
                         }
