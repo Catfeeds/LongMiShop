@@ -536,4 +536,6 @@ CREATE TABLE `lm_user_route` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+ALTER TABLE `lm_coupon`
+ADD COLUMN `is_delete`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除' ;
   ";

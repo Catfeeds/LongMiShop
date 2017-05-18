@@ -12,10 +12,10 @@ class CouponController extends BaseController {
     public function index(){
         //获取优惠券列表
         
-    	$count =  M('coupon')->count();
+    	$count =  M('coupon')->where(array("is_delete"=>"0"))->count();
     	$Page = new \Think\Page($count,10);        
         $show = $Page -> show();
-        $lists = M('coupon')->order('add_time desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $lists = M('coupon')->where(array("is_delete"=>"0"))->order('add_time desc')->limit($Page->firstRow.','.$Page->listRows)->select();
         if(!empty($lists)){
             foreach ( $lists as $key => $list){
                 $lists[$key]['use_num'] = getCountWithCondition("coupon_list",array('cid'=>$list['id'],'use_time' => array('neq',"0")));
@@ -207,10 +207,10 @@ class CouponController extends BaseController {
         //获取优惠券ID
         $cid = I('get.id');
         //查询是否存在优惠券
-        $row = M('coupon') -> where(array('id'=>$cid))->delete();
+        $row = M('coupon') -> where(array('id'=>$cid))->save(array("is_delete"=>"1"));
         if($row){
-            //删除此类型下的优惠券
-            M('coupon_list') -> where(array('cid'=>$cid))->delete();
+//            //删除此类型下的优惠券
+//            M('coupon_list') -> where(array('cid'=>$cid))->delete();
             $this->success("删除成功");
         }else{
             $this->error("删除失败");
