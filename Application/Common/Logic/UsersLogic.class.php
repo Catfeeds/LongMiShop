@@ -299,7 +299,7 @@ class UsersLogic extends BaseLogic
 //        }
         //调试使用
         $where = ' AND l.order_id = 0 AND '; // 未使用
-        $where .= ' ( ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > "('.time().' + ( c.limit_day * 24 * 60 * 60 ))  " and c.use_type = 1 ) ) ';
+        $where .= ' ( ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > ('.time().' + ( c.limit_day * 24 * 60 * 60 ))  and c.use_type = 1 ) ) ';
 
         //获取数量
         $sql = "SELECT count(l.id) as total_num FROM __PREFIX__coupon_list".
@@ -390,12 +390,12 @@ class UsersLogic extends BaseLogic
                             unset($couponList[$couponKey]);
                             continue;
                         }
-                        if( $goodsSum > $couponList[$couponKey]['condition'] ){
+                        if( $goodsSum < $couponList[$couponKey]['condition'] ){
                             unset($couponList[$couponKey]);
                             continue;
                         }
                     }else{
-                        if( $sum > $couponList[$couponKey]['condition'] ){
+                        if( $sum < $couponList[$couponKey]['condition'] ){
                             unset($couponList[$couponKey]);
                             continue;
                         }
@@ -414,7 +414,7 @@ class UsersLogic extends BaseLogic
     public function getCoupon( $userId ){
         //调试使用
         $where = ' AND (l.order_id = 0 and l.use_time = 0) AND '; // 未使用
-        $where .= '( ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > "('.time().' + ( c.limit_day * 24 * 60 * 60 ))  " and c.use_type = 1 )) ';
+        $where .= '( ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > ('.time().' + ( c.limit_day * 24 * 60 * 60 ))  and c.use_type = 1 )) ';
         $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.goods_id,c.is_discount,c.use_type,c.desc,c.is_appoint,c.limit_day FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
             " c ON l.cid =  c.id WHERE l.uid = '{$userId}' {$where}  ORDER BY l.send_time DESC,l.use_time";
