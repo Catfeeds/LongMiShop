@@ -192,11 +192,12 @@ class CartController extends MobileBaseController {
                 $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
                 $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
                 $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址
+                if($item['admin_id'] == 0){
+                    $sum += $item['member_goods_price'] * $item['goods_num'];
+                }
+
             }
 
-            if($item['admin_id'] == 0){
-                $sum += $item['member_goods_price'] * $item['goods_num'];
-            }
 
 
         }
