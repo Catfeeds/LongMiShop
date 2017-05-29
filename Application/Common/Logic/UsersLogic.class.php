@@ -339,7 +339,17 @@ class UsersLogic extends BaseLogic
         $couponCount    = $result['data']['count'];
         if( !empty( $couponList ) ){
             foreach ( $couponList as $couponKey => $couponItem ){
-                if($couponItem['use_type'] == 0 && $couponItem['use_end_time']  <= time()){
+                
+
+		foreach ( $goods_data as $goods_data_item){
+		   if($goods_data_item['refuse_coupon'] == 1 ){
+			 unset($couponList[$couponKey]);
+                         continue;
+		   }
+		}
+
+
+		if($cuponItem['use_type'] == 0 && $couponItem['use_end_time']  <= time()){
                     unset($couponList[$couponKey]);
                     continue;
                 }

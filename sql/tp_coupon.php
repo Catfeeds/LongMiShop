@@ -538,4 +538,9 @@ CREATE TABLE `lm_user_route` (
 
 ALTER TABLE `lm_coupon`
 ADD COLUMN `is_delete`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除' ;
+
+ALTER TABLE  `lm_goods` ADD  `refuse_coupon` TINYINT( 3 ) NOT NULL DEFAULT  '0' COMMENT  '禁用优惠券';
+
+
+
   ";

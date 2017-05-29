@@ -312,7 +312,16 @@
                                         <!--否:<input type="radio" <if condition="$goodsInfo[is_free_shipping] eq 0">checked="checked"</if> value="0" name="is_free_shipping" /> -->
                                     <!--</td>-->
                                 <!--</tr>     -->
+                               
                                 <tr>
+                                    <td>是否禁用优惠券:</td>
+                                    <td>
+                                        是:<input type="radio" <if condition="$goodsInfo[refuse_coupon] eq 1">checked="checked"</if> value="1" name="refuse_coupon" />
+                                        否:<input type="radio" <if condition="$goodsInfo[refuse_coupon] eq 0">checked="checked"</if> value="0" name="refuse_coupon" />
+                                    </td>
+                                </tr>    
+
+				 <tr>
                                   <td>选择配送方式</td>
                                   <td>
                                     <select name="delivery_way"  class="delivery_way">

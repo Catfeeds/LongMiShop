@@ -243,7 +243,6 @@ class GoodsController extends BaseController {
         {
             C('TOKEN_ON',false);
             $mainPart = $_POST['mainPart'];
-
             $tempArray = array();
             if( !empty( $mainPart  )){
                 foreach($mainPart as $key=>$item){

@@ -183,13 +183,14 @@ class CartController extends MobileBaseController {
         foreach( $cartList  as $key => $item){
 
             if($item['selected'] == 1){
-                $goods_res = M('goods')->field('weight,delivery_way') -> where("goods_id = '".$item['goods_id']."'")->find();
+                $goods_res = M('goods')->field('refuse_coupon,weight,delivery_way') -> where("goods_id = '".$item['goods_id']."'")->find();
                 $goods_data[$key]['spec_key'] = $item['spec_key']; //商品规格
                 $goods_data[$key]['goods_id'] = $item['goods_id']; //商品id
                 $goods_data[$key]['goods_num'] = $item['goods_num']; //件数  重量
                 $goods_data[$key]['goods_name'] = $item['goods_name']; //商品名称
                 $goods_data[$key]['goods_price'] = $item['goods_price']; //商品价格
                 $goods_data[$key]['weight'] = $goods_res['weight'];  //商品重量
+                $goods_data[$key]['refuse_coupon'] = $goods_res['refuse_coupon'];  
                 $goods_data[$key]['shipping_code'] = $goods_res['delivery_way']; //配送方式
                 $goods_data[$key]['site'] = $region_list[$address['province']]['name']; //收获地址
                 if($item['admin_id'] == 0){
@@ -212,7 +213,9 @@ class CartController extends MobileBaseController {
 
         $usersLogic = new \Common\Logic\UsersLogic();
         $result = $usersLogic -> getCanUseCoupon( $this->user_id , $sum ,$goods_data);
-
+	//dd($cartList);
+	//dd($goods_data);
+        $cartList = $goods_data;
         $this -> assign('couponList',$result['data']['result']);
         $this -> assign('shippingList', $shippingList); // 物流公司
         $this -> assign('cartList', $cartList); // 购物车的商品
