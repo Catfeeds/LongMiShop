@@ -138,7 +138,9 @@
                 <img src="{$goods.original_img}" width="92" height="92">
             </div>
             <div class="cp2_r">
-                <p>{$goods.goods_name}</p>
+                <p>{$goods.goods_name}
+		<if condition="$goods['refuse_coupon']==1">【此商品不可使用优惠券】</if>
+</p>
                 <span id="goods_price">￥{:$user&&$user['discount']<1?$goods['shop_price']*$user['discount']:$goods['shop_price']}</span>
                 <div class="mui-numbox z-index" data-numbox-min="1" data-numbox-max="999999">
                     <button class="mui-btn mui-btn-numbox-minus" type="button" disabled=""  >-</button>

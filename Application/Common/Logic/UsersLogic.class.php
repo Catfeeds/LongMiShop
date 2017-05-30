@@ -336,17 +336,16 @@ class UsersLogic extends BaseLogic
     public function getCanUseCoupon($userId , $sum ,$goods_data = array()){
         $result         = $this -> getCoupon($userId);
         $couponList     = $result['data']['result'];
-        $couponCount    = $result['data']['count'];
-        if( !empty( $couponList ) ){
+        $couponCount    = $result['data']['count']; 
+	   foreach ( $goods_data as $goods_data_item){
+                 
+		if($goods_data_item['refuse_coupon'] ){
+                        $couponList = array();
+			$couponCount = 0;
+                   }
+         }
+	if( !empty( $couponList ) ){
             foreach ( $couponList as $couponKey => $couponItem ){
-                
-
-		foreach ( $goods_data as $goods_data_item){
-		   if($goods_data_item['refuse_coupon'] == 1 ){
-			 unset($couponList[$couponKey]);
-                         continue;
-		   }
-		}
 
 
 		if($cuponItem['use_type'] == 0 && $couponItem['use_end_time']  <= time()){

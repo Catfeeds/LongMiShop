@@ -41,9 +41,18 @@
         </if>
     </foreach>
 
+	 <if condition="$v['refuse_coupon']==1">
+<div class="site_txt">优惠券<span>此订单不享受优惠</span></div>
+   <div class="site_txt1" style="display:none" >
+<else/>
+ <div class="site_txt1" >
+
+</if>
+
+
   <!--<div class="site_txt">优惠券<span>升级中...</span></div>-->
 
-    <div class="site_txt1" >
+<!--    <div class="site_txt1" >-->
         <!--<div class="site_txt1" style="display:none" >-->
         <a href="javascript:void(0);">优惠券 <span  class="coupon_span">{: !empty($couponList) ?  count($couponList).'张可用' : '无可用'}</span></a>
         <div class="mui-input-group" style="display:none">
