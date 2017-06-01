@@ -2,43 +2,43 @@
 class foreverCouponMobileController {
 
     public $assignData = array();
+    public $userInfo = array();
+    public $user_id = null;
 
-    public $key = null;
+    const TB_USER = "addons_forevercoupon_user";
+    const TB_CONFIG = "addons_forevercoupon_config";
 
-
-    public function __construct()
+    public function __construct($userInfo)
     {
-        $this -> key = md5("42368");
+        $this -> userInfo = $userInfo;
+        $this -> user_id = $userInfo['user_id'];
     }
 
     //初始页面
     public function index(){
-        $name = I("name");
-        $name = str_replace(' ',$this -> key,$name);
-        $position = I("position");
-        $position = str_replace(' ',$this -> key,$position);
-
-        $this -> assignData['name'] = $name;
-        $this -> assignData['position'] = $position;
-        return $this -> assignData;
-    }
-
-    //图片页面
-    public function run(){
-        $name = I("name","STEVE Jobs");
-        $name = str_replace($this -> key,' ',$name);
-        $position = I("position","CEO");
-        $position = str_replace($this -> key,' ',$position);
-        $im = imagecreatetruecolor(588, 800);
-        $bg = imagecreatefromjpeg('./Template/mobile/longmi/Static/images/toutu.jpg');
-        imagecopy($im,$bg,0,0,0,0,588, 800);
-        imagedestroy($bg);
-        $black = imagecolorallocate($im, 115, 115, 115);
-        $font = './Template/mobile/longmi/Static/fonts/test.ttf';
-        imagettftext($im, 24, 5, 100, 360, $black, $font, $name);
-        imagettftext($im, 18, 5, 105, 400, $black, $font, $position);
-        imagejpeg($im);
-        imagedestroy($im);
-        header("content-type:image/jpeg");
+        $edition = 1;
+        if( !isExistenceDataWithCondition(self::TB_USER,array('user_id'=>$this -> userInfo['user_id'],'edition'=>$edition))){
+            $config = findDataWithCondition( self::TB_CONFIG );
+            $id = $config['coupon_id'];
+            if( !empty($config) && !empty($id) && isExistenceDataWithCondition("coupon",array("id"=>$id)) ){
+                $data = array(
+                    'edition'=>$edition,
+                    'user_id'=>$this -> userInfo['user_id'],
+                    'create_time'=>time()
+                );
+                addData(self::TB_USER,$data);
+                $id = $config['coupon_id'];
+                $condition = array(
+                    "uid"=>$this -> userInfo['user_id'],
+                    "cid"=>$id,
+                    "order_id"=>"",
+                );
+                if( !isExistenceDataWithCondition("coupon_list",$condition)) {
+                    addNewCoupon($id, $this -> userInfo['user_id']);
+                }
+            }
+        }
+        header("Location: ".U('Mobile/Index/index'));
+        exit;
     }
 }

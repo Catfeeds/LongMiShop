@@ -1,0 +1,23 @@
+<form id="configForm" enctype="multipart/form-data">
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <table class="table table-bordered">
+                <tr>
+                    <td>优惠券id:</td>
+                    <td width="85%">
+                        <input name="coupon_id" class="form-control"  value="{$config.coupon_id}">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="pull-right">
+            <input type="hidden" name="pluginName" value="config">
+            <button class="btn btn-primary" onclick="ajaxSubmitForm();" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
+        </div>
+    </div>
+</form>
+<script>
+    function ajaxSubmitForm(){
+        ajax_submit_form('configForm',"{:U('Admin/Addons/foreverCoupon?is_ajax=1')}");
+    }
+</script>

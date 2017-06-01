@@ -703,6 +703,11 @@ class BuyLogic extends BaseLogic
                 throw new \Exception('优惠券使用失败！');
             }
             //TODO:永久优惠券
+            $foreverCouponConfig = findDataWithCondition( "addons_forevercoupon_config" );
+            if( !empty($foreverCouponConfig) && !empty($foreverCouponConfig['coupon_id'])  && $this -> _post_data['couponInfo']['id'] == $foreverCouponConfig['coupon_id'] ){
+                addNewCoupon($foreverCouponConfig['coupon_id'], $this -> user['user_id']);
+            }
+
         }
 
         if( isInCreateOrder( $this -> status )){
