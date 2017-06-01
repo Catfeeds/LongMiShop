@@ -702,6 +702,7 @@ class BuyLogic extends BaseLogic
             if(empty($result)){
                 throw new \Exception('优惠券使用失败！');
             }
+            //TODO:永久优惠券
         }
 
         if( isInCreateOrder( $this -> status )){
