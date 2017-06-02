@@ -14,10 +14,10 @@ class foreverCouponAdminController {
     //初始页面
     public function index(){
         $this->assignData["list"] = array(
-//            array(
-//                "title" => "用户列表",
-//                "act"   => "userList"
-//            ),
+            array(
+                "title" => "用户列表",
+                "act"   => "userList"
+            ),
             array(
                 "title" => "基础设置",
                 "act"   => "config"

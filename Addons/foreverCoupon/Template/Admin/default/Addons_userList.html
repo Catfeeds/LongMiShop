@@ -1,0 +1,36 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td class="text-left">
+                id
+            </td>
+            <td class="text-left">
+                用户id
+            </td>
+            <td class="text-left">
+                创建时间
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="item">
+            <tr>
+                <td class="text-left">
+                    {$item.id}
+                </td>
+                <td class="text-left">
+                    {$item.user_id}
+                </td>
+                <td class="text-left">
+                    {$item.create_time|date='Y-m-d H:i:s',###}
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-sm-3 text-left"></div>
+    <div class="col-sm-9 text-right">{$page}</div>
+</div>
