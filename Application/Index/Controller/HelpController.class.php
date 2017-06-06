@@ -29,10 +29,10 @@ class HelpController extends IndexBaseController {
         $nameLogic->rndChinaName();
         $numbers = array(
 //            "01" => "6313",
-            "02" => "40000",
-            "03" => "20000",
-            "04" => "50000",
-            "05" => "60000",
+            "02" => "400",
+            "03" => "200",
+            "04" => "500",
+            "05" => "600",
 //            "06" => "3711",
 //            "07" => "1331",
 //            "08" => "374",
@@ -42,10 +42,10 @@ class HelpController extends IndexBaseController {
 //            "12" => "228"
         );
         $orderNumber = array(
-            "02" => "8000",
-            "03" => "48000",
-            "04" => "8000",
-            "05" => "10000",
+            "02" => "80",
+            "03" => "480",
+            "04" => "80",
+            "05" => "100",
         );
         set_time_limit(0);
         $model = new \Think\Model();
