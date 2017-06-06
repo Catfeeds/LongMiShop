@@ -52,7 +52,7 @@ class HelpController extends IndexBaseController {
 //            "03" => "480",
 //            "04" => "80",
 //            "05" => "100",
-            "06" => "1500",
+            "06" => "0",
         );
         $model = new \Think\Model();
         try {
@@ -72,7 +72,7 @@ class HelpController extends IndexBaseController {
                     $map['reg_time'] = rand($startTime, $endTime);
                     $map['mobile'] = "";
                     $map['mobile_validated'] = 0;
-                    $map['oauth'] = "DAORU3";
+                    $map['oauth'] = "DAORU4";
                     $map['head_pic'] = "";
                     $map['sex'] = 1;
                     $userId = M('users')->add($map);
