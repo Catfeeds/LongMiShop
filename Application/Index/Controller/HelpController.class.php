@@ -12,7 +12,8 @@ class HelpController extends IndexBaseController {
             "about",
             "contact",
             "join",
-            'user'
+            'user',
+            'order'
         );
     }
 
@@ -23,33 +24,39 @@ class HelpController extends IndexBaseController {
 
     public function user()
     {
-        exit;
+//        exit;
         $nameLogic = new \Common\Logic\NameLogic();
         $nameLogic->rndChinaName();
         $numbers = array(
-            "01" => "6313",
-            "02" => "2575",
-            "03" => "1423",
-            "04" => "195",
-            "05" => "843",
-            "06" => "3711",
-            "07" => "1331",
-            "08" => "374",
-            "09" => "8226",
-            "10" => "8573",
-            "11" => "3528",
-            "12" => "228"
+//            "01" => "6313",
+            "02" => "40000",
+            "03" => "20000",
+            "04" => "50000",
+            "05" => "60000",
+//            "06" => "3711",
+//            "07" => "1331",
+//            "08" => "374",
+//            "09" => "8226",
+//            "10" => "8573",
+//            "11" => "3528",
+//            "12" => "228"
+        );
+        $orderNumber = array(
+            "02" => "8000",
+            "03" => "48000",
+            "04" => "8000",
+            "05" => "10000",
         );
         set_time_limit(0);
         $model = new \Think\Model();
         try {
             $model->startTrans();
             foreach ($numbers as $month => $number) {
-                $startTime = strtotime("2016-" . $month . "-01");
+                $startTime = strtotime("2017-" . $month . "-01");
                 if( $month == 12){
-                    $endTime = strtotime("2017-01-01");
+                    $endTime = strtotime("2018-01-01");
                 }else{
-                    $endTime = strtotime("2016-" . ($month + 1) . "-01");
+                    $endTime = strtotime("2017-" . ($month + 1) . "-01");
                 }
                 for ($i = 1; $i <= $number; $i++) {
                     $map = array();
@@ -58,7 +65,7 @@ class HelpController extends IndexBaseController {
                     $map['reg_time'] = rand($startTime, $endTime);
                     $map['mobile'] = "";
                     $map['mobile_validated'] = 0;
-                    $map['oauth'] = "DAORU2";
+                    $map['oauth'] = "DAORU3";
                     $map['head_pic'] = "";
                     $map['sex'] = 1;
                     $userId = M('users')->add($map);
@@ -67,6 +74,42 @@ class HelpController extends IndexBaseController {
                     }
                 }
             }
+            foreach ($orderNumber as $month => $number){
+
+                $sql="SELECT r1.* 
+ FROM lm_order AS r1 JOIN
+    (SELECT ROUND(RAND() * 
+           (SELECT MAX(order_id) 
+            FROM lm_order)) AS order_id) 
+    AS r2 
+WHERE r1.order_id >= r2.order_id  and r1.
+ORDER BY r1.order_id ASC
+LIMIT 1;";
+                for ($i = 1; $i <= $number; $i++) {
+                    $orderInfo = M("order")->query($sql);
+                    $orderInfo = $orderInfo[0];
+                    $data = $orderInfo;
+                    unset($data['order_id']);
+                    $time = strtotime("2017-" . $month . "-1");
+                    $time += rand(0, 30 * 24 * 60 * 60);
+                    $data['order_sn'] = date('YmdHis', $time) . rand(1000, 9999);
+                    $data['add_time'] = $time;
+                    $data['pay_time'] = $time + $orderInfo['pay_time'] - $orderInfo['add_time'];
+                    $data['shipping_time'] = $time + $orderInfo['shipping_time'] - $orderInfo['add_time'];
+                    $data['confirm_time'] = $time + $orderInfo['confirm_time'] - $orderInfo['add_time'];
+                    $order_id = M("order")->add($data);
+                    $order_goods_list = selectDataWithCondition("order_goods", array("order_id" => $orderInfo["order_id"]));
+                    if (!empty($order_goods_list)) {
+                        foreach ($order_goods_list as $order_goods_item) {
+                            $data2 = $order_goods_item;
+                            unset($data2['rec_id']);
+                            $data2["order_id"] = $order_id;
+                            isSuccessToAddData("order_goods", $data2);
+                        }
+                    }
+                }
+            }
+
             $model->commit();
         } catch (\Exception $e) {
             $model->rollback();
