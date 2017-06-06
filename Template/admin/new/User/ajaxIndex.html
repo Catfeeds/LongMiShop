@@ -16,18 +16,21 @@
                                         <a href="javascript:sort('level');">会员等级</a>
                                     </td>
                                     <td class="text-left">
-                                        <a href="javascript:sort('total_amount');">累计消费</a>
+                                        <a href="javascript:sort('user_money');">余额</a>
                                     </td>
-                                    <td class="text-left">
-                                        <a href="javascript:sort('email');">邮件地址</a>
-                                    </td>
-                                    
-                                    <td class="text-left">
-                                        <a href="javascript:sort('mobile');">手机号码</a>
-                                    </td>
-                                    <td class="text-left">
-                                        <a href="javascript:sort('pay_points');">积分</a>
-                                    </td>
+                                    <!--<td class="text-left">-->
+                                        <!--<a href="javascript:sort('total_amount');">累计消费</a>-->
+                                    <!--</td>-->
+                                    <!--<td class="text-left">-->
+                                        <!--<a href="javascript:sort('email');">邮件地址</a>-->
+                                    <!--</td>-->
+                                    <!---->
+                                    <!--<td class="text-left">-->
+                                        <!--<a href="javascript:sort('mobile');">手机号码</a>-->
+                                    <!--</td>-->
+                                    <!--<td class="text-left">-->
+                                        <!--<a href="javascript:sort('pay_points');">积分</a>-->
+                                    <!--</td>-->
                                     <td class="text-left">
                                         <a href="javascript:sort('reg_time');">注册日期</a>
                                     </td>
@@ -48,29 +51,32 @@
                                             <input type="hidden" name="shipping_code[]" value="flat.flat">
                                         </td>
                                         <td class="text-right">{$list.user_id}</td>
-                                        <td class="text-left">{$list.nickname}</td>
+                                        <td class="text-left">
+                                            <img src="{$list.head_pic}" style="width: 60px;height: 60px; border-radius: 50%"/>
+                                            {$list.nickname}</td>
                                         <td class="text-left">{$list.level}</td>
-                                        <td class="text-left">{$list.total_amount}</td>
-                                        <td class="text-left">{$list.email}
-                                            <if condition="($list['email_validated'] eq 0) AND ($list['email'])">
-                                                (未验证)
-                                            </if>
-                                        </td>
-                                        <td class="text-left">{$list.mobile}
-                                            <if condition="($list['mobile_validated'] eq 0) AND ($list['mobile'])">
-                                                (未验证)
-                                            </if>
-                                        </td>
-                                        <td class="text-left">{$list.pay_points}</td>
+                                        <td class="text-left">{$list.user_money}</td>
+                                        <!--<td class="text-left">{$list.total_amount}</td>-->
+                                        <!--<td class="text-left">{$list.email}-->
+                                            <!--<if condition="($list['email_validated'] eq 0) AND ($list['email'])">-->
+                                                <!--(未验证)-->
+                                            <!--</if>-->
+                                        <!--</td>-->
+                                        <!--<td class="text-left">{$list.mobile}-->
+                                            <!--<if condition="($list['mobile_validated'] eq 0) AND ($list['mobile'])">-->
+                                                <!--(未验证)-->
+                                            <!--</if>-->
+                                        <!--</td>-->
+                                        <!--<td class="text-left">{$list.pay_points}</td>-->
                                         <td class="text-left">{$list.reg_time|date='Y-m-d H:i',###}</td>
                                         <td class="text-left">{: !empty($list['openid']) ? '微信' : '' }</td>
                                         <td class="text-left"><if condition="!empty($list['sync_time'])">{$list['sync_time']|date='Y-m-d H:i',###}</if></td>
                                         <td class="text-right">
-                                            <a href="{:U('Admin/user/detail',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>
-                                            <a href="{:U('Admin/user/address',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="收货地址"><i class="fa fa-home"></i></a>
+                                            <!--<a href="{:U('Admin/user/detail',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>-->
+                                            <a href="{:U('Admin/user/address',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="收货地址"><i class="fa fa-home"></i>收货地址</a>
                                             <!--<a href="{:U('Admin/order/index',array('user_id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="订单查看"><i class="fa fa-shopping-cart"></i></a>-->
-                                            <a href="{:U('Admin/user/account_log',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="账户"><i class="glyphicon glyphicon-yen"></i></a>
-                                            <a href="{:U('Admin/user/delete',array('id'=>$list['user_id']))}" onClick="return confirm('确定删除?');" id="button-delete6" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a>
+                                            <a href="{:U('Admin/user/account_log',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="账户"><i class="glyphicon glyphicon-yen"></i>余额</a>
+                                            <!--<a href="{:U('Admin/user/delete',array('id'=>$list['user_id']))}" onClick="return confirm('确定删除?');" id="button-delete6" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a>-->
                                         </td>
                                     </tr>
                                 </volist>

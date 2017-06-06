@@ -265,14 +265,18 @@ function cardDiscountAmountCalculation( $couponId , $userId , $money ,  $goodsDa
  * @param null $cid
  * @param null $userId
  * @param int $type
+ * @param bool $needWeChatMsg
  * @return bool|mixed
  */
-function addNewCoupon($cid = null  ,$userId = null,$type =3)
+function addNewCoupon($cid = null  ,$userId = null,$type =3,$needWeChatMsg = true)
 {
     if (is_null($cid) || is_null($userId)) {
         return false;
     }
 
+    if( !isExistenceDataWithCondition("coupon",array("id"=>$cid))){
+        return false;
+    }
     $add = array(
         "cid"          => $cid,
         "type"         => $type,
@@ -291,13 +295,14 @@ function addNewCoupon($cid = null  ,$userId = null,$type =3)
 
     $add['code'] = $code;
 
-
-    $url = "http://".$_SERVER["HTTP_HOST"].U("Mobile/User/coupon");
-    $user = get_user_info($userId);
-    if( !empty( $user['openid'])){
-        $text = "【系统消息】您获得了一张卡券！<a href = '".$url."'>点击查看</a>";
-        $jsSdkLogic = new \Common\Logic\JsSdkLogic();
-        $jsSdkLogic -> push_msg( $user['openid'] , $text );
+    if( $needWeChatMsg ){
+        $url = "http://".$_SERVER["HTTP_HOST"].U("Mobile/User/coupon");
+        $user = get_user_info($userId);
+        if( !empty( $user['openid'])){
+            $text = "【系统消息】您获得了一张卡券！<a href = '".$url."'>点击查看</a>";
+            $jsSdkLogic = new \Common\Logic\JsSdkLogic();
+            $jsSdkLogic -> push_msg( $user['openid'] , $text );
+        }
     }
 
     return addData('coupon_list', $add);

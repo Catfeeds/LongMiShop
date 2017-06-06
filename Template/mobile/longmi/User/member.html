@@ -1,0 +1,100 @@
+<include file="Public/header2"/>
+<body>
+<include file="Public/loading"/>
+
+<div class="user">
+    <!--<a href="http://mp.weixin.qq.com/s/fgRDo0jhhQHU5b1g6o6WYA" class="memberInfo">会员规则&nbsp;></a>-->
+    <p>
+        <a href="{:U('Mobile/User/index');}">
+            <img src="__DefaultUserImages__" class="userHeadImg" id="head_img" width="92" height="92">
+        </a>
+    </p>
+    <p id="point_number">积分：...</p>
+    <p id="level_name">等级：...</p>
+    <p id="points_clear_time">积分清空时间：...</p>
+</div>
+
+<div class="my_nav member_my_nav">
+    <ul>
+        <li><a>拥有特权<span class="mui-icon mui-icon-arrowdown" id="privilege_list_btn" ></span></a></li>
+    </ul>
+</div>
+<div class="mui-content" id="privilege_list"></div>
+
+<div id="log_list">
+    <div class="empty"><img src="__STATIC__/images/new/no_money.png"></div>
+    <div class="empty_txt">皇上！国库空虚，<br/>赶紧赚米呀！娘娘们都要跑光啦！</div>
+</div>
+
+<include file="Public/js"/>
+<include file="Public/nav"/>
+
+</body>
+<include file="Public/footer"/>
+
+<script type="text/html" id="privilegeList">
+    <div class="top_menu">
+        <ul>
+            <% for (var i in item) { %>
+            <li style="background-image:url('__STATIC__/images/new/member/<%= item[i].icon %>.png')">
+                <p>
+                    <a><b><%= item[i].name %><br><span id="userMoney"><%= item[i]['value'][level] %>&nbsp;</span></b></a>
+                </p>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+</script>
+
+
+<script type="text/html" id="logList">
+    <% for (var i in item) { %>
+    <div class="m6">
+        <div class="m6_left">
+            <div><%= item[i].text %></div>
+            <div class="m7"><%= item[i].time %></div>
+        </div>
+        <div class="m6_right"><% if ( item[i].value != 0 ) { %><%= item[i].value %><% } %></div>
+    </div>
+    <% } %>
+</script>
+
+<script>
+
+    $(function(){
+        $.ajax({
+            type : "GET",
+            url:"{:U('Wap/User/member')}",
+            dataType:'json',
+            success: function(data){
+                if( data.state == 1){
+                    $("#head_img").attr("src",data.data.user.head_img);
+                    $("#point_number").html("积分："+data.data.user.points);
+                    $("#level_name").html("等级："+data.data.user.level_name);
+                    if(data.data.user.level == 1||data.data.user.level == 4){
+                        $("#points_clear_time").hide();
+                    }else{
+                        $("#points_clear_time").html("积分清空时间："+data.data.user.points_clear_time);
+                    }
+                    $("#log_list").html(template.render("logList", data.data.log));
+                    $("#privilege_list").html(template.render("privilegeList", data.data.privilege));
+                    $("#privilege_list_btn").show();
+                    $("#privilege_list_btn").click(function(){
+                        $("#privilege_list").toggleClass("privilege_click");
+                        $("#privilege_list_btn").toggleClass("mui-icon-arrowdown");
+                        $("#privilege_list_btn").toggleClass("mui-icon-arrowup");
+                    });
+                    if( data.data.user.need_show_level == 1){
+                        alert("恭喜你升级为"+data.data.user.level_name);
+                    }
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error:function(){
+                alert("网络错误！");
+            }
+        });
+    });
+</script>
+</html>

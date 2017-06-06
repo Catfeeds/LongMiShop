@@ -3,17 +3,17 @@
 
 <div class="my_nav">
     <ul>
-        <li><a href="{: U('Mobile/User/edit_details')}">修改基本信息</a></li>
+        <li><a href="{: U('Mobile/User/edit_details')}">基本信息</a></li>
         <if condition = " isThirdAccount( $user ) && !isBinding( $user['user_id'] )" >
             <if condition = " empty( $user['mobile'] ) ">
-                <li><a href="{: U('Mobile/User/binding')}">绑定手机号码</a></li>
+                <!--<li><a href="{: U('Mobile/User/binding')}">绑定手机号码</a></li>-->
                 <else/>
-                <li><a href="{: U('Mobile/User/edit_mobile')}">修改手机号码（{: $user['mobile']}）</a></li>
+                <!--<li><a href="{: U('Mobile/User/edit_mobile')}">修改手机号码（{: $user['mobile']}）</a></li>-->
             </if>
         </if>
         <if condition = " !isThirdAccount( $user ) " >
-            <li><a href="{: U('Mobile/User/edit_mobile')}">修改手机号码（{: $user['mobile']}）</a></li>
-            <li><a href="{: U('Mobile/User/edit_password')}">修改登录密码</a></li>
+            <!--<li><a href="{: U('Mobile/User/edit_mobile')}">修改手机号码（{: $user['mobile']}）</a></li>-->
+            <!--<li><a href="{: U('Mobile/User/edit_password')}">修改登录密码</a></li>-->
         </if>
     </ul>
 </div>

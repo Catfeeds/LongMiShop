@@ -1,5 +1,5 @@
 <?php
-
+exit;
 include 'auto.php';
 if(IS_SAE)
 header("Location: index_sae.php");

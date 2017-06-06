@@ -678,8 +678,13 @@ class BuyLogic extends BaseLogic
         $order = $this -> _post_data['orderData'];
 
         if( $this -> status == "inCreateOrder" ){
-            minus_stock($order["order_id"]);
+            if(!minus_stock($order["order_id"])){
+                throw new \Exception('库存不足！');
+            }
         }
+
+        //更改最后一次购买时间
+        saveData("users",array("user_id"=>$this -> user['user_id']),array("last_buy_time"=>time()));
 
         //改变优惠券状态
         if( $this -> _post_data['useCoupon'] == true &&!empty($this -> _post_data['couponInfo']) ){
@@ -697,6 +702,12 @@ class BuyLogic extends BaseLogic
             if(empty($result)){
                 throw new \Exception('优惠券使用失败！');
             }
+            //TODO:永久优惠券
+            $foreverCouponConfig = findDataWithCondition( "addons_forevercoupon_config" );
+            if( !empty($foreverCouponConfig) && !empty($foreverCouponConfig['coupon_id'])  && $this -> _post_data['couponInfo']['id'] == $foreverCouponConfig['coupon_id'] ){
+                addNewCoupon($foreverCouponConfig['coupon_id'], $this -> user['user_id']);
+            }
+
         }
 
         if( isInCreateOrder( $this -> status )){

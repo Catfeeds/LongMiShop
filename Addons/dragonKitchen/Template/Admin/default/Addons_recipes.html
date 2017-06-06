@@ -1,0 +1,65 @@
+<div class="navbar navbar-default">
+    <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'recipesDetail' ))}" class="btn btn-primary pull-right" style=" margin: 10px 5px 0 0;">
+        <i class="fa fa-plus"></i>添加食谱
+    </a>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td class="text-right">
+                ID
+            </td>
+            <td class="text-left">
+                菜名
+            </td>
+            <td class="text-left">
+                访问量
+            </td>
+            <td class="text-left">
+                图片
+            </td>
+            <td class="text-left">
+                创建时间
+            </td>
+            <td class="text-right">
+                操作
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="item">
+            <tr>
+                <td class="text-right">{$item.id}</td>
+                <td class="text-left">
+                    <img src="{$item.icon}" style="width: 60px; height: 60px;">
+                    {$item.shop_name|getSubstr=0,33}
+                </td>
+                <td class="text-left">
+                    {$regionList[$item['province']]['name']}
+                    {$regionList[$item['city']]['name']}
+                    {$regionList[$item['district']]['name']}
+                    {$item['address']}
+                </td>
+                <td class="text-left">{$item.seats}</td>
+                <td class="text-left">{$item.create_time|date='Y-m-d',###}</td>
+                <td class="text-right">
+                    <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'adminList','id'=>$item['id'] ))}" class="btn btn-info" title="核销员列表">
+                        核销员列表
+                    </a>
+                    <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'setMeal','id'=>$item['id'] ))}" class="btn btn-info" title="查看详情">
+                        设置菜品
+                    </a>
+                    <a href="{:U('Admin/Addons/lunchFeast' , array('pluginName' => 'shopDetail','id'=>$item['id'] ))}" class="btn btn-info" title="查看详情">
+                        查看详情
+                    </a>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-sm-3 text-left"></div>
+    <div class="col-sm-9 text-right">{$page}</div>
+</div>

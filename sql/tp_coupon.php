@@ -483,5 +483,64 @@ ALTER TABLE `lm_coupon`
 ADD COLUMN `remarks`  varchar(255) NULL COMMENT '备注' AFTER `name`;
 
 
+
+ALTER TABLE `lm_users`
+ADD COLUMN `experience`  int(11) NOT NULL DEFAULT 0 COMMENT '经验值' AFTER `frozen_money`;
+
+ALTER TABLE `lm_users`
+ADD COLUMN `upgrade_time`  int(11) NULL COMMENT '升级时间' AFTER `experience`;
   
+  
+  
+CREATE TABLE `lm_points_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `create_time` int(10) DEFAULT NULL,
+  `value` int(11) NOT NULL DEFAULT '0' COMMENT '更改数值',
+  `text` varchar(255) DEFAULT NULL COMMENT '备注',
+  `before_points` int(11) NOT NULL DEFAULT '0' COMMENT '改变前的数值',
+  `after_points` int(11) NOT NULL DEFAULT '0' COMMENT '改变后的数值',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `lm_users`
+ADD COLUMN `user_points`  int(11) NOT NULL DEFAULT 0 COMMENT '积分' AFTER `user_money`;
+
+ALTER TABLE `lm_users`
+ADD COLUMN `last_buy_time`  int(10) NULL COMMENT '最后购买时间' AFTER `reg_time`;
+
+ALTER TABLE `lm_users`
+ADD COLUMN `points_clear_time`  int(11) NULL DEFAULT NULL COMMENT '积分清除时间' AFTER `frozen_money`;
+
+
+ALTER TABLE `lm_users`
+MODIFY COLUMN `pay_points`  decimal(10,2) UNSIGNED NOT NULL DEFAULT 0 COMMENT '消费积分' AFTER `distribut_money`;
+
+ALTER TABLE `lm_points_log`
+MODIFY COLUMN `value`  decimal(11,2) NOT NULL DEFAULT 0 COMMENT '更改数值' AFTER `create_time`,
+MODIFY COLUMN `before_points`  decimal(11,2) NOT NULL DEFAULT 0 COMMENT '改变前的数值' AFTER `text`,
+MODIFY COLUMN `after_points`  decimal(11,2) NOT NULL DEFAULT 0 COMMENT '改变后的数值' AFTER `before_points`;
+
+ALTER TABLE `lm_users`
+MODIFY COLUMN `points_clear_time`  int(11) NOT NULL DEFAULT 0 COMMENT '积分清除时间' AFTER `frozen_money`;
+ALTER TABLE `lm_users`
+ADD COLUMN `need_show_level`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否需要显示升级动画' AFTER `level`;
+
+DROP TABLE IF EXISTS `lm_user_route`;
+CREATE TABLE `lm_user_route` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+ALTER TABLE `lm_coupon`
+ADD COLUMN `is_delete`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除' ;
+
+ALTER TABLE  `lm_goods` ADD  `refuse_coupon` TINYINT( 3 ) NOT NULL DEFAULT  '0' COMMENT  '禁用优惠券';
+
+
+
   ";

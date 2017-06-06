@@ -93,15 +93,15 @@
                                 	<td colspan="2"><input type="text" class="form-control" name="hot_keywords" value="{$config.hot_keywords}">
                                 		<p class="text-warning">多个热门搜索关键词请用竖线|分开，如(手机|电脑)</p>
                                 	</td>
-                                </tr> 
+                                </tr>
                                 <tr>
                                     <td>公众号关注回复关键字：</td>
                                     <td colspan="2">
                                         <!-- <textarea name="subscribe_reply" id="" cols="110" rows="10">{$config.subscribe_reply}</textarea> -->
                                         <input type="text" class="form-control" name="subscribe_reply" value="{$config.subscribe_reply}">
                                     </td>
-                                </tr>      
-                            	<tr>
+                                </tr>
+                                <tr>
                                     <td>开启APP测试：</td>
                                     <td >
                                        	 关<input type="radio" class="" name="app_test" value="0" <if condition="$config[app_test] eq 0"> checked="checked"</if>>
@@ -128,6 +128,12 @@
                                     <td colspan="2">
                                         <!-- <textarea name="subscribe_reply" id="" cols="110" rows="10">{$config.subscribe_reply}</textarea> -->
                                         <input type="text" class="form-control" name="send_coupons_cont" value="{$config.send_coupons_cont}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>支付成功后跳转页面链接：</td>
+                                    <td colspan="2">
+                                        <input type="text" class="form-control" name="pay_ok_url" value="{$config.pay_ok_url}">
                                     </td>
                                 </tr>
                                 </tbody> 

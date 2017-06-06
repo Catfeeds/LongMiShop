@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>提交订单_{$lmshop_config.shop_info_store_title}</title>
-    <meta http-equiv="keywords" content="{$lmshop_config['shop_info_store_keyword']}" />
-    <meta name="description" content="{$lmshop_config['shop_info_store_desc']}" />
+    <title>提交订单_{$shopConfig.shop_info_store_title}</title>
+    <meta http-equiv="keywords" content="{$shopConfig['shop_info_store_keyword']}" />
+    <meta name="description" content="{$shopConfig['shop_info_store_desc']}" />
     <script src="__STATIC__/js/mui.min.js"></script>
     <script src="__STATIC__/js/jquery.min.js"></script>
     <script src="__STATIC__/js/function.js"></script>
@@ -40,7 +40,20 @@
             </div>
         </if>
     </foreach>
-    <div class="site_txt1">
+
+	 <if condition="$v['refuse_coupon']==1">
+<div class="site_txt">优惠券<span>此订单不享受优惠</span></div>
+   <div class="site_txt1" style="display:none" >
+<else/>
+ <div class="site_txt1" >
+
+</if>
+
+
+  <!--<div class="site_txt">优惠券<span>升级中...</span></div>-->
+
+<!--    <div class="site_txt1" >-->
+        <!--<div class="site_txt1" style="display:none" >-->
         <a href="javascript:void(0);">优惠券 <span  class="coupon_span">{: !empty($couponList) ?  count($couponList).'张可用' : '无可用'}</span></a>
         <div class="mui-input-group" style="display:none">
             <notempty name="couponList">
@@ -81,14 +94,14 @@
             <div class="c_btn2"><a href="{:U('Cart/cart')}">取消</a></div>
         </div>
     </div>
-    
+
 
     <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
         <ul class="mui-table-view">
             <li class="mui-table-view-cell" >
                 <if condition = "$user['user_money'] lt $total_price['total_fee'] " >
                     <a href="javascript:void(0);" style="color: grey;">余额支付(余额不足)</a>
-                <else/>
+                    <else/>
                     <a href="#" id="balanceButton">余额支付</a>
                 </if>
             </li>

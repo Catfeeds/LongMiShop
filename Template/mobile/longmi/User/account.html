@@ -1,4 +1,7 @@
-<include file="Public/header"/>
+<include file="Public/header2"/>
+<body>
+<include file="Public/loading"/>
+
 <div class="money">
     <div class="m1">余额</div>
     <div class="m2"><span>￥</span>{$user['user_money']}</div>
@@ -30,6 +33,14 @@
     <div class="empty_txt">
         您的粮仓里又有新米了，<br/>可别忘了提出来煮粥哦！
     </div>
+<else/>
+    <div class="empty"><img src="__STATIC__/images/new/no_money.png"></div>
+    <div class="empty_txt">皇上！国库空虚，<br/>赶紧赚米呀！娘娘们都要跑光啦！</div>
+</notempty>
+<include file="Public/js"/>
+<include file="Public/nav"/>
+</body>
+<notempty name="account_log">
     <script>
         var  page = 1;
         /*** ajax 提交表单 查询订单列表结果*/
@@ -38,9 +49,7 @@
             page += 1;
             $.ajax({
                 type : "GET",
-                url:"/index.php?m=Mobile&c=User&a=account&is_ajax=1&p="+page,//+tab,
-//			url:"{:U('Mobile/User/account',null,'')}/is_ajax/1/p/"+page,//+tab,
-//			data : $('#filter_form').serialize(),// 你的formid 搜索表单 序列化提交
+                url:"/index.php?m=Mobile&c=User&a=account&is_ajax=1&p="+page,
                 success: function(data)
                 {
                     if($.trim(data) == '')
@@ -51,12 +60,7 @@
             });
         }
     </script>
-    <else/>
-    <div class="empty"><img src="__STATIC__/images/new/no_money.png"></div>
-    <div class="empty_txt">皇上！国库空虚，<br/>赶紧赚米呀！娘娘们都要跑光啦！</div>
 </notempty>
-
-</body>
 <style>
     .m6{
         padding-right: 20px;

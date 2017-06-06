@@ -1,0 +1,16 @@
+<div class="tab-pane active" id="tab_pay">
+    <div class="row">
+        <volist name="list" id="p">
+            <div class="col-sm-2">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h4>{$p.title}</h4>
+                        <p>
+                            <a href="{:U('Admin/Addons/'.ADDONS_NAME , array('pluginName' => $p['act']))}" class="btn btn-primary" role="button">查看</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </volist>
+    </div>
+</div>

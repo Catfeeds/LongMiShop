@@ -8,6 +8,7 @@ class ActivityController extends MobileBaseController {
     {
         return array(
             'index',
+            'fiveYuanBuying',
             'group',
             'group_list',
         );
@@ -15,13 +16,20 @@ class ActivityController extends MobileBaseController {
     public function  _initialize() {
         parent::_initialize();
     }
-    public function index(){      
+    public function index(){
+        $this -> display();
+    }
+    public function fiveYuanBuying(){
+        $this -> display();
+    }
+    public function fiveYuanBuyingPayOk(){
         $this -> display();
     }
    /**
     * 商品详情页
     */ 
     public function group(){
+        exit;
         //form表单提交
         C('TOKEN_ON',true);  
         $goodsLogic = new \Common\Logic\GoodsLogic();
@@ -77,6 +85,7 @@ class ActivityController extends MobileBaseController {
      */
     public function group_list()
     {
+        exit;
     	$count =  M('GroupBuy') -> where(time()." >= start_time and ".time()." <= end_time ")->count();// 查询满足要求的总记录数
     	$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数  	
     	$show = $Page -> show();// 分页显示输出

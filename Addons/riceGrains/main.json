@@ -1,7 +1,8 @@
 {
-  "title" : "圣诞送礼活动",
-  "desc"  : "圣诞送礼活动",
-  "code"  : "christmas",
-  "author": "zhonght",
+  "title" : "粒粒接辛苦",
+  "desc"  : "粒粒接辛苦，米粒小游戏",
+  "code"  : "riceGrains",
+  "author": "钟瀚涛",
+  "is_hide":true,
   "icon"  : "logo.jpg"
 }

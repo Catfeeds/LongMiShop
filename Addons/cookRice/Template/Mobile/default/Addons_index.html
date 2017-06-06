@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta content="telephone=no" name="format-detection" />
+    <title>煮饭</title>
+    <link href="__PUBLIC__/mui/css/mui.min.css" rel="stylesheet" />
+    <link href="__ADDONS__/css/css.css?{$v}" rel="stylesheet" />
+</head>
+<body>
+
+<!--关注部分-->
+<div class="follow" id="follow">
+    <img src="__PUBLIC__/images/{$qrcode}"/>
+    <p>
+        关注公众号才能玩游戏哦！
+    </p>
+</div>
+
+
+<div class="main">
+    <!--tab 1-->
+    <div id="tab_1" class="f_tab">
+        <div class="bg">
+            <img src="__ADDONS__/images/f_bg.jpg" >
+        </div>
+        <p class="f_tip">{$tip}</p>
+        <if condition = " $status neq 7">
+            <div class="f_content">
+                <div class="f_progress">
+                    <span class="f_progress_l">0°</span>
+                    <span class="f_progress_r">100°</span>
+                </div>
+            </div>
+        </if>
+        <if condition = "$status eq 1">
+            <a href="javascript:void(0);" class="f_c_button">
+                我也要煮饭
+            </a>
+        </if>
+        <if condition = "$status eq 2">
+            <a href="javascript:void(0);" class="f_c_button">
+                叫朋友帮忙煮饭
+            </a>
+        </if>
+        <if condition = "$status eq 3">
+            <a href="javascript:void(0);" class="f_c_button">
+                帮ta煮饭
+            </a>
+        </if>
+        <if condition = "$status eq 4">
+            <a href="javascript:void(0);" class="f_c_button">
+                我也要煮饭
+            </a>
+        </if>
+        <if condition = "$status eq 5">
+            <a href="javascript:showSubmit();" class="f_c_button2">
+                点击领取奖品
+            </a>
+            <div class="f_application" style="display:none;">
+                <form action="" method="post" class="form">
+                    <input type="text" id="user_name"  placeholder="姓名：">
+                    <input type="text" id="user_phone" placeholder="手机号：">
+                    <input type="text" id="user_site"  placeholder="邮寄地址：">
+                </form>
+            </div>
+            <a href="javascript:void(0);" class="f_c_button"  style="display:none;">
+                提交资料
+            </a>
+        </if>
+        <if condition = "$status eq 7">
+            <div class="f_application">
+                <div class="form">
+                    <span class="f_application_tip">领取成功</span>
+                </div>
+            </div>
+        </if>
+    </div>
+    <!--tab 1 end-->
+
+    <!--tab 2-->
+    <div id="tab_2" class="f_tab">
+        <div class="f_pic">
+            <img src="__ADDONS__/images/f_introduce_1.jpg">
+            <img src="__ADDONS__/images/f_introduce_2.jpg">
+        </div>
+    </div>
+    <!--tab 2 end-->
+
+    <!--tab 3-->
+    <div id="tab_3" class="f_tab">
+        <div class="f_describe_top"></div>
+        <div class="f_describe">
+            <p>《活动时间》</p>
+            <span>巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</span>
+            <br><br><br>
+            <p>《活动时间》</p>
+            <span>巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</span>
+            <br><br><br>
+            <p>《活动时间》</p>
+            <span>巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</span>
+            <br><br><br>
+            <p>《活动时间》</p>
+            <span>巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</span>
+            <br><br><br>
+        </div>
+    </div>
+    <!--tab 3 end-->
+
+    <!--tab 4-->
+    <div id="tab_4" class="f_tab">
+        <div class="f_describe_top"></div>
+        <div class="f_help_list">
+            <volist name="helpList" id="helpItem">
+                <div class="f_help">
+                    <img src="{$helpItem.head_pic}">
+                    <span>+{$helpItem.value}</span>
+                </div>
+            </volist>
+        </div>
+    </div>
+    <!--tab 4 end-->
+
+    <div class="f_bottom">
+        <a href="javascript:void(0);" data-number = "1">
+            专业煮饭>
+        </a>
+        <a href="javascript:void(0);" data-number = "2">
+            飘香龙米>
+        </a>
+        <a href="javascript:void(0);" data-number = "3">
+            煮饭秘诀>
+        </a>
+        <a href="javascript:void(0);" data-number = "4">
+            助力列表>
+        </a>
+    </div>
+
+</div>
+
+
+<!--分享遮罩-->
+<div id="guide">
+    <img src="__ADDONS__/images/guide.png">
+</div>
+
+</body>
+
+
+<script src="__PUBLIC__/js/jquery-1.10.2.min.js"></script>
+
+
+<if condition=" !$isFollow ">
+    <script type="text/javascript">
+        $("#follow").show();
+    </script>
+    <else/>
+    <script type="text/javascript">
+        var ApiUrl = "{:U('Mobile/Addons/cookRice')}";
+        var status = "{$status}";
+        var activityId = "{$id}";
+    </script>
+    <script src="__ADDONS__/js/addons.js?{$v}" type="text/javascript"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        var ShareLink = "{$config['share_url']}";
+        if(status != 1){
+            ShareLink = ShareLink+"?activityId="+activityId;
+        }
+        var ShareImgUrl = "{$config['share_img']}";
+        var ShareTitle = "{$config['share_title']}";
+        var ShareDesc = "{$config['share_desc']}";
+        wx.config({
+            debug: false,
+            appId: "{$signPackage['appId']}",
+            timestamp: '{$signPackage["timestamp"]}',
+            nonceStr: '{$signPackage["nonceStr"]}',
+            signature: '{$signPackage["signature"]}',
+            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage','hideOptionMenu']
+        });
+        wx.ready(function(){
+            wx.onMenuShareTimeline({
+                title: ShareTitle,
+                link:ShareLink,
+                imgUrl:ShareImgUrl
+            });
+            wx.onMenuShareAppMessage({
+                title: ShareTitle,
+                desc: ShareDesc,
+                link:ShareLink,
+                imgUrl:ShareImgUrl
+            });
+
+        });
+    </script>
+</if>
+</html>

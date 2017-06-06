@@ -6,6 +6,7 @@
     <title>{$shopConfig['shop_info_store_title']}</title>
     <meta http-equiv="keywords" content="{$shopConfig['shop_info_store_keyword']}" />
     <meta name="description" content="{$shopConfig['shop_info_store_desc']}" />
+    <link rel="shortcut icon" href="/favicon.ico">
     <link href="__STATIC__/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link href="__STATIC__/css/style2.css?{$versionToken}" type="text/css" rel="stylesheet">
 </head>
@@ -46,9 +47,13 @@
                 <li data-target="#myCarousel" data-slide-to="1" class=""></li>
                 <li data-target="#myCarousel" data-slide-to="2" class=""></li>
                 <li data-target="#myCarousel" data-slide-to="3" class=""></li>
+                <!--<li data-target="#myCarousel" data-slide-to="4" class=""></li>-->
             </ol>
             <!-- 轮播（Carousel）项目 -->
             <div class="carousel-inner">
+                <!--<div class="item active">-->
+                    <!--<a href="#product"><img src="__STATIC__/images/banner0.png?{$versionToken}" alt=""></a>-->
+                <!--</div>-->
                 <div class="item active">
                     <a href="#product"><img src="__STATIC__/images/banner1.jpg?{$versionToken}" alt=""></a>
                 </div>
@@ -252,14 +257,18 @@
                         <ol class="carousel-indicators control">
                             <li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
                             <li data-target="#myCarousel2" data-slide-to="1" class=""></li>
+                            <li data-target="#myCarousel2" data-slide-to="2" class=""></li>
                         </ol>
                         <!-- 轮播（Carousel）项目 -->
                         <div class="carousel-inner">
                             <div class="item active">
-                                <img src="__STATIC__/images/koubei1.jpg" alt="">
+                                <img src="__STATIC__/images/koubei/p1.jpg?{$indexVersionToken}" alt="">
                             </div>
                             <div class="item">
-                                <img src="__STATIC__/images/koubei2.jpg" alt="">
+                                <img src="__STATIC__/images/koubei/p2.jpg?{$indexVersionToken}" alt="">
+                            </div>
+                            <div class="item">
+                                <img src="__STATIC__/images/koubei/p3.jpg?{$indexVersionToken}" alt="">
                             </div>
                         </div>
                     </div>

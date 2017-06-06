@@ -1,0 +1,28 @@
+<include file="Public/header2"/>
+<body>
+<include file="Public/loading"/>
+<div class="mui-slider-group">
+    <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+        <div id="scroll1" class="mui-scroll-wrapper">
+            <ul class="mui-table-view mui-grid-view" style="background-color:#efeff4 !important">
+                <li class="mui-table-view-cell mui-media mui-col-xs-6">
+                    <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$vo[goods_id]))}">
+                        <img class="mui-media-object" src="{$vo.goods_id|goods_thum_images=400,400}" >
+                        <div class="to">
+                            <div class="to1">{$vo.goods_name}</div>
+                            <div class="to2" style="float:left">￥{$vo.shop_price}</div>
+                            <div class="m8">已销售：{: !empty($vo['virtual_sales']) ? $vo['virtual_sales'] : $vo['sales_sum'] }</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<include file="Public/js"/>
+<include file="Public/nav"/>
+</body>
+
+<include file="Public/footer"/>
+</html>
+

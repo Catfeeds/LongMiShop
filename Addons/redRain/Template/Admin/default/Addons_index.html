@@ -1,0 +1,50 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td class="text-right">
+                ID
+            </td>
+            <td class="text-left">
+                版本
+            </td>
+            <td class="text-left">
+                昵称
+            </td>
+            <td class="text-left">
+                金额
+            </td>
+            <td class="text-left">
+                是否发放
+            </td>
+            <td class="text-left">
+                时间
+            </td>
+            <td class="text-left">
+                操作
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="item">
+            <tr>
+                <td class="text-right">{$item.id}</td>
+                <td class="text-left">{$redConfig[$item["version"]]["title"]}</td>
+                <td class="text-left">{$item.user.nickname}</td>
+                <td class="text-left">{$item.money}</td>
+                <td class="text-left">{$stateTest[$item['state']]}</td>
+                <td class="text-left">{:date('Y-m-d H:i:s',$item['create_time'])}</td>
+                <td class="text-left">
+                    <if condition="$item['state'] != 1">
+                        <a href="{:U('Admin/Addons/redRain',array('pluginName'=>'grant','id'=>$item['id']))}" target="_blank">发放红包</a>
+                    </if>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-sm-3 text-left"></div>
+    <div class="col-sm-9 text-right">{$page}</div>
+</div>

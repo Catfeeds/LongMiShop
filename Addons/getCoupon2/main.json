@@ -1,0 +1,8 @@
+{
+  "title" : "红包雨",
+  "desc"  : "抢红包活动",
+  "code"  : "redRain",
+  "author": "钟瀚涛",
+  "is_hide": true,
+  "icon"  : "logo.jpg"
+}

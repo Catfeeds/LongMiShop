@@ -18,15 +18,17 @@ if(file_exists("./Install/") && !file_exists("./Install/install.lock")){
 error_reporting(E_ALL ^ E_NOTICE);//显示除去 E_NOTICE 之外的所有错误信息
 // 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
 define('APP_DEBUG',true);
+//define('APP_DEBUG',false);
+//error_reporting(0);
 // 定义应用目录
 define('APP_PATH','./Application/');
 //  定义插件目录
 define('PLUGIN_PATH','plugins/');
 // define('BIND_MODULE','Index'); 
 // 开启页面gzip压缩
-// ob_end_clean();
-// define ( "GZIP_ENABLE", function_exists ( 'ob_gzhandler' ) );
-// ob_start ( GZIP_ENABLE ? 'ob_gzhandler' : null );
+ ob_end_clean();
+ define ( "GZIP_ENABLE", function_exists ( 'ob_gzhandler' ) );
+ ob_start ( GZIP_ENABLE ? 'ob_gzhandler' : null );
 
 define('UPLOAD_PATH','Public/upload/'); // 编辑器图片上传路径
 define('MY_CACHE_TIME',0); //  缓存时间  31104000
