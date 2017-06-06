@@ -52,7 +52,7 @@ class HelpController extends IndexBaseController {
 //            "03" => "480",
 //            "04" => "80",
 //            "05" => "100",
-            "06" => "900",
+            "06" => "0",
         );
         $model = new \Think\Model();
         try {
