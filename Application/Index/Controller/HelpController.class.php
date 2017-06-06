@@ -82,7 +82,7 @@ class HelpController extends IndexBaseController {
            (SELECT MAX(order_id) 
             FROM lm_order)) AS order_id) 
     AS r2 
-WHERE r1.order_id >= r2.order_id  and r1.
+WHERE r1.order_id >= r2.order_id  and r1.order_status = 4 
 ORDER BY r1.order_id ASC
 LIMIT 1;";
                 for ($i = 1; $i <= $number; $i++) {
