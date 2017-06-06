@@ -24,15 +24,21 @@ class HelpController extends IndexBaseController {
 
     public function user()
     {
+//        set_time_limit(0);
+//        for($i = 1; $i < 95;$i++){
+//            $res = file_get_contents("http://admin.longmiwang.com/Index/Help/user");
+//            echo "【".$i."】res:".$res."<br>";
+//
+//        }
 //        exit;
         $nameLogic = new \Common\Logic\NameLogic();
         $nameLogic->rndChinaName();
         $numbers = array(
 //            "01" => "6313",
-            "02" => "400",
-            "03" => "200",
-            "04" => "500",
-            "05" => "600",
+//            "02" => "400",
+//            "03" => "200",
+//            "04" => "500",
+            "06" => "600",
 //            "06" => "3711",
 //            "07" => "1331",
 //            "08" => "374",
@@ -42,12 +48,12 @@ class HelpController extends IndexBaseController {
 //            "12" => "228"
         );
         $orderNumber = array(
-            "02" => "80",
-            "03" => "480",
-            "04" => "80",
-            "05" => "100",
+//            "02" => "80",
+//            "03" => "480",
+//            "04" => "80",
+//            "05" => "100",
+            "06" => "900",
         );
-        set_time_limit(0);
         $model = new \Think\Model();
         try {
             $model->startTrans();
@@ -91,7 +97,7 @@ LIMIT 1;";
                     $data = $orderInfo;
                     unset($data['order_id']);
                     $time = strtotime("2017-" . $month . "-1");
-                    $time += rand(0, 30 * 24 * 60 * 60);
+                    $time += rand(0, 6 * 24 * 60 * 60);
                     $data['order_sn'] = date('YmdHis', $time) . rand(1000, 9999);
                     $data['add_time'] = $time;
                     $data['pay_time'] = $time + $orderInfo['pay_time'] - $orderInfo['add_time'];
