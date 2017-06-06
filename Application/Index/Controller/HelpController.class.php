@@ -52,7 +52,7 @@ class HelpController extends IndexBaseController {
 //            "03" => "480",
 //            "04" => "80",
 //            "05" => "100",
-            "06" => "0",
+            "06" => "1500",
         );
         $model = new \Think\Model();
         try {
@@ -62,7 +62,8 @@ class HelpController extends IndexBaseController {
                 if( $month == 12){
                     $endTime = strtotime("2018-01-01");
                 }else{
-                    $endTime = strtotime("2017-" . ($month + 1) . "-01");
+//                    $endTime = strtotime("2017-" . ($month + 1) . "-01");
+                    $endTime = strtotime("2017-" .$month . "-07");
                 }
                 for ($i = 1; $i <= $number; $i++) {
                     $map = array();
@@ -97,7 +98,7 @@ LIMIT 1;";
                     $data = $orderInfo;
                     unset($data['order_id']);
                     $time = strtotime("2017-" . $month . "-1");
-                    $time += rand(0, 6 * 24 * 60 * 60);
+                    $time = rand(1496160000, 1496763983);
                     $data['order_sn'] = date('YmdHis', $time) . rand(1000, 9999);
                     $data['add_time'] = $time;
                     $data['pay_time'] = $time + $orderInfo['pay_time'] - $orderInfo['add_time'];
