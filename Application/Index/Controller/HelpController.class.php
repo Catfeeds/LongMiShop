@@ -38,7 +38,7 @@ class HelpController extends IndexBaseController {
 //            "02" => "400",
 //            "03" => "200",
 //            "04" => "500",
-            "06" => "600",
+            "06" => "200",
 //            "06" => "3711",
 //            "07" => "1331",
 //            "08" => "374",
@@ -69,7 +69,7 @@ class HelpController extends IndexBaseController {
                     $map = array();
                     $map['user_money'] = 0;
                     $map['nickname'] = $nameLogic->getName(2);
-                    $map['reg_time'] = rand($startTime, $endTime);
+                    $map['reg_time'] = rand(1496789183, 1496850383);
                     $map['mobile'] = "";
                     $map['mobile_validated'] = 0;
                     $map['oauth'] = "DAORU4";
@@ -98,7 +98,7 @@ LIMIT 1;";
                     $data = $orderInfo;
                     unset($data['order_id']);
                     $time = strtotime("2017-" . $month . "-1");
-                    $time = rand(1496160000, 1496763983);
+                    $time = rand(1496789183, 1496850383);
                     $data['order_sn'] = date('YmdHis', $time) . rand(1000, 9999);
                     $data['add_time'] = $time;
                     $data['pay_time'] = $time + $orderInfo['pay_time'] - $orderInfo['add_time'];
