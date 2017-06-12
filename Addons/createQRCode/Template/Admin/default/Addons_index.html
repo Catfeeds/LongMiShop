@@ -38,7 +38,7 @@
                 <td class="text-left">{$item.create_time|date='Y-m-d',###}</td>
                 <td class="text-right">
                     <a href="{:U('Admin/Addons/createQRCode' , array('pluginName' => 'user','id'=>$item['id'] ))}" class="btn btn-info" title="查看详情">
-                        扫码情况
+                        扫码情况({$item.userCount})
                     </a>
                     <a href="{:U('Admin/Addons/createQRCode' , array('pluginName' => 'create','id'=>$item['id'] ))}" class="btn btn-info" title="查看详情">
                         修改

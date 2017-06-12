@@ -711,6 +711,7 @@ class OrderController extends BaseController {
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付方式</td>';
     	$strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付状态</td>';
         $strTable .= '<td style="text-align:center;font-size:12px;" width="*">发货状态</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">物流信息</td>';
         $strTable .= '<td style="text-align:center;font-size:12px;" width="*">商品信息</td>';
         $strTable .= '<td style="text-align:center;font-size:12px;" width="*">商品数量</td>';
         $strTable .= '<td style="text-align:center;font-size:12px;" width="*">用户备注</td>';
@@ -734,6 +735,7 @@ class OrderController extends BaseController {
             $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$this->shipping_status[$val['shipping_status']].'</td>';
 
             $strGoods=array();
+            $shippingArray=array();
             foreach($orderGoods as $key =>  $goods){
                 $returnRes = M('return_goods') -> where(array('order_id'=>$goods['order_id'],'goods_id'=>$goods['goods_id'],'spec_key'=>$goods['spec_key']))->find();
                 if(!empty($returnRes) && $returnRes['result'] == 0){ //有未处理订单 不能导出该订单
@@ -745,8 +747,20 @@ class OrderController extends BaseController {
                 $strGoods[$key]['string']= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name']." ";
                 if ($goods['spec_key_name'] != '') $strGoods[$key]['string'] .= " 规格：".$goods['spec_key_name'];
                 $strGoods[$key]['number']=$goods['goods_num'];
+                $shipping_name = M('delivery_doc')->field('shipping_name,invoice_no')->where(array('id'=>$goods['delivery_id']))->find();
+                if( !empty($shipping_name) && !empty($shipping_name['shipping_name']) && !empty($shipping_name['invoice_no']) ){
+                    $shippingArray[$key]['shipping_name'] = $shipping_name['shipping_name'];
+                    $shippingArray[$key]['invoice_no'] = $shipping_name['invoice_no'];
+                }
             }
             unset($orderGoods);
+            $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">';
+            if(!empty($shippingArray)){
+                foreach ($shippingArray as $shippingItem){
+                    $tempString .= $shippingItem['shipping_name'] .":[".$shippingItem['invoice_no']."]<br>";
+                }
+            }
+            $tempString .= '</td>';
             $tempString .= '<td style="text-align:left;font-size:12px;">'.$strGoods[0]['string'].' </td>';
             $tempString .= '<td style="text-align:left;font-size:12px;"><b style="color:#f00;">'.$strGoods[0]['number'].'</b> </td>';
             $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['user_note'].'</td>';
