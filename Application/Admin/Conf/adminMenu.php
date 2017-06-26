@@ -280,13 +280,13 @@
                         "ctl"    => "report",
                         "act"    => "saleTop",
                     ),
-                    array(
-                        "module" => "module",
-                        "level"  => 3,
-                        "title"  => "会员排行",
-                        "ctl"    => "report",
-                        "act"    => "userTop",
-                    ),
+//                    array(
+//                        "module" => "module",
+//                        "level"  => 3,
+//                        "title"  => "会员排行",
+//                        "ctl"    => "report",
+//                        "act"    => "userTop",
+//                    ),
                     array(
                         "module" => "module",
                         "level"  => 3,
@@ -294,20 +294,20 @@
                         "ctl"    => "report",
                         "act"    => "saleList",
                     ),
-                    array(
-                        "module" => "module",
-                        "level"  => 3,
-                        "title"  => "会员统计",
-                        "ctl"    => "report",
-                        "act"    => "user",
-                    ),
-                    array(
-                        "module" => "module",
-                        "level"  => 3,
-                        "title"  => "财务统计",
-                        "ctl"    => "report",
-                        "act"    => "finance",
-                    )
+//                    array(
+//                        "module" => "module",
+//                        "level"  => 3,
+//                        "title"  => "会员统计",
+//                        "ctl"    => "report",
+//                        "act"    => "user",
+//                    ),
+//                    array(
+//                        "module" => "module",
+//                        "level"  => 3,
+//                        "title"  => "财务统计",
+//                        "ctl"    => "report",
+//                        "act"    => "finance",
+//                    )
                 )
             )
         ),

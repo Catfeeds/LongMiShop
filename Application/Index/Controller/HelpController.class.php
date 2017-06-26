@@ -24,13 +24,16 @@ class HelpController extends IndexBaseController {
 
     public function user()
     {
+
+
+//        UPDATE `lm_order` SET shipping_time = 0  ,`shipping_code` ="",`confirm_time` = 0,`shipping_status` =0,`order_status` =1  WHERE `shipping_time` >1498488018
 //        set_time_limit(0);
 //        for($i = 1; $i < 95;$i++){
 //            $res = file_get_contents("http://admin.longmiwang.com/Index/Help/user");
 //            echo "【".$i."】res:".$res."<br>";
 //
 //        }
-//        exit;
+        exit;
         $nameLogic = new \Common\Logic\NameLogic();
         $nameLogic->rndChinaName();
         $numbers = array(
