@@ -10,7 +10,7 @@ class Order2CronClass
         $work_time = intval(date("Hi"));
         $rand = rand(0,100);
         if ($work_time > "900" && $work_time < "2100") {
-            if( $rand > 70){
+            if( $rand > 85){
                 $sql = "SELECT r1.* 
  FROM lm_order AS r1 JOIN
     (SELECT ROUND(RAND() * 

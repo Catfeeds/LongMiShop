@@ -38,7 +38,7 @@ class HelpController extends IndexBaseController {
 //            "02" => "400",
 //            "03" => "200",
 //            "04" => "500",
-            "06" => "200",
+            "06" => "600",
 //            "06" => "3711",
 //            "07" => "1331",
 //            "08" => "374",
@@ -52,18 +52,18 @@ class HelpController extends IndexBaseController {
 //            "03" => "480",
 //            "04" => "80",
 //            "05" => "100",
-            "06" => "0",
+            "06" => "55",
         );
         $model = new \Think\Model();
         try {
             $model->startTrans();
             foreach ($numbers as $month => $number) {
-                $startTime = strtotime("2017-" . $month . "-01");
+                $startTime = strtotime("2017-" . $month . "-08");
                 if( $month == 12){
                     $endTime = strtotime("2018-01-01");
                 }else{
 //                    $endTime = strtotime("2017-" . ($month + 1) . "-01");
-                    $endTime = strtotime("2017-" .$month . "-07");
+                    $endTime = strtotime("2017-" .$month . "-26");
                 }
                 for ($i = 1; $i <= $number; $i++) {
                     $map = array();
@@ -72,7 +72,7 @@ class HelpController extends IndexBaseController {
                     $map['reg_time'] = rand(1496789183, 1496850383);
                     $map['mobile'] = "";
                     $map['mobile_validated'] = 0;
-                    $map['oauth'] = "DAORU4";
+                    $map['oauth'] = "DAORU170626";
                     $map['head_pic'] = "";
                     $map['sex'] = 1;
                     $userId = M('users')->add($map);
@@ -98,7 +98,7 @@ LIMIT 1;";
                     $data = $orderInfo;
                     unset($data['order_id']);
                     $time = strtotime("2017-" . $month . "-1");
-                    $time = rand(1496789183, 1496850383);
+                    $time += rand(0, 26 * 24 * 60 * 60);
                     $data['order_sn'] = date('YmdHis', $time) . rand(1000, 9999);
                     $data['add_time'] = $time;
                     $data['pay_time'] = $time + $orderInfo['pay_time'] - $orderInfo['add_time'];
