@@ -333,78 +333,77 @@ class UsersLogic extends BaseLogic
      * @param array $goods_data
      * @return array
      */
-    public function getCanUseCoupon($userId , $sum ,$goods_data = array()){
-        $result         = $this -> getCoupon($userId);
-        $couponList     = $result['data']['result'];
-        $couponCount    = $result['data']['count']; 
-	   foreach ( $goods_data as $goods_data_item){
-                 
-		if($goods_data_item['refuse_coupon'] ){
-                        $couponList = array();
-			$couponCount = 0;
-                   }
-         }
-	if( !empty( $couponList ) ){
-            foreach ( $couponList as $couponKey => $couponItem ){
+    public function getCanUseCoupon($userId, $sum, $goods_data = array())
+    {
+        $result = $this->getCoupon($userId);
+        $couponList = $result['data']['result'];
+        $couponCount = $result['data']['count'];
+        foreach ($goods_data as $goods_data_item) {
 
-
-		if($couponItem['use_type'] == 0 && $couponItem['use_end_time']  <= time()){
+            if ($goods_data_item['refuse_coupon']) {
+                $couponList = array();
+                $couponCount = 0;
+            }
+        }
+        if (!empty($couponList)) {
+            foreach ($couponList as $couponKey => $couponItem) {
+                if ($couponItem['use_type'] == 0 && $couponItem['use_end_time'] <= time()) {
                     unset($couponList[$couponKey]);
                     continue;
                 }
-                if($couponItem['use_type'] == 1 && $couponItem['receive_time']  <= (time()+($couponItem['limit_day'] * 24 * 60 * 60 ))){
+                if ($couponItem['use_type'] == 1 && time() >= ($couponItem['send_time'] + ($couponItem['limit_day'] * 24 * 60 * 60))) {
                     unset($couponList[$couponKey]);
                     continue;
                 }
-                if( $couponList[$couponKey]['order_id'] != 0 ){
+                if ($couponList[$couponKey]['order_id'] != 0) {
                     unset($couponList[$couponKey]);
                     continue;
                 }
-                if($couponItem['is_discount'] == 3){
+                if ($couponItem['is_discount'] == 3) {
                     unset($couponList[$couponKey]);
                     continue;
                 }
-                if($couponItem['is_discount'] == 2){
-                    if( empty($goods_data)){
+                if ($couponItem['is_discount'] == 2) {
+                    if (empty($goods_data)) {
                         unset($couponList[$couponKey]);
                         continue;
                     }
                     $goodsSum = 0;
-                    foreach ( $goods_data as $goods_data_item){
-                        if( $goods_data_item["goods_id"] == $couponItem['goods_id']){
+                    foreach ($goods_data as $goods_data_item) {
+                        if ($goods_data_item["goods_id"] == $couponItem['goods_id']) {
                             $goodsSum += $goods_data_item['goods_num'];
                         }
                     }
-                    if( $goodsSum <= 1){
+                    if ($goodsSum <= 1) {
                         unset($couponList[$couponKey]);
                         continue;
                     }
 
                 }
-                if($couponItem['is_discount'] == 0 || $couponItem['is_discount'] == 1 ){
-                    if($couponItem['is_appoint'] == 1){
-                        if( empty($goods_data)){
+                if ($couponItem['is_discount'] == 0 || $couponItem['is_discount'] == 1) {
+                    if ($couponItem['is_appoint'] == 1) {
+                        if (empty($goods_data)) {
                             unset($couponList[$couponKey]);
                             continue;
                         }
                         $haveGoodsId = false;
                         $goodsSum = 0;
-                        foreach ( $goods_data as $goods_data_item){
-                            if( $goods_data_item["goods_id"] == $couponItem['goods_id']){
+                        foreach ($goods_data as $goods_data_item) {
+                            if ($goods_data_item["goods_id"] == $couponItem['goods_id']) {
                                 $haveGoodsId = true;
                                 $goodsSum += $goods_data_item['goods_price'] * $goods_data_item['goods_num'];
                             }
                         }
-                        if(!$haveGoodsId){
+                        if (!$haveGoodsId) {
                             unset($couponList[$couponKey]);
                             continue;
                         }
-                        if( $goodsSum < $couponList[$couponKey]['condition'] ){
+                        if ($goodsSum < $couponList[$couponKey]['condition']) {
                             unset($couponList[$couponKey]);
                             continue;
                         }
-                    }else{
-                        if( $sum < $couponList[$couponKey]['condition'] ){
+                    } else {
+                        if ($sum < $couponList[$couponKey]['condition']) {
                             unset($couponList[$couponKey]);
                             continue;
                         }
@@ -412,7 +411,7 @@ class UsersLogic extends BaseLogic
                 }
             }
         }
-        return callback(true,"获取成功",array("result" => $couponList , "count" => $couponCount));
+        return callback(true, "获取成功", array("result" => $couponList, "count" => $couponCount));
     }
 
     /**
