@@ -348,7 +348,7 @@ class UsersLogic extends BaseLogic
             foreach ( $couponList as $couponKey => $couponItem ){
 
 
-		if($cuponItem['use_type'] == 0 && $couponItem['use_end_time']  <= time()){
+		if($couponItem['use_type'] == 0 && $couponItem['use_end_time']  <= time()){
                     unset($couponList[$couponKey]);
                     continue;
                 }
