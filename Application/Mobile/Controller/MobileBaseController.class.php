@@ -36,7 +36,6 @@ abstract class MobileBaseController extends BaseController {
                     }
             }
         }
-
         $this -> user_id = session(__UserID__);
         $user_info = get_user_info($this -> user_id);
         if(!empty($user_info)){

@@ -18,10 +18,20 @@
 @include_once "Function/kuaidi.php";
 @include_once "Function/addons.php";
 
+function _dd($x) {
+    if( session(__UserID__) == "407" ){
+        echo "<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">";
+        echo "<pre>";
+        print_r($x);
+        echo "</pre>";
+        die;
+    }
+}
 function dd($x) {
-    echo "<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">";
-    echo "<pre>";
-    print_r($x);
-    echo "</pre>";
-    die;
+    if( session(__UserID__) == "407" ){
+        echo "<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">";
+        echo "<pre>";
+        print_r($x);
+        echo "</pre>";
+    }
 }

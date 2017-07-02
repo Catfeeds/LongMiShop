@@ -351,6 +351,7 @@ class UsersLogic extends BaseLogic
                     unset($couponList[$couponKey]);
                     continue;
                 }
+                dd($couponItem);
                 if ($couponItem['use_type'] == 1 && time() >= ($couponItem['send_time'] + ($couponItem['limit_day'] * 24 * 60 * 60))) {
                     unset($couponList[$couponKey]);
                     continue;
