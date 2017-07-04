@@ -299,7 +299,7 @@ class UsersLogic extends BaseLogic
 //        }
         //调试使用
         $where = ' AND l.order_id = 0 AND '; // 未使用
-        $where .= ' ( ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > ('.time().' + ( c.limit_day * 24 * 60 * 60 ))  and c.use_type = 1 ) ) ';
+        $where .= ' ( ( c.use_end_time > '.time().' and c.use_type = 0 ) or ('.time().'  < ( l.send_time  + ( c.limit_day * 24 * 60 * 60 ))   and c.use_type = 1 ) ) ';
 
         //获取数量
         $sql = "SELECT count(l.id) as total_num FROM __PREFIX__coupon_list".
