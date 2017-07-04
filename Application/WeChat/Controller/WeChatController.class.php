@@ -39,6 +39,8 @@ class WeChatController extends Controller {
 
     public function responseMsg()
     {
+	 setLogResult(json_encode($GLOBALS),"微信进来1","test");
+
         //get post data, May be due to the different environments
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
         //extract post data

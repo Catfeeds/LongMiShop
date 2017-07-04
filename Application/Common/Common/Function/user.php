@@ -779,6 +779,7 @@ function userUpgradeDetection( $userId ,$points,$level)
  */
 function userUpgrade( $userId , $level )
 {
+    return false;
     $condition = array(
         "user_id" => $userId
     );
