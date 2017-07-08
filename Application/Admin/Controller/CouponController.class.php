@@ -169,7 +169,7 @@ class CouponController extends BaseController {
     					$user_id = $val['user_id'];
     					$time = time();
     					$gap = ($k+1) == $able ? '' : ',';
-    					$insert .= "($cid,1,$user_id,$time)$gap";
+    					$insert .= "($cid,1,$user_id,$time,$time)$gap";
     				}
     			}
     		}else{
@@ -180,10 +180,10 @@ class CouponController extends BaseController {
     			foreach ($user_id as $k=>$v){
     				$time = time();
     				$gap = ($k+1) == $able ? '' : ',';
-    				$insert .= "($cid,1,$v,$time)$gap";
+    				$insert .= "($cid,1,$v,$time,$time)$gap";
     			}
     		}
-			$sql = "insert into __PREFIX__coupon_list (`cid`,`type`,`uid`,`send_time`) VALUES $insert";
+			$sql = "insert into __PREFIX__coupon_list (`cid`,`type`,`uid`,`send_time`,`receive_time`) VALUES $insert";
 			M()->execute($sql);
 			M('coupon') -> where("id=$cid")->setInc('send_num',$able);
 			adminLog("发放".$able.'张'.$coupon['name']);
