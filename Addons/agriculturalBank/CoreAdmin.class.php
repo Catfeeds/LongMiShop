@@ -25,7 +25,7 @@ class agriculturalBankAdminController
                 $list[$key]["user"] = get_user_info($item["user_id"]);
                 $condition = "user_id ='". $item["user_id"]."' and add_time >= '".$item['create_time']."' and pay_status = 1";
                 $count = getCountWithCondition("order", $condition);
-                $lists[$key]["orderCount"] = intval($count);
+                $list[$key]["orderCount"] = intval($count);
             }
         }
         $this->assignData['list'] = $list;
