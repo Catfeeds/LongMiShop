@@ -20,6 +20,9 @@
             <td class="text-left">
                 申请时间
             </td>
+            <td class="text-left">
+                扫码之后的订单情况
+            </td>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +34,11 @@
                 <td class="text-left">{$item.user_id}</td>
                 <td class="text-left">{$item.user.nickname}</td>
                 <td class="text-left">{$item.create_time|date="Y-m-d H:d",###}</td>
+                <td class="text-left">
+                    <a href="{: U('Admin/Addons/agriculturalBank',array('pluginName'=>'order','id'=>$item['id'],'user_id'=>$item['user_id'])) }">
+                        订单查看({$item.orderCount})
+                    </a>
+                </td>
             </tr>
         </volist>
         </tbody>
