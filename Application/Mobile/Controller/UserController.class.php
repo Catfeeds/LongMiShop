@@ -1346,9 +1346,22 @@ class UserController extends MobileBaseController {
     }
 
 
-
+    /**
+     * 领取优惠券
+     */
     public function getCoupon(){
         $id = I("id",null);
+
+        //时间戳
+        $couponInfo = findDataWithCondition("coupon",array("add_time"=>$id));
+        if(!empty($couponInfo)){
+            $id = $couponInfo['id'];
+        }
+
+        if( empty($id)  || !isExistenceDataWithCondition("coupon",array("id"=>$id))  ){
+            header("Location: ".U("Mobile/User/index"));
+            exit;
+        }
 
         is_null($id)?$id=17:false;
         !in_array($id,array('4','17',"16","28","30"))?$id=17:false;
