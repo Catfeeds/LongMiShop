@@ -1356,15 +1356,10 @@ class UserController extends MobileBaseController {
         $couponInfo = findDataWithCondition("coupon",array("add_time"=>$id));
         if(!empty($couponInfo)){
             $id = $couponInfo['id'];
+        }else{
+            is_null($id)?$id=17:false;
+            !in_array($id,array('4','17',"16","28","30"))?$id=17:false;
         }
-
-        if( empty($id)  || !isExistenceDataWithCondition("coupon",array("id"=>$id))  ){
-            header("Location: ".U("Mobile/User/index"));
-            exit;
-        }
-
-        is_null($id)?$id=17:false;
-        !in_array($id,array('4','17',"16","28","30"))?$id=17:false;
 
         if( empty($id)  || !isExistenceDataWithCondition("coupon",array("id"=>$id))  ){
             header("Location: ".U("Mobile/User/index"));
