@@ -11,7 +11,6 @@ class UserController extends MobileBaseController {
     {
         return array(
             'login',
-            'login2',
             'pop_login',
             'do_login',
             'logout',
@@ -44,18 +43,22 @@ class UserController extends MobileBaseController {
      * 用户中心首页
      */
     public function index(){
+        $usersLogic = new \Common\Logic\UsersLogic();
+        $result = $usersLogic -> getCoupon( $this->user_id);
+        $this -> assign('couponCount', $result['data']['count']);
+        $this -> assign('orderCount' , $usersLogic -> getOrderCount( $this->user_id));
+        $this -> assign('number', getInviteNumber($this ->user_id) );
         $this -> display();
     }
 
 
     public function logout(){
-        exit;
-//        session_unset();
-//        session_destroy();
-//        setcookie('cn','',time()-3600,'/');
-//        setcookie('user_id','',time()-3600,'/');
-//        //$this->success("退出成功",U('Mobile/Index/index'));
-//        header("Location:".U('Mobile/Index/index'));
+        session_unset();
+        session_destroy();
+        setcookie('cn','',time()-3600,'/');
+        setcookie('user_id','',time()-3600,'/');
+        //$this->success("退出成功",U('Mobile/Index/index'));
+        header("Location:".U('Mobile/Index/index'));
     }
 
     /*
@@ -70,7 +73,7 @@ class UserController extends MobileBaseController {
         $this -> assign('account_log',$account_log);
         $this -> assign('page',$data['show']);
         $this -> assign('count',$data['count']);
-        $this -> assign('limit',$data['limit'] * I('p',1));
+        $this -> assign('limit',$data['limit'] * I('p'));
 
         if($_GET['is_ajax'])
         {
@@ -101,30 +104,14 @@ class UserController extends MobileBaseController {
      *  登录
      */
     public function login(){
-        if( isWeChatBrowser() ){
-            header("Location: ".U('Mobile/Addons/riceGrains'));exit;
-        }
         if( isLoginState() ){
-            header("Location: ".U('Mobile/User/index'));exit;
+        	header("Location: ".U('Mobile/User/index'));
         }
         $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Mobile/User/index");
         $this -> assign('referurl',$referurl);
-        if( $_SERVER["HTTP_HOST"] == "www.longmiwang.com"){
-            $this -> display("login2");
-        }else{
-            $this -> display();
-        }
-    }
-
-    public function login2(){
-        if( isWeChatBrowser() ){
-            header("Location: ".U('Mobile/User/index'));exit;
-        }
-        if( isLoginState() ){
-            header("Location: ".U('Mobile/User/index'));exit;
-        }
         $this -> display();
     }
+
 
     public function do_login(){
     	$username = I('post.username');
@@ -371,15 +358,6 @@ class UserController extends MobileBaseController {
     public function save_address(){
         $id = I('address_id');
         $data = I('post.');
-        if(empty($data["consignee"])){
-            $this->error('收货人姓名不能为空');exit;
-        }
-        if(empty($data["mobile"])){
-            $this->error('收货人手机号不能为空');exit;
-        }
-        if(empty($data["address"])){
-            $this->error('收货人地址不能为空');exit;
-        }
         $data['user_id'] = $this->user_id;
         if( !empty($data['is_default']) ){
             M('user_address') -> where(array('user_id'=>$this->user_id))->save(array('is_default'=>0));
@@ -1339,41 +1317,6 @@ class UserController extends MobileBaseController {
         $this -> assign('inviteData', getCallbackData($inviteData));
 
         $this -> display();
-    }
-
-    public function member(){
-        $this -> display();
-    }
-
-
-
-    public function getCoupon(){
-        $id = I("id",null);
-
-        is_null($id)?$id=17:false;
-        !in_array($id,array('4','17',"16","28","30"))?$id=17:false;
-
-        if( empty($id)  || !isExistenceDataWithCondition("coupon",array("id"=>$id))  ){
-            header("Location: ".U("Mobile/User/index"));
-            exit;
-        }
-        $condition = array(
-            "uid"=>$this->user_id,
-            "cid"=>$id
-        );
-        if( !isExistenceDataWithCondition("coupon_list",$condition)){
-            if( $this->user["is_follow"] == 1){
-                addNewCoupon( $id , $this->user_id);
-                header("Location: ".U("Mobile/User/coupon"));
-                exit;
-            }else{
-                $this -> display();
-                exit;
-            }
-        }
-
-        header("Location: ".U("Mobile/User/coupon"));
-        exit;
     }
 
 }

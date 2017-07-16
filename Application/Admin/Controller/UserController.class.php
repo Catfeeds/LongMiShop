@@ -18,11 +18,10 @@ class UserController extends BaseController {
     public function ajaxIndex(){
         // 搜索条件
         $condition = array();
-//        I('mobile') ? $condition['mobile'] = I('mobile') : false;
+        I('mobile') ? $condition['mobile'] = I('mobile') : false;
         I('nickname') ? $condition['nickname'] = array("like" , "%".I('nickname')."%") : false;
-//        I('email') ? $condition['email'] = I('email') : false;
-        I('userId') ? $condition['user_id'] = I('userId') : false;
-        $sort_order = I('order_by','user_id').' '.I('sort','desc');
+        I('email') ? $condition['email'] = I('email') : false;
+        $sort_order = I('order_by','reg_time').' '.I('sort','desc');
                
         $model = M('users');
         $count = $model->where($condition)->count();
@@ -33,7 +32,6 @@ class UserController extends BaseController {
         }
         
         $userList = $model->where($condition)->order($sort_order)->limit($Page->firstRow.','.$Page->listRows)->select();
-                
         $user_id_arr = get_arr_column($userList, 'user_id');
         if(!empty($user_id_arr))
         {

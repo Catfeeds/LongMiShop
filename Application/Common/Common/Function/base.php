@@ -1104,4 +1104,3 @@ function myHttp($url, $params, $method = 'GET', $header = array(), $multi = fals
     if($error) throw new Exception('请求发生错误：' . $error);
     return  $data;
 }
-

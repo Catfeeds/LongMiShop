@@ -50,16 +50,3 @@ function getCallbackMessage( $result )
 {
     return $result['msg'] ? $result['msg'] : "" ;
 }
-
-
-/**
- * json返回
- * @param int $state
- * @param string $msg
- * @param array $data
- */
-function printJson( $state = 1, $msg = '', $data = array() )
-{
-    is_bool($state) ? ( $state ? 1 : 0 ) : false;
-    exit(json_encode(array( 'state' => $state , 'msg' => $msg , 'data' => $data )));
-}

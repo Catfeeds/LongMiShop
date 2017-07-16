@@ -40,9 +40,6 @@ function getAddonsList( $path )
             }else{
                 $configArray["inInstall"] = false;
             }
-            if($configArray["is_hide"]){
-                continue;
-            }
             $result[] = $configArray;
         }
 

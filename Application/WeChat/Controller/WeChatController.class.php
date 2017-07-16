@@ -80,27 +80,6 @@ class WeChatController extends Controller {
                 M('users') -> where($where) -> save($data);
             }
         }
-
-        if($postObj->MsgType == 'event' && ($postObj->Event == 'subscribe' || $postObj->Event == 'SCAN' ))
-        {
-            $qrCode = trim($postObj->EventKey);
-            if(strstr($qrCode,"addons_qr_code_")){
-                $qrCode = str_replace("qrscene_","",$qrCode);
-                $qrInfo = findDataWithCondition("addons_createqrcode_qr",array("code"=>$qrCode),array('id','key_word'));
-                if( !empty($qrInfo)){
-                    $data = array(
-                        "qr_id"=>$qrInfo['id'],
-                        "create_time"=>time(),
-                        "openid"=>(string)$fromUsername,
-                        "event"=>(string)$postObj->Event,
-                        "tag"=>json_encode($postObj),
-                    );
-                    addData("addons_createqrcode_list",$data);
-                    $keyword = $qrInfo["key_word"];
-                }
-            }
-        }
-
         if($postObj->MsgType == 'event' && $postObj->Event == 'unsubscribe')
         {
             if( !empty($fromUsername) ){
@@ -161,37 +140,9 @@ class WeChatController extends Controller {
         }
 
 
-//        if($postObj->MsgType == 'image')
-//        {
-//            // 其他文本回复
-//            $textTpl = "<xml>
-//                                <ToUserName><![CDATA[%s]]></ToUserName>
-//                                <FromUserName><![CDATA[%s]]></FromUserName>
-//                                <CreateTime>%s</CreateTime>
-//                                <MsgType><![CDATA[%s]]></MsgType>
-//                                <Content><![CDATA[%s]]></Content>
-//                                <FuncFlag>0</FuncFlag>
-//                                </xml>";
-//            $contentStr = '客官~小的收到，正在核对您的信息，稍后会有客服通知您结果';
-//            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
-//            exit($resultStr);
-//        }
-
-
-        $work_time = intval (date("Hi"));
-        if( $work_time >"900" && $work_time < "2100"){
-            /**
-             * 客服部分
-             */
-            $textTpl = "<xml>
-                                <ToUserName><![CDATA[%s]]></ToUserName>
-                                <FromUserName><![CDATA[%s]]></FromUserName>
-                                <CreateTime>%s</CreateTime>
-                                <MsgType><![CDATA[%s]]></MsgType>
-                                </xml>";
-            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'transfer_customer_service');
-            exit($resultStr);
-        }else{
+        if($postObj->MsgType == 'image')
+        {
+            // 其他文本回复
             $textTpl = "<xml>
                                 <ToUserName><![CDATA[%s]]></ToUserName>
                                 <FromUserName><![CDATA[%s]]></FromUserName>
@@ -200,10 +151,23 @@ class WeChatController extends Controller {
                                 <Content><![CDATA[%s]]></Content>
                                 <FuncFlag>0</FuncFlag>
                                 </xml>";
-            $contentStr = '亲爱滴客官，龙米家的客服MM上班时间是09:00-21:00哦，如有紧急情况可添加微信longmiwang帮您解决哈。爱你哟，么么哒！';
+            $contentStr = '客官~小的收到，正在核对您的信息，稍后会有客服通知您结果';
             $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
             exit($resultStr);
         }
+
+        // 其他文本回复
+        $textTpl = "<xml>
+                                <ToUserName><![CDATA[%s]]></ToUserName>
+                                <FromUserName><![CDATA[%s]]></FromUserName>
+                                <CreateTime>%s</CreateTime>
+                                <MsgType><![CDATA[%s]]></MsgType>
+                                <Content><![CDATA[%s]]></Content>
+                                <FuncFlag>0</FuncFlag>
+                                </xml>";
+        $contentStr = '欢迎来到龙米!';
+        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
+        exit($resultStr);
 
     }
 }

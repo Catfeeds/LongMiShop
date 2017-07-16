@@ -15,43 +15,25 @@ function giveBeInviteGift( $userId ){
 /**
  * 获取邀请奖励
  * @param $userId
- * @param null $orderId
  * @return bool
  */
-function giveInviteGift( $userId , $orderId = null ){
+function giveInviteGift( $userId ){
     $condition = array(
         "user_id" => $userId,
         "pay_status" => 1,
     );
-    $invitedUserId = getInvitedUserId( $userId );
-    $isSpecial = isSpecialInvitation($invitedUserId);
-    $shopConfig = getShopConfig();
-    if($isSpecial){
-        if( !is_null($orderId)){
-            $condition["order_id"] = $orderId;
+    $orderCount = M('order') -> where($condition) -> count();
+    if( $orderCount == 1){
+        $shopConfig = getShopConfig();
+        $invitedUserId = getInvitedUserId( $userId );
+        giveGift( $invitedUserId , $shopConfig['prize_invite_value'] , $shopConfig['prize_invite'] , 1);
+        $userInfo = findDataWithCondition( "users" , array( "user_id" => $userId ) ,"nickname" );
+        $shopConfig = getShopConfig( );
+        if(  $shopConfig['prize_invite'] == 2 ){
+            sendWeChatMessageUseUserId( $invitedUserId , "邀请奖励" , array("userName" => $userInfo['nickname'],"money" => $shopConfig['prize_invite_value']) );
         }
-        $orderInfo = findDataWithCondition('order',$condition);
-        if( !empty($orderInfo)){
-            $money = $orderInfo["order_amount"]  * 0.2;
-            giveGift( $invitedUserId , $money , $shopConfig['prize_invite'] , 1);
-            $userInfo = findDataWithCondition( "users" , array( "user_id" => $userId ) ,"nickname" );
-            if(  $shopConfig['prize_invite'] == 2 ){
-                sendWeChatMessageUseUserId( $invitedUserId , "邀请奖励2" , array("userName" => $userInfo['nickname'],"money" => $shopConfig['prize_invite_value']) );
-            }
-            return true;
-        }
-    }else{
-        $orderCount = M('order')->where($condition) ->count();
-        if( $orderCount == 1 ){
-            giveGift( $invitedUserId , $shopConfig['prize_invite_value'] , $shopConfig['prize_invite'] , 1);
-            $userInfo = findDataWithCondition( "users" , array( "user_id" => $userId ) ,"nickname" );
-            if(  $shopConfig['prize_invite'] == 2 ){
-                sendWeChatMessageUseUserId( $invitedUserId , "邀请奖励" , array("userName" => $userInfo['nickname'],"money" => $shopConfig['prize_invite_value']) );
-            }
-            return true;
-        }
+        return true;
     }
-
     return false;
 }
 

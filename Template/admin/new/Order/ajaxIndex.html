@@ -12,7 +12,7 @@
 
     <volist name="orderList" id="list">
     <dl class="dl_box1">
-        <dt>订单号：{$list.order_sn}<if condition="$list['is_one']">【首单】</if></dt>
+        <dt>订单号：{$list.order_sn}</dt>
         <dd>
             <span class="btn_d"><a href="{:U('Admin/order/detail',array('order_id'=>$list['order_id']))}">查看详情</a></span>
             <!--<span class="btn_d"><a href="javascript:showDiv()">备注</a></span>-->
@@ -89,8 +89,8 @@
     </volist>
     {$page}
 
-    <else />
 
+    <else />
     
     <div class="none">还没有相关数据</div>
 

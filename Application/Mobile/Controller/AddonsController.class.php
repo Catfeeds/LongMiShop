@@ -15,9 +15,7 @@ class AddonsController extends MobileBaseController {
 
     function exceptAuthActions()
     {
-        return array(
-            "tweetQRCode"
-        );
+        return null;
     }
 
     public function  _initialize() {
@@ -30,16 +28,12 @@ class AddonsController extends MobileBaseController {
      */
     private function _init(){
 
-        $this -> pluginName = I( "pluginName" , null );
-        $this -> pluginName = is_null($this -> pluginName) ? I( "pN" , "index" ) : $this -> pluginName;
-
-
+        $this -> pluginName = I( "pluginName" , "index" );
         $this -> addonsLogic = new AddonsLogic();
         $this -> addonsLogic -> loadAddons( ACTION_NAME , $this -> pluginName , self::APPOINTED , $this -> user_info );
         
         $this -> addonsConfig  = $this -> addonsLogic -> getAddonsConfig();
         $dataList = $this -> addonsLogic -> run() ;
-        $theme = self::THEME;
         if( !empty( $dataList ) ){
             foreach ( $dataList as $dataKey => $dataItem ){
                 if( $dataKey == "__success"){
@@ -50,16 +44,11 @@ class AddonsController extends MobileBaseController {
                     $this -> error( $dataItem["msg"] , $dataItem["url"] , $dataItem["time"]  );
                     exit;
                 }
-                if( $dataKey == "__theme"){
-                    $theme = $dataItem;
-                    continue;
-                }
-
                 $this -> assign( $dataKey , $dataItem );
             }
         }
         C( "TMPL_PARSE_STRING.__ADDONS__" , '/Addons/' . ACTION_NAME . '/Static' );
-        $viewPath = "./Addons/".ACTION_NAME."/Template/" . self::APPOINTED . "/" . $theme . "/Addons_" . $this -> pluginName .".html" ;
+        $viewPath = "./Addons/".ACTION_NAME."/Template/" . self::APPOINTED . "/" . self::THEME . "/Addons_" . $this -> pluginName .".html" ;
         $this -> view -> display($viewPath);
     }
 
@@ -68,10 +57,5 @@ class AddonsController extends MobileBaseController {
      */
     public function  _empty(){}
 
-
-    public function tweetQRCode(){
-        header("Location: http://mp.weixin.qq.com/s/ksHv0QFtJEOAUJOv0QNTNQ");
-        exit;
-    }
 
 }

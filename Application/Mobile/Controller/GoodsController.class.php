@@ -48,7 +48,7 @@ class GoodsController extends MobileBaseController {
     	$spec = I('spec',0); // 规格
     	$attr = I('attr',''); // 属性
     	$sort = I('sort','goods_id'); // 排序
-    	$sort_asc = I('sort_asc','desc'); // 排序
+    	$sort_asc = I('sort_asc','asc'); // 排序
     	$price = I('price',''); // 价钱
     	$start_price = trim(I('start_price','0')); // 输入框价钱
         $end_price = trim(I('end_price','0')); // 输入框价钱
@@ -109,12 +109,7 @@ class GoodsController extends MobileBaseController {
     	$page = new Page($count,$limit);
     	if($count > 0)
     	{
-    	    $field = "*";
-    	    if( $sort == "sales_sum"){
-                $field = "* ,if(virtual_sales>0,virtual_sales,sales_sum) as sales_sum2 ";
-                $sort = "sales_sum2";
-            }
-            $goods_list = M('goods') -> where("goods_id in ( ".  implode(',', $filter_goods_id).")") ->field($field)->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows) ->select();
+    		$goods_list = M('goods') -> where("goods_id in ( ".  implode(',', $filter_goods_id).")")->order("$sort $sort_asc")->limit($page->firstRow.','.$page->listRows) ->select();
 
             $filter_goods_id2 = get_arr_column($goods_list, 'goods_id');
     		if($filter_goods_id2)
@@ -194,32 +189,13 @@ class GoodsController extends MobileBaseController {
         	$this->error('此商品不存在或者已下架');
         }
 
-        //老用户促销
-        if (!empty($goods['old_mam_timer'])) {
-            $goods['isOldManTime'] =  true;
-            $diffTime = $goods['old_mam_timer'] - time();
-            if( $diffTime < 2 ){
-                $isOver = true;
-                M('Cart') -> where(array('goods_id'=>$goods_id))->delete();
-            }else{
-                $goods['diffTime'] = $diffTime;
-                $isOver = false;
-            }
-            $isOldMan = true;
-            //if($this->user['last_buy_time'] > 0 || $goods_id == 23){
-            //    $isOldMan = true;
-           // }
-            $goods['isOver'] = $isOver;
-            $goods['isOldMan'] = $isOldMan;
-        }
-
 //        if($goods['brand_id']){
 //            $brnad = M('brand') -> where("id =".$goods['brand_id'])->find();
 //            $goods['brand_name'] = $brnad['name'];
 //        }
 
 
-        $goods_images_list = M('GoodsImages') -> where("goods_id = $goods_id")->order("sort desc")->select(); // 商品 图册
+        $goods_images_list = M('GoodsImages') -> where("goods_id = $goods_id")->select(); // 商品 图册
 //        $goods_attribute = M('GoodsAttribute')->getField('attr_id,attr_name'); // 查询属性
 //        $goods_attr_list = M('GoodsAttr') -> where("goods_id = $goods_id")->select(); // 查询商品属性表
 		$filter_spec = $goodsLogic->getSpec($goods_id);

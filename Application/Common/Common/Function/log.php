@@ -39,3 +39,4 @@ function setLogResult($word='' , $title = null ,$fileName = "base" ,$suffix = "h
     flock($fp, LOCK_UN);
     fclose($fp);
 }
+

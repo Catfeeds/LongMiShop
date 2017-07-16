@@ -85,8 +85,6 @@ class UsersLogic extends BaseLogic
                 $data['user_id'] = $user['user_id'];
                 M('users')->save($data);
             }
-            //注册送积分
-            increasePoints("register", $user['user_id']);
 //			// 会员注册送优惠券
 //			$coupon = M('coupon') -> where("send_end_time > ".time()." and ((createnum - send_num) > 0 or createnum = 0) and type = 2")->select();
 //			foreach ($coupon as $key => $val)
@@ -171,8 +169,7 @@ class UsersLogic extends BaseLogic
             M('coupon_list')->add(array('cid'=>$val['id'],'type'=>$val['type'],'uid'=>$user_id,'send_time'=>time()));
             M('Coupon') -> where("id = {$val['id']}")->setInc('send_num'); // 优惠券领取数量加一
         }
-        //注册送积分
-        increasePoints("register", $user_id);
+        
         return array('status'=>1,'msg'=>'注册成功','result'=>$user);
     }
 
@@ -299,7 +296,7 @@ class UsersLogic extends BaseLogic
 //        }
         //调试使用
         $where = ' AND l.order_id = 0 AND '; // 未使用
-        $where .= ' ( ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > ('.time().' + ( c.limit_day * 24 * 60 * 60 ))  and c.use_type = 1 ) ) ';
+        $where .= ' ( ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > "('.time().' + ( c.limit_day * 24 * 60 * 60 ))  " and c.use_type = 1 ) ) ';
 
         //获取数量
         $sql = "SELECT count(l.id) as total_num FROM __PREFIX__coupon_list".
@@ -336,26 +333,9 @@ class UsersLogic extends BaseLogic
     public function getCanUseCoupon($userId , $sum ,$goods_data = array()){
         $result         = $this -> getCoupon($userId);
         $couponList     = $result['data']['result'];
-        $couponCount    = $result['data']['count']; 
-	   foreach ( $goods_data as $goods_data_item){
-                 
-		if($goods_data_item['refuse_coupon'] ){
-                        $couponList = array();
-			$couponCount = 0;
-                   }
-         }
-	if( !empty( $couponList ) ){
+        $couponCount    = $result['data']['count'];
+        if( !empty( $couponList ) ){
             foreach ( $couponList as $couponKey => $couponItem ){
-
-
-		if($cuponItem['use_type'] == 0 && $couponItem['use_end_time']  <= time()){
-                    unset($couponList[$couponKey]);
-                    continue;
-                }
-                if($couponItem['use_type'] == 1 && $couponItem['receive_time']  <= (time()+($couponItem['limit_day'] * 24 * 60 * 60 ))){
-                    unset($couponList[$couponKey]);
-                    continue;
-                }
                 if( $couponList[$couponKey]['order_id'] != 0 ){
                     unset($couponList[$couponKey]);
                     continue;
@@ -423,7 +403,7 @@ class UsersLogic extends BaseLogic
     public function getCoupon( $userId ){
         //调试使用
         $where = ' AND (l.order_id = 0 and l.use_time = 0) AND '; // 未使用
-        $where .= '( ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > ('.time().' + ( c.limit_day * 24 * 60 * 60 ))  and c.use_type = 1 )) ';
+        $where .= '( ( c.use_end_time > '.time().' and c.use_type = 0 ) or ( l.receive_time  > "('.time().' + ( c.limit_day * 24 * 60 * 60 ))  " and c.use_type = 1 )) ';
         $sql = "SELECT l.*,c.name,c.money,c.use_end_time,c.condition,c.goods_id,c.is_discount,c.use_type,c.desc,c.is_appoint,c.limit_day FROM __PREFIX__coupon_list".
             " l LEFT JOIN __PREFIX__coupon".
             " c ON l.cid =  c.id WHERE l.uid = '{$userId}' {$where}  ORDER BY l.send_time DESC,l.use_time";
@@ -582,58 +562,58 @@ class UsersLogic extends BaseLogic
      * @param $user_id 地址id(编辑时需传入)
      * @return array
      */
-//    public function add_address($user_id,$address_id=0,$data){
-//        $post = $data;
-//        if($address_id == 0)
-//        {
-//            $c = M('UserAddress') -> where("user_id = $user_id")->count();
-//            if($c >= 20)
-//                return array('status'=>-1,'msg'=>'最多只能添加20个收货地址','result'=>'');
-//        }
-//
-//        //检查手机格式
-//        if($post['consignee'] == '')
-//            return array('status'=>-1,'msg'=>'收货人不能为空','result'=>'');
-//        if(!$post['province'] || !$post['city'] || !$post['district'])
-//            return array('status'=>-1,'msg'=>'所在地区不能为空','result'=>'');
-//        if(!$post['address'])
-//            return array('status'=>-1,'msg'=>'地址不能为空','result'=>'');
-//        if(!check_mobile($post['mobile']))
-//            return array('status'=>-1,'msg'=>'手机号码格式有误','result'=>'');
-//
-//        //编辑模式
-//        if($address_id > 0){
-//
-//            $address = M('user_address') -> where(array('address_id'=>$address_id,'user_id'=> $user_id))->find();
-//            if($post['is_default'] == 1 && $address['is_default'] != 1)
-//                M('user_address') -> where(array('user_id'=>$user_id))->save(array('is_default'=>0));
-//            $row = M('user_address') -> where(array('address_id'=>$address_id,'user_id'=> $user_id))->save($post);
-//            dd($post);
-//            if(!$row)
-//                return array('status'=>-1,'msg'=>'操作完成','result'=>'');
-//            return array('status'=>1,'msg'=>'编辑成功','result'=>'');
-//        }
-//        //添加模式
-//        $post['user_id'] = $user_id;
-//
-//        // 如果目前只有一个收货地址则改为默认收货地址
-//        $c = M('user_address') -> where("user_id = {$post['user_id']}")->count();
-//        if($c == 0)  $post['is_default'] = 1;
-//
-//        $address_id = M('user_address')->add($post);
-//        //如果设为默认地址
-//        $insert_id = M()->getLastInsID();
-//        $map['user_id'] = $user_id;
-//        $map['address_id'] = array('neq',$insert_id);
-//
-//        if($post['is_default'] == 1)
-//            M('user_address') -> where($map)->save(array('is_default'=>0));
-//        if(!$address_id)
-//            return array('status'=>-1,'msg'=>'添加失败','result'=>'');
-//
-//
-//        return array('status'=>1,'msg'=>'添加成功','result'=>$address_id);
-//    }
+    public function add_address($user_id,$address_id=0,$data){
+        $post = $data;
+        if($address_id == 0)
+        {
+            $c = M('UserAddress') -> where("user_id = $user_id")->count();
+            if($c >= 20)
+                return array('status'=>-1,'msg'=>'最多只能添加20个收货地址','result'=>'');
+        }        
+        
+        //检查手机格式
+        if($post['consignee'] == '')
+            return array('status'=>-1,'msg'=>'收货人不能为空','result'=>'');
+        if(!$post['province'] || !$post['city'] || !$post['district'])
+            return array('status'=>-1,'msg'=>'所在地区不能为空','result'=>'');
+        if(!$post['address'])
+            return array('status'=>-1,'msg'=>'地址不能为空','result'=>'');
+        if(!check_mobile($post['mobile']))
+            return array('status'=>-1,'msg'=>'手机号码格式有误','result'=>'');
+
+        //编辑模式
+        if($address_id > 0){
+
+            $address = M('user_address') -> where(array('address_id'=>$address_id,'user_id'=> $user_id))->find();
+            if($post['is_default'] == 1 && $address['is_default'] != 1)
+                M('user_address') -> where(array('user_id'=>$user_id))->save(array('is_default'=>0));
+            $row = M('user_address') -> where(array('address_id'=>$address_id,'user_id'=> $user_id))->save($post);
+            dd($post);
+            if(!$row)
+                return array('status'=>-1,'msg'=>'操作完成','result'=>'');
+            return array('status'=>1,'msg'=>'编辑成功','result'=>'');
+        }
+        //添加模式
+        $post['user_id'] = $user_id;
+        
+        // 如果目前只有一个收货地址则改为默认收货地址
+        $c = M('user_address') -> where("user_id = {$post['user_id']}")->count();
+        if($c == 0)  $post['is_default'] = 1;
+        
+        $address_id = M('user_address')->add($post);
+        //如果设为默认地址
+        $insert_id = M()->getLastInsID();
+        $map['user_id'] = $user_id;
+        $map['address_id'] = array('neq',$insert_id);
+               
+        if($post['is_default'] == 1)
+            M('user_address') -> where($map)->save(array('is_default'=>0));
+        if(!$address_id)
+            return array('status'=>-1,'msg'=>'添加失败','result'=>'');
+        
+        
+        return array('status'=>1,'msg'=>'添加成功','result'=>$address_id);
+    }
 
     /**
      * 地址添加/编辑

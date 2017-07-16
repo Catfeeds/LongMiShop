@@ -66,37 +66,37 @@
                 </div>
               </div>
             </div>
-            <!--<div class="col-sm-12">-->
-            <!--<div class="panel panel-default">-->
-            	<!--<div class="panel-heading">-->
-                    <!--<h3 class="panel-title"><i class="fa fa-list"></i> 销售表格概览</h3>-->
-                <!--</div>-->
-                <!--<div class="panel-body">-->
-	            	<!--<table id="list-table" class="table table-bordered table-striped">-->
-			               <!--<thead>-->
-			                   <!--<tr>-->
-			                   	   <!--<th>时间</th>-->
-				                   <!--<th>订单数</th>-->
-				                   <!--<th>销售总额</th>			                   -->
-				                   <!--<th>客单价</th>-->
-			                  	   <!--<th>查看</th>-->
-			                   <!--</tr>-->
-			                <!--</thead>-->
-							<!--<tbody>-->
-	                         <!--<foreach name="list" item="vo" key="k" >-->
-	                          <!--<tr role="row" align="center">-->
-	                          	 <!--<td>{$vo.day}</td>-->
-	                          	 <!--<td>{$vo.order_num}</td>-->
-	                             <!--<td>{$vo.amount}</td>-->
-			                     <!--<td>{$vo.sign}</td>-->
-			                     <!--<td><a href="{:U('Report/saleList',array('begin'=>$vo['day'],'end'=>$vo['end']))}">订单列表</a></td>-->
-			                   <!--</tr>-->
-			                  <!--</foreach>-->
-			                <!--</tbody>-->
-			        <!--</table>-->
-		        <!--</div>-->
-		      <!--</div>-->
-            <!--</div>-->
+            <div class="col-sm-12">
+            <div class="panel panel-default">
+            	<div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 销售表格概览</h3>
+                </div>
+                <div class="panel-body">
+	            	<table id="list-table" class="table table-bordered table-striped">
+			               <thead>
+			                   <tr>
+			                   	   <th>时间</th>
+				                   <th>订单数</th>
+				                   <th>销售总额</th>			                   
+				                   <th>客单价</th>
+			                  	   <th>查看</th>
+			                   </tr>
+			                </thead>
+							<tbody>
+	                         <foreach name="list" item="vo" key="k" >
+	                          <tr role="row" align="center">
+	                          	 <td>{$vo.day}</td>
+	                          	 <td>{$vo.order_num}</td>
+	                             <td>{$vo.amount}</td>
+			                     <td>{$vo.sign}</td>
+			                     <td><a href="{:U('Report/saleList',array('begin'=>$vo['day'],'end'=>$vo['end']))}">订单列表</a></td>
+			                   </tr>
+			                  </foreach>
+			                </tbody>
+			        </table>
+		        </div>
+		      </div>
+            </div>
             <!--  
             <div class="col-md-6">        
               <div class="box box-info">

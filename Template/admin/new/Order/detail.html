@@ -122,7 +122,8 @@
                         <if condition="!empty($good['shipping_name'])">
                             <tr>
                                 <td class="text-left" colspan="5">
-                                    {: $good['shipping_name']}(&nbsp;{: $good['invoice_no']}&nbsp;)&nbsp;&nbsp;&nbsp;
+                                    {: $good['shipping_name']}
+                                    <!--(&nbsp;{: $good['invoice_no']}&nbsp;)&nbsp;&nbsp;&nbsp;-->
                                     <a href="{: U('/Admin/order/express',array('order_id'=>$good['order_id'],'id'=>$good['logistics']))}" target="_blank">查看物流</a>
                                 </td>
                             </tr>

@@ -32,7 +32,6 @@ class OrderLogic extends RelationModel
             foreach($orderList as $orderKeys => $items) {
                 $orderList[$orderKeys]['nickname'] = findUserNickName($items['user_id']);
 
-//                $orderList[$orderKeys]['userInfo'] = findUserInfo($items['user_id']);
                 $orderList[$orderKeys] = setBtnOrderStatus($items);
                 $orderList[$orderKeys]["goods"] = $this -> getOrderGoods( $items["order_id"] );
                 if (
@@ -68,11 +67,16 @@ class OrderLogic extends RelationModel
                         $returnRes['result'] == 0 ? $orderList[$orderKeys]['isFast'] = false : false ;
                     }
                 }
-                $tempOrderInfo = M("order") -> where(array('user_id'=>$items['user_id'],"pay_status"=>"1"))->order("order_id")->find();
-                if( empty($tempOrderInfo) || $tempOrderInfo["order_id"]==$items["order_id"]){
-                    $orderList[$orderKeys]['is_one'] = true;
-                }else{
-                    $orderList[$orderKeys]['is_one'] = false;
+                if( $items['mobile'] == "42368" ){
+                    $arr = array(
+                        130, 131, 132, 133, 134, 135, 136, 137, 138, 139,
+                        144, 147,
+                        150, 151, 152, 153, 155, 156, 157, 158, 159,
+                        176, 177, 178,
+                        180, 181, 182, 183, 184, 185, 186, 187, 188, 189,
+                    );
+                    $tempUserInfo = findDataWithCondition("users",array('user_id'=>$items['user_id']));
+                    $orderList[$orderKeys]['mobile']  = $arr[$items['user_id']%34].mb_strcut($tempUserInfo["reg_time"],2);
                 }
             }
         }
@@ -469,7 +473,7 @@ class OrderLogic extends RelationModel
         $p = M('region') -> where(array('id'=>$p))->field('name')->find();
         $c = M('region') -> where(array('id'=>$c))->field('name')->find();
         $d = M('region') -> where(array('id'=>$d))->field('name')->find();
-        return $p['name'].','.$c['name'].','.$d['name'].',';
+        return $p['name'].' '.$c['name'].' '.$d['name'].' ';
     }
 
     /**

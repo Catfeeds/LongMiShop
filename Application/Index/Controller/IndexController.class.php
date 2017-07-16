@@ -16,8 +16,6 @@ class IndexController extends IndexBaseController {
 
     public function _initialize() {
         parent::_initialize();
-        $versionToken = "I_V.1.0";
-        $this -> assign('indexVersionToken', $versionToken);
     }
 
     public function index(){

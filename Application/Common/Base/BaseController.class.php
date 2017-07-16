@@ -9,11 +9,11 @@ class BaseController extends Controller
     public $shopConfig = array();
 
     public function _initialize() {
-//        if( isMobile() ){
-//            cookie('is_mobile','1',3600);
-//        }else{
-//            cookie('is_mobile','0',3600);
-//        }
+        if( isMobile() ){
+            cookie('is_mobile','1',3600);
+        }else{
+            cookie('is_mobile','0',3600);
+        }
 
         $this->session_id = session_id();
         define('SESSION_ID', $this->session_id);
@@ -29,7 +29,7 @@ class BaseController extends Controller
         $shopConfig = getShopConfig();
         $this -> shopConfig = $shopConfig;
         $this -> assign('shopConfig', $shopConfig);
-        $versionToken = "v3.18";
+        $versionToken = "v2.5";
         $this -> assign('versionToken', $versionToken);
     }
 
