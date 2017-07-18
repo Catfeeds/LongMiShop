@@ -33,15 +33,9 @@ class Order2CronClass
         if ($random > 50) {
             return;
         }
-        $sql = "SELECT r1.* 
- FROM lm_order AS r1 JOIN
-    (SELECT ROUND(RAND() * 
-           (SELECT MAX(order_id) 
-            FROM lm_order)) AS order_id) 
-    AS r2 
-WHERE r1.order_id >= r2.order_id 
-and mobile != '18689555512'  ORDER BY r1.order_id ASC
-LIMIT 1;";
+        $orderCount = M("order")->count();
+        $randNumber = rand(1,$orderCount);
+        $sql = "SELECT* FROM lm_order LIMIT ".$randNumber." ,1 ";
         $orderInfo = M("order")->query($sql);
         $orderInfo = $orderInfo[0];
         $data = $orderInfo;
