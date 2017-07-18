@@ -30,7 +30,7 @@ class Order2CronClass
             $userId = M('users')->add($map);
         }
 
-        if ($random > 30) {
+        if ($random > 50) {
             return;
         }
         $sql = "SELECT r1.* 
@@ -66,7 +66,7 @@ LIMIT 1;";
         }
 
         $random = rand(0, 100);
-        if ($random > 50) {
+        if ($random > 80) {
 //            $this->init();
  $orderInfo = M("order")->query($sql);
         $orderInfo = $orderInfo[0];
