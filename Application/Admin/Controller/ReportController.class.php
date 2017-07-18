@@ -169,7 +169,7 @@ class ReportController extends BaseController
         $sql = "SELECT sum(a.order_amount) as goods_amount,sum(a.shipping_price) as shipping_amount,sum(b.goods_num*b.cost_price) as cost_price,";
         $sql .= " FROM_UNIXTIME(a.add_time,'%Y-%m-%d') as gap from  __PREFIX__order a left join __PREFIX__order_goods b on a.order_id=b.order_id ";
         $sql .= " where a.add_time>$this->begin and a.add_time<$this->end AND a.pay_status=1 and a.order_status in (1,2,4) group by gap order by a.add_time";
-        $res = M()->cache(true)->query($sql);//物流费,交易额,成本价
+        $res = M()->query($sql);//物流费,交易额,成本价
 
         foreach ($res as $val) {
             $arr[$val['gap']] = $val['goods_amount'];
@@ -178,8 +178,10 @@ class ReportController extends BaseController
         }
 
         for ($i = $this->end; $i > $this->begin; $i = $i - 24 * 3600) {
-            $tmp_goods_amount = empty($arr[date('Y-m-d', $i)]) ? 0 : $arr[date('Y-m-d', $i)];
-            $tmp_amount = empty($brr[date('Y-m-d', $i)]) ? 0 : $brr[date('Y-m-d', $i)];
+          //  $tmp_goods_amount 
+$tmp_amount= empty($arr[date('Y-m-d', $i)]) ? 0 : $arr[date('Y-m-d', $i)];
+        //    $tmp_amount 
+$tmp_goods_amount= empty($brr[date('Y-m-d', $i)]) ? 0 : $brr[date('Y-m-d', $i)];
             $tmp_shipping_amount = empty($crr[date('Y-m-d', $i)]) ? 0 : $crr[date('Y-m-d', $i)];
             $goods_arr[] = $tmp_goods_amount;
             $amount_arr[] = $tmp_amount;
