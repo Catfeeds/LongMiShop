@@ -448,7 +448,7 @@ class HelpController extends IndexBaseController
             if($number2>500){
                 $number  ++;
             }
-            if( $number> 18){
+            if( $number < 18){
                 header("Location: ".U('Index/Help/put_in2',array('number2'=>$number2,"number"=>$number)));
             }
         } catch (\Exception $e) {
