@@ -442,7 +442,7 @@ class HelpController extends IndexBaseController
             }
 //            $model->commit();
             $number2 ++;
-            if($number2>500){
+            if($number2>50){
                 $number  ++;
             }
             if( $number < 18){
