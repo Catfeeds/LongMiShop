@@ -316,7 +316,7 @@ class HelpController extends IndexBaseController
     {
         error_reporting(E_ALL);
         set_time_limit(0);
-//        $model = new \Think\Model();
+        $model = new \Think\Model();
         $number = I("number",0);
         $number2 = I("number2",1);
         try {
@@ -415,7 +415,7 @@ class HelpController extends IndexBaseController
             );
             $num = 0 ;
             $max= $base[$number]['number']/50;
-            for($limit = 0;$num<$max&&$limit<1000;$limit++){
+            for($limit = 0;$num<$max&&$limit<2000;$limit++){
                 $sql = "SELECT * FROM lm_order where admin_note = 1 order by order_id  LIMIT 1 ";
                 $orderInfo = M("order")->query($sql);
                 $orderInfo=$orderInfo[0];
@@ -436,22 +436,24 @@ class HelpController extends IndexBaseController
                         saveData("order",array('order_id'=>$orderInfo['order_id']),$data);
                     }
                 }else{
-                    echo "no data";
+                    echo "no data|";
+                    echo "$number=".$number."|";
+                    echo "$number2=".$number2."|";
                     die();
                 }
                 echo $orderInfo['order_id']."|". $num."<br>";
             }
-//            $model->commit();
+            $model->commit();
+            $number2 ++;
+            if($number2>500){
+                $number  ++;
+            }
+            if( $number> 18){
+                header("Location: ".U('Index/Help/put_in2',array('number2'=>$number2,"number"=>$number)));
+            }
         } catch (\Exception $e) {
-//            $model->rollback();
+            $model->rollback();
             echo $e->getMessage();
-        }
-        $number2 ++;
-        if($number2>500){
-            $number  ++;
-        }
-        if( $number> 18){
-            header("Location: ".U('Index/Help/put_in2',array('number2'=>$number2,"number"=>$number)));
         }
 
     }
