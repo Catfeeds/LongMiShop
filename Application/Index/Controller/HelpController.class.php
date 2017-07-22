@@ -413,7 +413,7 @@ class HelpController extends IndexBaseController
                 )
             );
             $num = 0 ;
-            $max= $base[$number]['number']/3;
+            $max= $base[$number]['number']/6;
             for(;$num<$max;){
                 $sql = "SELECT * FROM lm_order where admin_note = 1 order by order_id  LIMIT 1 ";
                 $orderInfo = M("order")->query($sql);
