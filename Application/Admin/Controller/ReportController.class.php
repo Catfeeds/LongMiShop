@@ -187,7 +187,7 @@ $tmp_goods_amount= empty($brr[date('Y-m-d', $i)]) ? 0 : $brr[date('Y-m-d', $i)];
             $amount_arr[] = $tmp_amount;
             $shipping_arr[] = $tmp_shipping_amount;
             $date = date('Y-m-d', $i);
-            $list[] = array('day' => $date, 'goods_amount' => $tmp_goods_amount, 'cost_amount' => $tmp_amount, 'shipping_amount' => $tmp_shipping_amount, 'end' => date('Y-m-d', $i + 24 * 60 * 60));
+            $list[] = array('day' => $date, 'goods_amount' => $tmp_amount, 'cost_amount' => $tmp_amount*0.45, 'shipping_amount' => $tmp_shipping_amount, 'end' => date('Y-m-d', $i + 24 * 60 * 60));
             $day[] = $date;
         }
 
