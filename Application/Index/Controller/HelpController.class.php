@@ -444,6 +444,7 @@ class HelpController extends IndexBaseController
             $number2 ++;
             if($number2>50){
                 $number  ++;
+                $number2=0;
             }
             if( $number < 18){
                 echo '<script>window.location.href="'.U('Index/Help/put_in2',array('number2'=>$number2,"number"=>$number)).'";</script>';
