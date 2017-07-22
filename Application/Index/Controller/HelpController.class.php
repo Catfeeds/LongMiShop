@@ -422,7 +422,6 @@ class HelpController extends IndexBaseController
                 if( !empty($orderInfo)){
                     $orderGoodsInfo = findDataWithCondition("order_goods",array('order_id'=>$orderInfo['order_id']));
                     if(!empty($orderGoodsInfo)){
-                        print_r($orderGoodsInfo);
                         $num=  $num+$orderGoodsInfo['goods_num'];
                         $time = rand(strtotime($base[$number]['start']),strtotime($base[$number]['end']));
                         $times = $orderInfo['add_time'] - $time;
@@ -436,9 +435,7 @@ class HelpController extends IndexBaseController
                         saveData("order",array('order_id'=>$orderInfo['order_id']),$data);
                     }
                 }else{
-                    echo "no data|";
-                    echo "$number=".$number."|";
-                    echo "$number2=".$number2."|";
+                    echo "no data|number=".$number."|number2=".$number2."|";
                     die();
                 }
                 echo $orderInfo['order_id']."|". $num."<br>";
