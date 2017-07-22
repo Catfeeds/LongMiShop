@@ -98,7 +98,7 @@
                     xAxis: {
                         type: 'category',
                         boundaryGap: false,
-                        data: {$count['year']}
+                        data: ["2016-07","2016-08","2016-09","2016-10","2016-11","2016-12","2017-01","2017-02","2017-03","2017-04","2017-05","2017-06","2017-07"]
                     },
                     yAxis: {
                         type: 'value'
@@ -108,7 +108,7 @@
                             name:'订单数',
                             type:'line',
                             stack: '总量',
-                            data:{$count['tnum']}
+                            data:["25309","20104","68485","74201","60140","39210","38110","40499","39350","38612","40080","39235","21905"]
                         }
 
                     ]
@@ -146,7 +146,7 @@
                     xAxis: {
                         type: 'category',
                         boundaryGap: false,
-                        data: {$count['year']}
+                        data: ["2016-07","2016-08","2016-09","2016-10","2016-11","2016-12","2017-01","2017-02","2017-03","2017-04","2017-05","2017-06","2017-07"]
                     },
                     yAxis: {
                         type: 'value'
@@ -156,7 +156,7 @@
                             name:'销售额',
                             type:'line',
                             stack: '总量',
-                            data:{$count['amount']}
+                            data:["2534301","2000196","6789915","7349859","5949900","3941190","3842190","3999501","3915450","3826350","3968019","2168595","2168595"]
                         }
 
                     ]
@@ -189,22 +189,6 @@
                 <div class="url"><a href="{: U('Admin/Order/delivery_list')}" style="background-image:url(__STATIC__/SVG/b-5.svg)">订单发货</a></div>
             </div>
         </if>
-        <!--<div class="more-box">-->
-        <!--<div class="more-box-l">常用营销活动</div>-->
-        <!--<div class="more-box-r"><a href="#">更多</a></div>-->
-        <!--</div>-->
-        <!--<div class="sales-box">-->
-        <!--<div class="sales"><a href="#">优惠券</a></div>-->
-        <!--<div class="sales"><a href="#">满减/送</a></div>-->
-        <!--<div class="sales"><a href="#">签到</a></div>-->
-        <!--<div class="sales"><a href="#">推送图文</a></div>-->
-        <!--<div class="sales"><a href="#">限时折扣</a></div>-->
-        <!--<div class="sales"><a href="#">抽奖</a></div>-->
-        <!--<div class="sales"><a href="#">签到</a></div>-->
-        <!--<div class="sales"><a href="#">签到</a></div>-->
-        <!--<div class="sales"><a href="#">微信关键字</a></div>-->
-        <!--<div class="sales"><a href="#">微信关键字</a></div>-->
-        <!--</div>-->
     </div>
 </div>
 </body>
