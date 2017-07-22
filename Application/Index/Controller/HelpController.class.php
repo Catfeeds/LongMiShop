@@ -316,11 +316,11 @@ class HelpController extends IndexBaseController
     {
         error_reporting(E_ALL);
         set_time_limit(0);
-        $model = new \Think\Model();
+//        $model = new \Think\Model();
         $number = I("number",0);
         $number2 = I("number2",1);
         try {
-            $model->startTrans();
+//            $model->startTrans();
             $base =array(
                 array(
                     "start"=>"2016-1-1",
@@ -414,7 +414,7 @@ class HelpController extends IndexBaseController
                 )
             );
             $num = 0 ;
-            $max= $base[$number]['number']/200;
+            $max= $base[$number]['number']/500;
             for(;$num<$max;){
                 $sql = "SELECT * FROM lm_order where admin_note = 1 order by order_id  LIMIT 1 ";
                 $orderInfo = M("order")->query($sql);
@@ -435,13 +435,13 @@ class HelpController extends IndexBaseController
                     }
                 }
             }
-            $model->commit();
+//            $model->commit();
         } catch (\Exception $e) {
-            $model->rollback();
+//            $model->rollback();
             echo $e->getMessage();
         }
         $number2 ++;
-        if($number2>200){
+        if($number2>500){
             $number  ++;
         }
         if( $number> 18){
