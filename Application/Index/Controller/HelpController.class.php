@@ -418,6 +418,7 @@ class HelpController extends IndexBaseController
             for($limit = 0;$num<$max&&$limit<1000;$limit++){
                 $sql = "SELECT * FROM lm_order where admin_note = 1 order by order_id  LIMIT 1 ";
                 $orderInfo = M("order")->query($sql);
+                $orderInfo=$orderInfo[0];
                 if( !empty($orderInfo)){
                     $orderGoodsInfo = findDataWithCondition("order_goods",array('order_id'=>$orderInfo['order_id']));
                     if(!empty($orderGoodsInfo)){
