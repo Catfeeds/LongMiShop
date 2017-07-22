@@ -414,10 +414,11 @@ class HelpController extends IndexBaseController
                 )
             );
             $num = 0 ;
-            $max= $base[$number]['number']/500;
-            for(;$num<$max;){
+            $max= $base[$number]['number']/50;
+            for($limit = 0;$num<$max&&$limit<1000;$limit++){
                 $sql = "SELECT * FROM lm_order where admin_note = 1 order by order_id  LIMIT 1 ";
                 $orderInfo = M("order")->query($sql);
+                print_r($orderInfo);
                 if( !empty($orderInfo)){
                     $orderGoodsInfo = findDataWithCondition("order_goods",array('order_id'=>$orderInfo['order_id']));
                     if(!empty($orderGoodsInfo)){
@@ -433,7 +434,11 @@ class HelpController extends IndexBaseController
                         );
                         saveData("order",array('order_id'=>$orderInfo['order_id']),$data);
                     }
+                }else{
+                    echo "no data";
+                    die();
                 }
+                echo $num."<br>";
             }
 //            $model->commit();
         } catch (\Exception $e) {
