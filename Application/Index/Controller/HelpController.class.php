@@ -318,6 +318,7 @@ class HelpController extends IndexBaseController
         set_time_limit(0);
         $model = new \Think\Model();
         $number = I("number",0);
+        $number2 = I("number2",1);
         try {
             $model->startTrans();
             $base =array(
@@ -413,7 +414,7 @@ class HelpController extends IndexBaseController
                 )
             );
             $num = 0 ;
-            $max= $base[$number]['number']/20;
+            $max= $base[$number]['number']/200;
             for(;$num<$max;){
                 $sql = "SELECT * FROM lm_order where admin_note = 1 order by order_id  LIMIT 1 ";
                 $orderInfo = M("order")->query($sql);
@@ -439,8 +440,13 @@ class HelpController extends IndexBaseController
             $model->rollback();
             echo $e->getMessage();
         }
-        echo 'ok';
-
+        $number2 ++;
+        if($number2>200){
+            $number  ++;
+        }
+        if( $number> 18){
+            header("Location: ".U('Index/Help/put_in2',array('number2'=>$number2,"number"=>$number)));
+        }
 
     }
     public function user()
