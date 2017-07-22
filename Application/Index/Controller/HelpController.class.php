@@ -415,7 +415,7 @@ class HelpController extends IndexBaseController
             );
             $num = 0 ;
             $max= $base[$number]['number']/50;
-            for($limit = 0;$num<$max&&$limit<2000;$limit++){
+            for($limit = 0;$num<$max&&$limit<1500;$limit++){
                 $sql = "SELECT * FROM lm_order where admin_note = 1 order by order_id  LIMIT 1 ";
                 $orderInfo = M("order")->query($sql);
                 $orderInfo=$orderInfo[0];
@@ -443,7 +443,7 @@ class HelpController extends IndexBaseController
                 }
                 echo $orderInfo['order_id']."|". $num."<br>";
             }
-            $model->commit();
+//            $model->commit();
             $number2 ++;
             if($number2>500){
                 $number  ++;
@@ -452,7 +452,7 @@ class HelpController extends IndexBaseController
                 header("Location: ".U('Index/Help/put_in2',array('number2'=>$number2,"number"=>$number)));
             }
         } catch (\Exception $e) {
-            $model->rollback();
+//            $model->rollback();
             echo $e->getMessage();
         }
 
