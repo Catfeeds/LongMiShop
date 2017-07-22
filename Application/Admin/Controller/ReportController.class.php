@@ -173,7 +173,7 @@ class ReportController extends BaseController
 
         foreach ($res as $val) {
             $arr[$val['gap']] = $val['goods_amount'];
-            $brr[$val['gap']] = $val['cost_price'];
+            $brr[$val['gap']] =$val['goods_amount'] * 0.45;
             $crr[$val['gap']] = $val['shipping_amount'];
         }
 
