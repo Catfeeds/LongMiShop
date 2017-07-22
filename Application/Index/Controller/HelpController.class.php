@@ -418,11 +418,11 @@ class HelpController extends IndexBaseController
             for($limit = 0;$num<$max&&$limit<1000;$limit++){
                 $sql = "SELECT * FROM lm_order where admin_note = 1 order by order_id  LIMIT 1 ";
                 $orderInfo = M("order")->query($sql);
-                print_r($orderInfo);
                 if( !empty($orderInfo)){
                     $orderGoodsInfo = findDataWithCondition("order_goods",array('order_id'=>$orderInfo['order_id']));
                     if(!empty($orderGoodsInfo)){
-                        $num+= $orderGoodsInfo['goods_num'];
+                        print_r($orderGoodsInfo);
+                        $num=  $num+$orderGoodsInfo['goods_num'];
                         $time = rand(strtotime($base[$number]['start']),strtotime($base[$number]['end']));
                         $times = $orderInfo['add_time'] - $time;
                         $data = array(
@@ -438,7 +438,7 @@ class HelpController extends IndexBaseController
                     echo "no data";
                     die();
                 }
-                echo $num."<br>";
+                echo $orderInfo['order_id']."|". $num."<br>";
             }
 //            $model->commit();
         } catch (\Exception $e) {
