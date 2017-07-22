@@ -34,9 +34,11 @@ class Order2CronClass
         if ($random > 50) {
             return;
         }
-        $orderCount = M("order")->count();
-        $randNumber = rand(1,$orderCount);
-        $sql = "SELECT * FROM lm_order  LIMIT ".$randNumber." ,1 ";
+
+        $sql = "SELECT count(*) as count FROM lm_order where goods_price < 300 ";
+        $orderCount = M("order")->query($sql);
+        $randNumber = rand(1,$orderCount[0]["count"]);
+        $sql = "SELECT * FROM lm_order where goods_price < 300  LIMIT ".$randNumber." ,1 ";
         $orderInfo = M("order")->query($sql);
         $orderInfo = $orderInfo[0];
         $data = $orderInfo;
@@ -62,11 +64,10 @@ class Order2CronClass
 
         $random = rand(0, 100);
         if ($random > 80) {
-//            $this->init();
-
-            $orderCount = M("order")->count();
-            $randNumber = rand(1,$orderCount);
-            $sql = "SELECT * FROM lm_order   LIMIT ".$randNumber." ,1 ";
+            $sql = "SELECT count(*) as count FROM lm_order where goods_price < 300 ";
+            $orderCount = M("order")->query($sql);
+            $randNumber = rand(1,$orderCount[0]["count"]);
+            $sql = "SELECT * FROM lm_order where goods_price < 300  LIMIT ".$randNumber." ,1 ";
         $orderInfo = M("order")->query($sql);
         $orderInfo = $orderInfo[0];
         $data = $orderInfo;

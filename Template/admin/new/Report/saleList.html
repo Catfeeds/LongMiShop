@@ -21,25 +21,7 @@
 							 		</foreach>
 				                  </select>
 			                  </div>
-		  					</div>	
-		  					<div class="col-xs-2">
-		  					    <div class="form-group margin">
-				                  <select name="brand_id" id="brand_id" class="form-control">
-				                    <option value="0">所有品牌</option>
-				                        <foreach name="brandList" item="v" key="k" >
-				                           <option value="{$v['id']}" <if condition="$brand_id eq $v[id]">selected</if>>{$v['name']}</option>
-										</foreach>
-				                  </select>
-				                </div>   	
-                			</div>				
-				  			<div class="col-xs-4">         
-					            <div class="input-group margin">
-						            <div class="input-group-addon">
-						               	选择时间  <i class="fa fa-calendar"></i>
-						            </div>
-					               <input type="text" class="form-control pull-right" name="timegap" value="{$timegap}" id="start_time">
-					            </div>
-				  			</div>	
+		  					</div>
                    		 	<div class="col-xs-1"><input class="btn btn-block btn-info margin" type="submit" value="确定"></div>
                   		</form>
                  	</div>
