@@ -165,7 +165,6 @@ class HelpController extends IndexBaseController
         }
     }
     public function haha(){
-        exit;
         error_reporting(E_ALL);
         set_time_limit(0);
         $number = I("number",1);
