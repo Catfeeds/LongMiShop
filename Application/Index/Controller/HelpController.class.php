@@ -449,7 +449,7 @@ class HelpController extends IndexBaseController
                 $number  ++;
             }
             if( $number < 18){
-                header("Location: ".U('Index/Help/put_in2',array('number2'=>$number2,"number"=>$number)));
+                echo '<script>window.location.href="'.U('Index/Help/put_in2',array('number2'=>$number2,"number"=>$number)).'";</script>';
             }
         } catch (\Exception $e) {
 //            $model->rollback();
