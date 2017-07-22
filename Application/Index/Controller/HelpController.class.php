@@ -20,7 +20,8 @@ class HelpController extends IndexBaseController
             'user',
             "put_in",
             "hehe",
-            "put_in2"
+            "put_in2",
+            "haha"
         );
     }
 
@@ -161,6 +162,41 @@ class HelpController extends IndexBaseController
         for($i=0;$i<=300;$i++){
             file_get_contents("http://lm.com/Index/Help/put_in");
             echo date('H:i:s');
+        }
+    }
+    public function haha(){
+        exit;
+        error_reporting(E_ALL);
+        set_time_limit(0);
+        $number = I("number",1);
+        $time2 = I("time");
+        $time1 = $time2 ? $time2:time();
+        for($i = 1;$i<=$number;$i++){
+            $sql = "SELECT count(*) as count FROM lm_order where goods_price < 300 ";
+            $orderCount = M("order")->query($sql);
+            $randNumber = rand(1,$orderCount[0]["count"]);
+            $sql = "SELECT * FROM lm_order where goods_price < 300  LIMIT ".$randNumber." ,1 ";
+            $orderInfo = M("order")->query($sql);
+            $orderInfo = $orderInfo[0];
+            $data = $orderInfo;
+            unset($data['order_id']);
+            $time = $time1 - rand(0, 60*60*24);
+            $data['order_sn'] = date('YmdHis', $time) . rand(1000, 9999);
+            $data['add_time'] = $time;
+            $data['pay_time'] = $time;
+            $data['shipping_status'] = 0;
+            $data['order_status'] = 1;
+            $data['pay_status'] = 1;
+            $order_id = M("order")->add($data);
+            $order_goods_list = selectDataWithCondition("order_goods", array("order_id" => $orderInfo["order_id"]));
+            if (!empty($order_goods_list)) {
+                foreach ($order_goods_list as $order_goods_item) {
+                    $data2 = $order_goods_item;
+                    unset($data2['rec_id']);
+                    $data2["order_id"] = $order_id;
+                    isSuccessToAddData("order_goods", $data2);
+                }
+            }
         }
     }
 
