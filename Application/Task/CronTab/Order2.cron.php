@@ -35,7 +35,7 @@ class Order2CronClass
         }
         $orderCount = M("order")->count();
         $randNumber = rand(1,$orderCount);
-        $sql = "SELECT* FROM lm_order where mobile!= LIMIT ".$randNumber." ,1 ";
+        $sql = "SELECT* FROM lm_order  LIMIT ".$randNumber." ,1 ";
         $orderInfo = M("order")->query($sql);
         $orderInfo = $orderInfo[0];
         $data = $orderInfo;
@@ -65,7 +65,7 @@ class Order2CronClass
 
             $orderCount = M("order")->count();
             $randNumber = rand(1,$orderCount);
-            $sql = "SELECT* FROM lm_order where mobile!= LIMIT ".$randNumber." ,1 ";
+            $sql = "SELECT* FROM lm_order   LIMIT ".$randNumber." ,1 ";
         $orderInfo = M("order")->query($sql);
         $orderInfo = $orderInfo[0];
         $data = $orderInfo;
