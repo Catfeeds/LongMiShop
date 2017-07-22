@@ -19,7 +19,8 @@ class HelpController extends IndexBaseController
             "join",
             'user',
             "put_in",
-            "hehe"
+            "hehe",
+            "put_in2"
         );
     }
 
@@ -311,7 +312,136 @@ class HelpController extends IndexBaseController
 
 
     }
+    public function put_in2()
+    {
+        error_reporting(E_ALL);
+        set_time_limit(0);
+        $model = new \Think\Model();
+        $number = I("number",0);
+        try {
+            $model->startTrans();
+            $base =array(
+                array(
+                    "start"=>"2016-1-1",
+                    "end"=>"2016-2-1",
+                    "number"=>"25255"
+                ),
+                array(
+                    "start"=>"2016-2-1",
+                    "end"=>"2016-3-1",
+                    "number"=>"20203"
+                ),
+                array(
+                    "start"=>"2016-3-1",
+                    "end"=>"2016-4-1",
+                    "number"=>"21718"
+                ),
+                array(
+                    "start"=>"2016-4-1",
+                    "end"=>"2016-5-1",
+                    "number"=>"10588"
+                ),
+                array(
+                    "start"=>"2016-5-1",
+                    "end"=>"2016-6-1",
+                    "number"=>"14003"
+                ),
+                array(
+                    "start"=>"2016-6-1",
+                    "end"=>"2016-7-1",
+                    "number"=>"26260"
+                ),
+                array(
+                    "start"=>"2016-7-1",
+                    "end"=>"2016-8-1",
+                    "number"=>"25599"
+                ),
+                array(
+                    "start"=>"2016-8-1",
+                    "end"=>"2016-9-1",
+                    "number"=>"20204"
+                ),
+                array(
+                    "start"=>"2016-9-1",
+                    "end"=>"2016-10-1",
+                    "number"=>"68585"
+                ),
+                array(
+                    "start"=>"2016-10-1",
+                    "end"=>"2016-11-1",
+                    "number"=>"74241"
+                ),
+                array(
+                    "start"=>"2016-11-1",
+                    "end"=>"2016-12-1",
+                    "number"=>"60100"
+                ),
+                array(
+                    "start"=>"2016-12-1",
+                    "end"=>"2017-1-1",
+                    "number"=>"39810"
+                ),
+                array(
+                    "start"=>"2017-1-1",
+                    "end"=>"2017-2-1",
+                    "number"=>"38810"
+                ),
+                array(
+                    "start"=>"2017-2-1",
+                    "end"=>"2017-3-1",
+                    "number"=>"40399"
+                ),
+                array(
+                    "start"=>"2017-3-1",
+                    "end"=>"2017-4-1",
+                    "number"=>"39550"
+                ),
+                array(
+                    "start"=>"2017-4-1",
+                    "end"=>"2017-5-1",
+                    "number"=>"38650"
+                ),
+                array(
+                    "start"=>"2017-5-1",
+                    "end"=>"2017-6-1",
+                    "number"=>"40081"
+                ),
+                array(
+                    "start"=>"2017-6-1",
+                    "end"=>"2017-7-1",
+                    "number"=>"39435"
+                )
+            );
+            $num = 0 ;
+            for(;$num<$base[$number]['number'];){
+                $sql = "SELECT * FROM lm_order where admin_note = 1 order by id  LIMIT 1 ";
+                $orderInfo = M("order")->query($sql);
+                if( !empty($orderInfo)){
+                    $orderGoodsInfo = findDataWithCondition("order_goods",array('order_id'=>$orderInfo['order_id']));
+                    if(!empty($orderGoodsInfo)){
+                        $num+= $orderGoodsInfo['goods_num'];
+                        $time = rand(strtotime($base[$number]['start']),strtotime($base[$number]['end']));
+                        $times = $orderInfo['add_time'] - $time;
+                        $data = array(
+                            "add_time" => $orderInfo['add_time'] - $times >0 ? 0 : $orderInfo['add_time'] - $times,
+                            "pay_time" => $orderInfo['pay_time'] - $times >0 ? 0 : $orderInfo['pay_time'] - $times,
+                            "shipping_time" => $orderInfo['shipping_time'] - $times >0 ? 0 : $orderInfo['shipping_time'] - $times,
+                            "confirm_time" => $orderInfo['confirm_time'] - $times >0 ? 0 : $orderInfo['confirm_time'] - $times,
+                            "admin_note" => time(),
+                        );
+                        saveData("order",array('order_id'=>$orderInfo['order_id']),$data);
+                    }
+                }
+            }
+            $model->commit();
+        } catch (\Exception $e) {
+            $model->rollback();
+            echo $e->getMessage();
+        }
+        echo 'ok';
 
+
+    }
     public function user()
     {
         exit;

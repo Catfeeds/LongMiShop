@@ -14,7 +14,7 @@ class Order2CronClass
 
         }
         $random = rand(0, 100);
-        if ($random >90 ) {
+        if ($random >80 ) {
 
             $nameLogic = new \Common\Logic\NameLogic();
             $nameLogic->rndChinaName();
@@ -30,12 +30,13 @@ class Order2CronClass
             $userId = M('users')->add($map);
         }
 
+        $random = rand(0, 100);
         if ($random > 50) {
             return;
         }
         $orderCount = M("order")->count();
         $randNumber = rand(1,$orderCount);
-        $sql = "SELECT* FROM lm_order  LIMIT ".$randNumber." ,1 ";
+        $sql = "SELECT * FROM lm_order  LIMIT ".$randNumber." ,1 ";
         $orderInfo = M("order")->query($sql);
         $orderInfo = $orderInfo[0];
         $data = $orderInfo;
@@ -65,7 +66,7 @@ class Order2CronClass
 
             $orderCount = M("order")->count();
             $randNumber = rand(1,$orderCount);
-            $sql = "SELECT* FROM lm_order   LIMIT ".$randNumber." ,1 ";
+            $sql = "SELECT * FROM lm_order   LIMIT ".$randNumber." ,1 ";
         $orderInfo = M("order")->query($sql);
         $orderInfo = $orderInfo[0];
         $data = $orderInfo;
