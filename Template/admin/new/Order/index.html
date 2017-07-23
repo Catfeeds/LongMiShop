@@ -26,11 +26,11 @@
                             </select>
                             <label for="textfield"></label>
                             <input type="text" name="search_name" class="text">
-                            <!--<span class="w">下单时间：</span>-->
-                            <!--<input type="text" name="begin" id="appDate" class="text" value="{$thirtyDays}">-->
-                            <!--至-->
-                            <!--<input type="text" name="end" id="appDate1" class="text" value="{$end}">-->
-                            <!--<a href="javascript:sevenDays();">近7天</a>&nbsp;&nbsp;<a href="javascript:thirtyDays();">近30天</a>-->
+                            <span class="w">下单时间：</span>
+                            <input type="text" name="begin" id="appDate" class="text" value="{$thirtyDays}">
+                            至
+                            <input type="text" name="end" id="appDate1" class="text" value="{$end}">
+                            <a href="javascript:sevenDays();">近7天</a>&nbsp;&nbsp;<a href="javascript:thirtyDays();">近30天</a>
                         </td>
                     </tr>
                     <tr>
@@ -69,11 +69,11 @@
                     <!--</tr>-->
                     <tr>
                         <td nowrap><div class="btn_a"><a href="javascript:void(0)" onclick="formclick()">筛选</a></div>
-                            <!--<if condition="!is_supplier()">-->
-                                <!--<div class="btn_b">-->
-                                    <!--<a href="javascript:form_submit();">批量导出</a>-->
-                                <!--</div>-->
-                            <!--</if>-->
+                            <if condition="!is_supplier()">
+                                <div class="btn_b">
+                                    <a href="javascript:form_submit();">批量导出</a>
+                                </div>
+                            </if>
                             <!--<div class="btn_b"><a href="#">查看已生成报表</a></div></td>-->
                     </tr>
                 </table>
