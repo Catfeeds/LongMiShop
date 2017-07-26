@@ -25,7 +25,7 @@ class createQRCodeAdminController
             foreach ($list as $key =>  $item){
                 $condition = array("qr_id" => $item['id']);
                 $number =M(self::TB_LIST)->where($condition)->group('openid')->count();
-                $list[$key]['userCount'] = intval($number);
+                $list[$key]['userCount'] = intval(count($number));
             }
         }
         $this->assignData['list'] = $list ;
