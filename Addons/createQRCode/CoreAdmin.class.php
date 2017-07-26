@@ -38,7 +38,8 @@ class createQRCodeAdminController
     {
         $id = I("id");
         $condition = array("qr_id" => $id);
-        $count =M(self::TB_LIST)->where($condition)->group('openid')->count();
+        $count =M(self::TB_LIST)->where($condition)->group('openid')->select();
+        $count = count($count);
         $Page = new \Think\Page($count, 10);
         $show = $Page->show();
         $lists =M(self::TB_LIST)->where($condition)->limit($Page->firstRow, $Page->listRows)->order(" create_time desc")->group('openid')->select();
