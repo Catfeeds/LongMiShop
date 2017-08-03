@@ -190,7 +190,7 @@ class ReportController extends BaseController
         }
 
         $this->assign('list', $list);
-        $result = array('goods_arr' => $goods_arr, 'amount' => $amount_arr, 'shipping_arr' => $shipping_arr, 'time' => $day);
+        $result = array('goods_arr' => $amount_arr, 'amount' => $goods_arr, 'shipping_arr' => $shipping_arr, 'time' => $day);
         $this->assign('result', json_encode($result));
         $this->display();
     }

@@ -40,7 +40,8 @@ function count_postage($array){
     }
     $postage = 0; //邮费总价
     $goods_postage = array();
-    
+
+//    dd($array);
     foreach($array as $item){
         $log_res = M('logistics') -> where("log_id = ".$item['shipping_code'])->find();
 
@@ -72,7 +73,7 @@ function count_postage($array){
         if(!empty($condition['pinkage'])){ //是否属于包邮地区
             foreach ($condition['pinkage'] as $items) {
                 //pinkage_mode  1价钱  2重量
-                if($items['pinkage_area'] == $item['site']['province'] && $items['pinkage_mode'] == 1 && $items['pinkage_bound'] >= $item['goods_price']) {
+                if($items['pinkage_area'] == $item['site'] && $items['pinkage_mode'] == 1 && $items['pinkage_bound'] >= $item['goods_price']) {
                     $postage += 0;
                     $goods_postage[$item['goods_id'].'_LM_'.$item['spec_key']] = 0; //商品单个邮费
                     break;
@@ -83,14 +84,11 @@ function count_postage($array){
                 }
             }
         }
-
-
+//        $array
         if(!empty($condition['no_pinkage'])) { //是否属于指定地区
 
             foreach ($condition['no_pinkage'] as $items) {
-
-                if ($items['area'] == $item['site']['province']) {
-
+                if ($items['area'] == $item['site']) {
                     $base = $items['base'];            //基础件数 or 重量
                     $money = $items['money'];        //基础邮费
                     $add_base = $items['add_base'];    //增加件数 or 重量
