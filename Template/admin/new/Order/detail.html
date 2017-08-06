@@ -174,7 +174,13 @@
                         <td class="text-right">+{$order.shipping_price}</td>
                         <td class="text-right">-{$order.integral_money}</td>
                         <td class="text-right">-{$order.user_money}</td>
-                        <td class="text-right">-{$order.coupon_price}</td>
+                        <td class="text-right">
+                            -{$order.coupon_price}
+
+                            <notempty name="couponInfo">
+                                <a href="{:U('Admin/Coupon/coupon_info',array('id'=>$couponInfo['cid']))}">查看优惠券详情</a>
+                            </notempty>
+                        </td>
                         <td class="text-right">减:{$order.discount}</td>
                         <td class="text-right">{$order.order_amount}</td>
                     </tr>

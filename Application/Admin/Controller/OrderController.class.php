@@ -144,6 +144,8 @@ class OrderController extends BaseController {
             $this -> error('没有此订单');
             exit;
         }
+        $couponInfo = findDataWithCondition("coupon_list",array('order_id'=>$order_id));
+
 
         $button     = $orderLogic -> getOrderButton( $order );
         $sql = "SELECT g.*,o.*,(o.goods_num * o.member_goods_price) AS goods_total FROM __PREFIX__order_goods o ".
