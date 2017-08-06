@@ -174,6 +174,7 @@ class OrderController extends BaseController {
         // 获取操作记录
         $action_log = M('order_action') -> where(array('order_id'=>$order_id))->order('log_time desc')->select();
         $this -> assign('order',$order);
+        $this -> assign('couponInfo',$couponInfo);
         $this -> assign('action_log',$action_log);
         $this -> assign('orderGoods',$orderGoods);
         $split = count($orderGoods) >1 ? 1 : 0;
