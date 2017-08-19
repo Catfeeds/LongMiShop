@@ -33,7 +33,7 @@
                 <td class="text-left">{$item.p_phone}</td>
                 <td class="text-left">{$item.user_id}</td>
                 <td class="text-left">{$item.user.nickname}</td>
-                <td class="text-left">{$item.create_time|date="Y-m-d H:d",###}</td>
+                <td class="text-left">{$item.create_time|date="Y-m-d H:i",###}</td>
                 <td class="text-left">
                     <a href="{: U('Admin/Addons/agriculturalBank',array('pluginName'=>'order','id'=>$item['id'],'user_id'=>$item['user_id'])) }">
                         订单查看({$item.orderCount})
