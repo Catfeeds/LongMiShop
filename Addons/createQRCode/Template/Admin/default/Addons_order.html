@@ -29,7 +29,7 @@
                 <td class="text-left">{$item.order_sn}</td>
                 <td class="text-left">{$item.order_status_desc}</td>
                 <td class="text-left">{$item.total_amount}</td>
-                <td class="text-left">{$item.add_time|date="Y-m-d H:d",###}</td>
+                <td class="text-left">{$item.add_time|date="Y-m-d H:i",###}</td>
                 <td class="text-left">
                     <a href="{:U('Admin/order/detail',array('order_id'=>$item['order_id']))}">
                         查看详情
