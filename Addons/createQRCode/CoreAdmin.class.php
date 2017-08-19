@@ -37,7 +37,10 @@ class createQRCodeAdminController
     public function user()
     {
         $id = I("id");
-        $condition = array("qr_id" => $id);
+        $condition = array();
+        if( !empty($id)){
+            $condition = array("qr_id" => $id);
+        }
         $count =M(self::TB_LIST)->where($condition)->group('openid')->select();
         $count = count($count);
         $Page = new \Think\Page($count, 10);
@@ -51,6 +54,8 @@ class createQRCodeAdminController
                 $condition = "user_id ='". $user["user_id"]."' and add_time >= '".$list['create_time']."' and pay_status = 1";
                 $count = getCountWithCondition("order", $condition);
                 $lists[$key]["orderCount"] = intval($count);
+                $condition = array("id"=>$list['qr_id']);
+                $lists[$key]["qrInfo"] = findDataWithCondition(self::TB_QR, $condition);
             }
         }
         $this->assignData['list'] =$lists;
@@ -63,7 +68,10 @@ class createQRCodeAdminController
     public function userOut()
     {
         $id = I("id");
-        $condition = array("qr_id" => $id);
+        $condition = array();
+        if( !empty($id)){
+            $condition = array("qr_id" => $id);
+        }
         $lists =M(self::TB_LIST)->where($condition)->order(" create_time desc")->group('openid')->select();
         if(!empty($lists)){
             $strTable ='<table width="500" border="1">';
@@ -71,14 +79,18 @@ class createQRCodeAdminController
             $strTable .= '<td style="text-align:center;font-size:12px;width:120px;">ID</td>';
             $strTable .= '<td style="text-align:center;font-size:12px;" width="100">昵称</td>';
             $strTable .= '<td style="text-align:center;font-size:12px;" width="*">类型</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">关键字</td>';
             $strTable .= '<td style="text-align:center;font-size:12px;" width="*">扫码时间</td>';
             $strTable .= '</tr>';
             foreach ($lists as $key=>$list){
                 $user = findDataWithCondition("users",array('openid'=>$list['openid']),"nickname");
+                $condition = array("id"=>$list['qr_id']);
+                $qrInfo = findDataWithCondition(self::TB_QR, $condition);
                 $strTable .= '<tr>';
                 $strTable .= '<td>'.$list['id'].'</td>';
                 $strTable .= '<td>'.$user['nickname'].'</td>';
                 $strTable .= '<td>'.$list['event'].'</td>';
+                $strTable .= '<td>'.$qrInfo['key_word'].'</td>';
                 $strTable .= '<td>'.date('Y-m-d H:i',$list['create_time']).'</td>';
                 $strTable .= '</tr>';
 

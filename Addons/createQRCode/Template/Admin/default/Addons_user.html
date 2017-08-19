@@ -18,6 +18,9 @@
                 类型
             </td>
             <td class="text-left">
+                关键字
+            </td>
+            <td class="text-left">
                 扫码时间
             </td>
             <td class="text-left">
@@ -31,6 +34,7 @@
                 <td class="text-right">{$item.id}</td>
                 <td class="text-left">{$item.nickname}</td>
                 <td class="text-left">{$item.event}</td>
+                <td class="text-left">{$item.qrInfo.key_word}</td>
                 <td class="text-left">{$item.create_time|date="Y-m-d H:d",###}</td>
                 <td class="text-left">
                     <a href="{: U('Admin/Addons/createQRCode',array('pluginName'=>'order','id'=>$item['id'],'user_id'=>$item['user_id'])) }">
