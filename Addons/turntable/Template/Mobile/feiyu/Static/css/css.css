@@ -1,0 +1,379 @@
+
+*{
+    margin:0;
+    padding: 0;
+}
+body {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    background:url("../images/hah.png") no-repeat;
+    background-size: cover;
+}
+#lottery {
+    display: inherit;
+    width: 98%;
+    height: 100%;
+    margin: 0 auto;
+    margin-top: 47%;
+}
+
+#lottery table {
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+#lottery table tr {
+    width: 100%;
+    height: 80px;
+}
+
+#lottery tr td {
+    width: 20%;
+    height: 100%;
+    border-radius: 8px;
+    position: relative;
+}
+
+#lottery tr td .details-left {
+    display: none;
+    position: absolute;
+    font-size: 12px;
+    width: 130px;
+    background-color: #e9e9e9;
+    z-index: 999;
+    height: 45px;
+    bottom: 40px;
+    left: 40px;
+    border-radius: 3px;
+    border: 1px solid #2d2d2d;
+}
+
+#lottery tr td .details-right {
+    display: none;
+    position: absolute;
+    font-size: 12px;
+    width: 130px;
+    background-color: #e9e9e9;
+    z-index: 999;
+    height: 45px;
+    bottom: 40px;
+    right: 40px;
+    border-radius: 3px;
+    border: 1px solid #2d2d2d;
+}
+
+#lottery tr td .details-left p,
+#lottery tr td .details-right p {
+    margin: 0;
+    line-height: 16px;
+    padding-left: 3px;
+}
+
+#lottery tr td div {
+    width: 89%;
+    height: 98%;
+    margin: 5% auto;
+    border-radius: 8px;
+    background-color: #f1cdcb;
+}
+
+.center {
+    width: 100%;
+    margin-top: 25px;
+    height: 60px;
+}
+
+.center div {
+    width: 50%;
+    float: left;
+}
+
+.center div a {
+    position: relative;
+    color: rgba(255, 255, 255, 1);
+    margin-left: 8%;
+    text-decoration: none;
+    background-color: rgba(246, 24, 101, 1);
+    font-weight: 700;
+    font-size: 12px;
+    display: inline-block;
+    padding: 8px 4px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    width: 80%;
+    text-align: center;
+    -webkit-box-shadow: 0px 5px 0px rgb(178, 23, 125), 0px 5px 25px rgba(0, 0, 0, .7);
+    -moz-box-shadow: 0px 5px 0px rgba(178, 23, 125, 1), 0px 5px 25px rgba(0, 0, 0, .7);
+    box-shadow: 0px 5px 0px rgba(178, 23, 125, 1), 0px 5px 25px rgba(0, 0, 0, .7);
+    -webkit-transition: all .1s ease;
+    -moz-transition: all .1s ease;
+    -ms-transition: all .1s ease;
+    -o-transition: all .1s ease;
+    transition: all .1s ease;
+}
+
+.center a:active {
+    -webkit-box-shadow: 0px 3px 0px rgba(178, 23, 125, 1), 0px 3px 6px rgba(0, 0, 0, .9);
+    -moz-box-shadow: 0px 3px 0px rgba(178, 23, 125, 1), 0px 3px 6px rgba(0, 0, 0, .9);
+    box-shadow: 0px 3px 0px rgba(178, 23, 125, 1), 0px 3px 6px rgba(0, 0, 0, .9);
+    position: relative;
+    top: 6px;
+}
+
+#lottery tr td .img-box {
+    position: relative;
+    width: 80%;
+    padding-bottom: 70%;
+}
+
+#lottery tr td .img-box img {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#lottery tr td span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-weight: 800;
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: #000000;
+    height: 20px;
+    line-height: 20px;
+}
+.lottery-unit div span{
+    overflow: hidden;
+}
+#lottery table td.active {
+    background-color: #fff;
+}
+
+#lottery table td div.active {
+    border: 4px solid #fff;
+}
+
+#coupons-list {
+    background: transparent;
+    z-index: 999;
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#coupons-list .coupons_mask {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+#coupons-list .coupon-b {
+    position: fixed;
+    bottom: 0;
+    height: 50px;
+    border-top: 1px solid #eee;
+    z-index: 999;
+    width: 100%;
+    background: #fff;
+    color: #999999;
+}
+
+#coupons-list .coupon-b .coupon-now {
+    display: inline-block;
+    width: 60%;
+    height: 50px;
+    padding-left: 20px;
+    line-height: 50px;
+    font-size: 14px;
+}
+
+#coupons-list .coupon-b .coupon-now #coupons-selector-after {
+    color: #eb4f4c;
+    font-family: "微软雅黑";
+    font-weight: 700;
+}
+
+#coupons-list .coupon-b .coupon-go {
+    display: inline-block;
+    width: 20%;
+    height: 30px;
+    padding-left: 20px;
+    line-height: 30px;
+    color: #FFF;
+    font-size: 12px;
+    border-radius: 3px;
+    background: #eb4f4c;
+}
+
+#coupons-list ul {
+    background: white;
+    position: absolute;
+    padding: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 30%;
+    overflow: auto;
+}
+
+#coupons-list ul li {
+    width: 90%;
+    margin: 10px auto;
+    border: 1px solid #EEEEEE;
+    height: 80px;
+    list-style: none;
+}
+
+#coupons-list ul li img {
+    display: block;
+    width: 45px;
+    height: 35px;
+    margin: 2px auto;
+}
+
+#coupons-list ul li p {
+    margin: 0;
+    color: #666666;
+}
+
+#coupons-list ul li.activity {
+    border: 2px solid #f29921;
+    box-shadow: 2px 3px 5px rgba(239, 170, 78, 0.41);
+}
+
+#coupons-list ul li * {
+    background: transparent;
+}
+#mask{
+    border-radius: 5px;
+    display: none;
+    position: fixed;
+    width: 200px;
+    height: 250px;
+    background-color:#fff;
+    z-index: 999;
+    left: 50%;
+    margin-left: -100px;
+    top: 30%;
+    border: 1px solid #fff;
+}
+#mask_type{
+    width: 100%;
+    height: 50px;
+}
+#prize_type{
+    line-height: 40px;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 800;
+}
+#mask_type span{
+    float: left;
+    display: inline-block;
+    width: 50%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    box-sizing: border-box;
+}
+#mess{
+    height: 200px;
+    background-color: #fff;
+    width: 100%;
+}
+#mess img{
+    display: block;
+    height: 100px;
+    width: 150px;
+    margin: 5px auto;
+}
+#mess span{
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    line-height: 20px;
+    font-size: 12px;
+    text-align: center;
+}
+#take a{
+    text-decoration: none;
+    color: #000;
+}
+.record{
+    background-color:#fff;
+    height: 40px !important;
+}
+.record p{
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+.x_new_publish{width:89%!important;height: 40px !important;position:relative;
+    background-color: #fff !important;overflow:hidden;margin: 0 auto!important;}
+.x_new_publish:before {content: " ";position: absolute;left: 0;top: 0;width: 100%;height: 1px;border-top: 1px solid #e1e1e1;color: #C7C7C7;-webkit-transform-origin: 0 0;transform-origin: 0 0;-webkit-transform: scaleY(0.5);transform: scaleY(0.5);}
+.x_new_publish:after {content: " ";position: absolute;left: 0;bottom: 0;width: 100%;height: 1px;border-bottom: 1px solid #e1e1e1;color: #C7C7C7;-webkit-transform-origin: 0 100%;transform-origin: 0 100%;-webkit-transform: scaleY(0.5);transform: scaleY(0.5);}
+.x_new_publish .left-icon{position: absolute;padding-left: 15px;line-height: 20px;}
+.x_new_publish .left-icon .iconfont{font-size: 24px;color: #d93a55;}
+.x_newest_publish{width:100%;line-height:40px;position: absolute;float: left;}
+.x_newest_publish li{width:100%;height:40px;overflow:hidden;text-overflow:ellipsis;}
+.x_newest_publish span{display: inline-block !important;
+    line-height:20px !important;
+    width:inherit !important;}
+
+
+#guide{
+    position: fixed;
+    z-index: 99999;
+    width: 100%;
+    height: 100%;
+    opacity:1;
+    top:0;
+    right: 0;
+    display: none;
+}
+#guide img{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+}
+
+
+.follow{
+    width: 100%;
+    height: 100%;
+    background: #333;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: 3;
+    display: none;
+}
+
+.follow img{
+    width: 80%;
+    margin: 10%;
+}
+.follow p{
+    width: 80%;
+    margin: 10%;
+    color: #fff;
+    display:block;
+    font-size: 20px;
+    text-align:center;
+}

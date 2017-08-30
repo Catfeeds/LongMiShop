@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta content="telephone=no" name="format-detection" />
+    <title>抽奖啦</title>
+    <meta name="description" content="抽奖啦" />
+    <meta http-equiv="keywords" content="抽奖啦" />
+    <link href="__PUBLIC__/mui/css/mui.min.css" rel="stylesheet" />
+    <link href="{$__temp}/css/css.css?{$v}" rel="stylesheet" />
+</head>
+<body>
+<div id="mask">
+    <div id="mess">
+        <p id="prize_type"></p>
+        <p>
+            <img src="" alt="">
+            <span></span>
+        </p>
+    </div>
+    <p id="mask_type">
+				<span id="continue" style="background-color:#f6dd21;border-right: 1px solid #fff">
+					再试一次
+				</span>
+        <span id="take" style="background-color:#f6dd21;">
+					<a href="">确认地址</a>
+				</span>
+    </p>
+</div>
+<div id="lottery">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="lottery-unit lottery-unit-0 unit-left">
+                <div>
+                    <div class="img-box">
+                        <img  alt="">
+                    </div>
+                    <span></span>
+                </div>
+                <div class="details details-left">
+                    <p></p>
+                    <p></p>
+                </div>
+            </td>
+            <td class="lottery-unit lottery-unit-1 unit-left">
+                <div>
+                    <div class="img-box">
+                        <img  alt="">
+                    </div>
+                    <span></span>
+                </div>
+                <div class="details details-left">
+                    <p></p>
+                    <p></p>
+                </div>
+            </td>
+            <td class="lottery-unit lottery-unit-2 unit-left">
+                <div>
+                    <div class="img-box">
+                        <img  alt="">
+                    </div>
+                    <span></span>
+                </div>
+                <div class="details details-left">
+                    <p></p>
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="lottery-unit lottery-unit-8 unit-left">
+                <div>
+                    <div class="img-box">
+                        <img  alt="">
+                    </div>
+                    <span></span>
+                </div>
+                <div class="details details-left">
+                    <p></p>
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div style="background:transparent;">
+                    <div class="img-box" style="background:transparent;">
+                        <img src="{$__temp}/images/logo.svg" alt="">
+                    </div>
+                    <span></span>
+                </div>
+            </td>
+            <td class="lottery-unit lottery-unit-4 unit-right">
+                <div>
+                    <div class="img-box">
+                        <img  alt="">
+                    </div>
+                    <span></span>
+                </div>
+                <div class="details details-right">
+                    <p></p>
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="lottery-unit lottery-unit-7 unit-left">
+                <div>
+                    <div class="img-box">
+                        <img  alt="">
+                    </div>
+                    <span></span>
+                </div>
+                <div class="details details-left">
+                    <p></p>
+                    <p></p>
+                </div>
+            </td>
+            <td class="lottery-unit lottery-unit-6 unit-left">
+                <div>
+                    <div class="img-box">
+                        <img  alt="">
+                    </div>
+                    <span></span>
+                </div>
+                <div class="details details-left">
+                    <p></p>
+                    <p></p>
+                </div>
+            </td>
+            <td class="lottery-unit lottery-unit-5 unit-left">
+                <div>
+                    <div class="img-box">
+                        <img  alt="">
+                    </div>
+                    <span></span>
+                </div>
+                <div class="details details-left">
+                    <p></p>
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="center">
+    <div>
+        <a href="#" class="go">点击抽奖</a>
+    </div>
+    <div>
+        <a href="#" class="coupons-down">规则</a>
+    </div>
+</div>
+
+<!--关注部分-->
+<div class="follow" id="follow">
+    <img src="__PUBLIC__/images/{$qrcode}"/>
+    <p>关注公众号才能玩游戏哦！<br>长按二维码即可关注哦！</p>
+</div>
+
+<!--分享遮罩-->
+<div id="guide">
+    <img src="{$__temp}/images/guide.png">
+</div>
+
+<script src="__PUBLIC__/js/jquery-1.10.2.min.js"></script>
+<if condition=" !$isFollow ">
+    <script type="text/javascript">
+        $("#follow").show();
+    </script>
+    <else/>
+    <script src="__PUBLIC__/mui/js/mui.min.js"></script>
+    <script type="text/javascript">
+        var lotteryUrl = "{:U('Mobile/Addons/turntable',array('pluginName' => 'lottery' ))}";
+        function alert( msg ){
+            mui.toast( msg );
+        }
+    </script>
+    <script src="{$__temp}/js/addons.js?{$v}" type="text/javascript"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+        var ShareImgUrl = "{$config['share_img']}";
+        var ShareTitle = "{$config['share_title']}";
+        var ShareDesc = "{$config['share_desc']}";
+        var ShareLink = "{$config['share_url']}";
+        wx.config({
+            debug: false,
+            appId: "{$signPackage['appId']}",
+            timestamp: '{$signPackage["timestamp"]}',
+            nonceStr: '{$signPackage["nonceStr"]}',
+            signature: '{$signPackage["signature"]}',
+            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage','hideOptionMenu']
+        });
+        wx.ready(function(){
+            wx.onMenuShareTimeline({
+                title: ShareTitle,
+                link:ShareLink,
+                imgUrl:ShareImgUrl
+            });
+            wx.onMenuShareAppMessage({
+                title: ShareTitle,
+                desc: ShareDesc,
+                link:ShareLink,
+                imgUrl:ShareImgUrl
+            });
+
+        });
+    </script>
+</if>
+</html>
