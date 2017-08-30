@@ -1,0 +1,29 @@
+<form id="shopForm" method="post">
+    <div class="tab-content">
+        <div class="tab-pane active" >
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td>代码:</td>
+                    <td>
+                        <textarea class="form-control" style="width:450px; height: 500px;"  name="html">{$html}</textarea>
+                        <span id="err_shop_name" style="color:#F00; display:none;"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-primary" onclick="ajaxSubmitForm();" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
+        </div>
+    </div>
+</form>
+<script>
+    function ajaxSubmitForm(){
+        if( $("input[name='html']").val() == ""){
+            alert("代码！");
+            return;
+        }
+        $("#shopForm").submit();
+    }
+</script>

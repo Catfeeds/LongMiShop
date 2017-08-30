@@ -62,12 +62,13 @@
                                             <if condition="$list['is_create_code'] eq 0">
                                                 <a href="javascript:void(0)" class="btn btn-info"  title="生成兑换码"  data-url="{:U('Admin/GiftCoupon/convert',array('id'=>$list[id]))}" onclick="converts(this)">系统生成兑换码</a>
                                                 <a href="javascript:void(0)" class="btn btn-info"  title="生成兑换码"   onclick="create(this)">导入excel表格</a>
+                                                <else/>
+                                                <a href="{:U('Admin/GiftCoupon/excl_out',array('id'=>$list['id']))}" class="btn btn-info" >导出兑换码</a>
                                             </if>
                                             <form  action="{:U('Admin/GiftCoupon/excelCreate')}" method="post" enctype="multipart/form-data" style="display: none">
                                                 <input type="file" name="create" style="display:none" class="fileCreate" >
                                                 <input type="text" name="id" value="{$list[id]}">
                                             </form>
-
                                             <a href="{:U('Admin/GiftCoupon/coupon_list',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看"><i class="fa fa-eye"></i></a>
                                             <a href="{:U('Admin/GiftCoupon/coupon_info',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
                                            <!--  <a data-url="{:U('Admin/GiftCoupon/del_coupon',array('id'=>$list['id']))}" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a> -->

@@ -369,10 +369,6 @@ class GiftCouponController extends BaseController {
         }
     }
 
-
-    /*
-     * 优惠券详细查看
-     */
     public function coupon_list(){
         $cid = I('get.id');
         $check_coupon = M('gift_coupon')->field('id') -> where(array('id'=>$cid))->find();
@@ -404,6 +400,37 @@ class GiftCouponController extends BaseController {
         $this -> assign('lists',$coupon_list);
         $this -> assign('page',$show);
         $this -> display();
+    }
+
+    /*
+     * 优惠券详细查看
+     */
+    public function excl_out(){
+        $cid = I('get.id');
+        $check_coupon = M('gift_coupon')->field('id') -> where(array('id'=>$cid))->find();
+        if(!$check_coupon['id'] > 0){
+            $this->error('不存在该礼品券');
+        }
+        $data = M("coupon_code") -> where(array("gift_coupon_id"=>$cid))->select();
+        if(!empty($data)){
+            $status = array("0"=>"未领取","1"=>"已领取","2"=>"已使用");
+            $strTable ='<table width="500" border="1">';
+            $strTable .= '<tr>';
+            $strTable .= '<td style="text-align:center;font-size:12px;width:120px;">兑换码</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="100">状态</td>';
+            $strTable .= '</tr>';
+            foreach ($data as $val){
+                $strTable .= '<tr>';
+                $strTable .= '<td >&nbsp;'.$val['code'].'</td>';
+                $strTable .= '<td >'.$status[$val['state']].' </td>';
+                $strTable .= '</tr>';
+            }
+            $strTable .= '</table>';
+            downloadExcel($strTable,'giftCoupon');
+            exit;
+        }
+        $this->error('没有数据');
+        exit;
     }
 
     /*
