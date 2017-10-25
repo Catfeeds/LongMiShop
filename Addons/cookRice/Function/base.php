@@ -8,7 +8,7 @@
 function cookRiceGetConfig()
 {
     $array = array(
-        "edition"   => 1,
+        "edition"   => 3,
         "data"      => array(
             "1" => array(
                 "edition" => 1,
@@ -23,6 +23,13 @@ function cookRiceGetConfig()
                 "number"  => "5",
                 "theme"   => "default",
                 "endTime" => 1487174400
+            ),
+            "3" => array(
+                "edition" => 3,
+                "name"    => "煮饭游戏",
+                "number"  => "5",
+                "theme"   => "default",
+                "endTime" => 1511617821
             ),
         ),
         "maxNumber" => "100",
