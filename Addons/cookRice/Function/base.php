@@ -28,7 +28,7 @@ function cookRiceGetConfig()
                 "edition" => 3,
                 "name"    => "煮饭游戏",
                 "number"  => "5",
-                "theme"   => "default",
+                "theme"   => "new",
                 "endTime" => 1511617821
             ),
         ),
