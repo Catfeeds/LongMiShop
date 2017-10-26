@@ -37,7 +37,7 @@ img{
 }
 .top_nav{
 	height:38px;
-	background: #a6dc3d;
+	background: #599d8b;
 	width: 100%;
 	position: relative;
 }
@@ -80,7 +80,7 @@ img{
 	text-align: right;
 	line-height: 24px;
 	padding: 2px 0;
-	color: #a6dc3d;
+	color: #599d8b;
 	background: transparent;
 	float: left;
 }
@@ -115,7 +115,7 @@ img{
 }
 .top_menu li span {
 	font-size: 12px;
-	color: #a6dc3d;
+	color: #599d8b;
 }
 .top_menu a {
 	padding-top: 55px;
@@ -341,7 +341,7 @@ img{
 	display: block;
 }
 .cp_r span {
-	color: #a6dc3d;
+	color: #599d8b;
 	line-height: 42px;
 	font-size: 16px;
 	float: left;
@@ -413,7 +413,7 @@ img{
 	display: block;
 }
 .cp1_r span {
-	color: #a6dc3d;
+	color: #599d8b;
 	line-height: 42px;
 	font-size: 18px;
 	float: left;
@@ -504,7 +504,7 @@ img{
 	background-color: #EFEFF4;
 }
 .list_h a {
-	color: #a6dc3d;
+	color: #599d8b;
 }
 .list_right {
 	padding-left: 26%;
@@ -576,7 +576,7 @@ img{
 }
 .er li span {
 	font-size: 18px;
-	color: #a6dc3d;
+	color: #599d8b;
 	line-height: 30px;
 }
 .none {
@@ -618,7 +618,7 @@ img{
 }
 .er1 li span {
 	font-size: 18px;
-	color: #a6dc3d;
+	color: #599d8b;
 	line-height: 30px;
 }
 .er1 a {
@@ -663,7 +663,7 @@ img{
 	line-height: 45px;
 }
 .edit a {
-	color: #a6dc3d;
+	color: #599d8b;
 	text-decoration: none;
 }
 .return {
@@ -743,7 +743,7 @@ img{
 	font-size: 20px;
 	text-align: center;
 	line-height: 50px;
-	color: #a6dc3d;
+	color: #599d8b;
 	font-weight: bold;
 	width: 100%;
 	position: absolute;
@@ -775,10 +775,10 @@ img{
 .top_list_h {
 }
 .top_list_h a {
-	color: #a6dc3d;
+	color: #599d8b;
 	border-bottom-width: 3px;
 	border-bottom-style: solid;
-	border-bottom-color: #a6dc3d;
+	border-bottom-color: #599d8b;
 	display: block;
 	width: 50%;
 	margin-right: auto;
@@ -804,7 +804,7 @@ img{
 	color: #999;
 }
 .money {
-	background-color: #a6dc3d;
+	background-color: #599d8b;
 	padding-top: 50px;
 	padding-bottom: 50px;
 	text-align: center;
@@ -891,7 +891,7 @@ img{
 	float: right;
 }
 .m9 {
-	color: #a6dc3d;
+	color: #599d8b;
 	font-weight: bold;
 	line-height: 45px;
 }
@@ -901,7 +901,7 @@ img{
 }
 .m11 {
 	font-size: 24px;
-	color: #a6dc3d;
+	color: #599d8b;
 	position: absolute;
 	top: 30px;
 	right: 10px;
@@ -955,10 +955,10 @@ img{
 	width: 100%;
 }
 .top1_list_h a {
-	color: #a6dc3d;
+	color: #599d8b;
 	border-bottom-width: 3px;
 	border-bottom-style: solid;
-	border-bottom-color: #a6dc3d;
+	border-bottom-color: #599d8b;
 	display: block;
 	width: 100%;
 	height: 47px;
@@ -983,7 +983,7 @@ img{
 	line-height: 30px;
 }
 .to2 {
-	color: #a6dc3d;
+	color: #599d8b;
 }
 .me_box {
 	text-align: center;
@@ -1025,7 +1025,7 @@ img{
 	overflow: hidden;
 }
 .me_r a {
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	border-radius: 4px;
 	color: #FFFFFF;
 	font-size: 16px;
@@ -1033,7 +1033,7 @@ img{
 	display: block;
 	line-height: 35px;
 	margin-left: 5px;
-	background-color: #a6dc3d;
+	background-color: #599d8b;
 	text-align: center;
 }
 .price {
@@ -1053,7 +1053,7 @@ img{
 	font-weight: bold;
 }
 .price_left .price_left_money{
-	color: #a6dc3d;
+	color: #599d8b;
 }
 .price2 .price_left{
 	padding-left: 5px;
@@ -1061,8 +1061,8 @@ img{
 .price_right {
 	/*border-left-width: 2px;*/
 	/*border-left-style: solid;*/
-	/*border-left-color: #a6dc3d;*/
-	color: #a6dc3d;
+	/*border-left-color: #599d8b;*/
+	color: #599d8b;
 	float: right;
 	padding-left: 20px;
 	font-size: 24px;
@@ -1162,7 +1162,7 @@ img{
 	width: 250px;
 }
 .c_btn1 a {
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	border-radius: 4px;
 	color: #FFF;
 	font-size: 16px;
@@ -1170,15 +1170,15 @@ img{
 	line-height: 45px;
 	float: right;
 	margin-right: 5px;
-	background-color: #a6dc3d;
+	background-color: #599d8b;
 	text-align: center;
 	padding-right: 5px;
 	padding-left: 5px;
 }
 .c_btn2 a {
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	border-radius: 4px;
-	color: #a6dc3d;
+	color: #599d8b;
 	font-size: 16px;
 	display: block;
 	line-height: 45px;
@@ -1223,7 +1223,7 @@ img{
 	display: block;
 }
 .cp2_r span {
-	color: #a6dc3d;
+	color: #599d8b;
 	line-height: 42px;
 	font-size: 18px;
 	float: left;
@@ -1267,9 +1267,9 @@ img{
 	overflow: hidden;
 }
 .m33_hover {
-	background-color: #a6dc3d!important;
+	background-color: #599d8b!important;
 	color: #FFF !important;
-	border: 1px solid #a6dc3d !important;
+	border: 1px solid #599d8b !important;
 }
 .m33_hover a {
 	color: #FFF !important;
@@ -1280,13 +1280,13 @@ img{
 	margin-left: 5px;
 }
 .m33_btn a {
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	border-radius: 4px;
 	color: #FFF;
 	font-size: 16px;
 	display: block;
 	line-height: 45px;
-	background-color: #a6dc3d;
+	background-color: #599d8b;
 	text-align: center;
 	margin-top: 15px;
 	margin-bottom: 15px;
@@ -1332,14 +1332,14 @@ img{
 .l_btn2 a {
 	display: block;
 	font-size: 16px;
-	background-color: #a6dc3d;
+	background-color: #599d8b;
 	float: right;
 	color: #FFF;
 	border-radius: 4px;
 	line-height: 30px;
 	width: 80px;
 	text-align: center;
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	margin-left: 10px;
 }
 .checkbox_s {
@@ -1383,13 +1383,13 @@ img{
 	font-size: 14px;
 }
 .login_btn a {
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	border-radius: 4px;
 	color: #FFF;
 	font-size: 18px;
 	display: block;
 	line-height: 45px;
-	background-color: #a6dc3d;
+	background-color: #599d8b;
 	text-align: center;
 	padding-right: 15px;
 	padding-left: 15px;
@@ -1405,7 +1405,7 @@ img{
 .login_txt a {
 	margin-right: 5px;
 	margin-left: 5px;
-	color: #a6dc3d;
+	color: #599d8b;
 	line-height: 50px;
 }
 .code {
@@ -1421,9 +1421,9 @@ img{
 .note {
 }
 .note a {
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	border-radius: 4px;
-	color: #a6dc3d;
+	color: #599d8b;
 	font-size: 14px;
 	width: 100px;
 	display: block;
@@ -1536,13 +1536,13 @@ img{
 .l_btn3 a {
 	display: block;
 	font-size: 16px;
-	background-color: #a6dc3d;
+	background-color: #599d8b;
 	color: #FFF;
 	border-radius: 4px;
 	line-height: 40px;
 	width: 120px;
 	text-align: center;
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -1564,7 +1564,7 @@ img{
 	margin-bottom: 20px;
 }
 .pay-OK {
-	color: #a6dc3d;
+	color: #599d8b;
 	text-align: center;
 	background-color: #FFF;
 	background-image: url(../SVG/order.svg);
@@ -1574,7 +1574,7 @@ img{
 	padding-bottom: 10px;
 }
 .pay-OK1 {
-	color: #a6dc3d;
+	color: #599d8b;
 	text-align: center;
 	background-color: #FFF;
 	background-image: url(../SVG/order1.svg);
@@ -1755,13 +1755,13 @@ img{
 	width: 24px;
 }
 .login_btn_on {
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	border-radius: 4px;
 	color: #FFF !important;
 	font-size: 18px;
 	display: block !important;
 	line-height: 35px !important;
-	background-color: #a6dc3d !important;
+	background-color: #599d8b !important;
 	text-align: center;
 	margin-top: 15px;
 	width: 90% !important;
@@ -1890,7 +1890,7 @@ Load—more a{
 	text-align: right;
 }
 .OK-a span{
-	color: #a6dc3d;
+	color: #599d8b;
 	padding-right: 10px;
 	padding-left: 10px;
 }
@@ -1898,9 +1898,9 @@ Load—more a{
 	color: #666;
 }
 .login_btn9 a {
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	border-radius: 4px;
-	color: #a6dc3d;
+	color: #599d8b;
 	font-size: 18px;
 	display: block;
 	line-height: 45px;
@@ -1950,7 +1950,7 @@ Load—more a{
 .tip_b strong{
 	border-left-width: 3px;
 	border-left-style: solid;
-	border-left-color: #a6dc3d;
+	border-left-color: #599d8b;
 	line-height: 32px;
 	padding-left: 5px;
 	font-size: 14px;
@@ -1958,7 +1958,7 @@ Load—more a{
 	color: #333;
 }
 .tip_b span{
-	color: #a6dc3d;
+	color: #599d8b;
 }
 .tip_text{
 	width: 90% !important;
@@ -2245,7 +2245,7 @@ Load—more a{
 }
 /*cart2 优惠券*/
 .site_txt1 a:hover{
-	color:#a6dc3d;
+	color:#599d8b;
 }
 .coupon_span{
 	float:right;
@@ -2330,7 +2330,7 @@ Load—more a{
 }
 
 .cp1_r span {
-	color: #a6dc3d;
+	color: #599d8b;
 	line-height: 32px;
 	font-size: 14px;
 	float: left;
@@ -2514,14 +2514,14 @@ Load—more a{
 	text-align: center;
 	color: #fff;
 	float: right;
-	background: #a6dc3d;
+	background: #599d8b;
 	border-radius: 5px;
 }
 .cp_index_r span {
-	color: #a6dc3d;
+	color: #599d8b;
 	line-height:28px;
 	font-size: 14px;
-	border: 1px dashed #a6dc3d;
+	border: 1px dashed #599d8b;
 	border-radius: 5px;
 	padding: 0 5px;
 	display: block;
@@ -2535,7 +2535,7 @@ Load—more a{
 	text-align: right;
 }
 .cp_index_r .cp_index_number {
-	background: #a6dc3d;
+	background: #599d8b;
 	color: #fff;
 }
 
@@ -2644,7 +2644,7 @@ Load—more a{
 	border-bottom: 2px dashed #fff;
 }
 .coupon_div:nth-child(2n+1) .coupon_div_top{
-	background: #a6dc3d;
+	background: #599d8b;
 }
 .coupon_div:nth-child(2n) .coupon_div_top{
 	background: #b2b2b2;
@@ -2705,7 +2705,7 @@ Load—more a{
 	display: block;
 }
 .coupon_div_r span {
-	color: #a6dc3d;
+	color: #599d8b;
 	line-height: 42px;
 	font-size: 18px;
 	float: left;
@@ -2747,7 +2747,7 @@ Load—more a{
 	transform: scale(0.9);
 }
 .new_poster b{
-	color: #a6dc3d;
+	color: #599d8b;
 }
 
 
@@ -2892,7 +2892,7 @@ Load—more a{
 	line-height: 20px;
 	font-size: 12px;
 	color: #fff;
-	background: #a6dc3d;
+	background: #599d8b;
 	float: right;
 	border-radius: 4px;
 }
@@ -2934,7 +2934,7 @@ Load—more a{
 .spinner > div {
 	width: 30px;
 	height: 30px;
-	background-color: #67CF22;
+	background-color: #599d8b;
 
 	border-radius: 100%;
 	display: inline-block;
@@ -3015,7 +3015,7 @@ Load—more a{
 	color: #FFF;
 	font-weight: bold;
 	cursor: pointer;
-	background-color: #a6dc3d;
+	background-color: #599d8b;
 	font-size: 16px;
 }
 .foot .total {
@@ -3023,7 +3023,7 @@ Load—more a{
 	cursor: pointer;
 }
 .foot #priceTotal, .foot #selectedTotal {
-	color: #a6dc3d;
+	color: #599d8b;
 	font-weight: bold;
 }
 .foot .selected {
@@ -3046,11 +3046,11 @@ Load—more a{
 	display: none;
 }
 .foot .selected:hover .arrow {
-	color: #a6dc3d;
+	color: #599d8b;
 }
 .foot .selected-view {
 	width: 935px;
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	position: absolute;
 	height: auto;
 	background: #ffffff;
@@ -3068,7 +3068,7 @@ Load—more a{
 .foot .selected-view .arrow {
 	font-size: 16px;
 	line-height: 100%;
-	color: #a6dc3d;
+	color: #599d8b;
 	position: absolute;
 	right: 330px;
 	bottom: -9px;
@@ -3131,14 +3131,14 @@ table td {
 	float: left;
 }
 .fiveYuanBuying a.a1{
-	border: 1px solid #a6dc3d;
-	background: #a6dc3d;
+	border: 1px solid #599d8b;
+	background: #599d8b;
 	color: #fff;
 }
 .fiveYuanBuying a.a2{
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	background: #fff;
-	color: #a6dc3d;
+	color: #599d8b;
 }
 .notice-box{
 	width: 100%;

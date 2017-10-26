@@ -42,7 +42,7 @@
 	color: #FFF;
 	font-weight: bold;
 	cursor: pointer;
-	background-color: #a6dc3d;
+	background-color: #599d8b;
 	font-size: 16px;
 }
 .foot .total {
@@ -50,7 +50,7 @@
 	cursor: pointer;
 }
 .foot #priceTotal, .foot #selectedTotal {
-	color: #a6dc3d;
+	color: #599d8b;
 	font-weight: bold;
 }
 .foot .selected {
@@ -73,11 +73,11 @@
 	display: none;
 }
 .foot .selected:hover .arrow {
-	color: #a6dc3d;
+	color: #599d8b;
 }
 .foot .selected-view {
 	width: 935px;
-	border: 1px solid #a6dc3d;
+	border: 1px solid #599d8b;
 	position: absolute;
 	height: auto;
 	background: #ffffff;
@@ -95,7 +95,7 @@
 .foot .selected-view .arrow {
 	font-size: 16px;
 	line-height: 100%;
-	color: #a6dc3d;
+	color: #599d8b;
 	position: absolute;
 	right: 330px;
 	bottom: -9px;

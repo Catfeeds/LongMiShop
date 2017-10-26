@@ -3,18 +3,18 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
-<path fill="#99C614" stroke="#FFFFFF" stroke-width="0.25" stroke-miterlimit="10" d="M17.016,15.903
+<path fill="#599d8b" stroke="#FFFFFF" stroke-width="0.25" stroke-miterlimit="10" d="M17.016,15.903
 	c0-0.347-0.281-0.628-0.628-0.628H5.093c-0.347,0-0.628,0.281-0.628,0.628c0,0.347,0.281,0.627,0.628,0.627h11.295
 	C16.735,16.53,17.016,16.25,17.016,15.903z"/>
-<path fill="#99C614" stroke="#FFFFFF" stroke-width="0.25" stroke-miterlimit="10" d="M27.157,5.88H4.483
+<path fill="#599d8b" stroke="#FFFFFF" stroke-width="0.25" stroke-miterlimit="10" d="M27.157,5.88H4.483
 	c-2.058,0-3.741,1.683-3.741,3.741v13.894c0,2.057,1.683,3.741,3.741,3.741H8.11v-1.201H4.29c-1.304,0-2.371-1.067-2.371-2.372
 	V12.839h27.685v10.843c0,1.304-1.067,2.372-2.372,2.372H14.137v1.201h13.02c2.058,0,3.741-1.683,3.741-3.741V9.62
 	C30.898,7.563,29.215,5.88,27.157,5.88z M29.603,11.584H1.919V9.453c0-1.304,1.067-2.372,2.371-2.372h22.942
 	c1.304,0,2.372,1.067,2.372,2.372V11.584z"/>
-<path fill="#99C614" stroke="#FFFFFF" stroke-width="0.25" stroke-miterlimit="10" d="M24.058,22.178h2.399
+<path fill="#599d8b" stroke="#FFFFFF" stroke-width="0.25" stroke-miterlimit="10" d="M24.058,22.178h2.399
 	c0.347,0,0.627-0.281,0.627-0.628c0-0.347-0.281-0.628-0.627-0.628h-2.399c-0.347,0-0.627,0.281-0.628,0.628
 	C23.431,21.898,23.712,22.178,24.058,22.178z"/>
-<path fill="#99C614" stroke="#FFFFFF" stroke-width="0.25" stroke-miterlimit="10" d="M26.458,19.705
+<path fill="#599d8b" stroke="#FFFFFF" stroke-width="0.25" stroke-miterlimit="10" d="M26.458,19.705
 	c0.347,0,0.627-0.281,0.627-0.628c0-0.346-0.281-0.628-0.627-0.628h-2.399c-0.347,0-0.627,0.281-0.628,0.628
 	c0,0.347,0.281,0.628,0.628,0.628H26.458z"/>
 </svg>

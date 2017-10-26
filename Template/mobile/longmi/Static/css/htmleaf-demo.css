@@ -54,7 +54,7 @@
 	padding-bottom: 8px;
 	border-bottom-width: 2px;
 	border-bottom-style: solid;
-	border-bottom-color: #a6dc3d;
+	border-bottom-color: #599d8b;
 }
 .tabBox .bd ul {
 	padding-bottom: 20px;
@@ -80,7 +80,7 @@
 	height: 40px;
 }
 .merchandise_box span {
-	color: #a6dc3d;
+	color: #599d8b;
 }
 .merchandise_box li {
 	width: 20%;
@@ -288,7 +288,7 @@
 	padding-left: 10px;
 }
 .feedback-titel span {
-	color: #a6dc3d;
+	color: #599d8b;
 	font-size: 18px;
 }
 .feedback-txt {

@@ -37,7 +37,7 @@
 .price{
 	padding-right: 5px;
 	padding-left: 5px;
-	color: #a6dc3d;
+	color: #599d8b;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 }
@@ -89,12 +89,12 @@
 	margin-left: 2px;
 }
 .subtotal{
-	color: #a6dc3d;
+	color: #599d8b;
 	font-weight: bold;
 }
 .operation span:hover,a:hover{
 	cursor: pointer;
-	color: #a6dc3d;
+	color: #599d8b;
 	text-decoration: underline;
 }
 
@@ -132,24 +132,24 @@
 	color: #FFF;
 	font-weight: bold;
 	cursor: pointer;
-	background-color: #a6dc3d;
+	background-color: #599d8b;
 	font-size: 16px;
 }
 .foot .total{
 	margin: 0 5px;
 	cursor: pointer;
 }
-.foot  #priceTotal, .foot #selectedTotal{color:#a6dc3d;font-family:"Microsoft Yahei";font-weight:bold;}
+.foot  #priceTotal, .foot #selectedTotal{color:#599d8b;font-family:"Microsoft Yahei";font-weight:bold;}
 .foot .selected{cursor:pointer;}
 .foot .selected .arrow{position:relative;top:-3px;margin-left:3px;}
 .foot .selected .down{position:relative;top:3px;display:none;}
 .show .selected .down{display:inline;}
 .show .selected .up{display:none;}
-.foot .selected:hover .arrow{color:#a6dc3d;}
-.foot .selected-view{width:935px;border:1px solid #a6dc3d;position:absolute;height:auto;background:#ffffff;z-index:9;bottom:48px;left:-1px;display:none;}
+.foot .selected:hover .arrow{color:#599d8b;}
+.foot .selected-view{width:935px;border:1px solid #599d8b;position:absolute;height:auto;background:#ffffff;z-index:9;bottom:48px;left:-1px;display:none;}
 .show .selected-view{display:block;}
 .foot .selected-view div{height:auto;}
-.foot .selected-view .arrow{font-size:16px;line-height:100%;color:#a6dc3d;position:absolute;right:330px;bottom:-9px;}
+.foot .selected-view .arrow{font-size:16px;line-height:100%;color:#599d8b;position:absolute;right:330px;bottom:-9px;}
 .foot .selected-view .arrow span{color:#ffffff;position:absolute;left:0px;bottom:1px;}
 table td{
 	margin-bottom: 5px;
