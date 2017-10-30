@@ -98,3 +98,7 @@ class Order2CronClass
 
 $orderCronClassObj = new Order2CronClass();
 $orderCronClassObj->init();
+$orderCronClassObj->init();
+$orderCronClassObj->init();
+$orderCronClassObj->init();
+$orderCronClassObj->init();

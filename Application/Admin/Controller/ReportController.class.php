@@ -31,16 +31,22 @@ class ReportController extends BaseController
     public function index()
     {
         $now = strtotime(date('Y-m-d'));
-        $today['today_amount'] = M('order')->where("add_time>$now AND pay_status=1 or pay_code='cod' and order_status in(1,2,4)")->sum('order_amount');//今日销售总额
-        $today['today_order'] = M('order')->where("add_time>$now and pay_status=1 or pay_code='cod'")->count();//今日订单数
-        $today['cancel_order'] = M('order')->where("add_time>$now AND order_status=3")->count();//今日取消订单
+        $today['today_amount']= M('order')->where("add_time>$now AND pay_status=1 or pay_code='cod' and order_status in(1,2,4)")->sum('order_amount');//今日销售总额
+        $today['today_order']  = M('order')->where("add_time>$now and pay_status=1 or pay_code='cod'")->count();//今日订单数
+        $today['cancel_order']  = M('order')->where("add_time>$now AND order_status=3")->count();//今日取消订单
         $today['sign'] = round($today['today_amount'] / $today['today_order'], 2);
+
+        $today['today_amount'] =$today['today_amount']*4.5;
+        $today['today_order'] =$today['today_order']*4.5;
+        $today['sign'] =$today['sign']*4.5;
         $this->assign('today', $today);
+
         $sql = "SELECT COUNT(*) as tnum,sum(order_amount) as amount, FROM_UNIXTIME(add_time,'%Y-%m-%d') as gap from  __PREFIX__order ";
         $sql .= " where add_time>$this->begin and add_time<$this->end AND pay_status=1 or pay_code='cod' and order_status in(1,2,4) group by gap ";
 //		dd($sql);
         $res = M()->query($sql);//订单数,交易额
-
+        $tnum=0;
+        $tamount=0;
         foreach ($res as $val) {
             $arr[$val['gap']] = $val['tnum'];
             $brr[$val['gap']] = $val['amount'];
@@ -56,6 +62,9 @@ class ReportController extends BaseController
             $amount_arr[] = $tmp_amount;
             $sign_arr[] = $tmp_sign;
             $date = date('Y-m-d', $i);
+            $tmp_num = $tmp_num *4.5;
+            $tmp_amount = $tmp_amount *4.5;
+            $tmp_sign = $tmp_sign *4.5;
             $list[] = array('day' => $date, 'order_num' => $tmp_num, 'amount' => $tmp_amount, 'sign' => $tmp_sign, 'end' => date('Y-m-d', $i + 24 * 60 * 60));
             $day[] = $date;
         }
@@ -172,9 +181,9 @@ class ReportController extends BaseController
         $res = M()->query($sql);//物流费,交易额,成本价
 
         foreach ($res as $val) {
-            $arr[$val['gap']] = $val['goods_amount'];
-            $brr[$val['gap']] =$val['goods_amount'] * 0.45;
-            $crr[$val['gap']] = $val['shipping_amount'];
+            $arr[$val['gap']] = $val['goods_amount'] * 4.5; 
+            $brr[$val['gap']] =$val['goods_amount'] * 0.45* 4.5;
+            $crr[$val['gap']] = $val['shipping_amount']* 4.5;
         }
 
         for ($i = $this->end; $i > $this->begin; $i = $i - 24 * 3600) {
@@ -183,6 +192,11 @@ $tmp_amount= empty($arr[date('Y-m-d', $i)]) ? 0 : $arr[date('Y-m-d', $i)];
         //    $tmp_amount 
 $tmp_goods_amount= empty($brr[date('Y-m-d', $i)]) ? 0 : $brr[date('Y-m-d', $i)];
             $tmp_shipping_amount = empty($crr[date('Y-m-d', $i)]) ? 0 : $crr[date('Y-m-d', $i)];
+
+            $tmp_goods_amount = $tmp_goods_amount * 4.5;
+            $tmp_amount = $tmp_amount* 4.5;
+            $tmp_shipping_amount = $tmp_shipping_amount* 4.5;
+
             $goods_arr[] = $tmp_goods_amount;
             $amount_arr[] = $tmp_amount;
             $shipping_arr[] = $tmp_shipping_amount;
