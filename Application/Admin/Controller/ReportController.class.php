@@ -8,6 +8,8 @@ class ReportController extends BaseController
     public $begin;
     public $end;
 
+    const NUMBER_RATE = 4;
+
     public function _initialize()
     {
         parent::_initialize();
@@ -36,9 +38,9 @@ class ReportController extends BaseController
         $today['cancel_order']  = M('order')->where("add_time>$now AND order_status=3")->count();//今日取消订单
         $today['sign'] = round($today['today_amount'] / $today['today_order'], 2);
 
-        $today['today_amount'] =$today['today_amount']*4.5;
-        $today['today_order'] =$today['today_order']*4.5;
-        $today['sign'] =$today['sign']*4.5;
+        $today['today_amount'] =$today['today_amount']*self::NUMBER_RATE;
+        $today['today_order'] =$today['today_order']*self::NUMBER_RATE;
+        $today['sign'] =$today['sign']*self::NUMBER_RATE;
         $this->assign('today', $today);
 
         $sql = "SELECT COUNT(*) as tnum,sum(order_amount) as amount, FROM_UNIXTIME(add_time,'%Y-%m-%d') as gap from  __PREFIX__order ";
@@ -62,9 +64,9 @@ class ReportController extends BaseController
             $amount_arr[] = $tmp_amount;
             $sign_arr[] = $tmp_sign;
             $date = date('Y-m-d', $i);
-            $tmp_num = $tmp_num *4.5;
-            $tmp_amount = $tmp_amount *4.5;
-            $tmp_sign = $tmp_sign *4.5;
+            $tmp_num = $tmp_num *self::NUMBER_RATE;
+            $tmp_amount = $tmp_amount *self::NUMBER_RATE;
+            $tmp_sign = $tmp_sign *self::NUMBER_RATE;
             $list[] = array('day' => $date, 'order_num' => $tmp_num, 'amount' => $tmp_amount, 'sign' => $tmp_sign, 'end' => date('Y-m-d', $i + 24 * 60 * 60));
             $day[] = $date;
         }
@@ -181,9 +183,9 @@ class ReportController extends BaseController
         $res = M()->query($sql);//物流费,交易额,成本价
 
         foreach ($res as $val) {
-            $arr[$val['gap']] = $val['goods_amount'] * 4.5; 
-            $brr[$val['gap']] =$val['goods_amount'] * 0.45* 4.5;
-            $crr[$val['gap']] = $val['shipping_amount']* 4.5;
+            $arr[$val['gap']] = $val['goods_amount'] * self::NUMBER_RATE;
+            $brr[$val['gap']] =$val['goods_amount'] * 0.45* self::NUMBER_RATE;
+            $crr[$val['gap']] = $val['shipping_amount']* self::NUMBER_RATE;
         }
 
         for ($i = $this->end; $i > $this->begin; $i = $i - 24 * 3600) {
@@ -193,9 +195,9 @@ $tmp_amount= empty($arr[date('Y-m-d', $i)]) ? 0 : $arr[date('Y-m-d', $i)];
 $tmp_goods_amount= empty($brr[date('Y-m-d', $i)]) ? 0 : $brr[date('Y-m-d', $i)];
             $tmp_shipping_amount = empty($crr[date('Y-m-d', $i)]) ? 0 : $crr[date('Y-m-d', $i)];
 
-            $tmp_goods_amount = $tmp_goods_amount * 4.5;
-            $tmp_amount = $tmp_amount* 4.5;
-            $tmp_shipping_amount = $tmp_shipping_amount* 4.5;
+            $tmp_goods_amount = $tmp_goods_amount * self::NUMBER_RATE;
+            $tmp_amount = $tmp_amount* self::NUMBER_RATE;
+            $tmp_shipping_amount = $tmp_shipping_amount* self::NUMBER_RATE;
 
             $goods_arr[] = $tmp_goods_amount;
             $amount_arr[] = $tmp_amount;
