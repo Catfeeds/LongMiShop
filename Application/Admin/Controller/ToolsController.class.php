@@ -471,7 +471,7 @@ class ToolsController extends BaseController {
         //    }
         // }
         $path = "./Application/Common/Conf/region.js";
-        $a = var_export($cityData, TRUE);
+//        $a = var_export($cityData, TRUE);
         file_put_contents($path,$content);
     }
 

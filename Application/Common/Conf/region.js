@@ -45,7 +45,7 @@ var  cityData3 = [{
  text : '密云县' },{ 
  value : '322', 
  text : '延庆县' },] 
-} ,
+} , 
  ]} ,{ 
  value: '338', 
  text : '天津市', 
@@ -5048,7 +5048,75 @@ var  cityData3 = [{
 } ,{ 
  value : '29855', 
  text : '东莞市' , 
- children : [ ] 
+ children : [ { 
+ value : '29856', 
+ text : '东城街道' },{ 
+ value : '29857', 
+ text : '南城街道' },{ 
+ value : '29858', 
+ text : '万江街道' },{ 
+ value : '29859', 
+ text : '莞城街道' },{ 
+ value : '29860', 
+ text : '石碣镇' },{ 
+ value : '29861', 
+ text : '石龙镇' },{ 
+ value : '29862', 
+ text : '茶山镇' },{ 
+ value : '29863', 
+ text : '石排镇' },{ 
+ value : '29864', 
+ text : '企石镇' },{ 
+ value : '29865', 
+ text : '横沥镇' },{ 
+ value : '29866', 
+ text : '桥头镇' },{ 
+ value : '29867', 
+ text : '谢岗镇' },{ 
+ value : '29868', 
+ text : '东坑镇' },{ 
+ value : '29869', 
+ text : '常平镇' },{ 
+ value : '29870', 
+ text : '寮步镇' },{ 
+ value : '29871', 
+ text : '樟木头镇' },{ 
+ value : '29872', 
+ text : '大朗镇' },{ 
+ value : '29873', 
+ text : '黄江镇' },{ 
+ value : '29874', 
+ text : '清溪镇' },{ 
+ value : '29875', 
+ text : '塘厦镇' },{ 
+ value : '29876', 
+ text : '凤岗镇' },{ 
+ value : '29877', 
+ text : '大岭山镇' },{ 
+ value : '29878', 
+ text : '长安镇' },{ 
+ value : '29879', 
+ text : '虎门镇' },{ 
+ value : '29880', 
+ text : '厚街镇' },{ 
+ value : '29881', 
+ text : '沙田镇' },{ 
+ value : '29882', 
+ text : '道滘镇' },{ 
+ value : '29883', 
+ text : '洪梅镇' },{ 
+ value : '29884', 
+ text : '麻涌镇' },{ 
+ value : '29885', 
+ text : '望牛墩镇' },{ 
+ value : '29886', 
+ text : '中堂镇' },{ 
+ value : '29887', 
+ text : '高埗镇' },{ 
+ value : '29888', 
+ text : '松山湖管委会' },{ 
+ value : '29889', 
+ text : '虎门港管委会' },] 
 } ,{ 
  value : '29890', 
  text : '中山市' , 
@@ -7803,10 +7871,6 @@ var  cityData3 = [{
  ]} ,{ 
  value: '47495', 
  text : '澳门特别行政区', 
- children : [ { 
- value : '47535', 
- text : '123' , 
- children : [ ] 
-} , 
+ children : [  
  ]} ,
  ]
