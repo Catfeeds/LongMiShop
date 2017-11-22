@@ -1014,11 +1014,12 @@ function changeOrderMemberMoney( $level , $user_id ){
 
 
 /**
+ * 20% 提成的叼毛
  * @return array
  */
 function getSpecialInvitation(){
     $array = array(
-        "35421","35420","33634"
+        "35421","35420","33634","41244"
     );
     return $array;
 }
