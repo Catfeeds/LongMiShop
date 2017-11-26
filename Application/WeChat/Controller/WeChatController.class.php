@@ -99,6 +99,17 @@ class WeChatController extends Controller {
                     );
                     addData("addons_createqrcode_list",$data);
                     $keyword = $qrInfo["key_word"];
+
+                    if(strstr($keyword,"create_invite_")){
+                        $inviteUserId = str_replace("create_invite_","",$keyword);
+                        if( !empty($fromUsername) ){
+                            $where = " openid = '$fromUsername'";
+                            $userInfo = M('users') -> where($where) -> find();
+                            createInviteRelationship($userInfo['user_id'],$inviteUserId,$userInfo['nickname'],$this -> shopConfig);
+                        }
+                        $keyword = $this -> shopConfig['basic_subscribe_reply'];
+                    }
+
                 }
             }
         }
