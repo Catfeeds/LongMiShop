@@ -1019,7 +1019,7 @@ function changeOrderMemberMoney( $level , $user_id ){
  */
 function getSpecialInvitation(){
     $array = array(
-        "35421","35420","33634","41244"
+        "35421","35420","33634","41244","1635"
     );
     return $array;
 }
