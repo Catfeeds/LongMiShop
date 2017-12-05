@@ -15,6 +15,7 @@ CREATE TABLE `lm_addons_createqrcode_qr` (
   `limit_time` int(11) DEFAULT '0' COMMENT '存在时间',
   `ticket` varchar(150) DEFAULT NULL,
   `url` varchar(150) DEFAULT NULL,
+  `title` varchar(150) DEFAULT NULL,
   `key_word` varchar(50) DEFAULT NULL,
   `create_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)

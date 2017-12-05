@@ -115,8 +115,10 @@ class createQRCodeAdminController
         $info = findDataWithCondition(self::TB_QR, array("id" => $id));
         if (IS_POST) {
             $time = time();
+            $title = I("title");
             $keyWord = I("key_word");
             $data = array(
+                "title" => $title,
                 "key_word" => $keyWord,
             );
             if( !empty($info)){

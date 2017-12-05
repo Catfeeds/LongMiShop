@@ -40,17 +40,24 @@
                                         <input type="radio" class="" name="point_rate" value="10" <if condition="$config[point_rate] eq 10"> checked </if> >1元 = 10积分  &nbsp;&nbsp;&nbsp;&nbsp;
                                         <input type="radio" class="" name="point_rate" value="100"<if condition="$config[point_rate] eq 100"> checked </if> >1元 = 100积分
                                     </td>
-                                </tr>    
+                                </tr>
                                 <tr>
                                     <td>发货后多少天自动收货：</td>
-                                    <td >                         		
+                                    <td >
                                         <select class="form-control" name="auto_confirm_date" id="distribut_date">
-                                                <for start="1" end="31" name="i" >          
-                                                    <option value="{$i}" <if condition="$config[auto_confirm_date] eq $i">selected="selected"</if>>{$i}天</option>
-                                                </for>
-                                        </select>                                      
+                                            <for start="1" end="31" name="i" >
+                                                <option value="{$i}" <if condition="$config[auto_confirm_date] eq $i">selected="selected"</if>>{$i}天</option>
+                                            </for>
+                                        </select>
                                     </td>
-                                </tr>                               
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">永久20%分佣的用户：</td>
+                                    <td class="col-sm-8">
+                                        <textarea class="form-control" name="20_brokerage" >{$config.20_brokerage}</textarea>
+                                        <span>用户ID,多个用英文" , "隔开<br>如（  12,544,236  ）<br></span>
+                                    </td>
+                                </tr>
                                 </tbody> 
                                 <tfoot>
                                 	<tr>

@@ -1021,7 +1021,22 @@ function getSpecialInvitation(){
     $array = array(
         "35421","35420","33634","41244","1635"
     );
-    return $array;
+    return array_merge($array,getConfigSpecialInvitation());
+}
+
+/**
+ * 获取后台的叼毛
+ * @return array
+ */
+function getConfigSpecialInvitation(){
+    $data = tpCache("shopping");
+    if(!empty($data["20_brokerage"])){
+        $temp =explode(",",$data["20_brokerage"]);
+        if(!empty($temp) && is_array($temp)){
+            return $temp;
+        }
+    }
+    return array();
 }
 
 /**
