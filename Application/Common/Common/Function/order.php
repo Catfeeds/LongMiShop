@@ -536,7 +536,6 @@ function returnOrderHandle( $returnOrderInfo , $postData )
                 if( !callbackIsTrue($res)){
                     throw new \Exception(getCallbackMessage($res));
                 }
-                throw new \Exception('123！');
             }else{
                 //退到余额
                 $moneyRes = accountLog($userId, $data['refund_money'], 0, $desc);
