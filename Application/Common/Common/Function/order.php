@@ -528,9 +528,21 @@ function returnOrderHandle( $returnOrderInfo , $postData )
             $data['result'] = 1;
             $desc = '售后退款';
             $userId = $returnOrderInfo['user_id'];
-            $moneyRes = accountLog($userId, $data['refund_money'], 0, $desc);
-            if (!$moneyRes) {
-                throw new \Exception('退款失败！');
+
+            if($postData["refundMoneyType"] == 1){
+                //退到微信零钱
+                $userInfo = findUserInfo($userId);
+                $res = userWeChatWithdrawDeposit($userInfo["openid"],$data['refund_money'],"",$desc);
+                if( !callbackIsTrue($res)){
+                    throw new \Exception(getCallbackMessage($res));
+                }
+                throw new \Exception('123！');
+            }else{
+                //退到余额
+                $moneyRes = accountLog($userId, $data['refund_money'], 0, $desc);
+                if (!$moneyRes) {
+                    throw new \Exception('退款失败！');
+                }
             }
             $type = 3;
             $where = array(

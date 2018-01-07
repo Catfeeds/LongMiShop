@@ -603,7 +603,7 @@ class WechatController extends BaseController {
             );
             $upload = new \Think\Upload($uploadConfig);//实例化上传类
             $info = $upload->upload($file);
-            dd($upload);
+//            dd($upload);
             if($info){
                 return $info;
             }

@@ -413,7 +413,9 @@ class OrderController extends BaseController {
         if(IS_POST)
         {
             $data['refund_money'] = trim(I('money'));
+            $data['refundMoneyType'] = trim(I('refundMoneyType'));
             $data['remark'] = I('remark');
+
             $result = returnOrderHandle( $return_goods , $data );
             exit( json_encode( $result ) );
         }

@@ -144,6 +144,15 @@
             </td>
         </tr>
         <tr>
+            <td class="text-right">退款类型:</td>
+            <td class="text-center">
+                <select class="input-sm refund_money_type" name="refund_money_type">
+                    <option value="0" selected>用户余额</option>
+                    <option value="1">微信零钱</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td colspan="2">
                 <div class="form-group text-center">
                     <button onclick="doSubmit(this)" class="btn btn-primary" type="button">确认退款</button>
@@ -203,10 +212,11 @@ function doSubmit(obj) {
         layer.alert('退款金额不能大于原订单金额', {icon: 2});
         return;
     }
+    var refundMoneyType = contentDiv.find(".refund_money_type").val();
     $.ajax({
         type : "POST",
         url:"{:U('Admin/Order/return_info')}",
-        data : {money:money,id:returnId},
+        data : {money:money,id:returnId,refundMoneyType:refundMoneyType},
         dataType : 'json',
         success: function(data){
             isLock = 0;
