@@ -230,7 +230,7 @@ class createQRCodeAdminController
                 $tempString .= '<tr>';
                 $tempString .= '<td style="text-align:center;font-size:12px;" rowspan="'.$lineNumber.'">&nbsp;'.$val['qr_id'].'/&nbsp;'.$val['qr_name'].'/&nbsp;'.$val['qr_key_word'].'</td>';
                 $tempString .= '<td style="text-align:center;font-size:12px;" rowspan="'.$lineNumber.'">&nbsp;'.$val['order_sn'].'</td>';
-                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['create_time'].' </td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.date("Y-m-d",$val['add_time']).' </td>';
                 $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.date("H:i:d",$val['add_time']).' </td>';
                 $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'."{$val['consignee']}".' </td>';
                 $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'."{$region[$val['province']]},{$region[$val['city']]},{$region[$val['district']]},{$region[$val['twon']]}".$val['address'].'</td>';
