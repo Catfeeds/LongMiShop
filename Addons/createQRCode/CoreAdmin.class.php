@@ -9,8 +9,14 @@ class createQRCodeAdminController
 
     public $assignData = array();
 
+    public  $order_status;
+    public  $shipping_status;
+    public  $pay_status;
     public function __construct()
     {
+        $this -> order_status = C('ORDER_STATUS');
+        $this -> shipping_status = C('SHIPPING_STATUS');
+        $this -> pay_status = C('PAY_STATUS');
     }
 
 
