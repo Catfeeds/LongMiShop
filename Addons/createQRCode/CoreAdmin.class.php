@@ -165,6 +165,130 @@ class createQRCodeAdminController
         return $this->assignData;
     }
 
+    public function allOrderOut(){
+        $qrList = selectDataWithCondition(self::TB_QR);
+        if(!empty($qrList)){
+            $dataList = array();
+//            $orderIdList = array();
+            foreach ($qrList as $qrItem) {
+                $openidList = selectDataWithCondition(self::TB_LIST, array("qr_id" => $qrItem["id"]), array("openid","create_time"));
+                if (!empty($openidList)) {
+                    foreach ($openidList as $openidItem) {
+                        $info = findDataWithCondition("users", array("openid" => $openidItem["openid"]), array("user_id"));
+                        if (!empty($info)) {
+                            $condition = "user_id ='".$info["user_id"]."' and add_time >= '".$openidItem['create_time']."' and pay_status = 1";
+                            $lists =M("order")->where($condition)->order(" add_time desc")->select();
+                            if(!empty($lists)){
+                                foreach ($lists as $item){
+//                                    if(isset($orderIdList[$item["order_id"]])){
+//
+//                                    }
+                                    $dataList[$qrItem["id"]."_".$item["order_id"]] = $item;
+                                    $dataList[$qrItem["id"]."_".$item["order_id"]]["qr_name"] = $qrItem["title"];
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            $region	= M('region')->getField('id,name');
+
+            $strTable ='<table width="500" border="1">';
+            $strTable .= '<tr>';
+            $strTable .= '<td style="text-align:center;font-size:12px;width:120px;">二维码名称</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;width:120px;">订单编号</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="100">日期</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">下单时间</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">收货人</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">收货地址</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">手机</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">订单金额</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">实际支付</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付方式</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付状态</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">发货状态</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">物流信息</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">商品信息</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">商品数量</td>';
+            $strTable .= '<td style="text-align:center;font-size:12px;" width="*">用户备注</td>';
+            $strTable .= '</tr>';
+            foreach($dataList as $k=>$val){
+                $orderGoods = D('order_goods') -> where('order_id='.$val['order_id'])->select();
+                $lineNumber = count($orderGoods);
+
+                $tempString = "";
+                $tempString .= '<tr>';
+                $tempString .= '<td style="text-align:center;font-size:12px;" rowspan="'.$lineNumber.'">&nbsp;'.$val['qr_name'].'</td>';
+                $tempString .= '<td style="text-align:center;font-size:12px;" rowspan="'.$lineNumber.'">&nbsp;'.$val['order_sn'].'</td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['create_time'].' </td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.date("H:i:d",$val['add_time']).' </td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'."{$val['consignee']}".' </td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'."{$region[$val['province']]},{$region[$val['city']]},{$region[$val['district']]},{$region[$val['twon']]}".$val['address'].'</td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['mobile'].'</td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['goods_price'].'</td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['order_amount'].'</td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['pay_name'].'</td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$this->pay_status[$val['pay_status']].'</td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$this->shipping_status[$val['shipping_status']].'</td>';
+
+                $strGoods=array();
+                $shippingArray=array();
+                foreach($orderGoods as $key =>  $goods){
+                    $returnRes = M('return_goods') -> where(array('order_id'=>$goods['order_id'],'goods_id'=>$goods['goods_id'],'spec_key'=>$goods['spec_key']))->find();
+                    if(!empty($returnRes) && $returnRes['result'] == 0){ //有未处理订单 不能导出该订单
+                        continue 2;
+                    }
+                    if( $returnRes['result'] == 1 ){ //同意退款 跳出该商品
+                        continue;
+                    }
+                    $strGoods[$key]['string']= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name']." ";
+                    if ($goods['spec_key_name'] != '') $strGoods[$key]['string'] .= " 规格：".$goods['spec_key_name'];
+                    $strGoods[$key]['number']=$goods['goods_num'];
+                    $shipping_name = M('delivery_doc')->field('shipping_name,invoice_no')->where(array('id'=>$goods['delivery_id']))->find();
+                    if( !empty($shipping_name) && !empty($shipping_name['shipping_name']) && !empty($shipping_name['invoice_no']) ){
+                        $shippingArray[$key]['shipping_name'] = $shipping_name['shipping_name'];
+                        $shippingArray[$key]['invoice_no'] = $shipping_name['invoice_no'];
+                    }
+                }
+                unset($orderGoods);
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">';
+                if(!empty($shippingArray)){
+                    foreach ($shippingArray as $shippingItem){
+                        $tempString .= $shippingItem['shipping_name'] .":[".$shippingItem['invoice_no']."]<br>";
+                    }
+                }
+                $tempString .= '</td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;">'.$strGoods[0]['string'].' </td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;"><b style="color:#f00;">'.$strGoods[0]['number'].'</b> </td>';
+                $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['user_note'].'</td>';
+                $tempString .= '</tr>';
+
+                if( $lineNumber > 1){
+                    for( $myI=1;$myI < $lineNumber;$myI++ ){
+                        $tempString .= '<tr>';
+                        $tempString .= '<td style="text-align:left;font-size:12px;">'.$strGoods[$myI]['string'].' </td>';
+                        $tempString .= '<td style="text-align:left;font-size:12px;"><b style="color:#f00;">'.$strGoods[$myI]['number'].'</b> </td>';
+                        $tempString .= '</tr>';
+                    }
+                }
+
+                $strTable .= $tempString;
+            }
+            $strTable .='</table>';
+            unset($orderList);
+            header("Content-type: application/vnd.ms-excel");
+            header("Content-Type: application/force-download");
+            header("Content-Disposition: attachment; filename=qrcode_order_".date('Y-m-d').".xls");
+            header('Expires:0');
+            header('Pragma:public');
+            echo '<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'.$strTable.'</html>';
+            exit;
+        }
+
+    }
+
     public function route(){
         $id = I('id');
         $user_id = I('user_id');
