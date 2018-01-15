@@ -184,6 +184,8 @@ class createQRCodeAdminController
 //
 //                                    }
                                     $dataList[$qrItem["id"]."_".$item["order_id"]] = $item;
+                                    $dataList[$qrItem["id"]."_".$item["order_id"]]["qr_id"] = $qrItem["id"];
+                                    $dataList[$qrItem["id"]."_".$item["order_id"]]["qr_key_word"] = $qrItem["key_word"];
                                     $dataList[$qrItem["id"]."_".$item["order_id"]]["qr_name"] = $qrItem["title"];
                                 }
                             }
@@ -220,7 +222,7 @@ class createQRCodeAdminController
 
                 $tempString = "";
                 $tempString .= '<tr>';
-                $tempString .= '<td style="text-align:center;font-size:12px;" rowspan="'.$lineNumber.'">&nbsp;'.$val['qr_name'].'</td>';
+                $tempString .= '<td style="text-align:center;font-size:12px;" rowspan="'.$lineNumber.'">&nbsp;'.$val['qr_id'].'/&nbsp;'.$val['qr_name'].'/&nbsp;'.$val['qr_key_word'].'</td>';
                 $tempString .= '<td style="text-align:center;font-size:12px;" rowspan="'.$lineNumber.'">&nbsp;'.$val['order_sn'].'</td>';
                 $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.$val['create_time'].' </td>';
                 $tempString .= '<td style="text-align:left;font-size:12px;" rowspan="'.$lineNumber.'">'.date("H:i:d",$val['add_time']).' </td>';
