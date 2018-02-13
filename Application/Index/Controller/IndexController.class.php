@@ -10,7 +10,8 @@ class IndexController extends IndexBaseController {
     {
         return array(
             'index',
-            'news'
+            'news',
+            'about'
         );
     }
 
@@ -18,6 +19,10 @@ class IndexController extends IndexBaseController {
         parent::_initialize();
         $versionToken = "I_V.1.0";
         $this -> assign('indexVersionToken', $versionToken);
+    }
+
+    public function about(){
+        $this -> display();
     }
 
     public function index(){

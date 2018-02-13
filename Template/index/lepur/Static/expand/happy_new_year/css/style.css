@@ -1,0 +1,73 @@
+/*a6dc3d*/
+body {
+    /*background-color: #fdf8f9;*/
+    background-color: #ffffff;
+}
+
+.head {
+    background: #cf2433;
+}
+
+.nav-center .menu li a:hover {
+    color: #cf2433;
+}
+
+.btn-lc {
+    border: 1px solid #cf2433;
+    color: #cf2433;
+}
+
+.btn-lc:hover, .btn-lc:focus {
+    color: #cf2433;
+}
+
+.buy {
+    color: #cf2433;
+}
+
+.buy:hover {
+    color: #cf2433;
+}
+
+.nav-left {
+    border: 0;
+}
+
+.nav-right {
+    border: 0;
+}
+
+.protit {
+    color: #cf2433;
+}
+
+.protit::before {
+    display: none;
+}
+
+.protit::after {
+    display: none;
+}
+
+#about {
+    margin-top: 0;
+}
+
+#about img {
+    max-width: 1080px;
+}
+
+#footer {
+    width: 100%;
+    text-align: center;
+    background: #fdf8f9;
+}
+
+#footer img {
+    width: 100%;
+    max-width: 1080px;
+}
+
+#product {
+    background-color: #fdf8f9;
+}
